@@ -51,6 +51,8 @@ namespace Np_Accounting
                 services.AddScoped<ViewModels.DashboardViewModel>();
                 services.AddScoped<Views.Pages.DataPage>();
                 services.AddScoped<ViewModels.DataViewModel>();
+                services.AddScoped<Views.Pages.PaymentPage>();
+                services.AddScoped<ViewModels.PaymentViewModel>();
                 services.AddScoped<Views.Pages.SettingsPage>();
                 services.AddScoped<ViewModels.SettingsViewModel>();
 

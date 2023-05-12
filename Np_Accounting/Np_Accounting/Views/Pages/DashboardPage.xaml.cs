@@ -15,7 +15,6 @@ namespace Np_Accounting.Views.Pages
         public DashboardPage(ViewModels.DashboardViewModel viewModel)
         {
             ViewModel = viewModel;
-
             InitializeComponent();
         }
     }

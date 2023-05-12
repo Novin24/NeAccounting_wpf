@@ -49,6 +49,13 @@ namespace Np_Accounting.ViewModels
                     PageTag = "data",
                     Icon = SymbolRegular.DataHistogram24,
                     PageType = typeof(Views.Pages.DataPage)
+                },
+                new NavigationItem()
+                {
+                    Content = "payPay",
+                    PageTag = "payment",
+                    Icon = SymbolRegular.Payment24,
+                    PageType = typeof(Views.Pages.PaymentPage)
                 }
             };
 
