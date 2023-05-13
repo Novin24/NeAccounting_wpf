@@ -1,4 +1,4 @@
-﻿<Page x:Class="Np_Accounting.Views.Pages.PaymentPage"
+﻿<ui:UiPage x:Class="Np_Accounting.Views.Pages.PaymentPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -22,4 +22,4 @@
         <ui:Button  Grid.Row="0" Command="{Binding ViewModel.PayCommand, Mode=OneWay}"  Content="not Click me" />
         <TextBlock FontSize="30" HorizontalAlignment="Right" Margin="22" Text="{Binding ViewModel.PayCount,Mode=OneWay}" />
     </Grid>
-</Page>
+</ui:UiPage>

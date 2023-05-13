@@ -6,7 +6,8 @@ namespace Np_Accounting.ViewModels
 {
     public partial class PaymentViewModel : ObservableObject, INavigationAware
     {
-        private int _payCount = 100;
+        [ObservableProperty]
+        private int _payCount = 125;
 
         public void OnNavigatedTo()
         {
