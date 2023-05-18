@@ -21,6 +21,6 @@ namespace Np_Accounting.ViewModels
         private void OnPay()
         {
             PayCount++;
-        }
+        } 
     }
 }
