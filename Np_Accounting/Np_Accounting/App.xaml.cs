@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using EnieyFrameworkCore.EntityFramework;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Np_Accounting.Models;
@@ -45,6 +47,9 @@ namespace Np_Accounting
                 // Main window with navigation
                 services.AddScoped<INavigationWindow, Views.Windows.MainWindow>();
                 services.AddScoped<ViewModels.MainWindowViewModel>();
+
+                services.AddDbContext<NovinDbContext>(options =>
+                        options.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=NovinWpf;Trusted_Connection=True;"));
 
                 // Views and ViewModels
                 services.AddScoped<Views.Pages.DashboardPage>();
