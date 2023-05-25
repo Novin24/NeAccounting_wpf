@@ -3,22 +3,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace EnieyFrameworkCore.Migrations
+namespace EnieyFrameworkCore.Migrations.NovinDb
 {
     /// <inheritdoc />
-    public partial class initDatabase : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Banks",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Temp = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Bank_ID = table.Column<int>(type: "int", nullable: false),
+                    Bank_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bank_Branch = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Account_num = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -28,7 +30,7 @@ namespace EnieyFrameworkCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Banks", x => x.Id);
                 });
         }
 
@@ -36,7 +38,7 @@ namespace EnieyFrameworkCore.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Banks");
         }
     }
 }

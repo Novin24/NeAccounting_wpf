@@ -48,8 +48,8 @@ namespace Np_Accounting
                 services.AddScoped<INavigationWindow, Views.Windows.MainWindow>();
                 services.AddScoped<ViewModels.MainWindowViewModel>();
 
-                services.AddDbContext<NovinDbContext>(options =>
-                        options.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=NovinWpf;Trusted_Connection=True;"));
+                services.AddDbContext<NovinDbContext>();
+                services.AddDbContext<BaseDomainDbContext>();
 
                 // Views and ViewModels
                 services.AddScoped<Views.Pages.DashboardPage>();

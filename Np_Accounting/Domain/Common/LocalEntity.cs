@@ -2,7 +2,7 @@
 
 namespace Domain.Common
 {
-    public abstract class BaseEntity<TKey> : IEntities
+    public abstract class LocalEntity<TKey> : IEntities
     {
         [Key]
         public TKey Id { get; set; }
@@ -14,7 +14,7 @@ namespace Domain.Common
         public Guid? DeleterId { get; set; }
     }
 
-    public abstract class BaseEntity : BaseEntity<int>
+    public abstract class LocalEntity : LocalEntity<int>
     {
 
     }

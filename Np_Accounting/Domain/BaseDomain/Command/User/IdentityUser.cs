@@ -1,6 +1,6 @@
 ﻿using Domain.Common;
 
-namespace Domain.User
+namespace Domain.BaseDomain.Command.User
 {
     public class IdentityUser : BaseEntity<Guid>
     {

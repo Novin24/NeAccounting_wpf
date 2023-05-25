@@ -4,26 +4,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EnieyFrameworkCore.EntityFramework
 {
-    public class NovinDbContext :DbContext
+    public class BaseDomainDbContext : DbContext
     {
 
-        public NovinDbContext(DbContextOptions<NovinDbContext> options ): base( options )
+        public BaseDomainDbContext(DbContextOptions<BaseDomainDbContext> options) : base(options)
         {
 
         }
+
+
+
         protected override void OnConfiguring(
                         DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=NovinWpf;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=BaseDomain;Trusted_Connection=True;");
 
         }
+
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            var entitiesAssembly = typeof(IEntities).Assembly;
-            modelBuilder.RegisterAllEntities<IEntities>(entitiesAssembly);
+            var entitiesAssembly = typeof(IBaseDomainEntities).Assembly;
+            modelBuilder.RegisterAllEntities<IBaseDomainEntities>(entitiesAssembly);
             modelBuilder.RegisterEntityTypeConfiguration(entitiesAssembly);
             modelBuilder.AddRestrictDeleteBehaviorConvention();
             modelBuilder.AddSequentialGuidForIdConvention();

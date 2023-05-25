@@ -4,19 +4,16 @@ using EnieyFrameworkCore.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace EnieyFrameworkCore.Migrations
 {
-    [DbContext(typeof(NovinDbContext))]
-    [Migration("20230520155504_initDatabase")]
-    partial class initDatabase
+    [DbContext(typeof(BaseDomainDbContext))]
+    partial class BaseDomainDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,11 +22,12 @@ namespace EnieyFrameworkCore.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.User.IdentityUser", b =>
+            modelBuilder.Entity("Domain.BaseDomain.Command.User.IdentityUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -63,7 +61,7 @@ namespace EnieyFrameworkCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("IdentityUser");
                 });
 #pragma warning restore 612, 618
         }
