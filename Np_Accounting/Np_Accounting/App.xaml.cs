@@ -1,5 +1,4 @@
-﻿using EnieyFrameworkCore.EntityFramework;
-using Microsoft.EntityFrameworkCore;
+﻿using Infrastructure.EntityFramework;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -7,8 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BaseDomain\Reed\" />
-    <Folder Include="Local\Reed\" />
+    <Compile Remove="BaseDomain\**" />
+    <Compile Remove="Local\**" />
+    <EmbeddedResource Remove="BaseDomain\**" />
+    <EmbeddedResource Remove="Local\**" />
+    <None Remove="BaseDomain\**" />
+    <None Remove="Local\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
   </ItemGroup>
 
   <ItemGroup>
