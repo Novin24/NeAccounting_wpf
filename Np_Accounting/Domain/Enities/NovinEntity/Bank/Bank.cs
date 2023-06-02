@@ -1,6 +1,6 @@
 ﻿using Domain.Common;
 
-namespace Domain.Local.Bank
+namespace Domain.Enities.NovinEntity.Bank
 {
     public class Banks : LocalEntity
     {
