@@ -57,7 +57,7 @@ namespace Np_Accounting.Views.Windows
             base.OnClosed(e);
 
             // Make sure that closing this window will begin the process of closing the application.
-            Application.Current.Shutdown();
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

@@ -24,10 +24,6 @@
         <ui:Button Grid.Row="0" Command="{Binding ViewModel.CounterIncrementCommand, Mode=OneWay}" FontSize="24" Content="Click me!" Icon="Save28" />
         <TextBlock Grid.Row="1" Margin="32,15,10,0" VerticalAlignment="Center" Text="{Binding ViewModel.Counter, Mode=OneWay}" />
 
-        <Border Grid.Row="3" Height="200">
-            <Border.Background>
-                <ImageBrush ImageSource="/Images/234.png"></ImageBrush>
-            </Border.Background>
-        </Border>
+
     </Grid>
 </ui:UiPage>
