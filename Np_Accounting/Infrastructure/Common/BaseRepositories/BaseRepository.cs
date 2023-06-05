@@ -5,17 +5,17 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Common
+namespace Infrastructure.Common.BaseRepositories
 {
-    public class Repository<TEntity> : IRepository<TEntity>
-        where TEntity : class, IEntities
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity>
+    where TEntity : class, IBaseDomainEntities
     {
-        protected readonly NovinDbContext DbContext;
+        protected readonly BaseDomainDbContext DbContext;
         public DbSet<TEntity> Entities { get; }
         public virtual IQueryable<TEntity> Table => Entities;
         public virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
 
-        public Repository(NovinDbContext dbContext)
+        public BaseRepository(BaseDomainDbContext dbContext)
         {
             DbContext = dbContext;
             Entities = DbContext.Set<TEntity>(); // City => Cities
