@@ -19,6 +19,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
+        <ui:SymbolIcon Symbol="Person28"/>
         <ui:Button  Grid.Row="0" Command="{Binding ViewModel.PayCommand, Mode=OneWay}"  Content="not Click me" />
         <TextBlock FontSize="30" HorizontalAlignment="Right" Margin="22" Text="{Binding ViewModel.PayCount,Mode=OneWay}" />
     </Grid>
