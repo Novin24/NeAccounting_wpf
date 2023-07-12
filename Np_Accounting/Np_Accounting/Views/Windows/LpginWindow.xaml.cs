@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Wpf.Ui.Controls.Interfaces;
+using Wpf.Ui.Mvvm.Contracts;
 
 namespace Np_Accounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for LpginPage.xaml
     /// </summary>
-    public partial class LpginPage : Page
+    public partial class LpginPage : INavigationWindow
     {
         public LpginPage()
         {
@@ -43,6 +35,36 @@ namespace Np_Accounting.Views.Pages
         private void btnlogin_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        public Frame GetFrame()
+        {
+            throw new NotImplementedException();
+        }
+
+        public INavigation GetNavigation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Navigate(Type pageType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPageService(IPageService pageService)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowWindow()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CloseWindow()
+        {
+            throw new NotImplementedException();
         }
     }
 }

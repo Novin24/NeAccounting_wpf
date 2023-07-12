@@ -1,10 +1,12 @@
 ﻿using Application.IBaseRepositories.Users;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Threading.Tasks;
+using Wpf.Ui.Common.Interfaces;
 
 namespace Np_Accounting.ViewModels
 {
-    class LogInViewModel
+    class LogInViewModel : ObservableObject
     {
         private readonly IUserManager _userManager;
 
