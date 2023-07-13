@@ -46,7 +46,7 @@ namespace Np_Accounting.Services
         {
             await Task.CompletedTask;
 
-            if (!System.Windows.Application.Current.Windows.OfType<Views.Windows.MainWindow>().Any())
+            if (!System.Windows.Application.Current.Windows.OfType<Views.Windows.LogInWindow>().Any())
             {
                 _navigationWindow = (_serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow)!;
                 _navigationWindow!.ShowWindow();

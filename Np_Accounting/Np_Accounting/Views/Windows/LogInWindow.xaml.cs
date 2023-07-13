@@ -5,37 +5,37 @@ using System.Windows.Input;
 using Wpf.Ui.Controls.Interfaces;
 using Wpf.Ui.Mvvm.Contracts;
 
-namespace Np_Accounting.Views.Pages
+namespace Np_Accounting.Views.Windows
 {
     /// <summary>
     /// Interaction logic for LpginPage.xaml
     /// </summary>
-    public partial class LpginPage : INavigationWindow
+    public partial class LogInWindow : INavigationWindow
     {
-        public LpginPage()
+        public LogInWindow()
         {
             InitializeComponent();
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //if (e.LeftButton == MouseButtonStte.Pressed)
-
-            // DragMove();
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
         }
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
-            //WindoState = WindowState.Minimized;
+            this.WindowState = WindowState.Minimized;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            //Application.Current.Shutdown();
+            System.Windows.Application.Current.Shutdown();
         }
 
         private void btnlogin_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
 
         public Frame GetFrame()
         {
@@ -49,7 +49,7 @@ namespace Np_Accounting.Views.Pages
 
         public bool Navigate(Type pageType)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public void SetPageService(IPageService pageService)
@@ -59,7 +59,7 @@ namespace Np_Accounting.Views.Pages
 
         public void ShowWindow()
         {
-            throw new NotImplementedException();
+            Show();
         }
 
         public void CloseWindow()

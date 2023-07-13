@@ -46,6 +46,9 @@ namespace Np_Accounting
                 // Main window with navigation
                 services.AddScoped<INavigationWindow, Views.Windows.MainWindow>();
                 services.AddScoped<ViewModels.MainWindowViewModel>();
+                
+                services.AddScoped<INavigationWindow, Views.Windows.LogInWindow>();
+                services.AddScoped<ViewModels.LogInViewModel>();
 
                 services.AddDbContext<NovinDbContext>();
                 services.AddDbContext<BaseDomainDbContext>();

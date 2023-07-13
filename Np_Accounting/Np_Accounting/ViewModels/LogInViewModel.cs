@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Threading.Tasks;
-using Wpf.Ui.Common.Interfaces;
 
 namespace Np_Accounting.ViewModels
 {
