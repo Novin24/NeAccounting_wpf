@@ -16,7 +16,7 @@ namespace Np_Accounting.Views.Pages
         {
             ViewModel = viewModel;
 
-            //InitializeComponent();
+            InitializeComponent();
         }
     }
 }

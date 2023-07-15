@@ -16,9 +16,9 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
     <Border CornerRadius="15">
-        <Border.Background>
+        <!--<Border.Background>
             <ImageBrush ImageSource="//images/3048402.jpg"/>
-        </Border.Background>
+        </Border.Background>-->
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -33,36 +33,34 @@
                         <GradientStop Color="#FFFF046B" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
-                <StackPanel Width="250" 
+                <StackPanel 
                         Orientation="Vertical"
                         Margin="0 0 0 0">
                     <TextBlock Margin="0 0 0 0" Height="40" HorizontalAlignment="Center" FontFamily="Calibri" FontWeight="Bold" FontSize="30"><Run  Text="سند پرداختی" /></TextBlock>
-                    <TextBlock  FontFamily="Calibri" FontSize="20" Height="40" HorizontalAlignment="Right" Margin="0,0,15,0"><Run  Text=": نوع سند" /></TextBlock>
-                    <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="50 0 0 0" >
-                        <Viewbox Height="23" Margin="0 0 0 0">
-                            <RadioButton GroupName="MCSites" >نقدی</RadioButton>
+                    <TextBlock  FontFamily="Calibri" FontSize="20" Height="40" HorizontalAlignment="Right" Margin="0,0,0,0"><Run  Text=": نوع سند" /></TextBlock>
+                    <WrapPanel Margin="0 0 0 0" HorizontalAlignment="Center"  >
+                        <Viewbox Height="23" Margin="0 0 0 0" HorizontalAlignment="Center">
+                            <RadioButton GroupName="MCSites" HorizontalAlignment="Center">نقدی</RadioButton>
                         </Viewbox>
 
-                        <Viewbox Height="23" Margin="0 0 0 0">
-                            <RadioButton GroupName="MCSites" >کارتخوان</RadioButton>
+                            <Viewbox Height="23" Margin="0 0 0 0" HorizontalAlignment="Center">
+                            <RadioButton GroupName="MCSites" HorizontalAlignment="Center">کارتخوان</RadioButton>
                         </Viewbox>
 
-                        <Viewbox Height="23" Margin="0 0 0 0">
-                            <RadioButton GroupName="MCSites" >کارت به کارت</RadioButton>
+                            <Viewbox Height="23" Margin="0 0 0 0" HorizontalAlignment="Center">
+                            <RadioButton GroupName="MCSites" HorizontalAlignment="Center">کارت به کارت</RadioButton>
                         </Viewbox>
 
-                        <Viewbox Height="23" Margin="0 0 0 0">
-                            <RadioButton GroupName="MCSites">...شبا،ساتناو</RadioButton>
+                        <Viewbox Height="23" Margin="0 0 0 0" HorizontalAlignment="Center">
+                            <RadioButton GroupName="MCSites" HorizontalAlignment="Center">...شبا،ساتناو</RadioButton>
                         </Viewbox>
 
 
-                        <Viewbox Height="23" Margin="0 0 0 0">
-                            <RadioButton GroupName="MCSites">حواله بانکی</RadioButton>
+                            <Viewbox Height="23" Margin="0 0 0 0" HorizontalAlignment="Center">
+                            <RadioButton GroupName="MCSites" HorizontalAlignment="Center">حواله بانکی</RadioButton>
                         </Viewbox>
 
                     </WrapPanel>
-
-                   
 
                     <Button x:Name="btnlogin"
                             BorderThickness="0"
