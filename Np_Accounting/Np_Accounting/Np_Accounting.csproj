@@ -45,8 +45,4 @@
     <Resource Include="Assets\applicationIcon-256.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="images\" />
-  </ItemGroup>
-
 </Project>
