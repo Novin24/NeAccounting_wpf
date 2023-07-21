@@ -33,7 +33,9 @@ namespace Np_Accounting.Views.Windows
 
         private void btnlogin_Click(object sender, RoutedEventArgs e)
         {
-
+            //MainWindow main = new MainWindow());
+            //this.CloseWindow();
+            //main.ShowWindow();
         }
 
 
