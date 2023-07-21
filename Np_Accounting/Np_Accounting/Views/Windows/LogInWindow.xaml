@@ -14,7 +14,7 @@
     MouseDown="Window_MouseDown">
     <Border CornerRadius="15">
         <Border.Background>
-            <ImageBrush ImageSource="/Images/Back_login.jpg"/>
+            <ImageBrush ImageSource="pack://application:,,,/Assets/Back_login.jpg" RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" />
         </Border.Background>
         <Border 
         CornerRadius="10"
@@ -40,7 +40,6 @@
                     <RowDefinition Height="40"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -152,12 +151,12 @@
                              VerticalContentAlignment="Center"
                              Margin="0 5 0 0"
                              Padding="30 0 0 0">
-                        <!--<TextBox.Background>
-                            <ImageBrush ImageSource="/Images/user9.png"
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="pack://application:,,,/Assets/user9.png"
                                         Stretch="None"
                                         AlignmentX="Left"
                                         />
-                        </TextBox.Background>-->
+                        </TextBox.Background>
                     </TextBox>
                     <TextBlock Text="Password"
                                Foreground="DarkGray"
@@ -176,12 +175,12 @@
                              VerticalContentAlignment="Center"
                              Margin="0 5 0 0"
                              Padding="30 0 0 0">
-                        <!--<PasswordBox.Background>
-                            <ImageBrush ImageSource="/Images/key.png"
+                        <PasswordBox.Background>
+                            <ImageBrush ImageSource="pack://application:,,,/Assets/key.png"
                                         Stretch="None"
                                         AlignmentX="Left"
                                         />
-                        </PasswordBox.Background>-->
+                        </PasswordBox.Background>
                     </PasswordBox>
 
                     <Button x:Name="btnlogin"
