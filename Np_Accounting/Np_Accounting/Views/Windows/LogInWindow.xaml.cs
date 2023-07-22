@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Application.IBaseRepositories.Users;
+using Np_Accounting.ViewModels;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using Wpf.Ui.Controls.Interfaces;
+using Wpf.Ui.Gallery.Services.Contracts;
 using Wpf.Ui.Mvvm.Contracts;
 
 namespace Np_Accounting.Views.Windows
@@ -10,11 +13,15 @@ namespace Np_Accounting.Views.Windows
     /// <summary>
     /// Interaction logic for LpginPage.xaml
     /// </summary>
-    public partial class LogInWindow : INavigationWindow
+    public partial class LogInWindow : IWindow
     {
-        public LogInWindow()
+        private readonly IServiceProvider _serviceProvider;
+        private INavigationWindow _navigationWindow;
+
+        public LogInWindow(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            _serviceProvider = serviceProvider;
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -31,42 +38,23 @@ namespace Np_Accounting.Views.Windows
             System.Windows.Application.Current.Shutdown();
         }
 
-        private void btnlogin_Click(object sender, RoutedEventArgs e)
+        private async void btnlogin_Click(object sender, RoutedEventArgs e)
         {
-            //MainWindow main = new MainWindow());
-            //this.CloseWindow();
-            //main.ShowWindow();
+
+            await Task.CompletedTask;
+            Hide();
+
+            if (!System.Windows.Application.Current.Windows.OfType<MainWindow>().Any())
+            {
+                _navigationWindow = (_serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow)!;
+                _navigationWindow!.ShowWindow();
+
+                _navigationWindow.Navigate(typeof(Pages.DashboardPage));
+            }
+
+            await Task.CompletedTask;
         }
 
 
-        public Frame GetFrame()
-        {
-            throw new NotImplementedException();
-        }
-
-        public INavigation GetNavigation()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Navigate(Type pageType)
-        {
-            return true;
-        }
-
-        public void SetPageService(IPageService pageService)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowWindow()
-        {
-            Show();
-        }
-
-        public void CloseWindow()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

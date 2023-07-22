@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Wpf.Ui.Gallery.Services.Contracts;
 using Wpf.Ui.Mvvm.Contracts;
 
 namespace Np_Accounting.Services
@@ -14,7 +15,7 @@ namespace Np_Accounting.Services
     public class ApplicationHostService : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
-        private INavigationWindow _navigationWindow;
+        private IWindow _navigationWindow;
 
         public ApplicationHostService(IServiceProvider serviceProvider)
         {
@@ -44,17 +45,23 @@ namespace Np_Accounting.Services
         /// </summary>
         private async Task HandleActivationAsync()
         {
-            await Task.CompletedTask;
 
-            if (!System.Windows.Application.Current.Windows.OfType<Views.Windows.MainWindow>().Any())
+            if (!System.Windows.Application.Current.Windows.OfType<Views.Windows.LogInWindow>().Any())
             {
-                _navigationWindow = (_serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow)!;
-                _navigationWindow!.ShowWindow();
-
-                _navigationWindow.Navigate(typeof(Views.Pages.DashboardPage));
+                _navigationWindow = _serviceProvider.GetService(typeof(IWindow)) as IWindow;
+                _navigationWindow!.Show();
             }
-
             await Task.CompletedTask;
+
+            //if (!System.Windows.Application.Current.Windows.OfType<Views.Windows.MainWindow>().Any())
+            //{
+            //    _navigationWindow = (_serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow)!;
+            //    _navigationWindow!.ShowWindow();
+
+            //    _navigationWindow.Navigate(typeof(Views.Pages.DashboardPage));
+            //}
+
+            //await Task.CompletedTask;
         }
     }
 }
