@@ -16,12 +16,13 @@ namespace Np_Accounting.Views.Windows
     {
         private readonly IServiceProvider _serviceProvider;
         private INavigationWindow _navigationWindow;
-        
+        public LogInViewModel _logInViewModel { get; }
 
-        public LogInWindow(IServiceProvider serviceProvider)
+        public LogInWindow(IServiceProvider serviceProvider, LogInViewModel logInViewModel)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
+            _logInViewModel = logInViewModel;
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -40,7 +41,7 @@ namespace Np_Accounting.Views.Windows
 
         private async void btnlogin_Click(object sender, RoutedEventArgs e)
         {
-            
+            var t = _logInViewModel.LogIn(Txt_UserName.Text, txt_password.Password);
             await Task.CompletedTask;
             Hide();
 

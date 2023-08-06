@@ -1,19 +1,13 @@
-﻿using Application.IBaseRepositories.Users;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Infrastructure.UnitOfWork;
 using System;
 using System.Threading.Tasks;
+using Wpf.Ui.Common.Interfaces;
 
 namespace Np_Accounting.ViewModels
 {
-    class LogInViewModel : ObservableObject
+    public class LogInViewModel : ObservableObject, INavigationAware
     {
-        private readonly IUserManager _userManager;
-
-        public LogInViewModel(IUserManager userManager)
-        {
-            _userManager = userManager;
-        }
-
         public async Task<Tuple<bool, string>> LogIn(string userName, string password)
         {
             if (string.IsNullOrEmpty(userName))
@@ -25,13 +19,26 @@ namespace Np_Accounting.ViewModels
             {
                 return Tuple.Create(false, "وارد کردن گذرواژه الزامیست");
             }
+            using (BaseUnitOfWork db = new BaseUnitOfWork())
+            {
 
-            if (await _userManager.LogInUser(userName, password))
+            if (await db.userRepository.LogInUser(userName, password))
             {
                 return Tuple.Create(true, "ورود با موفقیت انجام شد");
             }
+            }
 
             return Tuple.Create(false, "عدم تطابق نام کاربری و گذرواژه.");
+        }
+
+        public void OnNavigatedFrom()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNavigatedTo()
+        {
+            throw new NotImplementedException();
         }
     }
 }
