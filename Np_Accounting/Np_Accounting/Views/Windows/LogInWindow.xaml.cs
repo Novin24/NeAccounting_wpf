@@ -1,5 +1,4 @@
-﻿using Application.IBaseRepositories.Users;
-using Np_Accounting.ViewModels;
+﻿using Np_Accounting.ViewModels;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +16,7 @@ namespace Np_Accounting.Views.Windows
     {
         private readonly IServiceProvider _serviceProvider;
         private INavigationWindow _navigationWindow;
+        
 
         public LogInWindow(IServiceProvider serviceProvider)
         {
@@ -40,7 +40,7 @@ namespace Np_Accounting.Views.Windows
 
         private async void btnlogin_Click(object sender, RoutedEventArgs e)
         {
-
+            
             await Task.CompletedTask;
             Hide();
 

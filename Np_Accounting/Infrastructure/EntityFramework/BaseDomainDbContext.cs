@@ -7,14 +7,6 @@ namespace Infrastructure.EntityFramework
 {
     public class BaseDomainDbContext : DbContext
     {
-
-        public BaseDomainDbContext(DbContextOptions<BaseDomainDbContext> options) : base(options)
-        {
-
-        }
-
-
-
         protected override void OnConfiguring(
                         DbContextOptionsBuilder optionsBuilder)
         {
