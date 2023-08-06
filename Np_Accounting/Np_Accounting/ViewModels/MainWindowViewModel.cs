@@ -72,11 +72,11 @@ namespace Np_Accounting.ViewModels
 
             TrayMenuItems = new ObservableCollection<MenuItem>
             {
-                new MenuItem
+               /* new MenuItem
                 {
                     Header = "Home",
                     Tag = "tray_home"
-                }
+                }*/
             };
 
             _isInitialized = true;

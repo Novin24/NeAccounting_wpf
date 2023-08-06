@@ -15,27 +15,93 @@
     d:Background="{DynamicResource ApplicationBackgroundBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
+    <Border CornerRadius="15">
+        <!--<Border.Background>
+            <ImageBrush ImageSource="//images/3048402.jpg"/>
+        </Border.Background>-->
 
-    <Grid Margin="56,0">
-        <ui:VirtualizingItemsControl
-            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-            ItemsSource="{Binding ViewModel.Colors, Mode=OneWay}"
-            VirtualizingPanel.CacheLengthUnit="Item">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:DataColor}">
-                    <ui:Button
-                        Width="80"
-                        Height="80"
-                        Margin="2"
-                        Padding="0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Appearance="Secondary"
-                        Background="{Binding Color, Mode=OneWay}"
-                        FontSize="25"
-                        Icon="Fluent24" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ui:VirtualizingItemsControl>
-    </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1" Padding="15">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0" Opacity="0.73">
+                        <GradientStop Color="#FF8A0D35" Offset="0"/>
+                        <GradientStop Color="#FFFF046B" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel 
+                        Orientation="Vertical"
+                        Margin="0 0 0 0">
+                    <TextBlock Margin="0 0 0 0" Height="40" HorizontalAlignment="Center" FontFamily="Calibri" FontWeight="Bold" FontSize="30"><Run  Text="سند پرداختی" /></TextBlock>
+                    <TextBlock  FontFamily="Calibri" FontSize="20" Height="40" HorizontalAlignment="Right" Margin="0,0,0,0"><Run  Text=": نوع سند" /></TextBlock>
+                    <WrapPanel Margin="0 0 0 0" HorizontalAlignment="Center"  >
+                        <Viewbox Height="23" Margin="0 0 0 0" HorizontalAlignment="Center">
+                            <RadioButton GroupName="MCSites" HorizontalAlignment="Center">نقدی</RadioButton>
+                        </Viewbox>
+
+                            <Viewbox Height="23" Margin="0 0 0 0" HorizontalAlignment="Center">
+                            <RadioButton GroupName="MCSites" HorizontalAlignment="Center">کارتخوان</RadioButton>
+                        </Viewbox>
+
+                            <Viewbox Height="23" Margin="0 0 0 0" HorizontalAlignment="Center">
+                            <RadioButton GroupName="MCSites" HorizontalAlignment="Center">کارت به کارت</RadioButton>
+                        </Viewbox>
+
+                        <Viewbox Height="23" Margin="0 0 0 0" HorizontalAlignment="Center">
+                            <RadioButton GroupName="MCSites" HorizontalAlignment="Center">...شبا،ساتناو</RadioButton>
+                        </Viewbox>
+
+
+                            <Viewbox Height="23" Margin="0 0 0 0" HorizontalAlignment="Center">
+                            <RadioButton GroupName="MCSites" HorizontalAlignment="Center">حواله بانکی</RadioButton>
+                        </Viewbox>
+
+                    </WrapPanel>
+
+                    <Button x:Name="btnlogin"
+                            BorderThickness="0"
+                            Content="ثبت سند"
+                            Foreground="White"
+                            FontSize="26"
+                            FontFamily="Calibri"
+                            Cursor="Hand"
+                            Grid.Column="2"
+                            Margin="0 50 0 0">
+                        <Button.Background>
+                            <SolidColorBrush Color="#AF30FF13" Opacity="1"/>
+                        </Button.Background>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#462AD8"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#28AEED"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="150" Height="40"
+                                        CornerRadius="20"
+                                        Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
+    </Border>
+
+
 </ui:UiPage>
