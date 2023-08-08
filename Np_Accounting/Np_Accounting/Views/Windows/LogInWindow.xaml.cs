@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Gallery.Services.Contracts;
 using Wpf.Ui.Mvvm.Contracts;
 
@@ -12,17 +13,17 @@ namespace Np_Accounting.Views.Windows
     /// <summary>
     /// Interaction logic for LpginPage.xaml
     /// </summary>
-    public partial class LogInWindow : IWindow
+    public partial class LogInWindow : IWindow, INavigableView<LogInViewModel>
     {
         private readonly IServiceProvider _serviceProvider;
         private INavigationWindow _navigationWindow;
-        public LogInViewModel _logInViewModel { get; }
+        public LogInViewModel ViewModel { get; }
 
         public LogInWindow(IServiceProvider serviceProvider, LogInViewModel logInViewModel)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _logInViewModel = logInViewModel;
+            ViewModel = logInViewModel;
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -41,18 +42,17 @@ namespace Np_Accounting.Views.Windows
 
         private async void btnlogin_Click(object sender, RoutedEventArgs e)
         {
-            var t = _logInViewModel.LogIn(Txt_UserName.Text, txt_password.Password);
-            await Task.CompletedTask;
-            Hide();
-
-            if (!System.Windows.Application.Current.Windows.OfType<MainWindow>().Any())
+            if (await ViewModel.LogIn(Txt_UserName.Text, txt_password.Password))
             {
-                _navigationWindow = (_serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow)!;
-                _navigationWindow!.ShowWindow();
+                Hide();
+                if (!System.Windows.Application.Current.Windows.OfType<MainWindow>().Any())
+                {
+                    _navigationWindow = (_serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow)!;
+                    _navigationWindow!.ShowWindow();
 
-                _navigationWindow.Navigate(typeof(Pages.DashboardPage));
+                    _navigationWindow.Navigate(typeof(Pages.DashboardPage));
+                }
             }
-
             await Task.CompletedTask;
         }
 
