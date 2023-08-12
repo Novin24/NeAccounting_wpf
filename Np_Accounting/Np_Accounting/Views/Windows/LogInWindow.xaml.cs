@@ -17,9 +17,9 @@ namespace Np_Accounting.Views.Windows
     {
         private readonly IServiceProvider _serviceProvider;
         private INavigationWindow _navigationWindow;
-        public LogInViewModel ViewModel { get; }
+        public LogInWindowViewModel ViewModel { get; }
 
-        public LogInWindow(IServiceProvider serviceProvider, LogInViewModel logInViewModel)
+        public LogInWindow(IServiceProvider serviceProvider, LogInWindowViewModel logInViewModel)
         {
             InitializeComponent();
             ViewModel = logInViewModel;

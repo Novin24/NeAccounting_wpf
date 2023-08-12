@@ -48,7 +48,7 @@ namespace Np_Accounting
 
                 // Main window with navigation
                 services.AddTransient<IWindow, Views.Windows.LogInWindow>();
-                services.AddTransient<ViewModels.LogInViewModel>();
+                services.AddTransient<ViewModels.LogInWindowViewModel>();
 
                 services.AddSingleton<INavigationWindow, Views.Windows.MainWindow>();
                 services.AddSingleton<ViewModels.MainWindowViewModel>();

@@ -7,7 +7,7 @@ using Wpf.Ui.Common.Interfaces;
 
 namespace Np_Accounting.ViewModels
 {
-    public partial class LogInViewModel : ObservableObject, INavigationAware
+    public partial class LogInWindowViewModel : ObservableObject
     {
         [ObservableProperty]
         private string _logInError = "";
@@ -35,16 +35,6 @@ namespace Np_Accounting.ViewModels
             }
             LogInError = "عدم تطابق نام کاربری و گذرواژه !!!";
             return false;
-        }
-
-        public void OnNavigatedFrom()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnNavigatedTo()
-        {
-            throw new NotImplementedException();
         }
     }
 }
