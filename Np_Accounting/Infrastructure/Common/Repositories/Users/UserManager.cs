@@ -31,7 +31,8 @@ namespace Infrastructure.Common.Repositories.Users
 
             if (user.PasswordHash != passHash) { return false; }
 
-            CurrentUser.CurrentSurName = user.Name + " " + user.SurName;
+            CurrentUser.CurrentFullName = user.Name + " " + user.SurName;
+            CurrentUser.CurrentName = user.Name;
             CurrentUser.CurrentUserName = user.UserName;
             CurrentUser.CurrentUserId = user.Id;
             return true;

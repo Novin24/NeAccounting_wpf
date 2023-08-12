@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using DomainShared.Constants;
 using Wpf.Ui.Common.Interfaces;
 
 namespace Np_Accounting.ViewModels
@@ -7,20 +7,17 @@ namespace Np_Accounting.ViewModels
     public partial class DashboardViewModel : ObservableObject, INavigationAware
     {
         [ObservableProperty]
-        private int _counter = 0;
+        private string _userName = "";
 
         public void OnNavigatedTo()
         {
+            if (string.IsNullOrEmpty(_userName))
+                _userName = CurrentUser.CurrentName;
         }
 
         public void OnNavigatedFrom()
         {
         }
 
-        [RelayCommand]
-        private void OnCounterIncrement()
-        {
-            Counter++;
-        }
     }
 }
