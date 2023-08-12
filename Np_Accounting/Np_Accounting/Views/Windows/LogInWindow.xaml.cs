@@ -13,7 +13,7 @@ namespace Np_Accounting.Views.Windows
     /// <summary>
     /// Interaction logic for LpginPage.xaml
     /// </summary>
-    public partial class LogInWindow : IWindow, INavigableView<LogInViewModel>
+    public partial class LogInWindow : IWindow
     {
         private readonly IServiceProvider _serviceProvider;
         private INavigationWindow _navigationWindow;
@@ -22,8 +22,9 @@ namespace Np_Accounting.Views.Windows
         public LogInWindow(IServiceProvider serviceProvider, LogInViewModel logInViewModel)
         {
             InitializeComponent();
-            _serviceProvider = serviceProvider;
             ViewModel = logInViewModel;
+            DataContext = this;
+            _serviceProvider = serviceProvider;
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {

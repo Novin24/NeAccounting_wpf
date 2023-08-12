@@ -218,15 +218,16 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    
+
                     <TextBlock 
                                Margin="0 20 0 0"
-                               Foreground="White"
+                               Foreground="DarkGray"
                                FontSize="20"
-                               FontWeight="Medium"
-                               FontFamily="Montserrat"
+                               FlowDirection="RightToLeft"
+                               FontWeight="Heavy"
+                               FontFamily="B Nazanin"
                                HorizontalAlignment="Center"
-                               Text="{Binding _logInViewModel.LogInError, Mode=OneWay}"
+                               Text="{Binding ViewModel.LogInError, Mode=OneWay}"
                                />
                 </StackPanel>
             </Grid>
