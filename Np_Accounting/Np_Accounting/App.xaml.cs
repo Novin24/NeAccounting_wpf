@@ -1,4 +1,5 @@
 ﻿using Infrastructure.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,6 +9,8 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
+using Wpf.Ui.Controls;
+using Wpf.Ui.Gallery.Services.Contracts;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
 
@@ -44,21 +47,25 @@ namespace Np_Accounting
                 services.AddSingleton<INavigationService, NavigationService>();
 
                 // Main window with navigation
-                services.AddScoped<INavigationWindow, Views.Windows.MainWindow>();
-                services.AddScoped<ViewModels.MainWindowViewModel>();
+                services.AddTransient<IWindow, Views.Windows.LogInWindow>();
+                services.AddTransient<ViewModels.LogInWindowViewModel>();
+
+                services.AddSingleton<INavigationWindow, Views.Windows.MainWindow>();
+                services.AddSingleton<ViewModels.MainWindowViewModel>();
+                
 
                 services.AddDbContext<NovinDbContext>();
                 services.AddDbContext<BaseDomainDbContext>();
 
                 // Views and ViewModels
-                services.AddScoped<Views.Pages.DashboardPage>();
-                services.AddScoped<ViewModels.DashboardViewModel>();
-                services.AddScoped<Views.Pages.DataPage>();
-                services.AddScoped<ViewModels.DataViewModel>();
-                services.AddScoped<Views.Pages.PaymentPage>();
-                services.AddScoped<ViewModels.PaymentViewModel>();
-                services.AddScoped<Views.Pages.SettingsPage>();
-                services.AddScoped<ViewModels.SettingsViewModel>();
+                services.AddTransient<Views.Pages.DashboardPage>();
+                services.AddTransient<ViewModels.DashboardViewModel>();
+                services.AddTransient<Views.Pages.DataPage>();
+                services.AddTransient<ViewModels.DataViewModel>();
+                services.AddTransient<Views.Pages.PaymentPage>();
+                services.AddTransient<ViewModels.PaymentViewModel>();
+                services.AddTransient<Views.Pages.SettingsPage>();
+                services.AddTransient<ViewModels.SettingsViewModel>();
 
                 // Configuration
                 services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));
