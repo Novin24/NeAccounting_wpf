@@ -34,9 +34,83 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="3*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="1" Grid.RowSpan="3" Grid.Column="1"  Grid.ColumnSpan="3"  Background="#17274F"  CornerRadius="10" >
-            
-        </Border>
+        <Border Grid.Row="1" Grid.RowSpan="3" Grid.Column="1"  Grid.ColumnSpan="3"  Background="#17274F"  CornerRadius="10" ></Border>
+        <Border Grid.Row="3" Grid.RowSpan="3" Grid.Column="3"  Grid.ColumnSpan="3"  Background="#C8E4EE"  CornerRadius="10" ></Border>
+        <Border Grid.Row="2" Grid.RowSpan="3" Grid.Column="2"  Grid.ColumnSpan="3"  Background="Black"  CornerRadius="10" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0"    Background="#F6F5F3"  CornerRadius="10 0 0 10" >
+                    
+                </Border>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                   
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <TextBlock Margin="0 20 20 0" Height="40" HorizontalAlignment="Right"  FontFamily="Calibri" FontWeight="Bold" FontSize="15" ><Run  Text="999 : شماره سند " /></TextBlock>
+                        <TextBlock Margin="20 20 0 0" Height="40" HorizontalAlignment="Left"  FontFamily="Calibri" FontWeight="Bold" FontSize="15" ><Run  Text="1402/05/21 " /></TextBlock>
 
+                    </Grid>
+                    <Border Grid.Row="1"   CornerRadius="9" BorderBrush="#D6D5D5" BorderThickness="0.4">
+                        <Border.Background>
+                            <SolidColorBrush Color="White" Opacity="0.08"/>
+                        </Border.Background>
+                    
+                        <TabControl Margin="0,8,0,0" Grid.Row="1">
+                        <TabItem>
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock  FontFamily="Calibri" FontSize="14" Text="چک دریافتی" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid>
+                                <TextBlock Margin="12" Text="World" />
+                            </Grid>
+                        </TabItem>
+                        <TabItem IsSelected="True">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="اسناد دریافتی" />
+                                </StackPanel>
+                            </TabItem.Header>
+                                <Grid>   
+                                  <Grid VerticalAlignment="Top" Margin="0 10 0 0 ">
+                                            <Grid HorizontalAlignment="Right">
+                                               <TextBox  Width="100" Height="32.6" TextWrapping="Wrap" Padding="0 3 0 0 " TextAlignment="Center" FontSize="12" Margin="0 0 20 0 " Foreground="#FFE0E0E0" Text="نام مشتری" />
+                                          </Grid>
+                                           <Grid HorizontalAlignment="Left" Margin="20 0 0 0">
+                                              <ComboBox
+                                                   MinWidth="160" Height="32.6" HorizontalAlignment="Left" SelectedIndex="0" FontSize="10" Margin="0 0 0 0 ">
+                                                 <ComboBoxItem Content="حواله بانکی" />
+                                                    <ComboBoxItem Content="شبا ، ساتنا" />
+                                                    <ComboBoxItem Content="کارت به کارت" />
+                                                    <ComboBoxItem Content="کارتخوان" />
+                                                    <ComboBoxItem Content="نقدی" />
+                                               </ComboBox>
+                                          </Grid>
+                                        
+                                    </Grid>
+                                    <Grid  Margin="0 0 0 0 ">
+                                        <Grid HorizontalAlignment="Right">
+                                            <TextBox  Width="100" Height="32.6" TextWrapping="Wrap" Padding="0 3 0 0 " TextAlignment="Center" FontSize="12" Margin="0 0 10 0 " Foreground="#FFE0E0E0" Text="مبلغ وجه" />
+
+                                        </Grid>
+                                        <TextBlock HorizontalAlignment="Left"  Margin="0 25 0 0" Height="40" FontFamily="Calibri" FontWeight="Bold" FontSize="15"  ><Run  Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
+
+                                    </Grid>
+                                    
+                                    <Button Content="Standard WPF button" VerticalAlignment="Bottom" Margin="0 0 0 20" HorizontalAlignment="Center"/>
+                                </Grid>
+                            </TabItem>
+                    </TabControl>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </ui:UiPage>
