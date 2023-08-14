@@ -43,7 +43,7 @@ namespace Np_Accounting.Views.Windows
 
         private async void btnlogin_Click(object sender, RoutedEventArgs e)
         {
-            if(true)//if (await ViewModel.LogIn(Txt_UserName.Text, txt_password.Password))
+            if (await ViewModel.LogIn(Txt_UserName.Text, txt_password.Password))
             {
                 Hide();
                 if (!System.Windows.Application.Current.Windows.OfType<MainWindow>().Any())
