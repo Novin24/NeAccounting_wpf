@@ -52,8 +52,8 @@
                    
                     </Grid.RowDefinitions>
                     <Grid>
-                        <TextBlock Margin="0 20 20 0" Height="40" HorizontalAlignment="Right"  FontFamily="Calibri" FontWeight="Bold" FontSize="15" ><Run  Text="999 : شماره سند " /></TextBlock>
-                        <TextBlock Margin="20 20 0 0" Height="40" HorizontalAlignment="Left"  FontFamily="Calibri" FontWeight="Bold" FontSize="15" ><Run  Text="1402/05/21 " /></TextBlock>
+                        <TextBlock Margin="0 20 20 0" Height="40" HorizontalAlignment="Right"  FontFamily="Calibri" FontWeight="Bold" FontSize="15"  Foreground="White"><Run  Text="999 : شماره سند " /></TextBlock>
+                        <TextBlock Margin="20 20 0 0" Height="40" HorizontalAlignment="Left"  FontFamily="Calibri" FontWeight="Bold" FontSize="15"  Foreground="White"><Run  Text="1402/05/21 "/></TextBlock>
 
                     </Grid>
                     <Border Grid.Row="1"   CornerRadius="9" BorderBrush="#D6D5D5" BorderThickness="0.4">
@@ -61,7 +61,7 @@
                             <SolidColorBrush Color="White" Opacity="0.08"/>
                         </Border.Background>
                         
-                            <TabControl Margin="0,8,0,0" Grid.Row="1">
+                            <TabControl Margin="0,8,0,0" Grid.Row="1" Background="#FF222222" >
                                 <TabItem>
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
@@ -93,11 +93,11 @@
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                    
-                                    <ui:TextBox PlaceholderText="نام مشتری" TextAlignment="Center" FontSize="11" Foreground="White" Grid.Row="0" Grid.Column="1" Margin="30 4 20 0 "/>
+                                    <ui:TextBox PlaceholderText="نام مشتری" TextAlignment="Center" FontSize="11" Foreground="White" Grid.Row="0" Grid.Column="1" Margin="30 4 20 0 " Background="#FF2F2F2F"/>
                                    
                                     <Grid Margin="20 4 0 0">
                                                 <ComboBox
-                                                    SelectedIndex="4" FontSize="11" Margin="0 0 0 0 " HorizontalContentAlignment="Center" >
+                                                    SelectedIndex="4" FontSize="11" Margin="0 0 0 0 " HorizontalContentAlignment="Center" Background="#FF2F2F2F" >
                                                     <ComboBoxItem Content="حواله بانکی" />
                                                     <ComboBoxItem Content="شبا ، ساتنا" />
                                                     <ComboBoxItem Content="کارت به کارت" />
@@ -106,19 +106,19 @@
                                                 </ComboBox>
                                     </Grid>
 
-                                    <ui:TextBox Grid.Column="1" Grid.Row="1" Margin="0 4 20 0" PlaceholderText="مبلغ وجه" TextAlignment="Center" FontSize="11" Foreground="White" />
-                                   
-                                    <TextBlock HorizontalAlignment="Center"  Margin="0 0 0 0" VerticalAlignment="Center" FontFamily="Calibri" FontWeight="Bold" FontSize="13" Grid.Row="1" Grid.Column="0"><Run  Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
+                                    <ui:TextBox Grid.Column="1" Grid.Row="1" Margin="0 4 20 0" PlaceholderText="مبلغ وجه" TextAlignment="Center" FontSize="11" Foreground="White" Background="#FF2F2F2F" />
+
+                                    <TextBlock HorizontalAlignment="Center"  Margin="0 0 0 0" VerticalAlignment="Center" FontFamily="Calibri" FontWeight="Bold" FontSize="13" Grid.Row="1" Grid.Column="0"  Foreground="White"><Run  Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
                                    
                                     <ui:TextBox Grid.Column="1" Grid.Row="2" Margin="0 4 20 0" PlaceholderText="مبلغ تخفیف" TextAlignment="Center" FontSize="11" Foreground="White" />
 
-                                    <CheckBox Content="تسویه کامل"  Grid.Column="0" Grid.Row="2"  FontFamily="Calibri" HorizontalAlignment="Center" />
-                                    
-                                    <Button Content="Standard WPF button"  Margin="0 0 0 0" HorizontalAlignment="Center" Grid.Row="6"/>
+                                    <CheckBox Content="تسویه کامل"  Grid.Column="0" Grid.Row="2"  FontFamily="Calibri" HorizontalAlignment="Center"  Foreground="White" />
                                     <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  Grid.RowSpan="2" Margin="20 4 20 4">
-                                        <TextBlock  FontFamily="Calibri" FontSize="11" Text="چک دریافتی" HorizontalAlignment="Right" />
-                                        <RichTextBox Margin="0 20 0 0 " FontSize="11"></RichTextBox>
+                                        <TextBlock  FontFamily="Calibri" FontSize="11" Text="توضیحات" HorizontalAlignment="Right"  Foreground="White"/>
+                                        <RichTextBox Margin="0 20 0 0 " FontSize="11"  FlowDirection="RightToLeft" Background="#FF2F2F2F"></RichTextBox>
                                     </Grid>
+                                    <Button Content="ثبت سند"  Margin="0 0 0 0" HorizontalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" Background="#FF2F2F2F"/>
+                                    
                                     </Grid>
                                 </TabItem>
                             </TabControl>

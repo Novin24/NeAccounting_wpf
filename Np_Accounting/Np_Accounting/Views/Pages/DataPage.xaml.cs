@@ -18,5 +18,10 @@ namespace Np_Accounting.Views.Pages
 
             InitializeComponent();
         }
+
+        private void TabControl_Selected(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }
