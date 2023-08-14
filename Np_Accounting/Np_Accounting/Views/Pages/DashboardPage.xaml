@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Np_Accounting.Views.Pages"
+    xmlns:models ="clr-namespace:DomainShared.Notifications;assembly=DomainShared"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="DashboardPage"
@@ -11,8 +12,7 @@
     d:DesignWidth="800"
     d:Background="{DynamicResource ApplicationBackgroundBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-    mc:Ignorable="d"
-           >
+    mc:Ignorable="d">
 
     <Grid Margin="30,0" VerticalAlignment="Top">
         <Grid.RowDefinitions>
@@ -74,121 +74,54 @@
                             Text="{Binding ViewModel.UserName , Mode=OneWay}"
                             TextWrapping="WrapWithOverflow" 
                     />
-                <Grid Grid.Row="1" Margin="0,30,0,60">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <ui:CardAction
-                Grid.Row="0"
-                Grid.Column="0"
-                Margin="0,0,4,0"
-                Padding="0"
-                VerticalAlignment="Stretch"
-                CommandParameter="BasicInput"
-                IsChevronVisible="False">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
 
 
-                            <StackPanel
-                        Grid.Column="1"
-                        Margin="24"
-                        VerticalAlignment="Center">
-                                <TextBlock
-                            FontSize="12"
-                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                            Text="شما هیچ دیدگاهی ثبت  نکرده اید" HorizontalAlignment="Center"/>
-                                <TextBlock
-                            Margin="0 18 0 0"
-                            FontSize="16"
-                            FontWeight="Medium"
-                            Text="شما هیچ دیدگاهی ثبت  نکرده اید" 
-                            TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="RightToLeft" />
+                <Grid Margin="56,0">
+                    <ui:VirtualizingItemsControl
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            ItemsSource="{Binding ViewModel.Notifs, Mode=OneWay}"
+                            VirtualizingPanel.CacheLengthUnit="Item">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type  models:NotifViewModel}">
+                                <ui:CardAction
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="0,20,20,0"
+                                    Padding="0"
+                                    VerticalAlignment="Stretch"
+                                    CommandParameter="BasicInput"
+                                    IsChevronVisible="False">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            Margin="24"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                                Text="{Binding Titele, Mode=OneWay}" HorizontalAlignment="Center"/>
+                                            <TextBlock
+                                                Margin="0 18 0 0"
+                                                FontSize="16"
+                                                FontWeight="Medium"
+                                                Text="{Binding Message, Mode=OneWay}" 
+                                                TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="RightToLeft" />
 
-                            </StackPanel>
-                        </Grid>
-                    </ui:CardAction>
-
-                    <ui:CardAction
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="4,0,4,0"
-                Padding="0"
-                VerticalAlignment="Stretch"
-                CommandParameter="DialogsAndFlyouts"
-                IsChevronVisible="False">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel
-                        Grid.Column="1"
-                        Margin="24"
-                        VerticalAlignment="Center">
-
-                                <TextBlock
-                            FontSize="12"
-                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                            Text="تخفیف های باور نکردنی"
-                            TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" />
-                                <TextBlock
-                            Margin="0 18 0 0"
-                            FontSize="16"
-                            FontWeight="Medium"
-                            Text="eyd99  تخفیف %30 باکد"
-                            TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="RightToLeft" />
-                            </StackPanel>
-                        </Grid>
-                    </ui:CardAction>
-
-                    <ui:CardAction
-                Grid.Row="0"
-                Grid.Column="2"
-                Margin="4,0,4,0"
-                Padding="0"
-                VerticalAlignment="Stretch"
-               CommandParameter="Navigation"
-                IsChevronVisible="False">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-
-                            <StackPanel
-                        Grid.Column="1"
-                        Margin="24"
-                        VerticalAlignment="Center">
-
-
-                                <TextBlock
-                            FontSize="12"
-                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                            Text="تعداد محصولات خریداری شده"
-                            TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" />
-                                <TextBlock
-                            Margin="0 18 0 0"
-                            FontSize="16"
-                            FontWeight="Medium"
-                            Text="0"
-                            TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" />
-                            </StackPanel>
-                        </Grid>
-                    </ui:CardAction>
-
+                                        </StackPanel>
+                                    </Grid>
+                                </ui:CardAction>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ui:VirtualizingItemsControl>
                 </Grid>
+
+
+
+
             </StackPanel>
         </Border>
     </Grid>

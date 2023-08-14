@@ -1,4 +1,4 @@
-﻿using Application.IBaseRepositories.Users;
+﻿using Application.IBaseRepositories;
 using Common.Utilities;
 using Domain.BaseDomain.User;
 using DomainShared.Constants;
@@ -6,7 +6,7 @@ using Infrastructure.Common.BaseRepositories;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Common.Repositories.Users
+namespace Infrastructure.Common
 {
     public class UserManager : BaseRepository<IdentityUser>, IUserManager
     {

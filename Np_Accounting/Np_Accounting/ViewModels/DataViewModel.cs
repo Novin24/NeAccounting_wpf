@@ -32,7 +32,7 @@ namespace Np_Accounting.ViewModels
             for (int i = 0; i < 100; i++)
                 colorCollection.Add(new DataColor
                 {
-                    Color = new SolidColorBrush(Color.FromArgb(
+                    Colorr = new SolidColorBrush(Color.FromArgb(
                         (byte)200,
                         (byte)random.Next(0, 250),
                         (byte)random.Next(0, 250),
