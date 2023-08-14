@@ -25,7 +25,7 @@
                 <SolidColorBrush Color="White" Opacity="0.08"/>
             </Border.Background>
 
-            
+
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -63,27 +63,28 @@
                             FontSize="14"
                             FontWeight="Medium"
                             Text="سلام"
+                            FontFamily="B Nazanin"
                             TextWrapping="WrapWithOverflow" />
                 <TextBlock 
                             HorizontalAlignment="Right"
-                            Margin="0"
+                            Margin="0,0,30,0"
                             FontSize="14"
                             FontWeight="Medium"
-                            Text="حسابدار        "
-                            TextWrapping="WrapWithOverflow" />
+                            FontFamily="B Nazanin"
+                            Text="{Binding ViewModel.UserName , Mode=OneWay}"
+                            TextWrapping="WrapWithOverflow" 
+                    />
                 <Grid Grid.Row="1" Margin="0,30,0,60">
-                
-                
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                <ui:CardAction
+                    <ui:CardAction
                 Grid.Row="0"
                 Grid.Column="0"
                 Margin="0,0,4,0"
@@ -91,14 +92,14 @@
                 VerticalAlignment="Stretch"
                 CommandParameter="BasicInput"
                 IsChevronVisible="False">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                       
-                        <StackPanel
+
+                            <StackPanel
                         Grid.Column="1"
                         Margin="24"
                         VerticalAlignment="Center">
@@ -112,12 +113,12 @@
                             FontWeight="Medium"
                             Text="شما هیچ دیدگاهی ثبت  نکرده اید" 
                             TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="RightToLeft" />
-                           
-                        </StackPanel>
-                    </Grid>
-                </ui:CardAction>
 
-                <ui:CardAction
+                            </StackPanel>
+                        </Grid>
+                    </ui:CardAction>
+
+                    <ui:CardAction
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="4,0,4,0"
@@ -125,18 +126,18 @@
                 VerticalAlignment="Stretch"
                 CommandParameter="DialogsAndFlyouts"
                 IsChevronVisible="False">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel
+                            <StackPanel
                         Grid.Column="1"
                         Margin="24"
                         VerticalAlignment="Center">
-                           
-                            <TextBlock
+
+                                <TextBlock
                             FontSize="12"
                             Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                             Text="تخفیف های باور نکردنی"
@@ -148,10 +149,10 @@
                             Text="eyd99  تخفیف %30 باکد"
                             TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="RightToLeft" />
                             </StackPanel>
-                    </Grid>
-                </ui:CardAction>
+                        </Grid>
+                    </ui:CardAction>
 
-                <ui:CardAction
+                    <ui:CardAction
                 Grid.Row="0"
                 Grid.Column="2"
                 Margin="4,0,4,0"
@@ -159,14 +160,14 @@
                 VerticalAlignment="Stretch"
                CommandParameter="Navigation"
                 IsChevronVisible="False">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                      
-                        <StackPanel
+
+                            <StackPanel
                         Grid.Column="1"
                         Margin="24"
                         VerticalAlignment="Center">
@@ -184,10 +185,10 @@
                             Text="0"
                             TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" />
                             </StackPanel>
-                    </Grid>
-                </ui:CardAction>
-                
-            </Grid>
+                        </Grid>
+                    </ui:CardAction>
+
+                </Grid>
             </StackPanel>
         </Border>
     </Grid>

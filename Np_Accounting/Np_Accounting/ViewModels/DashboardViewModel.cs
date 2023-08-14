@@ -12,7 +12,7 @@ namespace Np_Accounting.ViewModels
         public void OnNavigatedTo()
         {
             if (string.IsNullOrEmpty(_userName))
-                _userName = CurrentUser.CurrentName;
+                UserName = CurrentUser.CurrentName;
         }
 
         public void OnNavigatedFrom()
