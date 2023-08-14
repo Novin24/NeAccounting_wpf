@@ -1,5 +1,5 @@
-﻿using Application.IBaseRepositories.Users;
-using Infrastructure.Common.Repositories.Users;
+﻿using Application.IBaseRepositories;
+using Infrastructure.Common;
 using Infrastructure.EntityFramework;
 
 namespace Infrastructure.UnitOfWork
@@ -9,6 +9,8 @@ namespace Infrastructure.UnitOfWork
         readonly BaseDomainDbContext BaseNovin = new ();
 
         private IUserManager _userManager;
+        private INotifManager _notifManager;
+
         public IUserManager userRepository
         {
             get
@@ -18,6 +20,15 @@ namespace Infrastructure.UnitOfWork
                     _userManager = new UserManager(BaseNovin);
                 }
                 return _userManager;
+            }
+        }
+        
+        public INotifManager NotifRepository
+        {
+            get
+            {
+                _notifManager ??= new NotifManager(BaseNovin);
+                return _notifManager;
             }
         }
         public void Dispose()

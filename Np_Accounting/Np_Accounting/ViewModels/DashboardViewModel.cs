@@ -1,26 +1,44 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using DomainShared.Constants;
+using DomainShared.Notifications;
+using Infrastructure.UnitOfWork;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Wpf.Ui.Common.Interfaces;
 
 namespace Np_Accounting.ViewModels
 {
     public partial class DashboardViewModel : ObservableObject, INavigationAware
     {
-        [ObservableProperty]
-        private int _counter = 0;
+        private bool _isInitialized = false;
 
-        public void OnNavigatedTo()
+        [ObservableProperty]
+        private string _userName = "";
+
+        [ObservableProperty]
+        private IEnumerable<NotifViewModel> _notifs;
+
+        public async void OnNavigatedTo()
         {
+            if (!_isInitialized)
+                await InitializeViewModel();
         }
 
         public void OnNavigatedFrom()
         {
         }
 
-        [RelayCommand]
-        private void OnCounterIncrement()
+        private async Task InitializeViewModel()
         {
-            Counter++;
+            UserName = CurrentUser.CurrentName;
+
+            using (BaseUnitOfWork db = new BaseUnitOfWork())
+            {
+                Notifs = await db.NotifRepository.GetNotifs();
+            }
+
+            _isInitialized = true;
         }
+
     }
 }

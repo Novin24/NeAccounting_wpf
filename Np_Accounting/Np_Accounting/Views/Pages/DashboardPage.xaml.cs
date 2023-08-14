@@ -1,4 +1,5 @@
 ﻿using Wpf.Ui.Common.Interfaces;
+using DomainShared.Notifications;
 
 namespace Np_Accounting.Views.Pages
 {
@@ -11,6 +12,8 @@ namespace Np_Accounting.Views.Pages
         {
             get;
         }
+
+        public NotifViewModel notif { get; set; }
 
         public DashboardPage(ViewModels.DashboardViewModel viewModel)
         {

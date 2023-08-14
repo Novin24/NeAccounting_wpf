@@ -1,7 +1,7 @@
 ﻿using Application.Common;
 using Domain.BaseDomain.User;
 
-namespace Application.IBaseRepositories.Users
+namespace Application.IBaseRepositories
 {
     public interface IUserManager : IBaseRepository<IdentityUser>
     {
