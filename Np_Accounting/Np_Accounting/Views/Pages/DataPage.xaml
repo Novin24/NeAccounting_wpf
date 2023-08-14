@@ -43,7 +43,22 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0"    Background="#F6F5F3"  CornerRadius="10 0 0 10" >
-                    
+                    <Grid>
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DataGrid Margin="10 10 10 10"></DataGrid>
+                        <Line Grid.Row="0"
+     X1="0" Y1="7"
+     X2="500" Y2="7"
+     StrokeThickness="8" VerticalAlignment="Bottom" Fill="#FFB5ACAC" Stroke="#FFCCCCCC" Height="9" Margin="10 0 " >
+                            
+                        </Line>
+                        <DataGrid Margin="10 10 10 10" Grid.Row="1" ></DataGrid>
+                    </Grid>
                 </Border>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -61,9 +76,9 @@
                             <SolidColorBrush Color="White" Opacity="0.08"/>
                         </Border.Background>
                         
-                            <TabControl Margin="0,8,0,0" Grid.Row="1" Background="#FF222222" >
+                            <TabControl Margin="0,8,0,0" Grid.Row="1" Background="#FF222222">
                                 <TabItem>
-                                    <TabItem.Header>
+                                    <TabItem.Header >
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock  FontFamily="Calibri" FontSize="14" Text="چک دریافتی" />
                                         </StackPanel>
@@ -110,7 +125,7 @@
 
                                     <TextBlock HorizontalAlignment="Center"  Margin="0 0 0 0" VerticalAlignment="Center" FontFamily="Calibri" FontWeight="Bold" FontSize="13" Grid.Row="1" Grid.Column="0"  Foreground="White"><Run  Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
                                    
-                                    <ui:TextBox Grid.Column="1" Grid.Row="2" Margin="0 4 20 0" PlaceholderText="مبلغ تخفیف" TextAlignment="Center" FontSize="11" Foreground="White" />
+                                    <ui:TextBox Grid.Column="1" Grid.Row="2" Margin="0 4 20 0" PlaceholderText="مبلغ تخفیف" TextAlignment="Center" FontSize="11" Foreground="White" Background="#FF2F2F2F" />
 
                                     <CheckBox Content="تسویه کامل"  Grid.Column="0" Grid.Row="2"  FontFamily="Calibri" HorizontalAlignment="Center"  Foreground="White" />
                                     <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  Grid.RowSpan="2" Margin="20 4 20 4">
