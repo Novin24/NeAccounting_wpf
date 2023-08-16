@@ -55,7 +55,7 @@
      X1="0" Y1="7"
      X2="500" Y2="7"
      StrokeThickness="8" VerticalAlignment="Bottom" Fill="#FFB5ACAC" Stroke="#FFCCCCCC" Height="9" Margin="10 0 " >
-                            
+
                         </Line>
                         <DataGrid Margin="10 10 10 10" Grid.Row="1" ></DataGrid>
                     </Grid>
@@ -64,7 +64,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="5*"></RowDefinition>
-                   
+
                     </Grid.RowDefinitions>
                     <Grid>
                         <TextBlock Margin="0 20 20 0" Height="40" HorizontalAlignment="Right"  FontFamily="Calibri" FontWeight="Bold" FontSize="15"  Foreground="White"><Run  Text="999 : شماره سند " /></TextBlock>
@@ -75,14 +75,14 @@
                         <Border.Background>
                             <SolidColorBrush Color="White" Opacity="0.08"/>
                         </Border.Background>
-                        
-                            <TabControl Margin="0,8,0,0" Grid.Row="1" Background="#FF222222">
-                                <TabItem>
-                                    <TabItem.Header >
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock  FontFamily="Calibri" FontSize="14" Text="چک دریافتی" />
-                                        </StackPanel>
-                                    </TabItem.Header>
+
+                        <TabControl Margin="0,8,0,0" Grid.Row="1" Background="#FF222222">
+                            <TabItem>
+                                <TabItem.Header >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock  FontFamily="Calibri" FontSize="14" Text="چک دریافتی" />
+                                    </StackPanel>
+                                </TabItem.Header>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"></RowDefinition>
@@ -102,41 +102,36 @@
 
                                     <ui:TextBox PlaceholderText="شعبه" TextAlignment="Center" FontSize="11"   Margin="20 4 0 0 " Background="#FF2F2F2F"/>
 
-                                    <ui:TextBox PlaceholderText="شماره چک" TextAlignment="Center" FontSize="11"  Background="#FF2F2F2F"  Grid.Column="1" Grid.Row="1" Margin="0 4 20 0"/>
+                                    <ui:TextBox PlaceholderText="شماره چک" TextAlignment="Center" FontSize="11"  Background="#FF2F2F2F"  Grid.Column="1" Grid.Row="1" Margin="3 4 20 0"/>
 
-                                    <ui:TextBox PlaceholderText="شماره حساب" TextAlignment="Center" FontSize="11"   Margin="20 4 0 0 " Grid.Row="1" Background="#FF2F2F2F"/>
+                                    <ui:TextBox PlaceholderText="شماره حساب" TextAlignment="Center" FontSize="11"   Margin="20 4 3 0 " Grid.Row="1" Background="#FF2F2F2F"/>
 
-                                    <ui:TextBox PlaceholderText="صاحب حساب"  TextAlignment="Center" FontSize="11"  Grid.Column="1" Grid.Row="2" Margin="0 4 20 0" Background="#FF2F2F2F" />
+                                    <ui:TextBox PlaceholderText="صاحب حساب"  TextAlignment="Center" FontSize="11"  Grid.Column="1" Grid.Row="2" Margin="3 4 20 0" Background="#FF2F2F2F" />
 
-                                    <StackPanel Grid.Row="2" Height="10">
-                                        <RadioButton
-                                    Content="Option 1"
-                                    GroupName="radio_group_one"
-                                    IsChecked="True" />
-                                        <RadioButton
-                                    Content="Option 2"
-                                    GroupName="radio_group_one" />
-                                        <RadioButton
-                                    Content="Option 3"
-                                    GroupName="radio_group_one"
-                                    />
-                                    </StackPanel>
-
+                                    <Grid Margin="20 4 0 0" Grid.Row="2" >
+                                        <ComboBox
+                                                    SelectedIndex="0" FontSize="11" Margin="0 0 0 0 " Background="#FF2F2F2F" >
+                                            <ComboBoxItem Content="وضعیت چک" IsEnabled="False"  />
+                                            <ComboBoxItem Content="ثبت شده" />
+                                            <ComboBoxItem Content="ثبت نشده" />
+                                            <ComboBoxItem Content="بدون نیاز به ثبت" />
+                                        </ComboBox>
+                                    </Grid>
                                     <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  Grid.RowSpan="2" Margin="20 4 20 4">
                                         <TextBlock  FontFamily="Calibri" FontSize="11" Text="توضیحات" HorizontalAlignment="Right"  Foreground="White"/>
                                         <RichTextBox Margin="0 20 0 0 " FontSize="11"  FlowDirection="RightToLeft" Background="#FF2F2F2F"></RichTextBox>
                                     </Grid>
-                                    <Button Content="ثبت سند"  Margin="0 0 0 0" HorizontalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" Background="#FF2F2F2F"/>
+                                    <Button Content="ثبت چک"  Margin="0 0 0 0" HorizontalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" Background="#FF2F2F2F"/>
 
                                 </Grid>
                             </TabItem>
-                                <TabItem IsSelected="True">
-                                    <TabItem.Header>
-                                        <StackPanel Orientation="Horizontal">
+                            <TabItem IsSelected="True">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
                                         <TextBlock  FontFamily="Calibri" FontSize="14" Text="اسناد دریافتی" />
-                                        </StackPanel>
-                                    </TabItem.Header>
-                                  <Grid>
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
@@ -150,38 +145,42 @@
                                         <ColumnDefinition></ColumnDefinition>
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                   
-                                    <ui:TextBox PlaceholderText="نام مشتری" TextAlignment="Center" FontSize="11" Foreground="White" Grid.Row="0" Grid.Column="1" Margin="30 4 20 0 " Background="#FF2F2F2F"/>
-                                   
+
+                                    <ui:TextBox PlaceholderText="نام مشتری" TextAlignment="Center" FontSize="11" Foreground="White" Grid.Row="0" Grid.Column="1" Margin="30 4 20 0 " Background="#FF2F2F2F" CaretBrush="#FF1F1F1F"/>
+
                                     <Grid Margin="20 4 0 0">
-                                                <ComboBox
-                                                    SelectedIndex="4" FontSize="11" Margin="0 0 0 0 " HorizontalContentAlignment="Center" Background="#FF2F2F2F" >
-                                                    <ComboBoxItem Content="حواله بانکی" />
-                                                    <ComboBoxItem Content="شبا ، ساتنا" />
-                                                    <ComboBoxItem Content="کارت به کارت" />
-                                                    <ComboBoxItem Content="کارتخوان" />
-                                                    <ComboBoxItem Content="نقدی" />
-                                                </ComboBox>
+                                        <ComboBox
+                                                    SelectedIndex="4" FontSize="11" Margin="0 0 0 0 " Background="#FF2F2F2F" >
+                                            <ComboBoxItem Content="حواله بانکی" />
+                                            <ComboBoxItem Content="شبا ، ساتنا" />
+                                            <ComboBoxItem Content="کارت به کارت" />
+                                            <ComboBoxItem Content="کارتخوان" />
+                                            <ComboBoxItem Content="نقدی" />
+                                        </ComboBox>
                                     </Grid>
 
-                                    <ui:TextBox Grid.Column="1" Grid.Row="1" Margin="0 4 20 0" PlaceholderText="مبلغ وجه" TextAlignment="Center" FontSize="11" Foreground="White" Background="#FF2F2F2F" />
+                                    <ui:TextBox Grid.Column="1" Grid.Row="1" Margin="0 4 20 0" PlaceholderText="مبلغ وجه" TextAlignment="Center" FontSize="11" Foreground="#FF1F1F1F" Background="#FF2F2F2F" />
 
                                     <TextBlock HorizontalAlignment="Center"  Margin="0 0 0 0" VerticalAlignment="Center" FontFamily="Calibri" FontWeight="Bold" FontSize="13" Grid.Row="1" Grid.Column="0"  Foreground="White"><Run  Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
-                                   
-                                    <ui:TextBox Grid.Column="1" Grid.Row="2" Margin="0 4 20 0" PlaceholderText="مبلغ تخفیف" TextAlignment="Center" FontSize="11" Foreground="White" Background="#FF2F2F2F" />
+
+                                    <ui:TextBox Grid.Column="1" Grid.Row="2" Margin="0 4 20 0" PlaceholderText="مبلغ تخفیف" TextAlignment="Center" FontSize="11" Foreground="White" Background="#FF2F2F2F" IconForeground="White" SelectionTextBrush="#FF1F1F1F" />
 
                                     <CheckBox Content="تسویه کامل"  Grid.Column="0" Grid.Row="2"  FontFamily="Calibri" HorizontalAlignment="Center"  Foreground="White" />
-                                    <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  Grid.RowSpan="2" Margin="20 4 20 4">
-                                        <TextBlock  FontFamily="Calibri" FontSize="11" Text="توضیحات" HorizontalAlignment="Right"  Foreground="White"/>
-                                        <RichTextBox Margin="0 20 0 0 " FontSize="11"  FlowDirection="RightToLeft" Background="#FF2F2F2F"></RichTextBox>
+                                    <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  Grid.RowSpan="2" Margin="20 3 20 4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="129*"/>
+                                            <ColumnDefinition Width="19*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock  FontFamily="Calibri" FontSize="11" Text="توضیحات" HorizontalAlignment="Center"  Foreground="White" Grid.Column="1"/>
+                                        <RichTextBox Margin="0,20,0,0" FontSize="11"  FlowDirection="RightToLeft" Background="#FF2F2F2F" SelectionTextBrush="White" Grid.ColumnSpan="2"></RichTextBox>
                                     </Grid>
                                     <Button Content="ثبت سند"  Margin="0 0 0 0" HorizontalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" Background="#FF2F2F2F"/>
-                                    
-                                    </Grid>
-                                </TabItem>
-                            </TabControl>
-                        
-                        
+
+                                </Grid>
+                            </TabItem>
+                        </TabControl>
+
+
                     </Border>
                 </Grid>
             </Grid>
