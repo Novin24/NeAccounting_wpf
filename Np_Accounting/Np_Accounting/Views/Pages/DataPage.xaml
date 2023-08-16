@@ -83,17 +83,60 @@
                                             <TextBlock  FontFamily="Calibri" FontSize="14" Text="چک دریافتی" />
                                         </StackPanel>
                                     </TabItem.Header>
-                                    <Grid>
-                                        <TextBlock Margin="12" Text="World" />
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ui:TextBox PlaceholderText="نام بانک" TextAlignment="Center" FontSize="11"  Grid.Row="0" Grid.Column="1" Margin="30 4 20 0 " Background="#FF2F2F2F"/>
+
+                                    <ui:TextBox PlaceholderText="شعبه" TextAlignment="Center" FontSize="11"   Margin="20 4 0 0 " Background="#FF2F2F2F"/>
+
+                                    <ui:TextBox PlaceholderText="شماره چک" TextAlignment="Center" FontSize="11"  Background="#FF2F2F2F"  Grid.Column="1" Grid.Row="1" Margin="0 4 20 0"/>
+
+                                    <ui:TextBox PlaceholderText="شماره حساب" TextAlignment="Center" FontSize="11"   Margin="20 4 0 0 " Grid.Row="1" Background="#FF2F2F2F"/>
+
+                                    <ui:TextBox PlaceholderText="صاحب حساب"  TextAlignment="Center" FontSize="11"  Grid.Column="1" Grid.Row="2" Margin="0 4 20 0" Background="#FF2F2F2F" />
+
+                                    <StackPanel Grid.Row="2" Height="10">
+                                        <RadioButton
+                                    Content="Option 1"
+                                    GroupName="radio_group_one"
+                                    IsChecked="True" />
+                                        <RadioButton
+                                    Content="Option 2"
+                                    GroupName="radio_group_one" />
+                                        <RadioButton
+                                    Content="Option 3"
+                                    GroupName="radio_group_one"
+                                    />
+                                    </StackPanel>
+
+                                    <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  Grid.RowSpan="2" Margin="20 4 20 4">
+                                        <TextBlock  FontFamily="Calibri" FontSize="11" Text="توضیحات" HorizontalAlignment="Right"  Foreground="White"/>
+                                        <RichTextBox Margin="0 20 0 0 " FontSize="11"  FlowDirection="RightToLeft" Background="#FF2F2F2F"></RichTextBox>
                                     </Grid>
-                                </TabItem>
+                                    <Button Content="ثبت سند"  Margin="0 0 0 0" HorizontalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" Background="#FF2F2F2F"/>
+
+                                </Grid>
+                            </TabItem>
                                 <TabItem IsSelected="True">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
                                         <TextBlock  FontFamily="Calibri" FontSize="14" Text="اسناد دریافتی" />
                                         </StackPanel>
                                     </TabItem.Header>
-                                <Grid>
+                                  <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
