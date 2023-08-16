@@ -146,7 +146,7 @@
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
 
-                                    <ui:TextBox PlaceholderText="نام مشتری" TextAlignment="Center" FontSize="11" Foreground="White" Grid.Row="0" Grid.Column="1" Margin="30 4 20 0 " Background="#FF2F2F2F" CaretBrush="#FF1F1F1F"/>
+                                    <ui:TextBox PlaceholderText="نام مشتری" TextAlignment="Center" FontSize="11" Foreground="White" Grid.Row="0" Grid.Column="1" Margin="30 4 20 0 " Background="#FF2F2F2F" CaretBrush="White"/>
 
                                     <Grid Margin="20 4 3 0">
                                         <ComboBox
@@ -160,11 +160,11 @@
                                         </ComboBox>
                                     </Grid>
 
-                                    <ui:TextBox Grid.Column="1" Grid.Row="1" Margin="3 4 20 0" PlaceholderText="مبلغ وجه" TextAlignment="Center" FontSize="11" Foreground="#FF1F1F1F" Background="#FF2F2F2F" />
+                                    <ui:TextBox Grid.Column="1" Grid.Row="1" Margin="3 4 20 0" PlaceholderText="مبلغ وجه" TextAlignment="Center" FontSize="11" Foreground="White" Background="#FF2F2F2F" />
 
                                     <TextBlock HorizontalAlignment="Center"  Margin="20 0 3 0" VerticalAlignment="Center" FontFamily="Calibri" FontWeight="Bold" FontSize="13" Grid.Row="1" Grid.Column="0"  Foreground="White"><Run  Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
 
-                                    <ui:TextBox Grid.Column="1" Grid.Row="2" Margin="3 4 20 0" PlaceholderText="مبلغ تخفیف" TextAlignment="Center" FontSize="11" Foreground="White" Background="#FF2F2F2F" IconForeground="White" SelectionTextBrush="#FF1F1F1F" />
+                                    <ui:TextBox Grid.Column="1" Grid.Row="2" Margin="3 4 20 0" PlaceholderText="مبلغ تخفیف" TextAlignment="Center" FontSize="11" Foreground="White" Background="#FF2F2F2F" IconForeground="White" SelectionTextBrush="White" />
 
                                     <CheckBox Content="تسویه کامل"  Grid.Column="0" Grid.Row="2"  FontFamily="Calibri" HorizontalAlignment="Center"  Foreground="White" />
                                     <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"  Grid.RowSpan="2" Margin="20 3 20 4">
