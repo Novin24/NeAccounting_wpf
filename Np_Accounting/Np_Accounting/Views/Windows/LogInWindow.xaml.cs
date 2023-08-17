@@ -25,6 +25,7 @@ namespace Np_Accounting.Views.Windows
             ViewModel = logInViewModel;
             DataContext = this;
             _serviceProvider = serviceProvider;
+            Txt_UserName.Focus();
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -43,7 +44,7 @@ namespace Np_Accounting.Views.Windows
 
         private async void btnlogin_Click(object sender, RoutedEventArgs e)
         {
-            //if (await ViewModel.LogIn(Txt_UserName.Text, txt_password.Password))
+            if (await ViewModel.LogIn(Txt_UserName.Text, txt_password.Password))
             {
                 Hide();
                 if (!System.Windows.Application.Current.Windows.OfType<MainWindow>().Any())
