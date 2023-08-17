@@ -57,7 +57,6 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0"
-                        Background="#F6F5F3"
                         CornerRadius="10 0 0 10">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -142,37 +141,43 @@
 
                                     <ui:TextBox PlaceholderText="نام بانک"
                                                 TextAlignment="Center"
-                                                FontSize="11"
+                                                VerticalAlignment="Center"
+                                                FontFamily="Calibri"
                                                 Grid.Row="0"
-                                                Grid.Column="1"
-                                                Margin="30 4 20 0 " />
+                                                Grid.Column="0"
+                                                Margin="20 0 30 0 " />
 
                                     <ui:TextBox PlaceholderText="شعبه"
                                                 TextAlignment="Center"
-                                                FontSize="11"
-                                                Margin="20 4 3 0 " />
+                                                Grid.Column="1"
+                                                Margin="3 4 20 0 " />
 
                                     <ui:TextBox PlaceholderText="شماره چک"
                                                 TextAlignment="Center"
-                                                FontSize="11"
-                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                FontSize="17"
+                                                FontFamily="Calibri"
+                                                Grid.Column="0"
                                                 Grid.Row="1"
-                                                Margin="3 4 20 0" />
+                                                Margin="20 0 3 0" />
 
                                     <ui:TextBox PlaceholderText="شماره حساب"
                                                 TextAlignment="Center"
                                                 FontSize="11"
-                                                Margin="20 4 3 0 "
-                                                Grid.Row="1" />
+                                                Margin="3 4 20 0 "
+                                                Grid.Row="1"
+                                                Grid.Column="1" />
 
                                     <ui:TextBox PlaceholderText="صاحب حساب"
+                                                VerticalAlignment="Center"
                                                 TextAlignment="Center"
-                                                FontSize="11"
-                                                Grid.Column="1"
+                                                FontFamily="Calibri"
+                                                Grid.Column="0"
                                                 Grid.Row="2"
-                                                Margin="3 4 20 0" />
+                                                Margin="20 0 3 0" />
 
-                                    <Grid Margin="20 4 3 0"
+                                    <Grid Margin="3 4 20 0"
+                                          Grid.Column="1"
                                           Grid.Row="2">
                                         <ComboBox SelectedIndex="0"
                                                   FontSize="10"
@@ -219,16 +224,17 @@
                                         <ColumnDefinition></ColumnDefinition>
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-
-                                    <ui:TextBox PlaceholderText="نام مشتری"
+                                    <ui:TextBox 
                                                 TextAlignment="Center"
                                                 FontSize="11"
                                                 Grid.Row="0"
-                                                Grid.Column="1"
-                                                Margin="30 4 20 0 "
-                                                CaretBrush="White" />
+                                                Grid.Column="0"
+                                                Margin="20 4 30 0 "
+                                                CaretBrush="White"
+                                                FontFamily="Calibri" />
 
-                                    <Grid Margin="20 4 3 0">
+                                    <Grid Margin="3 4 20 0"
+                                          Grid.Column="1">
                                         <ComboBox SelectedIndex="0"
                                                   FontSize="11"
                                                   Margin="0 0 0 0 ">
@@ -242,33 +248,34 @@
                                         </ComboBox>
                                     </Grid>
 
-                                    <ui:TextBox Grid.Column="1"
+                                    <ui:TextBox Grid.Column="0"
                                                 Grid.Row="1"
-                                                Margin="3 4 20 0"
+                                                Margin="20 4 3 0"
                                                 PlaceholderText="مبلغ وجه"
                                                 TextAlignment="Center"
                                                 FontSize="11"/>
 
                                     <TextBlock HorizontalAlignment="Center"
-                                               Margin="20 0 3 0"
+                                               Margin="3 0 20 0"
                                                VerticalAlignment="Center"
                                                FontFamily="Calibri"
                                                FontWeight="Bold"
                                                FontSize="13"
                                                Grid.Row="1"
-                                               Grid.Column="0"><Run Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
+                                               Grid.Column="1"><Run Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
 
-                                    <ui:TextBox Grid.Column="1"
+                                    <ui:TextBox Grid.Column="0"
                                                 Grid.Row="2"
-                                                Margin="3 4 20 0"
+                                                Margin="20 4 3 0"
                                                 PlaceholderText="مبلغ تخفیف"
                                                 TextAlignment="Center"
                                                 FontSize="11" />
 
                                     <CheckBox Content="تسویه کامل"
-                                              Grid.Column="0"
+                                              Grid.Column="1"
                                               Grid.Row="2"
                                               FontFamily="Calibri"
+                                              VerticalAlignment="Center"
                                               HorizontalAlignment="Center" />
                                     <Grid Grid.Column="0"
                                           Grid.ColumnSpan="2"
