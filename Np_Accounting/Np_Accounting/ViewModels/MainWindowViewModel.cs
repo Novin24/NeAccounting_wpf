@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 

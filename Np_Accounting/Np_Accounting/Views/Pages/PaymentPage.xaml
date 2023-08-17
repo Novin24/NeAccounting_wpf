@@ -12,15 +12,31 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
 
-    <Grid Margin="44,19" VerticalAlignment="Bottom">
+    <Grid Margin="44,19" >
         <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height=".5*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <ui:SymbolIcon Symbol="Person28"/>
         <ui:Button  Grid.Row="0" Command="{Binding ViewModel.PayCommand, Mode=OneWay}"  Content="not Click me" />
-        <TextBlock FontSize="30" HorizontalAlignment="Right" Margin="22" Text="{Binding ViewModel.PayCount,Mode=OneWay}" />
+        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="15" Margin="8" Text="{Binding ViewModel.PayCount, Mode=OneWay}" />
+        <ui:NumberBox Icon="{ui:SymbolIcon Payment48}"
+                      LargeChange="2.25"
+                      Maximum="10"
+                      Grid.Row="2"
+                      Grid.Column="1"
+                      FontSize="20"
+                      Minimum="-10"
+                      PlaceholderText="Enter your age"
+                      SmallChange="0.25"
+                      SpinButtonPlacementMode="Hidden"
+                      Value="1.50" />
     </Grid>
 </Page>

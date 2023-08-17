@@ -13,11 +13,11 @@ namespace Np_Accounting.Views.Pages
             get;
         }
 
-        public NotifViewModel notif { get; set; }
 
         public DashboardPage(ViewModels.DashboardViewModel viewModel)
         {
             ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
         }
     }

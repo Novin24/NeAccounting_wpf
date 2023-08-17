@@ -1,6 +1,4 @@
 ﻿using Np_Accounting.ViewModels;
-using System;
-using Wpf.Ui.Contracts;
 
 namespace Np_Accounting.Views.Windows
 {

@@ -26,7 +26,7 @@
                      Grid.Row="0"
                      CloseWindowByDoubleClickOnIcon="True">
             <ui:TitleBar.Icon>
-                <ui:ImageIcon Source="pack://application:,,,/Assets/wpfui-icon-256.png" />
+                <ui:ImageIcon Source="pack://application:,,,/Assets/applicationIcon-256.png" />
             </ui:TitleBar.Icon>
         </ui:TitleBar>
 
@@ -41,10 +41,7 @@
                            OpenPaneLength="310"
                            PaneDisplayMode="Left"
                            TitleBar="{Binding ElementName=TitleBar, Mode=OneWay}">
-            <ui:NavigationView.Header>
-                <ui:BreadcrumbBar x:Name="BreadcrumbBar"
-                                  Margin="42,32,42,20" />
-            </ui:NavigationView.Header>
+
 
             <ui:NavigationView.ContentOverlay>
                 <Grid>

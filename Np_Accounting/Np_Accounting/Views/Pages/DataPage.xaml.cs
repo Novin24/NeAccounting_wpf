@@ -15,7 +15,7 @@ namespace Np_Accounting.Views.Pages
         public DataPage(ViewModels.DataViewModel viewModel)
         {
             ViewModel = viewModel;
-
+            DataContext = this;
             InitializeComponent();
         }
 
