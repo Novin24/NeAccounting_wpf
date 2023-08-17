@@ -25,6 +25,7 @@ namespace Np_Accounting.Views.Windows
             ViewModel = logInViewModel;
             DataContext = this;
             _serviceProvider = serviceProvider;
+            Txt_UserName.Focus();
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
