@@ -1,18 +1,14 @@
 ﻿using Infrastructure.EntityFramework;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Np_Accounting.Models;
 using Np_Accounting.Services;
+using Np_Accounting.ViewModels;
+using Np_Accounting.Views.Pages;
+using Np_Accounting.Views.Windows;
 using System.IO;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Threading;
-using Wpf.Ui.Controls;
-using Wpf.Ui.Gallery.Services.Contracts;
-using Wpf.Ui.Mvvm.Contracts;
-using Wpf.Ui.Mvvm.Services;
 
 namespace Np_Accounting
 {
@@ -31,44 +27,32 @@ namespace Np_Accounting
             .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
             .ConfigureServices((context, services) =>
             {
-                // App Host
+
                 services.AddHostedService<ApplicationHostService>();
 
-                // Page resolver service
-                services.AddSingleton<IPageService, PageService>();
-
-                // Theme manipulation
-                services.AddSingleton<IThemeService, ThemeService>();
-
-                // TaskBar manipulation
-                services.AddSingleton<ITaskBarService, TaskBarService>();
-
-                // Service containing navigation, same as INavigationWindow... but without window
+                services.AddSingleton<MainWindow>();
+                services.AddSingleton<MainWindowViewModel>();
                 services.AddSingleton<INavigationService, NavigationService>();
+                services.AddSingleton<ISnackbarService, SnackbarService>();
+                services.AddSingleton<IContentDialogService, ContentDialogService>();
 
-                // Main window with navigation
-                services.AddTransient<IWindow, Views.Windows.LogInWindow>();
-                services.AddTransient<ViewModels.LogInWindowViewModel>();
+                services.AddTransient<LogInWindow>();
+                services.AddTransient<LogInWindowViewModel>();
+                services.AddTransient<DashboardPage>();
+                services.AddTransient<DashboardViewModel>();
+                services.AddTransient<DataPage>();
+                services.AddTransient<DataViewModel>();
+                services.AddTransient<SettingsPage>();
+                services.AddTransient<SettingsViewModel>();
+                services.AddTransient<PaymentPage>();
+                services.AddTransient<PaymentViewModel>();
 
-                services.AddSingleton<INavigationWindow, Views.Windows.MainWindow>();
-                services.AddSingleton<ViewModels.MainWindowViewModel>();
-                
-
+                // dbContext
                 services.AddDbContext<NovinDbContext>();
                 services.AddDbContext<BaseDomainDbContext>();
 
-                // Views and ViewModels
-                services.AddTransient<Views.Pages.DashboardPage>();
-                services.AddTransient<ViewModels.DashboardViewModel>();
-                services.AddTransient<Views.Pages.DataPage>();
-                services.AddTransient<ViewModels.DataViewModel>();
-                services.AddTransient<Views.Pages.PaymentPage>();
-                services.AddTransient<ViewModels.PaymentViewModel>();
-                services.AddTransient<Views.Pages.SettingsPage>();
-                services.AddTransient<ViewModels.SettingsViewModel>();
-
                 // Configuration
-                services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));
+                //services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));
             }).Build();
 
         /// <summary>

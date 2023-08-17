@@ -1,4 +1,4 @@
-﻿using Wpf.Ui.Common.Interfaces;
+﻿using Wpf.Ui.Controls;
 
 namespace Np_Accounting.Views.Pages
 {

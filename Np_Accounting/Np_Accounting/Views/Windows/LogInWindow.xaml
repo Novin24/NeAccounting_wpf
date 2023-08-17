@@ -1,4 +1,4 @@
-﻿<ui:UiWindow
+﻿<Window
     x:Class="Np_Accounting.Views.Windows.LogInWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -239,4 +239,4 @@
 
         </Border>
     </Border>
-</ui:UiWindow>
+</Window>

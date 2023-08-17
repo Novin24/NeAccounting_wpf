@@ -1,14 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using DomainShared.Constants;
+﻿using DomainShared.Constants;
 using DomainShared.Notifications;
 using Infrastructure.UnitOfWork;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Wpf.Ui.Common.Interfaces;
 
 namespace Np_Accounting.ViewModels
 {
-    public partial class DashboardViewModel : ObservableObject, INavigationAware
+    public partial class DashboardViewModel : ObservableObject
     {
         private bool _isInitialized = false;
 

@@ -1,45 +1,35 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using Wpf.Ui.Controls.Interfaces;
-using Wpf.Ui.Mvvm.Contracts;
+﻿using Np_Accounting.ViewModels;
+using System;
+using Wpf.Ui.Contracts;
 
 namespace Np_Accounting.Views.Windows
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : INavigationWindow
+    public partial class MainWindow
     {
-        public ViewModels.MainWindowViewModel ViewModel
-        {
-            get;
-        }
+        public MainWindowViewModel ViewModel { get; }
 
-        public MainWindow(ViewModels.MainWindowViewModel viewModel, IPageService pageService, INavigationService navigationService)
+        public MainWindow(
+            MainWindowViewModel viewModel,
+            INavigationService navigationService,
+            IServiceProvider serviceProvider,
+            ISnackbarService snackbarService,
+            IContentDialogService contentDialogService)
         {
+            Wpf.Ui.Appearance.Watcher.Watch(this);
+
             ViewModel = viewModel;
             DataContext = this;
 
             InitializeComponent();
-            SetPageService(pageService);
+            navigationService.SetNavigationControl(NavigationView);
+            snackbarService.SetSnackbarPresenter(SnackbarPresenter);
+            contentDialogService.SetContentPresenter(RootContentDialog);
 
-            navigationService.SetNavigationControl(RootNavigation);
+            NavigationView.SetServiceProvider(serviceProvider);
         }
 
         #region INavigationWindow methods
 
-        public Frame GetFrame()
-            => RootFrame;
-
-        public INavigation GetNavigation()
-            => RootNavigation;
-
-        public bool Navigate(Type pageType)
-            => RootNavigation.Navigate(pageType);
-
-        public void SetPageService(IPageService pageService)
-            => RootNavigation.PageService = pageService;
 
         public void ShowWindow()
             => Show();

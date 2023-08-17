@@ -1,11 +1,8 @@
-﻿using Microsoft.Extensions.Hosting;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Np_Accounting.Views.Pages;
+using Np_Accounting.Views.Windows;
 using Wpf.Ui.Gallery.Services.Contracts;
-using Wpf.Ui.Mvvm.Contracts;
 
 namespace Np_Accounting.Services
 {
@@ -40,28 +37,27 @@ namespace Np_Accounting.Services
             await Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Creates main window during activation.
-        /// </summary>
+
         private async Task HandleActivationAsync()
         {
-
-            if (!System.Windows.Application.Current.Windows.OfType<Views.Windows.LogInWindow>().Any())
-            {
-                _navigationWindow = _serviceProvider.GetService(typeof(IWindow)) as IWindow;
-                _navigationWindow!.Show();
-            }
             await Task.CompletedTask;
 
-            //if (!System.Windows.Application.Current.Windows.OfType<Views.Windows.MainWindow>().Any())
-            //{
-            //    _navigationWindow = (_serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow)!;
-            //    _navigationWindow!.ShowWindow();
+            if (!System.Windows.Application.Current.Windows.OfType<LogInWindow>().Any())
+            {
+                var navigationWindow = _serviceProvider.GetRequiredService<LogInWindow>();
+                navigationWindow.Loaded += OnNavigationWindowLoaded;
+                navigationWindow.Show();
+            }
+        }
 
-            //    _navigationWindow.Navigate(typeof(Views.Pages.DashboardPage));
-            //}
+        private void OnNavigationWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not MainWindow navigationWindow)
+            {
+                return;
+            }
 
-            //await Task.CompletedTask;
+            navigationWindow.NavigationView.Navigate(typeof(DashboardPage));
         }
     }
 }

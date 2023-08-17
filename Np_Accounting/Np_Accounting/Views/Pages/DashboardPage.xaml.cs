@@ -1,5 +1,5 @@
-﻿using Wpf.Ui.Common.Interfaces;
-using DomainShared.Notifications;
+﻿using DomainShared.Notifications;
+using Wpf.Ui.Controls;
 
 namespace Np_Accounting.Views.Pages
 {

@@ -1,4 +1,4 @@
-﻿<ui:UiPage
+﻿<Page
     x:Class="Np_Accounting.Views.Pages.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -15,9 +15,9 @@
     d:Background="{DynamicResource ApplicationBackgroundBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
-    <ui:UiPage.Resources>
+    <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-    </ui:UiPage.Resources>
+    </Page.Resources>
 
     <StackPanel Margin="56,0">
         <TextBlock
@@ -47,4 +47,4 @@
             Text="About Np_Accounting" />
         <TextBlock Margin="0,12,0,0" Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
     </StackPanel>
-</ui:UiPage>
+</Page>
