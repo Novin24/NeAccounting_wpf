@@ -18,5 +18,15 @@ namespace Np_Accounting.Views.Pages
 
             InitializeComponent();
         }
+
+        private void TabControl_Selected(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }
