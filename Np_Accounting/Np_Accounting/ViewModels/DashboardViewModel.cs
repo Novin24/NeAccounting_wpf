@@ -1,10 +1,11 @@
 ﻿using DomainShared.Constants;
 using DomainShared.Notifications;
 using Infrastructure.UnitOfWork;
+using Wpf.Ui.Controls;
 
 namespace Np_Accounting.ViewModels
 {
-    public partial class DashboardViewModel : ObservableObject
+    public partial class DashboardViewModel : ObservableObject , INavigationAware
     {
         private bool _isInitialized = false;
 
@@ -26,7 +27,7 @@ namespace Np_Accounting.ViewModels
 
         private async Task InitializeViewModel()
         {
-            UserName = CurrentUser.CurrentName;
+            UserName = " کاربر  :  " + CurrentUser.CurrentFullName;
 
             using (BaseUnitOfWork db = new BaseUnitOfWork())
             {

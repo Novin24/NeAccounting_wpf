@@ -1,6 +1,8 @@
-﻿namespace Np_Accounting.ViewModels
+﻿using Wpf.Ui.Controls;
+
+namespace Np_Accounting.ViewModels
 {
-    public partial class SettingsViewModel : ObservableObject
+    public partial class SettingsViewModel : ObservableObject, INavigationAware
     {
         private bool _isInitialized = false;
 

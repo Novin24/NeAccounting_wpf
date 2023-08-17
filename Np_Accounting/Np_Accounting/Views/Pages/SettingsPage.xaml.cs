@@ -15,7 +15,7 @@ namespace Np_Accounting.Views.Pages
         public SettingsPage(ViewModels.SettingsViewModel viewModel)
         {
             ViewModel = viewModel;
-
+            DataContext = this;
             InitializeComponent();
         }
     }
