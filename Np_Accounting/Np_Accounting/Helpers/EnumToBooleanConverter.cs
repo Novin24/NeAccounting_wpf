@@ -5,9 +5,6 @@ namespace Np_Accounting.Helpers
 {
     internal class EnumToBooleanConverter : IValueConverter
     {
-        public EnumToBooleanConverter()
-        {
-        }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
