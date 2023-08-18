@@ -27,7 +27,6 @@ namespace Np_Accounting
             .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
             .ConfigureServices((context, services) =>
             {
-
                 services.AddHostedService<ApplicationHostService>();
 
                 services.AddSingleton<MainWindow>();
@@ -42,8 +41,8 @@ namespace Np_Accounting
                 services.AddTransient<DashboardViewModel>();
                 services.AddTransient<DataPage>();
                 services.AddTransient<DataViewModel>();
-                services.AddTransient<SettingsPage>();
-                services.AddTransient<SettingsViewModel>();
+                services.AddSingleton<SettingsPage>();
+                services.AddSingleton<SettingsViewModel>();
                 services.AddTransient<PaymentPage>();
                 services.AddTransient<PaymentViewModel>();
 
