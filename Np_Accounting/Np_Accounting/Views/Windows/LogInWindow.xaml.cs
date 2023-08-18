@@ -1,22 +1,16 @@
-﻿using Np_Accounting.ViewModels;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Np_Accounting.ViewModels;
+using Np_Accounting.Views.Pages;
 using System.Windows.Input;
-using Wpf.Ui.Common.Interfaces;
-using Wpf.Ui.Gallery.Services.Contracts;
-using Wpf.Ui.Mvvm.Contracts;
 
 namespace Np_Accounting.Views.Windows
 {
     /// <summary>
     /// Interaction logic for LpginPage.xaml
     /// </summary>
-    public partial class LogInWindow : IWindow
+    public partial class LogInWindow
     {
         private readonly IServiceProvider _serviceProvider;
-        private INavigationWindow _navigationWindow;
         public LogInWindowViewModel ViewModel { get; }
 
         public LogInWindow(IServiceProvider serviceProvider, LogInWindowViewModel logInViewModel)
@@ -49,13 +43,23 @@ namespace Np_Accounting.Views.Windows
                 Hide();
                 if (!System.Windows.Application.Current.Windows.OfType<MainWindow>().Any())
                 {
-                    _navigationWindow = (_serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow)!;
-                    _navigationWindow!.ShowWindow();
+                    var navigationWindow = _serviceProvider.GetRequiredService<MainWindow>();
 
-                    _navigationWindow.Navigate(typeof(Pages.DashboardPage));
+                    navigationWindow.Loaded += OnNavigationWindowLoaded;
+                    navigationWindow!.Show();
                 }
             }
             await Task.CompletedTask;
+        }
+
+        private void OnNavigationWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not MainWindow navigationWindow)
+            {
+                return;
+            }
+
+            navigationWindow.NavigationView.Navigate(typeof(DashboardPage));
         }
     }
 }

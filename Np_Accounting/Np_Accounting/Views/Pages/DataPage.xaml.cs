@@ -1,4 +1,4 @@
-﻿using Wpf.Ui.Common.Interfaces;
+﻿using Wpf.Ui.Controls;
 
 namespace Np_Accounting.Views.Pages
 {
@@ -15,7 +15,7 @@ namespace Np_Accounting.Views.Pages
         public DataPage(ViewModels.DataViewModel viewModel)
         {
             ViewModel = viewModel;
-
+            DataContext = this;
             InitializeComponent();
         }
 

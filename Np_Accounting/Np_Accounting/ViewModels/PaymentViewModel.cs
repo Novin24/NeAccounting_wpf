@@ -1,10 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Wpf.Ui.Common.Interfaces;
-
-namespace Np_Accounting.ViewModels
+﻿namespace Np_Accounting.ViewModels
 {
-    public partial class PaymentViewModel : ObservableObject, INavigationAware
+    public partial class PaymentViewModel : ObservableObject
     {
         [ObservableProperty]
         private int _payCount = 125;

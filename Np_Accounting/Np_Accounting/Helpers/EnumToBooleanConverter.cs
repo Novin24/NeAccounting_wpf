@@ -1,14 +1,10 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Data;
 
 namespace Np_Accounting.Helpers
 {
     internal class EnumToBooleanConverter : IValueConverter
     {
-        public EnumToBooleanConverter()
-        {
-        }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

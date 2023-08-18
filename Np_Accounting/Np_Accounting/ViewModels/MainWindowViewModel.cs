@@ -1,85 +1,52 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Controls.Interfaces;
-using Wpf.Ui.Mvvm.Contracts;
 
 namespace Np_Accounting.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
-        private bool _isInitialized = false;
+        [ObservableProperty]
+        private string _applicationTitle = "Novin Acconting";
 
         [ObservableProperty]
-        private string _applicationTitle = String.Empty;
-
-        [ObservableProperty]
-        private ObservableCollection<INavigationControl> _navigationItems = new();
-
-        [ObservableProperty]
-        private ObservableCollection<INavigationControl> _navigationFooter = new();
-
-        [ObservableProperty]
-        private ObservableCollection<MenuItem> _trayMenuItems = new();
-
-        public MainWindowViewModel(INavigationService navigationService)
+        private ObservableCollection<object> _menuItems = new()
         {
-            if (!_isInitialized)
-                InitializeViewModel();
-        }
+            new NavigationViewItem()
+            {
+                Content = "Home",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
+                TargetPageType = typeof(Views.Pages.DashboardPage)
+            },
+            new NavigationViewItem()
+            {
+                Content = "Data",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
+                TargetPageType = typeof(Views.Pages.DataPage)
+            },
+            new NavigationViewItem()
+            {
+                Content = "payment",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.Payment24 },
+                TargetPageType = typeof(Views.Pages.PaymentPage)
+            }
+        };
 
-        private void InitializeViewModel()
+        [ObservableProperty]
+        private ObservableCollection<object> _footerMenuItems = new()
         {
-            ApplicationTitle = "WPF UI - Np_Accounting";
-
-            NavigationItems = new ObservableCollection<INavigationControl>
+            new NavigationViewItem()
             {
-                new NavigationItem()
-                {
-                    Content = "Home",
-                    PageTag = "dashboard",
-                    Icon = SymbolRegular.Home24,
-                    PageType = typeof(Views.Pages.DashboardPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "Data",
-                    PageTag = "data",
-                    Icon = SymbolRegular.DataHistogram24,
-                    PageType = typeof(Views.Pages.DataPage)
-                },
-                new NavigationItem()
-                {
-                    Content = "payPay",
-                    PageTag = "payment",
-                    Icon = SymbolRegular.Payment24,
-                    PageType = typeof(Views.Pages.PaymentPage)
-                }
-            };
+                Content = "Settings",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
+                TargetPageType = typeof(Views.Pages.SettingsPage)
+            }
+        };
 
-            NavigationFooter = new ObservableCollection<INavigationControl>
-            {
-                new NavigationItem()
-                {
-                    Content = "Settings",
-                    PageTag = "settings",
-                    Icon = SymbolRegular.Settings24,
-                    PageType = typeof(Views.Pages.SettingsPage)
-                }
-            };
-
-            TrayMenuItems = new ObservableCollection<MenuItem>
-            {
-               /* new MenuItem
-                {
-                    Header = "Home",
-                    Tag = "tray_home"
-                }*/
-            };
-
-            _isInitialized = true;
-        }
+        [ObservableProperty]
+        private ObservableCollection<MenuItem> _trayMenuItems = new()
+        {
+            new MenuItem { Header = "Home", Tag = "tray_home" }
+        };
     }
 }

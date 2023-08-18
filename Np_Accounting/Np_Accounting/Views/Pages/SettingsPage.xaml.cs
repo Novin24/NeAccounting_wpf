@@ -1,4 +1,4 @@
-﻿using Wpf.Ui.Common.Interfaces;
+﻿using Wpf.Ui.Controls;
 
 namespace Np_Accounting.Views.Pages
 {
@@ -7,15 +7,12 @@ namespace Np_Accounting.Views.Pages
     /// </summary>
     public partial class SettingsPage : INavigableView<ViewModels.SettingsViewModel>
     {
-        public ViewModels.SettingsViewModel ViewModel
-        {
-            get;
-        }
+        public ViewModels.SettingsViewModel ViewModel { get; }
 
         public SettingsPage(ViewModels.SettingsViewModel viewModel)
         {
             ViewModel = viewModel;
-
+            DataContext = this;
             InitializeComponent();
         }
     }

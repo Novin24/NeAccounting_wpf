@@ -1,13 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Np_Accounting.Models;
-using System;
-using System.Collections.Generic;
+﻿using Np_Accounting.Models;
 using System.Windows.Media;
-using Wpf.Ui.Common.Interfaces;
 
 namespace Np_Accounting.ViewModels
 {
-    public partial class DataViewModel : ObservableObject, INavigationAware
+    public partial class DataViewModel : ObservableObject
     {
         private bool _isInitialized = false;
 
