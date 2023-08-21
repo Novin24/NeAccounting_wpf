@@ -27,6 +27,9 @@ namespace Infrastructure.EntityFramework
             modelBuilder.RegisterEntityTypeConfiguration(entitiesAssembly);
             modelBuilder.AddRestrictDeleteBehaviorConvention();
             modelBuilder.AddSequentialGuidForIdConvention();
+
+
+            modelBuilder.ConfigureDbContext();
         }
     }
 }

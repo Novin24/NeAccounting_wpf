@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.NovinEntity.Customers;
+using Domain.NovinEntity.Documents;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Reflection;
 
@@ -84,6 +86,28 @@ namespace Infrastructure.Utilities
 
             foreach (Type type in types)
                 modelBuilder.Entity(type);
+        }
+
+
+
+        public static void ConfigureDbContext(this ModelBuilder builder)
+        {
+
+            builder.Entity<Document>(b =>
+            {
+                b.Property(r => r.Serial).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+
+                b.HasIndex(b => b.Id);
+                b.HasIndex(b => b.Serial);
+            });
+
+            builder.Entity<Customer>(b =>
+            {
+                b.HasIndex(b => b.Id);
+                b.Property(r => r.Name).IsRequired();
+                b.Property(r => r.NationalCode).IsRequired();
+                b.Property(r => r.Mobile).IsRequired();
+            });
         }
     }
 }
