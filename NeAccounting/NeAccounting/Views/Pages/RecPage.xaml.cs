@@ -1,15 +1,16 @@
-﻿using Wpf.Ui.Controls;
+﻿using NeAccounting.ViewModels;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Pages
 {
     /// <summary>
     /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class RecPage : INavigableView<ViewModels.RecViewModel>
+    public partial class RecPage : INavigableView<RecViewModel>
     {
-        public ViewModels.RecViewModel ViewModel { get; }
+        public RecViewModel ViewModel { get; }
 
-        public RecPage(ViewModels.RecViewModel viewModel)
+        public RecPage(RecViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;

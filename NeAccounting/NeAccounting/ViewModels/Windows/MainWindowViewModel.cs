@@ -2,7 +2,6 @@
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using NeAccounting.Pages;
-using NeAccounting.Views.Pages;
 
 namespace NeAccounting.ViewModels
 {

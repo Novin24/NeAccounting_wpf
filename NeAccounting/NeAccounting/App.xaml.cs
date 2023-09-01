@@ -48,6 +48,8 @@ namespace NeAccounting
                 services.AddTransient<DashboardViewModel>();
                 services.AddTransient<RecPage>();
                 services.AddTransient<RecViewModel>();
+                services.AddTransient<PayPage>();
+                services.AddTransient<PayViewModel>();
                 services.AddSingleton<SettingsPage>();
                 services.AddSingleton<SettingsViewModel>();
 

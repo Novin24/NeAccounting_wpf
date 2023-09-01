@@ -1,4 +1,4 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.PayPage"
+﻿<Page x:Class="NeAccounting.Pages.PayPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -120,8 +120,123 @@
                                     Grid.Row="1"
                                     FlowDirection="RightToLeft"
                                     Background="{DynamicResource ApplicationBackgroundBrush}">
+                            <TabItem IsSelected="True"
+                                     Header="اسناد پرداختی">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="نام مشتری"
+                                                   Margin="22 4 0 0 " />
+                                        <ui:TextBox TextAlignment="Center"
+                                                    FontSize="14"
+                                                    Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    Margin="20 4 30 0 "
+                                                    CaretBrush="White"
+                                                    FontFamily="Calibri" />
+                                    </StackPanel>
+                                    <StackPanel Margin="3 4 20 0"
+                                                Grid.Column="1">
+
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="نوع سند" />
+                                        <ComboBox SelectedIndex="0"
+                                                  FontSize="14"
+                                                  Margin="0 4 0 0 ">
+                                            <ComboBoxItem Content="حواله بانکی" />
+                                            <ComboBoxItem Content="شبا ، ساتنا" />
+                                            <ComboBoxItem Content="کارت به کارت" />
+                                            <ComboBoxItem Content="کارتخوان" />
+                                            <ComboBoxItem Content="نقدی" />
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="0"
+                                                Grid.Row="1">
+
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="مبلغ وجه"
+                                                   Margin="22 4 0 0 " />
+                                        <ui:TextBox Margin="20 4 3 0"
+                                                    TextAlignment="Center"
+                                                    FontSize="14"
+                                                    FontFamily="Calibri" />
+                                    </StackPanel>
+                                    <TextBlock HorizontalAlignment="Center"
+                                               Margin="3 20 20 0"
+                                               VerticalAlignment="Center"
+                                               FontFamily="Calibri"
+                                               FontWeight="Bold"
+                                               FontSize="14"
+                                               Grid.Row="1"
+                                               Grid.Column="1"><Run Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
+                                    <StackPanel Grid.Column="0"
+                                                Grid.Row="2">
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="مبلغ تخفیف"
+                                                   Margin="22 4 0 0 " />
+                                        <ui:NumberBox Grid.Column="0"
+                                                      Grid.Row="2"
+                                                      SpinButtonPlacementMode="Hidden"
+                                                      Margin="20 4 3 0"
+                                                      TextAlignment="Center"
+                                                      FontSize="14"
+                                                      FontFamily="Calibri" />
+                                    </StackPanel>
+
+
+                                    <CheckBox Content="تسویه کامل"
+                                              Grid.Column="1"
+                                              Grid.Row="2"
+                                              FontFamily="Calibri"
+                                              Margin="0 22 0 0 "
+                                              HorizontalAlignment="Center"
+                                              FontSize="14" />
+                                    <Grid Grid.Column="0"
+                                          Grid.ColumnSpan="2"
+                                          Grid.Row="3"
+                                          Grid.RowSpan="2"
+                                          Margin="20 3 20 4">
+
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="توضیحات"
+                                                   Grid.Column="1" />
+                                        <RichTextBox Margin="0,20,0,0"
+                                                     FontSize="14"
+                                                     FlowDirection="RightToLeft"
+                                                     Grid.ColumnSpan="2"
+                                                     FontFamily="Calibri"></RichTextBox>
+                                    </Grid>
+                                    <Button Content="ثبت سند"
+                                            Margin="0 0 0 0"
+                                            HorizontalAlignment="Center"
+                                            Grid.Row="6"
+                                            FontFamily="Calibri"
+                                            FontSize="15"
+                                            Grid.ColumnSpan="2" />
+
+                                </Grid>
+                            </TabItem>
                             <TabItem Margin="0,0,2,0"
-                                     Header="چک دریافتی">
+                                     Header="چک پرداختی">
 
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -223,121 +338,6 @@
                                                      FontSize="14"></RichTextBox>
                                     </StackPanel>
                                     <Button Content="ثبت چک"
-                                            Margin="0 0 0 0"
-                                            HorizontalAlignment="Center"
-                                            Grid.Row="6"
-                                            FontFamily="Calibri"
-                                            FontSize="15"
-                                            Grid.ColumnSpan="2" />
-
-                                </Grid>
-                            </TabItem>
-                            <TabItem IsSelected="True"
-                                     Header="اسناد دریافتی">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel>
-
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="نام مشتری"
-                                                   Margin="22 4 0 0 " />
-                                        <ui:TextBox TextAlignment="Center"
-                                                    FontSize="14"
-                                                    Grid.Row="0"
-                                                    Grid.Column="0"
-                                                    Margin="20 4 30 0 "
-                                                    CaretBrush="White"
-                                                    FontFamily="Calibri" />
-                                    </StackPanel>
-                                    <StackPanel Margin="3 4 20 0"
-                                                Grid.Column="1">
-
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="نام مشتری" />
-                                        <ComboBox SelectedIndex="0"
-                                                  FontSize="14"
-                                                  Margin="0 4 0 0 ">
-                                            <ComboBoxItem Content="حواله بانکی" />
-                                            <ComboBoxItem Content="شبا ، ساتنا" />
-                                            <ComboBoxItem Content="کارت به کارت" />
-                                            <ComboBoxItem Content="کارتخوان" />
-                                            <ComboBoxItem Content="نقدی" />
-                                        </ComboBox>
-                                    </StackPanel>
-                                    <StackPanel Grid.Column="0"
-                                                Grid.Row="1">
-
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="مبلغ وجه"
-                                                   Margin="22 4 0 0 " />
-                                        <ui:TextBox Margin="20 4 3 0"
-                                                    TextAlignment="Center"
-                                                    FontSize="14"
-                                                    FontFamily="Calibri" />
-                                    </StackPanel>
-                                    <TextBlock HorizontalAlignment="Center"
-                                               Margin="3 20 20 0"
-                                               VerticalAlignment="Center"
-                                               FontFamily="Calibri"
-                                               FontWeight="Bold"
-                                               FontSize="14"
-                                               Grid.Row="1"
-                                               Grid.Column="1"><Run Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
-                                    <StackPanel Grid.Column="0"
-                                                Grid.Row="2">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="مبلغ تخفیف"
-                                                   Margin="22 4 0 0 " />
-                                        <ui:NumberBox Grid.Column="0"
-                                                      Grid.Row="2"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      Margin="20 4 3 0"
-                                                      TextAlignment="Center"
-                                                      FontSize="14"
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
-
-
-                                    <CheckBox Content="تسویه کامل"
-                                              Grid.Column="1"
-                                              Grid.Row="2"
-                                              FontFamily="Calibri"
-                                              Margin="0 22 0 0 "
-                                              HorizontalAlignment="Center"
-                                              FontSize="14" />
-                                    <Grid Grid.Column="0"
-                                          Grid.ColumnSpan="2"
-                                          Grid.Row="3"
-                                          Grid.RowSpan="2"
-                                          Margin="20 3 20 4">
-
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="توضیحات"
-                                                   Grid.Column="1" />
-                                        <RichTextBox Margin="0,20,0,0"
-                                                     FontSize="14"
-                                                     FlowDirection="RightToLeft"
-                                                     Grid.ColumnSpan="2"
-                                                     FontFamily="Calibri"></RichTextBox>
-                                    </Grid>
-                                    <Button Content="ثبت سند"
                                             Margin="0 0 0 0"
                                             HorizontalAlignment="Center"
                                             Grid.Row="6"

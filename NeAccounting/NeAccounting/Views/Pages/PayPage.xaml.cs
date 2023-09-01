@@ -1,12 +1,12 @@
 ﻿using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.Views.Pages
+namespace NeAccounting.Pages
 {
     /// <summary>
     /// Interaction logic for PayPage.xaml
     /// </summary>
-    public partial class PayPage : INavigableView<ViewModels.PayViewModel>
+    public partial class PayPage : INavigableView<PayViewModel>
     {
         public PayViewModel ViewModel { get; }
 
