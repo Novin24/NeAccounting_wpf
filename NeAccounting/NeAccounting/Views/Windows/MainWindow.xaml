@@ -22,7 +22,7 @@
                  mc:Ignorable="d"
                  Background="Transparent">
     <Grid>
-        <Grid Visibility="Hidden">
+        <Grid x:Name="mainGrid" IsEnabled="False" Visibility="Hidden">
             <ui:TitleBar x:Name="TitleBar"
                          Title="{Binding ViewModel.ApplicationTitle}"
                          Grid.Row="0"
@@ -58,7 +58,7 @@
             <ContentPresenter x:Name="RootContentDialog"
                               Grid.Row="0" />
         </Grid>
-        <Grid>
+        <Grid x:Name="LoginGrid" IsEnabled="True">
             <Border CornerRadius="15">
                 <Border.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Assets/Back_login.jpg"
@@ -119,8 +119,8 @@
                                     FontSize="18"
                                     FontFamily="Montserrat"
                                     Cursor="Hand"
-                                    Grid.Column="1"
-                                    Click="BtnMinimize_Click">
+                                    Click="BtnMinimize_Click"
+                                    Grid.Column="1">
                                 <Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="Background"
@@ -157,8 +157,8 @@
                                     FontSize="11"
                                     FontFamily="Montserrat"
                                     Cursor="Hand"
-                                    Grid.Column="2"
-                                    Click="BtnClose_Click">
+                                    Click="BtnClose_Click"
+                                    Grid.Column="2">
                                 <Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="Background"
@@ -257,6 +257,7 @@
                                     IsTabStop="False"
                                     FontFamily="Montserrat"
                                     Cursor="Hand"
+                                    Click="Btnlogin_Click"
                                     Grid.Column="2"
                                     Margin="0 50 0 0">
                                 <Button.Style>

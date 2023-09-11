@@ -33,5 +33,32 @@ namespace NeAccounting.Windows
 
             NavigationView.SetServiceProvider(serviceProvider);
         }
+
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private async void Btnlogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (await ViewModel.LogIn(Txt_UserName.Text, txt_password.Password))
+            {
+                LoginGrid.Visibility = Visibility.Collapsed;
+                LoginGrid.IsEnabled = false;
+
+
+                await Task.Delay(100);
+
+                mainGrid.Visibility = Visibility.Visible;
+                mainGrid.IsEnabled = true;
+            }
+            await Task.CompletedTask;
+        }
     }
 }
