@@ -64,9 +64,25 @@
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <DataGrid Margin="10 10 10 10">
+                        <StackPanel Margin="10 10 10 10">
 
-                        </DataGrid>
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="15"
+                                       Text="آخرین چک ها"
+                                       HorizontalAlignment="Center" />
+                            <DataGrid Margin="0 6 0 6"
+                                      x:Name="LastChecksdata"
+                                      BorderThickness="10">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="مبلغ"
+                                                        Binding="{Binding LastchecksAmount}"
+                                                        Width="*" />
+                                    <DataGridTextColumn Header="تاریخ سند"
+                                                        Binding="{Binding LastchecksDate}"
+                                                        Width="*" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
                         <Line Grid.Row="0"
                               X1="0"
                               Y1="7"
