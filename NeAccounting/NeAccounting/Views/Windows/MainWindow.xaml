@@ -19,10 +19,11 @@
                  WindowBackdropType="Mica"
                  WindowCornerPreference="Round"
                  WindowStartupLocation="CenterScreen"
-                 mc:Ignorable="d"
-                 Background="Transparent">
+                 mc:Ignorable="d">
     <Grid>
-        <Grid x:Name="mainGrid" IsEnabled="False" Visibility="Hidden">
+        <Grid x:Name="mainGrid"
+              IsEnabled="False"
+              Visibility="Hidden">
             <ui:TitleBar x:Name="TitleBar"
                          Title="{Binding ViewModel.ApplicationTitle}"
                          Grid.Row="0"
@@ -58,7 +59,8 @@
             <ContentPresenter x:Name="RootContentDialog"
                               Grid.Row="0" />
         </Grid>
-        <Grid x:Name="LoginGrid" IsEnabled="True">
+        <Grid x:Name="LoginGrid"
+              IsEnabled="True">
             <Border CornerRadius="15">
                 <Border.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Assets/Back_login.jpg"
@@ -67,7 +69,7 @@
                 </Border.Background>
                 <Border CornerRadius="10"
                         BorderThickness="2"
-                        Opacity="0.91">
+                        Opacity="0.85">
 
                     <Border.BorderBrush>
                         <LinearGradientBrush StartPoint="0,0"
@@ -191,7 +193,8 @@
                                     Grid.Row="1"
                                     Orientation="Vertical"
                                     Margin="0 40 0 0">
-                            <ui:SymbolIcon Symbol="Person48" />
+                            <ui:SymbolIcon Symbol="Person16"
+                                           Filled="True" />
                             <TextBlock Text="NOVIN"
                                        Margin="0 12 0 0"
                                        Foreground="White"
@@ -199,12 +202,20 @@
                                        FontWeight="Medium"
                                        FontFamily="Montserrat"
                                        HorizontalAlignment="Center" />
-                            <TextBlock Text="Username"
-                                       Foreground="DarkGray"
-                                       FontSize="12"
-                                       FontWeight="Medium"
-                                       FontFamily="Montserrat"
-                                       Margin="0 40 0 0" />
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <ui:SymbolIcon Symbol="Person16"
+                                               Filled="True"
+                                               Margin="0,37,0,0" />
+                                <TextBlock Grid.Column="1"
+                                           Text="Username"
+                                           Foreground="White"
+                                           FontSize="12"
+                                           FontWeight="Medium"
+                                           FontFamily="Montserrat"
+                                           Margin="0 40 0 0" />
+                            </StackPanel>
                             <TextBox FontSize="13"
                                      FontWeight="Medium"
                                      FontFamily="Montserrat"
@@ -217,18 +228,19 @@
                                      VerticalContentAlignment="Center"
                                      Margin="0 5 0 0"
                                      Padding="30 0 0 0">
-                                <TextBox.Background>
-                                    <ImageBrush ImageSource="pack://application:,,,/Assets/user9.png"
-                                                Stretch="None"
-                                                AlignmentX="Left" />
-                                </TextBox.Background>
+
                             </TextBox>
-                            <TextBlock Text="Password"
-                                       Foreground="DarkGray"
-                                       FontSize="12"
-                                       FontWeight="Medium"
-                                       FontFamily="Montserrat"
-                                       Margin="0 15 0 0" />
+                            <StackPanel Orientation="Horizontal">
+                                <ui:SymbolIcon Symbol="Key16"
+                                               Filled="True"
+                                               Margin="0 13 0 0"/>
+                                <TextBlock Text="Password"
+                                           Foreground="White"
+                                           FontSize="12"
+                                           FontWeight="Medium"
+                                           FontFamily="Montserrat"
+                                           Margin="0 15 0 0" />
+                            </StackPanel>
                             <PasswordBox FontSize="13"
                                          FontWeight="Medium"
                                          FontFamily="Montserrat"
@@ -241,11 +253,7 @@
                                          VerticalContentAlignment="Center"
                                          Margin="0 5 0 0"
                                          Padding="30 0 0 0">
-                                <PasswordBox.Background>
-                                    <ImageBrush ImageSource="pack://application:,,,/Assets/key.png"
-                                                Stretch="None"
-                                                AlignmentX="Left" />
-                                </PasswordBox.Background>
+
                             </PasswordBox>
 
                             <Button x:Name="btnlogin"
