@@ -17,6 +17,7 @@
                  ExtendsContentIntoTitleBar="True"
                  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                  WindowBackdropType="Mica"
+                 WindowStyle="None"
                  WindowCornerPreference="Round"
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d">
