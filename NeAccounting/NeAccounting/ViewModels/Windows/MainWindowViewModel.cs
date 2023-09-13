@@ -3,6 +3,7 @@ using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using NeAccounting.Pages;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Views.Pages;
 
 namespace NeAccounting.ViewModels
 {
@@ -34,6 +35,12 @@ namespace NeAccounting.ViewModels
                 Content = "پرداختی",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Payment32 },
                 TargetPageType = typeof(PayPage)
+            },
+            new NavigationViewItem()
+            {
+                Content = "تعریف اجناس",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.SaveCopy20 },
+                TargetPageType = typeof(DefinitionOfPun)
             }
         };
 

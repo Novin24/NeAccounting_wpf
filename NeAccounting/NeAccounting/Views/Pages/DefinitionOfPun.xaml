@@ -1,0 +1,79 @@
+﻿<Page x:Class="NeAccounting.Views.Pages.DefinitionOfPun"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      mc:Ignorable="d"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="DefinitionOfPun">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".5*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height=".5*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width=".5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1"
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Background="#17274F"
+                CornerRadius="10"></Border>
+        <Border Grid.Row="3"
+                Grid.RowSpan="3"
+                Grid.Column="3"
+                Grid.ColumnSpan="3"
+                Background="#C8E4EE"
+                CornerRadius="10"></Border>
+        <Border Grid.Row="2"
+                Grid.RowSpan="3"
+                Grid.Column="2"
+                Grid.ColumnSpan="3"
+                Background="{DynamicResource ApplicationBackgroundBrush}"
+                CornerRadius="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="5*" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0"
+                        CornerRadius="0 10 0 10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Margin="22 4 30 0 ">
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="بانک"
+                                       Margin="1 0 0 0 " />
+                            <TextBox Margin="2 0 2 0" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
