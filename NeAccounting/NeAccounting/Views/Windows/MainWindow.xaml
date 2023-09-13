@@ -20,7 +20,8 @@
                  WindowStyle="None"
                  WindowCornerPreference="Round"
                  WindowStartupLocation="CenterScreen"
-                 mc:Ignorable="d">
+                 mc:Ignorable="d"
+                 MouseDown="Window_MouseDown">
     <Grid>
         <Grid x:Name="mainGrid"
               IsEnabled="False"

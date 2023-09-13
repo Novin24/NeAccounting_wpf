@@ -4,6 +4,7 @@
 // All Rights Reserved.
 
 using NeAccounting.ViewModels;
+using System.Windows.Input;
 //using Wpf.Ui.Controls;
 
 namespace NeAccounting.Windows
@@ -33,7 +34,11 @@ namespace NeAccounting.Windows
 
             NavigationView.SetServiceProvider(serviceProvider);
         }
-
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
 
         private void BtnMinimize_Click(object sender, RoutedEventArgs e)
         {
