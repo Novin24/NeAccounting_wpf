@@ -36,6 +36,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Mohsen.PersianDateControls">
+      <HintPath>C:\Users\Irick\Downloads\Compressed\PersianDatePicker.Core-master\PersianDatePicker.Core-master\src\PersianDateControls\bin\Debug\netcoreapp3.0\Mohsen.PersianDateControls.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\wpfui-icon-1024.png" />
     <Resource Include="Assets\wpfui-icon-256.png" />
     <Resource Include="Assets\Back_login.jpg" />
