@@ -5,6 +5,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Pages"
+      xmlns:lrc="clr-namespace:NeAccounting.Helpers"
+      xmlns:pdc="clr-namespace:NeAcconting.PersianDateControls"
       Title="DataPage"
       d:DataContext="{d:DesignInstance local:PayPage,
                                      IsDesignTimeCreatable=False}"
@@ -13,10 +15,13 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
+    <Page.Resources>
+        <lrc:DateTimeToPersianDateConverter x:Key="dateToPersianDateConverter" />
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height=".5*" />
-            <RowDefinition Height="*" /> 
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
@@ -204,17 +209,13 @@
                                                Grid.Column="1"><Run Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
                                     <StackPanel Grid.Column="0"
                                                 Grid.Row="2">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="مبلغ تخفیف"
-                                                   Margin="22 4 0 0 " />
-                                        <ui:NumberBox Grid.Column="0"
-                                                      Grid.Row="2"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      Margin="20 4 3 0"
-                                                      TextAlignment="Center"
-                                                      FontSize="14"
-                                                      FontFamily="Calibri" />
+
+                                        <pdc:PersianDatePicker SelectedDate="{Binding SelectedDate,
+                                            ElementName=datePicker,
+                                            Converter={StaticResource dateToPersianDateConverter},
+                                            Mode=TwoWay}"
+                                                               Margin="5"
+                                                               Width="135" />
                                     </StackPanel>
 
 

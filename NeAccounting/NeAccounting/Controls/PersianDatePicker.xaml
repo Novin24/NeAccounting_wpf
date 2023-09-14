@@ -69,7 +69,7 @@
                             <Trigger Property="IsMouseOver"
                                      Value="false">
                                 <Setter  Property="Foreground"
-                                         Value="{StaticResource ForegroundBrush}" />
+                                         Value="{DynamicResource TextFillColorSecondaryBrush}" />
                             </Trigger>
 
                             <Trigger Property="IsPressed"
@@ -79,7 +79,7 @@
                                         Value="{StaticResource PressedBrush}" />
                                 <Setter TargetName="Border"
                                         Property="BorderBrush"
-                                        Value="{StaticResource PressedBorderBrush}" />
+                                        Value="{StaticResource NormalBrush}" />
                             </Trigger>
                             <Trigger Property="IsPressed"
                                      Value="false">
@@ -94,39 +94,39 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    
-        <Grid>
-            <Button Style="{StaticResource openCalendarButtonStyle}"
-                    Name="openCalendarButton"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Left"
-                    Click="Button_Click">
-                <ui:SymbolIcon Symbol="CalendarRtl24"
-                               FontSize="28"
-                                />
-            </Button>
-            <ui:TextBox Margin="35,3,3,3"
-                        Name="dateTextBox"
-                        LostFocus="dateTextBox_LostFocus"
-                        AcceptsReturn="False"
-                        IsReadOnly="True"
-                        MaxLines="1"
-                        TextAlignment="Center"
-                        FontFamily="2  Titr"
-                        KeyUp="dateTextBox_KeyUp"
-                        Padding="2">
-            </ui:TextBox>
-            <Popup Name="persianCalnedarPopup"
-                   HorizontalAlignment="Right"
-                   PlacementTarget="{Binding ElementName=dateTextBox}"
-                   StaysOpen="False"
-                   Opened="persianCalnedarPopup_Opened">
-                <Grid Name="persianCalendarGrid"
-                      Background="White">
-                    <local:PersianCalendar x:Name="persianCalendar"
-                                           Height="160"
-                                           Width="175" />
-                </Grid>
-            </Popup>
-        </Grid>
+
+    <Grid>
+        <Button Style="{StaticResource openCalendarButtonStyle}"
+                Name="openCalendarButton"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Click="Button_Click">
+            <ui:SymbolIcon Symbol="CalendarRtl24"
+                           FontSize="28" />
+        </Button>
+        <ui:TextBox Margin="35,3,3,3"
+                    Name="dateTextBox"
+                    LostFocus="dateTextBox_LostFocus"
+                    AcceptsReturn="False"
+                    IsReadOnly="True"
+                    MaxLines="1"
+                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                    TextAlignment="Center"
+                    FontFamily="2  Titr"
+                    KeyUp="dateTextBox_KeyUp"
+                    Padding="2">
+        </ui:TextBox>
+        <Popup Name="persianCalnedarPopup"
+               HorizontalAlignment="Right"
+               PlacementTarget="{Binding ElementName=dateTextBox}"
+               StaysOpen="False"
+               Opened="persianCalnedarPopup_Opened">
+            <Grid Name="persianCalendarGrid"
+                  Background="White">
+                <local:PersianCalendar x:Name="persianCalendar"
+                                       Height="160"
+                                       Width="175" />
+            </Grid>
+        </Popup>
+    </Grid>
 </UserControl>
