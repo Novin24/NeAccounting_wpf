@@ -52,12 +52,18 @@
                 CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="4*" />
                     <RowDefinition Height="5*" />
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0"
-                        CornerRadius="0 10 0 10">
-                    <Grid Margin="15 15 15 15 ">
+                <TextBlock FontFamily="Calibri"
+                           FontSize="20"
+                           Text="تعریف اجناس و کالا"
+                           HorizontalAlignment="Center" 
+                           Margin="0 5 0 0 "/>
+                <Border Grid.Row="1"
+                        CornerRadius="0 0 0 0">
+                    <Grid Margin="15 0 15 0 ">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -67,7 +73,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Grid
+                        <Grid 
                               Margin="0 0 4 4 ">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
