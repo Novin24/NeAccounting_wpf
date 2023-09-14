@@ -40,7 +40,7 @@ namespace NeAccounting.ViewModels
             {
                 Content = "تعریف اجناس",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.SaveCopy20 },
-                TargetPageType = typeof(TestPage)
+                TargetPageType = typeof(DefinitionOfPun)
             }
         };
 

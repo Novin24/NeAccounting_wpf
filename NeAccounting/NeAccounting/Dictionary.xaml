@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="RectangleOne"
+                     Color="#17274F" />
+    <SolidColorBrush x:Key="rectangles Two"
+                     Color="#C8E4EE" />
+    
+</ResourceDictionary>
