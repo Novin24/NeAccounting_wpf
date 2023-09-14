@@ -34,10 +34,6 @@ namespace NeAccounting
             .ConfigureServices((context, services) =>
             {
                 services.AddHostedService<ApplicationHostService>();
-
-
-                services.AddSingleton<LogInWindow>();
-                services.AddSingleton<LogInWindowViewModel>();
                 services.AddSingleton<MainWindow>();
                 services.AddSingleton<MainWindowViewModel>();
                 services.AddSingleton<INavigationService, NavigationService>();

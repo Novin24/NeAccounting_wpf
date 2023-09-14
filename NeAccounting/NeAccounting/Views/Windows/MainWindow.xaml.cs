@@ -4,6 +4,7 @@
 // All Rights Reserved.
 
 using NeAccounting.ViewModels;
+using System.Windows.Input;
 //using Wpf.Ui.Controls;
 
 namespace NeAccounting.Windows
@@ -32,6 +33,37 @@ namespace NeAccounting.Windows
             contentDialogService.SetContentPresenter(RootContentDialog);
 
             NavigationView.SetServiceProvider(serviceProvider);
+        }
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+
+        private void BtnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private async void Btnlogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (await ViewModel.LogIn(Txt_UserName.Text, txt_password.Password))
+            {
+                LoginGrid.Visibility = Visibility.Collapsed;
+                LoginGrid.IsEnabled = false;
+
+
+                await Task.Delay(100);
+
+                mainGrid.Visibility = Visibility.Visible;
+                mainGrid.IsEnabled = true;
+            }
+            await Task.CompletedTask;
         }
     }
 }
