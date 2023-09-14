@@ -153,7 +153,6 @@
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel>
-
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    Text="نام مشتری"
