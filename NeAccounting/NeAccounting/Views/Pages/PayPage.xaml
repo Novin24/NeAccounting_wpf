@@ -112,20 +112,18 @@
 
                     </Grid.RowDefinitions>
                     <Grid>
-                        <TextBlock Margin="0 20 20 0"
+                        <ui:TextBlock Margin="0 20 20 0"
                                    Height="40"
                                    HorizontalAlignment="Right"
                                    FontFamily="Calibri"
                                    FontWeight="Bold"
-                                   FontSize="15"
-                                   Foreground="White"><Run Text="999 : شماره سند " /></TextBlock>
-                        <TextBlock Margin="20 20 0 0"
+                                   FontSize="15"><Run Text="999 : شماره سند " /></ui:TextBlock>
+                        <ui:TextBlock Margin="20 20 0 0"
                                    Height="40"
                                    HorizontalAlignment="Left"
                                    FontFamily="Calibri"
                                    FontWeight="Bold"
-                                   FontSize="15"
-                                   Foreground="White"><Run Text="1402/05/21 " /></TextBlock>
+                                   FontSize="15"><Run Text="1402/05/21 " /></ui:TextBlock>
 
                     </Grid>
                     <Border Grid.Row="1"
@@ -139,9 +137,10 @@
 
                         <TabControl Margin="8,8,8,0"
                                     Grid.Row="1"
+                                    FlowDirection="RightToLeft"
                                     Background="{DynamicResource ApplicationBackgroundBrush}">
                             <TabItem IsSelected="True"
-                                     Header="اسناد پرداختی">
+                                     Header="اسناد دریافتی">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"></RowDefinition>
@@ -157,7 +156,6 @@
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel>
-
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    Text="نام مشتری"
@@ -208,12 +206,17 @@
                                                Grid.Column="1"><Run Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
                                     <StackPanel Grid.Column="0"
                                                 Grid.Row="2">
-
-                                        <pdc:PersianDatePicker Margin="20 4 3 0"
-                                                               SelectedDate="{Binding SelectedDate,
-                                            ElementName=datePicker,
-                                            Converter={StaticResource dateToPersianDateConverter},
-                                            Mode=TwoWay}" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="مبلغ تخفیف"
+                                                   Margin="22 4 0 0 " />
+                                        <ui:NumberBox Grid.Column="0"
+                                                      Grid.Row="2"
+                                                      SpinButtonPlacementMode="Hidden"
+                                                      Margin="20 4 3 0"
+                                                      TextAlignment="Center"
+                                                      FontSize="14"
+                                                      FontFamily="Calibri" />
                                     </StackPanel>
 
 

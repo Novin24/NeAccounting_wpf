@@ -15,21 +15,6 @@
     </Page.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-            
-        <pdc:PersianDatePicker SelectedDate="{Binding SelectedDate, ElementName=datePicker, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}"/>
-            <ui:TextBox>fsdfdsfds</ui:TextBox>
-
-        </StackPanel>
-        <Grid Grid.Row="1">
-
-            <pdc:PersianCalendar Height="200" Width="200"/>
-
-        </Grid>
 
     </Grid>
 </Page>
