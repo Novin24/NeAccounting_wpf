@@ -11,6 +11,7 @@ using NeAccounting.Pages;
 using NeAccounting.Services;
 using NeAccounting.ViewModels;
 using NeAccounting.ViewModels.Pages;
+using NeAccounting.Views.Pages;
 using NeAccounting.Windows;
 using System.IO;
 using System.Reflection;
@@ -45,7 +46,7 @@ namespace NeAccounting
                 services.AddTransient<RecPage>();
                 services.AddTransient<RecViewModel>();
                 services.AddTransient<PayPage>();
-                services.AddTransient<TestPage>();
+                services.AddTransient<DefinitionOfPun>();
                 services.AddTransient<PayViewModel>();
                 services.AddSingleton<SettingsPage>();
                 services.AddSingleton<SettingsViewModel>();
