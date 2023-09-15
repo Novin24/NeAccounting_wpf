@@ -5,35 +5,16 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:pdc="clr-namespace:NeAcconting.PersianDateControls"
-      xmlns:local="clr-namespace:NeAccounting.Helpers"
+      xmlns:lrc="clr-namespace:NeAccounting.Helpers"
       mc:Ignorable="d"
       d:DesignHeight="450"
       d:DesignWidth="800"
       Title="TestPage">
     <Page.Resources>
-        <local:DateTimeToPersianDateConverter x:Key="dateToPersianDateConverter" />
+        <lrc:DateTimeToPersianDateConverter x:Key="dateToPersianDateConverter" />
     </Page.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <WrapPanel>
-            
-        <pdc:PersianDatePicker SelectedDate="{Binding SelectedDate, ElementName=datePicker, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}"
-                               TabIndex="3"
-                               Grid.Row="1"
-                               Grid.Column="1"
-                               HorizontalAlignment="Center"
-                               Margin="5"
-                               Width="135"
-                               FontSize="11.5"
-                               FontFamily="B Homa" />
-
-
-
-        </WrapPanel>
 
     </Grid>
 </Page>
