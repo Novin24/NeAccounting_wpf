@@ -139,7 +139,6 @@
 
                         <TabControl Margin="8,8,8,0"
                                     Grid.Row="1"
-                                    FlowDirection="RightToLeft"
                                     Background="{DynamicResource ApplicationBackgroundBrush}">
                             <TabItem IsSelected="True"
                                      Header="اسناد پرداختی">
@@ -210,12 +209,11 @@
                                     <StackPanel Grid.Column="0"
                                                 Grid.Row="2">
 
-                                        <pdc:PersianDatePicker SelectedDate="{Binding SelectedDate,
+                                        <pdc:PersianDatePicker Margin="20 4 3 0"
+                                                               SelectedDate="{Binding SelectedDate,
                                             ElementName=datePicker,
                                             Converter={StaticResource dateToPersianDateConverter},
-                                            Mode=TwoWay}"
-                                                               Margin="5"
-                                                               Width="135" />
+                                            Mode=TwoWay}" />
                                     </StackPanel>
 
 

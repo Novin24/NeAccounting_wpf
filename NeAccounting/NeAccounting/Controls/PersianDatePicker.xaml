@@ -109,7 +109,9 @@
                     LostFocus="dateTextBox_LostFocus"
                     AcceptsReturn="False"
                     IsReadOnly="True"
+                    HorizontalAlignment="Stretch"
                     MaxLines="1"
+                    FontSize="14"
                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                     TextAlignment="Center"
                     FontFamily="2  Titr"
@@ -124,8 +126,8 @@
             <Grid Name="persianCalendarGrid"
                   Background="White">
                 <local:PersianCalendar x:Name="persianCalendar"
-                                       Height="160"
-                                       Width="175" />
+                                       Height="200"
+                                       Width="200" />
             </Grid>
         </Popup>
     </Grid>
