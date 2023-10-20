@@ -1,6 +1,7 @@
 ﻿<Page x:Class="NeAccounting.Views.Pages.DefinitionOfPun"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
@@ -59,8 +60,8 @@
                 <TextBlock FontFamily="Calibri"
                            FontSize="20"
                            Text="تعریف اجناس و کالا"
-                           HorizontalAlignment="Center" 
-                           Margin="0 8 0 0 "/>
+                           HorizontalAlignment="Center"
+                           Margin="0 8 0 0 " />
                 <Border Grid.Row="1"
                         CornerRadius="0 0 0 0">
                     <Grid Margin="15 0 15 0 ">
@@ -73,8 +74,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Grid 
-                              Margin="0 0 4 4 ">
+                        <Grid Margin="0 0 4 4 ">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -95,7 +95,10 @@
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBox Margin="2 2 2 2" />
+                            <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
+                                               OriginalItemsSource="{Binding ViewModel.AutoSuggestBoxSuggestions, Mode=OneWay}"
+                                               PlaceholderText="Search..."
+                                               Margin="2 2 2 2" />
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="نام کالا"
@@ -117,7 +120,7 @@
                                        Text="موجودی انبار"
                                        Margin="1 0 0 0 "
                                        VerticalAlignment="Center"
-                                       Grid.Column="1"/>
+                                       Grid.Column="1" />
 
                         </Grid>
                         <Grid Grid.Row="1"

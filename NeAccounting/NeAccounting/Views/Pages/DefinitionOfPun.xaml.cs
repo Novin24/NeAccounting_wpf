@@ -1,28 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using NeAccounting.ViewModels;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for DefinitionOfPun.xaml
     /// </summary>
-    public partial class DefinitionOfPun : Page
+    public partial class DefinitionOfPun : INavigableView<PayViewModel>
     {
-        public DefinitionOfPun()
+        public PayViewModel ViewModel { get; }
+        public DefinitionOfPun(PayViewModel viewModel)
         {
+            ViewModel = viewModel;
             InitializeComponent();
         }
+
     }
 }

@@ -9,6 +9,7 @@ namespace NeAccounting.Pages
     public partial class PayPage : INavigableView<PayViewModel>
     {
         public PayViewModel ViewModel { get; }
+        public int cusId { get; set; }
 
         public PayPage(PayViewModel viewModel)
         {
@@ -29,6 +30,15 @@ namespace NeAccounting.Pages
         {
             public string LastchecksAmount { set; get; }
             public string LastchecksDate { set; get; }
+
+        }
+
+        private void AutoSuggestBoxSuggestions_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+          var t =   ViewModel.AutoSuggestBoxSuggestions.FirstOrDefault(a => a.Id == 
+          ((SuggestBoxViewModel<int>)args.SelectedItem).Id);
+
+            cusId = ((SuggestBoxViewModel<int>)args.SelectedItem).Id;
 
         }
     }
