@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repository\" />
+    <Compile Remove="Repository\**" />
+    <EmbeddedResource Remove="Repository\**" />
+    <None Remove="Repository\**" />
   </ItemGroup>
 
 	<ItemGroup>
@@ -25,5 +27,9 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Application\NeApplication.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Common\Repositories\CustomerRepository\" />
 	</ItemGroup>
 </Project>

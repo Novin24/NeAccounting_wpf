@@ -2,7 +2,7 @@
 
 namespace Domain.NovinEntity.Bank
 {
-    public class Banks : LocalEntity
+    public class Bank : LocalEntity
     {
         public int Bank_ID { get; set; }
         public string Bank_Name { get; set; }

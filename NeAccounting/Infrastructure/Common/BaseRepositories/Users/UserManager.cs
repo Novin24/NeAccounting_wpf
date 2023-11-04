@@ -1,14 +1,17 @@
-﻿using NeApplication.IBaseRepositories;
-using Common.Utilities;
+﻿using Common.Utilities;
 using Domain.BaseDomain.User;
+using Domain.NovinEntity.Customers;
 using DomainShared.Constants;
-using Infrastructure.Common.BaseRepositories;
+using DomainShared.ViewModels;
+using Infrastructure.Common.Repositories;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using NeApplication.IBaseRepositories;
+using NeApplication.IRepositoryies;
 
-namespace Infrastructure.Common
+namespace Infrastructure.Common.BaseRepositories.Users
 {
-    public class UserManager : BaseRepository<IdentityUser>, IUserManager
+    public class UserManager : BaseRepository<IdentityUser>, IIdentityUserManager
     {
         public UserManager(BaseDomainDbContext context) : base(context) { }
 
@@ -38,4 +41,23 @@ namespace Infrastructure.Common
             return true;
         }
     }
+
+    public class CustomerManager : Repository<Customer>, ICustomerManager
+    {
+        public CustomerManager(NovinDbContext context) : base(context) { }
+
+
+        public Task<List<SuggestBoxViewModel<Guid>>> GetDisplayUser()
+        {
+            return TableNoTracking.Select(x => new SuggestBoxViewModel<Guid>
+            {
+                Id = x.Id,
+                DisplayName = x.Name
+
+            }).ToListAsync();
+        }
+
+    }
+
+
 }

@@ -4,9 +4,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:local="clr-namespace:NeAccounting.Pages"
       xmlns:lrc="clr-namespace:NeAccounting.Helpers"
-      xmlns:pdc="clr-namespace:NeAcconting.PersianDateControls"
+      xmlns:local="clr-namespace:NeAccounting.Pages"
       Title="DataPage"
       d:DataContext="{d:DesignInstance local:PayPage,
                                      IsDesignTimeCreatable=False}"
@@ -164,13 +163,16 @@
                                                    FontSize="14"
                                                    Text="نام مشتری"
                                                    Margin="22 4 0 0 " />
+                                        
+                                        
                                         <ui:AutoSuggestBox x:Name="AutoSuggestBoxSuggestions"
                                                            Icon="{ui:SymbolIcon Search24}"
                                                            OriginalItemsSource="{Binding ViewModel.AutoSuggestBoxSuggestions, Mode=OneWay}"
                                                            PlaceholderText="Search..."
                                                            DisplayMemberPath="DisplayName"
                                                            FontSize="14"
-                                                           Grid.Row="0"                                                                         SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
+                                                           Grid.Row="0"                                                                         
+                                                           SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
                                                            Grid.Column="0"
                                                            Margin="20 4 30 0 "
                                                            FontFamily="Calibri" />

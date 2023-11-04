@@ -7,10 +7,6 @@ namespace Infrastructure.EntityFramework
     public class NovinDbContext :DbContext
     {
 
-        public NovinDbContext(DbContextOptions<NovinDbContext> options ): base( options )
-        {
-
-        }
         protected override void OnConfiguring(
                         DbContextOptionsBuilder optionsBuilder)
         {

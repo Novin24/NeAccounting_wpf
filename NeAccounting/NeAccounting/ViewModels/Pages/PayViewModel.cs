@@ -1,20 +1,22 @@
-﻿namespace NeAccounting.ViewModels
+﻿using DomainShared.ViewModels;
+
+namespace NeAccounting.ViewModels
 {
     public partial class PayViewModel : ObservableObject
     {
         [ObservableProperty]
-        private IEnumerable<SuggestBoxViewModel<int>> _autoSuggestBoxSuggestions = new List<SuggestBoxViewModel<int>>
+        private IEnumerable<SuggestBoxViewModel<Guid>> _autoSuggestBoxSuggestions = new List<SuggestBoxViewModel<Guid>>
         {
 
-            new SuggestBoxViewModel<int>(){DisplayName = "Phoebe" ,Id = 1},
-            new SuggestBoxViewModel<int>(){DisplayName  = "Lucas" ,Id = 2},
-            new SuggestBoxViewModel<int>(){DisplayName= "Carl" ,Id = 3},
-            new SuggestBoxViewModel<int>(){DisplayName= "Marissa" ,Id =4 },
-            new SuggestBoxViewModel<int>(){DisplayName= "Brandon" ,Id = 5},
-            new SuggestBoxViewModel<int>(){DisplayName= "Antoine" ,Id = 6},
-            new SuggestBoxViewModel<int>(){DisplayName= "Arielle" ,Id = 7},
-            new SuggestBoxViewModel<int>(){DisplayName= "Jamie" ,Id = 8},
-            new SuggestBoxViewModel<int>(){DisplayName= "Alexzander" ,Id =9 }
+            new SuggestBoxViewModel<Guid>(){DisplayName = "احمد" ,Id =new Guid("ff24451a-96d3-4224-a349-d4a06ae2da7e")},
+            new SuggestBoxViewModel<Guid>(){DisplayName  = "رضا" ,Id =new Guid( "ff24451a-96d3-4224-a349-d4a06ae2da7e")},
+            new SuggestBoxViewModel<Guid>(){DisplayName= "ممد" ,Id =new Guid( "ff24451a-96d3-4224-a349-d4a06ae2da7e")},
+            new SuggestBoxViewModel<Guid>(){DisplayName= "رضا" ,Id =new Guid("ff24451a-96d3-4224-a349-d4a06ae2da7e")},
+            new SuggestBoxViewModel<Guid>(){DisplayName= "تقی" ,Id =new Guid( "ff24451a-96d3-4224-a349-d4a06ae2da7e")},
+            new SuggestBoxViewModel<Guid>(){DisplayName= "بهرام" ,Id =new Guid( "ff24451a-96d3-4224-a349-d4a06ae2da7e")},
+            new SuggestBoxViewModel<Guid>(){DisplayName= "شمس" ,Id =new Guid( "ff24451a-96d3-4224-a349-d4a06ae2da7e")},
+            new SuggestBoxViewModel<Guid>(){DisplayName= "مهدی" ,Id =new Guid( "ff24451a-96d3-4224-a349-d4a06ae2da7e")},
+            new SuggestBoxViewModel<Guid>(){DisplayName= "اسمال" ,Id =new Guid("ff24451a-96d3-4224-a349-d4a06ae2da7e") }
         };
     }
 }

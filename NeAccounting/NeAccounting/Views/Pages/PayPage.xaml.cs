@@ -1,4 +1,5 @@
-﻿using NeAccounting.ViewModels;
+﻿using DomainShared.ViewModels;
+using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Pages
@@ -9,7 +10,7 @@ namespace NeAccounting.Pages
     public partial class PayPage : INavigableView<PayViewModel>
     {
         public PayViewModel ViewModel { get; }
-        public int cusId { get; set; }
+        public Guid cusId { get; set; }
 
         public PayPage(PayViewModel viewModel)
         {
@@ -35,10 +36,10 @@ namespace NeAccounting.Pages
 
         private void AutoSuggestBoxSuggestions_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-          var t =   ViewModel.AutoSuggestBoxSuggestions.FirstOrDefault(a => a.Id == 
-          ((SuggestBoxViewModel<int>)args.SelectedItem).Id);
+          //var t =   ViewModel.AutoSuggestBoxSuggestions.FirstOrDefault(a => a.Id == 
+          //((SuggestBoxViewModel<Guid>)args.SelectedItem).Id);
 
-            cusId = ((SuggestBoxViewModel<int>)args.SelectedItem).Id;
+            cusId = ((SuggestBoxViewModel<Guid>)args.SelectedItem).Id;
 
         }
     }

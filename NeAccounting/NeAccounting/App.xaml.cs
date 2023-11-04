@@ -50,6 +50,7 @@ namespace NeAccounting
                 services.AddTransient<PayViewModel>();
                 services.AddSingleton<SettingsPage>();
                 services.AddSingleton<SettingsViewModel>();
+                services.AddSingleton<DefinitoinOfPunViewModel>();
 
                 // dbContext
                 services.AddDbContext<NovinDbContext>();

@@ -1,9 +1,9 @@
 ﻿<Page x:Class="NeAccounting.Views.Pages.DefinitionOfPun"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       d:DataContext="{d:DesignInstance local:DefinitionOfPun,
                                      IsDesignTimeCreatable=False}"
@@ -95,10 +95,19 @@
                                 <ColumnDefinition Width="2*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
-                                               OriginalItemsSource="{Binding ViewModel.AutoSuggestBoxSuggestions, Mode=OneWay}"
-                                               PlaceholderText="Search..."
-                                               Margin="2 2 2 2" />
+                            
+                            <ui:AutoSuggestBox x:Name="AutoSuggestBoxSuggestions"
+                                Icon="{ui:SymbolIcon Search24}"
+                                OriginalItemsSource="{Binding ViewModel.AutoSuggestBoxSuggestions, Mode=OneWay}"
+                                PlaceholderText="Search..."
+                                DisplayMemberPath="DisplayName"
+                                FontSize="14"
+                                Grid.Row="0"
+                                SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
+                                Grid.Column="0"
+                                Margin="20 4 30 0 "
+                                FontFamily="Calibri" />
+                            
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="نام کالا"

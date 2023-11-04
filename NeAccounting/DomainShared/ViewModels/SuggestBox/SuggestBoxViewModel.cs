@@ -1,4 +1,4 @@
-﻿namespace NeAccounting.ViewModels
+﻿namespace DomainShared.ViewModels
 {
     public class SuggestBoxViewModel<T>
     {

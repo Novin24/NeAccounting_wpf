@@ -1,6 +1,7 @@
 ﻿using NeApplication.IBaseRepositories;
 using Infrastructure.Common;
 using Infrastructure.EntityFramework;
+using Infrastructure.Common.BaseRepositories.Users;
 
 namespace Infrastructure.UnitOfWork
 {
@@ -8,10 +9,10 @@ namespace Infrastructure.UnitOfWork
     {
         readonly BaseDomainDbContext BaseNovin = new ();
 
-        private IUserManager _userManager;
+        private IIdentityUserManager _userManager;
         private INotifManager _notifManager;
 
-        public IUserManager userRepository
+        public IIdentityUserManager userRepository
         {
             get
             {
