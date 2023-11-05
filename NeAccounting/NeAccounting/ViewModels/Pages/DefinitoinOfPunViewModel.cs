@@ -7,9 +7,10 @@ namespace NeAccounting.ViewModels.Pages
     public partial class DefinitoinOfPunViewModel : ObservableObject, INavigationAware
     {
 
+        private bool _isInitialized = false;
 
         [ObservableProperty]
-        private IEnumerable<SuggestBoxViewModel<Guid>> _autoSuggestBoxSuggestions;
+        private IEnumerable<SuggestBoxViewModel<Guid>> _asuBox;
 
         public void OnNavigatedFrom()
         {
@@ -18,7 +19,8 @@ namespace NeAccounting.ViewModels.Pages
 
         public async void OnNavigatedTo()
         {
-           await InitializeViewModel();
+            if (!_isInitialized)
+                await InitializeViewModel();
         }
 
 
@@ -26,8 +28,9 @@ namespace NeAccounting.ViewModels.Pages
         {
             using (UnitOfWork db = new UnitOfWork())
             {
-                _autoSuggestBoxSuggestions = await db.customerManager.GetDisplayUser();
+                AsuBox = await db.customerManager.GetDisplayUser();
             }
+            _isInitialized = true;
         }
     }
 }

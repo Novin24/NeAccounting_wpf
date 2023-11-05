@@ -45,12 +45,12 @@ namespace NeAccounting
                 services.AddTransient<DashboardViewModel>();
                 services.AddTransient<RecPage>();
                 services.AddTransient<RecViewModel>();
-                services.AddTransient<PayPage>();
+                services.AddSingleton<PayPage>();
+                services.AddSingleton<PayViewModel>();
                 services.AddTransient<DefinitionOfPun>();
-                services.AddTransient<PayViewModel>();
+                services.AddTransient<DefinitoinOfPunViewModel>();
                 services.AddSingleton<SettingsPage>();
                 services.AddSingleton<SettingsViewModel>();
-                services.AddSingleton<DefinitoinOfPunViewModel>();
 
                 // dbContext
                 services.AddDbContext<NovinDbContext>();

@@ -27,6 +27,7 @@ namespace NeAccounting.Pages
             two.LastchecksDate = "12/12/1402";
             LastChecksdata.Items.Add(two);
         }
+
         public class Lastchecks
         {
             public string LastchecksAmount { set; get; }

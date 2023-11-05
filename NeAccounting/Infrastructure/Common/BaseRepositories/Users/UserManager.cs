@@ -1,13 +1,9 @@
 ﻿using Common.Utilities;
 using Domain.BaseDomain.User;
-using Domain.NovinEntity.Customers;
 using DomainShared.Constants;
-using DomainShared.ViewModels;
-using Infrastructure.Common.Repositories;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IBaseRepositories;
-using NeApplication.IRepositoryies;
 
 namespace Infrastructure.Common.BaseRepositories.Users
 {
@@ -40,23 +36,6 @@ namespace Infrastructure.Common.BaseRepositories.Users
             CurrentUser.CurrentUserId = user.Id;
             return true;
         }
-    }
-
-    public class CustomerManager : Repository<Customer>, ICustomerManager
-    {
-        public CustomerManager(NovinDbContext context) : base(context) { }
-
-
-        public Task<List<SuggestBoxViewModel<Guid>>> GetDisplayUser()
-        {
-            return TableNoTracking.Select(x => new SuggestBoxViewModel<Guid>
-            {
-                Id = x.Id,
-                DisplayName = x.Name
-
-            }).ToListAsync();
-        }
-
     }
 
 

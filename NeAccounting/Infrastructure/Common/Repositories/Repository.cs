@@ -5,7 +5,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Common.Repositories
+namespace Infrastructure.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : class, IEntities

@@ -98,7 +98,7 @@
                             
                             <ui:AutoSuggestBox x:Name="AutoSuggestBoxSuggestions"
                                 Icon="{ui:SymbolIcon Search24}"
-                                OriginalItemsSource="{Binding ViewModel.AutoSuggestBoxSuggestions, Mode=OneWay}"
+                                               OriginalItemsSource="{Binding ViewModel.AsuBox, Mode=OneWay}"
                                 PlaceholderText="Search..."
                                 DisplayMemberPath="DisplayName"
                                 FontSize="14"
