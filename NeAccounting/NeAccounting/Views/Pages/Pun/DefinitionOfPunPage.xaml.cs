@@ -7,13 +7,13 @@ namespace NeAccounting.Views.Pages
     /// <summary>
     /// Interaction logic for DefinitionOfPun.xaml
     /// </summary>
-    public partial class DefinitionOfPun : INavigableView<DefinitoinOfPunViewModel>
+    public partial class DefinitionOfPunPage : INavigableView<DefinitoinOfPunViewModel>
     {
         public DefinitoinOfPunViewModel ViewModel { get; }
         public int materailId { get; set; }
 
 
-        public DefinitionOfPun(DefinitoinOfPunViewModel viewModel)
+        public DefinitionOfPunPage(DefinitoinOfPunViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;

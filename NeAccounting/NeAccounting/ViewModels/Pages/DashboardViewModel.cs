@@ -5,7 +5,7 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class DashboardViewModel : ObservableObject , INavigationAware
+    public partial class DashboardViewModel : ObservableObject, INavigationAware
     {
         private bool _isInitialized = false;
 
