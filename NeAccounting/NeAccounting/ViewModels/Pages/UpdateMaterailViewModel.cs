@@ -12,6 +12,27 @@ namespace NeAccounting.ViewModels.Pages
         [ObservableProperty]
         private IEnumerable<SuggestBoxViewModel<Guid>> _asuBox;
 
+        [ObservableProperty]
+        private string _materialName;
+
+        [ObservableProperty]
+        private string _serial;
+
+        [ObservableProperty]
+        private string _address;
+
+        [ObservableProperty]
+        private double _entity;
+
+        [ObservableProperty]
+        private int _unitId;
+
+        [ObservableProperty]
+        private int _materialId;
+
+        [ObservableProperty]
+        private string _erroreMessage = "";
+
         public void OnNavigatedFrom()
         {
 
@@ -26,12 +47,44 @@ namespace NeAccounting.ViewModels.Pages
 
         private async Task InitializeViewModel()
         {
-            using (UnitOfWork db = new UnitOfWork())
+            using (UnitOfWork db = new())
             {
-                await db.materialManager.TolistAsync(t => t.Serial == "");
+                await db.unitManager.GetUnits();
             }
             _isInitialized = true;
         }
 
+        [RelayCommand]
+        private async Task OnUpdate()
+        {
+            if (string.IsNullOrEmpty(MaterialName))
+            {
+                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                return;
+            }
+            if (string.IsNullOrEmpty(MaterialName))
+            {
+                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                return;
+            }
+            if (string.IsNullOrEmpty(MaterialName))
+            {
+                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                return;
+            }
+            if (string.IsNullOrEmpty(MaterialName))
+            {
+                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                return;
+            }
+            if (string.IsNullOrEmpty(MaterialName))
+            {
+                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                return;
+            }
+
+            using UnitOfWork db = new();
+            await db.materialManager.UpdateMaterial(MaterialId, MaterialName, Entity, UnitId, Serial, Address);
+        }
     }
 }

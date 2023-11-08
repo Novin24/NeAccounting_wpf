@@ -22,17 +22,17 @@ namespace Infrastructure.Repositories
         }
 
         #region Async Method
-        public async virtual Task<TEntity> GetByIdAsync(  params object[] ids)
+        public async virtual Task<TEntity> GetByIdAsync(params object[] ids)
         {
             return await Entities.FindAsync(ids);
         }
 
-        public async Task<TEntity> FindEntity(  Expression<Func<TEntity, bool>> expression)
+        public async Task<TEntity> FindEntity(Expression<Func<TEntity, bool>> expression)
         {
             return await TableNoTracking.FirstOrDefaultAsync(expression);
         }
 
-        public virtual async Task<bool> AddAsync(TEntity entity,   bool saveNow = true)
+        public virtual async Task<bool> AddAsync(TEntity entity, bool saveNow = true)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public virtual async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities,   bool saveNow = true)
+        public virtual async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public virtual async Task<bool> UpdateAsync(TEntity entity,   bool saveNow = true)
+        public virtual async Task<bool> UpdateAsync(TEntity entity, bool saveNow = true)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public virtual async Task<(bool isSuccess, string ErrorMessage)> UpdateRangeAsync(IEnumerable<TEntity> entities,   bool saveNow = true)
+        public virtual async Task<(bool isSuccess, string ErrorMessage)> UpdateRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace Infrastructure.Repositories
 
         }
 
-        public virtual async Task<bool> DeleteAsync(TEntity entity,   bool saveNow = true)
+        public virtual async Task<bool> DeleteAsync(TEntity entity, bool saveNow = true)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> DeleteAsync(int entityId,   bool saveNow = true)
+        public async Task<bool> DeleteAsync(int entityId, bool saveNow = true)
         {
             try
             {
@@ -128,7 +128,7 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public virtual async Task DeleteRangeAsync(IEnumerable<TEntity> entities,   bool saveNow = true)
+        public virtual async Task DeleteRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true)
         {
             Assert.NotNull(entities, nameof(entities));
             Entities.RemoveRange(entities);
@@ -255,20 +255,32 @@ namespace Infrastructure.Repositories
             return Entities.ToList();
         }
 
-        public virtual async Task<List<TEntity>> TolistAsync(  Expression<Func<TEntity, bool>> expression = null )
+        public virtual async Task<List<TEntity>> TolistAsync(Expression<Func<TEntity, bool>> expression = null)
         {
             if (expression != null)
                 return await TableNoTracking.Where(expression).ToListAsync();
             return await TableNoTracking.ToListAsync();
         }
-        public virtual async Task<List<TEntity>> TolistAsync<TProperty>(  Expression<Func<TEntity, TProperty>> IncludeExpression, Expression<Func<TEntity, bool>> expression = null)
+
+        public virtual async Task<List<TEntity>> TolistAsync<TResult>(Expression<Func<TEntity, TResult>> selectExpression, Expression<Func<TEntity, bool>> expression = null)
         {
-            if (expression != null && IncludeExpression != null)
-                return await TableNoTracking.Where(expression).Include(IncludeExpression).ToListAsync();
-            if (IncludeExpression != null)
-                return await TableNoTracking.Include(IncludeExpression).ToListAsync();
             if (expression != null)
-                return await TableNoTracking.Where(expression).ToListAsync();
+                TableNoTracking.Where(expression).AsQueryable();
+
+            TableNoTracking.Select(selectExpression).AsQueryable();
+
+            return await TableNoTracking.ToListAsync();
+        }
+        public virtual async Task<List<TEntity>> TolistAsync<TProperty, TResult>(Expression<Func<TEntity, int, TResult>> selectExpression, Expression<Func<TEntity, TProperty>> IncludeExpression, Expression<Func<TEntity, bool>> expression = null)
+        {
+            if (expression != null)
+                TableNoTracking.Where(expression).AsQueryable();
+
+            if (IncludeExpression != null)
+                TableNoTracking.Include(IncludeExpression).AsQueryable();
+
+            TableNoTracking.Select(selectExpression).AsQueryable();
+
             return await TableNoTracking.ToListAsync();
         }
         #endregion
