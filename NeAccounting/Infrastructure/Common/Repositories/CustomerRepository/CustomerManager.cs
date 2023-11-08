@@ -4,7 +4,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
 
-namespace Infrastructure.Repositories.CustomerRepository
+namespace Infrastructure.Repositories
 {
     public class CustomerManager : Repository<Customer>, ICustomerManager
     {

@@ -1,7 +1,7 @@
-﻿using NeApplication.IBaseRepositories;
-using Infrastructure.Common;
+﻿using Infrastructure.Common.BaseRepositories.Users;
 using Infrastructure.EntityFramework;
-using Infrastructure.Common.BaseRepositories.Users;
+using Infrastructure.Repositories;
+using NeApplication.IBaseRepositories;
 
 namespace Infrastructure.UnitOfWork
 {
@@ -16,10 +16,7 @@ namespace Infrastructure.UnitOfWork
         {
             get
             {
-                if (_userManager == null)
-                {
-                    _userManager = new UserManager(BaseNovin);
-                }
+                _userManager ??= new UserManager(BaseNovin);
                 return _userManager;
             }
         }
@@ -32,9 +29,6 @@ namespace Infrastructure.UnitOfWork
                 return _notifManager;
             }
         }
-        public void Dispose()
-        {
-            BaseNovin.Dispose();
-        }
+        public void Dispose() => BaseNovin.Dispose();
     }
 }

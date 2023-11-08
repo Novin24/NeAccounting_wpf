@@ -4,7 +4,7 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class PunListViewModel : ObservableObject, INavigationAware
+    public partial class MaterailListViewModel : ObservableObject, INavigationAware
     {
         [ObservableProperty]
         private string _punName = "";
@@ -26,7 +26,6 @@ namespace NeAccounting.ViewModels
 
         private async Task InitializeViewModel()
         {
-
             using (UnitOfWork db = new ())
             {
                 List = await db.materialManager.GetMaterails(PunName,Serial);

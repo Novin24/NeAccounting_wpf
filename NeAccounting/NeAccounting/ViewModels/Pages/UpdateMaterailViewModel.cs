@@ -4,7 +4,7 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels.Pages
 {
-    public partial class DefinitoinOfPunViewModel : ObservableObject, INavigationAware
+    public partial class UpdateMaterailViewModel : ObservableObject, INavigationAware
     {
 
         private bool _isInitialized = false;
@@ -28,9 +28,10 @@ namespace NeAccounting.ViewModels.Pages
         {
             using (UnitOfWork db = new UnitOfWork())
             {
-                AsuBox = await db.customerManager.GetDisplayUser();
+                await db.materialManager.TolistAsync(t => t.Serial == "");
             }
             _isInitialized = true;
         }
+
     }
 }

@@ -12,6 +12,7 @@ using NeAccounting.Services;
 using NeAccounting.ViewModels;
 using NeAccounting.ViewModels.Pages;
 using NeAccounting.Views.Pages;
+using NeAccounting.Views.Pages.Pun;
 using NeAccounting.Windows;
 using System.IO;
 using System.Reflection;
@@ -34,33 +35,51 @@ namespace NeAccounting
             .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
             .ConfigureServices((context, services) =>
             {
+                #region Main
                 services.AddHostedService<ApplicationHostService>();
                 services.AddSingleton<MainWindow>();
                 services.AddSingleton<MainWindowViewModel>();
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<ISnackbarService, SnackbarService>();
                 services.AddSingleton<IContentDialogService, ContentDialogService>();
+                #endregion
 
+                #region Dashboard
                 services.AddTransient<DashboardPage>();
                 services.AddTransient<DashboardViewModel>();
+                #endregion
 
+                #region Recived
                 services.AddTransient<RecPage>();
                 services.AddTransient<RecViewModel>();
+                #endregion
 
+                #region Payment
                 services.AddSingleton<PayPage>();
                 services.AddSingleton<PayViewModel>();
+                #endregion
 
-                services.AddTransient<DefinitionOfPunPage>();
-                services.AddTransient<DefinitoinOfPunViewModel>();
-                services.AddTransient<PunListPage>();
-                services.AddTransient<DefinitoinOfPunViewModel>();
+                #region materials
+                services.AddTransient<CreateMaterailPage>();
+                services.AddTransient<CreateMaterailViewModel>();
+                
+                services.AddTransient<MaterailListPage>();
+                services.AddTransient<MaterailListViewModel>();
+                
+                services.AddTransient<UpdateMaterailPage>();
+                services.AddTransient<UpdateMaterailViewModel>();
+                #endregion
 
+                #region Setting
                 services.AddSingleton<SettingsPage>();
                 services.AddSingleton<SettingsViewModel>();
+                #endregion
 
-                // dbContext
+                #region DbContext
                 services.AddDbContext<NovinDbContext>();
                 services.AddDbContext<BaseDomainDbContext>();
+                #endregion
+
             }).Build();
 
         /// <summary>

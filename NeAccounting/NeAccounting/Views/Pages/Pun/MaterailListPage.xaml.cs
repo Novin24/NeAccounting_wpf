@@ -6,11 +6,11 @@ namespace NeAccounting.Views.Pages.Pun
     /// <summary>
     /// صفحه نمایش اجناس
     /// </summary>
-    public partial class PunListPage :  INavigableView<DashboardViewModel>
+    public partial class MaterailListPage :  INavigableView<MaterailListViewModel>
     {
-        public DashboardViewModel ViewModel { get; }
+        public MaterailListViewModel ViewModel { get; }
 
-        public PunListPage(DashboardViewModel viewModel)
+        public MaterailListPage(MaterailListViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;

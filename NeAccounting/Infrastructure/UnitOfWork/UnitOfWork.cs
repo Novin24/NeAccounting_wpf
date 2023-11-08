@@ -1,8 +1,6 @@
 ﻿using Infrastructure.EntityFramework;
-using Infrastructure.Repositories.CustomerRepository;
-using Infrastructure.Repositories.MaterialRepository;
+using Infrastructure.Repositories;
 using NeApplication.IRepositoryies;
-using NeApplication.IRepositoryies.Materials;
 
 namespace Infrastructure.UnitOfWork
 {
@@ -13,6 +11,8 @@ namespace Infrastructure.UnitOfWork
         private ICustomerManager _customerManager;
 
         private IMaterialManager _materialManager;
+
+        private IUnitManager _unitManager;
 
         public ICustomerManager customerManager
         {
@@ -35,6 +35,18 @@ namespace Infrastructure.UnitOfWork
                     _materialManager = new MaterialManager(NovinDb);
                 }
                 return _materialManager;
+            }
+        }
+        
+        public IUnitManager unitManager
+        {
+            get
+            {
+                if (_unitManager == null)
+                {
+                    _unitManager = new UnitManager(NovinDb);
+                }
+                return _unitManager;
             }
         }
 

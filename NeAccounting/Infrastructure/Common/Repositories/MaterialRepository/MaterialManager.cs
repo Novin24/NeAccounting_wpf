@@ -3,9 +3,9 @@ using DomainShared.Pun;
 using DomainShared.ViewModels;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using NeApplication.IRepositoryies.Materials;
+using NeApplication.IRepositoryies;
 
-namespace Infrastructure.Repositories.MaterialRepository
+namespace Infrastructure.Repositories
 {
     public class MaterialManager : Repository<Material>, IMaterialManager
     {
@@ -41,7 +41,62 @@ namespace Infrastructure.Repositories.MaterialRepository
                     UnitName = x.Unit.Name
                 }).ToListAsync();
         }
+
+
+        public async Task<(string error, bool isSuccess)> CreateMaterial(string name,
+            double entity,
+            int unitId,
+            string serial,
+            string address)
+        {
+            if (await TableNoTracking.AnyAsync(t => t.Name == name))
+                return new("کاربر گرامی این کالا از قبل تعریف شده می‌باشد!!!", false);
+
+            try
+            {
+
+                var t = await Entities.AddAsync(new Material(name,
+                                unitId,
+                                serial,
+                                entity,
+                                address));
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> UpdateMaterial(
+            int materialId,
+            string name,
+            double entity,
+            int unitId,
+            string serial,
+            string address)
+        {
+            try
+            {
+                var mt = await Entities.FindAsync(materialId);
+
+                if (mt == null)
+                    return new("کالای مورد نظر یافت نشد !!!", false);
+
+                mt.Name = name;
+                mt.Entity = entity;
+                mt.UnitId = unitId;
+                mt.Serial = serial;
+                mt.PhysicalAddress = address;
+
+                Update(mt);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
     }
-
-
 }

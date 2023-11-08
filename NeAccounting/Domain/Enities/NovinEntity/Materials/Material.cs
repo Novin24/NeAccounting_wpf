@@ -5,19 +5,19 @@ namespace Domain.NovinEntity.Materials
     public class Material : LocalEntity
     {
         #region Navigation
-        public Unit Unit{ get;private set; }
-        public int UnitId { get; private set; }
+        public Unit Unit{ get;set; }
+        public int UnitId { get; set; }
         #endregion
 
         #region Property
-        public string Name { get; private set; }
-        public string Serial { get; private set; }
-        public double Entity { get; private set; }
-        public long LastPrice { get; private set; }
-        public long SellPrice { get; private set; }
-        public long BuyPrice { get; private set; }
-        public string PhysicalAddress { get; private set; }
-        public bool Active { get; private set; }
+        public string Name { get;  set; }
+        public string Serial { get;  set; }
+        public double Entity { get; set; }
+        public long LastPrice { get; set; }
+        public long SellPrice { get; set; }
+        public long BuyPrice { get; set; }
+        public string PhysicalAddress { get; set; }
+        public bool Active { get; set; }
         #endregion
 
         #region Constructor
@@ -30,18 +30,15 @@ namespace Domain.NovinEntity.Materials
             int unitId,
             string serial,
             double entity,
-            long lastPrice,
-            long sellPrice,
-            long buyPrice,
             string physicalAddress)
         {
             Name = name;
             UnitId = unitId;
             Serial = serial;
             Entity = entity;
-            LastPrice = lastPrice;
-            SellPrice = sellPrice;
-            BuyPrice = buyPrice;
+            LastPrice = 0;
+            SellPrice = 0;
+            BuyPrice = 0;
             PhysicalAddress = physicalAddress;
             Active = true;
         }
