@@ -1,6 +1,6 @@
 ﻿using Domain.NovinEntity.Materials;
-using DomainShared.Pun;
 using DomainShared.ViewModels;
+using DomainShared.ViewModels.Pun;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;

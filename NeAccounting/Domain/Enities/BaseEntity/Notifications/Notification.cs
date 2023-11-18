@@ -1,5 +1,5 @@
 ﻿using Domain.Common;
-using DomainShared.Enums;
+using DomainShared.Enums.Notifs;
 
 namespace Domain.Enities.Notifications
 {

@@ -21,6 +21,4 @@ namespace Infrastructure.Repositories
             }).ToListAsync();
         }
     }
-
-
 }

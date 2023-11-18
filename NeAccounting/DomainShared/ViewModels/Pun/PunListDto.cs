@@ -1,4 +1,4 @@
-﻿namespace DomainShared.Pun
+﻿namespace DomainShared.ViewModels.Pun
 {
     public struct PunListDto
     {
