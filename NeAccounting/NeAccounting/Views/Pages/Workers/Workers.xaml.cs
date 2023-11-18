@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NeAccounting.Views.Pages
+namespace NeAccounting.Views.Pages.Workers
 {
     /// <summary>
-    /// Interaction logic for DefinitionOfPun.xaml
+    /// Interaction logic for Workers.xaml
     /// </summary>
-    public partial class DefinitionOfPun : Page
+    public partial class Workers : Page
     {
-        public DefinitionOfPun()
+        public Workers()
         {
             InitializeComponent();
         }

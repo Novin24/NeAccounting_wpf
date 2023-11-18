@@ -1,14 +1,13 @@
-﻿using NeApplication.IBaseRepositories;
-using Common.Utilities;
+﻿using Common.Utilities;
 using Domain.BaseDomain.User;
 using DomainShared.Constants;
-using Infrastructure.Common.BaseRepositories;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using NeApplication.IBaseRepositories;
 
-namespace Infrastructure.Common
+namespace Infrastructure.Common.BaseRepositories.Users
 {
-    public class UserManager : BaseRepository<IdentityUser>, IUserManager
+    public class UserManager : BaseRepository<IdentityUser>, IIdentityUserManager
     {
         public UserManager(BaseDomainDbContext context) : base(context) { }
 
@@ -38,4 +37,6 @@ namespace Infrastructure.Common
             return true;
         }
     }
+
+
 }

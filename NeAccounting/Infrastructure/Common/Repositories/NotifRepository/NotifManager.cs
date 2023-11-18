@@ -1,11 +1,11 @@
-﻿using NeApplication.IBaseRepositories;
-using Domain.Enities.Notifications;
+﻿using Domain.Enities.Notifications;
 using DomainShared.Notifications;
 using Infrastructure.Common.BaseRepositories;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using NeApplication.IBaseRepositories;
 
-namespace Infrastructure.Common
+namespace Infrastructure.Repositories
 {
     public class NotifManager : BaseRepository<Notification>, INotifManager
     {

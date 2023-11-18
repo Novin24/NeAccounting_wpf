@@ -5,7 +5,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Common.Repositories
+namespace Infrastructure.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : class, IEntities
@@ -22,24 +22,24 @@ namespace Infrastructure.Common.Repositories
         }
 
         #region Async Method
-        public async virtual Task<TEntity> GetByIdAsync(CancellationToken cancellationToken, params object[] ids)
+        public async virtual Task<TEntity> GetByIdAsync(params object[] ids)
         {
-            return await Entities.FindAsync(ids, cancellationToken);
+            return await Entities.FindAsync(ids);
         }
 
-        public async Task<TEntity> FindEntity(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> expression)
+        public async Task<TEntity> FindEntity(Expression<Func<TEntity, bool>> expression)
         {
-            return await TableNoTracking.FirstOrDefaultAsync(expression, cancellationToken);
+            return await TableNoTracking.FirstOrDefaultAsync(expression);
         }
 
-        public virtual async Task<bool> AddAsync(TEntity entity, CancellationToken cancellationToken, bool saveNow = true)
+        public virtual async Task<bool> AddAsync(TEntity entity, bool saveNow = true)
         {
             try
             {
                 Assert.NotNull(entity, nameof(entity));
-                await Entities.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+                await Entities.AddAsync(entity).ConfigureAwait(false);
                 if (saveNow)
-                    await DbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                    await DbContext.SaveChangesAsync().ConfigureAwait(false);
                 return true;
             }
             catch (Exception ex)
@@ -48,14 +48,14 @@ namespace Infrastructure.Common.Repositories
             }
         }
 
-        public virtual async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool saveNow = true)
+        public virtual async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true)
         {
             try
             {
                 Assert.NotNull(entities, nameof(entities));
-                await Entities.AddRangeAsync(entities, cancellationToken).ConfigureAwait(false);
+                await Entities.AddRangeAsync(entities).ConfigureAwait(false);
                 if (saveNow)
-                    await DbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                    await DbContext.SaveChangesAsync().ConfigureAwait(false);
                 return true;
             }
             catch (Exception)
@@ -64,14 +64,14 @@ namespace Infrastructure.Common.Repositories
             }
         }
 
-        public virtual async Task<bool> UpdateAsync(TEntity entity, CancellationToken cancellationToken, bool saveNow = true)
+        public virtual async Task<bool> UpdateAsync(TEntity entity, bool saveNow = true)
         {
             try
             {
                 Assert.NotNull(entity, nameof(entity));
                 Entities.Update(entity);
                 if (saveNow)
-                    await DbContext.SaveChangesAsync(cancellationToken);
+                    await DbContext.SaveChangesAsync();
                 return true;
             }
             catch
@@ -80,7 +80,7 @@ namespace Infrastructure.Common.Repositories
             }
         }
 
-        public virtual async Task<(bool isSuccess, string ErrorMessage)> UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool saveNow = true)
+        public virtual async Task<(bool isSuccess, string ErrorMessage)> UpdateRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace Infrastructure.Common.Repositories
                 Entities.UpdateRange(entities);
                 int count = 0;
                 if (saveNow)
-                    count = await DbContext.SaveChangesAsync(cancellationToken);
+                    count = await DbContext.SaveChangesAsync();
                 return (count >= 0, null);
             }
             catch (Exception e)
@@ -98,14 +98,14 @@ namespace Infrastructure.Common.Repositories
 
         }
 
-        public virtual async Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken, bool saveNow = true)
+        public virtual async Task<bool> DeleteAsync(TEntity entity, bool saveNow = true)
         {
             try
             {
                 Assert.NotNull(entity, nameof(entity));
                 Entities.Remove(entity);
                 if (saveNow)
-                    await DbContext.SaveChangesAsync(cancellationToken);
+                    await DbContext.SaveChangesAsync();
                 return true;
             }
             catch
@@ -114,12 +114,12 @@ namespace Infrastructure.Common.Repositories
             }
         }
 
-        public async Task<bool> DeleteAsync(int entityId, CancellationToken cancellationToken, bool saveNow = true)
+        public async Task<bool> DeleteAsync(int entityId, bool saveNow = true)
         {
             try
             {
 
-                await DeleteAsync(await GetByIdAsync(cancellationToken, entityId), cancellationToken);
+                await DeleteAsync(await GetByIdAsync(entityId));
                 return true;
             }
             catch (Exception)
@@ -128,12 +128,12 @@ namespace Infrastructure.Common.Repositories
             }
         }
 
-        public virtual async Task DeleteRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken, bool saveNow = true)
+        public virtual async Task DeleteRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true)
         {
             Assert.NotNull(entities, nameof(entities));
             Entities.RemoveRange(entities);
             if (saveNow)
-                await DbContext.SaveChangesAsync(cancellationToken);
+                await DbContext.SaveChangesAsync();
         }
 
 
@@ -255,21 +255,33 @@ namespace Infrastructure.Common.Repositories
             return Entities.ToList();
         }
 
-        public virtual async Task<List<TEntity>> TolistAsync(CancellationToken cancellationToken, Expression<Func<TEntity, bool>> expression = null)
+        public virtual async Task<List<TEntity>> TolistAsync(Expression<Func<TEntity, bool>> expression = null)
         {
             if (expression != null)
-                return await TableNoTracking.Where(expression).ToListAsync(cancellationToken);
-            return await TableNoTracking.ToListAsync(cancellationToken);
+                return await TableNoTracking.Where(expression).ToListAsync();
+            return await TableNoTracking.ToListAsync();
         }
-        public virtual async Task<List<TEntity>> TolistAsync<TProperty>(CancellationToken cancellationToken, Expression<Func<TEntity, TProperty>> IncludeExpression, Expression<Func<TEntity, bool>> expression = null)
+
+        public virtual async Task<List<TEntity>> TolistAsync<TResult>(Expression<Func<TEntity, TResult>> selectExpression, Expression<Func<TEntity, bool>> expression = null)
         {
-            if (expression != null && IncludeExpression != null)
-                return await TableNoTracking.Where(expression).Include(IncludeExpression).ToListAsync(cancellationToken);
-            if (IncludeExpression != null)
-                return await TableNoTracking.Include(IncludeExpression).ToListAsync(cancellationToken);
             if (expression != null)
-                return await TableNoTracking.Where(expression).ToListAsync(cancellationToken);
-            return await TableNoTracking.ToListAsync(cancellationToken);
+                TableNoTracking.Where(expression).AsQueryable();
+
+            TableNoTracking.Select(selectExpression).AsQueryable();
+
+            return await TableNoTracking.ToListAsync();
+        }
+        public virtual async Task<List<TEntity>> TolistAsync<TProperty, TResult>(Expression<Func<TEntity, int, TResult>> selectExpression, Expression<Func<TEntity, TProperty>> IncludeExpression, Expression<Func<TEntity, bool>> expression = null)
+        {
+            if (expression != null)
+                TableNoTracking.Where(expression).AsQueryable();
+
+            if (IncludeExpression != null)
+                TableNoTracking.Include(IncludeExpression).AsQueryable();
+
+            TableNoTracking.Select(selectExpression).AsQueryable();
+
+            return await TableNoTracking.ToListAsync();
         }
         #endregion
     }

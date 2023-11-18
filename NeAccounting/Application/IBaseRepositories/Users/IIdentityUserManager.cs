@@ -1,9 +1,9 @@
-﻿using NeApplication.Common;
-using Domain.BaseDomain.User;
+﻿using Domain.BaseDomain.User;
+using NeApplication.Common;
 
 namespace NeApplication.IBaseRepositories
 {
-    public interface IUserManager : IBaseRepository<IdentityUser>
+    public interface IIdentityUserManager : IBaseRepository<IdentityUser>
     {
         Task<bool> LogInUser(string userName, string password);
         Task<IdentityUser> GetUser(string userName);

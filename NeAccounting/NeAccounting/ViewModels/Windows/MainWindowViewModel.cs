@@ -4,6 +4,7 @@ using Wpf.Ui.Controls;
 using NeAccounting.Pages;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Views.Pages;
+using NeAccounting.Views.Pages.Pun;
 
 namespace NeAccounting.ViewModels
 {
@@ -40,7 +41,7 @@ namespace NeAccounting.ViewModels
             {
                 Content = "تعریف اجناس",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.SaveCopy20 },
-                TargetPageType = typeof(DefinitionOfPun)
+                TargetPageType = typeof(MaterailListPage)
             }
         };
 
