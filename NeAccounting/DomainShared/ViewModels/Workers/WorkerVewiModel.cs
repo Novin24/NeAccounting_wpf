@@ -9,6 +9,6 @@ namespace DomainShared.ViewModels.Workers
         public string FullName { get; set; }
         public string JobTitle { get; set; }
         public string NationalCode { get; set; }
-        public Status status { get; set; }
+        public Status Status { get; set; }
     }
 }

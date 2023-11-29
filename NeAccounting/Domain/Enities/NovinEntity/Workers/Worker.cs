@@ -87,7 +87,6 @@ namespace Domain.NovinEntity.Workers
             string accountNumber,
             string description,
             string jobTitle,
-            Status status,
             Shift shift)
         {
             FullName = fullName;
@@ -99,7 +98,7 @@ namespace Domain.NovinEntity.Workers
             AccountNumber = accountNumber;
             Description = description;
             JobTitle = jobTitle;
-            Status = status;
+            Status = Status.InWork;
             ShiftStatus = shift;
         }
         #endregion
