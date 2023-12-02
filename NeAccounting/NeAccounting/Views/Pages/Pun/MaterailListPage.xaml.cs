@@ -1,7 +1,7 @@
 ﻿using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.Views.Pages.Pun
+namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// صفحه نمایش اجناس

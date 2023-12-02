@@ -1,17 +1,16 @@
 ﻿using NeAccounting.ViewModels;
-using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.Views.Pages.Workers
+namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// صفحه نمایش کارگران
     /// </summary>
-    public partial class Workers : INavigableView<WorkerListViewModel>
+    public partial class WorkersList : INavigableView<WorkerListViewModel>
     {
         public WorkerListViewModel ViewModel { get; }
 
-        public Workers(WorkerListViewModel viewModel)
+        public WorkersList(WorkerListViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;

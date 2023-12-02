@@ -1,5 +1,4 @@
-﻿using DomainShared.ViewModels;
-using NeAccounting.ViewModels.Pages;
+﻿using NeAccounting.ViewModels.Pages;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages

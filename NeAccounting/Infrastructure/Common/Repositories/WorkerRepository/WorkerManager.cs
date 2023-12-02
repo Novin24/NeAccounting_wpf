@@ -1,5 +1,4 @@
-﻿using Domain.NovinEntity.Materials;
-using Domain.NovinEntity.Workers;
+﻿using Domain.NovinEntity.Workers;
 using DomainShared.Enums;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.EntityFramework;
@@ -36,7 +35,7 @@ namespace Infrastructure.Repositories
             string mobile,
             string address,
             DateOnly startDate,
-            string personalId,
+            int personalId,
             string accountNumber,
             string description,
             string jobTitle,
@@ -67,6 +66,58 @@ namespace Infrastructure.Repositories
                     description,
                     jobTitle,
                     shift));
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> Update(
+            int id,
+            string fullName,
+            string natinalCode,
+            string mobile,
+            string address,
+            DateOnly startDate,
+            int personalId,
+            string accountNumber,
+            string description,
+            string jobTitle,
+            Status status,
+            Shift shift)
+        {
+            var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.Id == id);
+
+
+            if (worker == null)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+
+            if (natinalCode != worker.NationalCode)
+            {
+                var w = await TableNoTracking.FirstOrDefaultAsync(t => t.Id != id && t.NationalCode == natinalCode);
+                if (w != null)
+                {
+                    return new("کارگر دیگری با این کد ملی موجود می‌باشد!!!!", false);
+                }
+            }
+
+            worker.NationalCode = natinalCode;
+            worker.PersonnelId = personalId;
+            worker.AccountNumber = accountNumber;
+            worker.Description = description;
+            worker.Status = status;
+            worker.FullName = fullName;
+            worker.Mobile = mobile;
+            worker.Address = address;
+            worker.StartDate = startDate;
+            worker.ShiftStatus = shift;
+            worker.JobTitle = jobTitle;
+
+            try
+            {
+                Entities.Update(worker);
             }
             catch (Exception ex)
             {

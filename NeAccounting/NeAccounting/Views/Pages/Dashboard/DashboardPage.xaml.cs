@@ -1,5 +1,4 @@
-﻿using DomainShared.Notifications;
-using Wpf.Ui.Controls;
+﻿using Wpf.Ui.Controls;
 
 namespace NeAccounting.Pages
 {

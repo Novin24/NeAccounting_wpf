@@ -1,4 +1,5 @@
-﻿using DomainShared.ViewModels;
+﻿using DomainShared.Errore;
+using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
 using Wpf.Ui.Controls;
 
@@ -59,27 +60,17 @@ namespace NeAccounting.ViewModels.Pages
         {
             if (string.IsNullOrEmpty(MaterialName))
             {
-                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                ErroreMessage = NeErrorCodes.IsMandatory("نام کالا");
                 return;
             }
-            if (string.IsNullOrEmpty(MaterialName))
+            if (string.IsNullOrEmpty(Serial))
             {
-                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                ErroreMessage = NeErrorCodes.IsMandatory("سریال کالا");
                 return;
             }
-            if (string.IsNullOrEmpty(MaterialName))
+            if (string.IsNullOrEmpty(Address))
             {
-                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
-                return;
-            }
-            if (string.IsNullOrEmpty(MaterialName))
-            {
-                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
-                return;
-            }
-            if (string.IsNullOrEmpty(MaterialName))
-            {
-                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                ErroreMessage = NeErrorCodes.IsMandatory("مکان فیزیکی کالا");
                 return;
             }
 

@@ -43,7 +43,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// شمار پرسنلی
         /// </summary>
-        public string PersonnelId { get; set; }
+        public int PersonnelId { get; set; }
 
         /// <summary>
         /// شماره حساب
@@ -83,7 +83,7 @@ namespace Domain.NovinEntity.Workers
             string mobile,
             string address,
             DateOnly startDate,
-            string personalId,
+            int personalId,
             string accountNumber,
             string description,
             string jobTitle,

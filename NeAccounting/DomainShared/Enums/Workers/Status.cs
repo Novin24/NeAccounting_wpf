@@ -3,7 +3,7 @@
     /// <summary>
     /// وضعیت کارگر
     /// </summary>
-    public enum Status
+    public enum Status : byte
     {
         /// <summary>
         /// همه

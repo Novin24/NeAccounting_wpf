@@ -1,4 +1,5 @@
-﻿using DomainShared.ViewModels;
+﻿using DomainShared.Errore;
+using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
 using Wpf.Ui.Controls;
 
@@ -27,6 +28,9 @@ namespace NeAccounting.ViewModels.Pages
         [ObservableProperty]
         private int _unitId;
 
+        [ObservableProperty]
+        private string _erroreMessage = "";
+
 
         public void OnNavigatedFrom()
         {
@@ -52,12 +56,23 @@ namespace NeAccounting.ViewModels.Pages
         private async Task OnCreate()
         {
             if (string.IsNullOrEmpty(MaterialName))
+            {
+                ErroreMessage = NeErrorCodes.IsMandatory("نام کالا");
                 return;
+            }
+            if (string.IsNullOrEmpty(Serial))
+            {
+                ErroreMessage = NeErrorCodes.IsMandatory("سریال کالا");
+                return;
+            }
+            if (string.IsNullOrEmpty(Address))
+            {
+                ErroreMessage = NeErrorCodes.IsMandatory("مکان فیزیکی کالا");
+                return;
+            }
 
             using UnitOfWork db = new();
             await db.materialManager.CreateMaterial(MaterialName, Entity, UnitId, Serial, Address);
         }
-
-
     }
 }

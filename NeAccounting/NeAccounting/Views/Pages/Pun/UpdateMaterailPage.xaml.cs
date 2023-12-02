@@ -1,7 +1,7 @@
 ﻿using NeAccounting.ViewModels.Pages;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.Views.Pages.Pun
+namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for EditPunPage.xaml

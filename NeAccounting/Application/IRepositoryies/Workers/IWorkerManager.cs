@@ -11,5 +11,31 @@ namespace NeApplication.IRepositoryies
             string jobTitle,
             string nationalCode,
             Status status);
+
+        Task<(string error, bool isSuccess)> Create(
+            string fullName,
+            string natinalCode,
+            string mobile,
+            string address,
+            DateOnly startDate,
+            int personalId,
+            string accountNumber,
+            string description,
+            string jobTitle,
+            Shift shift);
+
+        Task<(string error, bool isSuccess)> Update(
+            int id,
+            string fullName,
+            string natinalCode,
+            string mobile,
+            string address,
+            DateOnly startDate,
+            int personalId,
+            string accountNumber,
+            string description,
+            string jobTitle,
+            Status status,
+            Shift shift);
     }
 }
