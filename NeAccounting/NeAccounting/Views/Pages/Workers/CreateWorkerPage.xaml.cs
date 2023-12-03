@@ -1,14 +1,18 @@
-﻿using System.Windows.Controls;
+﻿using NeAccounting.ViewModels;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for CreateWorkerPage.xaml
+    /// صفحه ایجاد کارگران
     /// </summary>
-    public partial class CreateWorkerPage : Page
+    public partial class CreateWorkerPage : INavigableView<CreateWorkerViewModel>
     {
-        public CreateWorkerPage()
+        public CreateWorkerViewModel ViewModel { get; }
+        public CreateWorkerPage(CreateWorkerViewModel viewModel)
         {
+            ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
         }
     }

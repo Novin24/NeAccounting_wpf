@@ -2,12 +2,14 @@
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
 using Wpf.Ui.Controls;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class CreateWorkerViewModel : ObservableObject, INavigationAware
+    public partial class UpdateWorkerViewModel : ObservableObject, INavigationAware
     {
+        [ObservableProperty]
+        private int _id;
+
         [ObservableProperty]
         private string _fullName = "";
 
@@ -40,6 +42,9 @@ namespace NeAccounting.ViewModels
         private Shift _shift = Shift.ByMounth;
 
         [ObservableProperty]
+        private Status _status = Status.InWork;
+
+        [ObservableProperty]
         private string _erroreMessage = "";
 
         public void OnNavigatedFrom()
@@ -53,7 +58,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnCreate()
+        private async Task OnUpdate()
         {
 
             if (string.IsNullOrEmpty(FullName))
@@ -93,7 +98,8 @@ namespace NeAccounting.ViewModels
             }
 
             using UnitOfWork db = new();
-            var (error, isSuccess) = await db.workerManager.Create(
+            var (error, isSuccess) = await db.workerManager.Update(
+                       Id,
                        FullName,
                        NationalCode,
                        Mobile,
@@ -103,6 +109,7 @@ namespace NeAccounting.ViewModels
                        AccountNumber,
                        Description,
                        JobTitle,
+                       Status,
                        Shift);
 
             if (!isSuccess)

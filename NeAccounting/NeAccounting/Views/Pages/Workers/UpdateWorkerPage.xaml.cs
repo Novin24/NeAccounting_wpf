@@ -1,14 +1,18 @@
-﻿using System.Windows.Controls;
+﻿using NeAccounting.ViewModels;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for UpdateWorkerPage.xaml
+    /// صفحه به روز رسانی کارگران
     /// </summary>
-    public partial class UpdateWorkerPage : Page
+    public partial class UpdateWorkerPage : INavigableView<UpdateWorkerViewModel>
     {
-        public UpdateWorkerPage()
+        public UpdateWorkerViewModel ViewModel { get; }
+        public UpdateWorkerPage(UpdateWorkerViewModel viewModel)
         {
+            ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
         }
     }

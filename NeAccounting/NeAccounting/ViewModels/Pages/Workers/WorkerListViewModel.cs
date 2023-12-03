@@ -5,7 +5,7 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class WorkerListViewModel : ObservableObject, INavigationAware
+    public partial class CreateWorkerViewModel : ObservableObject, INavigationAware
     {
         [ObservableProperty]
         private string _fullName = "";
