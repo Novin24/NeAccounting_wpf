@@ -4,13 +4,13 @@ using Wpf.Ui.Controls;
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// صفحه نمایش اجناس
+    /// صفحه نمایش کارگران
     /// </summary>
-    public partial class MaterailListPage :  INavigableView<MaterailListViewModel>
+    public partial class WorkersList : INavigableView<WorkerListViewModel>
     {
-        public MaterailListViewModel ViewModel { get; }
+        public WorkerListViewModel ViewModel { get; }
 
-        public MaterailListPage(MaterailListViewModel viewModel)
+        public WorkersList(WorkerListViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;

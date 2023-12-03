@@ -23,8 +23,4 @@
     <ProjectReference Include="..\DomainShared\DomainShared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Enities\NovinEntity\Workers\" />
-  </ItemGroup>
-
 </Project>

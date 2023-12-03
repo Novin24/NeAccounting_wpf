@@ -12,7 +12,6 @@ using NeAccounting.Services;
 using NeAccounting.ViewModels;
 using NeAccounting.ViewModels.Pages;
 using NeAccounting.Views.Pages;
-using NeAccounting.Views.Pages.Pun;
 using NeAccounting.Windows;
 using System.IO;
 using System.Reflection;

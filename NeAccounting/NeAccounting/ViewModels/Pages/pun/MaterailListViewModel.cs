@@ -1,4 +1,4 @@
-﻿using DomainShared.Pun;
+﻿using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using Wpf.Ui.Controls;
 
@@ -26,10 +26,8 @@ namespace NeAccounting.ViewModels
 
         private async Task InitializeViewModel()
         {
-            using (UnitOfWork db = new ())
-            {
-                List = await db.materialManager.GetMaterails(PunName,Serial);
-            }
+            using UnitOfWork db = new();
+            List = await db.materialManager.GetMaterails(PunName, Serial);
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using DomainShared.ViewModels;
+﻿using DomainShared.Errore;
+using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels.Pages
 {
-    public partial class UpdateMaterailViewModel : ObservableObject, INavigationAware
+    public partial class CreateMaterailViewModel : ObservableObject, INavigationAware
     {
 
         private bool _isInitialized = false;
@@ -28,10 +29,8 @@ namespace NeAccounting.ViewModels.Pages
         private int _unitId;
 
         [ObservableProperty]
-        private int _materialId;
-
-        [ObservableProperty]
         private string _erroreMessage = "";
+
 
         public void OnNavigatedFrom()
         {
@@ -44,7 +43,6 @@ namespace NeAccounting.ViewModels.Pages
                 await InitializeViewModel();
         }
 
-
         private async Task InitializeViewModel()
         {
             using (UnitOfWork db = new())
@@ -55,36 +53,26 @@ namespace NeAccounting.ViewModels.Pages
         }
 
         [RelayCommand]
-        private async Task OnUpdate()
+        private async Task OnCreate()
         {
             if (string.IsNullOrEmpty(MaterialName))
             {
-                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                ErroreMessage = NeErrorCodes.IsMandatory("نام کالا");
                 return;
             }
-            if (string.IsNullOrEmpty(MaterialName))
+            if (string.IsNullOrEmpty(Serial))
             {
-                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                ErroreMessage = NeErrorCodes.IsMandatory("سریال کالا");
                 return;
             }
-            if (string.IsNullOrEmpty(MaterialName))
+            if (string.IsNullOrEmpty(Address))
             {
-                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
-                return;
-            }
-            if (string.IsNullOrEmpty(MaterialName))
-            {
-                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
-                return;
-            }
-            if (string.IsNullOrEmpty(MaterialName))
-            {
-                ErroreMessage = "وارد کردن نام کالا الزامیست !!!";
+                ErroreMessage = NeErrorCodes.IsMandatory("مکان فیزیکی کالا");
                 return;
             }
 
             using UnitOfWork db = new();
-            await db.materialManager.UpdateMaterial(MaterialId, MaterialName, Entity, UnitId, Serial, Address);
+            await db.materialManager.CreateMaterial(MaterialName, Entity, UnitId, Serial, Address);
         }
     }
 }

@@ -1,10 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using Infrastructure.UnitOfWork;
+using NeAccounting.Pages;
+using NeAccounting.Views.Pages;
+using System.Collections.ObjectModel;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
-using NeAccounting.Pages;
-using Infrastructure.UnitOfWork;
-using NeAccounting.Views.Pages;
-using NeAccounting.Views.Pages.Pun;
 
 namespace NeAccounting.ViewModels
 {
