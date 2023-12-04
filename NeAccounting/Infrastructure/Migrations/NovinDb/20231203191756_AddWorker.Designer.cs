@@ -4,6 +4,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.NovinDb
 {
     [DbContext(typeof(NovinDbContext))]
-    partial class NovinDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231203191756_AddWorker")]
+    partial class AddWorker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,9 +60,6 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
@@ -99,9 +99,6 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.Property<long>("Etebar")
                         .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
@@ -156,9 +153,6 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
@@ -218,9 +212,6 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.Property<double>("Entity")
                         .HasColumnType("float");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
@@ -283,9 +274,6 @@ namespace Infrastructure.Migrations.NovinDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
@@ -330,6 +318,7 @@ namespace Infrastructure.Migrations.NovinDb
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("EndDate")
@@ -338,9 +327,6 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("JobTitle")
                         .IsRequired()
@@ -373,8 +359,6 @@ namespace Infrastructure.Migrations.NovinDb
                         .HasColumnType("tinyint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonnelId");
 
                     b.ToTable("Worker");
                 });

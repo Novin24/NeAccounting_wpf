@@ -16,7 +16,6 @@ namespace NeAccounting.ViewModels
         private IEnumerable<PunListDto> _list;
         public void OnNavigatedFrom()
         {
-            throw new NotImplementedException();
         }
 
         public async void OnNavigatedTo()

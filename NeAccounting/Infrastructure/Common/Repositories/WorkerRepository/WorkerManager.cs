@@ -9,15 +9,27 @@ namespace Infrastructure.Repositories
 {
     public class WorkerManager : Repository<Worker>, IWorkerManager
     {
-        public WorkerManager(NovinDbContext context) : base(context) { }
+        public WorkerManager(NovinDbContext context) : base(context)
+        {
+
+        }
 
         public Task<List<WorkerVewiModel>> GetWorkers(string fullName, string jobTitle, string nationalCode, Status status)
         {
+            if (!string.IsNullOrEmpty(fullName))
+                TableNoTracking.Where(t => t.FullName.Contains(fullName));
+
+            if (!string.IsNullOrEmpty(jobTitle))
+                TableNoTracking.Where(t => t.JobTitle.Contains(jobTitle));
+
+            if (!string.IsNullOrEmpty(nationalCode))
+                TableNoTracking.Where(t => t.NationalCode.Contains(nationalCode));
+
+            if (status != Status.All)
+                TableNoTracking.Where(t => t.Status == status);
+
             return TableNoTracking
-                .Where(t => !string.IsNullOrEmpty(fullName) && t.FullName.Contains(fullName))
-                .Where(t => !string.IsNullOrEmpty(jobTitle) && t.JobTitle.Contains(jobTitle))
-                .Where(t => !string.IsNullOrEmpty(nationalCode) && t.JobTitle.Contains(nationalCode))
-                .Where(t => status != Status.All && t.Status == status)
+                .Where(t => t.IsDeleted == false)
                 .Select(t => new WorkerVewiModel
                 {
                     Id = t.Id,
@@ -34,7 +46,7 @@ namespace Infrastructure.Repositories
             string natinalCode,
             string mobile,
             string address,
-            DateOnly startDate,
+            DateTime startDate,
             int personalId,
             string accountNumber,
             string description,
@@ -80,7 +92,7 @@ namespace Infrastructure.Repositories
             string natinalCode,
             string mobile,
             string address,
-            DateOnly startDate,
+            DateTime startDate,
             int personalId,
             string accountNumber,
             string description,

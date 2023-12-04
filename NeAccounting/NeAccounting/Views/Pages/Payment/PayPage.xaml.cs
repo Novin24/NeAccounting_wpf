@@ -10,21 +10,25 @@ namespace NeAccounting.Pages
     public partial class PayPage : INavigableView<PayViewModel>
     {
         public PayViewModel ViewModel { get; }
-        public Guid cusId { get; set; }
+        public Guid CusId { get; set; }
 
         public PayPage(PayViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-            Lastchecks One = new Lastchecks();
-            One.LastchecksAmount = "286,000";
-            One.LastchecksDate = "12/12/1402";
+            Lastchecks One = new()
+            {
+                LastchecksAmount = "286,000",
+                LastchecksDate = "12/12/1402"
+            };
             LastChecksdata.Items.Add(One);
 
-            Lastchecks two = new Lastchecks();
-            two.LastchecksAmount = "286,000";
-            two.LastchecksDate = "12/12/1402";
+            Lastchecks two = new()
+            {
+                LastchecksAmount = "286,000",
+                LastchecksDate = "12/12/1402"
+            };
             LastChecksdata.Items.Add(two);
         }
 
@@ -37,10 +41,10 @@ namespace NeAccounting.Pages
 
         private void AutoSuggestBoxSuggestions_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-          //var t =   ViewModel.AutoSuggestBoxSuggestions.FirstOrDefault(a => a.Id == 
-          //((SuggestBoxViewModel<Guid>)args.SelectedItem).Id);
+            //var t =   ViewModel.AutoSuggestBoxSuggestions.FirstOrDefault(a => a.Id == 
+            //((SuggestBoxViewModel<Guid>)args.SelectedItem).Id);
 
-            cusId = ((SuggestBoxViewModel<Guid>)args.SelectedItem).Id;
+            CusId = ((SuggestBoxViewModel<Guid>)args.SelectedItem).Id;
 
         }
     }

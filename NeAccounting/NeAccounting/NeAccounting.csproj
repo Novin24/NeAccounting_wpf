@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>wpfui-icon.ico</ApplicationIcon>
     <Nullable>enable</Nullable>
