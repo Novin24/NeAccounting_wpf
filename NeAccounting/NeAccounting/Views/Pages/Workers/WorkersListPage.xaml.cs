@@ -15,5 +15,6 @@ namespace NeAccounting.Views.Pages
             DataContext = this;
             InitializeComponent();
         }
+
     }
 }

@@ -126,7 +126,7 @@
                                   FontFamily="Calibri"
                                   FontWeight="Bold"
                                   FontSize="18"
-                                  Text=": شماره سند " />
+                                  Text=": شماره sند " />
                     <ui:TextBlock Margin="0 20 20 0"
                                   Height="40"
                                   HorizontalAlignment="Right"

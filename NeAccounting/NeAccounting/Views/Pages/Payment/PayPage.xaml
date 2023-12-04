@@ -164,7 +164,7 @@
                                     FlowDirection="RightToLeft"
                                     Background="{DynamicResource ApplicationBackgroundBrush}">
                             <TabItem IsSelected="True"
-                                     Header="اسناد دریافتی">
+                                     Header="اسناد پرداختی">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"></RowDefinition>
@@ -286,7 +286,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Margin="0,0,2,0"
-                                     Header="چک دریافتی">
+                                     Header="چک پرداختی">
 
                                 <Grid>
                                     <Grid.RowDefinitions>
