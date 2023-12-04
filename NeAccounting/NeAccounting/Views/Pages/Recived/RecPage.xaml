@@ -55,13 +55,32 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0"
-                        CornerRadius="10 0 0 10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="6*"></RowDefinition>
+
+                </Grid.RowDefinitions>
+                <ui:TextBlock Margin="10 0 0 0"
+                              Height="40"
+                              HorizontalAlignment="left"
+                              FontFamily="STXingkai"
+                              FontSize="35"
+                              Text="Novin" />
+                <Border Grid.Row="1"
+                        CornerRadius="9"
+                        Margin="4"
+                        BorderBrush="#D6D5D5"
+                        BorderThickness="0.4">
+                    <Border.Background>
+                        <SolidColorBrush Color="White"
+                                         Opacity="0.08" />
+                    </Border.Background>
+
                     <Grid>
                         <Grid.RowDefinitions>
 
                             <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <StackPanel Margin="10 10 10 10">
@@ -101,38 +120,42 @@
                     </Grid>
                 </Border>
                 <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"></RowDefinition>
-                        <RowDefinition Height="5*"></RowDefinition>
+                    <ui:TextBlock Margin="0 20 20 0"
+                                  Height="40"
+                                  HorizontalAlignment="Right"
+                                  FontFamily="Calibri"
+                                  FontWeight="Bold"
+                                  FontSize="18"
+                                  Text=": شماره سند " />
+                    <ui:TextBlock Margin="0 20 20 0"
+                                  Height="40"
+                                  HorizontalAlignment="Right"
+                                  FontFamily="Calibri"
+                                  FontWeight="Bold"
+                                  FontSize="18"
+                                  Text="999                     " />
+                    <TextBlock Margin="20 20 0 0"
+                               Height="40"
+                               HorizontalAlignment="Left"
+                               FontFamily="Calibri"
+                               FontWeight="Bold"
+                               FontSize="18"
+                               Foreground="White"><Run Text="1402/05/21 " /></TextBlock>
 
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <TextBlock Margin="0 20 20 0"
-                                   Height="40"
-                                   HorizontalAlignment="Right"
-                                   FontFamily="Calibri"
-                                   FontWeight="Bold"
-                                   FontSize="15"
-                                   Foreground="White"><Run Text="999 : شماره سند " /></TextBlock>
-                        <TextBlock Margin="20 20 0 0"
-                                   Height="40"
-                                   HorizontalAlignment="Left"
-                                   FontFamily="Calibri"
-                                   FontWeight="Bold"
-                                   FontSize="15"
-                                   Foreground="White"><Run Text="1402/05/21 " /></TextBlock>
-
-                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1"
+                      Grid.Row="1">
                     <Border Grid.Row="1"
                             CornerRadius="9"
                             BorderBrush="#D6D5D5"
-                            BorderThickness="0.4">
+                            BorderThickness="0.4"
+                            Margin="4">
                         <Border.Background>
                             <SolidColorBrush Color="White"
                                              Opacity="0.08" />
                         </Border.Background>
 
-                        <TabControl Margin="8,8,8,0"
+                        <TabControl Margin="8,8,8,8"
                                     Grid.Row="1"
                                     FlowDirection="RightToLeft"
                                     Background="{DynamicResource ApplicationBackgroundBrush}">
@@ -161,7 +184,7 @@
                                                     FontSize="14"
                                                     Grid.Row="0"
                                                     Grid.Column="0"
-                                                    Margin="20 4 30 0 "
+                                                    Margin="20 4 3 0 "
                                                     CaretBrush="White"
                                                     FontFamily="Calibri" />
                                     </StackPanel>
@@ -196,7 +219,9 @@
                                     <TextBlock HorizontalAlignment="Center"
                                                Margin="3 20 20 0"
                                                VerticalAlignment="Center"
+                                               TextAlignment="Center"
                                                FontFamily="Calibri"
+                                               TextWrapping="Wrap"
                                                FontWeight="Bold"
                                                FontSize="14"
                                                Grid.Row="1"
@@ -217,7 +242,7 @@
                                     </StackPanel>
 
 
-                                    <CheckBox Content="تسویه کامل"
+                                    <RadioButton Content="تسویه کامل"
                                               Grid.Column="1"
                                               Grid.Row="2"
                                               FontFamily="Calibri"
