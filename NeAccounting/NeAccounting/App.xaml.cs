@@ -16,6 +16,7 @@ using NeAccounting.Windows;
 using System.IO;
 using System.Reflection;
 using System.Windows.Threading;
+using Wpf.Ui;
 
 namespace NeAccounting
 {

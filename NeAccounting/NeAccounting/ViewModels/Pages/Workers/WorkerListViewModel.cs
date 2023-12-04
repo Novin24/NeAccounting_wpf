@@ -1,7 +1,7 @@
 ﻿using DomainShared.Enums;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
-using Wpf.Ui.Common;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
@@ -50,7 +50,7 @@ namespace NeAccounting.ViewModels
                         Status);
 
             if (!List.Any())
-                _snackbarService.Show("اوه","هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Info,new SymbolIcon(SymbolRegular.Warning20),TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("اوه","هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Caution,new SymbolIcon(SymbolRegular.Warning20),TimeSpan.FromMilliseconds(2000));
         }
     }
 }

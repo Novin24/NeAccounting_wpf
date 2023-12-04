@@ -29,7 +29,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="WPF-UI" Version="3.0.0-preview.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1 " />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1 " />
   </ItemGroup>
@@ -37,6 +36,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\NeApplication.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Wpf.Ui">
+      <HintPath>..\..\..\..\Library\Wpf.Ui.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
