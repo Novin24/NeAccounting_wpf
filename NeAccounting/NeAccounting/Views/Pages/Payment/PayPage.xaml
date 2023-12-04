@@ -40,13 +40,13 @@
                 Grid.RowSpan="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Rectangle One}"
+                Background="{StaticResource Rectangle Dark blue}"
                 CornerRadius="10"></Border>
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="3"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Rectangle Two}"
+                Background="{StaticResource Rectangle Pale blue}"
                 CornerRadius="10"></Border>
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
