@@ -207,13 +207,7 @@
                                                    FontSize="14"
                                                    Text="مبلغ تخفیف"
                                                    Margin="22 4 0 0 " />
-                                        <ui:NumberBox Grid.Column="0"
-                                                      Grid.Row="2"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      Margin="20 4 3 0"
-                                                      TextAlignment="Center"
-                                                      FontSize="14"
-                                                      FontFamily="Calibri" />
+ 
                                     </StackPanel>
 
 

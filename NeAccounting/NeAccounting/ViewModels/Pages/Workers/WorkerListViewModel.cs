@@ -50,7 +50,7 @@ namespace NeAccounting.ViewModels
                         Status);
 
             if (!List.Any())
-                _snackbarService.Show("اوه","هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Caution,new SymbolIcon(SymbolRegular.Warning20),TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("اوه","هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Primary,new SymbolIcon(SymbolRegular.Warning20),TimeSpan.FromMilliseconds(2000));
         }
     }
 }
