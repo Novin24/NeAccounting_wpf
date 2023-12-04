@@ -23,7 +23,7 @@ namespace NeAccounting.ViewModels
         private string _address = "";
 
         [ObservableProperty]
-        private DateOnly _startDate = DateOnly.FromDateTime(DateTime.Now);
+        private DateTime _startDate = DateTime.Now;
 
         [ObservableProperty]
         private int _personalId;

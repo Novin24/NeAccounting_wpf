@@ -24,6 +24,9 @@ namespace NeAccounting.ViewModels
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Home32 },
                 TargetPageType = typeof(DashboardPage)
             },
+
+            new NavigationViewItemSeparator(),
+
             new NavigationViewItem()
             {
                 Content = "دریافتی",
@@ -38,9 +41,14 @@ namespace NeAccounting.ViewModels
             },
             new NavigationViewItem()
             {
-                Content = "تعریف اجناس",
+                Content = "تعریف اولیه",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.SaveCopy20 },
-                TargetPageType = typeof(MaterailListPage)
+                //TargetPageType = typeof(MaterailListPage)
+                MenuItems = new ObservableCollection<object>
+                {
+                    new NavigationViewItem { Content = "اجناس", TargetPageType = typeof(MaterailListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.BuildingRetailMore20} },
+                    new NavigationViewItem { Content = "کارگران", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
+                }
             }
         };
 
@@ -74,7 +82,7 @@ namespace NeAccounting.ViewModels
                 LogInError = "وارد کردن گذرواژه الزامیست !!!";
                 return false;
             }
-            using (BaseUnitOfWork db = new BaseUnitOfWork())
+            using (BaseUnitOfWork db = new())
             {
                 if (await db.userRepository.LogInUser(userName, password))
                 {

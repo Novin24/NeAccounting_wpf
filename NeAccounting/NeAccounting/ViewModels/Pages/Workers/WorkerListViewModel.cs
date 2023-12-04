@@ -1,12 +1,16 @@
 ﻿using DomainShared.Enums;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
+using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class CreateWorkerViewModel : ObservableObject, INavigationAware
+    public partial class WorkerListViewModel : ObservableObject, INavigationAware
     {
+        private readonly ISnackbarService _snackbarService;
+
+
         [ObservableProperty]
         private string _fullName = "";
 
@@ -21,9 +25,14 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private IEnumerable<WorkerVewiModel> _list;
+
+        public WorkerListViewModel(ISnackbarService snackbarService)
+        {
+            _snackbarService = snackbarService;
+        }
+
         public void OnNavigatedFrom()
         {
-            throw new NotImplementedException();
         }
 
         public async void OnNavigatedTo()
@@ -39,6 +48,9 @@ namespace NeAccounting.ViewModels
                         JobTitle,
                         NationalCode,
                         Status);
+
+            if (!List.Any())
+                _snackbarService.Show("اوه","هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Info,new SymbolIcon(SymbolRegular.Warning20),TimeSpan.FromMilliseconds(2000));
         }
     }
 }

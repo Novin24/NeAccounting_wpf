@@ -33,12 +33,12 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// تاریخ شروع به کار
         /// </summary>
-        public DateOnly StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         /// <summary>
         /// تاریخ اتمام کار
         /// </summary>
-        public DateOnly? EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// شمار پرسنلی
@@ -53,7 +53,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// توضیحات
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// وضعیت
@@ -82,7 +82,7 @@ namespace Domain.NovinEntity.Workers
             string natinalCode,
             string mobile,
             string address,
-            DateOnly startDate,
+            DateTime startDate,
             int personalId,
             string accountNumber,
             string description,

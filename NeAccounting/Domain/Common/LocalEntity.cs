@@ -12,6 +12,7 @@ namespace Domain.Common
         public Guid? LastModifireId { get; set; }
         public DateTime? DeletionTime { get; set; }
         public Guid? DeleterId { get; set; }
+        public bool IsDeleted { get; set; }
     }
 
     public abstract class LocalEntity : LocalEntity<int>

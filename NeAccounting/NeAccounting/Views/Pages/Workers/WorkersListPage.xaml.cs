@@ -6,10 +6,10 @@ namespace NeAccounting.Views.Pages
     /// <summary>
     /// صفحه نمایش کارگران
     /// </summary>
-    public partial class WorkersList : INavigableView<CreateWorkerViewModel>
+    public partial class WorkersListPage : INavigableView<WorkerListViewModel>
     {
-        public CreateWorkerViewModel ViewModel { get; }
-        public WorkersList(CreateWorkerViewModel viewModel)
+        public WorkerListViewModel ViewModel { get; }
+        public WorkersListPage(WorkerListViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;

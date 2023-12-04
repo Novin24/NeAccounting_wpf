@@ -1,5 +1,6 @@
 ﻿using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
+using Domain.NovinEntity.Workers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Reflection;
@@ -26,6 +27,18 @@ namespace Infrastructure.Utilities
                 b.Property(r => r.Name).IsRequired();
                 b.Property(r => r.NationalCode).IsRequired();
                 b.Property(r => r.Mobile).IsRequired();
+            });
+
+
+            builder.Entity<Worker>(b =>
+            {
+                b.HasIndex(t => t.PersonnelId);
+                b.Property(t=> t.FullName).IsRequired();
+                b.Property(t=> t.Mobile).IsRequired();
+                b.Property(t=> t.NationalCode).IsRequired();
+                b.Property(t=> t.Address).IsRequired();
+                b.Property(t=> t.AccountNumber).IsRequired();
+                b.Property(t=> t.JobTitle).IsRequired();
             });
         }
 

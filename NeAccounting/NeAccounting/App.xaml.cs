@@ -48,6 +48,17 @@ namespace NeAccounting
                 services.AddTransient<DashboardViewModel>();
                 #endregion
 
+                #region worker
+                services.AddTransient<WorkersListPage>();
+                services.AddTransient<WorkerListViewModel>();
+
+                services.AddTransient<CreateWorkerPage>();
+                services.AddTransient<CreateWorkerViewModel>();
+
+                services.AddTransient<UpdateWorkerPage>();
+                services.AddTransient<UpdateWorkerViewModel>();
+                #endregion
+
                 #region Recived
                 services.AddTransient<RecPage>();
                 services.AddTransient<RecViewModel>();
