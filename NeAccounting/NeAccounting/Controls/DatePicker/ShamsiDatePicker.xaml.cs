@@ -26,12 +26,7 @@ namespace NeAcconting.Controls.DatePicker
         //Christian
 
 
-        private List<int> itm = new List<int>()
-        {
-            1401,
-            1402,
-            1403
-        };
+        private List<int> itm;
 
         int yearChristian = 2009;
         int monthChristian = 01;
@@ -58,6 +53,8 @@ namespace NeAcconting.Controls.DatePicker
             InitializeComponent();
 
             LoadXMLFile();
+            LoadYear();
+
             DataContext = this;
             // Insert code required on object creation below this point
             this.currentYear = persianCalendar.GetYear(DateTime.Now);
@@ -67,12 +64,14 @@ namespace NeAcconting.Controls.DatePicker
             //select correct month and year
             this.comboBoxMonths.SelectedIndex = currentMonth - 1;
             this.comboBoxYear.ItemsSource = itm;
-            //this.comboBoxYear.SelectedItem = currentYear;
+            this.comboBoxYear.SelectedItem = currentYear;
 
             calculateMonth(currentYear, currentMonth);
 
             IsCalculated = true;
         }
+
+
         #region calculating and showing the calendar
 
         /// <summary>
@@ -160,6 +159,15 @@ namespace NeAcconting.Controls.DatePicker
             {
                 MessageBox.Show(ex.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        /// <summary>
+        /// load range of Year
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private void LoadYear()
+        {
+            itm = Enumerable.Range(currentYear - 50, 100).ToList();
         }
 
         /// <summary>
