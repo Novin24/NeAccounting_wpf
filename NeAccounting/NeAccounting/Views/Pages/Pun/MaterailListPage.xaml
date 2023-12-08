@@ -143,7 +143,6 @@
                                 </StackPanel>
                             </Grid>
                             <DataGrid Margin="50 10 50 5"
-                                      x:Name="LastChecksdata"
                                       BorderThickness="10"
                                       Grid.Row="2"
                                       CanUserResizeColumns="False"

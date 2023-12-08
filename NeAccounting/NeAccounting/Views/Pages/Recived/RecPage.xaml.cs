@@ -15,6 +15,7 @@ namespace NeAccounting.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+           
             Lastchecks One = new Lastchecks();
             One.LastchecksAmount = "286,000";
             One.LastchecksDate = "12/12/1402";
