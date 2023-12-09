@@ -19,28 +19,21 @@ namespace NeAcconting.Controls.DatePicker
 
         //برای حرکت بین ماه ها
         //به شمسی
-        int yearForNavigating = 1387;
-        int monthForNavigating = 10;
+        private int yearForNavigating = 1387;
+        private int monthForNavigating = 10;
+
+        /// <summary>
+        /// سال های قابل نمایش
+        /// </summary>
+        private List<int> itm;
 
         //اطلاعات روزی که کاربر روی آن کلیک کرده
         //Christian
-
-
-        private List<int> itm;
-
-        int yearChristian = 2009;
-        int monthChristian = 01;
-        int dayChristian = 01;
+        public DateTime SelectedDate { get; set; }
 
         //Persian
-        int yearPersian = 1387;
-        int monthPersian = 01;
-        int dayPersian = 01;
+        public string PersianSelectedDate { get; set; }
 
-        //Hijri
-        int yearHijri = 1387;
-        int monthHijri = 01;
-        int dayHijri = 01;
 
         // ایا تقویم به صورت کامل بارگذازی شده
         private bool IsCalculated = false;
@@ -415,12 +408,7 @@ namespace NeAcconting.Controls.DatePicker
         /// </summary>
         /// <param name="which">Purpose Grid</param>
         /// <param name="persianDate">Text of Persian date</param>
-        /// <param name="hijriDate">Text of Hijri date</param>
-        /// <param name="miladiDate">Text of Christian date</param>
-        /// <param name=""RectangleStyleToday"">New name of rectangle resource</param>
         /// <param name="persianTextBlockResourceName">New name of Persian date resource</param>
-        /// <param name="hijriTextBlockResourceName">New name of Hijri date resource</param>
-        /// <param name="miladiTextBlockResourceName">New name of Christian date resource</param>
         /// <param name="tooltip_context">Text of tooltip</param>
         void changeProperties(int which, string persianDate, bool isCurrentDay, string persianTextBlockResourceName, string tooltip_context)
         {
@@ -855,6 +843,13 @@ namespace NeAcconting.Controls.DatePicker
             calculateMonth((int)comboBoxYear.SelectedItem, monthForNavigating);
         }
         #endregion Events
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int day = Convert.ToInt32((sender as Button).Content.ToString());
+            SelectedDate = persianCalendar.ToDateTime(yearForNavigating, monthForNavigating, day, 0, 0, 0, 0);
+            PersianSelectedDate = string.Concat(yearForNavigating,"/",monthForNavigating,"/",day);
+        }
     }
 
 

@@ -1,10 +1,9 @@
-﻿using NeAccounting.Controls.PersianDates;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace NeAcconting.PersianDateControls
+namespace NeAcconting.Controls.DatePicker
 {
     [DefaultEvent("SelectedDateChanged")]
     [DefaultProperty("SelectedDate")]
@@ -16,21 +15,12 @@ namespace NeAcconting.PersianDateControls
             setBindings();
             this.Text = this.SelectedDate.ToString();
 
-            //this is for closing the popup when a date is selected using PersianCalendar
-            foreach (var monthModeButton in this.persianCalendar.monthModeButtons)
-            {
-                monthModeButton.Click += delegate
-                {
-                    this.persianCalnedarPopup.IsOpen = false;
-                };
-            }
-
         }
 
         [Category("Date Picker")]
-        public  PersianDate SelectedDate
+        public PersianDate SelectedDate
         {
-            get { return ( PersianDate)GetValue(SelectedDateProperty); }
+            get { return (PersianDate)GetValue(SelectedDateProperty); }
             set { SetValue(SelectedDateProperty, value); }
         }
         public static readonly DependencyProperty SelectedDateProperty;
@@ -39,9 +29,9 @@ namespace NeAcconting.PersianDateControls
         /// Gets or sets the date that is being displayed in the calendar.
         /// </summary>
         [Category("Date Picker")]
-        public  PersianDate DisplayDate
+        public PersianDate DisplayDate
         {
-            get { return ( PersianDate)GetValue(DisplayDateProperty); }
+            get { return (PersianDate)GetValue(DisplayDateProperty); }
             set { SetValue(DisplayDateProperty, value); }
         }
         public static readonly DependencyProperty DisplayDateProperty;
@@ -50,9 +40,9 @@ namespace NeAcconting.PersianDateControls
         /// the minimum date that is displayed, and can be selected
         /// </summary>
         [Category("Date Picker")]
-        public  PersianDate DisplayDateStart
+        public PersianDate DisplayDateStart
         {
-            get { return ( PersianDate)GetValue(DisplayDateStartProperty); }
+            get { return (PersianDate)GetValue(DisplayDateStartProperty); }
             set { SetValue(DisplayDateStartProperty, value); }
         }
         public static readonly DependencyProperty DisplayDateStartProperty;
@@ -62,9 +52,9 @@ namespace NeAcconting.PersianDateControls
         /// the maximum date that is displayed, and can be selected
         /// </summary>
         [Category("Date Picker")]
-        public  PersianDate DisplayDateEnd
+        public PersianDate DisplayDateEnd
         {
-            get { return ( PersianDate)GetValue(DisplayDateEndProperty); }
+            get { return (PersianDate)GetValue(DisplayDateEndProperty); }
             set { SetValue(DisplayDateEndProperty, value); }
         }
         public static readonly DependencyProperty DisplayDateEndProperty;
@@ -90,7 +80,7 @@ namespace NeAcconting.PersianDateControls
         static object coerceDisplayDateEnd(DependencyObject d, object o)
         {
             var pdp = d as PersianDatePicker;
-             PersianDate value = ( PersianDate)o;
+            PersianDate value = (PersianDate)o;
             if (value < pdp.DisplayDateStart)
             {
                 return pdp.DisplayDateStart;
@@ -100,7 +90,7 @@ namespace NeAcconting.PersianDateControls
         static object coerceDateToBeInRange(DependencyObject d, object o)
         {
             PersianDatePicker pdp = d as PersianDatePicker;
-             PersianDate value = ( PersianDate)o;
+            PersianDate value = (PersianDate)o;
             if (value < pdp.DisplayDateStart)
             {
                 return pdp.DisplayDateStart;
@@ -121,27 +111,27 @@ namespace NeAcconting.PersianDateControls
 
         static PersianDatePicker()
         {
-            PropertyMetadata selectedDateMetadata = new PropertyMetadata( PersianDate.Today, selectedDateChanged);
+            PropertyMetadata selectedDateMetadata = new PropertyMetadata(PersianDate.Today, selectedDateChanged);
             selectedDateMetadata.CoerceValueCallback = coerceDateToBeInRange;
             SelectedDateProperty =
-                DependencyProperty.Register("SelectedDate", typeof( PersianDate), typeof(PersianDatePicker), selectedDateMetadata);
+                DependencyProperty.Register("SelectedDate", typeof(PersianDate), typeof(PersianDatePicker), selectedDateMetadata);
 
-            PropertyMetadata displayDateMetadata = new PropertyMetadata( PersianDate.Today);
+            PropertyMetadata displayDateMetadata = new PropertyMetadata(PersianDate.Today);
             displayDateMetadata.CoerceValueCallback = coerceDateToBeInRange;
             DisplayDateProperty =
-                DependencyProperty.Register("DisplayDate", typeof( PersianDate), typeof(PersianDatePicker), displayDateMetadata);
+                DependencyProperty.Register("DisplayDate", typeof(PersianDate), typeof(PersianDatePicker), displayDateMetadata);
 
-            PropertyMetadata textMetadata = new PropertyMetadata( PersianDate.Today.ToString());
+            PropertyMetadata textMetadata = new PropertyMetadata(PersianDate.Today.ToString());
             TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(PersianDatePicker), textMetadata);
 
-            PropertyMetadata displayDateStartMetaData = new PropertyMetadata(new  PersianDate());
+            PropertyMetadata displayDateStartMetaData = new PropertyMetadata(new PersianDate());
             DisplayDateStartProperty =
-                DependencyProperty.Register("DisplayDateStart", typeof( PersianDate), typeof(PersianDatePicker), displayDateStartMetaData);
+                DependencyProperty.Register("DisplayDateStart", typeof(PersianDate), typeof(PersianDatePicker), displayDateStartMetaData);
 
-            PropertyMetadata displayDateEndMetaData = new PropertyMetadata(new  PersianDate(10000, 1, 1));
+            PropertyMetadata displayDateEndMetaData = new PropertyMetadata(new PersianDate(10000, 1, 1));
             displayDateEndMetaData.CoerceValueCallback = coerceDisplayDateEnd;
             DisplayDateEndProperty =
-                DependencyProperty.Register("DisplayDateEnd", typeof( PersianDate), typeof(PersianDatePicker), displayDateEndMetaData);
+                DependencyProperty.Register("DisplayDateEnd", typeof(PersianDate), typeof(PersianDatePicker), displayDateEndMetaData);
 
             SelectedDateChangedEvent =
                 EventManager.RegisterRoutedEvent("SelectedDateChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(PersianDatePicker));
@@ -206,8 +196,8 @@ namespace NeAcconting.PersianDateControls
 
         void validateText()
         {
-             PersianDate date;
-            if ( PersianDate.TryParse(dateTextBox.Text, out date))
+            PersianDate date;
+            if (PersianDate.TryParse(dateTextBox.Text, out date))
             {
                 this.SelectedDate = date;
                 this.DisplayDate = date;

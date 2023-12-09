@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             xmlns:local="clr-namespace : NeAcconting.Controls.DatePicker"
+             xmlns:local="clr-namespace:NeAcconting.Controls.DatePicker"
              mc:Ignorable="d">
     <UserControl.Resources>
         <!-- برای روزهای ماه جاری  -->
@@ -37,11 +37,12 @@
                                         TargetName="copr"
                                         Value="#6e3bbf" />
                             </Trigger>
-
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="Click"
+                         Handler="Button_Click" />
         </Style>
         <!--  برای روزهای تعطیل  ماه جاری -->
         <Style x:Key="TextBlockStyle3"
@@ -369,7 +370,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
-                                Margin="2,0"
+                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
                         <Rectangle x:Name="RectangleJome0" />
                     </Grid>
