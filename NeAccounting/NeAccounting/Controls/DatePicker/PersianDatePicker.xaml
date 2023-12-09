@@ -106,7 +106,6 @@
         </Button>
         <ui:TextBox Margin="35,3,3,3"
                     Name="dateTextBox"
-                    LostFocus="dateTextBox_LostFocus"
                     AcceptsReturn="False"
                     IsReadOnly="True"
                     HorizontalAlignment="Stretch"
@@ -115,7 +114,6 @@
                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                     TextAlignment="Center"
                     FontFamily="2  Titr"
-                    KeyUp="dateTextBox_KeyUp"
                     Padding="2">
         </ui:TextBox>
         <Popup Name="persianCalnedarPopup"

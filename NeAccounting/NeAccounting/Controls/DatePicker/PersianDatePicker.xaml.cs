@@ -29,18 +29,18 @@ namespace NeAcconting.Controls.DatePicker
         [Category("Date Picker")]
         public DateTime SelectedDate
         {
-            get { return (PersianDate)GetValue(SelectedDateProperty); }
-            set { SetValue(SelectedDateProperty, value); }
+            get { return persianCalendar.SelectedDate; }
+            set { persianCalendar.SelectedDate = value; }
         }
 
         /// <summary>
         /// Gets or sets the date that is being displayed in the calendar.
         /// </summary>
         [Category("Date Picker")]
-        public DateTime DisplayDate
+        public string DisplayDate
         {
-            get { return (PersianDate)GetValue(DisplayDateProperty); }
-            set { SetValue(DisplayDateProperty, value); }
+            get { return Text; }
+            set { Text = value; }
         }
 
         public string Text
@@ -70,23 +70,7 @@ namespace NeAcconting.Controls.DatePicker
             persianCalnedarPopup.IsOpen = true;
         }
 
-        void validateText()
-        {
-            this.SelectedDate = persianCalendar.SelectedDate;
-            this.DisplayDate = persianCalendar.SelectedDate;
-            this.Text = this.SelectedDate.ToString();
-        }
 
-        private void dateTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            validateText();
-        }
-
-        private void dateTextBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return)
-                validateText();
-        }
 
         private void persianCalnedarPopup_Opened(object sender, EventArgs e)
         {
