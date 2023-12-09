@@ -226,7 +226,7 @@
                                                       FontSize="14"
                                                       FontFamily="Calibri" />
                                     </StackPanel>
-                                <TextBlock HorizontalAlignment="Center"
+                                    <TextBlock HorizontalAlignment="Center"
                                            Margin="3 20 20 0"
                                            VerticalAlignment="Center"
                                            TextAlignment="Center"
@@ -236,7 +236,7 @@
                                            FontSize="14"
                                            Grid.Row="1"
                                            Grid.Column="1"><Run Text="نه میلیارد و نه صد و نود و نه هزار تومان " /></TextBlock>
-                                <StackPanel Grid.Column="0"
+                                    <StackPanel Grid.Column="0"
                                                 Grid.Row="2">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
