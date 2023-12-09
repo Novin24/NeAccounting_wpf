@@ -9,15 +9,6 @@ namespace NeAcconting.Controls.DatePicker
     [DefaultProperty("SelectedDate")]
     public partial class PersianDatePicker : UserControl
     {
-        public static readonly DependencyProperty TextProperty;
-
-        public static readonly DependencyProperty SelectedDateProperty;
-
-        public static readonly DependencyProperty DisplayDateProperty;
-
-        public static readonly DependencyProperty DisplayDateStartProperty;
-
-        public static readonly DependencyProperty DisplayDateEndProperty;
 
         public static readonly RoutedEvent SelectedDateChangedEvent;
 
@@ -45,8 +36,8 @@ namespace NeAcconting.Controls.DatePicker
 
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get { return dateTextBox.Text; }
+            set { dateTextBox.Text = value; }
         }
 
         //events

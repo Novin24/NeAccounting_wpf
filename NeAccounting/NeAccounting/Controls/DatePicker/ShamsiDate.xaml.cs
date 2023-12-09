@@ -6,7 +6,7 @@ namespace NeAcconting.Controls.DatePicker
     /// <summary>
     /// Interaction logic for ShamsiDatePicker.xaml
     /// </summary>
-    public partial class ShamsiDatePicker : UserControl
+    public partial class ShamsiDate: UserControl
     {
 
         #region fields
@@ -41,7 +41,7 @@ namespace NeAcconting.Controls.DatePicker
 
         #endregion
 
-        public ShamsiDatePicker()
+        public ShamsiDate()
         {
             InitializeComponent();
 

@@ -123,7 +123,7 @@
                Opened="persianCalnedarPopup_Opened">
             <Grid Name="persianCalendarGrid"
                   Background="White">
-                <local:ShamsiDatePicker x:Name="persianCalendar"/>
+                <local:ShamsiDate x:Name="persianCalendar"/>
             </Grid>
         </Popup>
     </Grid>
