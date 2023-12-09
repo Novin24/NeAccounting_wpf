@@ -111,6 +111,7 @@
         </ui:TextBox>
         <Popup Name="persianCalnedarPopup"
                HorizontalAlignment="Right"
+               AllowsTransparency="True"
                PlacementTarget="{Binding ElementName=dateTextBox}"
                StaysOpen="False"
                Opened="persianCalnedarPopup_Opened">
