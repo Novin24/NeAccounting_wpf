@@ -25,10 +25,5 @@ namespace NeAccounting.Views.Pages.Test
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var t = pdp.Text;
-            var s = pdp.SelectedDate;
-        }
     }
 }

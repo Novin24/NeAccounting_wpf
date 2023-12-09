@@ -11,13 +11,13 @@
       Title="TestPage">
 
     <Grid>
-        <StackPanel>
+
 
             <datepicker:ShamsiDate />
 
-            <datepicker:PersianDatePicker HorizontalAlignment="Right"
+            <datepicker:PersianDatePicker VerticalAlignment="Bottom"
+                                          HorizontalAlignment="Left"
                                           x:Name="pdp" />
-            <Button  Click="Button_Click" Content="click me"/>
-        </StackPanel>
+
     </Grid>
 </Page>

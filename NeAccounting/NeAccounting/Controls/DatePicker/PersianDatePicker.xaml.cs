@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 
 namespace NeAcconting.Controls.DatePicker
 {
@@ -10,11 +8,16 @@ namespace NeAcconting.Controls.DatePicker
     public partial class PersianDatePicker : UserControl
     {
 
-        public static readonly RoutedEvent SelectedDateChangedEvent;
 
         public PersianDatePicker()
         {
             InitializeComponent();
+            dateTextBox.Text = persianCalendar.PersianSelectedDate;
+            persianCalendar.Click += (object sender, RoutedEventArgs e) =>
+            {
+                this.persianCalnedarPopup.IsOpen = false;
+                dateTextBox.Text = persianCalendar.PersianSelectedDate;
+            };
         }
 
         [Category("Date Picker")]
@@ -30,29 +33,8 @@ namespace NeAcconting.Controls.DatePicker
         [Category("Date Picker")]
         public string DisplayDate
         {
-            get { return Text; }
-            set { Text = value; }
-        }
-
-        public string Text
-        {
             get { return dateTextBox.Text; }
             set { dateTextBox.Text = value; }
-        }
-
-        //events
-        public event RoutedEventHandler SelectedDateChanged
-        {
-            add { AddHandler(SelectedDateChangedEvent, value); }
-            remove { RemoveHandler(SelectedDateChangedEvent, value); }
-        }
-
-
-        static void selectedDateChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-        {
-            PersianDatePicker pdp = o as PersianDatePicker;
-            pdp.Text = e.NewValue.ToString();
-            pdp.RaiseEvent(new RoutedEventArgs(SelectedDateChangedEvent, pdp));
         }
 
 
@@ -60,8 +42,6 @@ namespace NeAcconting.Controls.DatePicker
         {
             persianCalnedarPopup.IsOpen = true;
         }
-
-
 
         private void persianCalnedarPopup_Opened(object sender, EventArgs e)
         {
