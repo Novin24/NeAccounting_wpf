@@ -15,7 +15,7 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
     <Page.Resources>
-        <lrc:DateTimeToPersianDateConverter x:Key="dateToPersianDateConverter" />
+        <!--<lrc:DateTimeToPersianDateConverter x:Key="dateToPersianDateConverter" />-->
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>

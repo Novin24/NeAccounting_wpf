@@ -1,21 +1,19 @@
-﻿<UserControl x:Class="NeAcconting.PersianDateControls.PersianDatePicker"
+﻿<UserControl x:Class="NeAcconting.Controls.DatePicker.PersianDatePicker"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:NeAcconting.PersianDateControls"
+             xmlns:local="clr-namespace:NeAcconting.Controls.DatePicker"
              mc:Ignorable="d"
              BorderThickness="1"
              KeyboardNavigation.TabNavigation="Once">
     <UserControl.Resources>
         <Brush x:Key="NormalBrush">Transparent</Brush>
-        <Brush x:Key="NormalBorderBrush">Black</Brush>
         <Brush x:Key="DefaultedBorderBrush">DarkBlue</Brush>
         <Brush x:Key="HoverBrush">Transparent</Brush>
         <Brush x:Key="HoverBackgroundBrush">Transparent</Brush>
         <Brush x:Key="HoverForegroundBrush">RoyalBlue</Brush>
-        <Brush x:Key="ForegroundBrush">Black</Brush>
         <Brush x:Key="PressedBrush">Transparent</Brush>
         <Brush x:Key="PressedBorderBrush">Lavender</Brush>
         <Brush x:Key="textBoxHoverBorderBrush">LightBlue</Brush>
@@ -64,11 +62,6 @@
                             <Trigger Property="IsMouseOver"
                                      Value="false">
                                 <Setter  Property="Foreground"
-                                         Value="{StaticResource ForegroundBrush}" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver"
-                                     Value="false">
-                                <Setter  Property="Foreground"
                                          Value="{DynamicResource TextFillColorSecondaryBrush}" />
                             </Trigger>
 
@@ -106,7 +99,6 @@
         </Button>
         <ui:TextBox Margin="35,3,3,3"
                     Name="dateTextBox"
-                    LostFocus="dateTextBox_LostFocus"
                     AcceptsReturn="False"
                     IsReadOnly="True"
                     HorizontalAlignment="Stretch"
@@ -115,19 +107,17 @@
                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                     TextAlignment="Center"
                     FontFamily="2  Titr"
-                    KeyUp="dateTextBox_KeyUp"
                     Padding="2">
         </ui:TextBox>
         <Popup Name="persianCalnedarPopup"
                HorizontalAlignment="Right"
+               AllowsTransparency="True"
                PlacementTarget="{Binding ElementName=dateTextBox}"
                StaysOpen="False"
                Opened="persianCalnedarPopup_Opened">
-            <Grid Name="persianCalendarGrid"
-                  Background="White">
-                <local:PersianCalendar x:Name="persianCalendar"
-                                       Height="200"
-                                       Width="200" />
+            <Grid>
+                <local:ShamsiDate x:Name="persianCalendar" />
+
             </Grid>
         </Popup>
     </Grid>

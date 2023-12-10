@@ -12,10 +12,12 @@ using NeAccounting.Services;
 using NeAccounting.ViewModels;
 using NeAccounting.ViewModels.Pages;
 using NeAccounting.Views.Pages;
+using NeAccounting.Views.Pages.Test;
 using NeAccounting.Windows;
 using System.IO;
 using System.Reflection;
 using System.Windows.Threading;
+using Wpf.Ui;
 
 namespace NeAccounting
 {
@@ -58,6 +60,8 @@ namespace NeAccounting
                 services.AddTransient<UpdateWorkerPage>();
                 services.AddTransient<UpdateWorkerViewModel>();
                 #endregion
+
+                services.AddTransient<TestPage>();
 
                 #region Recived
                 services.AddTransient<RecPage>();

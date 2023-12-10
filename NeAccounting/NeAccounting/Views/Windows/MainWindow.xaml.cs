@@ -5,6 +5,7 @@
 
 using NeAccounting.ViewModels;
 using System.Windows.Input;
+using Wpf.Ui;
 //using Wpf.Ui.Controls;
 
 namespace NeAccounting.Windows
@@ -21,10 +22,11 @@ namespace NeAccounting.Windows
             IContentDialogService contentDialogService
         )
         {
-            Wpf.Ui.Appearance.Watcher.Watch(this);
 
             ViewModel = viewModel;
             DataContext = this;
+
+            Wpf.Ui.Appearance.SystemThemeWatcher.Watch(this);
 
             InitializeComponent();
 
