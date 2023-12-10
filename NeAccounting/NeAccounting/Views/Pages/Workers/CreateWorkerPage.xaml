@@ -58,7 +58,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
@@ -200,14 +200,21 @@
                             </Border>
                         </Grid>
                     </Border>
-                    <Grid Grid.Column="1">
+                    <Grid Grid.ColumnSpan="2">
                         <TextBlock Margin="20 20 0 0"
                                    Height="40"
-                                   HorizontalAlignment="Left"
+                                   HorizontalAlignment="Center"
                                    FontFamily="Calibri"
                                    FontWeight="Bold"
                                    FontSize="18"
                                    Foreground="White"><Run Text="1402/09/13 " /></TextBlock>
+                        <TextBlock Margin="0 20 20 0"
+                                   Height="40"
+                                   HorizontalAlignment="Right"
+                                   FontFamily="Calibri"
+                                   FontWeight="Bold"
+                                   FontSize="18"
+                                   Text="تعریف پرسنل" />
 
                     </Grid>
                     <Grid Grid.Column="1"

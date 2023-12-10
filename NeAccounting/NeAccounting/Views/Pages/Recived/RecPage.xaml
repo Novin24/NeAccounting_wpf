@@ -59,7 +59,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
@@ -121,7 +121,7 @@
                                   Grid.Row="1"></DataGrid>
                     </Grid>
                 </Border>
-                <Grid Grid.Column="1">
+                <Grid  Grid.ColumnSpan="2">
                     <ui:TextBlock Margin="0 20 20 0"
                                   Height="40"
                                   HorizontalAlignment="Right"
@@ -138,7 +138,7 @@
                                   Text="999                     " />
                     <TextBlock Margin="20 20 0 0"
                                Height="40"
-                               HorizontalAlignment="Left"
+                               HorizontalAlignment="Center"
                                FontFamily="Calibri"
                                FontWeight="Bold"
                                FontSize="18"><Run Text="1402/05/21 " /></TextBlock>
@@ -186,7 +186,6 @@
                                                            DisplayMemberPath="DisplayName"
                                                            FontSize="14"
                                                            Grid.Row="0"
-                                                           SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
                                                            Grid.Column="0"
                                                            Margin="20 4 3 0 "
                                                            FontFamily="Calibri" />

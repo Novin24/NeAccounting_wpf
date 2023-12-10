@@ -61,7 +61,7 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
@@ -125,7 +125,7 @@
                     </Grid>
                 </Border>
 
-                <Grid Grid.Column="1">
+                <Grid Grid.ColumnSpan="2">
                     <ui:TextBlock Margin="0 20 20 0"
                                   Height="40"
                                   HorizontalAlignment="Right"
@@ -142,7 +142,7 @@
                                   Text="999                     " />
                     <ui:TextBlock Margin="20 20 0 0"
                                   Height="40"
-                                  HorizontalAlignment="Left"
+                                  HorizontalAlignment="Center"
                                   FontFamily="Calibri"
                                   FontWeight="Bold"
                                   FontSize="18">
