@@ -1,6 +1,4 @@
-﻿using DomainShared.Enums;
-
-namespace DomainShared.ViewModels.Workers
+﻿namespace DomainShared.ViewModels.Workers
 {
     public struct WorkerVewiModel
     {
@@ -9,6 +7,6 @@ namespace DomainShared.ViewModels.Workers
         public string FullName { get; set; }
         public string JobTitle { get; set; }
         public string NationalCode { get; set; }
-        public Status Status { get; set; }
+        public string WorkerStatus { get; set; }
     }
 }

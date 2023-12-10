@@ -1,5 +1,6 @@
 ﻿using Domain.NovinEntity.Workers;
 using DomainShared.Enums;
+using DomainShared.Utilities;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,7 @@ namespace Infrastructure.Repositories
                     Id = t.Id,
                     PersonelId = t.PersonnelId,
                     JobTitle = t.JobTitle,
-                    Status = t.Status,
+                    WorkerStatus = t.Status.ToDisplay(DisplayProperty.Name),
                     FullName = t.FullName,
                     NationalCode = t.NationalCode,
                 }).ToListAsync();

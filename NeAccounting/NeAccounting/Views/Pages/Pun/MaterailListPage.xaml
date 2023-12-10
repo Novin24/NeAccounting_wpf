@@ -132,7 +132,7 @@
                                                 FontFamily="Calibri"
                                                 Text="{Binding ViewModel.PunName}"
                                                 Margin="0 4 0 0" />
-                                    <Button Command="{Binding ViewModel.SerchWorkerCommand}">جستجو</Button>
+                                    <Button Command="{Binding ViewModel.SearchMaterialCommand}">جستجو</Button>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
                                             Margin="20 4 0 0 ">
