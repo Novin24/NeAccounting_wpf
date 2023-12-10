@@ -124,14 +124,14 @@
                                         FontFamily="Calibri"
                                         Margin="0 4 0 0" />
                         </StackPanel>
-                        <StackPanel Grid.Column="0"
+                        <StackPanel Margin="20 4 0 0"
                                     Grid.Row="1">
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="میانگین قیمت خرید"
-                                       Margin="22 4 0 0 " />
-                            <ui:TextBox Margin="20 4 3 0"
+                                       Margin="2 0 0 0 " />
+                            <ui:TextBox Margin="0 4 3 0"
                                         TextAlignment="Center"
                                         FontSize="14"
                                         FontFamily="Calibri" />
@@ -149,16 +149,16 @@
                                         FontFamily="Calibri"
                                         Margin="0 4 0 0" />
                         </StackPanel>
-                        <StackPanel Grid.Column="0"
+                        <StackPanel Margin="20 4 0 0"
                                     Grid.Row="2">
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="محل نگهداری"
-                                       Margin="22 4 0 0 " />
+                                       Margin="2 0 0 0 " />
                             <ui:NumberBox Grid.Column="0"
                                           Grid.Row="2"
                                           SpinButtonPlacementMode="Hidden"
-                                          Margin="20 4 3 0"
+                                          Margin="0 4 3 0"
                                           TextAlignment="Center"
                                           FontSize="14"
                                           FontFamily="Calibri" />
