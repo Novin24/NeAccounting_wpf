@@ -103,6 +103,7 @@
                     IsReadOnly="True"
                     HorizontalAlignment="Stretch"
                     MaxLines="1"
+                    MinWidth="80"
                     FontSize="14"
                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                     TextAlignment="Center"

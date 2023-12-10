@@ -40,7 +40,7 @@
 
   <ItemGroup>
     <Reference Include="Wpf.Ui">
-      <HintPath>..\..\..\..\Library\Wpf.Ui.dll</HintPath>
+      <HintPath>..\..\Wpf.Ui.dll</HintPath>
     </Reference>
   </ItemGroup>
 
