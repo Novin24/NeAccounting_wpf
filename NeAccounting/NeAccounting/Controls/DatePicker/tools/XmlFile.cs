@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Xml.Linq;
 
 namespace NeAcconting.Controls.DatePicker
 {
 
-    public partial class ShamsiDatePicker
+    public partial class ShamsiDate
     {
         string XMLFileName = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + "\\XML_DataBase.XML";
         XDocument xDocument;

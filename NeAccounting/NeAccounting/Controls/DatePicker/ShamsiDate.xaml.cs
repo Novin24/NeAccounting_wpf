@@ -6,12 +6,12 @@ namespace NeAcconting.Controls.DatePicker
     /// <summary>
     /// Interaction logic for ShamsiDatePicker.xaml
     /// </summary>
-    public partial class ShamsiDatePicker : UserControl
+    public partial class ShamsiDate : UserControl
     {
 
         #region fields
         PersianCalendar persianCalendar = new PersianCalendar();
-
+        public event RoutedEventHandler Click;
         //اطلاعات تاریخ امروز 
         readonly int currentYear = 1387;
         readonly int currentMonth = 10;
@@ -19,28 +19,21 @@ namespace NeAcconting.Controls.DatePicker
 
         //برای حرکت بین ماه ها
         //به شمسی
-        int yearForNavigating = 1387;
-        int monthForNavigating = 10;
+        private int yearForNavigating = 1387;
+        private int monthForNavigating = 10;
+
+        /// <summary>
+        /// سال های قابل نمایش
+        /// </summary>
+        private List<int> itm;
 
         //اطلاعات روزی که کاربر روی آن کلیک کرده
         //Christian
-
-
-        private List<int> itm;
-
-        int yearChristian = 2009;
-        int monthChristian = 01;
-        int dayChristian = 01;
+        public DateTime SelectedDate { get; set; }
 
         //Persian
-        int yearPersian = 1387;
-        int monthPersian = 01;
-        int dayPersian = 01;
+        public string PersianSelectedDate { get; set; }
 
-        //Hijri
-        int yearHijri = 1387;
-        int monthHijri = 01;
-        int dayHijri = 01;
 
         // ایا تقویم به صورت کامل بارگذازی شده
         private bool IsCalculated = false;
@@ -48,7 +41,7 @@ namespace NeAcconting.Controls.DatePicker
 
         #endregion
 
-        public ShamsiDatePicker()
+        public ShamsiDate()
         {
             InitializeComponent();
 
@@ -65,6 +58,10 @@ namespace NeAcconting.Controls.DatePicker
             this.comboBoxMonths.SelectedIndex = currentMonth - 1;
             this.comboBoxYear.ItemsSource = itm;
             this.comboBoxYear.SelectedItem = currentYear;
+
+            //Fill the selected date
+            SelectedDate = DateTime.Now;
+            PersianSelectedDate = string.Concat(currentYear, "/", currentMonth, "/", currentDay);
 
             calculateMonth(currentYear, currentMonth);
 
@@ -415,12 +412,7 @@ namespace NeAcconting.Controls.DatePicker
         /// </summary>
         /// <param name="which">Purpose Grid</param>
         /// <param name="persianDate">Text of Persian date</param>
-        /// <param name="hijriDate">Text of Hijri date</param>
-        /// <param name="miladiDate">Text of Christian date</param>
-        /// <param name=""RectangleStyleToday"">New name of rectangle resource</param>
         /// <param name="persianTextBlockResourceName">New name of Persian date resource</param>
-        /// <param name="hijriTextBlockResourceName">New name of Hijri date resource</param>
-        /// <param name="miladiTextBlockResourceName">New name of Christian date resource</param>
         /// <param name="tooltip_context">Text of tooltip</param>
         void changeProperties(int which, string persianDate, bool isCurrentDay, string persianTextBlockResourceName, string tooltip_context)
         {
@@ -429,6 +421,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 0:
                     TextBlockShanbe0.Content = persianDate;
                     TextBlockShanbe0.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle5Shanbe2.Style = new Style();
                     if (isCurrentDay) RectangleShanbe0.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") GridShanbe0.ToolTip = tooltip_context;
                     else GridShanbe0.ToolTip = null;
@@ -437,6 +430,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 1:
                     TextBlock1Shanbe0.Content = persianDate;
                     TextBlock1Shanbe0.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle1Shanbe0.Style = new Style();
                     if (isCurrentDay) Rectangle1Shanbe0.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid1Shanbe0.ToolTip = tooltip_context;
                     else Grid1Shanbe0.ToolTip = null;
@@ -445,6 +439,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 2:
                     TextBlock2Shanbe0.Content = persianDate;
                     TextBlock2Shanbe0.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle2Shanbe0.Style = new Style();
                     if (isCurrentDay) Rectangle2Shanbe0.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid2Shanbe0.ToolTip = tooltip_context;
                     else Grid2Shanbe0.ToolTip = null;
@@ -453,6 +448,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 3:
                     TextBlock3Shanbe0.Content = persianDate;
                     TextBlock3Shanbe0.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle3Shanbe0.Style = new Style();
                     if (isCurrentDay) Rectangle3Shanbe0.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid3Shanbe0.ToolTip = tooltip_context;
                     else Grid3Shanbe0.ToolTip = null;
@@ -461,6 +457,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 4:
                     TextBlock4Shanbe0.Content = persianDate;
                     TextBlock4Shanbe0.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle4Shanbe0.Style = new Style();
                     if (isCurrentDay)
                         Rectangle4Shanbe0.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid4Shanbe0.ToolTip = tooltip_context;
@@ -470,6 +467,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 5:
                     TextBlock5Shanbe0.Content = persianDate;
                     TextBlock5Shanbe0.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle5Shanbe0.Style = new Style();
                     if (isCurrentDay)
                         Rectangle5Shanbe0.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid5Shanbe0.ToolTip = tooltip_context;
@@ -479,6 +477,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 6:
                     TextBlockJome0.Content = persianDate;
                     TextBlockJome0.Style = (Style)FindResource(persianTextBlockResourceName);
+                    RectangleJome0.Style = new Style();
                     if (isCurrentDay)
                         RectangleJome0.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") GridJome0.ToolTip = tooltip_context;
@@ -490,6 +489,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 7:
                     TextBlockShanbe1.Content = persianDate;
                     TextBlockShanbe1.Style = (Style)FindResource(persianTextBlockResourceName);
+                    RectangleShanbe1.Style = new Style();
                     if (isCurrentDay)
                         RectangleShanbe1.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") GridShanbe1.ToolTip = tooltip_context;
@@ -499,6 +499,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 8:
                     TextBlock1Shanbe1.Content = persianDate;
                     TextBlock1Shanbe1.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle1Shanbe1.Style = new Style();
                     if (isCurrentDay)
                         Rectangle1Shanbe1.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid1Shanbe1.ToolTip = tooltip_context;
@@ -508,6 +509,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 9:
                     TextBlock2Shanbe1.Content = persianDate;
                     TextBlock2Shanbe1.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle2Shanbe1.Style = new Style();
                     if (isCurrentDay)
                         Rectangle2Shanbe1.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid2Shanbe1.ToolTip = tooltip_context;
@@ -517,6 +519,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 10:
                     TextBlock3Shanbe1.Content = persianDate;
                     TextBlock3Shanbe1.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle3Shanbe1.Style = new Style();
                     if (isCurrentDay)
                         Rectangle3Shanbe1.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid3Shanbe1.ToolTip = tooltip_context;
@@ -526,6 +529,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 11:
                     TextBlock4Shanbe1.Content = persianDate;
                     TextBlock4Shanbe1.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle4Shanbe1.Style = new Style();
                     if (isCurrentDay)
                         Rectangle4Shanbe1.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid4Shanbe1.ToolTip = tooltip_context;
@@ -535,6 +539,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 12:
                     TextBlock5Shanbe1.Content = persianDate;
                     TextBlock5Shanbe1.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle5Shanbe1.Style = new Style();
                     if (isCurrentDay)
                         Rectangle5Shanbe1.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid5Shanbe1.ToolTip = tooltip_context;
@@ -544,6 +549,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 13:
                     TextBlockJome1.Content = persianDate;
                     TextBlockJome1.Style = (Style)FindResource(persianTextBlockResourceName);
+                    RectangleJome1.Style = new Style();
                     if (isCurrentDay)
                         RectangleJome1.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") GridJome1.ToolTip = tooltip_context;
@@ -555,6 +561,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 14:
                     TextBlockShanbe2.Content = persianDate;
                     TextBlockShanbe2.Style = (Style)FindResource(persianTextBlockResourceName);
+                    RectangleShanbe2.Style = new Style();
                     if (isCurrentDay)
                         RectangleShanbe2.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") GridShanbe2.ToolTip = tooltip_context;
@@ -564,6 +571,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 15:
                     TextBlock1Shanbe2.Content = persianDate;
                     TextBlock1Shanbe2.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle1Shanbe2.Style = new Style();
                     if (isCurrentDay)
                         Rectangle1Shanbe2.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid1Shanbe2.ToolTip = tooltip_context;
@@ -573,6 +581,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 16:
                     TextBlock2Shanbe2.Content = persianDate;
                     TextBlock2Shanbe2.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle2Shanbe2.Style = new Style();
                     if (isCurrentDay)
                         Rectangle2Shanbe2.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid2Shanbe2.ToolTip = tooltip_context;
@@ -582,6 +591,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 17:
                     TextBlock3Shanbe2.Content = persianDate;
                     TextBlock3Shanbe2.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle3Shanbe2.Style = new Style();
                     if (isCurrentDay)
                         Rectangle3Shanbe2.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid3Shanbe2.ToolTip = tooltip_context;
@@ -591,6 +601,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 18:
                     TextBlock4Shanbe2.Content = persianDate;
                     TextBlock4Shanbe2.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle4Shanbe2.Style = new Style();
                     if (isCurrentDay)
                         Rectangle4Shanbe2.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid4Shanbe2.ToolTip = tooltip_context;
@@ -598,9 +609,9 @@ namespace NeAcconting.Controls.DatePicker
                     break;
 
                 case 19:
-                    Rectangle5Shanbe2.Style = new Style();
                     TextBlock5Shanbe2.Content = persianDate;
                     TextBlock5Shanbe2.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle5Shanbe2.Style = new Style();
                     if (isCurrentDay)
                         Rectangle5Shanbe2.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid5Shanbe2.ToolTip = tooltip_context;
@@ -610,6 +621,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 20:
                     TextBlockJome2.Content = persianDate;
                     TextBlockJome2.Style = (Style)FindResource(persianTextBlockResourceName);
+                    RectangleJome2.Style = new Style();
                     if (isCurrentDay)
                         RectangleJome2.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") GridJome2.ToolTip = tooltip_context;
@@ -621,6 +633,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 21:
                     TextBlockShanbe3.Content = persianDate;
                     TextBlockShanbe3.Style = (Style)FindResource(persianTextBlockResourceName);
+                    RectangleShanbe3.Style = new Style();
                     if (isCurrentDay)
                         RectangleShanbe3.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") GridShanbe3.ToolTip = tooltip_context;
@@ -630,6 +643,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 22:
                     TextBlock1Shanbe3.Content = persianDate;
                     TextBlock1Shanbe3.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle1Shanbe3.Style = new Style();
                     if (isCurrentDay)
                         Rectangle1Shanbe3.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid1Shanbe3.ToolTip = tooltip_context;
@@ -639,6 +653,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 23:
                     TextBlock2Shanbe3.Content = persianDate;
                     TextBlock2Shanbe3.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle2Shanbe3.Style = new Style();
                     if (isCurrentDay)
                         Rectangle2Shanbe3.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid2Shanbe3.ToolTip = tooltip_context;
@@ -648,6 +663,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 24:
                     TextBlock3Shanbe3.Content = persianDate;
                     TextBlock3Shanbe3.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle3Shanbe3.Style = new Style();
                     if (isCurrentDay)
                         Rectangle3Shanbe3.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid3Shanbe3.ToolTip = tooltip_context;
@@ -657,6 +673,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 25:
                     TextBlock4Shanbe3.Content = persianDate;
                     TextBlock4Shanbe3.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle4Shanbe3.Style = new Style();
                     if (isCurrentDay)
                         Rectangle4Shanbe3.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid4Shanbe3.ToolTip = tooltip_context;
@@ -666,6 +683,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 26:
                     TextBlock5Shanbe3.Content = persianDate;
                     TextBlock5Shanbe3.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle5Shanbe3.Style = new Style();
                     if (isCurrentDay)
                         Rectangle5Shanbe3.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid5Shanbe3.ToolTip = tooltip_context;
@@ -675,6 +693,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 27:
                     TextBlockJome3.Content = persianDate;
                     TextBlockJome3.Style = (Style)FindResource(persianTextBlockResourceName);
+                    RectangleJome3.Style = new Style();
                     if (isCurrentDay)
                         RectangleJome3.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") GridJome3.ToolTip = tooltip_context;
@@ -686,6 +705,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 28:
                     TextBlockShanbe4.Content = persianDate;
                     TextBlockShanbe4.Style = (Style)FindResource(persianTextBlockResourceName);
+                    RectangleShanbe4.Style = new Style();
                     if (isCurrentDay)
                         RectangleShanbe4.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") GridShanbe4.ToolTip = tooltip_context;
@@ -695,6 +715,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 29:
                     TextBlock1Shanbe4.Content = persianDate;
                     TextBlock1Shanbe4.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle1Shanbe4.Style = new Style();
                     if (isCurrentDay)
                         Rectangle1Shanbe4.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid1Shanbe4.ToolTip = tooltip_context;
@@ -704,6 +725,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 30:
                     TextBlock2Shanbe4.Content = persianDate;
                     TextBlock2Shanbe4.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle2Shanbe4.Style = new Style();
                     if (isCurrentDay)
                         Rectangle2Shanbe4.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid2Shanbe4.ToolTip = tooltip_context;
@@ -713,6 +735,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 31:
                     TextBlock3Shanbe4.Content = persianDate;
                     TextBlock3Shanbe4.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle3Shanbe4.Style = new Style();
                     if (isCurrentDay)
                         Rectangle3Shanbe4.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid3Shanbe4.ToolTip = tooltip_context;
@@ -722,6 +745,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 32:
                     TextBlock4Shanbe4.Content = persianDate;
                     TextBlock4Shanbe4.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle4Shanbe4.Style = new Style();
                     if (isCurrentDay)
                         Rectangle4Shanbe4.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid4Shanbe4.ToolTip = tooltip_context;
@@ -731,6 +755,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 33:
                     TextBlock5Shanbe4.Content = persianDate;
                     TextBlock5Shanbe4.Style = (Style)FindResource(persianTextBlockResourceName);
+                    Rectangle5Shanbe4.Style = new Style();
                     if (isCurrentDay)
                         Rectangle5Shanbe4.Style = (Style)FindResource("RectangleStyleToday");
                     if (tooltip_context != "") Grid5Shanbe4.ToolTip = tooltip_context;
@@ -740,6 +765,7 @@ namespace NeAcconting.Controls.DatePicker
                 case 34:
                     TextBlockJome4.Content = persianDate;
                     TextBlockJome4.Style = (Style)FindResource(persianTextBlockResourceName);
+                    RectangleJome4.Style = new Style();
                     if (isCurrentDay)
                         RectangleJome4.Style = (Style)FindResource("RectangleStyleToday");
 
@@ -855,6 +881,14 @@ namespace NeAcconting.Controls.DatePicker
             calculateMonth((int)comboBoxYear.SelectedItem, monthForNavigating);
         }
         #endregion Events
+
+        internal void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int day = Convert.ToInt32((sender as Button).Content.ToString());
+            SelectedDate = persianCalendar.ToDateTime(yearForNavigating, monthForNavigating, day, 0, 0, 0, 0);
+            PersianSelectedDate = string.Concat(yearForNavigating, "/", monthForNavigating, "/", day);
+            Click?.Invoke(this, e);
+        }
     }
 
 

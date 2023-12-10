@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="NeAcconting.Controls.DatePicker.ShamsiDatePicker"
+﻿<UserControl x:Class="NeAcconting.Controls.DatePicker.ShamsiDate"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             xmlns:local="clr-namespace : NeAcconting.Controls.DatePicker"
+             xmlns:local="clr-namespace:NeAcconting.Controls.DatePicker"
              mc:Ignorable="d">
     <UserControl.Resources>
         <!-- برای روزهای ماه جاری  -->
@@ -37,11 +37,12 @@
                                         TargetName="copr"
                                         Value="#6e3bbf" />
                             </Trigger>
-
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="Click"
+                         Handler="Button_Click" />
         </Style>
         <!--  برای روزهای تعطیل  ماه جاری -->
         <Style x:Key="TextBlockStyle3"
@@ -79,7 +80,8 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
+            <EventSetter Event="Click"
+                         Handler="Button_Click" />
         </Style>
         <!-- برای روزهای ماههای دیگر  -->
         <Style x:Key="TextBlockStyle2"
@@ -121,7 +123,8 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
+            <EventSetter Event="Click"
+                         Handler="Button_Click" />
         </Style>
         <!--  برای روزهای تعطیل  ماههای دیگر -->
         <Style x:Key="TextBlockStyle4"
@@ -163,6 +166,8 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="Click"
+                         Handler="Button_Click" />
         </Style>
         <!-- برای امروز  -->
         <Style x:Key="RectangleStyleToday"
@@ -184,7 +189,7 @@
             MinHeight="245"
             Width="245"
             CornerRadius="9"
-            BorderThickness=".7"
+            BorderThickness="1"
             Background="{DynamicResource ApplicationBackgroundBrush}">
         <Grid x:Name="LayoutRoot">
             <Grid.RowDefinitions>
@@ -369,7 +374,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
-                                Margin="2,0"
+                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
                         <Rectangle x:Name="RectangleJome0" />
                     </Grid>

@@ -24,5 +24,6 @@ namespace NeAccounting.Views.Pages.Test
         {
             InitializeComponent();
         }
+
     }
 }
