@@ -52,13 +52,8 @@
                     Background="{DynamicResource ApplicationBackgroundBrush}"
                     CornerRadius="10">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
@@ -68,7 +63,7 @@
                                   FontFamily="STXingkai"
                                   FontSize="35"
                                   Text="Novin" />
-                    <Grid Grid.Column="1">
+                    <Grid>
                         <TextBlock Margin="0 20 20 0"
                                    Height="40"
                                    HorizontalAlignment="Right"
@@ -78,7 +73,7 @@
                                    Text="کارگران و کارمندان" />
                         <TextBlock Margin="20 20 0 0"
                                    Height="40"
-                                   HorizontalAlignment="Left"
+                                   HorizontalAlignment="Center"
                                    FontFamily="Calibri"
                                    FontWeight="Bold"
                                    FontSize="18"

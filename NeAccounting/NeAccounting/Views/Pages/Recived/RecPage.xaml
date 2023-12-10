@@ -120,7 +120,7 @@
                                   Grid.Row="1"></DataGrid>
                     </Grid>
                 </Border>
-                <Grid Grid.Column="1">
+                <Grid  Grid.ColumnSpan="2">
                     <ui:TextBlock Margin="0 20 20 0"
                                   Height="40"
                                   HorizontalAlignment="Right"
@@ -137,7 +137,7 @@
                                   Text="999                     " />
                     <TextBlock Margin="20 20 0 0"
                                Height="40"
-                               HorizontalAlignment="Left"
+                               HorizontalAlignment="Center"
                                FontFamily="Calibri"
                                FontWeight="Bold"
                                FontSize="18"
