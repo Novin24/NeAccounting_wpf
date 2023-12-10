@@ -182,7 +182,6 @@
                                                    Margin="22 4 0 0 " />
                                         <ui:AutoSuggestBox x:Name="AutoSuggestBoxSuggestions"
                                                            Icon="{ui:SymbolIcon Search24}"
-                                                           OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
                                                            PlaceholderText="Search..."
                                                            DisplayMemberPath="DisplayName"
                                                            FontSize="14"

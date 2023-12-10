@@ -26,12 +26,13 @@ namespace Infrastructure.Repositories
         {
             return TableNoTracking
                 .Include(x => x.Unit)
-                .Where(x => !string.IsNullOrEmpty(name) && x.Name.Contains(name))
-                .Where(x => !string.IsNullOrEmpty(serial) && x.Name.Contains(serial))
+                .Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name))
+                .Where(x => string.IsNullOrEmpty(serial) || x.Serial.Contains(serial))
+                .Where(t => !t.IsDeleted)
                 .Select(x => new PunListDto
                 {
                     Id = x.Id,
-                    Name = x.Name,
+                    MaterialName = x.Name,
                     Serial = x.Serial,
                     SellPrice = x.SellPrice,
                     Address = x.PhysicalAddress,

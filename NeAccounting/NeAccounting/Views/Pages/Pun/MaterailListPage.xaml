@@ -8,6 +8,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450"
       d:DesignWidth="800"
+      d:DataContext="{d:DesignInstance local:MaterailListPage,
+                                     IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="PunList">
@@ -128,7 +130,9 @@
                                                Margin="2 0 0 0 " />
                                     <ui:TextBox TextAlignment="Center"
                                                 FontFamily="Calibri"
+                                                Text="{Binding ViewModel.PunName}"
                                                 Margin="0 4 0 0" />
+                                    <Button Command="{Binding ViewModel.SerchWorkerCommand}"> جستجو</Button>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
                                             Margin="20 4 0 0 ">
@@ -139,6 +143,7 @@
                                                Margin="2 0 0 0 " />
                                     <ui:TextBox TextAlignment="Center"
                                                 FontFamily="Calibri"
+                                                Text="{Binding ViewModel.Serial}"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
                             </Grid>
@@ -147,20 +152,31 @@
                                       Grid.Row="2"
                                       CanUserResizeColumns="False"
                                       CanUserResizeRows="False"
-                                      FontFamily="Calibri">
+                                      ItemsSource="{Binding ViewModel.List, Mode=OneWay}"
+                                      FontFamily="Calibri"
+                                      AutoGenerateColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="کد"
-                                                        Width="*" />
+
                                     <DataGridTextColumn Header="نام کالا"
-                                                        Width="*" />
+                                                        Width="*" 
+                                                        x:Name="MaterialName"
+                                                        Binding="{Binding MaterialName}"/>
+                                    <DataGridTextColumn Header="واحد"
+                                                        Width="*"
+                                                        x:Name="UnitName"
+                                                        Binding="{Binding UnitName}"/>
                                     <DataGridTextColumn Header="شماره سریال"
-                                                        Width="*" />
-                                    <DataGridTextColumn Header="میانگین قیمت خرید"
-                                                        Width="*" />
+                                                        Width="*"
+                                                        x:Name="Serial"
+                                                        Binding="{Binding Serial}"/>
                                     <DataGridTextColumn Header="موجودی انبار"
-                                                        Width="*" />
+                                                        Width="*" 
+                                                        x:Name="Entity"
+                                                        Binding="{Binding Entity}"/>
                                     <DataGridTextColumn Header="محل نگهداری"
-                                                        Width="*" />
+                                                        Width="*"
+                                                        x:Name="Address"
+                                                        Binding="{Binding Address}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
 

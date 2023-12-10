@@ -16,20 +16,12 @@ namespace Infrastructure.Repositories
 
         public Task<List<WorkerVewiModel>> GetWorkers(string fullName, string jobTitle, string nationalCode, Status status)
         {
-            if (!string.IsNullOrEmpty(fullName))
-                TableNoTracking.Where(t => t.FullName.Contains(fullName));
-
-            if (!string.IsNullOrEmpty(jobTitle))
-                TableNoTracking.Where(t => t.JobTitle.Contains(jobTitle));
-
-            if (!string.IsNullOrEmpty(nationalCode))
-                TableNoTracking.Where(t => t.NationalCode.Contains(nationalCode));
-
-            if (status != Status.All)
-                TableNoTracking.Where(t => t.Status == status);
-
             return TableNoTracking
-                .Where(t => t.IsDeleted == false)
+                .Where(t => !t.IsDeleted)
+                .Where(x => string.IsNullOrEmpty(fullName) || x.FullName.Contains(fullName))
+                .Where(x => string.IsNullOrEmpty(jobTitle) || x.JobTitle.Contains(jobTitle))
+                .Where(x => string.IsNullOrEmpty(nationalCode) || x.NationalCode.Contains(nationalCode))
+                .Where(x => status == Status.All || x.Status == status)
                 .Select(t => new WorkerVewiModel
                 {
                     Id = t.Id,

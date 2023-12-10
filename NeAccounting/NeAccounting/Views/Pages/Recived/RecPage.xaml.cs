@@ -33,5 +33,9 @@ namespace NeAccounting.Pages
 
         }
 
+        private void AutoSuggestBoxSuggestions_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+
+        }
     }
 }
