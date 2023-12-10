@@ -20,8 +20,10 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private string _nationalCode = "";
 
+        private Status Statu { get { return (Status)StatusByte; } set { StatusByte = (byte)value; } }
+
         [ObservableProperty]
-        private Status _status = Status.All;
+        private byte _statusByte = 0;
 
         [ObservableProperty]
         private IEnumerable<WorkerVewiModel> _list;
@@ -47,10 +49,24 @@ namespace NeAccounting.ViewModels
                         FullName,
                         JobTitle,
                         NationalCode,
-                        Status);
+                        Statu);
 
             if (!List.Any())
-                _snackbarService.Show("اوه","هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Primary,new SymbolIcon(SymbolRegular.Warning20),TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("اوه", "هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+        }
+
+        [RelayCommand]
+        private async Task OnSearchWorker()
+        {
+            using UnitOfWork db = new();
+            List = await db.workerManager.GetWorkers(
+                        FullName,
+                        JobTitle,
+                        NationalCode,
+                        Statu);
+
+            if (!List.Any())
+                _snackbarService.Show("اوه", "هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
         }
     }
 }

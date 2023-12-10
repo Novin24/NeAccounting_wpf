@@ -47,7 +47,7 @@ namespace NeAccounting.ViewModels
             },
             new NavigationViewItem()
             {
-                Content = "تعریف اولیه",
+                Content = "تعاریف اولیه",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.SaveCopy20 },
                 //TargetPageType = typeof(MaterailListPage)
                 MenuItems = new ObservableCollection<object>

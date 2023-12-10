@@ -30,7 +30,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnSerchWorker()
+        private async Task OnSearchMaterial()
         {
             using UnitOfWork db = new();
             List = await db.materialManager.GetMaterails(PunName, Serial);
