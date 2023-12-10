@@ -180,13 +180,16 @@
                                                    FontSize="14"
                                                    Text="نام مشتری"
                                                    Margin="22 4 0 0 " />
-                                        <ui:TextBox TextAlignment="Center"
-                                                    FontSize="14"
-                                                    Grid.Row="0"
-                                                    Grid.Column="0"
-                                                    Margin="20 4 3 0 "
-                                                    CaretBrush="White"
-                                                    FontFamily="Calibri" />
+                                        <ui:AutoSuggestBox x:Name="AutoSuggestBoxSuggestions"
+                                                           Icon="{ui:SymbolIcon Search24}"
+                                                           PlaceholderText="Search..."
+                                                           DisplayMemberPath="DisplayName"
+                                                           FontSize="14"
+                                                           Grid.Row="0"
+                                                           SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
+                                                           Grid.Column="0"
+                                                           Margin="20 4 3 0 "
+                                                           FontFamily="Calibri" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="0"
                                                 Grid.Column="1"
