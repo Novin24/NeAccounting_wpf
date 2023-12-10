@@ -4,6 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      
       xmlns:local="clr-namespace:NeAccounting.Pages"
       xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
       Title="DataPage"
@@ -140,8 +141,7 @@
                                HorizontalAlignment="Left"
                                FontFamily="Calibri"
                                FontWeight="Bold"
-                               FontSize="18"
-                               Foreground="White"><Run Text="1402/05/21 " /></TextBlock>
+                               FontSize="18"><Run Text="1402/05/21 " /></TextBlock>
 
                 </Grid>
                 <Grid Grid.Column="1"
@@ -180,17 +180,13 @@
                                                    FontSize="14"
                                                    Text="نام مشتری"
                                                    Margin="22 4 0 0 " />
-                                        <ui:AutoSuggestBox x:Name="AutoSuggestBoxSuggestions"
-                                                           Icon="{ui:SymbolIcon Search24}"
-                                                           OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
-                                                           PlaceholderText="Search..."
-                                                           DisplayMemberPath="DisplayName"
-                                                           FontSize="14"
-                                                           Grid.Row="0"
-                                                           SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
-                                                           Grid.Column="0"
-                                                           Margin="20 4 3 0 "
-                                                           FontFamily="Calibri" />
+                                        <ui:TextBox TextAlignment="Center"
+                                                    FontSize="14"
+                                                    Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    Margin="20 4 3 0 "
+                                                    CaretBrush="White"
+                                                    FontFamily="Calibri" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="0"
                                                 Grid.Column="1"

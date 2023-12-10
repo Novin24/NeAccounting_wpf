@@ -53,7 +53,7 @@ namespace NeAccounting.ViewModels
                 MenuItems = new ObservableCollection<object>
                 {
                     new NavigationViewItem { Content = "اجناس", TargetPageType = typeof(MaterailListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.BuildingRetailMore20} },
-                    new NavigationViewItem { Content = "کارگران", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
+                    new NavigationViewItem { Content = "پرسنل", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
                 }
             }
         };

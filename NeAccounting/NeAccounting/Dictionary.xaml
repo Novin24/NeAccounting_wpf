@@ -4,5 +4,23 @@
                      Color="#17274F" />
     <SolidColorBrush x:Key="Rectangle Pale blue"
                      Color="#C8E4EE" />
-                      
+
+    <Style x:Key="CenterGridHeaderStyle"
+           TargetType="DataGridColumnHeader">
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="Background"
+                Value="Transparent" />
+
+        <Setter Property="BorderThickness"
+                Value="1" />
+    </Style>
+
+    <Style x:Key="CenterDtaGridCell"
+           TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+    </Style>
 </ResourceDictionary>
