@@ -26,6 +26,13 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
+            List = await db.materialManager.GetMaterails(string.Empty, string.Empty);
+        }
+
+        [RelayCommand]
+        private async Task OnSerchWorker()
+        {
+            using UnitOfWork db = new();
             List = await db.materialManager.GetMaterails(PunName, Serial);
         }
     }
