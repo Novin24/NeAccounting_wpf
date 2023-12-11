@@ -1,9 +1,12 @@
 ﻿<Page x:Class="NeAccounting.Views.Pages.Test.TestPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages.Test"
+      d:DataContext="{d:DesignInstance local:TestPage,
+                                     IsDesignTimeCreatable=False}"
       xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
       mc:Ignorable="d"
       d:DesignHeight="450"
@@ -11,13 +14,13 @@
       Title="TestPage">
 
     <Grid>
+        <Button Command="{Binding ViewModel.MyClickCommand}">addPersonel</Button>
 
+        <datepicker:ShamsiDate />
 
-            <datepicker:ShamsiDate />
-
-            <datepicker:PersianDatePicker VerticalAlignment="Bottom"
-                                          HorizontalAlignment="Left"
-                                          x:Name="pdp" />
+        <datepicker:PersianDatePicker VerticalAlignment="Bottom"
+                                      HorizontalAlignment="Left"
+                                      x:Name="pdp" />
 
     </Grid>
 </Page>

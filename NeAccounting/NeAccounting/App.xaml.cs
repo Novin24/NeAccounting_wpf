@@ -62,6 +62,7 @@ namespace NeAccounting
                 #endregion
 
                 services.AddTransient<TestPage>();
+                services.AddTransient<TestViewModel>();
 
                 #region Recived
                 services.AddTransient<RecPage>();
