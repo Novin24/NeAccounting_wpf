@@ -70,8 +70,8 @@ namespace NeAccounting
                 #endregion
 
                 #region Payment
-                services.AddSingleton<PayPage>();
-                services.AddSingleton<PayViewModel>();
+                services.AddTransient<PayPage>();
+                services.AddTransient<PayViewModel>();
                 #endregion
 
                 #region materials

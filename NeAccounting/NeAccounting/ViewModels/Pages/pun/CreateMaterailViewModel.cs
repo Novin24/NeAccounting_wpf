@@ -53,7 +53,7 @@ namespace NeAccounting.ViewModels.Pages
         }
 
         [RelayCommand]
-        private async Task OnCreate()
+        private async Task OnCreateMaterial()
         {
             if (string.IsNullOrEmpty(MaterialName))
             {

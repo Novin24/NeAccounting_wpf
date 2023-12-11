@@ -106,16 +106,37 @@
 
                             <Grid>
 
-                                <TextBlock FontFamily="Calibri"
-                                           FontWeight="Bold"
-                                           FontSize="16"
-                                           Text="جستجو براساس :" />
-                                <Button Content="افزودن"
-                                        Grid.Row="4"
-                                        FontFamily="Calibri"
-                                        FontSize="15"
-                                        Padding="30 6"
-                                        HorizontalAlignment="Right" />
+
+                                <ui:CardAction Grid.Row="4"
+                                               FontFamily="Calibri"
+                                               FontSize="15"
+                                               Padding="9 0"
+                                               Command="{Binding ViewModel.OAddClickCommand, Mode=OneWay}"
+                                               CommandParameter="CreateWorker"
+                                               IsChevronVisible="False"
+                                               HorizontalAlignment="Right">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ui:SymbolIcon FontSize="22"
+                                                       Symbol="ReadingListAdd28" />
+
+                                        <StackPanel Grid.Column="1"
+                                                    Margin="8 4"
+                                                    VerticalAlignment="Center">
+                                            <ui:TextBlock Margin="0"
+                                                          FontTypography="BodyStrong"
+                                                          Text="افزودن"
+                                                          TextWrapping="WrapWithOverflow" />
+                                            <ui:TextBlock Appearance="Tertiary"
+                                                          Text="اضافه کردن کارگران و کارمندان ..."
+                                                          TextWrapping="WrapWithOverflow" />
+                                        </StackPanel>
+                                    </Grid>
+                                </ui:CardAction>
                             </Grid>
                             <Grid Grid.Row="1"
                                   Margin="0 ,5,0,5">

@@ -180,6 +180,7 @@
 
                         <Button Content="ثبت"
                                 Margin="15"
+                                Command="{Binding ViewModel.CreateMaterialCommand , Mode=OneWay}"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"
                                 Grid.Row="3"

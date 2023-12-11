@@ -1,6 +1,7 @@
 ﻿using DomainShared.Enums;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -9,7 +10,7 @@ namespace NeAccounting.ViewModels
     public partial class WorkerListViewModel : ObservableObject, INavigationAware
     {
         private readonly ISnackbarService _snackbarService;
-
+        private readonly INavigationService _navigationService;
 
         [ObservableProperty]
         private string _fullName = "";
@@ -28,9 +29,10 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private IEnumerable<WorkerVewiModel> _list;
 
-        public WorkerListViewModel(ISnackbarService snackbarService)
+        public WorkerListViewModel(ISnackbarService snackbarService, INavigationService navigationService)
         {
             _snackbarService = snackbarService;
+            _navigationService = navigationService;
         }
 
         public void OnNavigatedFrom()
@@ -66,7 +68,25 @@ namespace NeAccounting.ViewModels
                         Statu);
 
             if (!List.Any())
-                _snackbarService.Show("اوه", "هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("اوه", "هیچ کارگری در پایگاه داده با این مشخصات یافت نشد!!!!", ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+        }
+
+        [RelayCommand]
+        private void OAddClick(string parameter)
+        {
+            if (String.IsNullOrWhiteSpace(parameter))
+            {
+                return;
+            }
+
+            Type? pageType = NameToPageTypeConverter.Convert(parameter);
+
+            if (pageType == null)
+            {
+                return;
+            }
+
+            _ = _navigationService.Navigate(pageType);
         }
     }
 }

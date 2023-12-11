@@ -102,18 +102,36 @@
 
                             </Grid.RowDefinitions>
                             <Grid>
+                                <ui:CardAction Grid.Row="4"
+                                               FontFamily="Calibri"
+                                               FontSize="15"
+                                               Padding="9 0"
+                                               Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
+                                               CommandParameter="CreateMaterail"
+                                               IsChevronVisible="False"
+                                               HorizontalAlignment="Right">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                                <TextBlock 
-                                           FontFamily="Calibri"
-                                           FontWeight="Bold"
-                                           FontSize="16"
-                                           Text="جستجو براساس :" />
-                                <Button Content="افزودن"
-                                        Grid.Row="4"
-                                        FontFamily="Calibri"
-                                        FontSize="15"
-                                        Padding="30 6"
-                                        HorizontalAlignment="Right" />
+                                        <ui:SymbolIcon FontSize="22"
+                                                       Symbol="ReadingListAdd28" />
+
+                                        <StackPanel Grid.Column="1"
+                                                    Margin="8 4"
+                                                    VerticalAlignment="Center">
+                                            <ui:TextBlock Margin="0"
+                                                          FontTypography="BodyStrong"
+                                                          Text="افزودن"
+                                                          TextWrapping="WrapWithOverflow" />
+                                            <ui:TextBlock Appearance="Tertiary"
+                                                          Text="اضافه کردن کالا و اجناس ..."
+                                                          TextWrapping="WrapWithOverflow" />
+                                        </StackPanel>
+                                    </Grid>
+                                </ui:CardAction>
                             </Grid>
                             <Grid Grid.Row="1"
                                   Margin="0 ,5,0,5">
@@ -132,7 +150,7 @@
                                                 FontFamily="Calibri"
                                                 Text="{Binding ViewModel.PunName}"
                                                 Margin="0 4 0 0" />
-                                    <Button Command="{Binding ViewModel.SearchMaterialCommand}">جستجو</Button>
+                                    <Button Command="{Binding ViewModel.AddClickCommand}">جستجو</Button>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
                                             Margin="20 4 0 0 ">
@@ -196,12 +214,15 @@
                                                             HorizontalAlignment="Center">
                                                     <Button  BorderBrush="Transparent"
                                                              Margin="2"
+                                                             CommandParameter="{Binding Id , Mode=OneWay}"
+                                                             Command="{Binding Path=DataContext.ViewModel.UpdateMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                              Padding="7,5">
                                                         <ui:SymbolIcon Symbol="Pen16" />
                                                     </Button>
                                                     <Button Margin="3"
+                                                            CommandParameter="{Binding Id , Mode=OneWay}"
+                                                            Command="{Binding Path=DataContext.ViewModel.RemoveMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                             Padding="7,5">
-
                                                         <ui:SymbolIcon Symbol="Delete16" />
                                                     </Button>
                                                 </StackPanel>
