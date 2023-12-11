@@ -62,6 +62,7 @@ namespace NeAccounting
                 #endregion
 
                 services.AddTransient<TestPage>();
+                services.AddTransient<TestViewModel>();
 
                 #region Recived
                 services.AddTransient<RecPage>();
@@ -69,8 +70,8 @@ namespace NeAccounting
                 #endregion
 
                 #region Payment
-                services.AddSingleton<PayPage>();
-                services.AddSingleton<PayViewModel>();
+                services.AddTransient<PayPage>();
+                services.AddTransient<PayViewModel>();
                 #endregion
 
                 #region materials

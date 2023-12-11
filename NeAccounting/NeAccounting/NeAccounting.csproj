@@ -13,6 +13,8 @@
   <ItemGroup>
     <None Remove="Assets\Back_login.jpg" />
     <None Remove="Assets\key.png" />
+    <None Remove="Assets\Materials\0c954523-5b04-45cc-b69e-1af8505e685c.png" />
+    <None Remove="Assets\Materials\Add.png" />
     <None Remove="Assets\persone.png" />
     <None Remove="Assets\pexels-johannes-plenio-1103970.jpg" />
     <None Remove="Assets\user9.png" />
@@ -45,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Materials\Add.png" />
     <Resource Include="Assets\wpfui-icon-1024.png" />
     <Resource Include="Assets\wpfui-icon-256.png" />
     <Resource Include="Assets\Back_login.jpg" />
