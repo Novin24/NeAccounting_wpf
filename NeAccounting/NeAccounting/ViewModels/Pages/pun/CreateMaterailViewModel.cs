@@ -17,7 +17,7 @@ namespace NeAccounting.ViewModels.Pages
         }
 
         [ObservableProperty]
-        private IEnumerable<SuggestBoxViewModel<Guid>> _asuBox;
+        private IEnumerable<SuggestBoxViewModel<int>> _asuBox;
 
         [ObservableProperty]
         private string _materialName;
@@ -53,7 +53,7 @@ namespace NeAccounting.ViewModels.Pages
         {
             using (UnitOfWork db = new())
             {
-                await db.unitManager.GetUnits();
+              AsuBox = await db.unitManager.GetUnits();
             }
             _isInitialized = true;
         }
