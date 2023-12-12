@@ -1,6 +1,7 @@
 ﻿using DomainShared.Errore;
 using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -10,10 +11,12 @@ namespace NeAccounting.ViewModels.Pages
     {
 
         private bool _isInitialized = false;
+        private readonly INavigationService _navigationService;
         private readonly ISnackbarService _snackbarService;
-        public CreateMaterailViewModel(ISnackbarService snackbarService)
+        public CreateMaterailViewModel(ISnackbarService snackbarService, INavigationService navigationService)
         {
             _snackbarService = snackbarService;
+            _navigationService = navigationService;
         }
 
         [ObservableProperty]
@@ -29,14 +32,16 @@ namespace NeAccounting.ViewModels.Pages
         private string _address;
 
         [ObservableProperty]
-        private double _entity;
+        private long _lastSellPrice = 0;
 
         [ObservableProperty]
-        private int _unitId;
+        private double _entity = 0;
 
         [ObservableProperty]
-        private string _erroreMessage = "";
+        private int _unitId = 0;
 
+        [ObservableProperty]
+        private bool _isManufacturedGoods ;
 
         public void OnNavigatedFrom()
         {
@@ -53,8 +58,14 @@ namespace NeAccounting.ViewModels.Pages
         {
             using (UnitOfWork db = new())
             {
-              AsuBox = await db.unitManager.GetUnits();
+                AsuBox = await db.unitManager.GetUnits();
             }
+
+            if (AsuBox.Any())
+            {
+                UnitId = AsuBox.FirstOrDefault().Id;
+            }
+
             _isInitialized = true;
         }
 
@@ -63,30 +74,51 @@ namespace NeAccounting.ViewModels.Pages
         {
             if (string.IsNullOrEmpty(MaterialName))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(Serial))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سریال کالا"), ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سریال کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
+            if (!IsManufacturedGoods && Entity == 0)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موجودی انبار"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
+            if (UnitId == 0)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(Address))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مکان فیزیکی کالا"), ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مکان فیزیکی کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
-            using UnitOfWork db = new();
-            var result = await db.materialManager.CreateMaterial(MaterialName, Entity, UnitId, Serial, Address);
-
-            if (!result.isSuccess)
+            using (UnitOfWork db = new())
             {
-                _snackbarService.Show("خطا", result.error, ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
-                return;
+                var (error, isSuccess) = await db.materialManager.CreateMaterial(MaterialName, Entity, UnitId, Serial, Address, IsManufacturedGoods);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                    return;
+                }
+                await db.SaveChangesAsync();
             }
 
 
+            _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Accessibility24), TimeSpan.FromMilliseconds(2000));
+
+            Type? pageType = NameToPageTypeConverter.Convert("MaterailList");
+
+            if (pageType == null)
+            {
+                return;
+            }
+            _ = _navigationService.Navigate(pageType);
         }
     }
 }

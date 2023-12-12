@@ -54,7 +54,7 @@ namespace NeAccounting.ViewModels
                         Statu);
 
             if (!List.Any())
-                _snackbarService.Show("اوه", "هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("اوه", "هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
         }
 
         [RelayCommand]
@@ -68,7 +68,7 @@ namespace NeAccounting.ViewModels
                         Statu);
 
             if (!List.Any())
-                _snackbarService.Show("اوه", "هیچ کارگری در پایگاه داده با این مشخصات یافت نشد!!!!", ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("اوه", "هیچ کارگری در پایگاه داده با این مشخصات یافت نشد!!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
         }
 
         [RelayCommand]

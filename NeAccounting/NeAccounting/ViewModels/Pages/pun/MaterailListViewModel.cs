@@ -1,6 +1,8 @@
-﻿using DomainShared.ViewModels.Pun;
+﻿using DomainShared.ViewModels;
+using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Views.Pages;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -10,12 +12,12 @@ namespace NeAccounting.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
-
-
-        public MaterailListViewModel(INavigationService navigationService, IContentDialogService contentDialogService)
+        private readonly ISnackbarService _snackbarService;
+        public MaterailListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
+            _snackbarService = snackbarService;
         }
 
         [ObservableProperty]
@@ -81,14 +83,44 @@ namespace NeAccounting.ViewModels
 
             if (result == ContentDialogResult.Primary)
             {
-
+                using UnitOfWork db = new();
             }
         }
 
         [RelayCommand]
-        private void OnUpdateMaterial(int parameter)
+        private async Task OnUpdateMaterial(int parameter)
         {
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateMaterail");
 
+            if (pageType == null)
+            {
+                return;
+            }
+            var servise = _navigationService.GetNavigationControl();
+
+            var pun = List.First(t => t.Id == parameter);
+
+            IEnumerable<SuggestBoxViewModel<int>> asuBox;
+
+            using (UnitOfWork db = new())
+            {
+                asuBox = await db.unitManager.GetUnits();
+            }
+
+            var context = new UpdateMaterailPage(new Pages.UpdateMaterailViewModel(_snackbarService, _navigationService)
+            {
+                MaterialId = pun.Id,
+                Serial = pun.Serial,
+                LastSellPrice = pun.LastPrice,
+                Address = pun.Address,
+                Entity = pun.Entity,
+                IsManufacturedGoods = pun.IsManufacturedGoods,
+                MaterialName = pun.MaterialName,    
+                UnitId = pun.UnitId,
+                AsuBox = asuBox
+            });
+
+            servise.Navigate(pageType, context);
         }
     }
 }

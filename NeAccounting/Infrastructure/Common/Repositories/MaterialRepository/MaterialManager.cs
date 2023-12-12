@@ -34,10 +34,10 @@ namespace Infrastructure.Repositories
                     Id = x.Id,
                     MaterialName = x.Name,
                     Serial = x.Serial,
-                    SellPrice = x.SellPrice,
                     Address = x.PhysicalAddress,
-                    BuyPrice = x.BuyPrice,
+                    IsManufacturedGoods = x.IsManufacturedGoods,
                     Entity = x.Entity,
+                    UnitId = x.UnitId,
                     LastPrice = x.LastPrice,
                     UnitName = x.Unit.Name
                 }).ToListAsync();
@@ -48,7 +48,8 @@ namespace Infrastructure.Repositories
             double entity,
             int unitId,
             string serial,
-            string address)
+            string address,
+            bool isManufacturedGoods)
         {
             if (await TableNoTracking.AnyAsync(t => t.Name == name))
                 return new("کاربر گرامی این کالا از قبل تعریف شده می‌باشد!!!", false);
@@ -60,7 +61,8 @@ namespace Infrastructure.Repositories
                                 unitId,
                                 serial,
                                 entity,
-                                address));
+                                address,
+                                isManufacturedGoods));
             }
             catch (Exception ex)
             {
@@ -75,7 +77,8 @@ namespace Infrastructure.Repositories
             double entity,
             int unitId,
             string serial,
-            string address)
+            string address,
+            bool isManufacturedGoods)
         {
             try
             {
@@ -89,6 +92,7 @@ namespace Infrastructure.Repositories
                 mt.UnitId = unitId;
                 mt.Serial = serial;
                 mt.PhysicalAddress = address;
+                mt.IsManufacturedGoods = isManufacturedGoods;
 
                 Update(mt);
             }
@@ -99,5 +103,26 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
+        public async Task<(string error, PunListDto pun)> GetMaterailById(int Id)
+        {
+            var mt = await TableNoTracking
+                .Include(t => t.Unit)
+                .FirstOrDefaultAsync(t => t.Id == Id);
+
+            if (mt == null)
+                return new("کالای مورد نظر یافت نشد !!!", new PunListDto());
+
+            return new(string.Empty, new PunListDto()
+            {
+                MaterialName = mt.Name,
+                Address = mt.PhysicalAddress,
+                Serial = mt.Serial,
+                IsManufacturedGoods = mt.IsManufacturedGoods,
+                Entity = mt.Entity,
+                Id = Id,
+                LastPrice = mt.LastPrice,
+                UnitName = mt.Unit.Name
+            });
+        }
     }
 }

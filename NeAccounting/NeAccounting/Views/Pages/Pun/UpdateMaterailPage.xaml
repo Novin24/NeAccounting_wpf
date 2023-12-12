@@ -1,16 +1,226 @@
 ﻿<Page x:Class="NeAccounting.Views.Pages.UpdateMaterailPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       d:DataContext="{d:DesignInstance local:UpdateMaterailPage,
                                      IsDesignTimeCreatable=False}"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="EditPunPage">
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      d:Background="{DynamicResource ApplicationBackgroundBrush}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      mc:Ignorable="d">
 
     <Grid>
-        <Button Command="{Binding ViewModel.UpdateCommand}" Content="New"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".5*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height=".5*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width=".5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1"
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Background="{StaticResource Rectangle Dark blue}"
+                CornerRadius="10"></Border>
+        <Border Grid.Row="3"
+                Grid.RowSpan="3"
+                Grid.Column="3"
+                Grid.ColumnSpan="3"
+                Background="{StaticResource Rectangle Pale blue}"
+                CornerRadius="10"></Border>
+        <Border Grid.Row="2"
+                Grid.RowSpan="3"
+                Grid.Column="2"
+                Grid.ColumnSpan="3"
+                Background="{DynamicResource ApplicationBackgroundBrush}"
+                CornerRadius="10">
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+
+                </Grid.RowDefinitions>
+                <ui:TextBlock Margin="10 0 0 0"
+                              Height="40"
+                              HorizontalAlignment="left"
+                              FontFamily="STXingkai"
+                              FontSize="35"
+                              Text="Novin" />
+                <TextBlock Margin="0 20 20 0"
+                           Height="40"
+                           HorizontalAlignment="Right"
+                           FontFamily="Calibri"
+                           FontWeight="Bold"
+                           FontSize="18"
+                           Text="تعریف اجناس و کالاها" />
+                <TextBlock Margin="20 20 0 0"
+                           Height="40"
+                           HorizontalAlignment="Center"
+                           FontFamily="Calibri"
+                           FontWeight="Bold"
+                           FontSize="18"><Run Text="1402/09/13 " /></TextBlock>
+                <Border Grid.Row="1"
+                        CornerRadius="9"
+                        BorderBrush="#D6D5D5"
+                        BorderThickness="0.4"
+                        Margin="4">
+                    <Border.Background>
+                        <SolidColorBrush Color="White"
+                                         Opacity="0.08" />
+
+                    </Border.Background>
+                    <Grid FlowDirection="RightToLeft">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Margin="20 10 0 0 ">
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="نام کالا"
+                                       Margin="2 0 0 0 " />
+                            <TextBox TextAlignment="Center"
+                                     FontSize="14"
+                                     TabIndex="0"
+                                     Grid.Row="0"
+                                     Grid.Column="0"
+                                     x:Name="MaterialName"
+                                     Text="{Binding ViewModel.MaterialName}"
+                                     Margin="0 4 3 0 "
+                                     CaretBrush="White"
+                                     FontFamily="Calibri" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+                                    Margin="3 10 20 0 ">
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="واحد شمارش"
+                                       Margin="1 0 0 0 " />
+                            <ComboBox FontSize="14"
+                                      TabIndex="1"
+                                      FontFamily="Calibri"
+                                      SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay}"
+                                      SelectionChanged="ComboBox_SelectionChanged"
+                                      DisplayMemberPath="DisplayName"
+                                      SelectedValuePath="Id"
+                                      ItemsSource="{Binding ViewModel.AsuBox}"
+                                      Margin="0 4 0 0" />
+                        </StackPanel>
+                        <StackPanel Margin="20 4 0 0"
+                                    Grid.Row="1">
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="اخرین قیمت فروش"
+                                       Margin="2 0 0 0 " />
+                            <ui:NumberBox Margin="0 4 3 0"
+                                          TabIndex="2"
+                                          TextAlignment="Center"
+                                          SpinButtonPlacementMode="Hidden"
+                                          Text="{Binding ViewModel.LastSellPrice, Mode=TwoWay}"
+                                          FontSize="14"
+                                          FontFamily="Calibri" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+                                    Margin="3 4 20 0 "
+                                    Grid.Row="1">
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="محل نگهداری"
+                                       Margin="1 0 0 0 " />
+                            <ui:TextBox FontSize="14"
+                                        TextAlignment="Center"
+                                        Text="{Binding ViewModel.Address, Mode=TwoWay}"
+                                        TabIndex="3"
+                                        FontFamily="Calibri"
+                                        Margin="0 4 0 0" />
+                        </StackPanel>
+                        <StackPanel Margin="20 4 0 0"
+                                    Grid.Row="2">
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="شماره سریال"
+                                       Margin="2 0 0 0 " />
+                            <ui:TextBox Grid.Column="0"
+                                        Grid.Row="2"
+                                        Text="{Binding ViewModel.Serial , Mode= TwoWay}"
+                                        TabIndex="4"
+                                        Margin="0 4 3 0"
+                                        TextAlignment="Center"
+                                        FontSize="14"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
+                        <StackPanel Margin="10 24 0 0 "
+                                    Grid.Column="1"
+                                    Grid.Row="2">
+                            <CheckBox FontFamily="Calibri"
+                                      FontSize="14"
+                                      TabIndex="5"
+                                      Checked="CheckBox_Checked"
+                                      Unchecked="CheckBox_Checked"
+                                      IsChecked="{Binding ViewModel.IsManufacturedGoods , Mode=TwoWay}"
+                                      Margin="2 0 0 0 ">تعریف به عنوان کالای تولیدی</CheckBox>
+
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="0"
+                                    Grid.Row="3"
+                                    Margin="20 4 0 0">
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="موجودی انبار"
+                                       Margin="1 0 0 0 " />
+                            <ui:NumberBox FontSize="14"
+                                          x:Name="EntityNumbox"
+                                          Value="{Binding ViewModel.Entity, Mode=TwoWay}"
+                                          TextAlignment="Center"
+                                          SpinButtonPlacementMode="Hidden"
+                                          TabIndex="6"
+                                          FontFamily="Calibri"
+                                          Margin="0 4 0 0" />
+                        </StackPanel>
+
+                        <Button Content="ثبت"
+                                Margin="15"
+                                Command="{Binding ViewModel.UpdateCommand , Mode=OneWay}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center"
+                                Grid.Row="4"
+                                FontFamily="Calibri"
+                                FontSize="15"
+                                Grid.ColumnSpan="2" />
+
+                    </Grid>
+
+                </Border>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

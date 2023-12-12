@@ -61,9 +61,14 @@ namespace Infrastructure.UnitOfWork
             }
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
-            NovinDb.Dispose();
+            await NovinDb.DisposeAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await NovinDb.SaveChangesAsync();
         }
     }
 }
