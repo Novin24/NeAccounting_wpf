@@ -35,6 +35,7 @@ namespace Infrastructure.Repositories
                     MaterialName = x.Name,
                     Serial = x.Serial,
                     Address = x.PhysicalAddress,
+                    IsManufacturedGoods = x.IsManufacturedGoods,
                     Entity = x.Entity,
                     UnitId = x.UnitId,
                     LastPrice = x.LastPrice,

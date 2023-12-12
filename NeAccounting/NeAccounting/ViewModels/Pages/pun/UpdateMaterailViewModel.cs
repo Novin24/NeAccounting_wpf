@@ -1,5 +1,6 @@
 ﻿using DomainShared.Errore;
 using DomainShared.ViewModels;
+using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using Wpf.Ui;
@@ -14,12 +15,8 @@ namespace NeAccounting.ViewModels.Pages
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
 
-        public UpdateMaterailViewModel(int materialId)
-        {
-            MaterialId = materialId;
-        }
         public UpdateMaterailViewModel(ISnackbarService snackbarService, INavigationService navigationService)
-        
+
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
@@ -43,48 +40,28 @@ namespace NeAccounting.ViewModels.Pages
         [ObservableProperty]
         private double _entity = 0;
 
-        [ObservableProperty]    
+        [ObservableProperty]
         private int _unitId = 0;
 
         [ObservableProperty]
-        private bool _isManufacturedGoods = false;
+        private bool _isManufacturedGoods ;
 
         [ObservableProperty]
-        private string _unitName;
-
-        public int MaterialId { get; set; }
+        private int _materialId = 0;
 
         public void OnNavigatedFrom()
         {
 
         }
 
-        public async void OnNavigatedTo()
+        public void OnNavigatedTo()
         {
             if (!_isInitialized)
-                await InitializeViewModel();
+                InitializeViewModel();
         }
 
-
-        private async Task InitializeViewModel()
+        private void InitializeViewModel()
         {
-            using (UnitOfWork db = new())
-            {
-                var (error, pun) = await db.materialManager.GetMaterailById(MaterialId);
-                if (!string.IsNullOrEmpty(error))
-                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
-
-                MaterialName = pun.MaterialName;
-                Serial = pun.Serial;
-                Address = pun.Address;
-                LastSellPrice = pun.LastPrice;
-                Entity = pun.Entity;
-                UnitId = pun.UnitId;
-                UnitName = pun.UnitName;
-                IsManufacturedGoods = pun.IsManufacturedGoods;
-
-                AsuBox = await db.unitManager.GetUnits();
-            }
             _isInitialized = true;
         }
 
@@ -93,27 +70,27 @@ namespace NeAccounting.ViewModels.Pages
         {
             if (string.IsNullOrEmpty(MaterialName))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(Serial))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سریال کالا"), ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سریال کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
-            if (Entity == 0)
+            if (!IsManufacturedGoods && Entity == 0)
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موجودی انبار"), ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موجودی انبار"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (UnitId == 0)
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(Address))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مکان فیزیکی کالا"), ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مکان فیزیکی کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
@@ -122,7 +99,7 @@ namespace NeAccounting.ViewModels.Pages
 
             if (!isSuccess)
             {
-                _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Primary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             await db.SaveChangesAsync();

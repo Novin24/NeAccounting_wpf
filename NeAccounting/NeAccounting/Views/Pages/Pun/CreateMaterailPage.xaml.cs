@@ -11,8 +11,6 @@ namespace NeAccounting.Views.Pages
     public partial class CreateMaterailPage : INavigableView<CreateMaterailViewModel>
     {
         public CreateMaterailViewModel ViewModel { get; }
-        public int materailId { get; set; }
-
 
         public CreateMaterailPage(CreateMaterailViewModel viewModel)
         {
@@ -38,6 +36,7 @@ namespace NeAccounting.Views.Pages
                 if (cmb.IsChecked.Value)
                 {
                     EntityNumbox.Value = 0;
+                    ViewModel.Entity = 0;
                     EntityNumbox.IsEnabled = false;
                     return;
                 }

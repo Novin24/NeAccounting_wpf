@@ -111,7 +111,7 @@
                                      x:Name="MaterialName"
                                      Grid.Row="0"
                                      Grid.Column="0"
-                                     Text="{Binding ViewModel.MaterialName}"
+                                     Text="{Binding ViewModel.MaterialName , Mode=TwoWay}"
                                      Margin="0 4 3 0 "
                                      CaretBrush="White"
                                      FontFamily="Calibri" />
@@ -126,8 +126,10 @@
                             <ComboBox FontSize="14"
                                       TabIndex="1"
                                       FontFamily="Calibri"
+                                      SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay}"
                                       SelectionChanged="ComboBox_SelectionChanged"
                                       DisplayMemberPath="DisplayName"
+                                      SelectedValuePath="Id"
                                       ItemsSource="{Binding ViewModel.AsuBox}"
                                       Margin="0 4 0 0" />
                         </StackPanel>
@@ -142,7 +144,7 @@
                                           TabIndex="2"
                                           TextAlignment="Center"
                                           SpinButtonPlacementMode="Hidden"
-                                          Text="{Binding ViewModel.LastSellPrice}"
+                                          Text="{Binding ViewModel.LastSellPrice , Mode= TwoWay}"
                                           FontSize="14"
                                           FontFamily="Calibri" />
                         </StackPanel>
@@ -157,7 +159,7 @@
                             <ui:TextBox FontSize="14"
                                         TextAlignment="Center"
                                         TabIndex="3"
-                                        Text="{Binding ViewModel.Address}"
+                                        Text="{Binding ViewModel.Address , Mode=TwoWay}"
                                         FontFamily="Calibri"
                                         Margin="0 4 0 0" />
                         </StackPanel>
@@ -169,7 +171,7 @@
                                        Margin="2 0 0 0 " />
                             <ui:TextBox Grid.Column="0"
                                         Grid.Row="2"
-                                        Text="{Binding ViewModel.Serial}"
+                                        Text="{Binding ViewModel.Serial , Mode=TwoWay}"
                                         TabIndex="4"
                                         Margin="0 4 3 0"
                                         TextAlignment="Center"
@@ -184,7 +186,7 @@
                                       TabIndex="5"
                                       Checked="CheckBox_Checked"
                                       Unchecked="CheckBox_Checked"
-                                      IsChecked="{Binding ViewModel.IsManufacturedGoods}"
+                                      IsChecked="{Binding ViewModel.IsManufacturedGoods , Mode=TwoWay}"
                                       Margin="2 0 0 0 ">تعریف به عنوان کالای تولیدی</CheckBox>
 
                         </StackPanel>
@@ -198,7 +200,7 @@
                                        Margin="1 0 0 0 " />
                             <ui:NumberBox FontSize="14"
                                           x:Name="EntityNumbox"
-                                          Text="{Binding ViewModel.Entity}"
+                                          Value="{Binding ViewModel.Entity , Mode=TwoWay}"
                                           TextAlignment="Center"
                                           SpinButtonPlacementMode="Hidden"
                                           TabIndex="6"

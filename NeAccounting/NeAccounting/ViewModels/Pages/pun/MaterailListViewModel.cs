@@ -1,4 +1,5 @@
-﻿using DomainShared.ViewModels.Pun;
+﻿using DomainShared.ViewModels;
+using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
@@ -87,7 +88,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private void OnUpdateMaterial(int parameter)
+        private async Task OnUpdateMaterial(int parameter)
         {
             Type? pageType = NameToPageTypeConverter.Convert("UpdateMaterail");
 
@@ -97,7 +98,29 @@ namespace NeAccounting.ViewModels
             }
             var servise = _navigationService.GetNavigationControl();
 
-            servise.Navigate(pageType, new UpdateMaterailPage(new Pages.UpdateMaterailViewModel(parameter)));
+            var pun = List.First(t => t.Id == parameter);
+
+            IEnumerable<SuggestBoxViewModel<int>> asuBox;
+
+            using (UnitOfWork db = new())
+            {
+                asuBox = await db.unitManager.GetUnits();
+            }
+
+            var context = new UpdateMaterailPage(new Pages.UpdateMaterailViewModel(_snackbarService, _navigationService)
+            {
+                MaterialId = pun.Id,
+                Serial = pun.Serial,
+                LastSellPrice = pun.LastPrice,
+                Address = pun.Address,
+                Entity = pun.Entity,
+                IsManufacturedGoods = pun.IsManufacturedGoods,
+                MaterialName = pun.MaterialName,    
+                UnitId = pun.UnitId,
+                AsuBox = asuBox
+            });
+
+            servise.Navigate(pageType, context);
         }
     }
 }

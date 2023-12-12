@@ -12,11 +12,13 @@ namespace NeAccounting.Views.Pages
     {
         public UpdateMaterailViewModel ViewModel { get; }
 
+
         public UpdateMaterailPage(UpdateMaterailViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+            MaterialName.Focus();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -30,11 +32,12 @@ namespace NeAccounting.Views.Pages
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (sender is CheckBox cmb)
+            if (IsInitialized && sender is CheckBox cmb)
             {
                 if (cmb.IsChecked.Value)
                 {
                     EntityNumbox.Value = 0;
+                    ViewModel.Entity = 0;
                     EntityNumbox.IsEnabled = false;
                     return;
                 }
