@@ -1,6 +1,7 @@
 ﻿using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Views.Pages;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -10,12 +11,12 @@ namespace NeAccounting.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
-
-
-        public MaterailListViewModel(INavigationService navigationService, IContentDialogService contentDialogService)
+        private readonly ISnackbarService _snackbarService;
+        public MaterailListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
+            _snackbarService = snackbarService;
         }
 
         [ObservableProperty]
@@ -81,14 +82,22 @@ namespace NeAccounting.ViewModels
 
             if (result == ContentDialogResult.Primary)
             {
-
+                using UnitOfWork db = new();
             }
         }
 
         [RelayCommand]
         private void OnUpdateMaterial(int parameter)
         {
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateMaterail");
 
+            if (pageType == null)
+            {
+                return;
+            }
+            var servise = _navigationService.GetNavigationControl();
+
+            servise.Navigate(pageType, new UpdateMaterailPage(new Pages.UpdateMaterailViewModel(parameter)));
         }
     }
 }

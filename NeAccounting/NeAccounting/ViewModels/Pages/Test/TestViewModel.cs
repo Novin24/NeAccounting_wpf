@@ -15,7 +15,7 @@ namespace NeAccounting.ViewModels
         private void OnMyClick()
         {
             var navigationView = _navigationService.GetNavigationControl();
-            navigationView.Navigate(typeof(UpdateMaterailPage), new UpdateMaterailPage(new ViewModels.Pages.UpdateMaterailViewModel() { MaterialId = 398 }));
+            //navigationView.Navigate(typeof(UpdateMaterailPage), new UpdateMaterailPage(new ViewModels.Pages.UpdateMaterailViewModel() { MaterialId = 398 }));
         }
     }
 }

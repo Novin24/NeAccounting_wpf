@@ -93,6 +93,7 @@
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
 
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -107,6 +108,7 @@
                             <TextBox TextAlignment="Center"
                                      FontSize="14"
                                      TabIndex="0"
+                                     x:Name="MaterialName"
                                      Grid.Row="0"
                                      Grid.Column="0"
                                      Text="{Binding ViewModel.MaterialName}"
@@ -121,25 +123,26 @@
                                        FontSize="14"
                                        Text="واحد شمارش"
                                        Margin="1 0 0 0 " />
-                            <ui:AutoSuggestBox FontSize="14"
-                                               TabIndex="1"
-                                               FontFamily="Calibri"
-                                               DisplayMemberPath="DisplayName"
-                                               OriginalItemsSource="{Binding ViewModel.AsuBox}"
-                                               Margin="0 4 0 0" />
+                            <ComboBox FontSize="14"
+                                      TabIndex="1"
+                                      FontFamily="Calibri"
+                                      SelectionChanged="ComboBox_SelectionChanged"
+                                      DisplayMemberPath="DisplayName"
+                                      ItemsSource="{Binding ViewModel.AsuBox}"
+                                      Margin="0 4 0 0" />
                         </StackPanel>
                         <StackPanel Margin="20 4 0 0"
                                     Grid.Row="1">
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
-                                       Text="میانگین قیمت خرید"
+                                       Text="اخرین قیمت فروش"
                                        Margin="2 0 0 0 " />
                             <ui:NumberBox Margin="0 4 3 0"
                                           TabIndex="2"
                                           TextAlignment="Center"
                                           SpinButtonPlacementMode="Hidden"
-                                          Text="{Binding ViewModel.b}"
+                                          Text="{Binding ViewModel.LastSellPrice}"
                                           FontSize="14"
                                           FontFamily="Calibri" />
                         </StackPanel>
@@ -154,6 +157,7 @@
                             <ui:TextBox FontSize="14"
                                         TextAlignment="Center"
                                         TabIndex="3"
+                                        Text="{Binding ViewModel.Address}"
                                         FontFamily="Calibri"
                                         Margin="0 4 0 0" />
                         </StackPanel>
@@ -161,39 +165,52 @@
                                     Grid.Row="2">
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
-                                       Text="موجودی انبار"
+                                       Text="شماره سریال"
                                        Margin="2 0 0 0 " />
-                            <ui:NumberBox Grid.Column="0"
-                                          Grid.Row="2"
-                                          TabIndex="4"
-                                          SpinButtonPlacementMode="Hidden"
-                                          Margin="0 4 3 0"
-                                          TextAlignment="Center"
-                                          FontSize="14"
-                                          FontFamily="Calibri" />
+                            <ui:TextBox Grid.Column="0"
+                                        Grid.Row="2"
+                                        Text="{Binding ViewModel.Serial}"
+                                        TabIndex="4"
+                                        Margin="0 4 3 0"
+                                        TextAlignment="Center"
+                                        FontSize="14"
+                                        FontFamily="Calibri" />
                         </StackPanel>
-                        <StackPanel Grid.Column="1"
-                                    Grid.Row="2"
-                                    Margin="3 10 20 0 ">
+                        <StackPanel Margin="10 24 0 0 "
+                                    Grid.Column="1"
+                                    Grid.Row="2">
+                            <CheckBox FontFamily="Calibri"
+                                      FontSize="14"
+                                      TabIndex="5"
+                                      Checked="CheckBox_Checked"
+                                      Unchecked="CheckBox_Checked"
+                                      IsChecked="{Binding ViewModel.IsManufacturedGoods}"
+                                      Margin="2 0 0 0 ">تعریف به عنوان کالای تولیدی</CheckBox>
 
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="0"
+                                    Grid.Row="3"
+                                    Margin="20 4 0 0">
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
-                                       Text="شماره سریال"
+                                       Text="موجودی انبار"
                                        Margin="1 0 0 0 " />
-                            <ui:TextBox FontSize="14"
-                                        Text="{Binding ViewModel.Serial}"
-                                        TextAlignment="Center"
-                                        TabIndex="5"
-                                        FontFamily="Calibri"
-                                        Margin="0 4 0 0" />
+                            <ui:NumberBox FontSize="14"
+                                          x:Name="EntityNumbox"
+                                          Text="{Binding ViewModel.Entity}"
+                                          TextAlignment="Center"
+                                          SpinButtonPlacementMode="Hidden"
+                                          TabIndex="6"
+                                          FontFamily="Calibri"
+                                          Margin="0 4 0 0" />
                         </StackPanel>
-
                         <Button Content="ثبت"
                                 Margin="15"
                                 Command="{Binding ViewModel.CreateMaterialCommand , Mode=OneWay}"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"
-                                Grid.Row="3"
+                                Grid.Row="4"
                                 FontFamily="Calibri"
                                 FontSize="15"
                                 Grid.ColumnSpan="2" />

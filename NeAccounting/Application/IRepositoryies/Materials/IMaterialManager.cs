@@ -9,11 +9,13 @@ namespace NeApplication.IRepositoryies
     {
         Task<List<SuggestBoxViewModel<int>>> GetMaterails();
         Task<List<PunListDto>> GetMaterails(string name, string serial);
+        Task<(string error, PunListDto pun)> GetMaterailById(int Id);
         Task<(string error, bool isSuccess)> CreateMaterial(string name,
             double entity,
             int unitId,
             string serial,
-            string address);
+            string address , 
+            bool isManufacturedGoods);
 
         Task<(string error, bool isSuccess)> UpdateMaterial(
             int materialId,
@@ -21,6 +23,7 @@ namespace NeApplication.IRepositoryies
             double entity,
             int unitId,
             string serial,
-            string address);
+            string address, 
+            bool isManufacturedGoods);
     }
 }
