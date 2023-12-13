@@ -201,13 +201,16 @@
                                                        FontFamily="Calibri" />
                                 </StackPanel>
 
-                                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+                                <StackPanel Grid.Row="0"
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="تاریخ پرداخت"
                                                Margin="10 4 0 0 " />
                                     <datepicker:PersianDatePicker VerticalAlignment="Center"
-                                                              x:Name="pdp" />
+                                                                  FlowDirection="LeftToRight"
+                                                                  x:Name="pdp" />
                                 </StackPanel>
                                 <StackPanel Margin="3 4 20 0"
                                             Grid.Row="1"

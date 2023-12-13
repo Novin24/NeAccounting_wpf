@@ -198,6 +198,7 @@
                                                    Text="تاریخ دریافت"
                                                    Margin="10 4 0 0 " />
                                         <datepicker:PersianDatePicker VerticalAlignment="Center"
+                                                                      FlowDirection="LeftToRight"
                                                                       x:Name="pdp" />
                                     </StackPanel>
                                     <StackPanel Margin="3 4 20 0"

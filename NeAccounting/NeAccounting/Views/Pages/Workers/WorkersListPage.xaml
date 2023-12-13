@@ -252,12 +252,15 @@
                                                             HorizontalAlignment="Center">
                                                     <Button  BorderBrush="Transparent"
                                                              Margin="2"
+                                                             CommandParameter="{Binding Id , Mode=OneWay}"
+                                                             Command="{Binding Path=DataContext.ViewModel.UpdateWorkerCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                              Padding="7,5">
                                                         <ui:SymbolIcon Symbol="Pen16" />
                                                     </Button>
                                                     <Button Margin="3"
+                                                            CommandParameter="{Binding Id , Mode=OneWay}"
+                                                            Command="{Binding Path=DataContext.ViewModel.RemoveWorkerCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                             Padding="7,5">
-
                                                         <ui:SymbolIcon Symbol="Delete16" />
                                                     </Button>
                                                 </StackPanel>

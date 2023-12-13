@@ -14,7 +14,6 @@ namespace Infrastructure.Repositories
         public DbSet<TEntity> Entities { get; }
         public virtual IQueryable<TEntity> Table => Entities;
         public virtual IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();
-        public virtual IQueryable<TEntity> TableNoTrackingByDeleted => Entities.AsNoTracking();
 
         public Repository(NovinDbContext dbContext)
         {

@@ -28,7 +28,6 @@ namespace Infrastructure.Repositories
                 .Include(x => x.Unit)
                 .Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name))
                 .Where(x => string.IsNullOrEmpty(serial) || x.Serial.Contains(serial))
-                .Where(t => !t.IsDeleted)
                 .Select(x => new PunListDto
                 {
                     Id = x.Id,
