@@ -4,7 +4,6 @@ using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NeAccounting.ViewModels
 {
@@ -45,8 +44,10 @@ namespace NeAccounting.ViewModels
         private string _description = "";
 
         [ObservableProperty]
-
         private Shift _shift = Shift.ByMounth;
+
+        [ObservableProperty]
+        private Status _status = Status.InWork;
 
         public void OnNavigatedFrom()
         {

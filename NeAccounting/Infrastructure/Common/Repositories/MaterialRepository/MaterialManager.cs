@@ -77,6 +77,7 @@ namespace Infrastructure.Repositories
             int unitId,
             string serial,
             string address,
+            long lastPrice,
             bool isManufacturedGoods)
         {
             try
@@ -90,10 +91,11 @@ namespace Infrastructure.Repositories
                 mt.Entity = entity;
                 mt.UnitId = unitId;
                 mt.Serial = serial;
+                mt.LastPrice = lastPrice;
                 mt.PhysicalAddress = address;
                 mt.IsManufacturedGoods = isManufacturedGoods;
 
-                Update(mt);
+                Update(mt,false);
             }
             catch (Exception ex)
             {

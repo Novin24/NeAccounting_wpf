@@ -53,7 +53,7 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private void OnAddClick(string parameter)
         {
-            if (String.IsNullOrWhiteSpace(parameter))
+            if (string.IsNullOrWhiteSpace(parameter))
             {
                 return;
             }
@@ -84,6 +84,15 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
+                var isSuccess = await db.materialManager.DeleteAsync(parameter);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                    return;
+                }
+                _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Accessibility24), TimeSpan.FromMilliseconds(2000));
+
+                await OnSearchMaterial();
             }
         }
 
@@ -115,7 +124,7 @@ namespace NeAccounting.ViewModels
                 Address = pun.Address,
                 Entity = pun.Entity,
                 IsManufacturedGoods = pun.IsManufacturedGoods,
-                MaterialName = pun.MaterialName,    
+                MaterialName = pun.MaterialName,
                 UnitId = pun.UnitId,
                 AsuBox = asuBox
             });

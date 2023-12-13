@@ -47,7 +47,6 @@ namespace NeAccounting.ViewModels
         private string _description = "";
 
         [ObservableProperty]
-
         private Shift _shift = Shift.ByMounth;
 
         [ObservableProperty]

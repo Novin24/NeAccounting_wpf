@@ -24,6 +24,7 @@ namespace NeApplication.IRepositoryies
             int unitId,
             string serial,
             string address, 
+            long lastPrice,
             bool isManufacturedGoods);
     }
 }

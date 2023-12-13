@@ -115,7 +115,7 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnUpdateWorker(int parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateMaterail");
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateWorker");
 
             if (pageType == null)
             {

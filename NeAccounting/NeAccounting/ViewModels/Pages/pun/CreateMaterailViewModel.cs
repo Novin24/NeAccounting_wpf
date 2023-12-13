@@ -112,7 +112,7 @@ namespace NeAccounting.ViewModels.Pages
 
             _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Accessibility24), TimeSpan.FromMilliseconds(2000));
 
-            Type? pageType = NameToPageTypeConverter.Convert("WorkersList");
+            Type? pageType = NameToPageTypeConverter.Convert("MaterailList");
 
             if (pageType == null)
             {

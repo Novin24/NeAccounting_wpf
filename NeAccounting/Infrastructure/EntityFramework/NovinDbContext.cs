@@ -6,6 +6,8 @@ using System;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Security.Principal;
 using System.Linq.Expressions;
+using System.Threading;
+using DomainShared.Constants;
 
 namespace Infrastructure.EntityFramework
 {
@@ -19,12 +21,9 @@ namespace Infrastructure.EntityFramework
 
         }
 
-        private static readonly MethodInfo ConfigureBasePropertiesMethodInfo
-    = typeof(NovinDbContext)
-    .GetMethod(
-        nameof(ConfigureBaseProperties),
-        BindingFlags.Instance | BindingFlags.NonPublic
-    )!;
+        private static readonly MethodInfo ConfigureBasePropertiesMethodInfo = typeof(NovinDbContext)
+                .GetMethod(nameof(ConfigureBaseProperties),
+                BindingFlags.Instance | BindingFlags.NonPublic)!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,7 +45,7 @@ namespace Infrastructure.EntityFramework
         }
 
         protected virtual void ConfigureBaseProperties<TEntity>(ModelBuilder modelBuilder, IMutableEntityType mutableEntityType)
-    where TEntity : class
+                    where TEntity : class
         {
             if (mutableEntityType.IsOwned())
             {
@@ -97,25 +96,41 @@ namespace Infrastructure.EntityFramework
             return expression;
         }
 
-        public override int SaveChanges()
-        {
-            return base.SaveChanges();
-        }
-
-        public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        {
-            return base.SaveChanges(acceptAllChangesOnSuccess);
-        }
-
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
-        {
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        }
-
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            HandleSoftDelete();
             return base.SaveChangesAsync(cancellationToken);
         }
 
+        private void HandleSoftDelete()
+        {
+            var entities = ChangeTracker.Entries()
+                                .Where(e => e.State == EntityState.Deleted || e.State == EntityState.Modified || e.State == EntityState.Added);
+            foreach (var entity in entities)
+            {
+                if (entity.State == EntityState.Deleted && entity.Entity is ISoftDeleted)
+                {
+                    entity.State = EntityState.Modified;
+                    var book = entity.Entity as ISoftDeleted;
+                    book.DeletionTime = DateTime.Now;
+                    book.DeleterId = CurrentUser.CurrentUserId;
+                    book.IsDeleted = true;
+                }
+
+                if (entity.State == EntityState.Modified && entity.Entity is IEntities)
+                {
+                    var book = entity.Entity as IEntities;
+                    book.LastModifireId = CurrentUser.CurrentUserId;
+                    book.LastModificationTime = DateTime.Now;
+                }
+                
+                if (entity.State == EntityState.Added && entity.Entity is IEntities)
+                {
+                    var book = entity.Entity as IEntities;
+                    book.CreatorId = CurrentUser.CurrentUserId;
+                    book.CreationTime = DateTime.Now;
+                }
+            }
+        }
     }
 }

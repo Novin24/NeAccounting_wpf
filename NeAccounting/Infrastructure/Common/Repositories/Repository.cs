@@ -114,12 +114,12 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> DeleteAsync(int entityId, bool saveNow = true)
+        public async Task<bool> DeleteAsync<T>(T entityId, bool saveNow = true)
         {
             try
             {
 
-                await DeleteAsync(await GetByIdAsync(entityId));
+                await DeleteAsync(await GetByIdAsync(entityId), saveNow);
                 return true;
             }
             catch (Exception)
@@ -165,7 +165,8 @@ namespace Infrastructure.Repositories
         {
             Assert.NotNull(entity, nameof(entity));
             Entities.Update(entity);
-            DbContext.SaveChanges();
+            if (saveNow)
+                DbContext.SaveChanges();
         }
 
         public virtual void UpdateRange(IEnumerable<TEntity> entities, bool saveNow = true)
