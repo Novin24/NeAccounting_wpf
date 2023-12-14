@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using DomainShared.Enums;
 
 namespace Domain.NovinEntity.Customers
 {
@@ -16,6 +17,9 @@ namespace Domain.NovinEntity.Customers
             uint etebar,
             string nationalCode,
             string address,
+            CustomerType type,
+            bool promissoryNote,
+            bool chequeGuarantee,
             bool isBuyer,
             bool isSeller)
         {
@@ -26,6 +30,9 @@ namespace Domain.NovinEntity.Customers
             Address = address;
             Buyer = isBuyer;
             Seller = isSeller;
+            PromissoryNote = promissoryNote;
+            ChequeGuarantee = chequeGuarantee;
+            Type = type;
         }
         #endregion
 
@@ -37,6 +44,9 @@ namespace Domain.NovinEntity.Customers
         public string Address { get; set; }
         public bool Buyer { get; set; }
         public bool Seller { get; set; }
+        public CustomerType Type { get; set; }
+        public bool ChequeGuarantee { get; set; }
+        public bool PromissoryNote { get; set; }
         #endregion
     }
 }
