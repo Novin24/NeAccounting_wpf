@@ -15,9 +15,6 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
-    <Page.Resources>
-        <!--<lrc:DateTimeToPersianDateConverter x:Key="dateToPersianDateConverter" />-->
-    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height=".5*" />
@@ -238,6 +235,7 @@
                                                Margin="22 4 0 0 " />
                                     <ui:NumberBox Margin="20 4 3 2"
                                                   TextAlignment="Center"
+                                                  Name="Price"
                                                   SpinButtonPlacementMode="Hidden"
                                                   FontSize="14"
                                                   FontFamily="Calibri" />

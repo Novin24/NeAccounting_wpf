@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      
+      xmlns:lrc="clr-namespace:NeAccounting.Helpers"
       xmlns:local="clr-namespace:NeAccounting.Pages"
       xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
       Title="DataPage"
@@ -180,8 +180,9 @@
                                                    FontSize="14"
                                                    Text="نام مشتری"
                                                    Margin="22 4 0 0 " />
-                                        <ui:AutoSuggestBox x:Name="AutoSuggestBoxSuggestions"
+                                        <ui:AutoSuggestBox x:Name="ASBoxSuggestions"
                                                            Icon="{ui:SymbolIcon Search24}"
+                                                           OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
                                                            PlaceholderText="Search..."
                                                            DisplayMemberPath="DisplayName"
                                                            FontSize="14"

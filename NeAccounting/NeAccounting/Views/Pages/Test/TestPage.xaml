@@ -53,6 +53,20 @@
                     CornerRadius="10">
 
             </Border>
+            <StackPanel Grid.Row="3" Grid.Column="3">
+                <ui:NumberBox x:Name="prices"
+                              ValidationMode="InvalidInputOverwritten"
+                              TextChanged="prices_TextChanged"></ui:NumberBox>
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"
+                           FontFamily="Calibri"
+                           Padding="0 5"
+                           Foreground="Red"
+                           TextWrapping="Wrap"
+                           FontSize="16"
+                           Text="gdfgdf" />
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>
