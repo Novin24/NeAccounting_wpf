@@ -126,7 +126,7 @@ namespace NeAccounting.ViewModels
             await db.SaveChangesAsync();
 
 
-            _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Accessibility24), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(2000));
 
             Type? pageType = NameToPageTypeConverter.Convert("WorkersList");
 
