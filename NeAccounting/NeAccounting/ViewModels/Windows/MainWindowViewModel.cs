@@ -57,6 +57,12 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem(){Content = "افزودن اجناس",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateMaterailPage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem(){Content = "به روز رسانی اجناس",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateMaterailPage),Visibility = Visibility.Collapsed,},
                 #endregion
+                    
+                    #region Customer
+                    new NavigationViewItem {Content = "مشتری ها",TargetPageType = typeof(CustomerListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.BuildingRetailMore20} },
+                    new NavigationViewItem(){Content = "افزودن مشتری",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateMaterailPage),Visibility = Visibility.Collapsed,},
+                    new NavigationViewItem(){Content = "به روز رسانی مشتری",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateMaterailPage),Visibility = Visibility.Collapsed,},
+                #endregion
 
                 #region worker
                     new NavigationViewItem { Content = "پرسنل", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
@@ -64,6 +70,20 @@ namespace NeAccounting.ViewModels
                         Visibility = Visibility.Collapsed,},
                     new NavigationViewItem(){Content = "افزودن پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage),
                         Visibility = Visibility.Collapsed,},
+	            #endregion
+                }
+            },
+            new NavigationViewItem()
+            {
+                Content = "عملیات روزانه",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.SaveCopy20 },
+                //TargetPageType = typeof(MaterailListPage)
+                MenuItems = new ObservableCollection<object>
+                {
+                #region Remittance
+                    new NavigationViewItem {Content = "حواله فروش",TargetPageType = typeof(MaterailListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.BuildingRetailMore20} },
+                    new NavigationViewItem { Content = "حوله خرید", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
+                    new NavigationViewItem { Content = "حواله واسطه ای", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
 	            #endregion
                 }
             }
