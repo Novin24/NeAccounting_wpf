@@ -28,13 +28,13 @@
                 <RowDefinition Height=".5*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width=".5*"></ColumnDefinition>
                 <ColumnDefinition Width=".5*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width=".5*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width=".5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
                     Grid.RowSpan="3"
@@ -186,7 +186,10 @@
                                                 Text="{Binding ViewModel.JobTitle}"
                                                 FontFamily="Calibri"
                                                 Margin="0 5 0 0" />
-                                    <Button Command="{Binding ViewModel.SearchWorkerCommand}">جستجو</Button>
+                                    <Button Margin="0 25 0 0"
+                                            Padding="17 4 17 9"
+                                            IsDefault="True"
+                                            Command="{Binding ViewModel.SearchWorkerCommand}" >جستجو</Button>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
                                             Margin="20 9 0 0 "
