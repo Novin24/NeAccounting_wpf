@@ -1,13 +1,21 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NeAccounting.ViewModels
 {
     public partial class CreateWorkerViewModel : ObservableObject, INavigationAware
     {
+        private readonly ISnackbarService _snackbarService;
+        private readonly INavigationService _navigationService;
+        public CreateWorkerViewModel(INavigationService navigationService, ISnackbarService snackbarService)
+        {
+            _navigationService = navigationService;
+            _snackbarService = snackbarService;
+        }
         [ObservableProperty]
         private string _fullName = "";
 
@@ -36,11 +44,10 @@ namespace NeAccounting.ViewModels
         private string _description = "";
 
         [ObservableProperty]
-
         private Shift _shift = Shift.ByMounth;
 
         [ObservableProperty]
-        private string _erroreMessage = "";
+        private Status _status = Status.InWork;
 
         public void OnNavigatedFrom()
         {
@@ -58,42 +65,43 @@ namespace NeAccounting.ViewModels
 
             if (string.IsNullOrEmpty(FullName))
             {
-                ErroreMessage = NeErrorCodes.IsMandatory("نام کارگر");
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کارگر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(JobTitle))
             {
-                ErroreMessage = NeErrorCodes.IsMandatory("عنوان شغل");
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("عنوان شغل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(Mobile))
             {
-                ErroreMessage = NeErrorCodes.IsMandatory("موبایل");
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موبایل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(Address))
             {
-                ErroreMessage = NeErrorCodes.IsMandatory("آدرس");
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("آدرس"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (PersonalId <= 0)
             {
-                ErroreMessage = NeErrorCodes.IsMore("شماره پرسنلی", "صفر");
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("شماره پرسنلی", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(AccountNumber))
             {
-                ErroreMessage = NeErrorCodes.IsMandatory("شماره حساب");
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("شماره حساب"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(NationalCode))
             {
-                ErroreMessage = NeErrorCodes.IsMandatory("شماره ملی");
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("شماره ملی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
-            using UnitOfWork db = new();
-            var (error, isSuccess) = await db.workerManager.Create(
+            using (UnitOfWork db = new())
+            {
+                var (error, isSuccess) = await db.workerManager.Create(
                        FullName,
                        NationalCode,
                        Mobile,
@@ -104,9 +112,23 @@ namespace NeAccounting.ViewModels
                        Description,
                        JobTitle,
                        Shift);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                    return;
+                }
+                await db.SaveChangesAsync();
+            }
 
-            if (!isSuccess)
-                ErroreMessage = error; return;
+            _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.Accessibility24), TimeSpan.FromMilliseconds(2000));
+
+            Type? pageType = NameToPageTypeConverter.Convert("MaterailList");
+
+            if (pageType == null)
+            {
+                return;
+            }
+            _ = _navigationService.Navigate(pageType);
         }
-    }
+}
 }

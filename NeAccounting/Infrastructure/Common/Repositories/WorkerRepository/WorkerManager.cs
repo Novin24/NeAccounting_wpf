@@ -18,7 +18,6 @@ namespace Infrastructure.Repositories
         public Task<List<WorkerVewiModel>> GetWorkers(string fullName, string jobTitle, string nationalCode, Status status)
         {
             return TableNoTracking
-                .Where(t => !t.IsDeleted)
                 .Where(x => string.IsNullOrEmpty(fullName) || x.FullName.Contains(fullName))
                 .Where(x => string.IsNullOrEmpty(jobTitle) || x.JobTitle.Contains(jobTitle))
                 .Where(x => string.IsNullOrEmpty(nationalCode) || x.NationalCode.Contains(nationalCode))
@@ -29,6 +28,15 @@ namespace Infrastructure.Repositories
                     PersonelId = t.PersonnelId,
                     JobTitle = t.JobTitle,
                     WorkerStatus = t.Status.ToDisplay(DisplayProperty.Name),
+                    Status = t.Status,
+                    Shift= t.ShiftStatus,
+                    StartDate = t.StartDate,
+                    AccountNumber = t.AccountNumber,
+                    Address = t.Address,
+                    Description = t.Description,
+                    EndDate = t.EndDate,
+                    Mobile = t.Mobile,
+                    PersonnelId = t.PersonnelId,
                     FullName = t.FullName,
                     NationalCode = t.NationalCode,
                 }).ToListAsync();

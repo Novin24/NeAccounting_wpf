@@ -14,13 +14,59 @@
       Title="TestPage">
 
     <Grid>
-        <Button Command="{Binding ViewModel.MyClickCommand}">addPersonel</Button>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".5*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height=".5*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="1"
+                    Grid.RowSpan="3"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    Background="{StaticResource Rectangle Dark blue}"
+                    CornerRadius="10"></Border>
+            <Border Grid.Row="3"
+                    Grid.RowSpan="3"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="3"
+                    Background="{StaticResource Rectangle Pale blue}"
+                    CornerRadius="10"></Border>
+            <Border Grid.Row="2"
+                    Grid.RowSpan="3"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="3"
+                    Background="{DynamicResource ApplicationBackgroundBrush}"
+                    CornerRadius="10">
 
-        <datepicker:ShamsiDate />
-
-        <datepicker:PersianDatePicker VerticalAlignment="Bottom"
-                                      HorizontalAlignment="Left"
-                                      x:Name="pdp" />
-
+            </Border>
+            <StackPanel Grid.Row="3" Grid.Column="3">
+                <ui:NumberBox x:Name="prices"
+                              ValidationMode="InvalidInputOverwritten"
+                              TextChanged="prices_TextChanged"></ui:NumberBox>
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"
+                           FontFamily="Calibri"
+                           Padding="0 5"
+                           Foreground="Red"
+                           TextWrapping="Wrap"
+                           FontSize="16"
+                           Text="gdfgdf" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

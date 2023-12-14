@@ -57,15 +57,16 @@
                 <Grid>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="60"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <ui:TextBlock Margin="10 0 0 0"
-                                  Height="40"
-                                  HorizontalAlignment="left"
-                                  FontFamily="STXingkai"
-                                  FontSize="35"
+                    <ui:TextBlock Margin="15,0"
+                        Padding="0,20,0,0"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  FontFamily="the King &amp; Queen font"
+                                  FontSize="30"
                                   Text="Novin" />
 
                     <TextBlock Margin="0 20 20 0"
@@ -152,7 +153,7 @@
                                                 Text="{Binding ViewModel.PunName}"
                                                 Margin="0 4 0 0" />
                                     <Button IsDefault="True"
-                                            Command="{Binding ViewModel.SearchMaterialCommand}">جستجو</Button>
+                                            Command="{Binding ViewModel.SearchMaterialCommand }">جستجو</Button>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
                                             Margin="20 4 0 0 ">
@@ -172,7 +173,7 @@
                                       Grid.Row="2"
                                       CanUserResizeColumns="False"
                                       CanUserResizeRows="False"
-                                      ItemsSource="{Binding ViewModel.List, Mode=OneWay}"
+                                      ItemsSource="{Binding ViewModel.List, Mode=TwoWay}"
                                       FontFamily="Calibri"
                                       AutoGenerateColumns="False">
                                 <DataGrid.Columns>
@@ -233,11 +234,7 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-
-
                         </Grid>
-
-
                     </Border>
                 </Grid>
             </Border>

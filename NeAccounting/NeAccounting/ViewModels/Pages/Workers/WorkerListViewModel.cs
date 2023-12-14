@@ -1,7 +1,9 @@
 ﻿using DomainShared.Enums;
+using DomainShared.ViewModels;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Views.Pages;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -11,6 +13,7 @@ namespace NeAccounting.ViewModels
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
+        private readonly IContentDialogService _contentDialogService;
 
         [ObservableProperty]
         private string _fullName = "";
@@ -29,10 +32,11 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private IEnumerable<WorkerVewiModel> _list;
 
-        public WorkerListViewModel(ISnackbarService snackbarService, INavigationService navigationService)
+        public WorkerListViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService)
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
+            _contentDialogService = contentDialogService;
         }
 
         public void OnNavigatedFrom()
@@ -87,6 +91,64 @@ namespace NeAccounting.ViewModels
             }
 
             _ = _navigationService.Navigate(pageType);
+        }
+
+        [RelayCommand]
+        private async Task OnRemoveWorker(int parameter)
+        {
+            var result = await _contentDialogService.ShowSimpleDialogAsync(
+            new SimpleContentDialogCreateOptions()
+            {
+                Title = "آیا از حذف اطمینان دارید!!!",
+                Content = Application.Current.Resources["DeleteDialogContent"],
+                PrimaryButtonText = "بله",
+                SecondaryButtonText = "خیر",
+                CloseButtonText = "انصراف",
+            });
+
+            if (result == ContentDialogResult.Primary)
+            {
+                using UnitOfWork db = new();
+            }
+        }
+
+        [RelayCommand]
+        private async Task OnUpdateWorker(int parameter)
+        {
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateWorker");
+
+            if (pageType == null)
+            {
+                return;
+            }
+            var servise = _navigationService.GetNavigationControl();
+
+            var worker = List.First(t => t.Id == parameter);
+
+            IEnumerable<SuggestBoxViewModel<int>> asuBox;
+
+            using (UnitOfWork db = new())
+            {
+                asuBox = await db.unitManager.GetUnits();
+            }
+
+            var context = new UpdateWorkerPage(new UpdateWorkerViewModel( _navigationService, _snackbarService)
+            {
+                Id = worker.Id,
+                Shift = worker.Shift,
+                StartDate = worker.StartDate,
+                Status = worker.Status,
+                AccountNumber = worker.AccountNumber,
+                Address = worker.Address,
+                Description = worker.Description,
+                FullName= worker.FullName,
+                JobTitle = worker.JobTitle, 
+                Mobile = worker.Mobile, 
+                NationalCode = worker.NationalCode,
+                PersonalId = worker.PersonnelId,
+            });
+
+            servise.Navigate(pageType ,context);
         }
     }
 }

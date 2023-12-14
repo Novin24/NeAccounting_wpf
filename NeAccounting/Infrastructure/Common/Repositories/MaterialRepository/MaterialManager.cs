@@ -28,7 +28,6 @@ namespace Infrastructure.Repositories
                 .Include(x => x.Unit)
                 .Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name))
                 .Where(x => string.IsNullOrEmpty(serial) || x.Serial.Contains(serial))
-                .Where(t => !t.IsDeleted)
                 .Select(x => new PunListDto
                 {
                     Id = x.Id,
@@ -78,6 +77,7 @@ namespace Infrastructure.Repositories
             int unitId,
             string serial,
             string address,
+            long lastPrice,
             bool isManufacturedGoods)
         {
             try
@@ -91,10 +91,11 @@ namespace Infrastructure.Repositories
                 mt.Entity = entity;
                 mt.UnitId = unitId;
                 mt.Serial = serial;
+                mt.LastPrice = lastPrice;
                 mt.PhysicalAddress = address;
                 mt.IsManufacturedGoods = isManufacturedGoods;
 
-                Update(mt);
+                Update(mt,false);
             }
             catch (Exception ex)
             {

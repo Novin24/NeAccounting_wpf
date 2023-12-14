@@ -15,9 +15,6 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
-    <Page.Resources>
-        <!--<lrc:DateTimeToPersianDateConverter x:Key="dateToPersianDateConverter" />-->
-    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height=".5*" />
@@ -61,15 +58,15 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <ui:TextBlock Margin="10 0 0 0"
-                              Height="40"
-                              HorizontalAlignment="left"
-                              FontFamily="STXingkai"
-                              FontSize="35"
+                <ui:TextBlock Padding="0,20,0,0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              FontFamily="the King &amp; Queen font"
+                              FontSize="30"
                               Text="Novin" />
                 <Border Grid.Column="0"
                         Grid.Row="1"
@@ -201,13 +198,16 @@
                                                        FontFamily="Calibri" />
                                 </StackPanel>
 
-                                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+                                <StackPanel Grid.Row="0"
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="تاریخ پرداخت"
                                                Margin="10 4 0 0 " />
                                     <datepicker:PersianDatePicker VerticalAlignment="Center"
-                                                              x:Name="pdp" />
+                                                                  FlowDirection="LeftToRight"
+                                                                  x:Name="pdp" />
                                 </StackPanel>
                                 <StackPanel Margin="3 4 20 0"
                                             Grid.Row="1"
@@ -235,6 +235,7 @@
                                                Margin="22 4 0 0 " />
                                     <ui:NumberBox Margin="20 4 3 2"
                                                   TextAlignment="Center"
+                                                  Name="Price"
                                                   SpinButtonPlacementMode="Hidden"
                                                   FontSize="14"
                                                   FontFamily="Calibri" />

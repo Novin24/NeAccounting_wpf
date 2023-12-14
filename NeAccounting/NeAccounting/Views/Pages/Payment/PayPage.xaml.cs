@@ -44,6 +44,7 @@ namespace NeAccounting.Pages
             //var t =   ViewModel.AutoSuggestBoxSuggestions.FirstOrDefault(a => a.Id == 
             //((SuggestBoxViewModel<Guid>)args.SelectedItem).Id);
 
+            var t = Price.Text;
             CusId = ((SuggestBoxViewModel<Guid>)args.SelectedItem).Id;
 
         }

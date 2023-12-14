@@ -17,7 +17,7 @@ namespace NeApplication.Common
         void Attach(TEntity entity);
         void Delete(TEntity entity, bool saveNow = true);
         Task<bool> DeleteAsync(TEntity entity, bool saveNow = true);
-        Task<bool> DeleteAsync(int entityId, bool saveNow = true);
+        Task<bool> DeleteAsync<T>(T entityId, bool saveNow = true);
         void DeleteRange(IEnumerable<TEntity> entities, bool saveNow = true);
         Task DeleteRangeAsync(IEnumerable<TEntity> entities, bool saveNow = true);
         void Detach(TEntity entity);
