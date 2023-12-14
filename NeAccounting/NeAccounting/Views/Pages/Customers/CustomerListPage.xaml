@@ -11,7 +11,8 @@
       d:DataContext="{d:DesignInstance local:WorkersListPage,IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="Customer">
+      Title="Customer"
+      >
 
     <Grid>
         <Grid.RowDefinitions>
@@ -24,13 +25,13 @@
             <RowDefinition Height=".5*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width=".5*"></ColumnDefinition>
             <ColumnDefinition Width=".5*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width=".5*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width=".5*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
@@ -156,8 +157,8 @@
                                             FontFamily="Calibri"
                                             Margin="0 4 0 0" />
                             </StackPanel>
-                           <StackPanel Grid.Column="1"
-                                        Margin="4 10 20 0 ">
+                            <StackPanel Grid.Column="1"
+                                        Margin="4 4 0 0 ">
 
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="15"
@@ -166,11 +167,10 @@
                                 <ui:TextBox TextAlignment="Center"
                                             FontFamily="Calibri"
                                             Margin="0 4 0 0" />
-                               
+
                             </StackPanel>
-                            <StackPanel Grid.Row="1" Grid.ColumnSpan="2"
-                                        Margin="20 4 0 0"
-                                        HorizontalAlignment="Center">
+                            <StackPanel Grid.Row="1"
+                                        Margin="0 4 20 0">
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="15"
                                            Text="شماره موبایل"
@@ -182,7 +182,13 @@
                             </StackPanel>
 
 
-                            <Button Margin="0 30 0 0" Grid.Row="1" Padding="17 4 17 9">جستجو</Button>
+                            <Button Margin="0 25 0 0"
+                                    Padding="17 4 17 9"
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Right"
+                                    IsDefault="True"
+                                    >جستجو</Button>
                         </Grid>
                         <DataGrid Margin="0 5 0 30"
                                   x:Name="Workersdata"
@@ -206,7 +212,7 @@
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     Width="*" />
-                                <DataGridTextColumn Header="اعتبار"
+                                <DataGridTextColumn Header="کدملی"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     Width="*" />
@@ -214,7 +220,7 @@
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     Width="*" />
-                                <DataGridTextColumn Header="کدملی"
+                                <DataGridTextColumn Header="اعتبار"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     Width="*" />
