@@ -35,25 +35,13 @@ namespace NeAccounting.ViewModels
             },
             new NavigationViewItem()
             {
-                Content = "دریافتی",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.Payment32 },
-                TargetPageType = typeof(RecPage)
-            },
-            new NavigationViewItem()
-            {
-                Content = "پرداختی",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.Payment32 },
-                TargetPageType = typeof(PayPage)
-            },
-            new NavigationViewItem()
-            {
                 Content = "تعاریف اولیه",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.SaveCopy20 },
+                Icon = new SymbolIcon { Symbol = SymbolRegular.CollectionsAdd20 },
                 //TargetPageType = typeof(MaterailListPage)
                 MenuItems = new ObservableCollection<object>
                 {
-                    #region Customer
-                    new NavigationViewItem {Content = "مشتری ها",TargetPageType = typeof(CustomerListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.BuildingRetailMore20} },
+                #region Customer
+                    new NavigationViewItem {Content = "مشتری ها",TargetPageType = typeof(CustomerListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PeopleTeam16} },
                     new NavigationViewItem(){Content = "افزودن مشتری",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateMaterailPage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem(){Content = "به روز رسانی مشتری",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateMaterailPage),Visibility = Visibility.Collapsed,},
                 #endregion
@@ -65,7 +53,7 @@ namespace NeAccounting.ViewModels
                 #endregion
                     
                 #region worker
-                    new NavigationViewItem { Content = "پرسنل", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
+                    new NavigationViewItem { Content = "کارگران", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
                     new NavigationViewItem(){Content = "به روز رسانی پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateWorkerPage),
                         Visibility = Visibility.Collapsed,},
                     new NavigationViewItem(){Content = "افزودن پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage),
@@ -76,17 +64,54 @@ namespace NeAccounting.ViewModels
             new NavigationViewItem()
             {
                 Content = "عملیات روزانه",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.SaveCopy20 },
+                Icon = new SymbolIcon { Symbol = SymbolRegular. TaskListAdd20 },
                 //TargetPageType = typeof(MaterailListPage)
                 MenuItems = new ObservableCollection<object>
                 {
                 #region Remittance
-                    new NavigationViewItem {Content = "حواله فروش",TargetPageType = typeof(MaterailListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.BuildingRetailMore20} },
-                    new NavigationViewItem { Content = "حوله خرید", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
-                    new NavigationViewItem { Content = "حواله واسطه ای", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
+                    new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(PayPage),Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardTextEdit20 }},
+                    new NavigationViewItem {Content = "حواله فروش",TargetPageType = typeof(MaterailListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PlayingCards20} },
+                    new NavigationViewItem { Content = "حوله خرید", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.WalletCreditCard20} },
+                    new NavigationViewItem { Content = "حواله واسطه‌ای", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.ReceiptMoney20} },
+                    new NavigationViewItem { Content = "اجناس برگشتی", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.BoxMultipleArrowLeft20} },
+                    new NavigationViewItem {Content = "سفارشات",TargetPageType = typeof(PayPage),Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardTaskListRtl20 }},
+	            #endregion
+
+                    new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.MoneyCalculator20} },
+
+                #region Worker
+                    new NavigationViewItem { Content = "حقوق و مساعده", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonMoney20} },
+                    new NavigationViewItem { Content = "ثبت کارکرد", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonClock20} },
+                #endregion
+
+                #region Doc
+                    new NavigationViewItem {Content = "دریافتی از مشتری",TargetPageType = typeof(RecPage),Icon = new SymbolIcon { Symbol = SymbolRegular.CreditCardPerson20 }},
+                    new NavigationViewItem {Content = "پرداختی به مشتری",TargetPageType = typeof(PayPage),Icon = new SymbolIcon { Symbol = SymbolRegular.CreditCardPerson20 }},
 	            #endregion
                 }
-            }
+            },
+            new NavigationViewItem()
+            {
+                Content = "سال مالی",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.Timeline20 },
+                //TargetPageType = typeof(MaterailListPage)
+                MenuItems = new ObservableCollection<object>
+                {
+                    new NavigationViewItem { Content = "اتمام سال مالی کنونی", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.AlignEndHorizontal20} },
+                    new NavigationViewItem { Content = "بازگشت به سال ...", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.Rename20} },
+                }
+            },
+            new NavigationViewItem()
+            {
+                Content = "پشتبان گیری",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.CopySelect20 },
+                //TargetPageType = typeof(MaterailListPage)
+                MenuItems = new ObservableCollection<object>
+                {
+                    new NavigationViewItem { Content = "تهیه نسخه پشتیبان جدید", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.DocumentCopy20} },
+                    new NavigationViewItem { Content = "بازگردانی اطلاعات", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.SquareHintArrowBack20} },
+                }
+            },
         };
 
         [ObservableProperty]
@@ -94,7 +119,13 @@ namespace NeAccounting.ViewModels
         {
             new NavigationViewItem()
             {
-                Content = "Settings",
+                Content = "تنظیمات کاربری",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.PersonSettings20 },
+                TargetPageType = typeof(SettingsPage)
+            },
+            new NavigationViewItem()
+            {
+                Content = "تنظیمات برنامه",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Settings20 },
                 TargetPageType = typeof(SettingsPage)
             }
