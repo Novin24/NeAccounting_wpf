@@ -94,7 +94,7 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
+                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <Border Grid.ColumnSpan="2"
