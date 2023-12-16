@@ -21,10 +21,10 @@ namespace NeAccounting.Views.Pages.Test
         {
             if (!string.IsNullOrEmpty(prices.Text))
             {
-                System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-US");
-                var valueBefore = Int64.Parse(prices.Text, System.Globalization.NumberStyles.AllowThousands);
-                prices.Text = string.Format(culture, "{0:N0}", valueBefore);
-                prices.Select(prices.Text.Length, 0);
+                //System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-US");
+                //var valueBefore = Int64.Parse(prices.Text, System.Globalization.NumberStyles.AllowThousands);
+                //prices.Text = string.Format(culture, "{0:N0}", valueBefore);
+                //prices.Select(prices.Text.Length, 0);
             }
         }
 
