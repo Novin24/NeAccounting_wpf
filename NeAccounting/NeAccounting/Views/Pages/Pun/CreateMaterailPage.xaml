@@ -209,6 +209,7 @@
                         </StackPanel>
                         <Button Content="ثبت"
                                 Margin="15"
+                                Padding="20 5 "
                                 Command="{Binding ViewModel.CreateMaterialCommand , Mode=OneWay}"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"

@@ -188,7 +188,7 @@
                                     Padding="17 4 17 9"
                                     Grid.Row="1"
                                     Grid.Column="2"
-                                    HorizontalAlignment="Right"
+                                    HorizontalAlignment="Left"
                                     IsDefault="True"
                                     >جستجو</Button>
                         </Grid>
