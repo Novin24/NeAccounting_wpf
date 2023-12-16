@@ -56,7 +56,12 @@
             <StackPanel Grid.Row="3" Grid.Column="3">
                 <ui:NumberBox x:Name="prices"
                               ValidationMode="InvalidInputOverwritten"
+                              Margin="20"
                               TextChanged="prices_TextChanged"></ui:NumberBox>
+                
+                <Separator Background="Aqua"
+                           Height="2" />
+                
                 <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            TextAlignment="Center"
@@ -67,6 +72,7 @@
                            FontSize="16"
                            Text="gdfgdf" />
             </StackPanel>
+
         </Grid>
     </Grid>
 </Page>
