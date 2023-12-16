@@ -98,14 +98,8 @@
                         </Grid.RowDefinitions>
                         <Border Grid.ColumnSpan="2"
                                 CornerRadius="9"
-                                BorderBrush="#D6D5D5"
                                 BorderThickness="0.4"
                                 Margin="4">
-                            <Border.Background>
-                                <SolidColorBrush Color="White"
-                                                 Opacity="0.08" />
-
-                            </Border.Background>
                             <Grid FlowDirection="RightToLeft">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"></RowDefinition>
