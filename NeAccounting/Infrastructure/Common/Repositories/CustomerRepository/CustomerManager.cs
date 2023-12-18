@@ -56,7 +56,6 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> CreateCustomer(string name,
             string mobile,
-            uint totalCredit,
             uint cashCredit,
             uint promissoryNote,
             string nationalCode,
@@ -76,7 +75,7 @@ namespace Infrastructure.Repositories
                 var t = await Entities.AddAsync(new Customer(
                     name,
                     mobile,
-                    totalCredit,
+                    cashCredit + promissoryNote,
                     cashCredit,
                     promissoryNote,
                     nationalCode,
@@ -98,15 +97,12 @@ namespace Infrastructure.Repositories
             Guid Id,
             string name,
             string mobile,
-            uint totalCredit,
-            uint chequeCredit,
             uint cashCredit,
             uint promissoryNote,
             string nationalCode,
             string address,
             CustomerType type,
             bool havePromissoryNote,
-            bool haveChequeGuarantee,
             bool haveCashCredit,
             bool isBuyer,
             bool isSeller)
@@ -125,12 +121,10 @@ namespace Infrastructure.Repositories
                 mt.Buyer = isBuyer;
                 mt.Address = address;
                 mt.CashCredit = cashCredit;
-                mt.ChequeCredit = chequeCredit;
                 mt.HaveCashCredit = haveCashCredit;
-                mt.HaveChequeGuarantee = haveChequeGuarantee;
                 mt.HavePromissoryNote = havePromissoryNote;
                 mt.PromissoryNote = promissoryNote;
-                mt.TotalCredit = totalCredit;
+                mt.TotalCredit = promissoryNote + mt.ChequeCredit + cashCredit;
                 mt.Type = type;
 
                 Update(mt, false);

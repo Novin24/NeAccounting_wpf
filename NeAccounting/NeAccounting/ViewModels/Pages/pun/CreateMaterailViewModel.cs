@@ -5,7 +5,7 @@ using NeAccounting.Helpers;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.ViewModels.Pages
+namespace NeAccounting.ViewModels
 {
     public partial class CreateMaterailViewModel : ObservableObject, INavigationAware
     {

@@ -116,7 +116,7 @@ namespace NeAccounting.ViewModels
                 asuBox = await db.unitManager.GetUnits();
             }
 
-            var context = new UpdateMaterailPage(new Pages.UpdateMaterailViewModel(_snackbarService, _navigationService)
+            var context = new UpdateMaterailPage(new UpdateMaterailViewModel(_snackbarService, _navigationService)
             {
                 MaterialId = pun.Id,
                 Serial = pun.Serial,

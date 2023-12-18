@@ -7,10 +7,13 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class CreateCustomerViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject
+    public partial class UpdateCustomerViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject
     {
         private readonly INavigationService _navigationService = navigationService;
         private readonly ISnackbarService _snackbarService = snackbarService;
+
+        public Guid Id { get; set; }
+
         [ObservableProperty]
         private string _fullName;
 
@@ -34,7 +37,7 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private bool _haveCashCredit = false;
-
+        
         [ObservableProperty]
         private bool _havePromissoryNote = false;
 
@@ -43,6 +46,12 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private uint? _cashCredit = 0;
+        
+        [ObservableProperty]
+        private uint? _chequeCredit = 0;
+        
+        [ObservableProperty]
+        private uint? _totalCredit = 0;
 
 
 
@@ -84,7 +93,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.customerManager.CreateCustomer(FullName, Mobile, CashCredit.Value, PromissoryNote.Value, NationalCode, Address, (CustomerType)CusType, HavePromissoryNote, HaveCashCredit, Buyer, Seller);
+                var (error, isSuccess) = await db.customerManager.UpdateCustomer(Id,FullName, Mobile, CashCredit.Value, PromissoryNote.Value, NationalCode, Address, (CustomerType)CusType, HavePromissoryNote, HaveCashCredit, Buyer, Seller);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));

@@ -14,7 +14,6 @@ namespace NeApplication.IRepositoryies
         Task<(string error, CustomerListDto cus)> GetCustomerById(Guid Id);
         Task<(string error, bool isSuccess)> CreateCustomer(string name,
             string mobile,
-            uint totalCredit,
             uint cashCredit,
             uint promissoryNote,
             string nationalCode,
@@ -29,15 +28,12 @@ namespace NeApplication.IRepositoryies
             Guid Id,
             string name,
             string mobile,
-            uint totalCredit,
-            uint chequeCredit,
             uint cashCredit,
             uint promissoryNote,
             string nationalCode,
             string address,
             CustomerType type,
             bool havePromissoryNote,
-            bool haveChequeGuarantee,
             bool haveCashCredit,
             bool isBuyer,
             bool isSeller);

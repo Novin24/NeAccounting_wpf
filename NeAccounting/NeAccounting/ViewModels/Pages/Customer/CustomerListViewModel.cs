@@ -1,6 +1,7 @@
 ﻿using DomainShared.ViewModels.Customer;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Views.Pages;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -115,14 +116,27 @@ namespace NeAccounting.ViewModels
 
             var cus = List.First(t => t.Id == parameter);
 
-            //var context = new UpdateCustomerPage(new Pages.UpdateCustomerViewModel(_snackbarService, _navigationService)
-            //{
+            var context = new UpdateCustomerPage(new UpdateCustomerViewModel(_snackbarService, _navigationService)
+            {
+                Id = cus.Id,
+                FullName = cus.Name,
+                Seller = cus.Seller,
+                Buyer = cus.Buyer,
+                Address = cus.Address,
+                CashCredit = cus.CashCredit,
+                ChequeCredit = cus.ChequeCredit,
+                TotalCredit = cus.TotalCredit,
+                PromissoryNote = cus.PromissoryNote,
+                HavePromissoryNote = cus.HavePromissoryNote,
+                CusType = (byte)cus.CusType,
+                HaveCashCredit = cus.HaveCashCredit,
+                Mobile = cus.Mobile,
+                NationalCode = cus.NationalCode
+            });
 
-            //});
-
-            //servise.Navigate(pageType, context);
+            servise.Navigate(pageType, context);
         }
-        
+
         [RelayCommand]
         private void OnAddGaranteeCheque(Guid parameter)
         {

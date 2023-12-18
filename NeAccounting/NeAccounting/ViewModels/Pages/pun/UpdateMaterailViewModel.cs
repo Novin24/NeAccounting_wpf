@@ -1,12 +1,11 @@
 ﻿using DomainShared.Errore;
 using DomainShared.ViewModels;
-using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.ViewModels.Pages
+namespace NeAccounting.ViewModels
 {
     public partial class UpdateMaterailViewModel : ObservableObject, INavigationAware
     {
