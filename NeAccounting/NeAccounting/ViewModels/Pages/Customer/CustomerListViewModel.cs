@@ -1,5 +1,4 @@
-﻿using DomainShared.ViewModels;
-using DomainShared.ViewModels.Pun;
+﻿using DomainShared.ViewModels.Customer;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
@@ -8,28 +7,36 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class MaterailListViewModel : ObservableObject, INavigationAware
+    public partial class CustomerListViewModel : ObservableObject, INavigationAware
     {
+
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
-        public MaterailListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
+
+        public CustomerListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
             _snackbarService = snackbarService;
         }
 
-        [ObservableProperty]
-        private string _punName = "";
 
         [ObservableProperty]
-        private string _serial = "";
+        private string _nationalCode = "";
 
         [ObservableProperty]
-        private IEnumerable<PunListDto> _list;
+        private string _mobile = "";
+
+        [ObservableProperty]
+        private string _name = "";
+
+        [ObservableProperty]
+        private IEnumerable<CustomerListDto> _list;
+
         public void OnNavigatedFrom()
         {
+
         }
 
         public async void OnNavigatedTo()
@@ -40,14 +47,14 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            List = await db.materialManager.GetMaterails(string.Empty, string.Empty);
+            List = await db.customerManager.GetCustomerList(string.Empty, string.Empty, string.Empty);
         }
 
         [RelayCommand]
-        private async Task OnSearchMaterial()
+        public async Task OnSearchCus()
         {
             using UnitOfWork db = new();
-            List = await db.materialManager.GetMaterails(PunName, Serial);
+            List = await db.customerManager.GetCustomerList(Name, NationalCode, Mobile);
         }
 
         [RelayCommand]
@@ -69,7 +76,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnRemoveMaterial(int parameter)
+        private async Task OnRemoveCus(Guid parameter)
         {
             var result = await _contentDialogService.ShowSimpleDialogAsync(
             new SimpleContentDialogCreateOptions()
@@ -84,7 +91,7 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var isSuccess = await db.materialManager.DeleteAsync(parameter);
+                var isSuccess = await db.customerManager.DeleteAsync<Guid>(parameter);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
@@ -92,14 +99,14 @@ namespace NeAccounting.ViewModels
                 }
                 _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(2000));
 
-                await OnSearchMaterial();
+                await OnSearchCus();
             }
         }
 
         [RelayCommand]
-        private async Task OnUpdateMaterial(int parameter)
+        private void OnUpdateCus(Guid parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateMaterail");
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateCustomer");
 
             if (pageType == null)
             {
@@ -107,28 +114,48 @@ namespace NeAccounting.ViewModels
             }
             var servise = _navigationService.GetNavigationControl();
 
-            var pun = List.First(t => t.Id == parameter);
+            var cus = List.First(t => t.Id == parameter);
 
-            IEnumerable<SuggestBoxViewModel<int>> asuBox;
-
-            using (UnitOfWork db = new())
+            var context = new UpdateCustomerPage(new UpdateCustomerViewModel(_snackbarService, _navigationService)
             {
-                asuBox = await db.unitManager.GetUnits();
-            }
-
-            var context = new UpdateMaterailPage(new UpdateMaterailViewModel(_snackbarService, _navigationService)
-            {
-                MaterialId = pun.Id,
-                Serial = pun.Serial,
-                LastSellPrice = pun.LastPrice,
-                Address = pun.Address,
-                IsManufacturedGoods = pun.IsManufacturedGoods,
-                MaterialName = pun.MaterialName,
-                UnitId = pun.UnitId,
-                AsuBox = asuBox
+                Id = cus.Id,
+                FullName = cus.Name,
+                Seller = cus.Seller,
+                Buyer = cus.Buyer,
+                Address = cus.Address,
+                CashCredit = cus.CashCredit,
+                ChequeCredit = cus.ChequeCredit,
+                TotalCredit = cus.TotalCredit,
+                PromissoryNote = cus.PromissoryNote,
+                HavePromissoryNote = cus.HavePromissoryNote,
+                CusType = (byte)cus.CusType,
+                HaveCashCredit = cus.HaveCashCredit,
+                Mobile = cus.Mobile,
+                NationalCode = cus.NationalCode
             });
 
             servise.Navigate(pageType, context);
+        }
+
+        [RelayCommand]
+        private void OnAddGaranteeCheque(Guid parameter)
+        {
+            Type? pageType = NameToPageTypeConverter.Convert("AddCheque");
+
+            if (pageType == null)
+            {
+                return;
+            }
+            var servise = _navigationService.GetNavigationControl();
+
+            //var cus = List.First(t => t.Id == parameter);
+
+            //var context = new AddChequePage(new Pages.AddChequeViewModel(_snackbarService, _navigationService)
+            //{
+
+            //});
+
+            //servise.Navigate(pageType, context);
         }
     }
 }

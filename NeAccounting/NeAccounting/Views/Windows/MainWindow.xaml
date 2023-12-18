@@ -195,14 +195,12 @@
                                     Grid.Row="1"
                                     Orientation="Vertical"
                                     Margin="0 40 0 0">
-                            <ui:SymbolIcon Symbol="Person16"
-                                           Filled="True" />
-                            <TextBlock Text="NOVIN"
+                            <TextBlock Text="Novin"
                                        Margin="0 12 0 0"
                                        Foreground="White"
                                        FontSize="25"
                                        FontWeight="Medium"
-                                       FontFamily="Montserrat"
+                                       FontFamily="the King &amp; Queen font"
                                        HorizontalAlignment="Center" />
 
                             <StackPanel Orientation="Horizontal" Margin="0 40 0 0 ">

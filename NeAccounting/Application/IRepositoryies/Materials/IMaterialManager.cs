@@ -11,7 +11,6 @@ namespace NeApplication.IRepositoryies
         Task<List<PunListDto>> GetMaterails(string name, string serial);
         Task<(string error, PunListDto pun)> GetMaterailById(int Id);
         Task<(string error, bool isSuccess)> CreateMaterial(string name,
-            double entity,
             int unitId,
             string serial,
             string address , 
@@ -20,7 +19,6 @@ namespace NeApplication.IRepositoryies
         Task<(string error, bool isSuccess)> UpdateMaterial(
             int materialId,
             string name,
-            double entity,
             int unitId,
             string serial,
             string address, 

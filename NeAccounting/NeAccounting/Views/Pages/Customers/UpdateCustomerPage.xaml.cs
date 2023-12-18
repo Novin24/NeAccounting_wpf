@@ -5,13 +5,13 @@ using Wpf.Ui.Controls;
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for CreateCustomerPage.xaml
+    /// Interaction logic for UpdateCustomerPage.xaml
     /// </summary>
-    public partial class CreateCustomerPage : INavigableView<CreateCustomerViewModel>
+    public partial class UpdateCustomerPage : INavigableView<UpdateCustomerViewModel>
     {
-        public CreateCustomerViewModel ViewModel { get; }
+        public UpdateCustomerViewModel ViewModel { get; }
 
-        public CreateCustomerPage(CreateCustomerViewModel viewModel)
+        public UpdateCustomerPage(UpdateCustomerViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
@@ -21,6 +21,10 @@ namespace NeAccounting.Views.Pages
 
         private void CashCheckBox_Checked(object sender, RoutedEventArgs e)
         {
+            if (!IsInitialized)
+            {
+                return;
+            }
             if (sender is CheckBox cmb)
             {
                 if (!cmb.IsChecked.Value)
@@ -38,6 +42,7 @@ namespace NeAccounting.Views.Pages
 
         private void PromissoryCheckBox_Checked(object sender, RoutedEventArgs e)
         {
+            if (!IsInitialized) { return; }
             if (sender is CheckBox cmb)
             {
                 if (!cmb.IsChecked.Value)

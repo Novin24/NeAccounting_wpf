@@ -33,17 +33,12 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1 " />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1 " />
+    <PackageReference Include="WPF-UI" Version="1.10.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Application\NeApplication.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Wpf.Ui">
-      <HintPath>..\..\Wpf.Ui.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

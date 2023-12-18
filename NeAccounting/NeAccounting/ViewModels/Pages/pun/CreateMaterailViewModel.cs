@@ -5,7 +5,7 @@ using NeAccounting.Helpers;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.ViewModels.Pages
+namespace NeAccounting.ViewModels
 {
     public partial class CreateMaterailViewModel : ObservableObject, INavigationAware
     {
@@ -32,16 +32,13 @@ namespace NeAccounting.ViewModels.Pages
         private string _address;
 
         [ObservableProperty]
-        private long _lastSellPrice = 0;
-
-        [ObservableProperty]
-        private double _entity = 0;
+        private long? _lastSellPrice;
 
         [ObservableProperty]
         private int _unitId = 0;
 
         [ObservableProperty]
-        private bool _isManufacturedGoods ;
+        private bool _isManufacturedGoods;
 
         public void OnNavigatedFrom()
         {
@@ -82,11 +79,6 @@ namespace NeAccounting.ViewModels.Pages
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سریال کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
-            if (!IsManufacturedGoods && Entity == 0)
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موجودی انبار"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
-                return;
-            }
             if (UnitId == 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
@@ -97,10 +89,15 @@ namespace NeAccounting.ViewModels.Pages
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مکان فیزیکی کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
+            if (LastSellPrice == null || LastSellPrice == 0)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اخرین قیمت فروش"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.materialManager.CreateMaterial(MaterialName, Entity, UnitId, Serial, Address, IsManufacturedGoods);
+                var (error, isSuccess) = await db.materialManager.CreateMaterial(MaterialName, UnitId, Serial, Address, IsManufacturedGoods);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));

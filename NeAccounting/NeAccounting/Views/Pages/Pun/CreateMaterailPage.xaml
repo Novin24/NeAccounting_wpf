@@ -111,7 +111,7 @@
                                      x:Name="MaterialName"
                                      Grid.Row="0"
                                      Grid.Column="0"
-                                     Text="{Binding ViewModel.MaterialName , Mode=TwoWay}"
+                                     Text="{Binding ViewModel.MaterialName , Mode=OneWayToSource}"
                                      Margin="0 4 3 0 "
                                      CaretBrush="White"
                                      FontFamily="Calibri" />
@@ -143,10 +143,10 @@
                             <ui:NumberBox Margin="0 4 3 0"
                                           TabIndex="2"
                                           TextAlignment="Center"
+                                          FlowDirection="LeftToRight"
                                           SpinButtonPlacementMode="Hidden"
-                                          Text="{Binding ViewModel.LastSellPrice , Mode= TwoWay}"
-                                          FontSize="14"
-                                          FontFamily="Calibri" />
+                                          Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay}"
+                                          FontSize="14" />
                         </StackPanel>
                         <StackPanel Grid.Column="1"
                                     Margin="3 4 20 0 "
@@ -159,7 +159,7 @@
                             <ui:TextBox FontSize="14"
                                         TextAlignment="Center"
                                         TabIndex="3"
-                                        Text="{Binding ViewModel.Address , Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Address , Mode=OneWayToSource}"
                                         FontFamily="Calibri"
                                         Margin="0 4 0 0" />
                         </StackPanel>
@@ -171,7 +171,7 @@
                                        Margin="2 0 0 0 " />
                             <ui:TextBox Grid.Column="0"
                                         Grid.Row="2"
-                                        Text="{Binding ViewModel.Serial , Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Serial , Mode=OneWayToSource}"
                                         TabIndex="4"
                                         Margin="0 4 3 0"
                                         TextAlignment="Center"
@@ -184,31 +184,15 @@
                             <CheckBox FontFamily="Calibri"
                                       FontSize="14"
                                       TabIndex="5"
-                                      Checked="CheckBox_Checked"
-                                      Unchecked="CheckBox_Checked"
-                                      IsChecked="{Binding ViewModel.IsManufacturedGoods , Mode=TwoWay}"
+                                      IsChecked="{Binding ViewModel.IsManufacturedGoods , Mode=OneWayToSource}"
                                       Margin="2 0 0 0 ">تعریف به عنوان کالای تولیدی</CheckBox>
 
                         </StackPanel>
 
-                        <StackPanel Grid.Column="0"
-                                    Grid.Row="3"
-                                    Margin="20 4 0 0">
-                            <TextBlock FontFamily="Calibri"
-                                       FontSize="14"
-                                       Text="موجودی انبار"
-                                       Margin="1 0 0 0 " />
-                            <ui:NumberBox FontSize="14"
-                                          x:Name="EntityNumbox"
-                                          Value="{Binding ViewModel.Entity , Mode=TwoWay}"
-                                          TextAlignment="Center"
-                                          SpinButtonPlacementMode="Hidden"
-                                          TabIndex="6"
-                                          FontFamily="Calibri"
-                                          Margin="0 4 0 0" />
-                        </StackPanel>
+
                         <Button Content="ثبت"
                                 Margin="15"
+                                Padding="20 5 "
                                 Command="{Binding ViewModel.CreateMaterialCommand , Mode=OneWay}"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"
