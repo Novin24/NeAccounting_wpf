@@ -1,18 +1,17 @@
 ﻿<Page x:Class="NeAccounting.Views.Pages.CustomerListPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="450"
       d:DesignWidth="800"
       d:DataContext="{d:DesignInstance local:CustomerListPage ,IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="Customer"
-      >
+      Title="Customer">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -156,6 +155,7 @@
                                            Margin="2 0 0 0 " />
                                 <ui:TextBox TextAlignment="Center"
                                             x:Name="CusName_txt"
+                                            Text="{Binding ViewModel.Name , Mode=TwoWay}"
                                             FontFamily="Calibri"
                                             Margin="0 4 0 0" />
                             </StackPanel>
@@ -168,6 +168,7 @@
                                            Margin="2 0 0 0 " />
                                 <ui:TextBox TextAlignment="Center"
                                             FontFamily="Calibri"
+                                            Text="{Binding ViewModel.NationalCode, Mode=TwoWay}"
                                             Margin="0 4 0 0" />
 
                             </StackPanel>
@@ -179,6 +180,7 @@
                                            Margin="2 0 0 0 " />
                                 <ui:TextBox TextAlignment="Center"
                                             TabIndex="0"
+                                            Text="{Binding ViewModel.Mobile, Mode=TwoWay}"
                                             FontFamily="Calibri"
                                             Margin="0 5 0 0" />
                             </StackPanel>
@@ -188,9 +190,9 @@
                                     Padding="17 4 17 9"
                                     Grid.Row="1"
                                     Grid.Column="2"
+                                    Command="{Binding ViewModel.SearchCusCommand}"
                                     HorizontalAlignment="Left"
-                                    IsDefault="True"
-                                    >جستجو</Button>
+                                    IsDefault="True">جستجو</Button>
                         </Grid>
                         <DataGrid Margin="0 5 0 30"
                                   x:Name="Workersdata"
@@ -198,33 +200,35 @@
                                   Grid.Row="2"
                                   CanUserResizeColumns="False"
                                   FontSize="15"
+                                  ItemsSource="{Binding ViewModel.List, Mode=TwoWay}"
                                   CanUserResizeRows="False"
                                   FontFamily="Calibri"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="کد"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="*" />
                                 <DataGridTextColumn Header="نام مشتری"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="*" />
-                                <DataGridTextColumn Header="نوع مشتری"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding Name}"
                                                     Width="*" />
                                 <DataGridTextColumn Header="کدملی"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding NationalCode}"
                                                     Width="*" />
                                 <DataGridTextColumn Header="موبایل"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding Mobile}"
+                                                    Width="*" />
+                                <DataGridTextColumn Header="نوع مشتری"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding CusTypeName}"
                                                     Width="*" />
                                 <DataGridTextColumn Header="اعتبار"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding TotalCredit}"
                                                     Width="*" />
                                 <DataGridTemplateColumn Header="عملیات"
                                                         Width="*"
@@ -236,12 +240,19 @@
                                                 <Button  BorderBrush="Transparent"
                                                          Margin="2"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
+                                                         Command="{Binding Path=DataContext.ViewModel.UpdateCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                          Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Pen16" />
                                                 </Button>
+                                                <Button  Margin="2"
+                                                         CommandParameter="{Binding Id , Mode=OneWay}"
+                                                         Command="{Binding Path=DataContext.ViewModel.UpdateCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                         Padding="7,5">
+                                                    <ui:SymbolIcon Symbol="Wallpaper20" />
+                                                </Button>
                                                 <Button Margin="3"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
-                                                        Command="{Binding Path=DataContext.ViewModel.RemoveWorkerCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                        Command="{Binding Path=DataContext.ViewModel.RemoveCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                         Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Delete16" />
                                                 </Button>

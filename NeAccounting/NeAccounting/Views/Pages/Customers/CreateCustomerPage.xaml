@@ -94,7 +94,7 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <Border Grid.ColumnSpan="2"
@@ -103,12 +103,12 @@
                                 Margin="4">
                             <Grid FlowDirection="RightToLeft">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition  ></RowDefinition>
-                                    <RowDefinition  ></RowDefinition>
-                                    <RowDefinition  ></RowDefinition>
-                                    <RowDefinition  ></RowDefinition>
-                                    <RowDefinition  ></RowDefinition>
-                                    <RowDefinition  ></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
@@ -171,7 +171,7 @@
                                                   Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Row="2"
-                                            Margin="20 4 20 5">
+                                            Margin="20 4 20 15">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="آدرس"
@@ -183,49 +183,81 @@
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
 
+                                <Separator Grid.Row="3"
+                                           VerticalAlignment="Top"
+                                           Background="Gray"
+                                           Grid.ColumnSpan="2"
+                                           Margin="10 0"
+                                           Height="1.5" />
+
                                 <CheckBox Grid.Row="3"
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Left"
+                                          Margin="0,15"
+                                          HorizontalAlignment="Center"
                                           FlowDirection="LeftToRight">اعتبار نقدی</CheckBox>
 
                                 <ui:NumberBox Grid.Row="3"
                                               Grid.Column="1"
                                               FontSize="14"
                                               TextAlignment="Center"
+                                              x:Name="txt_CashGrantee"
                                               SpinButtonPlacementMode="Hidden"
                                               TabIndex="6"
                                               FontFamily="Calibri"
                                               Margin="20 0 20 0" />
 
 
+                                <Separator Grid.Row="4"
+                                           VerticalAlignment="Top"
+                                           Background="Gray"
+                                           Grid.ColumnSpan="2"
+                                           Margin="10 0"
+                                           Height="1.5" />
+
                                 <CheckBox Grid.Row="4"
-                                          Margin="0 15 0 0"
-                                          HorizontalAlignment="Left"
+                                          Margin="0 15"
+                                          HorizontalAlignment="Center"
                                           FlowDirection="LeftToRight">اعتبار سفته</CheckBox>
 
                                 <ui:NumberBox Grid.Row="4"
                                               Grid.Column="1"
                                               FontSize="14"
+                                              x:Name="txt_Grantee"
                                               TextAlignment="Center"
                                               SpinButtonPlacementMode="Hidden"
                                               TabIndex="6"
                                               FontFamily="Calibri"
-                                              Margin="20 10 20 0" />
+                                              Margin="20 0" />
+
+
+                                <Separator Grid.Row="5"
+                                           VerticalAlignment="Top"
+                                           Background="Gray"
+                                           Grid.ColumnSpan="2"
+                                           Margin="10 0"
+                                           Height="1.5" />
+
                                 <StackPanel Grid.Row="5"
-                                            Grid.Column="1"
-                                            Margin="20 4 20 0">
+                                            Orientation="Horizontal"
+                                            Grid.ColumnSpan="2"
+                                            HorizontalAlignment="Center">
+
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="اعتبار کل"
-                                               Margin="1 0 0 0 " />
+                                               Grid.Row="5"
+                                               HorizontalAlignment="Center"
+                                               Margin="0 22" />
+
+
                                     <ui:NumberBox FontSize="14"
                                                   TextAlignment="Center"
                                                   SpinButtonPlacementMode="Hidden"
                                                   TabIndex="6"
+                                                  MinWidth="200"
                                                   FontFamily="Calibri"
-                                                  Margin="0 4 0 0" />
-                                </StackPanel>
+                                                  Margin="20 0 0 0 " />
 
+                                </StackPanel>
                             </Grid>
 
                         </Border>
@@ -236,6 +268,7 @@
                                 Margin="0 0 0 6"
                                 Grid.ColumnSpan="2"
                                 IsDefault="True"
+                                Click="Button_Click"
                                 FontSize="15"
                                 FontFamily="Calibri"
                                 VerticalAlignment="Bottom"

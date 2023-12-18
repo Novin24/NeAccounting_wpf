@@ -7,10 +7,8 @@ using NeApplication.IRepositoryies;
 
 namespace Infrastructure.Repositories
 {
-    public class MaterialManager : Repository<Material>, IMaterialManager
+    public class MaterialManager(NovinDbContext context) : Repository<Material>(context), IMaterialManager
     {
-        public MaterialManager(NovinDbContext context) : base(context) { }
-
         public Task<List<SuggestBoxViewModel<int>>> GetMaterails()
         {
 

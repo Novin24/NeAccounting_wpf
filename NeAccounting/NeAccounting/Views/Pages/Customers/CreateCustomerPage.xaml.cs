@@ -11,5 +11,11 @@ namespace NeAccounting.Views.Pages
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var t = txt_CashGrantee.Value;
+            var c = txt_Grantee.Value;
+        }
     }
 }
