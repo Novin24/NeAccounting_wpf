@@ -29,20 +29,5 @@ namespace NeAccounting.Views.Pages
             }
 
         }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            if (IsInitialized && sender is CheckBox cmb)
-            {
-                if (cmb.IsChecked.Value)
-                {
-                    EntityNumbox.Value = 0;
-                    ViewModel.Entity = 0;
-                    EntityNumbox.IsEnabled = false;
-                    return;
-                }
-                EntityNumbox.IsEnabled = true;
-            }
-        }
     }
 }

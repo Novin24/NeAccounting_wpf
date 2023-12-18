@@ -141,9 +141,10 @@
                                        Margin="2 0 0 0 " />
                             <ui:NumberBox Margin="0 4 3 0"
                                           TabIndex="2"
+                                          FlowDirection="LeftToRight"
                                           TextAlignment="Center"
                                           SpinButtonPlacementMode="Hidden"
-                                          Text="{Binding ViewModel.LastSellPrice, Mode=TwoWay}"
+                                          Text="{Binding ViewModel.LastSellPrice, Mode=OneWayToSource}"
                                           FontSize="14"
                                           FontFamily="Calibri" />
                         </StackPanel>
@@ -183,29 +184,11 @@
                             <CheckBox FontFamily="Calibri"
                                       FontSize="14"
                                       TabIndex="5"
-                                      Checked="CheckBox_Checked"
-                                      Unchecked="CheckBox_Checked"
                                       IsChecked="{Binding ViewModel.IsManufacturedGoods , Mode=TwoWay}"
                                       Margin="2 0 0 0 ">تعریف به عنوان کالای تولیدی</CheckBox>
 
                         </StackPanel>
 
-                        <StackPanel Grid.Column="0"
-                                    Grid.Row="3"
-                                    Margin="20 4 0 0">
-                            <TextBlock FontFamily="Calibri"
-                                       FontSize="14"
-                                       Text="موجودی انبار"
-                                       Margin="1 0 0 0 " />
-                            <ui:NumberBox FontSize="14"
-                                          x:Name="EntityNumbox"
-                                          Value="{Binding ViewModel.Entity, Mode=TwoWay}"
-                                          TextAlignment="Center"
-                                          SpinButtonPlacementMode="Hidden"
-                                          TabIndex="6"
-                                          FontFamily="Calibri"
-                                          Margin="0 4 0 0" />
-                        </StackPanel>
 
                         <Button Content="ثبت"
                                 Margin="15"

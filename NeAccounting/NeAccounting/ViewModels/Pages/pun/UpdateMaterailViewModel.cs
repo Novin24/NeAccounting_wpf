@@ -35,16 +35,13 @@ namespace NeAccounting.ViewModels.Pages
         private string _address;
 
         [ObservableProperty]
-        private long _lastSellPrice;
-
-        [ObservableProperty]
-        private double _entity = 0;
+        private long? _lastSellPrice;
 
         [ObservableProperty]
         private int _unitId = 0;
 
         [ObservableProperty]
-        private bool _isManufacturedGoods ;
+        private bool _isManufacturedGoods;
 
         [ObservableProperty]
         private int _materialId = 0;
@@ -78,11 +75,7 @@ namespace NeAccounting.ViewModels.Pages
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سریال کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
-            if (!IsManufacturedGoods && Entity == 0)
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موجودی انبار"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
-                return;
-            }
+
             if (UnitId == 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
@@ -93,9 +86,14 @@ namespace NeAccounting.ViewModels.Pages
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مکان فیزیکی کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
+            if (LastSellPrice == null || LastSellPrice == 0)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اخرین قیمت فروش"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
 
             using UnitOfWork db = new();
-            (string error, bool isSuccess) = await db.materialManager.UpdateMaterial(MaterialId, MaterialName, Entity, UnitId, Serial, Address,LastSellPrice, IsManufacturedGoods);
+            (string error, bool isSuccess) = await db.materialManager.UpdateMaterial(MaterialId, MaterialName, UnitId, Serial, Address, LastSellPrice.Value, IsManufacturedGoods);
 
             if (!isSuccess)
             {

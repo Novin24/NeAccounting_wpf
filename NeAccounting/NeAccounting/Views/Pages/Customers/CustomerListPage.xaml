@@ -241,19 +241,19 @@
                                                          Margin="2"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                         Padding="7,5">
+                                                         Padding="7,5" ToolTip="ویرایش">
                                                     <ui:SymbolIcon Symbol="Pen16" />
                                                 </Button>
                                                 <Button  Margin="2"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                         Padding="7,5">
+                                                         Padding="7,5" ToolTip="افزودن چک ضمانتی">
                                                     <ui:SymbolIcon Symbol="Wallpaper20" />
                                                 </Button>
                                                 <Button Margin="3"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
                                                         Command="{Binding Path=DataContext.ViewModel.RemoveCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                        Padding="7,5">
+                                                        Padding="7,5" ToolTip="حذف">
                                                     <ui:SymbolIcon Symbol="Delete16" />
                                                 </Button>
                                             </StackPanel>

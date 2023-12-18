@@ -16,28 +16,26 @@ namespace Domain.NovinEntity.Customers
             string name,
             string mobile,
             uint totalCredit,
-            uint chequeCredit,
             uint cashCredit,
             uint promissoryNote,
             string nationalCode,
             string address,
             CustomerType type,
             bool havePromissoryNote,
-            bool haveChequeGuarantee,
             bool haveCashCredit,
             bool isBuyer,
             bool isSeller)
         {
+            HaveChequeGuarantee = false;
+            ChequeCredit = 0;
             Name = name;
             Mobile = mobile;
             TotalCredit = totalCredit;
-            ChequeCredit = chequeCredit;
             CashCredit = cashCredit;
             PromissoryNote = promissoryNote;
             NationalCode = nationalCode;
             HavePromissoryNote = havePromissoryNote;
             HaveCashCredit = haveCashCredit;
-            HaveChequeGuarantee = haveChequeGuarantee;
             Address = address;
             Buyer = isBuyer;
             Seller = isSeller;

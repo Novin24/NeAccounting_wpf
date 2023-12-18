@@ -28,7 +28,6 @@ namespace Domain.NovinEntity.Materials
         public Material(string name,
             int unitId,
             string serial,
-            double entity,
             string physicalAddress,
             bool isManufacturedGoods)
         {
@@ -36,7 +35,7 @@ namespace Domain.NovinEntity.Materials
             IsManufacturedGoods = isManufacturedGoods;
             UnitId = unitId;
             Serial = serial;
-            Entity = entity;
+            Entity = 0;
             LastPrice = 0;
             PhysicalAddress = physicalAddress;
             Active = true;

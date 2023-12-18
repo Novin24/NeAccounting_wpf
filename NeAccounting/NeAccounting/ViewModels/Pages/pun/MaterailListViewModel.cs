@@ -122,7 +122,6 @@ namespace NeAccounting.ViewModels
                 Serial = pun.Serial,
                 LastSellPrice = pun.LastPrice,
                 Address = pun.Address,
-                Entity = pun.Entity,
                 IsManufacturedGoods = pun.IsManufacturedGoods,
                 MaterialName = pun.MaterialName,
                 UnitId = pun.UnitId,

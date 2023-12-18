@@ -66,7 +66,7 @@ namespace NeAccounting
                 services.AddTransient<CustomerListViewModel>();
 
                 services.AddTransient<CreateCustomerPage>();
-                //services.AddTransient<CreateCustomerViewModel>();
+                services.AddTransient<CreateCustomerViewModel>();
 
                 //services.AddTransient<UpdateCustomerPage>();
                 //services.AddTransient<UpdateCustomerViewModel>();

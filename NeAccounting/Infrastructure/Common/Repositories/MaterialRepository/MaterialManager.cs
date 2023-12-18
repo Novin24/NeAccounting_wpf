@@ -42,7 +42,6 @@ namespace Infrastructure.Repositories
 
 
         public async Task<(string error, bool isSuccess)> CreateMaterial(string name,
-            double entity,
             int unitId,
             string serial,
             string address,
@@ -57,7 +56,6 @@ namespace Infrastructure.Repositories
                 var t = await Entities.AddAsync(new Material(name,
                                 unitId,
                                 serial,
-                                entity,
                                 address,
                                 isManufacturedGoods));
             }
@@ -71,7 +69,6 @@ namespace Infrastructure.Repositories
         public async Task<(string error, bool isSuccess)> UpdateMaterial(
             int materialId,
             string name,
-            double entity,
             int unitId,
             string serial,
             string address,
@@ -86,7 +83,6 @@ namespace Infrastructure.Repositories
                     return new("کالای مورد نظر یافت نشد !!!", false);
 
                 mt.Name = name;
-                mt.Entity = entity;
                 mt.UnitId = unitId;
                 mt.Serial = serial;
                 mt.LastPrice = lastPrice;
