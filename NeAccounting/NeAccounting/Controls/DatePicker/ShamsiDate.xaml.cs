@@ -13,26 +13,83 @@ namespace NeAcconting.Controls.DatePicker
         PersianCalendar persianCalendar = new PersianCalendar();
         public event RoutedEventHandler Click;
         //اطلاعات تاریخ امروز 
-        readonly int currentYear = 1387;
-        readonly int currentMonth = 10;
-        readonly int currentDay = 1;
+        private readonly int currentYear = 1387;
+        private readonly int currentMonth = 10;
+        private readonly int currentDay = 1;
+
+
+        //اطلاعات تاریخ انتخابی 
+        private int selectedYear = 1387;
+        private int selectedMonth = 10;
+        private int selectedDay = 1;
 
         //برای حرکت بین ماه ها
         //به شمسی
         private int yearForNavigating = 1387;
         private int monthForNavigating = 10;
 
-        /// <summary>
-        /// سال های قابل نمایش
-        /// </summary>
-        private List<int> itm;
 
         //اطلاعات روزی که کاربر روی آن کلیک کرده
         //Christian
-        public DateTime SelectedDate { get; set; }
+        //private DateTime _selectedDate = DateTime.Now;
+        //public DateTime SelectedDate
+        //{
+        //    get { return _selectedDate; }
+        //    set
+        //    {
+        //        if (_selectedDate != value)
+        //        {
+        //            this.selectedYear = persianCalendar.GetYear(value);
+        //            this.selectedMonth = persianCalendar.GetMonth(value);
+        //            this.selectedDay = persianCalendar.GetDayOfMonth(value);
+        //            _selectedDate = value;
+
+        //            InitialCalculator(selectedYear, selectedMonth, selectedDay);
+        //        }
+        //    }
+        //}
+
+
+
+        public DateTime SelectedDate
+        {
+            get { return (DateTime)GetValue(SelectedDateProperty); }
+            set
+            {
+                SetValue(SelectedDateProperty, value);
+                this.selectedYear = persianCalendar.GetYear(value);
+                this.selectedMonth = persianCalendar.GetMonth(value);
+                this.selectedDay = persianCalendar.GetDayOfMonth(value);
+                InitialCalculator(selectedYear, selectedMonth, selectedDay);
+            }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectedDate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedDateProperty =
+            DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(ShamsiDate), new PropertyMetadata(DateTime.Now));
+
+
+
+
 
         //Persian
-        public string PersianSelectedDate { get; set; }
+        //public string PersianSelectedDate { get; set; }
+
+        public string PersianSelectedDate
+        {
+            get
+            {
+                var t = (string)GetValue(PersianSelectedDateProperty);
+                return t;
+            }
+            set { SetValue(PersianSelectedDateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for PersianSelectedDate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PersianSelectedDateProperty =
+            DependencyProperty.Register("PersianSelectedDate", typeof(string), typeof(ShamsiDate), new PropertyMetadata(null));
+
+
 
 
         // ایا تقویم به صورت کامل بارگذازی شده
@@ -44,30 +101,32 @@ namespace NeAcconting.Controls.DatePicker
         public ShamsiDate()
         {
             InitializeComponent();
-
-            LoadXMLFile();
-            LoadYear();
-
-            DataContext = this;
             // Insert code required on object creation below this point
             this.currentYear = persianCalendar.GetYear(DateTime.Now);
             this.currentMonth = persianCalendar.GetMonth(DateTime.Now);
             this.currentDay = persianCalendar.GetDayOfMonth(DateTime.Now);
+            InitialCalculator(currentYear, currentMonth, currentDay);
+        }
 
+
+
+        private void InitialCalculator(int year, int month, int day)
+        {
+            LoadXMLFile();
+
+
+            DataContext = this;
             //select correct month and year
-            this.comboBoxMonths.SelectedIndex = currentMonth - 1;
-            this.comboBoxYear.ItemsSource = itm;
-            this.comboBoxYear.SelectedItem = currentYear;
+            this.comboBoxMonths.SelectedIndex = month - 1;
+            this.comboBoxYear.ItemsSource = LoadYear(year);
+            this.comboBoxYear.SelectedItem = year;
 
             //Fill the selected date
-            SelectedDate = DateTime.Now;
-            PersianSelectedDate = string.Concat(currentYear, "/", currentMonth, "/", currentDay);
-
-            calculateMonth(currentYear, currentMonth);
+            PersianSelectedDate = string.Concat(year, "/", month, "/", day);
+            calculateMonth(year, month);
 
             IsCalculated = true;
         }
-
 
         #region calculating and showing the calendar
 
@@ -143,7 +202,7 @@ namespace NeAcconting.Controls.DatePicker
                     }
                     else
                     {
-                        if (DayOfWeek.convertToPersianDay() == "جمعه")//بررسی جمعه بودن روز Friday
+                        if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
                             changeProperties(i, persianDate, false, "TextBlockStyle4", tooltip_context);
                         else
                             changeProperties(i, persianDate, false, "TextBlockStyle2", tooltip_context);
@@ -162,9 +221,9 @@ namespace NeAcconting.Controls.DatePicker
         /// load range of Year
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        private void LoadYear()
+        private List<int> LoadYear(int year)
         {
-            itm = Enumerable.Range(currentYear - 50, 100).ToList();
+            return Enumerable.Range(year - 50, 100).ToList();
         }
 
         /// <summary>
@@ -882,7 +941,7 @@ namespace NeAcconting.Controls.DatePicker
         }
         #endregion Events
 
-        internal void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             int day = Convert.ToInt32((sender as Button).Content.ToString());
             SelectedDate = persianCalendar.ToDateTime(yearForNavigating, monthForNavigating, day, 0, 0, 0, 0);

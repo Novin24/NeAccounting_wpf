@@ -17,37 +17,49 @@ namespace NeAccounting.ViewModels
             _snackbarService = snackbarService;
         }
         [ObservableProperty]
-        private string _fullName = "";
+        private string _fullName;
 
         [ObservableProperty]
-        private string _jobTitle = "";
+        private string _jobTitle;
 
         [ObservableProperty]
-        private string _mobile = "";
+        private string _mobile;
 
         [ObservableProperty]
-        private string _address = "";
-
-        [ObservableProperty]
-        private DateTime _startDate = DateTime.Now;
+        private string _address;
 
         [ObservableProperty]
         private int _personalId;
 
         [ObservableProperty]
-        private string _accountNumber = "";
+        private DateTime _startDate;
 
         [ObservableProperty]
-        private string _nationalCode = "";
+        private string _accountNumber;
 
         [ObservableProperty]
-        private string _description = "";
+        private string _nationalCode;
+
+        [ObservableProperty]
+        private string _description;
 
         [ObservableProperty]
         private Shift _shift = Shift.ByMounth;
 
         [ObservableProperty]
         private Status _status = Status.InWork;
+
+        [ObservableProperty]
+        private long? _salary = 0;
+
+        [ObservableProperty]
+        private long? overtimeSalary;
+
+        [ObservableProperty]
+        private long? insurancePremium;
+
+        [ObservableProperty]
+        private byte? dayInMonth;
 
         public void OnNavigatedFrom()
         {
@@ -88,6 +100,31 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("شماره پرسنلی", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
+
+            if (Salary == null || Salary <= 0)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
+
+            if (OvertimeSalary == null || OvertimeSalary <= 0)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
+
+            if (Shift == Shift.ByMounth && (InsurancePremium == null || InsurancePremium <= 0))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("مبلغ بیمه", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
+
+            if (Shift == Shift.ByMounth && (DayInMonth == null || DayInMonth <= 0))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("تعداد روز کاری", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
+
             if (string.IsNullOrEmpty(AccountNumber))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("شماره حساب"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
@@ -106,12 +143,16 @@ namespace NeAccounting.ViewModels
                        NationalCode,
                        Mobile,
                        Address,
-                       StartDate,
                        PersonalId,
                        AccountNumber,
                        Description,
                        JobTitle,
-                       Shift);
+                       StartDate,
+                       Shift,
+                       Salary.Value,
+                       OvertimeSalary.Value,
+                       InsurancePremium.Value,
+                       DayInMonth.Value);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
@@ -130,5 +171,5 @@ namespace NeAccounting.ViewModels
             }
             _ = _navigationService.Navigate(pageType);
         }
-}
+    }
 }

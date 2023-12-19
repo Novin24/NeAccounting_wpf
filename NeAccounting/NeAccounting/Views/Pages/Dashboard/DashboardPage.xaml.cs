@@ -7,10 +7,7 @@ namespace NeAccounting.Pages
     /// </summary>
     public partial class DashboardPage : INavigableView<ViewModels.DashboardViewModel>
     {
-        public ViewModels.DashboardViewModel ViewModel
-        {
-            get;
-        }
+        public ViewModels.DashboardViewModel ViewModel { get; }
 
 
         public DashboardPage(ViewModels.DashboardViewModel viewModel)
@@ -18,6 +15,7 @@ namespace NeAccounting.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+
         }
     }
 }

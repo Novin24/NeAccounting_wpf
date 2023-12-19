@@ -5,6 +5,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
+      d:DataContext="{d:DesignInstance local:CreateWorkerPage,
+                                     IsDesignTimeCreatable=False}"
       Title="CreateWorkerPage"
       d:DesignHeight="450"
       d:DesignWidth="800"
@@ -62,8 +65,7 @@
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <ui:TextBlock 
-                                  Padding="0,20,0,0"
+                    <ui:TextBlock Padding="0,20,0,0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   FontFamily="the King &amp; Queen font"
@@ -82,7 +84,7 @@
                         <Grid>
                             <Grid.RowDefinitions>
 
-                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height=".70*"></RowDefinition>
                                 <RowDefinition Height="1*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Border CornerRadius="9"
@@ -102,35 +104,40 @@
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <RadioButton GroupName="wages"
-                                             VerticalAlignment="Top"
-                                             HorizontalAlignment="Center"
-                                             FlowDirection="LeftToRight">ساعتی - شیفتی</RadioButton>
+                                                 VerticalAlignment="Top"
+                                                 HorizontalAlignment="Center"
+                                                 Checked="RadioButton_Checked"
+                                                 FlowDirection="LeftToRight">ساعتی - شیفتی</RadioButton>
 
                                     <StackPanel Grid.Row="1">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    Text="دستمزد"
                                                    Margin="2 0 0 0 " />
-                                        <ui:TextBox TextAlignment="Center"
-                                                    FontSize="14"
-                                                    Grid.Row="0"
-                                                    Grid.Column="0"
-                                                    Margin="0 4 3 0 "
-                                                    CaretBrush="White"
-                                                    FontFamily="Calibri" />
+                                        <ui:NumberBox TextAlignment="Center"
+                                                      FontSize="14"
+                                                      Grid.Row="0"
+                                                      x:Name="txt_ShiftPrice"
+                                                      IsEnabled="False"
+                                                      Grid.Column="0"
+                                                      Margin="0 4 3 0 "
+                                                      CaretBrush="White"
+                                                      FontFamily="Calibri" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="2">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    Text="اضافه کاری"
                                                    Margin="2 0 0 0 " />
-                                        <ui:TextBox TextAlignment="Center"
-                                                    FontSize="14"
-                                                    Grid.Row="0"
-                                                    Grid.Column="0"
-                                                    Margin="0 4 3 0 "
-                                                    CaretBrush="White"
-                                                    FontFamily="Calibri" />
+                                        <ui:NumberBox TextAlignment="Center"
+                                                      FontSize="14"
+                                                      Grid.Row="0"
+                                                      IsEnabled="False"
+                                                      x:Name="txt_overTimeShift"
+                                                      Grid.Column="0"
+                                                      Margin="0 4 3 0 "
+                                                      CaretBrush="White"
+                                                      FontFamily="Calibri" />
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -152,10 +159,13 @@
                                         <RowDefinition Height="2*"></RowDefinition>
                                         <RowDefinition Height="2*"></RowDefinition>
                                         <RowDefinition Height="2*"></RowDefinition>
+                                        <RowDefinition Height="2*"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <RadioButton GroupName="wages"
                                                  VerticalAlignment="Top"
                                                  HorizontalAlignment="Center"
+                                                 IsChecked="True"
+                                                 Checked="RadioButton_Checked_1"
                                                  FlowDirection="LeftToRight">ثابت - ماهانه
                                     </RadioButton>
                                     <StackPanel Grid.Row="1">
@@ -163,39 +173,56 @@
                                                    FontSize="14"
                                                    Text="دستمزد"
                                                    Margin="2 0 0 0 " />
-                                        <ui:TextBox TextAlignment="Center"
-                                                    FontSize="14"
-                                                    Grid.Row="0"
-                                                    Grid.Column="0"
-                                                    Margin="0 4 3 0 "
-                                                    CaretBrush="White"
-                                                    FontFamily="Calibri" />
+                                        <ui:NumberBox TextAlignment="Center"
+                                                      FontSize="14"
+                                                      Grid.Row="0"
+                                                      x:Name="txt_MonthPrice"
+                                                      Grid.Column="0"
+                                                      Margin="0 4 3 0 "
+                                                      CaretBrush="White"
+                                                      FontFamily="Calibri" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="2">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
-                                                   Text="مبلغ بیمه"
+                                                   Text="اضافه کاری"
                                                    Margin="2 0 0 0 " />
-                                        <ui:TextBox TextAlignment="Center"
-                                                    FontSize="14"
-                                                    Grid.Row="0"
-                                                    Grid.Column="0"
-                                                    Margin="0 4 3 0 "
-                                                    CaretBrush="White"
-                                                    FontFamily="Calibri" />
+                                        <ui:NumberBox TextAlignment="Center"
+                                                      FontSize="14"
+                                                      Grid.Row="0"
+                                                      x:Name="txt_overtimePriceMonth"
+                                                      Grid.Column="0"
+                                                      Margin="0 4 3 0 "
+                                                      CaretBrush="White"
+                                                      FontFamily="Calibri" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="3">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
-                                                   Text="تعداد روزها"
+                                                   Text="حق بیمه"
                                                    Margin="2 0 0 0 " />
-                                        <ui:TextBox TextAlignment="Center"
-                                                    FontSize="14"
-                                                    Grid.Row="0"
-                                                    Grid.Column="0"
-                                                    Margin="0 4 3 0 "
-                                                    CaretBrush="White"
-                                                    FontFamily="Calibri" />
+                                        <ui:NumberBox TextAlignment="Center"
+                                                      FontSize="14"
+                                                      Grid.Row="0"
+                                                      Grid.Column="0"
+                                                      Margin="0 4 3 0 "
+                                                      x:Name="txt_insurancePerimum"
+                                                      CaretBrush="White"
+                                                      FontFamily="Calibri" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="4">
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="تعداد روز ها"
+                                                   Margin="2 0 0 0 " />
+                                        <ui:NumberBox TextAlignment="Center"
+                                                      FontSize="14"
+                                                      Grid.Row="0"
+                                                      Grid.Column="0"
+                                                      x:Name="txt_dayInMonth"
+                                                      Margin="0 4 3 0 "
+                                                      CaretBrush="White"
+                                                      FontFamily="Calibri" />
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -253,9 +280,12 @@
                                                Margin="2 0 0 0 " />
                                     <ui:TextBox TextAlignment="Center"
                                                 FontSize="14"
+                                                TabIndex="0"
                                                 Grid.Row="0"
+                                                x:Name="txt_name"
                                                 Grid.Column="0"
                                                 Margin="0 4 3 0 "
+                                                Text="{Binding ViewModel.FullName}"
                                                 CaretBrush="White"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
@@ -266,10 +296,13 @@
                                                FontSize="14"
                                                Text="تاریخ شروع کار"
                                                Margin="1 0 0 0 " />
-                                    <ui:TextBox FontSize="14"
-                                                TextAlignment="Center"
-                                                FontFamily="Calibri"
-                                                Margin="0 4 0 0" />
+                                    <datepicker:PersianDatePicker FontSize="14"
+                                                                  FlowDirection="LeftToRight"
+                                                                  FontFamily="Calibri"
+                                                                  TabIndex="2"
+                                                                  x:Name="dtp"
+                                                                  SelectedDate = "{Binding dateNow, Mode=TwoWay}"
+                                                                  Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="0"
                                             Grid.Row="1">
@@ -391,6 +424,7 @@
                                         Margin="0 0 0 6"
                                         HorizontalAlignment="Center"
                                         Grid.Row="6"
+                                        Click="Button_Click"
                                         FontFamily="Calibri"
                                         FontSize="15"
                                         Grid.ColumnSpan="2" />

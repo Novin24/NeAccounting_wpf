@@ -69,6 +69,26 @@ namespace Domain.NovinEntity.Workers
         /// عنوان شغلی
         /// </summary>
         public string JobTitle { get; set; }
+
+        /// <summary>
+        /// دستمزد
+        /// </summary>
+        public long Salary { get; set; }
+
+        /// <summary>
+        /// دسمتزد اضافه کاری
+        /// </summary>
+        public long OverTimeSalary { get; set; }
+
+        /// <summary>
+        /// حق بیمه
+        /// </summary>
+        public long InsurancePremium { get; set; }
+
+        /// <summary>
+        /// تعداد روز کاری در ماه
+        /// </summary>
+        public byte DayInMonth { get; set; }
         #endregion
 
         #region Constructor
@@ -82,16 +102,24 @@ namespace Domain.NovinEntity.Workers
             string natinalCode,
             string mobile,
             string address,
-            DateTime startDate,
             int personalId,
             string accountNumber,
             string description,
             string jobTitle,
-            Shift shift)
+            DateTime startDate,
+            Shift shift,
+            long salary,
+            long overtimeSalary,
+            long insurancePremium,
+            byte dayInMonth)
         {
             FullName = fullName;
             NationalCode = natinalCode;
             Mobile = mobile;
+            DayInMonth = dayInMonth;
+            Salary = salary;
+            OverTimeSalary = overtimeSalary;
+            InsurancePremium = insurancePremium;
             Address = address;
             StartDate = startDate;
             PersonnelId = personalId;
