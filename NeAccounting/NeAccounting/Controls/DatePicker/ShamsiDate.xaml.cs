@@ -27,29 +27,6 @@ namespace NeAcconting.Controls.DatePicker
         private int yearForNavigating = 1387;
         private int monthForNavigating = 10;
 
-
-        //اطلاعات روزی که کاربر روی آن کلیک کرده
-        //Christian
-        //private DateTime _selectedDate = DateTime.Now;
-        //public DateTime SelectedDate
-        //{
-        //    get { return _selectedDate; }
-        //    set
-        //    {
-        //        if (_selectedDate != value)
-        //        {
-        //            this.selectedYear = persianCalendar.GetYear(value);
-        //            this.selectedMonth = persianCalendar.GetMonth(value);
-        //            this.selectedDay = persianCalendar.GetDayOfMonth(value);
-        //            _selectedDate = value;
-
-        //            InitialCalculator(selectedYear, selectedMonth, selectedDay);
-        //        }
-        //    }
-        //}
-
-
-
         public DateTime SelectedDate
         {
             get { return (DateTime)GetValue(SelectedDateProperty); }
@@ -109,8 +86,6 @@ namespace NeAcconting.Controls.DatePicker
         protected virtual void InitialCalculator(int year, int month, int day)
         {
             LoadXMLFile();
-
-
             DataContext = this;
             //select correct month and year
             this.comboBoxMonths.SelectedIndex = month - 1;
@@ -174,34 +149,67 @@ namespace NeAcconting.Controls.DatePicker
                             tooltip_context = GetTextOfMemo(thisYear, thisMonth, thisDay, "PERSIAN");
 
 
-                            if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                            if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
+                            {
+                                changeProperties(i, persianDate, true, "TextBlockStyle24", tooltip_context);
+                            }
+                            else if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                            {
                                 changeProperties(i, persianDate, true, "TextBlockStyle3", tooltip_context);
+                            }
                             else
+                            {
                                 changeProperties(i, persianDate, true, "TextBlockStyle1", tooltip_context);
+                            }
                         }
                         else if (SearchInCalendar(thisYear, thisMonth, thisDay, "PERSIAN"))
                         {
                             tooltip_context = GetTextOfMemo(thisYear, thisMonth, thisDay, "PERSIAN");
-                            if (isHoliday(thisYear, thisMonth, thisDay, "PERSIAN"))
+
+                            if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
+                            {
+                                changeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
+                            }
+                            else if (isHoliday(thisYear, thisMonth, thisDay, "PERSIAN"))//بررسی جمعه بودن روز Friday
+                            {
                                 changeProperties(i, persianDate, false, "TextBlockStyle3", tooltip_context);
+                            }
                             else
+                            {
                                 changeProperties(i, persianDate, false, "TextBlockStyle1", tooltip_context);
+                            }
                         }
 
                         else
                         {
-                            if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                            if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
+                            {
+                                changeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
+                            }
+                            else if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                            {
                                 changeProperties(i, persianDate, false, "TextBlockStyle3", tooltip_context);
+                            }
                             else
+                            {
                                 changeProperties(i, persianDate, false, "TextBlockStyle1", tooltip_context);
+                            }
                         }
                     }
                     else
                     {
-                        if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                        if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == currentYear)
+                        {
+                            changeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
+                        }
+                        else if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                        {
                             changeProperties(i, persianDate, false, "TextBlockStyle4", tooltip_context);
+                        }
                         else
+                        {
                             changeProperties(i, persianDate, false, "TextBlockStyle2", tooltip_context);
+                        }
                     }
 
                     increasePersianDay(ref thisYear, ref thisMonth, ref thisDay, 1);
@@ -935,8 +943,6 @@ namespace NeAcconting.Controls.DatePicker
             }
             calculateMonth((int)comboBoxYear.SelectedItem, monthForNavigating);
         }
-        #endregion Events
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             int day = Convert.ToInt32((sender as Button).Content.ToString());
@@ -944,6 +950,8 @@ namespace NeAcconting.Controls.DatePicker
             PersianSelectedDate = string.Concat(yearForNavigating, "/", monthForNavigating, "/", day);
             Click?.Invoke(this, e);
         }
+        #endregion Events
+
     }
 
 
