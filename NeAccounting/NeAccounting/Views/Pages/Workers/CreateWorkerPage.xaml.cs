@@ -9,7 +9,7 @@ namespace NeAccounting.Views.Pages
     public partial class CreateWorkerPage : INavigableView<CreateWorkerViewModel>
     {
         public CreateWorkerViewModel ViewModel { get; }
-        public DateTime dateNow { get; set; }
+        public DateTime dateNow { get; set; } = DateTime.Now.AddYears(1);
         public CreateWorkerPage(CreateWorkerViewModel viewModel)
         {
             ViewModel = viewModel;
@@ -57,6 +57,7 @@ namespace NeAccounting.Views.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var ts = dtp.SelectedDate;
+            var sdfd = dtp.DisplayDate;
             dtp.SelectedDate = DateTime.Now.AddYears(2);
             var t = dtp.persianCalendar.SelectedDate = DateTime.Now .AddYears(2);
         }

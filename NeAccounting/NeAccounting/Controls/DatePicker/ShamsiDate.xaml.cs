@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
-
 namespace NeAcconting.Controls.DatePicker
 {
     /// <summary>
@@ -10,7 +9,7 @@ namespace NeAcconting.Controls.DatePicker
     {
 
         #region fields
-        PersianCalendar persianCalendar = new PersianCalendar();
+        private static PersianCalendar persianCalendar = new PersianCalendar();
         public event RoutedEventHandler Click;
         //اطلاعات تاریخ امروز 
         private readonly int currentYear = 1387;
@@ -19,9 +18,9 @@ namespace NeAcconting.Controls.DatePicker
 
 
         //اطلاعات تاریخ انتخابی 
-        private int selectedYear = 1387;
-        private int selectedMonth = 10;
-        private int selectedDay = 1;
+        private static int selectedYear = 1387;
+        private static int selectedMonth = 10;
+        private static int selectedDay = 1;
 
         //برای حرکت بین ماه ها
         //به شمسی
@@ -55,32 +54,30 @@ namespace NeAcconting.Controls.DatePicker
         {
             get { return (DateTime)GetValue(SelectedDateProperty); }
             set
-            {
-                SetValue(SelectedDateProperty, value);
-                this.selectedYear = persianCalendar.GetYear(value);
-                this.selectedMonth = persianCalendar.GetMonth(value);
-                this.selectedDay = persianCalendar.GetDayOfMonth(value);
-                InitialCalculator(selectedYear, selectedMonth, selectedDay);
-            }
+            { SetValue(SelectedDateProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedDate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedDateProperty =
-            DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(ShamsiDate), new PropertyMetadata(DateTime.Now));
+            DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(ShamsiDate), new PropertyMetadata(DateTime.Now, SelectedDatePropertyChenged));
 
 
+        private static void SelectedDatePropertyChenged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            if (obj is not ShamsiDate shamsiDate)
+                return;
+            selectedYear = persianCalendar.GetYear((DateTime)args.NewValue);
+            selectedMonth = persianCalendar.GetMonth((DateTime)args.NewValue);
+            selectedDay = persianCalendar.GetDayOfMonth((DateTime)args.NewValue);
+            shamsiDate.InitialCalculator(selectedYear, selectedMonth, selectedDay);
+        }
 
-
-
-        //Persian
-        //public string PersianSelectedDate { get; set; }
 
         public string PersianSelectedDate
         {
             get
             {
-                var t = (string)GetValue(PersianSelectedDateProperty);
-                return t;
+                return (string)GetValue(PersianSelectedDateProperty);
             }
             set { SetValue(PersianSelectedDateProperty, value); }
         }
@@ -109,8 +106,7 @@ namespace NeAcconting.Controls.DatePicker
         }
 
 
-
-        private void InitialCalculator(int year, int month, int day)
+        protected virtual void InitialCalculator(int year, int month, int day)
         {
             LoadXMLFile();
 

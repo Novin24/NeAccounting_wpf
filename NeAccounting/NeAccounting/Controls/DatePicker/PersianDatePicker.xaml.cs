@@ -12,11 +12,11 @@ namespace NeAcconting.Controls.DatePicker
         public PersianDatePicker()
         {
             InitializeComponent();
-            dateTextBox.Text = persianCalendar.PersianSelectedDate;
+            //dateTextBox.Text = persianCalendar.PersianSelectedDate;
             persianCalendar.Click += (object sender, RoutedEventArgs e) =>
             {
                 this.persianCalnedarPopup.IsOpen = false;
-                dateTextBox.Text = persianCalendar.PersianSelectedDate;
+                //dateTextBox.Text = persianCalendar.PersianSelectedDate;
             };
         }
 
@@ -37,18 +37,25 @@ namespace NeAcconting.Controls.DatePicker
         {
             get { return (DateTime)GetValue(SelectedDateProperty); }
             set
-            {
-                SetValue(SelectedDateProperty, value);
-                dateTextBox.Text = persianCalendar.PersianSelectedDate;
-
-            }
+            { SetValue(SelectedDateProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedDate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedDateProperty =
             DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(PersianDatePicker), new PropertyMetadata(DateTime.Now));
 
+        //private static void SelectedDayChenged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        //{
+        //    if (obj is not PersianDatePicker ps)
+        //        return;
+        //    var t = (DateTime)args.NewValue;
+        //    ps.SetDateBox();
+        //}
 
+        //private void SetDateBox()
+        //{ 
+        //    dateTextBox.Text = persianCalendar.PersianSelectedDate;
+        //}
 
         /// <summary>
         /// Gets or sets the date that is being displayed in the calendar.
@@ -82,5 +89,7 @@ namespace NeAcconting.Controls.DatePicker
         {
             this.persianCalendar.Focus();
         }
+
+
     }
 }
