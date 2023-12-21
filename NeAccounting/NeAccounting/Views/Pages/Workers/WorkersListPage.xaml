@@ -189,7 +189,7 @@
                                     <Button Margin="0 5 0 12"
                                             Padding="17 4 17 9"
                                             IsDefault="True"
-                                            Command="{Binding ViewModel.SearchWorkerCommand}" >جستجو</Button>
+                                            Command="{Binding ViewModel.SearchWorkerCommand}">جستجو</Button>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
                                             Margin="20 9 0 0 "
@@ -203,11 +203,11 @@
                                               FontFamily="Calibri"
                                               SelectedIndex="{Binding ViewModel.StatusByte}"
                                               Margin="0 4 0 0 ">
+                                        <ComboBoxItem Content="همه موارد"
+                                                      IsSelected="True" />
                                         <ComboBoxItem Content="مشغول به کار" />
                                         <ComboBoxItem Content="تسویه و اتمام کار" />
                                         <ComboBoxItem Content="اخراج شده" />
-                                        <ComboBoxItem Content="همه موارد"
-                                                      IsSelected="True" />
                                     </ComboBox>
                                 </StackPanel>
                             </Grid>

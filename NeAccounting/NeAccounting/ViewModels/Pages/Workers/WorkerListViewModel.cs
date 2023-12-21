@@ -24,7 +24,7 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private string _nationalCode = "";
 
-        private Status Statu { get { return (Status)StatusByte; } set { StatusByte = (byte)value; } }
+        private Status Status { get { return (Status)StatusByte; } set { StatusByte = (byte)value; } }
 
         [ObservableProperty]
         private byte _statusByte = 0;
@@ -55,7 +55,7 @@ namespace NeAccounting.ViewModels
                         FullName,
                         JobTitle,
                         NationalCode,
-                        Statu);
+                        Status);
 
             if (!List.Any())
                 _snackbarService.Show("اوه", "هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
@@ -69,7 +69,7 @@ namespace NeAccounting.ViewModels
                         FullName,
                         JobTitle,
                         NationalCode,
-                        Statu);
+                        Status);
 
             if (!List.Any())
                 _snackbarService.Show("اوه", "هیچ کارگری در پایگاه داده با این مشخصات یافت نشد!!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
@@ -135,18 +135,22 @@ namespace NeAccounting.ViewModels
             var context = new UpdateWorkerPage(new UpdateWorkerViewModel( _navigationService, _snackbarService)
             {
                 Id = worker.Id,
-                Shift = worker.Shift,
+                WorkerShift = worker.Shift,
                 StartDate = worker.StartDate,
                 Status = worker.Status,
                 AccountNumber = worker.AccountNumber,
                 Address = worker.Address,
+                DayInMonth = worker.DayInMonth,
+                Salary = worker.Salary,
+                OvertimeSalary = worker.OverTimeSalary,
+                InsurancePremium = worker.InsurancePremium,
                 Description = worker.Description,
                 FullName= worker.FullName,
                 JobTitle = worker.JobTitle, 
                 Mobile = worker.Mobile, 
                 NationalCode = worker.NationalCode,
                 PersonalId = worker.PersonnelId,
-            });
+            },_snackbarService);
 
             servise.Navigate(pageType ,context);
         }

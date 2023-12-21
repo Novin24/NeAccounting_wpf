@@ -81,6 +81,16 @@ namespace Domain.NovinEntity.Workers
         public long OverTimeSalary { get; set; }
 
         /// <summary>
+        /// دستمزد هر شیفت
+        /// </summary>
+        public long ShiftSalary { get; set; }
+
+        /// <summary>
+        /// دسمتزد اضافه کاری شیفتی
+        /// </summary>
+        public long ShiftOverTimeSalary { get; set; }
+
+        /// <summary>
         /// حق بیمه
         /// </summary>
         public long InsurancePremium { get; set; }
@@ -110,6 +120,8 @@ namespace Domain.NovinEntity.Workers
             Shift shift,
             long salary,
             long overtimeSalary,
+            long shiftSalary,
+            long shiftOvertimeSalary,
             long insurancePremium,
             byte dayInMonth)
         {
