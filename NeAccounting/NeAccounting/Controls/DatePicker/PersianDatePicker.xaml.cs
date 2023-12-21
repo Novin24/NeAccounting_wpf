@@ -12,7 +12,7 @@ namespace NeAcconting.Controls.DatePicker
         public PersianDatePicker()
         {
             InitializeComponent();
-            //dateTextBox.Text = persianCalendar.PersianSelectedDate;
+            //dateTextBox.Text = PersianSelectedDate;
             persianCalendar.Click += (object sender, RoutedEventArgs e) =>
             {
                 this.persianCalnedarPopup.IsOpen = false;
@@ -37,7 +37,9 @@ namespace NeAcconting.Controls.DatePicker
         {
             get { return (DateTime)GetValue(SelectedDateProperty); }
             set
-            { SetValue(SelectedDateProperty, value); }
+            {
+                SetValue(SelectedDateProperty, value);
+            }
         }
 
         // Using a DependencyProperty as the backing store for SelectedDate.  This enables animation, styling, binding, etc...
@@ -69,16 +71,26 @@ namespace NeAcconting.Controls.DatePicker
 
 
 
-        public string DisplayDate
+        public string PersianSelectedDate
         {
-            get { return (string)GetValue(DisplayDateProperty); }
-            set { SetValue(DisplayDateProperty, value); }
+            get 
+            { 
+                    var s = (string)GetValue(PersianSelectedDateProperty);
+                return s;
+            }
+            set { SetValue(PersianSelectedDateProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for DisplayDate.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DisplayDateProperty =
-            DependencyProperty.Register("DisplayDate", typeof(string), typeof(PersianDatePicker), new PropertyMetadata(null));
+        public static readonly DependencyProperty PersianSelectedDateProperty =
+            DependencyProperty.Register("PersianSelectedDate", typeof(string), typeof(PersianDatePicker), new PropertyMetadata(string.Empty, SelectedDayChenged));
 
+        private static void SelectedDayChenged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            if (obj is not PersianDatePicker ps)
+                return;
+            var t = (string)args.NewValue;
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

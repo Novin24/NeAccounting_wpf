@@ -11,12 +11,12 @@ namespace DomainShared.Enums
         /// همه
         /// </summary>
         [Display(Name ="همه")]
-        All,
+        All = 3,
         /// <summary>
         /// درحال کار
         /// </summary>
         [Display(Name ="مشغول به کار")]
-        InWork,
+        InWork = 0,
         /// <summary>
         /// تسویه و اتمام کار
         /// </summary>

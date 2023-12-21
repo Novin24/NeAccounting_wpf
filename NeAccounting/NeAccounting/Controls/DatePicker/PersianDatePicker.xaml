@@ -105,7 +105,7 @@
                     HorizontalAlignment="Stretch"
                     MaxLines="1"
                     MinWidth="80"
-                    Text="{Binding DisplayDate , Mode=OneWay , ElementName=pfp}"
+                    Text="{Binding PersianSelectedDate , Mode=OneWay , ElementName=pfp}"
                     FontSize="14"
                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                     TextAlignment="Center"
@@ -121,7 +121,7 @@
             <Grid>
                 <local:ShamsiDate x:Name="persianCalendar"
                                   SelectedDate="{Binding SelectedDate ,Mode=TwoWay , ElementName=pfp}"
-                                  PersianSelectedDate="{Binding DisplayDate , Mode=TwoWay ,ElementName=pfp}"/>
+                                  PersianSelectedDate="{Binding PersianSelectedDate , Mode=OneWayToSource ,ElementName=pfp}"/>
 
             </Grid>
         </Popup>

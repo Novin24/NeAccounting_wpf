@@ -1,9 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace DomainShared.Exceptions
+namespace DomainShared.Extension
 {
     public static class Encrypt
     {

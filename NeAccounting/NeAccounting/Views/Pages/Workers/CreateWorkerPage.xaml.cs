@@ -1,4 +1,7 @@
-﻿using NeAccounting.ViewModels;
+﻿using NeAccounting.Helpers.Extention;
+using NeAccounting.ViewModels;
+using System.Text.RegularExpressions;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -8,14 +11,15 @@ namespace NeAccounting.Views.Pages
     /// </summary>
     public partial class CreateWorkerPage : INavigableView<CreateWorkerViewModel>
     {
+        private readonly ISnackbarService _snackbarService;
         public CreateWorkerViewModel ViewModel { get; }
-        public DateTime dateNow { get; set; } = DateTime.Now.AddYears(1);
-        public CreateWorkerPage(CreateWorkerViewModel viewModel)
+        public CreateWorkerPage(CreateWorkerViewModel viewModel, ISnackbarService snackbarService)
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
             txt_name.Focus();
+            _snackbarService = snackbarService;
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
@@ -24,6 +28,8 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
+            ViewModel.Shift = DomainShared.Enums.Shift.ByHour;
+
             txt_dayInMonth.IsEnabled = false;
             txt_dayInMonth.Value = 0;
             txt_MonthPrice.IsEnabled = false;
@@ -43,6 +49,8 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
+            ViewModel.Shift = DomainShared.Enums.Shift.ByMounth;
+
             txt_dayInMonth.IsEnabled = true;
             txt_MonthPrice.IsEnabled = true;
             txt_insurancePerimum.IsEnabled = true;
@@ -54,12 +62,33 @@ namespace NeAccounting.Views.Pages
             txt_overTimeShift.Value = 0;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            var ts = dtp.SelectedDate;
-            var sdfd = dtp.DisplayDate;
-            dtp.SelectedDate = DateTime.Now.AddYears(2);
-            var t = dtp.persianCalendar.SelectedDate = DateTime.Now .AddYears(2);
+            if (sender is TextBox txt)
+            {
+                Regex regex = NumberOnly();
+                txt.Text = txt.Text.Trim();
+                if (!regex.IsMatch(txt.Text))
+                {
+                    txt.Text = string.Empty;
+                    _snackbarService.Show("خطا", "شماره موبایل وارد شده نامعتبر میباشد !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                }
+            }
+
         }
+
+        private void Txt_NationalCode_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox txt)
+            {
+                if (!txt.Text.ValidNationalCode(_snackbarService))
+                {
+                    txt.Text = string.Empty;
+                }
+            }
+        }
+
+        [GeneratedRegex(@"^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$")]
+        private static partial Regex NumberOnly();
     }
 }

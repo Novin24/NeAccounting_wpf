@@ -2,12 +2,13 @@
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Helpers.Extention;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class CreateWorkerViewModel : ObservableObject, INavigationAware
+    public partial class CreateWorkerViewModel : ObservableObject
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
@@ -29,10 +30,10 @@ namespace NeAccounting.ViewModels
         private string _address;
 
         [ObservableProperty]
-        private int _personalId;
+        private int? _personalId;
 
         [ObservableProperty]
-        private DateTime _startDate;
+        private DateTime _startDate = DateTime.Now;
 
         [ObservableProperty]
         private string _accountNumber;
@@ -47,10 +48,10 @@ namespace NeAccounting.ViewModels
         private Shift _shift = Shift.ByMounth;
 
         [ObservableProperty]
-        private Status _status = Status.InWork;
+        private byte _status = 0;
 
         [ObservableProperty]
-        private long? _salary = 0;
+        private long? _salary;
 
         [ObservableProperty]
         private long? overtimeSalary;
@@ -61,15 +62,6 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private byte? dayInMonth;
 
-        public void OnNavigatedFrom()
-        {
-
-        }
-
-        public async void OnNavigatedTo()
-        {
-
-        }
 
         [RelayCommand]
         private async Task OnCreate()
@@ -95,7 +87,7 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("آدرس"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
-            if (PersonalId <= 0)
+            if (PersonalId == null || PersonalId <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("شماره پرسنلی", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
@@ -130,9 +122,8 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("شماره حساب"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
-            if (string.IsNullOrEmpty(NationalCode))
+            if (!NationalCode.ValidNationalCode(_snackbarService))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("شماره ملی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
@@ -143,7 +134,7 @@ namespace NeAccounting.ViewModels
                        NationalCode,
                        Mobile,
                        Address,
-                       PersonalId,
+                       PersonalId.Value,
                        AccountNumber,
                        Description,
                        JobTitle,
@@ -163,7 +154,7 @@ namespace NeAccounting.ViewModels
 
             _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(2000));
 
-            Type? pageType = NameToPageTypeConverter.Convert("MaterailList");
+            Type? pageType = NameToPageTypeConverter.Convert("CustomerList");
 
             if (pageType == null)
             {
