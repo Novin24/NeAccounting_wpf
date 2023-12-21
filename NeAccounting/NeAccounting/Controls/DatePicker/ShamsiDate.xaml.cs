@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
-
 namespace NeAcconting.Controls.DatePicker
 {
     /// <summary>
@@ -10,29 +9,62 @@ namespace NeAcconting.Controls.DatePicker
     {
 
         #region fields
-        PersianCalendar persianCalendar = new PersianCalendar();
+        private static PersianCalendar persianCalendar = new PersianCalendar();
         public event RoutedEventHandler Click;
         //اطلاعات تاریخ امروز 
-        readonly int currentYear = 1387;
-        readonly int currentMonth = 10;
-        readonly int currentDay = 1;
+        private readonly int currentYear = 1387;
+        private readonly int currentMonth = 10;
+        private readonly int currentDay = 1;
+
+
+        //اطلاعات تاریخ انتخابی 
+        private static int selectedYear = 1387;
+        private static int selectedMonth = 10;
+        private static int selectedDay = 1;
 
         //برای حرکت بین ماه ها
         //به شمسی
         private int yearForNavigating = 1387;
         private int monthForNavigating = 10;
 
-        /// <summary>
-        /// سال های قابل نمایش
-        /// </summary>
-        private List<int> itm;
+        public DateTime SelectedDate
+        {
+            get { return (DateTime)GetValue(SelectedDateProperty); }
+            set
+            { SetValue(SelectedDateProperty, value); }
+        }
 
-        //اطلاعات روزی که کاربر روی آن کلیک کرده
-        //Christian
-        public DateTime SelectedDate { get; set; }
+        // Using a DependencyProperty as the backing store for SelectedDate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedDateProperty =
+            DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(ShamsiDate), new PropertyMetadata(DateTime.Now, SelectedDatePropertyChenged));
 
-        //Persian
-        public string PersianSelectedDate { get; set; }
+
+        private static void SelectedDatePropertyChenged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            if (obj is not ShamsiDate shamsiDate)
+                return;
+            selectedYear = persianCalendar.GetYear((DateTime)args.NewValue);
+            selectedMonth = persianCalendar.GetMonth((DateTime)args.NewValue);
+            selectedDay = persianCalendar.GetDayOfMonth((DateTime)args.NewValue);
+            shamsiDate.InitialCalculator(selectedYear, selectedMonth, selectedDay);
+        }
+
+
+        public string PersianSelectedDate
+        {
+            get
+            {
+                var s = (string)GetValue(PersianSelectedDateProperty);
+                return s;
+            }
+            set { SetValue(PersianSelectedDateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for PersianSelectedDate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PersianSelectedDateProperty =
+            DependencyProperty.Register("PersianSelectedDate", typeof(string), typeof(ShamsiDate), new PropertyMetadata(string.Empty));
+
+
 
 
         // ایا تقویم به صورت کامل بارگذازی شده
@@ -44,30 +76,29 @@ namespace NeAcconting.Controls.DatePicker
         public ShamsiDate()
         {
             InitializeComponent();
-
-            LoadXMLFile();
-            LoadYear();
-
-            DataContext = this;
             // Insert code required on object creation below this point
             this.currentYear = persianCalendar.GetYear(DateTime.Now);
             this.currentMonth = persianCalendar.GetMonth(DateTime.Now);
             this.currentDay = persianCalendar.GetDayOfMonth(DateTime.Now);
+            InitialCalculator(currentYear, currentMonth, currentDay);
+        }
 
+
+        protected virtual void InitialCalculator(int year, int month, int day)
+        {
+            LoadXMLFile();
+            DataContext = this;
             //select correct month and year
-            this.comboBoxMonths.SelectedIndex = currentMonth - 1;
-            this.comboBoxYear.ItemsSource = itm;
-            this.comboBoxYear.SelectedItem = currentYear;
+            this.comboBoxMonths.SelectedIndex = month - 1;
+            this.comboBoxYear.ItemsSource = LoadYear(year);
+            this.comboBoxYear.SelectedItem = year;
 
             //Fill the selected date
-            SelectedDate = DateTime.Now;
-            PersianSelectedDate = string.Concat(currentYear, "/", currentMonth, "/", currentDay);
-
-            calculateMonth(currentYear, currentMonth);
+            PersianSelectedDate = string.Concat(year, "/", month, "/", day);
+            calculateMonth(year, month);
 
             IsCalculated = true;
         }
-
 
         #region calculating and showing the calendar
 
@@ -119,34 +150,67 @@ namespace NeAcconting.Controls.DatePicker
                             tooltip_context = GetTextOfMemo(thisYear, thisMonth, thisDay, "PERSIAN");
 
 
-                            if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                            if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
+                            {
+                                changeProperties(i, persianDate, true, "TextBlockStyle24", tooltip_context);
+                            }
+                            else if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                            {
                                 changeProperties(i, persianDate, true, "TextBlockStyle3", tooltip_context);
+                            }
                             else
+                            {
                                 changeProperties(i, persianDate, true, "TextBlockStyle1", tooltip_context);
+                            }
                         }
                         else if (SearchInCalendar(thisYear, thisMonth, thisDay, "PERSIAN"))
                         {
                             tooltip_context = GetTextOfMemo(thisYear, thisMonth, thisDay, "PERSIAN");
-                            if (isHoliday(thisYear, thisMonth, thisDay, "PERSIAN"))
+
+                            if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
+                            {
+                                changeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
+                            }
+                            else if (isHoliday(thisYear, thisMonth, thisDay, "PERSIAN"))//بررسی جمعه بودن روز Friday
+                            {
                                 changeProperties(i, persianDate, false, "TextBlockStyle3", tooltip_context);
+                            }
                             else
+                            {
                                 changeProperties(i, persianDate, false, "TextBlockStyle1", tooltip_context);
+                            }
                         }
 
                         else
                         {
-                            if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                            if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
+                            {
+                                changeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
+                            }
+                            else if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                            {
                                 changeProperties(i, persianDate, false, "TextBlockStyle3", tooltip_context);
+                            }
                             else
+                            {
                                 changeProperties(i, persianDate, false, "TextBlockStyle1", tooltip_context);
+                            }
                         }
                     }
                     else
                     {
-                        if (DayOfWeek.convertToPersianDay() == "جمعه")//بررسی جمعه بودن روز Friday
+                        if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == currentYear)
+                        {
+                            changeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
+                        }
+                        else if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
+                        {
                             changeProperties(i, persianDate, false, "TextBlockStyle4", tooltip_context);
+                        }
                         else
+                        {
                             changeProperties(i, persianDate, false, "TextBlockStyle2", tooltip_context);
+                        }
                     }
 
                     increasePersianDay(ref thisYear, ref thisMonth, ref thisDay, 1);
@@ -162,9 +226,9 @@ namespace NeAcconting.Controls.DatePicker
         /// load range of Year
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        private void LoadYear()
+        private List<int> LoadYear(int year)
         {
-            itm = Enumerable.Range(currentYear - 50, 100).ToList();
+            return Enumerable.Range(year - 50, 100).ToList();
         }
 
         /// <summary>
@@ -880,15 +944,15 @@ namespace NeAcconting.Controls.DatePicker
             }
             calculateMonth((int)comboBoxYear.SelectedItem, monthForNavigating);
         }
-        #endregion Events
-
-        internal void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             int day = Convert.ToInt32((sender as Button).Content.ToString());
             SelectedDate = persianCalendar.ToDateTime(yearForNavigating, monthForNavigating, day, 0, 0, 0, 0);
             PersianSelectedDate = string.Concat(yearForNavigating, "/", monthForNavigating, "/", day);
             Click?.Invoke(this, e);
         }
+        #endregion Events
+
     }
 
 

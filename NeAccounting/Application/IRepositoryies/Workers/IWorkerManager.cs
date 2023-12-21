@@ -17,12 +17,16 @@ namespace NeApplication.IRepositoryies
             string natinalCode,
             string mobile,
             string address,
-            DateTime startDate,
             int personalId,
             string accountNumber,
             string description,
             string jobTitle,
-            Shift shift);
+            DateTime startDate, 
+            Shift shift,
+            long salary,
+            long overtimeSalary,
+            long insurancePremium,
+            byte dayInMonth);
 
         Task<(string error, bool isSuccess)> Update(
             int id,

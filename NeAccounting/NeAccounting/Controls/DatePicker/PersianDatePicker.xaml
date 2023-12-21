@@ -1,10 +1,11 @@
 ﻿<UserControl x:Class="NeAcconting.Controls.DatePicker.PersianDatePicker"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:NeAcconting.Controls.DatePicker"
+             Name="pfp"
              mc:Ignorable="d"
              BorderThickness="1"
              KeyboardNavigation.TabNavigation="Once">
@@ -104,6 +105,7 @@
                     HorizontalAlignment="Stretch"
                     MaxLines="1"
                     MinWidth="80"
+                    Text="{Binding PersianSelectedDate , Mode=OneWay , ElementName=pfp}"
                     FontSize="14"
                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                     TextAlignment="Center"
@@ -117,7 +119,9 @@
                StaysOpen="False"
                Opened="persianCalnedarPopup_Opened">
             <Grid>
-                <local:ShamsiDate x:Name="persianCalendar" />
+                <local:ShamsiDate x:Name="persianCalendar"
+                                  SelectedDate="{Binding SelectedDate ,Mode=TwoWay , ElementName=pfp}"
+                                  PersianSelectedDate="{Binding PersianSelectedDate , Mode=OneWayToSource ,ElementName=pfp}"/>
 
             </Grid>
         </Popup>

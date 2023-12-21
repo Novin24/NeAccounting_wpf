@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DomainShared.Utilities
 {

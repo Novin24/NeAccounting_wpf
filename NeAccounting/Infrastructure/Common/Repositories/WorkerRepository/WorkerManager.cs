@@ -47,12 +47,16 @@ namespace Infrastructure.Repositories
             string natinalCode,
             string mobile,
             string address,
-            DateTime startDate,
             int personalId,
             string accountNumber,
             string description,
             string jobTitle,
-            Shift shift)
+            DateTime startDate,
+            Shift shift,
+            long salary,
+            long overtimeSalary,
+            long insurancePremium,
+            byte dayInMonth)
         {
             var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.NationalCode == natinalCode || t.PersonnelId == personalId);
 
@@ -73,12 +77,16 @@ namespace Infrastructure.Repositories
                     natinalCode,
                     mobile,
                     address,
-                    startDate,
                     personalId,
                     accountNumber,
                     description,
                     jobTitle,
-                    shift));
+                    startDate,
+                    shift,
+                    salary,
+                    overtimeSalary,
+                    insurancePremium,
+                    dayInMonth));
             }
             catch (Exception ex)
             {

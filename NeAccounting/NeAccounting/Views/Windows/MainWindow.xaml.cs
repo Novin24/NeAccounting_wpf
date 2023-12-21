@@ -35,6 +35,7 @@ namespace NeAccounting.Windows
             contentDialogService.SetContentPresenter(RootContentDialog);
 
             NavigationView.SetServiceProvider(serviceProvider);
+            Txt_UserName.Focus();
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -64,6 +65,7 @@ namespace NeAccounting.Windows
 
                 mainGrid.Visibility = Visibility.Visible;
                 mainGrid.IsEnabled = true;
+                mainWin.WindowState = WindowState.Maximized;
             }
             await Task.CompletedTask;
         }
