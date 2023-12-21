@@ -48,19 +48,22 @@ namespace NeAccounting.ViewModels
         private Shift _shift = Shift.ByMounth;
 
         [ObservableProperty]
-        private byte _status = 0;
-
-        [ObservableProperty]
         private long? _salary;
 
         [ObservableProperty]
-        private long? overtimeSalary;
+        private long? _overtimeSalary;
 
         [ObservableProperty]
-        private long? insurancePremium;
+        private long? _shiftSalary;
 
         [ObservableProperty]
-        private byte? dayInMonth;
+        private long? _shiftovertimeSalary;
+
+        [ObservableProperty]
+        private long? _insurancePremium;
+
+        [ObservableProperty]
+        private byte? _dayInMonth;
 
 
         [RelayCommand]
@@ -69,57 +72,69 @@ namespace NeAccounting.ViewModels
 
             if (string.IsNullOrEmpty(FullName))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کارگر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کارگر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(JobTitle))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("عنوان شغل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("عنوان شغل"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(Mobile))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موبایل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موبایل"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (string.IsNullOrEmpty(Address))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("آدرس"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("آدرس"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (PersonalId == null || PersonalId <= 0)
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMore("شماره پرسنلی", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("شماره پرسنلی", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
             if (Salary == null || Salary <= 0)
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد ماهانه", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
             if (OvertimeSalary == null || OvertimeSalary <= 0)
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری ماهانه", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
+
+            if (ShiftSalary == null || ShiftSalary <= 0)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد ", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
+
+            if (ShiftovertimeSalary == null || ShiftovertimeSalary <= 0)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
             if (Shift == Shift.ByMounth && (InsurancePremium == null || InsurancePremium <= 0))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMore("مبلغ بیمه", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("مبلغ بیمه", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
             if (Shift == Shift.ByMounth && (DayInMonth == null || DayInMonth <= 0))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMore("تعداد روز کاری", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("تعداد روز کاری", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
             if (string.IsNullOrEmpty(AccountNumber))
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("شماره حساب"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("شماره حساب"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
             if (!NationalCode.ValidNationalCode(_snackbarService))
@@ -142,11 +157,13 @@ namespace NeAccounting.ViewModels
                        Shift,
                        Salary.Value,
                        OvertimeSalary.Value,
+                       ShiftSalary.Value,
+                       ShiftovertimeSalary.Value,
                        InsurancePremium.Value,
                        DayInMonth.Value);
                 if (!isSuccess)
                 {
-                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                     return;
                 }
                 await db.SaveChangesAsync();

@@ -54,7 +54,36 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// وضعیت شیفت
         /// </summary>
-        public Shift Shift{ get; set; }
-       
+        public Shift Shift { get; set; }
+
+        /// <summary>
+        /// دستمزد
+        /// </summary>
+        public long Salary { get; set; }
+
+        /// <summary>
+        /// دسمتزد اضافه کاری
+        /// </summary>
+        public long OverTimeSalary { get; set; }
+
+        /// <summary>
+        /// حق بیمه
+        /// </summary>
+        public long InsurancePremium { get; set; }
+
+        /// <summary>
+        /// تعداد روز کاری در ماه
+        /// </summary>
+        public byte DayInMonth { get; set; }
+
+        /// <summary>
+        /// دستمزد هر شیفت
+        /// </summary>
+        public long ShiftSalary { get; set; }
+
+        /// <summary>
+        /// دسمتزد اضافه کاری شیفتی
+        /// </summary>
+        public long ShiftOverTimeSalary { get; set; }
     }
 }

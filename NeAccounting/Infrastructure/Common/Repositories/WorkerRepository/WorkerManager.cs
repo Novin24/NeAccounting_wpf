@@ -30,6 +30,8 @@ namespace Infrastructure.Repositories
                     WorkerStatus = t.Status.ToDisplay(DisplayProperty.Name),
                     Status = t.Status,
                     Shift= t.ShiftStatus,
+                    ShiftSalary= t.ShiftSalary,
+                    ShiftOverTimeSalary= t.ShiftOverTimeSalary,
                     StartDate = t.StartDate,
                     AccountNumber = t.AccountNumber,
                     Address = t.Address,
@@ -39,6 +41,10 @@ namespace Infrastructure.Repositories
                     PersonnelId = t.PersonnelId,
                     FullName = t.FullName,
                     NationalCode = t.NationalCode,
+                    Salary = t.Salary,
+                    OverTimeSalary = t.OverTimeSalary,
+                    DayInMonth = t.DayInMonth,
+                    InsurancePremium = t.InsurancePremium,
                 }).ToListAsync();
         }
 
@@ -55,7 +61,9 @@ namespace Infrastructure.Repositories
             Shift shift,
             long salary,
             long overtimeSalary,
-            long insurancePremium,
+            long shiftSalary,
+            long shiftOvertimeSalary,
+            long insurancePremium, 
             byte dayInMonth)
         {
             var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.NationalCode == natinalCode || t.PersonnelId == personalId);
@@ -85,6 +93,8 @@ namespace Infrastructure.Repositories
                     shift,
                     salary,
                     overtimeSalary,
+                    shiftSalary,
+                    shiftOvertimeSalary,
                     insurancePremium,
                     dayInMonth));
             }

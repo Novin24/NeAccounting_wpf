@@ -24,7 +24,9 @@ namespace NeApplication.IRepositoryies
             DateTime startDate, 
             Shift shift,
             long salary,
-            long overtimeSalary,
+            long overtimeSalary, 
+            long shiftSalary,
+            long shiftOvertimeSalary,
             long insurancePremium,
             byte dayInMonth);
 
