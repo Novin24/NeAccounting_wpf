@@ -55,12 +55,13 @@
                     <RowDefinition Height="*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <ui:TextBlock Margin="10 0 0 0"
-                              Height="40"
-                              HorizontalAlignment="left"
-                              FontFamily="STXingkai"
-                              FontSize="35"
+                <ui:TextBlock Margin="15 -35 0 -50"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              FontFamily="the King &amp; Queen font"
+                              FontSize="30"
                               Text="Novin" />
+
                 <TextBlock Margin="0 20 20 0"
                            Height="40"
                            HorizontalAlignment="Right"
