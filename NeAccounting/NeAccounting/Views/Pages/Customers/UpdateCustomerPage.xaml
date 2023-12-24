@@ -17,38 +17,36 @@
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="1.4*" />
+                <RowDefinition Height="1.3*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height=".5*" />
+                <RowDefinition Height="1.3*" />
+                <RowDefinition Height="1.4*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".5*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width=".5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
                     Grid.RowSpan="3"
-                    Grid.Column="1"
+                    Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Background="{StaticResource Rectangle Dark blue}"
                     CornerRadius="10"></Border>
             <Border Grid.Row="3"
                     Grid.RowSpan="3"
-                    Grid.Column="3"
+                    Grid.Column="2"
                     Grid.ColumnSpan="3"
                     Background="{StaticResource Rectangle Pale blue}"
                     CornerRadius="10"></Border>
             <Border Grid.Row="2"
                     Grid.RowSpan="3"
-                    Grid.Column="2"
+                    Grid.Column="1"
                     Grid.ColumnSpan="3"
                     Background="{DynamicResource ApplicationBackgroundBrush}"
                     CornerRadius="10">
@@ -63,7 +61,7 @@
 
                     </Grid.RowDefinitions>
                     <ui:TextBlock Padding="0,20,0,0"
-                                  Margin="6 0 0 0"
+                                  Margin="15 0 0 0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Center"
                                   FontFamily="the King &amp; Queen font"
@@ -130,7 +128,7 @@
                                                     TabIndex="0"
                                                     TextAlignment="Center"
                                                     x:Name="txt_fullName"
-                                                    Text="{Binding ViewModel.FullName , Mode=TwoWay}"
+                                                    Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
                                                     FontSize="14"
                                                     FontFamily="Calibri" />
                                     </StackPanel>
@@ -140,14 +138,15 @@
                                                    FontSize="14"
                                                    Text="کدملی"
                                                    Margin="2 0 0 0 " />
-                                        <ui:TextBox Grid.Column="0"
-                                                    Grid.Row="2"
-                                                    TabIndex="1"
-                                                    Margin="0 4 3 0"
-                                                    TextAlignment="Center"
-                                                    Text="{Binding ViewModel.NationalCode, Mode=TwoWay}"
-                                                    FontSize="14"
-                                                    FontFamily="Calibri" />
+                                        <ui:NumberBox Grid.Column="0"
+                                                      Grid.Row="2"
+                                                      TabIndex="1"
+                                                      Margin="0 4 3 0"
+                                                      TextAlignment="Center"
+                                                      SpinButtonPlacementMode="Hidden"
+                                                      Text="{Binding ViewModel.NationalCode, Mode=OneWayToSource}"
+                                                      FontSize="14"
+                                                      FontFamily="Calibri" />
                                     </StackPanel>
                                     <StackPanel Margin="20 2 20 0 "
                                                 Grid.Row="1">
@@ -170,12 +169,13 @@
                                                    FontSize="14"
                                                    Text="موبایل"
                                                    Margin="1 0 0 0 " />
-                                        <ui:TextBox FontSize="14"
-                                                    TextAlignment="Center"
-                                                    TabIndex="3"
-                                                    Text="{Binding ViewModel.Mobile, Mode=TwoWay}"
-                                                    FontFamily="Calibri"
-                                                    Margin="0 4 0 0" />
+                                        <ui:NumberBox FontSize="14"
+                                                      TextAlignment="Center"
+                                                      TabIndex="3"
+                                                      SpinButtonPlacementMode="Hidden"
+                                                      Text="{Binding ViewModel.Mobile, Mode=OneWayToSource}"
+                                                      FontFamily="Calibri"
+                                                      Margin="0 4 0 0" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="2"
                                                 Margin="20 4 20 15">
@@ -186,7 +186,7 @@
                                         <ui:TextBox FontSize="14"
                                                     TextAlignment="Center"
                                                     TabIndex="4"
-                                                    Text="{Binding ViewModel.Address, Mode=TwoWay}"
+                                                    Text="{Binding ViewModel.Address, Mode=OneWayToSource}"
                                                     FontFamily="Calibri"
                                                     Margin="0 4 0 0" />
                                     </StackPanel>
@@ -239,7 +239,7 @@
                                                   IsEnabled="False"
                                                   x:Name="txt_CashGrantee"
                                                   SpinButtonPlacementMode="Hidden"
-                                                  Value="{Binding ViewModel.CashCredit, Mode=TwoWay}"
+                                                  Value="{Binding ViewModel.CashCredit, Mode=OneWayToSource}"
                                                   TabIndex="8"
                                                   FontFamily="Calibri"
                                                   Margin="20 0 20 0" />
@@ -271,7 +271,7 @@
                                                   x:Name="txt_Grantee"
                                                   IsEnabled="False"
                                                   TextAlignment="Center"
-                                                  Value="{Binding ViewModel.PromissoryNote, Mode=TwoWay}"
+                                                  Value="{Binding ViewModel.PromissoryNote, Mode=OneWayToSource}"
                                                   SpinButtonPlacementMode="Hidden"
                                                   FontFamily="Calibri"
                                                   Margin="20 0" />
@@ -294,7 +294,7 @@
                                                     TextAlignment="Center"
                                                     x:Name="txt_total"
                                                     IsEnabled="False"
-                                                    Text="{Binding ViewModel.TotalCredit , Mode=TwoWay}"
+                                                    Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
                                                     FontSize="14"
                                                     FontFamily="Calibri" />
                                     </StackPanel>
