@@ -1,5 +1,6 @@
 ﻿using Domain.NovinEntity.Workers;
 using DomainShared.Enums;
+using DomainShared.ViewModels;
 using DomainShared.ViewModels.Workers;
 using NeApplication.Common;
 
@@ -7,6 +8,9 @@ namespace NeApplication.IRepositoryies
 {
     public interface IWorkerManager : IRepository<Worker>
     {
+
+        Task<List<SuggestBoxViewModel<int>>> GetWorkers();
+
         Task<List<WorkerVewiModel>> GetWorkers(string fullName,
             string jobTitle,
             string nationalCode,
@@ -21,10 +25,10 @@ namespace NeApplication.IRepositoryies
             string accountNumber,
             string description,
             string jobTitle,
-            DateTime startDate, 
+            DateTime startDate,
             Shift shift,
             long salary,
-            long overtimeSalary, 
+            long overtimeSalary,
             long shiftSalary,
             long shiftOvertimeSalary,
             long insurancePremium,
@@ -42,6 +46,28 @@ namespace NeApplication.IRepositoryies
             string description,
             string jobTitle,
             Status status,
-            Shift shift);
+            Shift shift,
+            long salary,
+            long overtimeSalary,
+            long shiftSalary,
+            long shiftOvertimeSalary,
+            long insurancePremium,
+            byte dayInMonth);
+
+        Task<(string error, bool isSuccess)> AddSalary(int workerId,
+            DateTime submitDate,
+            int amountOf,
+            uint financialAid,
+            uint overTime,
+            uint tax,
+            uint childAllowance,
+            uint rightHousingAndFood,
+            uint insurance,
+            uint loanInstallment,
+            uint otherAdditions,
+            uint otherDeductions,
+            long leftOver,
+            string? description);
+
     }
 }

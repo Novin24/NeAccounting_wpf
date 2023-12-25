@@ -1,6 +1,7 @@
 ﻿using Domain.NovinEntity.Workers;
 using DomainShared.Enums;
 using DomainShared.Utilities;
+using DomainShared.ViewModels;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -8,11 +9,16 @@ using NeApplication.IRepositoryies;
 
 namespace Infrastructure.Repositories
 {
-    public class WorkerManager : Repository<Worker>, IWorkerManager
+    public class WorkerManager(NovinDbContext context) : Repository<Worker>(context), IWorkerManager
     {
-        public WorkerManager(NovinDbContext context) : base(context)
+        public Task<List<SuggestBoxViewModel<int>>> GetWorkers()
         {
+            return TableNoTracking.Select(x => new SuggestBoxViewModel<int>
+            {
+                Id = x.Id,
+                DisplayName = x.FullName
 
+            }).ToListAsync();
         }
 
         public Task<List<WorkerVewiModel>> GetWorkers(string fullName, string jobTitle, string nationalCode, Status status)
@@ -29,9 +35,9 @@ namespace Infrastructure.Repositories
                     JobTitle = t.JobTitle,
                     WorkerStatus = t.Status.ToDisplay(DisplayProperty.Name),
                     Status = t.Status,
-                    Shift= t.ShiftStatus,
-                    ShiftSalary= t.ShiftSalary,
-                    ShiftOverTimeSalary= t.ShiftOverTimeSalary,
+                    Shift = t.ShiftStatus,
+                    ShiftSalary = t.ShiftSalary,
+                    ShiftOverTimeSalary = t.ShiftOverTimeSalary,
                     StartDate = t.StartDate,
                     AccountNumber = t.AccountNumber,
                     Address = t.Address,
@@ -63,7 +69,7 @@ namespace Infrastructure.Repositories
             long overtimeSalary,
             long shiftSalary,
             long shiftOvertimeSalary,
-            long insurancePremium, 
+            long insurancePremium,
             byte dayInMonth)
         {
             var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.NationalCode == natinalCode || t.PersonnelId == personalId);
@@ -79,7 +85,6 @@ namespace Infrastructure.Repositories
 
             try
             {
-
                 var t = await Entities.AddAsync(new Worker(
                     fullName,
                     natinalCode,
@@ -117,7 +122,13 @@ namespace Infrastructure.Repositories
             string description,
             string jobTitle,
             Status status,
-            Shift shift)
+            Shift shift,
+            long salary,
+            long overtimeSalary,
+            long shiftSalary,
+            long shiftOvertimeSalary,
+            long insurancePremium,
+            byte dayInMonth)
         {
             var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.Id == id);
 
@@ -145,6 +156,12 @@ namespace Infrastructure.Repositories
             worker.StartDate = startDate;
             worker.ShiftStatus = shift;
             worker.JobTitle = jobTitle;
+            worker.Salary = salary;
+            worker.OverTimeSalary = overtimeSalary;
+            worker.ShiftSalary = shiftSalary;
+            worker.ShiftOverTimeSalary = shiftOvertimeSalary;
+            worker.InsurancePremium = insurancePremium;
+            worker.DayInMonth = dayInMonth;
 
             try
             {
@@ -155,6 +172,56 @@ namespace Infrastructure.Repositories
                 return new("خطا دراتصال به پایگاه داده!!!", false);
             }
             return new(string.Empty, true);
+        }
+
+
+        public async Task<(string error, bool isSuccess)> AddSalary(int workerId,
+            DateTime submitDate,
+            int amountOf,
+            uint financialAid,
+            uint overTime,
+            uint tax,
+            uint childAllowance,
+            uint rightHousingAndFood,
+            uint insurance,
+            uint loanInstallment,
+            uint otherAdditions,
+            uint otherDeductions,
+            long leftOver,
+            string? description)
+        {
+            var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.Id == workerId);
+
+
+            if (worker == null)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+
+            worker.Salaries.Add(
+                new Salary(
+                    submitDate,
+                    amountOf,
+                    financialAid,
+                    overTime,
+                    tax,
+                    childAllowance,
+                    insurance,
+                    rightHousingAndFood,
+                    loanInstallment,
+                    otherAdditions,
+                    otherDeductions,
+                    leftOver,
+                    description));
+
+            try
+            {
+                Entities.Update(worker);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+
         }
     }
 }

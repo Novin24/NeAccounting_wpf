@@ -80,7 +80,7 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.MoneyCalculator20} },
 
                 #region Worker
-                    new NavigationViewItem { Content = "حقوق و مساعده", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonMoney20} },
+                    new NavigationViewItem { Content = "حقوق و مساعده", TargetPageType = typeof(CreateSalaryPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonMoney20} },
                     new NavigationViewItem { Content = "ثبت کارکرد", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonClock20} },
                 #endregion
 
