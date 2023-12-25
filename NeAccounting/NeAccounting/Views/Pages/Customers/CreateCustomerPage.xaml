@@ -88,226 +88,219 @@
                         <SolidColorBrush Color="White"
                                          Opacity="0.08" />
                     </Border.Background>
-                    <Grid>
+                    <Grid FlowDirection="RightToLeft">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
+                            <ColumnDefinition Width=".5*" />
+                            <ColumnDefinition Width=".5*" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
-                        </Grid.RowDefinitions>
-                        <Border Grid.ColumnSpan="2"
-                                CornerRadius="9"
-                                BorderThickness="0.4"
-                                Margin="4">
-                            <Grid FlowDirection="RightToLeft">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                </Grid.RowDefinitions>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
+                        <StackPanel Margin="20 9 20 0"
+                                    Grid.ColumnSpan="2">
 
-                                <StackPanel Margin="20 4 20 0">
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="نام و نام خانوادگی"
+                                       Margin="2 0 0 4 " />
+                            <ui:TextBox TabIndex="0"
+                                        TextAlignment="Center"
+                                        x:Name="txt_fullName"
+                                        Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
+                                        FontSize="14"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
+                        <StackPanel Margin="20 9 20 0"
+                                    Grid.Column="2"
+                                    Grid.ColumnSpan="2">
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="کدملی"
+                                       Margin="2 0 0 4" />
+                            <ui:TextBox Grid.Row="2"
+                                        TabIndex="1"
+                                        TextAlignment="Center"
+                                        Text="{Binding ViewModel.NationalCode, Mode=OneWayToSource}"
+                                        FontSize="14"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
+                        <StackPanel Margin="20 3 20 0 "
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2">
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="نوع مشتری"
+                                       Margin="2 0 0 5 " />
+                            <ComboBox SelectedIndex="{Binding ViewModel.CusType, Mode=TwoWay}"
+                                      FontSize="14"
+                                      TabIndex="2">
+                                <ComboBoxItem Content="حقوقی" />
+                                <ComboBoxItem Content="حقیقی" />
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1"
+                                    Grid.Column="2"
+                                    Grid.ColumnSpan="2"
+                                    Margin="20 4 20 0">
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="موبایل"
+                                       Margin="2 0 0 5" />
+                            <ui:TextBox FontSize="14"
+                                        TextAlignment="Center"
+                                        TabIndex="3"
+                                        Text="{Binding ViewModel.Mobile, Mode=OneWayToSource}"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="2"
+                                    Margin="20 4 20 15"
+                                    Grid.ColumnSpan="2">
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="آدرس"
+                                       Margin="2 0 0 4 " />
+                            <ui:TextBox FontSize="14"
+                                        TextAlignment="Center"
+                                        TabIndex="4"
+                                        Text="{Binding ViewModel.Address, Mode=OneWayToSource}"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="2"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    Grid.Column="2"
+                                    Grid.ColumnSpan="2"
+                                    Margin="20 8 20 0">
+                            <CheckBox Grid.Row="3"
+                                      Margin="0,10"
+                                      TabIndex="5"
+                                      FontFamily="Calibri"
+                                      IsChecked="{Binding ViewModel.Buyer, Mode=TwoWay}"
+                                      HorizontalAlignment="Center"
+                                      FlowDirection="LeftToRight">خریدار</CheckBox>
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="نام و نام خانوادگی"
-                                               Margin="2 0 0 0 " />
-                                    <ui:TextBox Margin="0 4 3 0"
-                                                TabIndex="0"
-                                                TextAlignment="Center"
-                                                x:Name="txt_fullName"
-                                                Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
-                                                FontSize="14"
-                                                FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Margin="20 4 20 0"
-                                            Grid.Column="1">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="کدملی"
-                                               Margin="2 0 0 0 " />
-                                    <ui:NumberBox Grid.Column="0"
-                                                  Grid.Row="2"
-                                                  TabIndex="1"
-                                                  Margin="0 4 3 0"
-                                                  TextAlignment="Center"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  Text="{Binding ViewModel.NationalCode, Mode=OneWayToSource}"
-                                                  FontSize="14"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Margin="20 2 20 0 "
-                                            Grid.Row="1">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="نوع مشتری"
-                                               Margin="2 0 0 0 " />
-                                    <ComboBox SelectedIndex="{Binding ViewModel.CusType, Mode=TwoWay}"
-                                              FontSize="14"
-                                              TabIndex="2"
-                                              Margin="0 4 0 0 ">
-                                        <ComboBoxItem Content="حقوقی" />
-                                        <ComboBoxItem Content="حقیقی" />
-                                    </ComboBox>
-                                </StackPanel>
-                                <StackPanel Grid.Row="1"
-                                            Grid.Column="1"
-                                            Margin="20 4 20 0">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="موبایل"
-                                               Margin="1 0 0 0 " />
-                                    <ui:NumberBox FontSize="14"
-                                                  TextAlignment="Center"
-                                                  TabIndex="3"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  Text="{Binding ViewModel.Mobile, Mode=OneWayToSource}"
-                                                  FontFamily="Calibri"
-                                                  Margin="0 4 0 0" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="2"
-                                            Margin="20 4 20 15">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="آدرس"
-                                               Margin="1 0 0 0 " />
-                                    <ui:TextBox FontSize="14"
-                                                TextAlignment="Center"
-                                                TabIndex="4"
-                                                Text="{Binding ViewModel.Address, Mode=OneWayToSource}"
-                                                FontFamily="Calibri"
-                                                Margin="0 4 0 0" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="2"
-                                            Orientation="Horizontal"
-                                            HorizontalAlignment="Center"
-                                            Grid.Column="1"
-                                            Margin="20 8 20 0">
-                                    <CheckBox Grid.Row="3"
-                                              Margin="0,10"
-                                              TabIndex="5"
-                                              FontFamily="Calibri"
-                                              IsChecked="{Binding ViewModel.Buyer, Mode=TwoWay}"
-                                              HorizontalAlignment="Center"
-                                              FlowDirection="LeftToRight">خریدار</CheckBox>
+                            <CheckBox Grid.Row="3"
+                                      TabIndex="6"
+                                      Margin="0,10"
+                                      FontFamily="Calibri"
+                                      IsChecked="{Binding ViewModel.Seller, Mode=TwoWay}"
+                                      HorizontalAlignment="Center"
+                                      FlowDirection="LeftToRight">فروشنده</CheckBox>
 
-                                    <CheckBox Grid.Row="3"
-                                              TabIndex="6"
-                                              Margin="0,10"
-                                              FontFamily="Calibri"
-                                              IsChecked="{Binding ViewModel.Seller, Mode=TwoWay}"
-                                              HorizontalAlignment="Center"
-                                              FlowDirection="LeftToRight">فروشنده</CheckBox>
+                        </StackPanel>
 
-                                </StackPanel>
+                        <Separator Grid.Row="3"
+                                   VerticalAlignment="Top"
+                                   Background="Gray"
+                                   Grid.ColumnSpan="4"
+                                   Margin="10 0"
+                                   Height="1.5" />
 
-                                <Separator Grid.Row="3"
-                                           VerticalAlignment="Top"
-                                           Background="Gray"
-                                           Grid.ColumnSpan="2"
-                                           Margin="10 0"
-                                           Height="1.5" />
+                        <CheckBox Grid.Row="3"
+                                  Grid.ColumnSpan="2"
+                                  Margin="0,15"
+                                  HorizontalAlignment="Center"
+                                  FontFamily="Calibri"
+                                  TabIndex="7"
+                                  Checked="CashCheckBox_Checked"
+                                  Unchecked="CashCheckBox_Checked"
+                                  IsChecked="{Binding ViewModel.HaveCashCredit, Mode=TwoWay}"
+                                  FlowDirection="LeftToRight">اعتبار نقدی</CheckBox>
 
-                                <CheckBox Grid.Row="3"
-                                          Margin="0,15"
-                                          HorizontalAlignment="Center"
-                                          FontFamily="Calibri"
-                                          TabIndex="7"
-                                          Checked="CashCheckBox_Checked"
-                                          Unchecked="CashCheckBox_Checked"
-                                          IsChecked="{Binding ViewModel.HaveCashCredit, Mode=TwoWay}"
-                                          FlowDirection="LeftToRight">اعتبار نقدی</CheckBox>
-
-                                <ui:NumberBox Grid.Row="3"
-                                              Grid.Column="1"
-                                              FontSize="14"
-                                              TextAlignment="Center"
-                                              FlowDirection="LeftToRight"
-                                              LostFocus="Txt_Grantee_LostFocus"
-                                              IsEnabled="False"
-                                              x:Name="txt_CashGrantee"
-                                              SpinButtonPlacementMode="Hidden"
-                                              Value="{Binding ViewModel.CashCredit, Mode=OneWayToSource}"
-                                              TabIndex="8"
-                                              FontFamily="Calibri"
-                                              Margin="20 0 20 0" />
+                        <ui:NumberBox Grid.Row="3"
+                                      Grid.Column="2"
+                                      Grid.ColumnSpan="2"
+                                      FontSize="14"
+                                      TextAlignment="Center"
+                                      FlowDirection="LeftToRight"
+                                      LostFocus="Txt_Grantee_LostFocus"
+                                      IsEnabled="False"
+                                      x:Name="txt_CashGrantee"
+                                      SpinButtonPlacementMode="Hidden"
+                                      Value="{Binding ViewModel.CashCredit, Mode=OneWayToSource}"
+                                      TabIndex="8"
+                                      FontFamily="Calibri"
+                                      Margin="20 0 20 0" />
 
 
-                                <Separator Grid.Row="4"
-                                           VerticalAlignment="Top"
-                                           Background="Gray"
-                                           Grid.ColumnSpan="2"
-                                           Margin="10 0"
-                                           Height="1.5" />
+                        <Separator Grid.Row="4"
+                                   VerticalAlignment="Top"
+                                   Background="Gray"
+                                   Grid.ColumnSpan="4"
+                                   Margin="10 0"
+                                   Height="1.5" />
 
-                                <CheckBox Grid.Row="4"
-                                          Margin="0 15"
-                                          TabIndex="9"
-                                          HorizontalAlignment="Center"
-                                          Checked="PromissoryCheckBox_Checked"
-                                          Unchecked="PromissoryCheckBox_Checked"
-                                          IsChecked="{Binding ViewModel.HavePromissoryNote, Mode=TwoWay}"
-                                          FontFamily="Calibri"
-                                          FlowDirection="LeftToRight">اعتبار سفته</CheckBox>
+                        <CheckBox Grid.Row="4"
+                                  Margin="0 15"
+                                  TabIndex="9"
+                                  Grid.ColumnSpan="2"
+                                  HorizontalAlignment="Center"
+                                  Checked="PromissoryCheckBox_Checked"
+                                  Unchecked="PromissoryCheckBox_Checked"
+                                  IsChecked="{Binding ViewModel.HavePromissoryNote, Mode=TwoWay}"
+                                  FontFamily="Calibri"
+                                  FlowDirection="LeftToRight">اعتبار سفته</CheckBox>
 
-                                <ui:NumberBox Grid.Row="4"
-                                              Grid.Column="1"
-                                              FontSize="14"
-                                              TabIndex="10"
-                                              LostFocus="Txt_Grantee_LostFocus"
-                                              FlowDirection="LeftToRight"
-                                              x:Name="txt_Grantee"
-                                              IsEnabled="False"
-                                              TextAlignment="Center"
-                                              Value="{Binding ViewModel.PromissoryNote, Mode=OneWayToSource}"
-                                              SpinButtonPlacementMode="Hidden"
-                                              FontFamily="Calibri"
-                                              Margin="20 0" />
+                        <ui:NumberBox Grid.Row="4"
+                                      Grid.Column="2"
+                                      Grid.ColumnSpan="2"
+                                      FontSize="14"
+                                      TabIndex="10"
+                                      LostFocus="Txt_Grantee_LostFocus"
+                                      FlowDirection="LeftToRight"
+                                      x:Name="txt_Grantee"
+                                      IsEnabled="False"
+                                      TextAlignment="Center"
+                                      Value="{Binding ViewModel.PromissoryNote, Mode=OneWayToSource}"
+                                      SpinButtonPlacementMode="Hidden"
+                                      FontFamily="Calibri"
+                                      Margin="20 0" />
 
 
-                                <Separator Grid.Row="5"
-                                           VerticalAlignment="Top"
-                                           Background="Gray"
-                                           Grid.ColumnSpan="2"
-                                           Margin="10 0"
-                                           Height="1.5" />
+                        <Separator Grid.Row="5"
+                                   VerticalAlignment="Top"
+                                   Background="Gray"
+                                   Grid.ColumnSpan="4"
+                                   Margin="10 0"
+                                   Height="1.5" />
 
-                                <StackPanel Margin="20 4 20 0"
-                                            Grid.Row="5">
+                        <StackPanel Margin="10 4 10 0"
+                                    Grid.Row="5"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2">
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="اعتبار کل" />
-                                    <ui:TextBox TabIndex="8"
-                                                TextAlignment="Center"
-                                                x:Name="txt_total"
-                                                IsEnabled="False"
-                                                Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
-                                                FontSize="14"
-                                                FontFamily="Calibri" />
-                                </StackPanel>
-                            </Grid>
-
-                        </Border>
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="اعتبار کل"
+                                       Margin="3 6 0 6" />
+                            <ui:TextBox TabIndex="8"
+                                        TextAlignment="Center"
+                                        x:Name="txt_total"
+                                        IsEnabled="False"
+                                        Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
+                                        FontSize="14"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
 
                         <Button Content="ثبت"
-                                Grid.Row="1"
-                                Padding="20 5 "
-                                Margin="0 0 0 6"
+                                Grid.Row="6"
+                                Grid.Column="1"
+                                Padding="30 4 "
+                                Margin="0 0 0 13"
                                 Grid.ColumnSpan="2"
                                 IsDefault="True"
                                 Command="{Binding ViewModel.CreateCustomerCommand}"
-                                FontSize="15"
+                                FontSize="17"
                                 FontFamily="Calibri"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center" />
