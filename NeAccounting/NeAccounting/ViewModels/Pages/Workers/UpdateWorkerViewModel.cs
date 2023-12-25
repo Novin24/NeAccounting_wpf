@@ -96,7 +96,7 @@ namespace NeAccounting.ViewModels
 
         }
 
-        public async void OnNavigatedTo()
+        public void OnNavigatedTo()
         {
 
         }
@@ -131,28 +131,30 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
-            if (Salary == null || Salary <= 0)
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
-                return;
-            }
-
-            if (OvertimeSalary == null || OvertimeSalary <= 0)
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
-                return;
-            }
-            if (ShiftSalary == null || ShiftSalary <= 0)
+            if (WorkerShift == Shift.ByHour && (ShiftSalary == null || ShiftSalary <= 0))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد ", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
-            if (ShiftovertimeSalary == null || ShiftovertimeSalary <= 0)
+            if (WorkerShift == Shift.ByHour && (ShiftovertimeSalary == null || ShiftovertimeSalary <= 0))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
+
+            if (WorkerShift == Shift.ByMounth && (OvertimeSalary == null || OvertimeSalary <= 0))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
+
+            if (WorkerShift == Shift.ByMounth && (Salary == null || Salary <= 0))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                return;
+            }
+
             if (WorkerShift == Shift.ByMounth && (InsurancePremium == null || InsurancePremium <= 0))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("مبلغ بیمه", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
@@ -188,7 +190,13 @@ namespace NeAccounting.ViewModels
                        Description,
                        JobTitle,
                        Status,
-                       WorkerShift);
+                       WorkerShift,
+                       Salary.Value,
+                       OvertimeSalary.Value,
+                       ShiftSalary.Value,
+                       ShiftovertimeSalary.Value,
+                       InsurancePremium.Value,
+                       DayInMonth.Value);
 
             if (!isSuccess)
             {

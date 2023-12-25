@@ -132,27 +132,31 @@ namespace NeAccounting.ViewModels
                 asuBox = await db.unitManager.GetUnits();
             }
 
-            var context = new UpdateWorkerPage(new UpdateWorkerViewModel( _navigationService, _snackbarService)
+            var context = new UpdateWorkerPage(new UpdateWorkerViewModel(_navigationService, _snackbarService)
             {
                 Id = worker.Id,
                 WorkerShift = worker.Shift,
                 StartDate = worker.StartDate,
                 Status = worker.Status,
                 AccountNumber = worker.AccountNumber,
+                ShiftSalary = worker.ShiftSalary,
+                ShiftovertimeSalary = worker.ShiftOverTimeSalary,
                 Address = worker.Address,
                 DayInMonth = worker.DayInMonth,
                 Salary = worker.Salary,
                 OvertimeSalary = worker.OverTimeSalary,
                 InsurancePremium = worker.InsurancePremium,
                 Description = worker.Description,
-                FullName= worker.FullName,
-                JobTitle = worker.JobTitle, 
-                Mobile = worker.Mobile, 
+                FullName = worker.FullName,
+                JobTitle = worker.JobTitle,
+                Mobile = worker.Mobile,
                 NationalCode = worker.NationalCode,
                 PersonalId = worker.PersonnelId,
-            },_snackbarService);
+            }, _snackbarService);
 
-            servise.Navigate(pageType ,context);
+            servise.Navigate(pageType, context);
         }
     }
+
+
 }

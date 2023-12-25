@@ -33,12 +33,21 @@ namespace Infrastructure.Utilities
             builder.Entity<Worker>(b =>
             {
                 b.HasIndex(t => t.PersonnelId);
-                b.Property(t=> t.FullName).IsRequired();
-                b.Property(t=> t.Mobile).IsRequired();
-                b.Property(t=> t.NationalCode).IsRequired();
-                b.Property(t=> t.Address).IsRequired();
-                b.Property(t=> t.AccountNumber).IsRequired();
-                b.Property(t=> t.JobTitle).IsRequired();
+                b.Property(t => t.FullName).IsRequired();
+                b.Property(t => t.Mobile).IsRequired();
+                b.Property(t => t.NationalCode).IsRequired();
+                b.Property(t => t.Address).IsRequired();
+                b.Property(t => t.AccountNumber).IsRequired();
+                b.Property(t => t.JobTitle).IsRequired();
+            });
+
+            builder.Entity<Salary>(b =>
+            {
+                b.HasIndex(t => t.WorkerId);
+                b.HasOne(t => t.Worker)
+                .WithMany(s => s.Salaries)
+                .HasForeignKey(t => t.WorkerId);
+
             });
         }
 

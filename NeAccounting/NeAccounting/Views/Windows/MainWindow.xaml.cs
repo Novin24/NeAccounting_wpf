@@ -60,9 +60,6 @@ namespace NeAccounting.Windows
                 LoginGrid.Visibility = Visibility.Collapsed;
                 LoginGrid.IsEnabled = false;
 
-
-                await Task.Delay(100);
-
                 mainGrid.Visibility = Visibility.Visible;
                 mainGrid.IsEnabled = true;
                 mainWin.WindowState = WindowState.Maximized;

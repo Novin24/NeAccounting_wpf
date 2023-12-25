@@ -6,7 +6,7 @@ namespace Domain.NovinEntity.Workers
     public class Worker : LocalEntity
     {
         #region Navigation
-
+        public ICollection<Salary> Salaries { get; set; }
         #endregion
 
         #region Property
@@ -142,5 +142,5 @@ namespace Domain.NovinEntity.Workers
             ShiftStatus = shift;
         }
         #endregion
-    }
+    }    
 }
