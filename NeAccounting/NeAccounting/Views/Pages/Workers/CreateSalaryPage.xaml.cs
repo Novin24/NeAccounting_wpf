@@ -24,7 +24,7 @@ namespace NeAccounting.Views.Pages
 
         private void SetTotalPlusPrice()
         {
-            txt_totalPlus.Value += input;
+            //txt_totalPlus.Value += input;
         }
 
         private void NumberBox_ValueChanged(object sender, RoutedEventArgs e)
