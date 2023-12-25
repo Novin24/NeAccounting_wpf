@@ -17,38 +17,36 @@
       mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height=".5*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height=".5*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width=".5*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width=".5*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
-                Grid.Column="1"
+                Grid.Column="0"
                 Grid.ColumnSpan="3"
                 Background="{StaticResource Rectangle Dark blue}"
                 CornerRadius="10"></Border>
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
-                Grid.Column="3"
+                Grid.Column="2"
                 Grid.ColumnSpan="3"
                 Background="{StaticResource Rectangle Pale blue}"
                 CornerRadius="10"></Border>
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
-                Grid.Column="2"
+                Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Background="{DynamicResource ApplicationBackgroundBrush}"
                 CornerRadius="10">
@@ -62,8 +60,9 @@
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <ui:TextBlock Padding="0,20,0,0"
-                              HorizontalAlignment="Center"
+                <ui:TextBlock Margin="15,0"
+                              Padding="0,20,0,0"
+                              HorizontalAlignment="Left"
                               VerticalAlignment="Center"
                               FontFamily="the King &amp; Queen font"
                               FontSize="30"
@@ -200,6 +199,7 @@
 
                                 <StackPanel Grid.Row="0"
                                             Grid.Column="1"
+                                            Margin="0 0 15 0"
                                             VerticalAlignment="Center">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"

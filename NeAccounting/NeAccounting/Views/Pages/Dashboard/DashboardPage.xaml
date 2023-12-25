@@ -25,14 +25,14 @@
                 BorderBrush="#D6D5D5"
                 BorderThickness="0.4">
             <Border.Background>
-                <SolidColorBrush Color="White"
+                <SolidColorBrush Color="White" 
                                  Opacity="0.08" />
             </Border.Background>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <ui:CardAction Grid.Row="0"
                                Margin="10"
@@ -75,14 +75,17 @@
                 Padding="20"
                 CornerRadius="9"
                 BorderBrush="#D6D5D5"
-                Height="auto"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
                 BorderThickness="0.4">
             <Border.Background>
                 <SolidColorBrush Color="White"
                                  Opacity="0.08" />
             </Border.Background>
             <StackPanel>
-                <Grid Margin="10,0">
+                <Grid Margin="10,0"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      Height="440">
                     <ui:VirtualizingItemsControl Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                  ItemsSource="{Binding ViewModel.Notifs, Mode=OneWay}"
                                                  VirtualizingPanel.CacheLengthUnit="Item">

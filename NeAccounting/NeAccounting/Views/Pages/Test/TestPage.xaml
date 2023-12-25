@@ -9,70 +9,15 @@
                                      IsDesignTimeCreatable=False}"
       xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
       mc:Ignorable="d"
-      d:DesignHeight="450"
-      d:DesignWidth="800"
+      Background="Gray"
+      Height="600"
       Title="TestPage">
 
-    <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="10*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height=".5*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="10*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Row="1"
-                    Grid.RowSpan="3"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="3"
-                    Background="{StaticResource Rectangle Dark blue}"
-                    CornerRadius="10"></Border>
-            <Border Grid.Row="3"
-                    Grid.RowSpan="3"
-                    Grid.Column="3"
-                    Grid.ColumnSpan="3"
-                    Background="{StaticResource Rectangle Pale blue}"
-                    CornerRadius="10"></Border>
-            <Border Grid.Row="2"
-                    Grid.RowSpan="3"
-                    Grid.Column="2"
-                    Grid.ColumnSpan="3"
-                    Background="{DynamicResource ApplicationBackgroundBrush}"
-                    CornerRadius="10">
+    <Grid Background="Aqua" Height="430">
+        <ui:TextBox Width="250"
+                    MinHeight="300"
+                    Margin="0 25 0 25"
+                    TextWrapping="Wrap" />
 
-            </Border>
-            <StackPanel Grid.Row="3" Grid.Column="3">
-                <ui:NumberBox x:Name="prices"
-                              ValidationMode="InvalidInputOverwritten"
-                              Margin="20"
-                              TextChanged="prices_TextChanged"></ui:NumberBox>
-                
-                <Separator Background="Aqua"
-                           Height="2" />
-                
-                <TextBlock HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           TextAlignment="Center"
-                           FontFamily="Calibri"
-                           Padding="0 5"
-                           Foreground="Red"
-                           TextWrapping="Wrap"
-                           FontSize="16"
-                           Text="gdfgdf" />
-            </StackPanel>
-
-        </Grid>
     </Grid>
 </Page>
