@@ -59,11 +59,11 @@ namespace NeAccounting
 
                 services.AddTransient<UpdateWorkerPage>();
                 services.AddTransient<UpdateWorkerViewModel>();
-                
+
                 services.AddTransient<CreateSalaryPage>();
                 services.AddTransient<CreateSalaryViewModel>();
                 #endregion
-                
+
                 #region Customer
                 services.AddTransient<CustomerListPage>();
                 services.AddTransient<CustomerListViewModel>();
@@ -83,6 +83,34 @@ namespace NeAccounting
                 services.AddTransient<RecViewModel>();
                 #endregion
 
+                #region Invoice
+                services.AddTransient<CreateSellInvoicePage>();
+                //services.AddTransient<CreateSellInvoiceViewModel>();
+                services.AddTransient<UpdateSellInvoicePage>();
+                //services.AddTransient<UpdateSellInvoiceViewModel>();
+
+                services.AddTransient<CreateBuyInvoicePage>();
+                //services.AddTransient<CreateBuyInvoiceViewModel>();
+                services.AddTransient<UpdateBuyInvoicePage>();
+                //services.AddTransient<UpdateBuyInvoiceViewModel>();
+
+                services.AddTransient<CreateIntermediaryInvoicePage>();
+                //services.AddTransient<CreateIntermediaryInvoiceViewModel>();
+                services.AddTransient<UpdateIntermediaryInvoicePage>();
+                //services.AddTransient<UpdateIntermediaryInvoiceViewModel>();
+                #endregion
+
+                #region Expence
+                services.AddTransient<CreateExpencePage>();
+                //services.AddTransient<CreateExpenceViewModel>();
+
+                services.AddTransient<UpdateExpencePage>();
+                //services.AddTransient<UpdateExpenceViewModel>();
+
+                services.AddTransient<ExpencesListPage>();
+                //services.AddTransient<ExpencesListViewModel>();
+                #endregion
+
                 #region Payment
                 services.AddTransient<PayPage>();
                 services.AddTransient<PayViewModel>();
@@ -91,10 +119,10 @@ namespace NeAccounting
                 #region materials
                 services.AddTransient<CreateMaterailPage>();
                 services.AddTransient<CreateMaterailViewModel>();
-                
+
                 services.AddTransient<MaterailListPage>();
                 services.AddTransient<MaterailListViewModel>();
-                
+
                 services.AddTransient<UpdateMaterailPage>();
                 services.AddTransient<UpdateMaterailViewModel>();
                 #endregion
