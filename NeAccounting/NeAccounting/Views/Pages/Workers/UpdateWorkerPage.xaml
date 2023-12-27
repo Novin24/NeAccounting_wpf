@@ -141,7 +141,7 @@
                                                       TabIndex="12"
                                                       FlowDirection="LeftToRight"
                                                       Grid.Row="0"
-                                                      IsEnabled="{Binding ViewModel.ShiftByHour , Mode=OneWay}"
+                                                      IsEnabled="{Binding ViewModel.ShiftByHour , Mode=TwoWay}"
                                                       Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay}"
                                                       x:Name="txt_overTimeShift"
                                                       Grid.Column="0"

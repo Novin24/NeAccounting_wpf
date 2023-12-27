@@ -1,8 +1,10 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Enums;
+using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using System.Reflection.Emit;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -15,49 +17,53 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     private int _workerId = -1;
 
     [ObservableProperty]
+    private int? _personelId;
+
+    [ObservableProperty]
     private DateTime _submitDate = DateTime.Now;
 
     [ObservableProperty]
-    private uint _amountOf;
+    private uint _amountOf = 0;
 
     [ObservableProperty]
-    private uint _financialAid;
+    private uint _financialAid = 0;
 
     [ObservableProperty]
-    private uint _overTime;
+    private uint _overTime = 0;
 
     [ObservableProperty]
-    private uint _tax;
+    private uint _tax = 0;
 
     [ObservableProperty]
-    private uint _childAllowance;
+    private uint _childAllowance = 0;
 
     [ObservableProperty]
-    private uint _insurance;
+    private uint _insurance = 0;
 
     [ObservableProperty]
-    private uint _rightHousingAndFood;
+    private uint _rightHousingAndFood = 0;
 
     [ObservableProperty]
-    private uint _loanInstallment;
+    private uint _loanInstallment = 0;
 
     [ObservableProperty]
-    private uint _otherAdditions;
+    private uint _otherAdditions = 0;
 
     [ObservableProperty]
-    private uint _otherDeductions;
+    private uint _otherDeductions = 0;
 
     [ObservableProperty]
-    private long _leftOver;
+    private uint _leftOver = 0;
 
     [ObservableProperty]
     private string? _description;
 
     [ObservableProperty]
-    private IEnumerable<SuggestBoxViewModel<int>> _auSuBox;
+    private Shift _shiftStatus;
 
     [ObservableProperty]
-    private WorkerVewiModel _worker;
+    private IEnumerable<SuggestBoxViewModel<int>> _auSuBox;
+
 
     [RelayCommand]
     private async Task OnCreate()
@@ -118,7 +124,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
 
         using (UnitOfWork db = new())
         {
-            var (error, isSuccess) = await db.workerManager.AddSalary(
+            var (error, isSuccess) = await db.workerManager.AddOrUpdateSalary(
                    WorkerId,
                    SubmitDate,
                    AmountOf,
@@ -163,9 +169,22 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     {
     }
 
-    public async Task OnSelect()
+    public async Task<bool> OnSelect()
     {
         using UnitOfWork db = new();
-        Worker = await db.workerManager.GetWorker(WorkerId);
+        var Worker = await db.workerManager.GetWorker(WorkerId);
+        var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
+
+        if (!details.Success)
+        {
+            _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            return false;
+        }
+        Insurance = details.InsurancePremium;
+        AmountOf = details.SalaryAmount;
+        OverTime = details.OverTimeSalary;
+        PersonelId = details.PersonelId;
+        
+        return true;
     }
 }

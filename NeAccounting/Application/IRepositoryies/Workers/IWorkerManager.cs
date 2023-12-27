@@ -29,11 +29,11 @@ namespace NeApplication.IRepositoryies
             string jobTitle,
             DateTime startDate,
             Shift shift,
-            long salary,
-            long overtimeSalary,
-            long shiftSalary,
-            long shiftOvertimeSalary,
-            long insurancePremium,
+            uint salary,
+            uint overtimeSalary,
+            uint shiftSalary,
+            uint shiftOvertimeSalary,
+            uint insurancePremium,
             byte dayInMonth);
 
         Task<(string error, bool isSuccess)> Update(
@@ -49,14 +49,14 @@ namespace NeApplication.IRepositoryies
             string jobTitle,
             Status status,
             Shift shift,
-            long salary,
-            long overtimeSalary,
-            long shiftSalary,
-            long shiftOvertimeSalary,
-            long insurancePremium,
+            uint salary,
+            uint overtimeSalary,
+            uint shiftSalary,
+            uint shiftOvertimeSalary,
+            uint insurancePremium,
             byte dayInMonth);
 
-        Task<(string error, bool isSuccess)> AddSalary(int workerId,
+        Task<(string error, bool isSuccess)> AddOrUpdateSalary(int workerId,
             DateTime submitDate,
             uint amountOf,
             uint financialAid,
@@ -68,8 +68,24 @@ namespace NeApplication.IRepositoryies
             uint loanInstallment,
             uint otherAdditions,
             uint otherDeductions,
-            long leftOver,
+            uint leftOver,
             string? description);
 
+
+        Task<(string error, bool isSuccess)> AddOrUpdateFunctuion(
+            int workerId,
+            DateTime submitDate,
+            byte amountOf,
+            byte amountOfOverTime,
+            string? description);
+
+
+        Task<(string error, bool isSuccess)> AddAid(
+            int workerId,
+            DateTime submitDate,
+            byte amountOf,
+            string? description);
+            
+        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate);
     }
 }

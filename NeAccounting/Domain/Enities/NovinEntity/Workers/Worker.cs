@@ -6,7 +6,7 @@ namespace Domain.NovinEntity.Workers
     public class Worker : LocalEntity
     {
         #region Navigation
-        public ICollection<Salary> Salaries { get; set; }
+        public ICollection<Salary> Salaries { get; private set; }
         #endregion
 
         #region Property
@@ -73,27 +73,27 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// دستمزد
         /// </summary>
-        public long Salary { get; set; }
+        public uint Salary { get; set; }
 
         /// <summary>
         /// دسمتزد اضافه کاری
         /// </summary>
-        public long OverTimeSalary { get; set; }
+        public uint OverTimeSalary { get; set; }
 
         /// <summary>
         /// دستمزد هر شیفت
         /// </summary>
-        public long ShiftSalary { get; set; }
+        public uint ShiftSalary { get; set; }
 
         /// <summary>
         /// دسمتزد اضافه کاری شیفتی
         /// </summary>
-        public long ShiftOverTimeSalary { get; set; }
+        public uint ShiftOverTimeSalary { get; set; }
 
         /// <summary>
         /// حق بیمه
         /// </summary>
-        public long InsurancePremium { get; set; }
+        public uint InsurancePremium { get; set; }
 
         /// <summary>
         /// تعداد روز کاری در ماه
@@ -118,11 +118,11 @@ namespace Domain.NovinEntity.Workers
             string jobTitle,
             DateTime startDate,
             Shift shift,
-            long salary,
-            long overtimeSalary,
-            long shiftSalary,
-            long shiftOvertimeSalary,
-            long insurancePremium,
+            uint salary,
+            uint overtimeSalary,
+            uint shiftSalary,
+            uint shiftOvertimeSalary,
+            uint insurancePremium,
             byte dayInMonth)
         {
             FullName = fullName;
@@ -137,10 +137,20 @@ namespace Domain.NovinEntity.Workers
             PersonnelId = personalId;
             AccountNumber = accountNumber;
             Description = description;
+            ShiftSalary = shiftSalary;
+            ShiftOverTimeSalary = shiftOvertimeSalary;
             JobTitle = jobTitle;
             Status = Status.InWork;
             ShiftStatus = shift;
         }
         #endregion
-    }    
+
+        #region Methods
+        public Worker AddSalary(Salary salary)
+        {
+            Salaries.Add(salary);
+            return this;
+        }
+        #endregion
+    }
 }

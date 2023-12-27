@@ -222,7 +222,7 @@
                                       AutoGenerateColumns="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="شماره پرسنلی"
-                                                        Binding="{Binding PersonelId}"
+                                                        Binding="{Binding PersonnelId}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />

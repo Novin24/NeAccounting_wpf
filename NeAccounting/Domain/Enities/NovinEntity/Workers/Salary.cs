@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using System.Globalization;
 
 namespace Domain.NovinEntity.Workers
 {
@@ -11,12 +12,12 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// لیست مساعده ها
         /// </summary>
-        public ICollection<FinancialAid> Aids { get; set; }
+        public ICollection<FinancialAid> Aids { get; private set; }
 
         /// <summary>
         /// لیست کارکرها
         /// </summary>
-        public ICollection<Function> Functions { get; set; }
+        public ICollection<Function> Functions { get; private set; }
         #endregion
 
         #region Property
@@ -24,6 +25,16 @@ namespace Domain.NovinEntity.Workers
         /// تاریخ پرداخت
         /// </summary>
         public DateTime SubmitDate { get; set; }
+
+        /// <summary>
+        /// ماه شمسی فیش
+        /// </summary>
+        public int PersianMonth { get; set; }
+
+        /// <summary>
+        /// سال شمسی فیش حقوقی
+        /// </summary>
+        public int PersianYear { get; set; }
 
         /// <summary>
         /// حقوق پرداختی
@@ -78,7 +89,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// باقی مانده
         /// </summary>
-        public long LeftOver { get; set; }
+        public uint LeftOver { get; set; }
 
         /// <summary>
         /// توضیحات
@@ -105,9 +116,12 @@ namespace Domain.NovinEntity.Workers
             uint loanInstallment,
             uint otherAdditions,
             uint otherDeductions,
-            long leftOver,
+            uint leftOver,
             string? description)
         {
+            PersianCalendar pc = new();
+            PersianMonth = pc.GetMonth(submitDate);
+            PersianYear = pc.GetYear(submitDate);
             SubmitDate = submitDate;
             AmountOf = amountOf;
             FinancialAid = financialAid;
