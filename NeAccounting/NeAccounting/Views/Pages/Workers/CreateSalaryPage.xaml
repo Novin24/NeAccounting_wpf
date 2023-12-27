@@ -9,7 +9,6 @@
       d:DataContext="{d:DesignInstance local:CreateSalaryPage,
                                      IsDesignTimeCreatable=False}"
       Title="Salary"
-      d:DesignHeight="450"
       d:DesignWidth="800"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -131,10 +130,17 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Margin="20 4 20 0 ">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="نام پرسنل"
-                                               Margin="2 0 0 0 " />
+                                    <DockPanel>
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="نام پرسنل"
+                                                   Margin="2 0 0 7" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   x:Name="txt_Personel"
+                                                   HorizontalAlignment="Right"
+                                                   Margin="2 0 0 7" />
+                                    </DockPanel>
                                     <ui:AutoSuggestBox FontSize="14"
                                                        x:Name="txt_name"
                                                        Icon="{ui:SymbolIcon Search24}"
@@ -163,7 +169,7 @@
                                             Margin="20 4 20 0 ">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
-                                               Text="تعداد روز / شیفت کاری"
+                                               Text="مبلغ حقوق"
                                                Margin="2 0 0 0 " />
                                     <ui:NumberBox FontSize="14"
                                                   TextAlignment="Center"
@@ -371,10 +377,10 @@
                                                Text="توضیحات"
                                                Grid.Column="1" />
                                     <TextBox Margin="0,20,0,0"
-                                                 FontSize="14"
-                                                 FlowDirection="RightToLeft"
-                                                 Grid.ColumnSpan="2"
-                                                 FontFamily="Calibri"></TextBox>
+                                             FontSize="14"
+                                             FlowDirection="RightToLeft"
+                                             Grid.ColumnSpan="2"
+                                             FontFamily="Calibri"></TextBox>
                                 </Grid>
                                 <Button Content="ثبت"
                                         Margin="0 0 0 0"

@@ -1,5 +1,6 @@
 ﻿using DomainShared.Errore;
 using DomainShared.ViewModels;
+using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using Wpf.Ui;
@@ -17,7 +18,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     private DateTime _submitDate = DateTime.Now;
 
     [ObservableProperty]
-    private int _amountOf;
+    private uint _amountOf;
 
     [ObservableProperty]
     private uint _financialAid;
@@ -54,6 +55,9 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
 
     [ObservableProperty]
     private IEnumerable<SuggestBoxViewModel<int>> _auSuBox;
+
+    [ObservableProperty]
+    private WorkerVewiModel _worker;
 
     [RelayCommand]
     private async Task OnCreate()
@@ -157,5 +161,11 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
 
     public void OnNavigatedFrom()
     {
+    }
+
+    public async Task OnSelect()
+    {
+        using UnitOfWork db = new();
+        Worker = await db.workerManager.GetWorker(WorkerId);
     }
 }

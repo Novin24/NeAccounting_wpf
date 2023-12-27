@@ -49,6 +49,16 @@ namespace Infrastructure.Utilities
                 .HasForeignKey(t => t.WorkerId);
 
             });
+
+            builder.Entity<Function>(b =>
+            {
+                b.HasIndex(t => t.SalaryId);
+                b.HasOne(t => t.Salary)
+                .WithMany(s => s.Functions)
+                .HasForeignKey(t => t.SalaryId);
+
+            });
+
         }
 
 

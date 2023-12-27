@@ -11,6 +11,8 @@ namespace NeApplication.IRepositoryies
 
         Task<List<SuggestBoxViewModel<int>>> GetWorkers();
 
+        Task<WorkerVewiModel> GetWorker(int workerId);
+
         Task<List<WorkerVewiModel>> GetWorkers(string fullName,
             string jobTitle,
             string nationalCode,
@@ -56,7 +58,7 @@ namespace NeApplication.IRepositoryies
 
         Task<(string error, bool isSuccess)> AddSalary(int workerId,
             DateTime submitDate,
-            int amountOf,
+            uint amountOf,
             uint financialAid,
             uint overTime,
             uint tax,

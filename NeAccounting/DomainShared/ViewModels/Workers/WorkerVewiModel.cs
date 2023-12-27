@@ -5,7 +5,6 @@ namespace DomainShared.ViewModels.Workers
     public struct WorkerVewiModel
     {
         public int Id { get; set; }
-        public int PersonelId { get; set; }
         public string FullName { get; set; }
         public string JobTitle { get; set; }
         public string NationalCode { get; set; }
@@ -44,7 +43,7 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// توضیحات
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// وضعیت

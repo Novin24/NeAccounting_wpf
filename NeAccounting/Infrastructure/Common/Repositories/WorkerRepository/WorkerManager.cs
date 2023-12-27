@@ -31,7 +31,6 @@ namespace Infrastructure.Repositories
                 .Select(t => new WorkerVewiModel
                 {
                     Id = t.Id,
-                    PersonelId = t.PersonnelId,
                     JobTitle = t.JobTitle,
                     WorkerStatus = t.Status.ToDisplay(DisplayProperty.Name),
                     Status = t.Status,
@@ -177,7 +176,7 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> AddSalary(int workerId,
             DateTime submitDate,
-            int amountOf,
+            uint amountOf,
             uint financialAid,
             uint overTime,
             uint tax,
@@ -222,6 +221,33 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
 
+        }
+
+        public Task<WorkerVewiModel> GetWorker(int workerId)
+        {
+            return TableNoTracking.Where(t => t.Id == workerId)
+                .Select(w=> new WorkerVewiModel
+                {
+                    Shift = w.ShiftStatus,
+                    ShiftOverTimeSalary = w.ShiftOverTimeSalary,    
+                    ShiftSalary = w.ShiftSalary,
+                    StartDate = w.StartDate,
+                    Status = w.Status,
+                    OverTimeSalary = w.OverTimeSalary,
+                    AccountNumber = w.AccountNumber,
+                    Address = w.Address,
+                    DayInMonth = w.DayInMonth,
+                    Description = w.Description,
+                    FullName = w.FullName,
+                    PersonnelId = w.PersonnelId,
+                    WorkerStatus = w.Status.ToDisplay(DisplayProperty.Name),
+                    NationalCode = w.NationalCode,
+                    EndDate = w.EndDate,
+                    Id = w.Id,
+                    InsurancePremium = w.InsurancePremium,
+                    JobTitle = w.JobTitle,
+                    Mobile = w.Mobile
+                }).FirstOrDefaultAsync();
         }
     }
 }
