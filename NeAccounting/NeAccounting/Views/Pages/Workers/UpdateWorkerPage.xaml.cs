@@ -32,13 +32,13 @@ namespace NeAccounting.Views.Pages
             ViewModel.WorkerShift = Shift.ByHour;
 
             txt_dayInMonth.IsEnabled = false;
-            txt_dayInMonth.Text = string.Empty;
+            txt_dayInMonth.Value = 0;
             txt_MonthPrice.IsEnabled = false;
-            txt_MonthPrice.Text = string.Empty;
+            txt_MonthPrice.Value = 0;
             txt_insurancePerimum.IsEnabled = false;
-            txt_insurancePerimum.Text = string.Empty;
+            txt_insurancePerimum.Value = 0;
             txt_overtimePriceMonth.IsEnabled = false;
-            txt_overtimePriceMonth.Text = string.Empty;
+            txt_overtimePriceMonth.Value = 0;
 
             txt_ShiftPrice.IsEnabled = true;
             txt_overTimeShift.IsEnabled = true;
@@ -58,9 +58,9 @@ namespace NeAccounting.Views.Pages
             txt_overtimePriceMonth.IsEnabled = true;
 
             txt_ShiftPrice.IsEnabled = false;
-            txt_ShiftPrice.Text = string.Empty;
+            txt_ShiftPrice.Value = 0;
             txt_overTimeShift.IsEnabled = false;
-            txt_overTimeShift.Text = string.Empty;
+            txt_overTimeShift.Value = 0;
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)

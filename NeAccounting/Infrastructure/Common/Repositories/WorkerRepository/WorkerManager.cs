@@ -6,6 +6,7 @@ using DomainShared.ViewModels.Workers;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
+using System.Globalization;
 
 namespace Infrastructure.Repositories
 {
@@ -31,7 +32,6 @@ namespace Infrastructure.Repositories
                 .Select(t => new WorkerVewiModel
                 {
                     Id = t.Id,
-                    PersonelId = t.PersonnelId,
                     JobTitle = t.JobTitle,
                     WorkerStatus = t.Status.ToDisplay(DisplayProperty.Name),
                     Status = t.Status,
@@ -65,11 +65,11 @@ namespace Infrastructure.Repositories
             string jobTitle,
             DateTime startDate,
             Shift shift,
-            long salary,
-            long overtimeSalary,
-            long shiftSalary,
-            long shiftOvertimeSalary,
-            long insurancePremium,
+            uint salary,
+            uint overtimeSalary,
+            uint shiftSalary,
+            uint shiftOvertimeSalary,
+            uint insurancePremium,
             byte dayInMonth)
         {
             var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.NationalCode == natinalCode || t.PersonnelId == personalId);
@@ -123,11 +123,11 @@ namespace Infrastructure.Repositories
             string jobTitle,
             Status status,
             Shift shift,
-            long salary,
-            long overtimeSalary,
-            long shiftSalary,
-            long shiftOvertimeSalary,
-            long insurancePremium,
+            uint salary,
+            uint overtimeSalary,
+            uint shiftSalary,
+            uint shiftOvertimeSalary,
+            uint insurancePremium,
             byte dayInMonth)
         {
             var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.Id == id);
@@ -175,9 +175,9 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<(string error, bool isSuccess)> AddSalary(int workerId,
+        public async Task<(string error, bool isSuccess)> AddOrUpdateSalary(int workerId,
             DateTime submitDate,
-            int amountOf,
+            uint amountOf,
             uint financialAid,
             uint overTime,
             uint tax,
@@ -187,30 +187,62 @@ namespace Infrastructure.Repositories
             uint loanInstallment,
             uint otherAdditions,
             uint otherDeductions,
-            long leftOver,
+            uint leftOver,
             string? description)
         {
-            var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.Id == workerId);
+            var worker = await Entities
+                .Include(s => s.Salaries)
+                .FirstOrDefaultAsync(t => t.Id == workerId);
 
 
             if (worker == null)
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
 
-            worker.Salaries.Add(
-                new Salary(
-                    submitDate,
-                    amountOf,
-                    financialAid,
-                    overTime,
-                    tax,
-                    childAllowance,
-                    insurance,
-                    rightHousingAndFood,
-                    loanInstallment,
-                    otherAdditions,
-                    otherDeductions,
-                    leftOver,
-                    description));
+            PersianCalendar pc = new();
+            var persianMonth = pc.GetMonth(submitDate);
+            var persianYear = pc.GetYear(submitDate);
+
+            var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth && t.PersianYear == persianYear);
+
+            if (salary != null)
+            {
+                if (salary.AmountOf != 0)
+                {
+                    return new("کاربر گرامی برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
+                }
+
+                salary.SubmitDate = submitDate;
+                salary.AmountOf = amountOf;
+                salary.OverTime = overTime;
+                salary.FinancialAid = financialAid;
+                salary.Tax = tax;
+                salary.RightHousingAndFood = rightHousingAndFood;
+                salary.Insurance = insurance;
+                salary.ChildAllowance = childAllowance;
+                salary.LoanInstallment = loanInstallment;
+                salary.OtherDeductions = otherDeductions;
+                salary.OtherAdditions = otherAdditions;
+                salary.PersianMonth = persianMonth;
+                salary.PersianYear = persianYear;
+            }
+            else
+            {
+                worker.AddSalary(
+                    new Salary(
+                        submitDate,
+                        amountOf,
+                        financialAid,
+                        overTime,
+                        tax,
+                        childAllowance,
+                        insurance,
+                        rightHousingAndFood,
+                        loanInstallment,
+                        otherAdditions,
+                        otherDeductions,
+                        leftOver,
+                        description));
+            }
 
             try
             {
@@ -222,6 +254,220 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
 
+        }
+
+        public Task<WorkerVewiModel> GetWorker(int workerId)
+        {
+            return TableNoTracking.Where(t => t.Id == workerId)
+                .Select(w => new WorkerVewiModel
+                {
+                    Shift = w.ShiftStatus,
+                    ShiftOverTimeSalary = w.ShiftOverTimeSalary,
+                    ShiftSalary = w.ShiftSalary,
+                    StartDate = w.StartDate,
+                    Status = w.Status,
+                    OverTimeSalary = w.OverTimeSalary,
+                    AccountNumber = w.AccountNumber,
+                    Address = w.Address,
+                    DayInMonth = w.DayInMonth,
+                    Description = w.Description,
+                    FullName = w.FullName,
+                    PersonnelId = w.PersonnelId,
+                    WorkerStatus = w.Status.ToDisplay(DisplayProperty.Name),
+                    NationalCode = w.NationalCode,
+                    EndDate = w.EndDate,
+                    Id = w.Id,
+                    InsurancePremium = w.InsurancePremium,
+                    JobTitle = w.JobTitle,
+                    Mobile = w.Mobile
+                }).FirstOrDefaultAsync();
+        }
+
+
+        public async Task<(string error, bool isSuccess)> AddOrUpdateFunctuion(
+            int workerId,
+            DateTime submitDate,
+            byte amountOf,
+            byte amountOfOverTime,
+            string? description)
+        {
+            PersianCalendar pc = new();
+            var persianMonth = pc.GetMonth(submitDate);
+            var persianYear = pc.GetYear(submitDate);
+
+            var worker = await TableNoTracking
+                .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
+                .ThenInclude(c => c.Functions)
+                .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+
+            var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth);
+
+
+            if (salary != null)
+            {
+                if (salary.Functions.Count != 0)
+                {
+                    return new("برای این پرسنل در این ماه کارکرد ثبت شده !!!", false);
+                }
+
+                salary.AddFunction(
+                    new Function(
+                        submitDate,
+                        amountOf,
+                        amountOfOverTime,
+                        description));
+            }
+            else
+            {
+                worker.AddSalary(
+                    new Salary(
+                        submitDate,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        string.Empty)
+                    .AddFunction(
+                        new Function(
+                            submitDate,
+                            amountOf,
+                            amountOfOverTime,
+                            description)));
+            }
+
+            try
+            {
+                Entities.Update(worker);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+
+        public async Task<(string error, bool isSuccess)> AddAid(
+            int workerId,
+            DateTime submitDate,
+            byte amountOf,
+            string? description)
+        {
+            PersianCalendar pc = new();
+            var persianMonth = pc.GetMonth(submitDate);
+            var persianYear = pc.GetYear(submitDate);
+
+            var worker = await TableNoTracking
+                .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
+                .ThenInclude(c => c.Aids)
+                .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+
+            var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth);
+
+
+            if (salary != null)
+            {
+                if (salary.AmountOf != 0)
+                {
+                    return new("کاربر گرامی پس از صدور فیش حقوقی امکان ثبت مساعده در این ماه وجود ندارد !!!", false);
+                }
+
+                salary.AddFinancialAid(
+                    new FinancialAid(
+                        submitDate,
+                        amountOf,
+                        description));
+            }
+            else
+            {
+                worker.AddSalary(
+                    new Salary(
+                        submitDate,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        uint.MinValue,
+                        string.Empty)
+                    .AddFinancialAid(
+                        new FinancialAid(
+                            submitDate,
+                            amountOf,
+                            description)));
+            }
+
+            try
+            {
+                Entities.Update(worker);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate)
+        {
+            PersianCalendar pc = new();
+            var persianMonth = pc.GetMonth(submitDate);
+            var persianYear = pc.GetYear(submitDate);
+            uint aid = 0;
+            uint ssalary = 0;
+            uint overtime = 0;
+
+            var worker = await TableNoTracking
+                .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
+                .ThenInclude(c => c.Aids)
+                .FirstAsync(t => t.Id == workerId);
+
+
+            var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth);
+
+            if (salary == null || salary.Functions.Count == 0)
+                return new SalaryWorkerViewModel() { Error = "برای پرسنل مورد نظر کارکردی در این ماه ثبت نشده !!!", Success = false };
+
+
+            if (salary.Aids.Count != 0)
+            {
+                aid = (uint)salary.Aids.Sum(t => t.AmountOf);
+            }
+
+            var func = salary.Functions.First();
+
+            ssalary = worker.ShiftStatus == Shift.ByMounth ? func.AmountOf * worker.Salary : func.AmountOf * worker.ShiftSalary;
+            overtime = worker.ShiftStatus == Shift.ByMounth ? func.AmountOf * worker.OverTimeSalary : func.AmountOf * worker.ShiftOverTimeSalary;
+
+            return new SalaryWorkerViewModel()
+            {
+                PersonelId = worker.PersonnelId,
+                ShiftStatus = worker.ShiftStatus,
+                InsurancePremium = worker.InsurancePremium,
+                FinancialAidAmount = aid,
+                SalaryAmount = ssalary,
+                OverTimeSalary = overtime,
+                Error = string.Empty,
+                Success = true,
+            };
         }
     }
 }

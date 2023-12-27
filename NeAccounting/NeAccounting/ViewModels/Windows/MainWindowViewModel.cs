@@ -51,14 +51,6 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem(){Content = "افزودن اجناس",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateMaterailPage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem(){Content = "به روز رسانی اجناس",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateMaterailPage),Visibility = Visibility.Collapsed,},
                 #endregion
-                    
-                #region worker
-                    new NavigationViewItem { Content = "کارگران", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
-                    new NavigationViewItem(){Content = "به روز رسانی پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateWorkerPage),
-                        Visibility = Visibility.Collapsed,},
-                    new NavigationViewItem(){Content = "افزودن پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage),
-                        Visibility = Visibility.Collapsed,},
-	            #endregion
                 }
             },
             new NavigationViewItem()
@@ -99,6 +91,25 @@ namespace NeAccounting.ViewModels
                 {
                     new NavigationViewItem { Content = "اتمام سال مالی کنونی", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.AlignEndHorizontal20} },
                     new NavigationViewItem { Content = "بازگشت به سال ...", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.Rename20} },
+                }
+            },
+
+            new NavigationViewItem()
+            {
+                Content = "پرسنل",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.Timeline20 },
+                //TargetPageType = typeof(MaterailListPage)
+                MenuItems = new ObservableCollection<object>
+                {
+                    new NavigationViewItem { Content = "کارگران", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
+                    new NavigationViewItem(){Content = "به روز رسانی پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateWorkerPage),
+                        Visibility = Visibility.Collapsed,},
+                    new NavigationViewItem(){Content = "افزودن پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage),
+                        Visibility = Visibility.Collapsed,},
+
+                    new NavigationViewItem(){Content = "مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage)},
+
+                    new NavigationViewItem(){Content = "کارکرد",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage)},
                 }
             },
             new NavigationViewItem()

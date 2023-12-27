@@ -1,5 +1,5 @@
 ﻿using Domain.Common;
-using DomainShared.Enums;
+using System.Globalization;
 
 namespace Domain.NovinEntity.Workers
 {
@@ -8,6 +8,16 @@ namespace Domain.NovinEntity.Workers
         #region Navigation
         public int WorkerId { get; set; }
         public Worker Worker { get; set; }
+
+        /// <summary>
+        /// لیست مساعده ها
+        /// </summary>
+        public ICollection<FinancialAid> Aids { get; private set; }
+
+        /// <summary>
+        /// لیست کارکرها
+        /// </summary>
+        public ICollection<Function> Functions { get; private set; }
         #endregion
 
         #region Property
@@ -17,9 +27,19 @@ namespace Domain.NovinEntity.Workers
         public DateTime SubmitDate { get; set; }
 
         /// <summary>
-        /// تعداد روز / شیفت
+        /// ماه شمسی فیش
         /// </summary>
-        public int AmountOf { get; set; }
+        public int PersianMonth { get; set; }
+
+        /// <summary>
+        /// سال شمسی فیش حقوقی
+        /// </summary>
+        public int PersianYear { get; set; }
+
+        /// <summary>
+        /// حقوق پرداختی
+        /// </summary>
+        public uint AmountOf { get; set; }
 
         /// <summary>
         /// مساعده مالی
@@ -69,7 +89,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// باقی مانده
         /// </summary>
-        public long LeftOver { get; set; }
+        public uint LeftOver { get; set; }
 
         /// <summary>
         /// توضیحات
@@ -81,12 +101,12 @@ namespace Domain.NovinEntity.Workers
         #region Constructor
         public Salary()
         {
-
+            Aids = new List<FinancialAid>();
         }
 
         public Salary(
             DateTime submitDate,
-            int amountOf,
+            uint amountOf,
             uint financialAid,
             uint overTime,
             uint tax,
@@ -96,9 +116,12 @@ namespace Domain.NovinEntity.Workers
             uint loanInstallment,
             uint otherAdditions,
             uint otherDeductions,
-            long leftOver,
+            uint leftOver,
             string? description)
         {
+            PersianCalendar pc = new();
+            PersianMonth = pc.GetMonth(submitDate);
+            PersianYear = pc.GetYear(submitDate);
             SubmitDate = submitDate;
             AmountOf = amountOf;
             FinancialAid = financialAid;
@@ -112,6 +135,20 @@ namespace Domain.NovinEntity.Workers
             OtherDeductions = otherDeductions;
             LeftOver = leftOver;
             Description = description;
+        }
+        #endregion
+
+        #region Methods
+        public Salary AddFinancialAid(FinancialAid aid)
+        {
+            Aids.Add(aid);
+            return this;
+        }
+
+        public Salary AddFunction(Function function)
+        {
+            Functions.Add(function);
+            return this;
         }
         #endregion
     }

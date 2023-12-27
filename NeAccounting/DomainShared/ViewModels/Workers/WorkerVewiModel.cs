@@ -5,7 +5,6 @@ namespace DomainShared.ViewModels.Workers
     public struct WorkerVewiModel
     {
         public int Id { get; set; }
-        public int PersonelId { get; set; }
         public string FullName { get; set; }
         public string JobTitle { get; set; }
         public string NationalCode { get; set; }
@@ -44,7 +43,7 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// توضیحات
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// وضعیت
@@ -59,17 +58,17 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// دستمزد
         /// </summary>
-        public long Salary { get; set; }
+        public uint Salary { get; set; }
 
         /// <summary>
         /// دسمتزد اضافه کاری
         /// </summary>
-        public long OverTimeSalary { get; set; }
+        public uint OverTimeSalary { get; set; }
 
         /// <summary>
         /// حق بیمه
         /// </summary>
-        public long InsurancePremium { get; set; }
+        public uint InsurancePremium { get; set; }
 
         /// <summary>
         /// تعداد روز کاری در ماه
@@ -79,11 +78,11 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// دستمزد هر شیفت
         /// </summary>
-        public long ShiftSalary { get; set; }
+        public uint ShiftSalary { get; set; }
 
         /// <summary>
         /// دسمتزد اضافه کاری شیفتی
         /// </summary>
-        public long ShiftOverTimeSalary { get; set; }
+        public uint ShiftOverTimeSalary { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace NeAccounting.ViewModels
         private string _address;
 
         [ObservableProperty]
-        private int? _personalId;
+        private int _personalId = 0;
 
         [ObservableProperty]
         private DateTime _startDate = DateTime.Now;
@@ -48,22 +48,22 @@ namespace NeAccounting.ViewModels
         private Shift _shift = Shift.ByMounth;
 
         [ObservableProperty]
-        private long? _salary;
+        private uint _salary = 0;
 
         [ObservableProperty]
-        private long? _overtimeSalary;
+        private uint _overtimeSalary= 0;
 
         [ObservableProperty]
-        private long? _shiftSalary;
+        private uint _shiftSalary = 0;
 
         [ObservableProperty]
-        private long? _shiftovertimeSalary;
+        private uint _shiftovertimeSalary = 0;
 
         [ObservableProperty]
-        private long? _insurancePremium;
+        private uint _insurancePremium = 0;
 
         [ObservableProperty]
-        private byte? _dayInMonth;
+        private byte _dayInMonth = 0;
 
 
         [RelayCommand]
@@ -96,37 +96,37 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
-            if (Salary == null || Salary <= 0)
+            if ( Salary <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد ماهانه", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
-            if (OvertimeSalary == null || OvertimeSalary <= 0)
+            if (OvertimeSalary <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری ماهانه", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
-            if (ShiftSalary == null || ShiftSalary <= 0)
+            if (ShiftSalary <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد ", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
-            if (ShiftovertimeSalary == null || ShiftovertimeSalary <= 0)
+            if (ShiftovertimeSalary <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
-            if (Shift == Shift.ByMounth && (InsurancePremium == null || InsurancePremium <= 0))
+            if (Shift == Shift.ByMounth && InsurancePremium <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("مبلغ بیمه", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
 
-            if (Shift == Shift.ByMounth && (DayInMonth == null || DayInMonth <= 0))
+            if (Shift == Shift.ByMounth && DayInMonth <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("تعداد روز کاری", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
@@ -149,18 +149,18 @@ namespace NeAccounting.ViewModels
                        NationalCode,
                        Mobile,
                        Address,
-                       PersonalId.Value,
+                       PersonalId,
                        AccountNumber,
                        Description,
                        JobTitle,
                        StartDate,
                        Shift,
-                       Salary.Value,
-                       OvertimeSalary.Value,
-                       ShiftSalary.Value,
-                       ShiftovertimeSalary.Value,
-                       InsurancePremium.Value,
-                       DayInMonth.Value);
+                       Salary,
+                       OvertimeSalary,
+                       ShiftSalary,
+                       ShiftovertimeSalary,
+                       InsurancePremium,
+                       DayInMonth);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));

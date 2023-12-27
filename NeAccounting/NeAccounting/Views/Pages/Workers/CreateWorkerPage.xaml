@@ -120,7 +120,7 @@
                                                       Grid.Row="0"
                                                       SpinButtonPlacementMode="Hidden"
                                                       x:Name="txt_ShiftPrice"
-                                                      Value="{Binding ViewModel.ShiftSalary , Mode=OneWayToSource}"
+                                                      Value="{Binding ViewModel.ShiftSalary , Mode=TwoWay}"
                                                       IsEnabled="False"
                                                       Grid.Column="0"
                                                       Margin="0 4 3 0 "
@@ -138,7 +138,7 @@
                                                       TabIndex="12"
                                                       Grid.Row="0"
                                                       IsEnabled="False"
-                                                      Value="{Binding ViewModel.ShiftovertimeSalary , Mode=OneWayToSource}"
+                                                      Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay}"
                                                       x:Name="txt_overTimeShift"
                                                       Grid.Column="0"
                                                       Margin="0 4 3 0 "
@@ -183,7 +183,7 @@
                                         <ui:NumberBox TextAlignment="Center"
                                                       FontSize="14"
                                                       Grid.Row="0"
-                                                      Value="{Binding ViewModel.Salary , Mode=OneWayToSource}"
+                                                      Value="{Binding ViewModel.Salary , Mode=TwoWay}"
                                                       SpinButtonPlacementMode="Hidden"
                                                       x:Name="txt_MonthPrice"
                                                       TabIndex="14"
@@ -203,7 +203,7 @@
                                                       FontSize="14"
                                                       Grid.Row="0"
                                                       x:Name="txt_overtimePriceMonth"
-                                                      Value="{Binding ViewModel.OvertimeSalary , Mode=OneWayToSource}"
+                                                      Value="{Binding ViewModel.OvertimeSalary , Mode=TwoWay}"
                                                       Grid.Column="0"
                                                       Margin="0 4 3 0 "
                                                       CaretBrush="White"
@@ -218,7 +218,7 @@
                                                       FontSize="14"
                                                       SpinButtonPlacementMode="Hidden"
                                                       Grid.Row="0"
-                                                      Value="{Binding ViewModel.InsurancePremium , Mode=OneWayToSource}"
+                                                      Value="{Binding ViewModel.InsurancePremium , Mode=TwoWay}"
                                                       TabIndex="16"
                                                       Grid.Column="0"
                                                       Margin="0 4 3 0 "
@@ -238,7 +238,7 @@
                                                       TabIndex="17"
                                                       Grid.Column="0"
                                                       x:Name="txt_dayInMonth"
-                                                      Value="{Binding ViewModel.DayInMonth , Mode=OneWayToSource}"
+                                                      Value="{Binding ViewModel.DayInMonth , Mode=TwoWay}"
                                                       Margin="0 4 3 0 "
                                                       CaretBrush="White"
                                                       FontFamily="Calibri" />
@@ -433,7 +433,7 @@
                                                Text="آدرس"
                                                Grid.Column="1" />
                                     <ScrollViewer Margin="0,22,0,0"
-                                                  MinHeight="90" 
+                                                  MinHeight="90"
                                                   Height="92"
                                                   VerticalScrollBarVisibility="Auto">
                                         <TextBox Text="{Binding ViewModel.Address, Mode=OneWayToSource}"
@@ -461,16 +461,16 @@
                                                   VerticalScrollBarVisibility="Auto">
 
                                         <ui:TextBox Margin="0,20,0,0"
-                                                FontSize="14"
-                                                TabIndex="9"
-                                                Text="{Binding ViewModel.Description,Mode=OneWayToSource}"
-                                                FlowDirection="RightToLeft"
-                                                Grid.ColumnSpan="2"
-                                                TextWrapping="Wrap"
-                                                FontFamily="Calibri"></ui:TextBox>
-                                </ScrollViewer>
+                                                    FontSize="14"
+                                                    TabIndex="9"
+                                                    Text="{Binding ViewModel.Description,Mode=OneWayToSource}"
+                                                    FlowDirection="RightToLeft"
+                                                    Grid.ColumnSpan="2"
+                                                    TextWrapping="Wrap"
+                                                    FontFamily="Calibri"></ui:TextBox>
+                                    </ScrollViewer>
                                 </Grid>
-                              
+
                                 <Button Content="ثبت"
                                         Padding="20 5 "
                                         Margin="0 0 0 6"

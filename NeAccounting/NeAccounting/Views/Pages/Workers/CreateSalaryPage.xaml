@@ -9,7 +9,6 @@
       d:DataContext="{d:DesignInstance local:CreateSalaryPage,
                                      IsDesignTimeCreatable=False}"
       Title="Salary"
-      d:DesignHeight="450"
       d:DesignWidth="800"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -84,7 +83,7 @@
                                       FontWeight="Bold"
                                       FontSize="18"
                                       Foreground="White"
-                                      Text="ثبت کارکرد و حقوق ماهانه " />
+                                      Text="صدور فیش حقوقی" />
                     </Grid>
                     <Border Grid.Row="1"
                             CornerRadius="9"
@@ -131,10 +130,18 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Margin="20 4 20 0 ">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="نام پرسنل"
-                                               Margin="2 0 0 0 " />
+                                    <DockPanel>
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="نام پرسنل"
+                                                   Margin="2 0 0 7" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   x:Name="txt_Personel"
+                                                   Text="{Binding ViewModel.PersonelId , Mode=OneWay}"
+                                                   HorizontalAlignment="Right"
+                                                   Margin="2 0 0 7" />
+                                    </DockPanel>
                                     <ui:AutoSuggestBox FontSize="14"
                                                        x:Name="txt_name"
                                                        Icon="{ui:SymbolIcon Search24}"
@@ -163,11 +170,12 @@
                                             Margin="20 4 20 0 ">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
-                                               Text="تعداد روز / شیفت کاری"
+                                               Text="مبلغ حقوق"
                                                Margin="2 0 0 0 " />
                                     <ui:NumberBox FontSize="14"
                                                   TextAlignment="Center"
                                                   x:Name="txt_amountOf"
+                                                  IsEnabled="False"
                                                   Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
                                                   SpinButtonPlacementMode="Hidden"
                                                   FontFamily="Calibri" />
@@ -182,6 +190,7 @@
                                                Margin="1 0 0 0 " />
                                     <ui:NumberBox FontSize="14"
                                                   TextAlignment="Center"
+                                                  IsEnabled="False"
                                                   x:Name="txt_Aid"
                                                   SpinButtonPlacementMode="Hidden"
                                                   Value="{Binding ViewModel.FinancialAid , Mode=TwoWay}"
@@ -197,6 +206,7 @@
                                                Margin="2 0 0 0 " />
                                     <ui:NumberBox FontSize="14"
                                                   TextAlignment="Center"
+                                                  IsEnabled="False"
                                                   x:Name="txt_overtime"
                                                   Value="{Binding ViewModel.OverTime , Mode=TwoWay}"
                                                   SpinButtonPlacementMode="Hidden"
@@ -208,13 +218,14 @@
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
-                                               Text="مالیات"
+                                               Text="حق بیمه"
                                                Margin="1 0 0 0 " />
                                     <ui:NumberBox FontSize="14"
                                                   TextAlignment="Center"
-                                                  x:Name="txt_Tax"
+                                                  Value="{Binding ViewModel.Insurance , Mode=TwoWay}"
                                                   SpinButtonPlacementMode="Hidden"
-                                                  Value="{Binding ViewModel.Tax , Mode=TwoWay}"
+                                                  IsEnabled="False"
+                                                  x:Name="txt_Insurance"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="0"
@@ -228,6 +239,8 @@
                                                   SpinButtonPlacementMode="Hidden"
                                                   Value="{Binding ViewModel.RightHousingAndFood , Mode=TwoWay}"
                                                   FontSize="14"
+                                                  IsEnabled="False"
+                                                  ValueChanged="NumberBox_ValueChanged"
                                                   x:Name="txt_RighOfFood"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
@@ -237,13 +250,14 @@
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
-                                               Text="حق بیمه"
+                                               Text="مالیات"
                                                Margin="1 0 0 0 " />
                                     <ui:NumberBox FontSize="14"
                                                   TextAlignment="Center"
-                                                  Value="{Binding ViewModel.Insurance , Mode=TwoWay}"
+                                                  x:Name="txt_Tax"
+                                                  IsEnabled="False"
                                                   SpinButtonPlacementMode="Hidden"
-                                                  x:Name="txt_Insurance"
+                                                  Value="{Binding ViewModel.Tax , Mode=TwoWay}"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="0"
@@ -257,6 +271,8 @@
                                                   TextAlignment="Center"
                                                   Value="{Binding ViewModel.ChildAllowance, Mode=TwoWay}"
                                                   SpinButtonPlacementMode="Hidden"
+                                                  ValueChanged="NumberBox_ValueChanged"
+                                                  IsEnabled="False"
                                                   x:Name="txt_ChildAllowance"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
@@ -272,6 +288,7 @@
                                                   TextAlignment="Center"
                                                   Value="{Binding ViewModel.LoanInstallment, Mode=TwoWay}"
                                                   SpinButtonPlacementMode="Hidden"
+                                                  IsEnabled="False"
                                                   x:Name="txt_loanInstallment"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
@@ -287,6 +304,7 @@
                                                   x:Name="txt_OtherAdditions"
                                                   SpinButtonPlacementMode="Hidden"
                                                   ValueChanged="NumberBox_ValueChanged"
+                                                  IsEnabled="False"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
@@ -301,6 +319,7 @@
                                                   Value="{Binding ViewModel.OtherDeductions , Mode=TwoWay}"
                                                   TextAlignment="Center"
                                                   x:Name="txt_Othere"
+                                                  IsEnabled="False"
                                                   SpinButtonPlacementMode="Hidden"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
@@ -371,10 +390,10 @@
                                                Text="توضیحات"
                                                Grid.Column="1" />
                                     <TextBox Margin="0,20,0,0"
-                                                 FontSize="14"
-                                                 FlowDirection="RightToLeft"
-                                                 Grid.ColumnSpan="2"
-                                                 FontFamily="Calibri"></TextBox>
+                                             FontSize="14"
+                                             FlowDirection="RightToLeft"
+                                             Grid.ColumnSpan="2"
+                                             FontFamily="Calibri"></TextBox>
                                 </Grid>
                                 <Button Content="ثبت"
                                         Margin="0 0 0 0"

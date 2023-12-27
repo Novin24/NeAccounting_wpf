@@ -3,7 +3,7 @@
     /// <summary>
     /// شیفت کاری
     /// </summary>
-    public enum Shift
+    public enum Shift : byte
     {
         /// <summary>
         /// ساعتی 
