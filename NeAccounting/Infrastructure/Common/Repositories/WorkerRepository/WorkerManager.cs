@@ -12,6 +12,8 @@ namespace Infrastructure.Repositories
 {
     public class WorkerManager(NovinDbContext context) : Repository<Worker>(context), IWorkerManager
     {
+        #region Worker
+
         public Task<List<SuggestBoxViewModel<int>>> GetWorkers()
         {
             return TableNoTracking.Select(x => new SuggestBoxViewModel<int>
@@ -21,6 +23,34 @@ namespace Infrastructure.Repositories
 
             }).ToListAsync();
         }
+
+        public Task<WorkerVewiModel> GetWorker(int workerId)
+        {
+            return TableNoTracking.Where(t => t.Id == workerId)
+                .Select(w => new WorkerVewiModel
+                {
+                    Shift = w.ShiftStatus,
+                    ShiftOverTimeSalary = w.ShiftOverTimeSalary,
+                    ShiftSalary = w.ShiftSalary,
+                    StartDate = w.StartDate,
+                    Status = w.Status,
+                    OverTimeSalary = w.OverTimeSalary,
+                    AccountNumber = w.AccountNumber,
+                    Address = w.Address,
+                    DayInMonth = w.DayInMonth,
+                    Description = w.Description,
+                    FullName = w.FullName,
+                    PersonnelId = w.PersonnelId,
+                    WorkerStatus = w.Status.ToDisplay(DisplayProperty.Name),
+                    NationalCode = w.NationalCode,
+                    EndDate = w.EndDate,
+                    Id = w.Id,
+                    InsurancePremium = w.InsurancePremium,
+                    JobTitle = w.JobTitle,
+                    Mobile = w.Mobile
+                }).FirstOrDefaultAsync();
+        }
+
 
         public Task<List<WorkerVewiModel>> GetWorkers(string fullName, string jobTitle, string nationalCode, Status status)
         {
@@ -173,8 +203,9 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
+        #endregion
 
-
+        #region Salary
         public async Task<(string error, bool isSuccess)> AddOrUpdateSalary(int workerId,
             DateTime submitDate,
             uint amountOf,
@@ -255,35 +286,52 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
 
         }
-
-        public Task<WorkerVewiModel> GetWorker(int workerId)
+        public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate)
         {
-            return TableNoTracking.Where(t => t.Id == workerId)
-                .Select(w => new WorkerVewiModel
-                {
-                    Shift = w.ShiftStatus,
-                    ShiftOverTimeSalary = w.ShiftOverTimeSalary,
-                    ShiftSalary = w.ShiftSalary,
-                    StartDate = w.StartDate,
-                    Status = w.Status,
-                    OverTimeSalary = w.OverTimeSalary,
-                    AccountNumber = w.AccountNumber,
-                    Address = w.Address,
-                    DayInMonth = w.DayInMonth,
-                    Description = w.Description,
-                    FullName = w.FullName,
-                    PersonnelId = w.PersonnelId,
-                    WorkerStatus = w.Status.ToDisplay(DisplayProperty.Name),
-                    NationalCode = w.NationalCode,
-                    EndDate = w.EndDate,
-                    Id = w.Id,
-                    InsurancePremium = w.InsurancePremium,
-                    JobTitle = w.JobTitle,
-                    Mobile = w.Mobile
-                }).FirstOrDefaultAsync();
+            PersianCalendar pc = new();
+            var persianMonth = pc.GetMonth(submitDate);
+            var persianYear = pc.GetYear(submitDate);
+            uint aid = 0;
+            uint ssalary = 0;
+            uint overtime = 0;
+
+            var worker = await TableNoTracking
+                .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
+                .ThenInclude(c => c.Aids)
+                .FirstAsync(t => t.Id == workerId);
+
+
+            var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth);
+
+            if (salary == null || salary.Functions.Count == 0)
+                return new SalaryWorkerViewModel() { Error = "برای پرسنل مورد نظر کارکردی در این ماه ثبت نشده !!!", Success = false };
+
+
+            if (salary.Aids.Count != 0)
+            {
+                aid = (uint)salary.Aids.Sum(t => t.AmountOf);
+            }
+
+            var func = salary.Functions.First();
+
+            ssalary = worker.ShiftStatus == Shift.ByMounth ? func.AmountOf * worker.Salary : func.AmountOf * worker.ShiftSalary;
+            overtime = worker.ShiftStatus == Shift.ByMounth ? func.AmountOf * worker.OverTimeSalary : func.AmountOf * worker.ShiftOverTimeSalary;
+
+            return new SalaryWorkerViewModel()
+            {
+                PersonelId = worker.PersonnelId,
+                ShiftStatus = worker.ShiftStatus,
+                InsurancePremium = worker.InsurancePremium,
+                FinancialAidAmount = aid,
+                SalaryAmount = ssalary,
+                OverTimeSalary = overtime,
+                Error = string.Empty,
+                Success = true,
+            };
         }
+        #endregion
 
-
+        #region Function
         public async Task<(string error, bool isSuccess)> AddOrUpdateFunctuion(
             int workerId,
             DateTime submitDate,
@@ -357,7 +405,31 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<(string error, bool isSuccess)> AddAid(
+        public async Task<List<FunctionListViewModel>> GetFunctionList(int? workerId = null)
+        {
+            return await (from worker in DbContext.Set<Worker>()
+                                                             .AsNoTracking()
+                                                             .Where(t => workerId == null || t.Id == workerId)
+
+                          join salary in DbContext.Set<Salary>()
+                                                  on worker.Id equals salary.WorkerId
+
+                          join func in DbContext.Set<Function>()
+                                                  on salary.Id equals func.SalaryId
+
+                          select new FunctionListViewModel()
+                          {
+                              Id = func.Id,
+                              Name = worker.FullName,
+                              AmountOf = func.AmountOf,
+                              AmountOfOverTime = func.AmountOfOverTime,
+                              Date = func.SubmitDate
+                          }).ToListAsync();
+        }
+        #endregion
+
+        #region Aid
+        public async Task<(string error, bool isSuccess)> AddOrUpdateAid(
             int workerId,
             DateTime submitDate,
             byte amountOf,
@@ -426,48 +498,26 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate)
+        public async Task<List<AidViewModel>> GetAidList(int? workerId = null)
         {
-            PersianCalendar pc = new();
-            var persianMonth = pc.GetMonth(submitDate);
-            var persianYear = pc.GetYear(submitDate);
-            uint aid = 0;
-            uint ssalary = 0;
-            uint overtime = 0;
+            return await (from worker in DbContext.Set<Worker>()
+                                                  .AsNoTracking()
+                                                  .Where(t => workerId == null || t.Id == workerId)
 
-            var worker = await TableNoTracking
-                .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
-                .ThenInclude(c => c.Aids)
-                .FirstAsync(t => t.Id == workerId);
+                          join salary in DbContext.Set<Salary>()
+                                                  on worker.Id equals salary.WorkerId
 
+                          join aid in DbContext.Set<FinancialAid>()
+                                                  on salary.Id equals aid.SalaryId
 
-            var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth);
-
-            if (salary == null || salary.Functions.Count == 0)
-                return new SalaryWorkerViewModel() { Error = "برای پرسنل مورد نظر کارکردی در این ماه ثبت نشده !!!", Success = false };
-
-
-            if (salary.Aids.Count != 0)
-            {
-                aid = (uint)salary.Aids.Sum(t => t.AmountOf);
-            }
-
-            var func = salary.Functions.First();
-
-            ssalary = worker.ShiftStatus == Shift.ByMounth ? func.AmountOf * worker.Salary : func.AmountOf * worker.ShiftSalary;
-            overtime = worker.ShiftStatus == Shift.ByMounth ? func.AmountOf * worker.OverTimeSalary : func.AmountOf * worker.ShiftOverTimeSalary;
-
-            return new SalaryWorkerViewModel()
-            {
-                PersonelId = worker.PersonnelId,
-                ShiftStatus = worker.ShiftStatus,
-                InsurancePremium = worker.InsurancePremium,
-                FinancialAidAmount = aid,
-                SalaryAmount = ssalary,
-                OverTimeSalary = overtime,
-                Error = string.Empty,
-                Success = true,
-            };
+                          select new AidViewModel()
+                          {
+                              Name = worker.FullName,
+                              Price = aid.AmountOf,
+                              Date = aid.SubmitDate,
+                              Details = new AidDetails() { Id = aid.Id, SalaryId = salary.Id, WorkerId = worker.Id }
+                          }).ToListAsync();
         }
+        #endregion
     }
 }

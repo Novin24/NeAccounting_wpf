@@ -80,12 +80,16 @@ namespace NeApplication.IRepositoryies
             string? description);
 
 
-        Task<(string error, bool isSuccess)> AddAid(
+        Task<(string error, bool isSuccess)> AddOrUpdateAid(
             int workerId,
             DateTime submitDate,
             byte amountOf,
             string? description);
             
         Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate);
+
+        Task<List<AidViewModel>> GetAidList(int? workerId = null);
+
+        Task<List<FunctionListViewModel>> GetFunctionList(int? workerId = null);
     }
 }

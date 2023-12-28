@@ -1,10 +1,8 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
-using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
-using System.Reflection.Emit;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 

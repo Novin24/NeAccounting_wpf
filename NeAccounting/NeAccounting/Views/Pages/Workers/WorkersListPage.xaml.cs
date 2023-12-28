@@ -14,17 +14,7 @@ namespace NeAccounting.Views.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+            txt_name.Focus();
         }
-        public class Listofworkers
-        {
-            public string personnel_ID { set; get; }
-            public string Name_and_surname_of_the_worker { set; get; }
-            public string job_title { set; get; }
-            public string National_Code { set; get; }
-            public string Condition { set; get; }
-
-        }
-
-
     }
 }

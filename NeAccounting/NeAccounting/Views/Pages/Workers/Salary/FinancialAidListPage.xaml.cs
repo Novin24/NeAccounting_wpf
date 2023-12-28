@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using NeAccounting.ViewModels;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for FinancialAidListPage.xaml
     /// </summary>
-    public partial class FinancialAidListPage : Page
+    public partial class FinancialAidListPage : INavigableView<AidListViewModel>
     {
-        public FinancialAidListPage()
+        public AidListViewModel ViewModel { get; }
+        public FinancialAidListPage(AidListViewModel viewModel)
         {
+            ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
+            txt_name.Focus();
         }
     }
 }
