@@ -54,7 +54,7 @@
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <ui:TextBlock Margin="15,0"
+                <ui:TextBlock Margin="55,0"
                               Padding="0,20,0,0"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Center"
@@ -62,14 +62,14 @@
                               FontSize="30"
                               Text="Novin" />
                 <Grid>
-                    <TextBlock Margin="0 20 20 0"
+                    <TextBlock Margin="0 20 55 0"
                                Height="40"
                                HorizontalAlignment="Right"
                                FontFamily="Calibri"
                                FontWeight="Bold"
                                FontSize="18"
                                Text="مشتری" />
-                    <TextBlock Margin="20 20 0 0"
+                    <TextBlock Margin="60 20 0 0"
                                Height="40"
                                HorizontalAlignment="Center"
                                FontFamily="Calibri"

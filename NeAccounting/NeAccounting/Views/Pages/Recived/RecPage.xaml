@@ -96,9 +96,13 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="مبلغ"
                                                         Binding="{Binding LastchecksAmount}"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
                                     <DataGridTextColumn Header="تاریخ سند"
                                                         Binding="{Binding LastchecksDate}"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
                                 </DataGrid.Columns>
                             </DataGrid>
