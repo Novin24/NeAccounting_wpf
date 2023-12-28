@@ -1,39 +1,31 @@
-﻿using DomainShared.Enums;
-using DomainShared.ViewModels;
+﻿using DomainShared.ViewModels;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
-using System.Threading.Tasks.Dataflow;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class WorkerListViewModel : ObservableObject, INavigationAware
+    public partial class AidListViewModel : ObservableObject, INavigationAware
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
 
-        [ObservableProperty]
-        private string _fullName = "";
 
         [ObservableProperty]
-        private string _jobTitle = "";
+        private int _workerId = -1;
+
 
         [ObservableProperty]
-        private string _nationalCode = "";
-
-        private Status Status { get { return (Status)StatusByte; } set { StatusByte = (byte)value; } }
+        private IEnumerable<SuggestBoxViewModel<int>> _auSuBox;
 
         [ObservableProperty]
-        private byte _statusByte = 0;
+        private IEnumerable<AidViewModel> _list;
 
-        [ObservableProperty]
-        private IEnumerable<WorkerVewiModel> _list;
-
-        public WorkerListViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService)
+        public AidListViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService)
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
@@ -52,28 +44,15 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            List = await db.workerManager.GetWorkers(
-                        FullName,
-                        JobTitle,
-                        NationalCode,
-                        Status);
-
-            if (!List.Any())
-                _snackbarService.Show("تذکر", "هیچ کارگری در پایگاه داده یافت نشد!!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            AuSuBox = await db.workerManager.GetWorkers();
+            List = await db.workerManager.GetAidList();
         }
 
         [RelayCommand]
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            List = await db.workerManager.GetWorkers(
-                        FullName,
-                        JobTitle,
-                        NationalCode,
-                        Status);
-
-            if (!List.Any())
-                _snackbarService.Show("تذکر", "هیچ کارگری در پایگاه داده با این مشخصات یافت نشد!!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            List = await db.workerManager.GetAidList(WorkerId);
         }
 
         [RelayCommand]
@@ -95,7 +74,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnRemoveWorker(int parameter)
+        private async Task OnRemoveAid(AidDetails parameter)
         {
             var result = await _contentDialogService.ShowSimpleDialogAsync(
             new SimpleContentDialogCreateOptions()
@@ -123,7 +102,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnUpdateWorker(int parameter)
+        private async Task OnUpdateAid(int parameter)
         {
             Type? pageType = NameToPageTypeConverter.Convert("UpdateWorker");
 
@@ -133,7 +112,7 @@ namespace NeAccounting.ViewModels
             }
             var servise = _navigationService.GetNavigationControl();
 
-            var worker = List.First(t => t.Id == parameter);
+            var worker = List.First(t => t.Details.Id == parameter);
 
             IEnumerable<SuggestBoxViewModel<int>> asuBox;
 
@@ -144,24 +123,7 @@ namespace NeAccounting.ViewModels
 
             var context = new UpdateWorkerPage(new UpdateWorkerViewModel(_navigationService, _snackbarService)
             {
-                Id = worker.Id,
-                WorkerShift = worker.Shift,
-                StartDate = worker.StartDate,
-                Status = worker.Status,
-                AccountNumber = worker.AccountNumber,
-                ShiftSalary = worker.ShiftSalary,
-                ShiftovertimeSalary = worker.ShiftOverTimeSalary,
-                Address = worker.Address,
-                DayInMonth = worker.DayInMonth,
-                Salary = worker.Salary,
-                OvertimeSalary = worker.OverTimeSalary,
-                InsurancePremium = worker.InsurancePremium,
-                Description = worker.Description,
-                FullName = worker.FullName,
-                JobTitle = worker.JobTitle,
-                Mobile = worker.Mobile,
-                NationalCode = worker.NationalCode,
-                PersonalId = worker.PersonnelId,
+
             }, _snackbarService);
 
             servise.Navigate(pageType, context);

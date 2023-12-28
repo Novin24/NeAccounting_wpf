@@ -119,6 +119,8 @@ namespace Domain.NovinEntity.Workers
             uint leftOver,
             string? description)
         {
+            Aids = new List<FinancialAid>();
+            Functions = new List<Function>();
             PersianCalendar pc = new();
             PersianMonth = pc.GetMonth(submitDate);
             PersianYear = pc.GetYear(submitDate);

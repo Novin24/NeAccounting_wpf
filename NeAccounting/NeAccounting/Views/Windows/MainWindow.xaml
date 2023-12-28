@@ -6,8 +6,8 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
-                 MinHeight="850"
-                 MinWidth="1200"
+                 MinWidth="1100"
+                 MinHeight="650"
                  d:DataContext="{d:DesignInstance local:MainWindow,
                                      IsDesignTimeCreatable=True}"
                  ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
@@ -202,7 +202,8 @@
                                        FontFamily="the King &amp; Queen font"
                                        HorizontalAlignment="Center" />
 
-                            <StackPanel Orientation="Horizontal" Margin="0 40 0 0 ">
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0 40 0 0 ">
 
                                 <ui:SymbolIcon Symbol="Person16"
                                                Filled="True"
@@ -229,10 +230,11 @@
                                      Padding="2 0 0 0">
 
                             </TextBox>
-                            <StackPanel Orientation="Horizontal" Margin="0 15 0 0 ">
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0 15 0 0 ">
                                 <ui:SymbolIcon Symbol="Key16"
                                                Filled="True"
-                                               Margin="0 -1 0 0"/>
+                                               Margin="0 -1 0 0" />
                                 <TextBlock Text="Password"
                                            Foreground="White"
                                            FontSize="12"

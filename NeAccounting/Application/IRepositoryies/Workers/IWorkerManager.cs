@@ -83,7 +83,7 @@ namespace NeApplication.IRepositoryies
         Task<(string error, bool isSuccess)> AddOrUpdateAid(
             int workerId,
             DateTime submitDate,
-            byte amountOf,
+            uint amountOf,
             string? description);
             
         Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate);

@@ -432,7 +432,7 @@ namespace Infrastructure.Repositories
         public async Task<(string error, bool isSuccess)> AddOrUpdateAid(
             int workerId,
             DateTime submitDate,
-            byte amountOf,
+            uint amountOf,
             string? description)
         {
             PersianCalendar pc = new();
@@ -513,7 +513,7 @@ namespace Infrastructure.Repositories
                           select new AidViewModel()
                           {
                               Name = worker.FullName,
-                              Price = aid.AmountOf,
+                              Price = aid.AmountOf.ToString("N"),
                               Date = aid.SubmitDate,
                               Details = new AidDetails() { Id = aid.Id, SalaryId = salary.Id, WorkerId = worker.Id }
                           }).ToListAsync();

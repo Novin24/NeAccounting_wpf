@@ -1,4 +1,5 @@
-﻿using NeAccounting.ViewModels;
+﻿using DomainShared.ViewModels;
+using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -14,7 +15,11 @@ namespace NeAccounting.Views.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-            txt_name.Focus();
+        }
+
+        private void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            ViewModel.WorkerId = ((SuggestBoxViewModel<int>)args.SelectedItem).Id;
         }
     }
 }
