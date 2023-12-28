@@ -361,4 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/NeAccounting/NeAccounting/Views/Pages/Workers/FunctionListPage.xaml.cs

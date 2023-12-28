@@ -172,11 +172,11 @@
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
-                                    <DataGridTextColumn Header="تاریخ"
+                                    <DataGridTextColumn Header="مبلغ"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width="*" />
-                                    <DataGridTextColumn Header="مبلغ"
+                                    <DataGridTextColumn Header="تاریخ"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width="*" />
