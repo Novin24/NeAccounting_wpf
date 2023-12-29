@@ -65,6 +65,9 @@ namespace NeAccounting
                 
                 services.AddTransient<FinancialAidListPage>();
                 //services.AddTransient<CreateFinancialAidViewModel>();
+
+
+                services.AddTransient<FunctionListPage>();
                 #endregion
 
                 #region Customer
