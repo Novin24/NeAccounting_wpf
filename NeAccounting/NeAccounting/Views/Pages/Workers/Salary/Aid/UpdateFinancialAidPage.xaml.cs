@@ -1,25 +1,27 @@
 ﻿using DomainShared.ViewModels;
 using NeAccounting.ViewModels;
+using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for CreateFinancialAidPage.xaml
+    /// Interaction logic for UpdateFinancialAidPage.xaml
     /// </summary>
-    public partial class CreateFinancialAidPage : INavigableView<CreateFinancialAidViewModel>
+    public partial class UpdateFinancialAidPage : INavigableView<CreateFinancialAidViewModel>
     {
         public CreateFinancialAidViewModel ViewModel { get; }
-        public CreateFinancialAidPage(CreateFinancialAidViewModel viewModel)
+
+        public UpdateFinancialAidPage()
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
         }
-
         private void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            ViewModel.WorkerId = ((SuggestBoxViewModel<int>)args.SelectedItem).Id;
+            ViewModel.WorkerId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
+            ViewModel.PersonelId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).PersonnelId;
         }
     }
 }

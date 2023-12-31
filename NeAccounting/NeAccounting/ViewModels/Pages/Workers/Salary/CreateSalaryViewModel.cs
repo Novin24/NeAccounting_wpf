@@ -60,7 +60,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     private Shift _shiftStatus;
 
     [ObservableProperty]
-    private IEnumerable<SuggestBoxViewModel<int>> _auSuBox;
+    private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
 
     [RelayCommand]

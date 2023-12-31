@@ -20,6 +20,9 @@ namespace NeAccounting.ViewModels
         }
 
         [ObservableProperty]
+        private int? _PersonelId;
+        
+        [ObservableProperty]
         private int _workerId = -1;
 
         [ObservableProperty]
@@ -32,7 +35,7 @@ namespace NeAccounting.ViewModels
         private string? _description;
 
         [ObservableProperty]
-        private IEnumerable<SuggestBoxViewModel<int>> _auSuBox;
+        private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
         [ObservableProperty]
         private IEnumerable<AidViewModel> _list;

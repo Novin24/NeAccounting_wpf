@@ -150,15 +150,23 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Margin="20 10 0 0 ">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="نام پرسنل"
-                                               Margin="2 0 0 0 " />
+                                    <DockPanel>
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="نام پرسنل"
+                                                   Margin="2 0 0 0" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   x:Name="txt_Personel"
+                                                   Foreground="#BB8F60"
+                                                   Text="{Binding ViewModel.PersonelId , Mode=OneWay}"
+                                                   HorizontalAlignment="Right"
+                                                   Margin="0 0 7 0" />
+                                    </DockPanel>
                                     <ui:AutoSuggestBox x:Name="txt_sugName"
                                                        Icon="{ui:SymbolIcon Search24}"
                                                        PlaceholderText="جستجو ..."
                                                        FontSize="14"
-                                                       TabIndex="0"
                                                        OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
                                                        SuggestionChosen="txt_name_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
@@ -171,11 +179,12 @@
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="تاریخ پرداخت"
-                                               Margin="1 0 0 0 " />
+                                               Margin="10 0 0 0 " />
                                     <datepicker:PersianDatePicker FontSize="14"
                                                                   FlowDirection="LeftToRight"
                                                                   FontFamily="Calibri"
-                                                                  TabIndex="1"
+                                                                  Focusable="True"
+                                                                  IsTabStop="True"
                                                                   x:Name="dtp"
                                                                   SelectedDate="{Binding ViewModel.PayDate , Mode=TwoWay}"
                                                                   Margin="0 4 0 0" />
@@ -193,7 +202,6 @@
                                                   FontSize="14"
                                                   Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
                                                   FlowDirection="LeftToRight"
-                                                  TabIndex="2"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
                                 <Grid Grid.Column="0"
@@ -208,7 +216,6 @@
                                                Margin="0,7,0,0" />
 
                                     <ui:TextBox FontSize="14"
-                                                TabIndex="3"
                                                 Margin="0,30,0,0"
                                                 FlowDirection="RightToLeft"
                                                 Grid.ColumnSpan="2"
@@ -222,7 +229,6 @@
                                         Margin="0 20"
                                         HorizontalAlignment="Center"
                                         Grid.Row="6"
-                                        TabIndex="4"
                                         FontFamily="Calibri"
                                         FontSize="15"
                                         Command="{Binding ViewModel.CreateCommand}"

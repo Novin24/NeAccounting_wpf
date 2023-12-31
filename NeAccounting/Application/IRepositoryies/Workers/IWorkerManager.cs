@@ -9,7 +9,7 @@ namespace NeApplication.IRepositoryies
     public interface IWorkerManager : IRepository<Worker>
     {
 
-        Task<List<SuggestBoxViewModel<int>>> GetWorkers();
+        Task<List<PersonnerlSuggestBoxViewModel>> GetWorkers();
 
         Task<WorkerVewiModel> GetWorker(int workerId);
 

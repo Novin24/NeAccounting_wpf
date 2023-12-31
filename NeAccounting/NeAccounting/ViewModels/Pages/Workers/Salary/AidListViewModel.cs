@@ -20,7 +20,7 @@ namespace NeAccounting.ViewModels
 
 
         [ObservableProperty]
-        private IEnumerable<SuggestBoxViewModel<int>> _auSuBox;
+        private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
         [ObservableProperty]
         private IEnumerable<AidViewModel> _list;
@@ -102,7 +102,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnUpdateAid(int parameter)
+        private async Task OnUpdateAid(AidDetails parameter)
         {
             Type? pageType = NameToPageTypeConverter.Convert("UpdateWorker");
 
@@ -110,23 +110,18 @@ namespace NeAccounting.ViewModels
             {
                 return;
             }
-            var servise = _navigationService.GetNavigationControl();
+            var service = _navigationService.GetNavigationControl();
 
-            var worker = List.First(t => t.Details.Id == parameter);
+            var worker = List.First(t => t.Details.Id == parameter.Id);
 
-            IEnumerable<SuggestBoxViewModel<int>> asuBox;
 
-            using (UnitOfWork db = new())
-            {
-                asuBox = await db.unitManager.GetUnits();
-            }
 
             var context = new UpdateWorkerPage(new UpdateWorkerViewModel(_navigationService, _snackbarService)
             {
 
             }, _snackbarService);
 
-            servise.Navigate(pageType, context);
+            service.Navigate(pageType, context);
         }
     }
 }

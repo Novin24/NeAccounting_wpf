@@ -14,12 +14,13 @@ namespace Infrastructure.Repositories
     {
         #region Worker
 
-        public Task<List<SuggestBoxViewModel<int>>> GetWorkers()
+        public Task<List<PersonnerlSuggestBoxViewModel>> GetWorkers()
         {
-            return TableNoTracking.Select(x => new SuggestBoxViewModel<int>
+            return TableNoTracking.Select(x => new PersonnerlSuggestBoxViewModel
             {
                 Id = x.Id,
-                DisplayName = x.FullName
+                DisplayName = x.FullName,
+                PersonnelId = x.PersonnelId
 
             }).ToListAsync();
         }
@@ -501,8 +502,8 @@ namespace Infrastructure.Repositories
         public async Task<List<AidViewModel>> GetAidList(int? workerId = null)
         {
             return await (from worker in DbContext.Set<Worker>()
-                                                  .AsNoTracking()
-                                                  .Where(t => workerId == null || t.Id == workerId)
+                                                   .AsNoTracking()
+                                                   .Where(t => workerId == null || t.Id == workerId)
 
                           join salary in DbContext.Set<Salary>()
                                                   on worker.Id equals salary.WorkerId
@@ -517,6 +518,7 @@ namespace Infrastructure.Repositories
                               Date = aid.SubmitDate,
                               Details = new AidDetails() { Id = aid.Id, SalaryId = salary.Id, WorkerId = worker.Id }
                           }).ToListAsync();
+
         }
         #endregion
     }

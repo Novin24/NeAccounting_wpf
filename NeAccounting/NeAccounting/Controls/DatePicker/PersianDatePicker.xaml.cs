@@ -102,6 +102,10 @@ namespace NeAcconting.Controls.DatePicker
             this.persianCalendar.Focus();
         }
 
-
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            base.OnGotFocus(e);
+            openCalendarButton.Focus();
+        }
     }
 }

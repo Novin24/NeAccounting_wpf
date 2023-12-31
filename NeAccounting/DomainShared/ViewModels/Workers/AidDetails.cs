@@ -1,6 +1,9 @@
 ﻿namespace DomainShared.ViewModels.Workers
 {
-    public class AidDetails
+    public struct AidDetails
     {
+        public int Id { get; set; }
+        public int SalaryId { get; set; }
+        public int WorkerId { get; set; }
     }
 }
