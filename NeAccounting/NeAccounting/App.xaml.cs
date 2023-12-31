@@ -64,6 +64,9 @@ namespace NeAccounting
                 services.AddTransient<CreateSalaryViewModel>();
                 
                 services.AddTransient<FinancialAidListPage>();
+
+                services.AddTransient<CreateFunctionPage>();
+
                 //services.AddTransient<CreateFinancialAidViewModel>();
 
 
