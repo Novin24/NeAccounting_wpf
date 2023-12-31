@@ -22,7 +22,7 @@ namespace NeAccounting.Views.Pages
         private async void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
 
-            ViewModel.WorkerId = ((SuggestBoxViewModel<int>)args.SelectedItem).Id;
+            ViewModel.WorkerId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
             if (!await ViewModel.OnSelect())
             {
                 return;

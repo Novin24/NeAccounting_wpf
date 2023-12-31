@@ -51,7 +51,7 @@ namespace NeAccounting.ViewModels
         private uint _salary = 0;
 
         [ObservableProperty]
-        private uint _overtimeSalary= 0;
+        private uint _overtimeSalary = 0;
 
         [ObservableProperty]
         private uint _shiftSalary = 0;
@@ -96,7 +96,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
-            if ( Salary <= 0)
+            if (Salary <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد ماهانه", "صفر"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;

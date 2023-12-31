@@ -103,11 +103,16 @@ namespace NeAccounting.ViewModels
                 {
                     new NavigationViewItem { Content = "کارگران", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.InprivateAccount20} },
                     new NavigationViewItem(){Content = "به روز رسانی پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateWorkerPage),
-                        Visibility = Visibility.Collapsed,},
+                        Visibility = Visibility.Collapsed},
                     new NavigationViewItem(){Content = "افزودن پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage),
-                        Visibility = Visibility.Collapsed,},
+                        Visibility = Visibility.Collapsed},
+
 
                     new NavigationViewItem(){Content = "مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(FinancialAidListPage)},
+                    new NavigationViewItem(){Content = "افزودن مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateFinancialAidPage),
+                        Visibility = Visibility.Collapsed},
+                    new NavigationViewItem(){Content = "ویرایش مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateSalaryPage),
+                        Visibility = Visibility.Collapsed},
 
                     new NavigationViewItem(){Content = "کارکرد",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage)},
                 }

@@ -9,7 +9,7 @@ namespace NeApplication.IRepositoryies
     public interface IWorkerManager : IRepository<Worker>
     {
 
-        Task<List<SuggestBoxViewModel<int>>> GetWorkers();
+        Task<List<PersonnerlSuggestBoxViewModel>> GetWorkers();
 
         Task<WorkerVewiModel> GetWorker(int workerId);
 
@@ -80,12 +80,23 @@ namespace NeApplication.IRepositoryies
             string? description);
 
 
-        Task<(string error, bool isSuccess)> AddAid(
+        Task<(string error, bool isSuccess)> AddOrUpdateAid(
             int workerId,
             DateTime submitDate,
-            byte amountOf,
+            uint amountOf,
             string? description);
-            
+
+        Task<(string error, bool isSuccess)> UpdateAid(
+            int workerId,
+            int salaryId,
+            int aidId,
+            uint amountOf,
+            string? description);
+
         Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate);
+
+        Task<List<AidViewModel>> GetAidList(int? workerId = null);
+
+        Task<List<FunctionListViewModel>> GetFunctionList(int? workerId = null);
     }
 }

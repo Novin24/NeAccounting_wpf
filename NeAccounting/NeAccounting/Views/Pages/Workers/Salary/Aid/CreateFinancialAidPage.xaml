@@ -1,13 +1,15 @@
-﻿<Page x:Class="NeAccounting.Pages.CreateFinancialAidPage"
+﻿<Page x:Class="NeAccounting.Views.Pages.CreateFinancialAidPage"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:NeAccounting.Pages"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
       d:DesignHeight="450"
       d:DesignWidth="800"
+      d:DataContext="{d:DesignInstance local:CreateFinancialAidPage,
+                                     IsDesignTimeCreatable=False}"
       Title="CreateFinancialAidPage"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -78,7 +80,7 @@
                         </Border.Background>
 
                         <Grid>
-                          <Border Grid.Row="1"
+                            <Border Grid.Row="1"
                                     CornerRadius="9"
                                     Margin="5"
                                     BorderBrush="#D6D5D5"
@@ -112,15 +114,15 @@
                             </Border>
                         </Grid>
                     </Border>
-                   
-                        <TextBlock Margin="0 20 20 0"
-                                   Grid.ColumnSpan="2"
-                                   Height="40"
-                                   HorizontalAlignment="Right"
-                                   FontFamily="Calibri"
-                                   FontWeight="Bold"
-                                   FontSize="18"
-                                   Text="ثبت مساعده" />
+
+                    <TextBlock Margin="0 20 20 0"
+                               Grid.ColumnSpan="2"
+                               Height="40"
+                               HorizontalAlignment="Right"
+                               FontFamily="Calibri"
+                               FontWeight="Bold"
+                               FontSize="18"
+                               Text="ثبت مساعده" />
 
                     <Grid Grid.Column="1"
                           Grid.Row="1">
@@ -148,19 +150,28 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Margin="20 10 0 0 ">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="نام پرسنل"
-                                               Margin="2 0 0 0 " />
-                                    <ui:TextBox TextAlignment="Center"
-                                                FontSize="14"
-                                                TabIndex="0"
-                                                Grid.Row="0"
-                                                x:Name="txt_name"
-                                                Grid.Column="0"
-                                                Margin="0 4 3 0 "
-                                                CaretBrush="White"
-                                                FontFamily="Calibri" />
+                                    <DockPanel>
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   Text="نام پرسنل"
+                                                   Margin="2 0 0 0" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="14"
+                                                   x:Name="txt_Personel"
+                                                   Foreground="#BB8F60"
+                                                   Text="{Binding ViewModel.PersonelId , Mode=OneWay}"
+                                                   HorizontalAlignment="Right"
+                                                   Margin="0 0 7 0" />
+                                    </DockPanel>
+                                    <ui:AutoSuggestBox x:Name="txt_sugName"
+                                                       Icon="{ui:SymbolIcon Search24}"
+                                                       PlaceholderText="جستجو ..."
+                                                       FontSize="14"
+                                                       OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
+                                                       SuggestionChosen="txt_name_SuggestionChosen"
+                                                       DisplayMemberPath="DisplayName"
+                                                       Margin="0 4 3 0 "
+                                                       FontFamily="Calibri" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
                                             Margin="3 7 20 0 ">
@@ -168,13 +179,14 @@
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="تاریخ پرداخت"
-                                               Margin="1 0 0 0 " />
+                                               Margin="10 0 0 0 " />
                                     <datepicker:PersianDatePicker FontSize="14"
                                                                   FlowDirection="LeftToRight"
                                                                   FontFamily="Calibri"
-                                                                  TabIndex="1"
+                                                                  Focusable="True"
+                                                                  IsTabStop="True"
                                                                   x:Name="dtp"
-                                                                  SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay}"
+                                                                  SelectedDate="{Binding ViewModel.PayDate , Mode=TwoWay}"
                                                                   Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="0"
@@ -188,8 +200,8 @@
                                                   SpinButtonPlacementMode="Hidden"
                                                   TextAlignment="Center"
                                                   FontSize="14"
+                                                  Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
                                                   FlowDirection="LeftToRight"
-                                                  TabIndex="2"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
                                 <Grid Grid.Column="0"
@@ -204,10 +216,10 @@
                                                Margin="0,7,0,0" />
 
                                     <ui:TextBox FontSize="14"
-                                                TabIndex="9"
                                                 Margin="0,30,0,0"
                                                 FlowDirection="RightToLeft"
                                                 Grid.ColumnSpan="2"
+                                                Text="{Binding ViewModel.Description, Mode=OneWayToSource}"
                                                 TextWrapping="Wrap"
                                                 FontFamily="Calibri"></ui:TextBox>
                                 </Grid>
@@ -217,8 +229,10 @@
                                         Margin="0 20"
                                         HorizontalAlignment="Center"
                                         Grid.Row="6"
+                                        IsDefault="True"
                                         FontFamily="Calibri"
                                         FontSize="15"
+                                        Command="{Binding ViewModel.CreateCommand}"
                                         Grid.ColumnSpan="2" />
                             </Grid>
                         </Border>

@@ -89,7 +89,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid >
         <Button Style="{StaticResource openCalendarButtonStyle}"
                 Name="openCalendarButton"
                 VerticalAlignment="Center"
@@ -104,6 +104,8 @@
                     IsReadOnly="True"
                     HorizontalAlignment="Stretch"
                     MaxLines="1"
+                    Focusable="False"
+                    IsTabStop="False"
                     MinWidth="80"
                     Text="{Binding PersianSelectedDate , Mode=OneWay , ElementName=pfp}"
                     FontSize="14"

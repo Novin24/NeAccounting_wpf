@@ -1,10 +1,8 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
-using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
-using System.Reflection.Emit;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -62,7 +60,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     private Shift _shiftStatus;
 
     [ObservableProperty]
-    private IEnumerable<SuggestBoxViewModel<int>> _auSuBox;
+    private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
 
     [RelayCommand]

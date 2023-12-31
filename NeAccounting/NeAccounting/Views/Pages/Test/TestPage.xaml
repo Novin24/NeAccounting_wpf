@@ -13,11 +13,13 @@
       Height="600"
       Title="TestPage">
 
-    <Grid Background="Aqua" Height="430">
-        <ui:TextBox Width="250"
-                    MinHeight="300"
-                    Margin="0 25 0 25"
-                    TextWrapping="Wrap" />
+    <Grid    Height="430">
+        <WrapPanel>
+
+            <ui:AutoSuggestBox Width="80"
+                               Name="txtName"></ui:AutoSuggestBox>
+            <ui:TextBox Width="100" />
+        </WrapPanel>
 
     </Grid>
 </Page>
