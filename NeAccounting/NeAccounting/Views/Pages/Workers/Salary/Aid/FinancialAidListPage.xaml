@@ -106,7 +106,7 @@
                                                FontFamily="Calibri"
                                                FontSize="15"
                                                Padding="9 0"
-                                               Command="{Binding ViewModel.OAddClickCommand}"
+                                               Command="{Binding ViewModel.AddClickCommand}"
                                                CommandParameter="CreateFinancialAid"
                                                IsChevronVisible="False"
                                                HorizontalAlignment="Right">

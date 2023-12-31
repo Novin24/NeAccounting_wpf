@@ -92,11 +92,22 @@ namespace NeApplication.IRepositoryies
             int aidId,
             uint amountOf,
             string? description);
+        Task<(string error, bool isSuccess)> UpdateFunc(
+            int workerId,
+            int salaryId,
+            int funcId,
+            byte amountOf,
+            byte overTime,
+            string? description);
 
         Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate);
 
         Task<List<AidViewModel>> GetAidList(int? workerId = null);
 
-        Task<List<FunctionListViewModel>> GetFunctionList(int? workerId = null);
+        Task<List<FunctionViewModel>> GetFunctionList(int? workerId = null);
+
+        Task<bool> DeleteAid(int workerId, int salaryId, int aidId);
+        Task<bool> DeleteFunc(int workerId, int salaryId, int aidId);
+
     }
 }

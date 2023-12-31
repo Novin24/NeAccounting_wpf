@@ -8,7 +8,7 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class AidListViewModel : ObservableObject, INavigationAware
+    public partial class FunctionListViewModel : ObservableObject, INavigationAware
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
@@ -23,9 +23,9 @@ namespace NeAccounting.ViewModels
         private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
         [ObservableProperty]
-        private IEnumerable<AidViewModel> _list;
+        private IEnumerable<FunctionViewModel> _list;
 
-        public AidListViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService)
+        public FunctionListViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService)
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
@@ -45,14 +45,14 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.workerManager.GetAidList();
+            List = await db.workerManager.GetFunctionList();
         }
 
         [RelayCommand]
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            List = await db.workerManager.GetAidList(WorkerId);
+            List = await db.workerManager.GetFunctionList(WorkerId);
         }
 
         [RelayCommand]
@@ -102,9 +102,9 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private void OnUpdateAid(AidDetails parameter)
+        private void OnUpdateFunc(FucntionDetails parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateFinancialAid");
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateFucntion");
 
             if (pageType == null)
             {
@@ -112,19 +112,19 @@ namespace NeAccounting.ViewModels
             }
             var service = _navigationService.GetNavigationControl();
 
-            var aid = List.First(t => t.Details.Id == parameter.Id);
+            var func = List.First(t => t.Details.Id == parameter.Id);
 
             var context = new UpdateFinancialAidPage(new UpdateFinancialAidViewModel(_navigationService, _snackbarService)
             {
-                WorkerId = parameter.WorkerId,
-                AmountOf = aid.AmountPrice,
-                Description = aid.Description,
-                PersonnelName = aid.Name,
-                SalaryId = parameter.SalaryId,
-                AidId = parameter.Id,
-                PayDate = aid.Date,
-                List = List.Where(t => t.Details.WorkerId == parameter.WorkerId),
-                PersonnelId = aid.PersonelId
+                //WorkerId = parameter.WorkerId,
+                //AmountOf = func.Amountof,
+                //Description = func.Description,
+                //PersonnelName = func.Name,
+                //SalaryId = parameter.SalaryId,
+                //AidId = parameter.Id,
+                //PayDate = func.Date,
+                //List = List.Where(t => t.Details.WorkerId == parameter.WorkerId),
+                //PersonnelId = func.PersonelId
             });
 
             service.Navigate(pageType, context);

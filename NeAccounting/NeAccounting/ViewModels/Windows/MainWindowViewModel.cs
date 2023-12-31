@@ -97,7 +97,7 @@ namespace NeAccounting.ViewModels
             new NavigationViewItem()
             {
                 Content = "پرسنل",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.Timeline20 },
+                Icon = new SymbolIcon { Symbol = SymbolRegular.InprivateAccount20 },
                 //TargetPageType = typeof(MaterailListPage)
                 MenuItems = new ObservableCollection<object>
                 {
@@ -111,10 +111,16 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem(){Content = "مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(FinancialAidListPage)},
                     new NavigationViewItem(){Content = "افزودن مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateFinancialAidPage),
                         Visibility = Visibility.Collapsed},
-                    new NavigationViewItem(){Content = "ویرایش مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateSalaryPage),
+                    new NavigationViewItem(){Content = "ویرایش مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateFinancialAidPage),
                         Visibility = Visibility.Collapsed},
 
-                    new NavigationViewItem(){Content = "کارکرد",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage)},
+
+                    new NavigationViewItem(){Content = "کارکرد",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(FunctionListPage)},
+                    new NavigationViewItem(){Content = "افزودن کارکرد",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateFunctionPage),
+                        Visibility = Visibility.Collapsed},
+                    //new NavigationViewItem(){Content = "ویرایش کارکر",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateFunctionPage),
+                    //    Visibility = Visibility.Collapsed},
+
                 }
             },
             new NavigationViewItem()
