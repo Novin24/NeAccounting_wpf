@@ -73,7 +73,7 @@ namespace NeAccounting.ViewModels
 
                 #region Worker
                     new NavigationViewItem { Content = "حقوق و مساعده", TargetPageType = typeof(CreateSalaryPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonMoney20} },
-                    new NavigationViewItem { Content = "ثبت کارکرد", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonClock20} },
+                    new NavigationViewItem { Content = "ثبت کارکرد", TargetPageType = typeof(CreateFunctionPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonClock20} },
                 #endregion
 
                 #region Doc

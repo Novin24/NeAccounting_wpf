@@ -67,10 +67,9 @@
                               FontFamily="the King &amp; Queen font"
                               FontSize="30"
                               Text="Novin" />
-                <Border Grid.Column="0"
-                        Grid.Row="1"
+                <Border Grid.Row="1"
                         CornerRadius="9"
-                        Margin="4"
+                        Margin="5"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4">
                     <Border.Background>
