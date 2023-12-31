@@ -104,7 +104,7 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnUpdateAid(AidDetails parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateWorker");
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateFinancialAid");
 
             if (pageType == null)
             {
@@ -112,14 +112,20 @@ namespace NeAccounting.ViewModels
             }
             var service = _navigationService.GetNavigationControl();
 
-            var worker = List.First(t => t.Details.Id == parameter.Id);
+            var aid = List.First(t => t.Details.Id == parameter.Id);
 
-
-
-            var context = new UpdateWorkerPage(new UpdateWorkerViewModel(_navigationService, _snackbarService)
+            var context = new UpdateFinancialAidPage(new UpdateFinancialAidViewModel(_navigationService, _snackbarService)
             {
-
-            }, _snackbarService);
+                WorkerId = parameter.WorkerId,
+                AmountOf = aid.AmountPrice,
+                Description = aid.Description,
+                PersonnelName = aid.Name,
+                SalaryId = parameter.SalaryId,
+                AidId = parameter.Id,
+                PayDate = aid.Date,
+                List = List.Where(t => t.Details.WorkerId == parameter.WorkerId),
+                PersonnelId = aid.PersonelId
+            });
 
             service.Navigate(pageType, context);
         }

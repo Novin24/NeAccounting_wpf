@@ -5,16 +5,19 @@ namespace DomainShared.ViewModels.Workers
     public struct AidViewModel
     {
         public string Name { get; set; }
+        public uint AmountPrice { get; set; }
+        public int PersonelId { get; set; }
         public string Price { get; set; }
-        public DateTime Date
+        public string? Description { get; set; }
+        public DateTime Date { get; set; }
+        public readonly string DisplayDate
         {
-            set
+            get
             {
                 PersianCalendar pc = new();
-                DisplayDate = string.Format("{0}/{1}/{2}", pc.GetYear(value), pc.GetMonth(value), pc.GetDayOfMonth(value));
+                return string.Format("{0}/{1}/{2}", pc.GetYear(Date), pc.GetMonth(Date),pc.GetDayOfMonth(Date));
             }
         }
-        public string DisplayDate { get; private set; }
         public AidDetails Details { get; set; }
     }
 }

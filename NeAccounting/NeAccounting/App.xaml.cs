@@ -63,11 +63,28 @@ namespace NeAccounting
                 services.AddTransient<CreateSalaryPage>();
                 services.AddTransient<CreateSalaryViewModel>();
 
+                #region aid
                 services.AddTransient<FinancialAidListPage>();
                 services.AddTransient<AidListViewModel>();
 
                 services.AddTransient<CreateFinancialAidPage>();
                 services.AddTransient<CreateFinancialAidViewModel>();
+
+                services.AddTransient<UpdateFinancialAidPage>();
+                services.AddTransient<UpdateFinancialAidViewModel>();
+                #endregion
+
+                #region function
+                //services.AddTransient<FinancialAidListPage>();
+                //services.AddTransient<AidListViewModel>();
+
+                //services.AddTransient<CreateFinancialAidPage>();
+                //services.AddTransient<CreateFinancialAidViewModel>();
+
+                //services.AddTransient<UpdateFinancialAidPage>();
+                //services.AddTransient<UpdateFinancialAidViewModel>();
+                #endregion
+
                 #endregion
 
                 #region Customer

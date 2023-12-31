@@ -499,6 +499,41 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
+        public async Task<(string error, bool isSuccess)> UpdateAid(
+            int workerId,
+            int salaryId,
+            int aidId,
+            uint amount,
+            string? description)
+        {
+
+            var worker = await TableNoTracking
+                .Include(t => t.Salaries.Where(s => s.Id == salaryId))
+                .ThenInclude(c => c.Aids.Where(c => c.Id == aidId))
+                .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Aids.Count == 0)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+
+            var aid = worker.Salaries.First().Aids.First();
+            if (aid == null)
+            {
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+            }
+            aid.AmountOf = amount;
+            aid.Description = description;
+
+            try
+            {
+                Entities.Update(worker);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
         public async Task<List<AidViewModel>> GetAidList(int? workerId = null)
         {
             return await (from worker in DbContext.Set<Worker>()
@@ -514,12 +549,16 @@ namespace Infrastructure.Repositories
                           select new AidViewModel()
                           {
                               Name = worker.FullName,
-                              Price = aid.AmountOf.ToString("N"),
+                              AmountPrice = aid.AmountOf,
+                              Description = aid.Description,
+                              PersonelId = worker.PersonnelId,
+                              Price = aid.AmountOf.ToString("#,#"),
                               Date = aid.SubmitDate,
                               Details = new AidDetails() { Id = aid.Id, SalaryId = salary.Id, WorkerId = worker.Id }
                           }).ToListAsync();
 
         }
+
         #endregion
     }
 }

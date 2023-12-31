@@ -229,6 +229,7 @@
                                         Margin="0 20"
                                         HorizontalAlignment="Center"
                                         Grid.Row="6"
+                                        IsDefault="True"
                                         FontFamily="Calibri"
                                         FontSize="15"
                                         Command="{Binding ViewModel.CreateCommand}"
