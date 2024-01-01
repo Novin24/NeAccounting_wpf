@@ -345,7 +345,7 @@ namespace Infrastructure.Repositories
             var persianMonth = pc.GetMonth(submitDate);
             var persianYear = pc.GetYear(submitDate);
 
-            var worker = await TableNoTracking
+            var worker = await Entities
                 .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
                 .ThenInclude(c => c.Functions)
                 .FirstOrDefaultAsync(t => t.Id == workerId);
@@ -440,7 +440,7 @@ namespace Infrastructure.Repositories
            string? description)
         {
 
-            var worker = await TableNoTracking
+            var worker = await Entities
                 .Include(t => t.Salaries.Where(s => s.Id == salaryId))
                 .ThenInclude(c => c.Functions.Where(c => c.Id == funcId))
                 .FirstOrDefaultAsync(t => t.Id == workerId);
@@ -468,9 +468,29 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public Task<bool> DeleteFunc(int workerId, int salaryId, int aidId)
+        public async Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int salaryId, int aidId)
         {
-            throw new NotImplementedException();
+            var worker = await Entities
+               .Include(t => t.Salaries.Where(s => s.Id == salaryId))
+               .ThenInclude(c => c.Functions.Where(c => c.Id == aidId))
+               .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Functions.Count == 0)
+            {
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+            }
+
+            var aid = worker.Salaries.First().Functions.First();
+            worker.Salaries.First().Functions.Remove(aid);
+            try
+            {
+                Entities.Update(worker);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
         }
         #endregion
 
@@ -485,7 +505,7 @@ namespace Infrastructure.Repositories
             var persianMonth = pc.GetMonth(submitDate);
             var persianYear = pc.GetYear(submitDate);
 
-            var worker = await TableNoTracking
+            var worker = await Entities
                 .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
                 .ThenInclude(c => c.Aids)
                 .FirstOrDefaultAsync(t => t.Id == workerId);
@@ -552,7 +572,7 @@ namespace Infrastructure.Repositories
             string? description)
         {
 
-            var worker = await TableNoTracking
+            var worker = await Entities
                 .Include(t => t.Salaries.Where(s => s.Id == salaryId))
                 .ThenInclude(c => c.Aids.Where(c => c.Id == aidId))
                 .FirstOrDefaultAsync(t => t.Id == workerId);
@@ -604,9 +624,29 @@ namespace Infrastructure.Repositories
 
         }
 
-        public Task<bool> DeleteAid(int workerId, int salaryId, int aidId)
+        public async Task<(string error, bool isSuccess)> DeleteAid(int workerId, int salaryId, int aidId)
         {
-            throw new NotImplementedException();
+            var worker = await Entities
+               .Include(t => t.Salaries.Where(s => s.Id == salaryId))
+               .ThenInclude(c => c.Aids.Where(c => c.Id == aidId))
+               .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Aids.Count == 0)
+            {
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+            }
+
+            var aid = worker.Salaries.First().Aids.First();
+            worker.Salaries.First().Aids.Remove(aid);
+            try
+            {
+                Entities.Update(worker);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
         }
         #endregion
     }

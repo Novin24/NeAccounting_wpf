@@ -94,16 +94,25 @@
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
-                                               Text="آخرین چک ها"
+                                               Text="آخرین مساعده ها"
                                                HorizontalAlignment="Center" />
                                     <DataGrid Margin="0 6 0 6"
+                                              ItemsSource="{Binding ViewModel.List}"
+                                              AutoGenerateColumns="False"
                                               BorderThickness="10">
                                         <DataGrid.Columns>
                                             <DataGridTextColumn Header="مبلغ مساعده"
+                                                                Binding="{Binding Price}"
+                                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                                ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                                Width="*" />
+                                            <DataGridTextColumn Header="شماره پرسنلی"
+                                                                Binding="{Binding PersonelId}"
                                                                 HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                                 ElementStyle="{StaticResource CenterDtaGridCell}"
                                                                 Width="*" />
                                             <DataGridTextColumn Header="تاریخ"
+                                                                Binding="{Binding DisplayDate}"
                                                                 HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                                 ElementStyle="{StaticResource CenterDtaGridCell}"
                                                                 Width="*" />
