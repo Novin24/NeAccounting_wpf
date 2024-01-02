@@ -27,6 +27,8 @@ namespace NeAcconting.Controls.DatePicker
         private int yearForNavigating = 1387;
         private int monthForNavigating = 10;
 
+        private IDictionary<int, DateTime> cal = new Dictionary<int, DateTime>();
+
         public DateTime SelectedDate
         {
             get { return (DateTime)GetValue(SelectedDateProperty); }
@@ -139,6 +141,7 @@ namespace NeAcconting.Controls.DatePicker
                 for (int i = 0; i < 6 * 7; i++)
                 {
                     tempDateTime = persianCalendar.ToDateTime(thisYear, thisMonth, thisDay, 01, 01, 01, 01);
+                    cal.Add(i, tempDateTime);
                     persianDate = thisDay.ToString(); //.convertToPersianNumber();
                     DayOfWeek = persianCalendar.GetDayOfWeek(tempDateTime).ToString();
 
@@ -946,13 +949,23 @@ namespace NeAcconting.Controls.DatePicker
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int day = Convert.ToInt32((sender as Button).Content.ToString());
-            SelectedDate = persianCalendar.ToDateTime(yearForNavigating, monthForNavigating, day, 0, 0, 0, 0);
-            PersianSelectedDate = string.Concat(yearForNavigating, "/", monthForNavigating, "/", day);
+            int index = (sender as Button).TabIndex;
+            var date = cal[index];
+            SelectedDate = date;
+            PersianSelectedDate = string.Concat(yearForNavigating, "/", monthForNavigating, "/", persianCalendar.GetDayOfMonth(date));
             Click?.Invoke(this, e);
         }
         #endregion Events
 
+        private void UserControl_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            var _FrameworkElement = e.OriginalSource as FrameworkElement;
+            if (e.Key == Key.Enter)
+            {
+                if (e.OriginalSource is Button) return;
+                _FrameworkElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            }
+        }
     }
 
 

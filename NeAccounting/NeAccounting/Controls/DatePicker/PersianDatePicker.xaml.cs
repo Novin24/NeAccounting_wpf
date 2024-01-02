@@ -18,6 +18,7 @@ namespace NeAcconting.Controls.DatePicker
                 this.persianCalnedarPopup.IsOpen = false;
                 //dateTextBox.Text = persianCalendar.PersianSelectedDate;
             };
+            persianCalendar.Focus();
         }
 
         //[Category("Date Picker")]

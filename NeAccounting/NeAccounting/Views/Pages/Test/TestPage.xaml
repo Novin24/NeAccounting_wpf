@@ -10,12 +10,14 @@
       xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
       mc:Ignorable="d"
       Background="Gray"
-      Height="600"
-      Width="480"
+      Height="800"
+      Width="600"
       Title="TestPage">
 
     <Grid>
-
-        <datepicker:PersianDatePicker />
+        <StackPanel>
+            
+        <datepicker:ShamsiDate />
+        </StackPanel>
     </Grid>
 </Page>
