@@ -11,15 +11,11 @@
       mc:Ignorable="d"
       Background="Gray"
       Height="600"
+      Width="480"
       Title="TestPage">
 
-    <Grid    Height="430">
-        <WrapPanel>
+    <Grid>
 
-            <ui:AutoSuggestBox Width="80"
-                               Name="txtName"></ui:AutoSuggestBox>
-            <ui:TextBox Width="100" />
-        </WrapPanel>
-
+        <datepicker:PersianDatePicker />
     </Grid>
 </Page>

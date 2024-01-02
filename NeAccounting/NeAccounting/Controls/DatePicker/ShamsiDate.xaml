@@ -460,6 +460,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="0"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
                         <Rectangle x:Name="RectangleShanbe0" />

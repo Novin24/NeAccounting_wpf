@@ -45,7 +45,7 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.workerManager.GetAidList();
+            List = await db.workerManager.GetAidList(WorkerId);
         }
 
         [RelayCommand]
@@ -92,6 +92,7 @@ namespace NeAccounting.ViewModels
                 var (error, isSuccess) = await db.workerManager.DeleteAid(parameter.WorkerId, parameter.SalaryId, parameter.Id);
                 if (!isSuccess)
                 {
+                    await db.SaveChangesAsync();
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                     return;
                 }

@@ -240,24 +240,18 @@
                                                   TextAlignment="Center"
                                                   Name="Price"
                                                   SpinButtonPlacementMode="Hidden"
-                                                  FontSize="14"
+                                                  FontSize="18"
                                                   FontFamily="Calibri" />
-                                    <TextBlock HorizontalAlignment="Right"
-                                               VerticalAlignment="Center"
-                                               TextAlignment="Center"
-                                               FontFamily="Calibri"
-                                               TextWrapping="Wrap"
-                                               FontSize="11"
-                                               Text="نه میلیارد و نه صد و نود و نه هزار تومان " />
 
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="0"
                                             Grid.Row="2">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="مبلغ تخفیف"
-                                               Margin="22 4 0 0 " />
+                                    <ui:TextBlock FontFamily="Calibri"
+                                                  FontSize="14"
+                                                  FontTypography="BodyStrong"
+                                                  Text="مبلغ تخفیف"
+                                                  Margin="22 4 0 0 " />
                                     <ui:NumberBox Grid.Column="0"
                                                   Grid.Row="2"
                                                   SpinButtonPlacementMode="Hidden"

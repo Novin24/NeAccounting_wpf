@@ -45,7 +45,7 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.workerManager.GetFunctionList();
+            List = await db.workerManager.GetFunctionList(WorkerId);
         }
 
         [RelayCommand]

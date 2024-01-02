@@ -300,6 +300,8 @@ namespace Infrastructure.Repositories
             var worker = await TableNoTracking
                 .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
                 .ThenInclude(c => c.Aids)
+                .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
+                .ThenInclude(f => f.Functions)
                 .FirstAsync(t => t.Id == workerId);
 
 
@@ -407,11 +409,11 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<List<FunctionViewModel>> GetFunctionList(int? workerId = null)
+        public async Task<List<FunctionViewModel>> GetFunctionList(int workerId)
         {
             return await (from worker in DbContext.Set<Worker>()
                                                              .AsNoTracking()
-                                                             .Where(t => workerId == null || t.Id == workerId)
+                                                             .Where(t => workerId == -1 || t.Id == workerId)
 
                           join salary in DbContext.Set<Salary>()
                                                   on worker.Id equals salary.WorkerId
@@ -480,11 +482,12 @@ namespace Infrastructure.Repositories
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
             }
 
-            var aid = worker.Salaries.First().Functions.First();
-            worker.Salaries.First().Functions.Remove(aid);
+            var func = worker.Salaries.First().Functions;
+            func.Remove(worker.Salaries.First().Functions.First());
             try
             {
                 Entities.Update(worker);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -599,11 +602,11 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<List<AidViewModel>> GetAidList(int? workerId = null)
+        public async Task<List<AidViewModel>> GetAidList(int workerId)
         {
             return await (from worker in DbContext.Set<Worker>()
                                                    .AsNoTracking()
-                                                   .Where(t => workerId == null || t.Id == workerId)
+                                                   .Where(t => workerId == -1 || t.Id == workerId)
 
                           join salary in DbContext.Set<Salary>()
                                                   on worker.Id equals salary.WorkerId
@@ -624,6 +627,7 @@ namespace Infrastructure.Repositories
 
         }
 
+
         public async Task<(string error, bool isSuccess)> DeleteAid(int workerId, int salaryId, int aidId)
         {
             var worker = await Entities
@@ -641,6 +645,7 @@ namespace Infrastructure.Repositories
             try
             {
                 Entities.Update(worker);
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
