@@ -70,7 +70,7 @@
                                    FontFamily="Calibri"
                                    FontWeight="Bold"
                                    FontSize="18"
-                                   Text="فاکتور فروش" />
+                                   Text="فاکتور خرید" />
                         <TextBlock Margin="60 20 0 0"
                                    Height="40"
                                    HorizontalAlignment="Center"
