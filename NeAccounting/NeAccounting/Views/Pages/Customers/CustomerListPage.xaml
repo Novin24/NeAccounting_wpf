@@ -195,6 +195,7 @@
                         <DataGrid Margin="0 5 0 30"
                                   x:Name="Workersdata"
                                   BorderThickness="10"
+                                  Height="400"
                                   Grid.Row="2"
                                   CanUserResizeColumns="False"
                                   FontSize="15"
