@@ -4,6 +4,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             PreviewKeyDown="UserControl_PreviewKeyDown"
+             GotFocus="UserControl_GotFocus"
              xmlns:local="clr-namespace:NeAcconting.Controls.DatePicker"
              mc:Ignorable="d">
     <UserControl.Resources>
@@ -249,26 +251,28 @@
                           MinHeight="30"
                           MinWidth="70"
                           Margin="5,0"
+                          IsTabStop="False"
                           x:Name="comboBoxYear"
                           Background="Transparent"
                           BorderBrush="Transparent"
                           FontFamily="arial"
                           FontSize="13"
                           FontWeight="Regular"
-                          SelectionChanged="comboBoxYear_SelectionChanged">
+                          SelectionChanged="ComboBoxYear_SelectionChanged">
                 </ComboBox>
                 <ComboBox Grid.Column="1"
                           VerticalAlignment="Center"
                           IsSynchronizedWithCurrentItem="True"
                           MinHeight="30"
                           Margin="5,0"
+                          IsTabStop="False"
                           MinWidth="60"
                           x:Name="comboBoxMonths"
                           Background="Transparent"
                           BorderBrush="Transparent"
                           FontFamily="arial"
                           FontSize="15"
-                          SelectionChanged="comboBoxMonths_SelectionChanged">
+                          SelectionChanged="ComboBoxMonths_SelectionChanged">
                     <ComboBoxItem Content="فروردین"
                                   IsSelected="True" />
                     <ComboBoxItem Content="اردیبهشت" />
@@ -289,17 +293,19 @@
                 <Button x:Name="previousMonth"
                         Content=" &gt; "
                         Grid.Column="3"
-                        Click="previousMonth_Click"
+                        Click="PreviousMonth_Click"
                         HorizontalAlignment="Right"
                         Height="26"
+                        Focusable="True"
                         Width="25"
                         Padding="0 0 0 4" />
                 <Button x:Name="nextMonth"
                         Content=" &lt;  "
+                        Focusable="True"
                         Grid.Column="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Click="nextMonth_Click"
+                        Click="NextMonth_Click"
                         Padding="2 0 0 4"
                         Width="25"
                         Height="25" />
@@ -401,6 +407,8 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="6"
+                                Focusable="True"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
                         <Rectangle x:Name="RectangleJome0" />
@@ -410,6 +418,7 @@
                         <Button x:Name="TextBlock5Shanbe0"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="5"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
@@ -419,6 +428,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock4Shanbe0"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                TabIndex="4"
                                 MinHeight="16"
                                 MinWidth="16"
                                 FontFamily="arial">۴</Button>
@@ -430,6 +440,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="3"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
                         <Rectangle x:Name="Rectangle3Shanbe0" />
@@ -439,6 +450,7 @@
                         <Button x:Name="TextBlock2Shanbe0"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="2"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
@@ -450,6 +462,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="1"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
                         <Rectangle x:Name="Rectangle1Shanbe0" />
@@ -476,6 +489,7 @@
                         <Button x:Name="TextBlockJome1"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="13"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
@@ -487,6 +501,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="12"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
                         <Rectangle x:Name="Rectangle5Shanbe1" />
@@ -497,6 +512,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="11"
                                 Margin="2,0"
                                 FontFamily="arial">۴</Button>
                         <Rectangle x:Name="Rectangle4Shanbe1" />
@@ -507,6 +523,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="10"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
                         <Rectangle x:Name="Rectangle3Shanbe1" />
@@ -517,6 +534,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="9"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
                         <Rectangle x:Name="Rectangle2Shanbe1" />
@@ -527,6 +545,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="8"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
                         <Rectangle x:Name="Rectangle1Shanbe1" />
@@ -537,6 +556,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="7"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
                         <Rectangle x:Name="RectangleShanbe1" />
@@ -553,6 +573,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="20"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
                         <Rectangle x:Name="RectangleJome2" />
@@ -562,6 +583,7 @@
                         <Button x:Name="TextBlock5Shanbe2"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="19"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
@@ -572,6 +594,7 @@
                         <Button x:Name="TextBlock4Shanbe2"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="18"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۴</Button>
@@ -583,6 +606,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="17"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
                         <Rectangle x:Name="Rectangle3Shanbe2" />
@@ -592,6 +616,7 @@
                         <Button x:Name="TextBlock2Shanbe2"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="16"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
@@ -602,6 +627,7 @@
                         <Button x:Name="TextBlock1Shanbe2"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="15"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
@@ -613,6 +639,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="14"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
                         <Rectangle x:Name="RectangleShanbe2" />
@@ -628,6 +655,7 @@
                         <Button x:Name="TextBlockJome3"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="27"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
@@ -638,6 +666,7 @@
                         <Button x:Name="TextBlock5Shanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="26"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
@@ -648,6 +677,7 @@
                         <Button x:Name="TextBlock4Shanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="25"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۴</Button>
@@ -658,6 +688,7 @@
                         <Button x:Name="TextBlock3Shanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="24"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
@@ -668,6 +699,7 @@
                         <Button x:Name="TextBlock2Shanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="23"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
@@ -678,6 +710,7 @@
                         <Button x:Name="TextBlock1Shanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="22"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
@@ -689,6 +722,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="21"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
                         <Rectangle x:Name="RectangleShanbe3" />
@@ -705,6 +739,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="34"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
                         <Rectangle x:Name="RectangleJome4" />
@@ -714,6 +749,7 @@
                         <Button x:Name="TextBlock5Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="33"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
@@ -724,6 +760,7 @@
                         <Button x:Name="TextBlock4Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="32"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۴</Button>
@@ -734,7 +771,8 @@
                         <Button x:Name="TextBlock3Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
-                                MinWidth="20"
+                                TabIndex="23"
+                                MinWidth="31"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
                         <Rectangle x:Name="Rectangle3Shanbe4" />
@@ -744,6 +782,7 @@
                         <Button x:Name="TextBlock2Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="30"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
@@ -754,6 +793,7 @@
                         <Button x:Name="TextBlock1Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="29"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
@@ -764,6 +804,7 @@
                         <Button x:Name="TextBlockShanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="28"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
@@ -781,6 +822,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="41"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
                     </Grid>
@@ -789,6 +831,7 @@
                         <Button x:Name="TextBlock5Shanbe5"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="40"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
@@ -799,6 +842,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                TabIndex="39"
                                 Margin="2,0"
                                 FontFamily="arial">۴</Button>
                     </Grid>
@@ -807,6 +851,7 @@
                         <Button x:Name="TextBlock3Shanbe5"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="38"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
@@ -815,6 +860,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock2Shanbe5"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                TabIndex="37"
                                 MinHeight="20"
                                 MinWidth="20"
                                 Margin="2,0"
@@ -825,6 +871,7 @@
                         <Button x:Name="TextBlock1Shanbe5"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="36"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
@@ -834,6 +881,7 @@
                         <Button x:Name="TextBlockShanbe5"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                TabIndex="35"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>

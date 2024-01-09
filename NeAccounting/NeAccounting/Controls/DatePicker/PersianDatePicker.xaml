@@ -89,7 +89,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid >
+    <Grid>
         <Button Style="{StaticResource openCalendarButtonStyle}"
                 Name="openCalendarButton"
                 VerticalAlignment="Center"
@@ -107,7 +107,7 @@
                     Focusable="False"
                     IsTabStop="False"
                     MinWidth="80"
-                    Text="{Binding PersianSelectedDate , Mode=OneWay , ElementName=pfp}"
+                    Text="{Binding DisplayDate , Mode=OneWay , ElementName=pfp}"
                     FontSize="14"
                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                     TextAlignment="Center"
@@ -122,8 +122,11 @@
                Opened="persianCalnedarPopup_Opened">
             <Grid>
                 <local:ShamsiDate x:Name="persianCalendar"
+                                  IsTabStop="True"
+                                  Focusable="True"
+                                  Click="persianCalendar_Click"
                                   SelectedDate="{Binding SelectedDate ,Mode=TwoWay , ElementName=pfp}"
-                                  PersianSelectedDate="{Binding PersianSelectedDate , Mode=OneWayToSource ,ElementName=pfp}"/>
+                                  PersianSelectedDate="{Binding DisplayDate , Mode=OneWayToSource ,ElementName=pfp}"/>
 
             </Grid>
         </Popup>

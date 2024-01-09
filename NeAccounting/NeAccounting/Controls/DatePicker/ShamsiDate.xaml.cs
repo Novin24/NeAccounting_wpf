@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
+using System.Windows.Input;
 namespace NeAcconting.Controls.DatePicker
 {
     /// <summary>
@@ -9,8 +10,13 @@ namespace NeAcconting.Controls.DatePicker
     {
 
         #region fields
+        // ایا تقویم به صورت کامل بارگذازی شده
+        private bool IsCalculated = false;
+        //\\
+
         private static PersianCalendar persianCalendar = new PersianCalendar();
         public event RoutedEventHandler Click;
+
         //اطلاعات تاریخ امروز 
         private readonly int currentYear = 1387;
         private readonly int currentMonth = 10;
@@ -21,13 +27,14 @@ namespace NeAcconting.Controls.DatePicker
         private static int selectedYear = 1387;
         private static int selectedMonth = 10;
         private static int selectedDay = 1;
+        private static byte selectedBtnIndex = 0;
 
         //برای حرکت بین ماه ها
         //به شمسی
         private int yearForNavigating = 1387;
         private int monthForNavigating = 10;
 
-        private IDictionary<int, DateTime> cal = new Dictionary<int, DateTime>();
+        private readonly Dictionary<int, DateTime> cal = [];
 
         public DateTime SelectedDate
         {
@@ -45,6 +52,9 @@ namespace NeAcconting.Controls.DatePicker
         {
             if (obj is not ShamsiDate shamsiDate)
                 return;
+
+            if (((DateTime)args.NewValue).Date == ((DateTime)args.OldValue).Date)
+                return;
             selectedYear = persianCalendar.GetYear((DateTime)args.NewValue);
             selectedMonth = persianCalendar.GetMonth((DateTime)args.NewValue);
             selectedDay = persianCalendar.GetDayOfMonth((DateTime)args.NewValue);
@@ -56,8 +66,7 @@ namespace NeAcconting.Controls.DatePicker
         {
             get
             {
-                var s = (string)GetValue(PersianSelectedDateProperty);
-                return s;
+                return (string)GetValue(PersianSelectedDateProperty);
             }
             set { SetValue(PersianSelectedDateProperty, value); }
         }
@@ -69,9 +78,6 @@ namespace NeAcconting.Controls.DatePicker
 
 
 
-        // ایا تقویم به صورت کامل بارگذازی شده
-        private bool IsCalculated = false;
-        //\\
 
         #endregion
 
@@ -82,12 +88,16 @@ namespace NeAcconting.Controls.DatePicker
             this.currentYear = persianCalendar.GetYear(DateTime.Now);
             this.currentMonth = persianCalendar.GetMonth(DateTime.Now);
             this.currentDay = persianCalendar.GetDayOfMonth(DateTime.Now);
+            selectedYear = persianCalendar.GetYear(SelectedDate);
+            selectedMonth = persianCalendar.GetMonth(SelectedDate);
+            selectedDay = persianCalendar.GetDayOfMonth(SelectedDate);
             InitialCalculator(currentYear, currentMonth, currentDay);
         }
 
 
         protected virtual void InitialCalculator(int year, int month, int day)
         {
+            IsCalculated = false;
             LoadXMLFile();
             DataContext = this;
             //select correct month and year
@@ -97,7 +107,7 @@ namespace NeAcconting.Controls.DatePicker
 
             //Fill the selected date
             PersianSelectedDate = string.Concat(year, "/", month, "/", day);
-            calculateMonth(year, month);
+            CalculateMonth(year, month);
 
             IsCalculated = true;
         }
@@ -108,12 +118,13 @@ namespace NeAcconting.Controls.DatePicker
         /// The main method to show the calendar
         /// This method shows `thisMonth` in `thisYear`
         /// </summary>
-        void calculateMonth(int thisYear, int thisMonth)
+        void CalculateMonth(int thisYear, int thisMonth)
         {
             try
             {
                 yearForNavigating = thisYear;
                 monthForNavigating = thisMonth;
+                cal.Clear();
 
                 DateTime tempDateTime = persianCalendar.ToDateTime(yearForNavigating, monthForNavigating, 15, 01, 01, 01, 01);
 
@@ -126,9 +137,9 @@ namespace NeAcconting.Controls.DatePicker
                 //Different between first place of calendar and first place of this month
                 //اختلاف بین خانه شروع ماه و اولین خانه تقویم            
                 string DayOfWeek = persianCalendar.GetDayOfWeek(persianCalendar.ToDateTime(thisYear, thisMonth, 01, 01, 01, 01, 01)).ToString();
-                int span = calculatePersianSpan(DayOfWeek.convertToPersianDay());
+                int span = CalculatePersianSpan(DayOfWeek.convertToPersianDay());
 
-                decreasePersianDay(ref thisYear, ref thisMonth, ref thisDay, span);
+                DecreasePersianDay(ref thisYear, ref thisMonth, ref thisDay, span);
 
                 string persianDate;//حاوی تاریخ روزهای شمسی Contains the date of Persian
                 //string christianDate;//حاوی تاریخ روزهای میلادی Contains the date of Christian
@@ -138,10 +149,10 @@ namespace NeAcconting.Controls.DatePicker
 
                 ////////////////////////////////////
 
-                for (int i = 0; i < 6 * 7; i++)
+                for (byte i = 0; i < 6 * 7; i++)
                 {
                     tempDateTime = persianCalendar.ToDateTime(thisYear, thisMonth, thisDay, 01, 01, 01, 01);
-                    cal.Add(i, tempDateTime);
+                    cal.TryAdd(i, tempDateTime);
                     persianDate = thisDay.ToString(); //.convertToPersianNumber();
                     DayOfWeek = persianCalendar.GetDayOfWeek(tempDateTime).ToString();
 
@@ -155,15 +166,15 @@ namespace NeAcconting.Controls.DatePicker
 
                             if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
                             {
-                                changeProperties(i, persianDate, true, "TextBlockStyle24", tooltip_context);
+                                ChangeProperties(i, persianDate, true, "TextBlockStyle24", tooltip_context);
                             }
                             else if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
                             {
-                                changeProperties(i, persianDate, true, "TextBlockStyle3", tooltip_context);
+                                ChangeProperties(i, persianDate, true, "TextBlockStyle3", tooltip_context);
                             }
                             else
                             {
-                                changeProperties(i, persianDate, true, "TextBlockStyle1", tooltip_context);
+                                ChangeProperties(i, persianDate, true, "TextBlockStyle1", tooltip_context);
                             }
                         }
                         else if (SearchInCalendar(thisYear, thisMonth, thisDay, "PERSIAN"))
@@ -172,15 +183,15 @@ namespace NeAcconting.Controls.DatePicker
 
                             if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
                             {
-                                changeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
+                                ChangeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
                             }
                             else if (isHoliday(thisYear, thisMonth, thisDay, "PERSIAN"))//بررسی جمعه بودن روز Friday
                             {
-                                changeProperties(i, persianDate, false, "TextBlockStyle3", tooltip_context);
+                                ChangeProperties(i, persianDate, false, "TextBlockStyle3", tooltip_context);
                             }
                             else
                             {
-                                changeProperties(i, persianDate, false, "TextBlockStyle1", tooltip_context);
+                                ChangeProperties(i, persianDate, false, "TextBlockStyle1", tooltip_context);
                             }
                         }
 
@@ -188,15 +199,15 @@ namespace NeAcconting.Controls.DatePicker
                         {
                             if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
                             {
-                                changeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
+                                ChangeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
                             }
                             else if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
                             {
-                                changeProperties(i, persianDate, false, "TextBlockStyle3", tooltip_context);
+                                ChangeProperties(i, persianDate, false, "TextBlockStyle3", tooltip_context);
                             }
                             else
                             {
-                                changeProperties(i, persianDate, false, "TextBlockStyle1", tooltip_context);
+                                ChangeProperties(i, persianDate, false, "TextBlockStyle1", tooltip_context);
                             }
                         }
                     }
@@ -204,19 +215,19 @@ namespace NeAcconting.Controls.DatePicker
                     {
                         if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == currentYear)
                         {
-                            changeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
+                            ChangeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
                         }
                         else if (DayOfWeek == "Friday")//بررسی جمعه بودن روز Friday
                         {
-                            changeProperties(i, persianDate, false, "TextBlockStyle4", tooltip_context);
+                            ChangeProperties(i, persianDate, false, "TextBlockStyle4", tooltip_context);
                         }
                         else
                         {
-                            changeProperties(i, persianDate, false, "TextBlockStyle2", tooltip_context);
+                            ChangeProperties(i, persianDate, false, "TextBlockStyle2", tooltip_context);
                         }
                     }
 
-                    increasePersianDay(ref thisYear, ref thisMonth, ref thisDay, 1);
+                    IncreasePersianDay(ref thisYear, ref thisMonth, ref thisDay, 1);
                 }
             }
             catch (Exception ex)
@@ -229,10 +240,7 @@ namespace NeAcconting.Controls.DatePicker
         /// load range of Year
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        private List<int> LoadYear(int year)
-        {
-            return Enumerable.Range(year - 50, 100).ToList();
-        }
+        private static List<int> LoadYear(int year) => Enumerable.Range(year - 50, 100).ToList();
 
         /// <summary>
         /// اضافه کردن تعداد مشخصی ماه به ورودی
@@ -241,7 +249,7 @@ namespace NeAcconting.Controls.DatePicker
         /// <param name="year">سال</param>
         /// <param name="month">ماه</param>
         /// <param name="number">تعداد ماهی که باید به ورودی اضافه شود</param>
-        void increasePersianMonth(ref int year, ref int month, int number)
+        static void IncreasePersianMonth(ref int year, ref int month, int number)
         {
             month += number;
             if (month > 12)
@@ -258,7 +266,7 @@ namespace NeAcconting.Controls.DatePicker
         /// <param name="year">سال</param>
         /// <param name="month">ماه</param>
         /// <param name="number">تعداد ماهی که باید از ورودی کم شود</param>
-        void decreasePersianMonth(ref int year, ref int month, int number)
+        static void DecreasePersianMonth(ref int year, ref int month, int number)
         {
             month -= number;
             if (month < 1)
@@ -276,7 +284,7 @@ namespace NeAcconting.Controls.DatePicker
         /// <param name="month">ماه</param>
         /// <param name="day">روز</param>
         /// <param name="number">تعداد روزی که باید به ورودی اضافه شود</param>
-        void increasePersianDay(ref int year, ref int month, ref int day, int number)
+        static void IncreasePersianDay(ref int year, ref int month, ref int day, int number)
         {
             int tempDay = day;
             tempDay += number;
@@ -284,25 +292,25 @@ namespace NeAcconting.Controls.DatePicker
             if (month <= 6 && tempDay > 31)
             {
                 day = number;
-                increasePersianMonth(ref year, ref month, 1);
+                IncreasePersianMonth(ref year, ref month, 1);
             }
             //5 ماه دوم سال 
             else if (month > 6 && month < 12 && tempDay > 30)
             {
                 day = number;
-                increasePersianMonth(ref year, ref month, 1);
+                IncreasePersianMonth(ref year, ref month, 1);
             }
             //اسفند در سال کبیسه
             else if (month == 12 && persianCalendar.IsLeapYear(year) && tempDay > 30)
             {
                 day = number;
-                increasePersianMonth(ref year, ref month, 1);
+                IncreasePersianMonth(ref year, ref month, 1);
             }
             //اسفند در سال غیر کبیسه
             else if (month == 12 && !persianCalendar.IsLeapYear(year) && tempDay > 29)
             {
                 day = number;
-                increasePersianMonth(ref year, ref month, 1);
+                IncreasePersianMonth(ref year, ref month, 1);
             }
             else
                 day += number;
@@ -316,7 +324,7 @@ namespace NeAcconting.Controls.DatePicker
         /// <param name="month">ماه</param>
         /// <param name="day">روز</param>
         /// <param name="number">تعداد روزی که باید از ورودی کم شود</param>
-        void decreasePersianDay(ref int year, ref int month, ref int day, int number)
+        static void DecreasePersianDay(ref int year, ref int month, ref int day, int number)
         {
             int tempDay = day;
             tempDay -= number;
@@ -327,7 +335,7 @@ namespace NeAcconting.Controls.DatePicker
                     day = 30 - number + 1;//+1 رو باید اضافه کرد در غیر این صورت محاسبات اشتباه میشوند ، تجربی
                 else
                     day = 29 - number + 1;
-                decreasePersianMonth(ref year, ref month, 1);
+                DecreasePersianMonth(ref year, ref month, 1);
             }
             else if (month <= 7 && month > 1 && tempDay < 1)
             {
@@ -338,7 +346,7 @@ namespace NeAcconting.Controls.DatePicker
             else if (month > 7 && month <= 12 && tempDay < 1)
             {
                 day = 30 - number + 1;
-                decreasePersianMonth(ref year, ref month, 1);
+                DecreasePersianMonth(ref year, ref month, 1);
             }
             else
                 day -= number;
@@ -348,130 +356,65 @@ namespace NeAcconting.Controls.DatePicker
         /// <summary>
         /// Converts a Persian weekday to equal of it in integer
         /// </summary>
-        int calculatePersianSpan(string weekday)
+        static int CalculatePersianSpan(string weekday)
         {
-            switch (weekday)
+            return weekday switch
             {
-                case "شنبه":
-                    return 0;
-
-                case "یک شنبه":
-                    return 1;
-
-                case "دو شنبه":
-                    return 2;
-
-                case "سه شنبه":
-                    return 3;
-
-                case "چهار شنبه":
-                    return 4;
-
-                case "پنج شنبه":
-                    return 5;
-
-                case "جمعه":
-                    return 6;
-
-                default:
-                    return 0;
-            }
+                "شنبه" => 0,
+                "یک شنبه" => 1,
+                "دو شنبه" => 2,
+                "سه شنبه" => 3,
+                "چهار شنبه" => 4,
+                "پنج شنبه" => 5,
+                "جمعه" => 6,
+                _ => 0,
+            };
         }
 
         /// <summary>
         /// Converts the input month number to short equal of it in Christian Calendar
         /// </summary>
-        string englishMonthName(int monthNumber)
+        static string EnglishMonthName(int monthNumber)
         {
-            switch (monthNumber)
+            return monthNumber switch
             {
-                case 01:
-                    return "Jan";
-
-                case 02:
-                    return "Feb";
-
-                case 03:
-                    return "Mar";
-
-                case 04:
-                    return "Apr";
-
-                case 05:
-                    return "May";
-
-                case 06:
-                    return "Jun";
-
-                case 07:
-                    return "Jul";
-
-                case 08:
-                    return "Aug";
-
-                case 09:
-                    return "Sep";
-
-                case 10:
-                    return "Oct";
-
-                case 11:
-                    return "Nov";
-
-                case 12:
-                    return "Dec";
-
-                default:
-                    return "";
-            }
+                01 => "Jan",
+                02 => "Feb",
+                03 => "Mar",
+                04 => "Apr",
+                05 => "May",
+                06 => "Jun",
+                07 => "Jul",
+                08 => "Aug",
+                09 => "Sep",
+                10 => "Oct",
+                11 => "Nov",
+                12 => "Dec",
+                _ => "",
+            };
         }
 
         /// <summary>
         /// Converts the input persian month name to equal of it in integer
         /// </summary>
-        int numberOfMonth(string persianMonthName)
+        static int NumberOfMonth(string persianMonthName)
         {
-            switch (persianMonthName)
+            return persianMonthName switch
             {
-                case "فروردین":
-                    return 1;
-
-                case "اردیبهشت":
-                    return 2;
-
-                case "خرداد":
-                    return 3;
-
-                case "تیر":
-                    return 4;
-
-                case "مرداد":
-                    return 5;
-
-                case "شهریور":
-                    return 6;
-
-                case "مهر":
-                    return 7;
-
-                case "آبان":
-                    return 8;
-
-                case "آذر":
-                    return 9;
-
-                case "دی":
-                    return 10;
-
-                case "بهمن":
-                    return 11;
-
-                case "اسفند":
-                    return 12;
-
-                default:
-                    return 0;
-            }
+                "فروردین" => 1,
+                "اردیبهشت" => 2,
+                "خرداد" => 3,
+                "تیر" => 4,
+                "مرداد" => 5,
+                "شهریور" => 6,
+                "مهر" => 7,
+                "آبان" => 8,
+                "آذر" => 9,
+                "دی" => 10,
+                "بهمن" => 11,
+                "اسفند" => 12,
+                _ => 0,
+            };
         }
 
         /// <summary>
@@ -481,8 +424,13 @@ namespace NeAcconting.Controls.DatePicker
         /// <param name="persianDate">Text of Persian date</param>
         /// <param name="persianTextBlockResourceName">New name of Persian date resource</param>
         /// <param name="tooltip_context">Text of tooltip</param>
-        void changeProperties(int which, string persianDate, bool isCurrentDay, string persianTextBlockResourceName, string tooltip_context)
+        void ChangeProperties(byte which, string persianDate, bool isCurrentDay, string persianTextBlockResourceName, string tooltip_context)
         {
+            if (persianTextBlockResourceName == "TextBlockStyle24")
+            {
+                selectedBtnIndex = which;
+            }
+
             switch (which)
             {
                 case 0:
@@ -901,10 +849,10 @@ namespace NeAcconting.Controls.DatePicker
         /// نمایش ماه بعد
         /// Shows the next month
         /// </summary>
-        void nextMonth_Click(object sender, RoutedEventArgs e)
+        void NextMonth_Click(object sender, RoutedEventArgs e)
         {
-            increasePersianMonth(ref yearForNavigating, ref monthForNavigating, 1);
-            calculateMonth(yearForNavigating, monthForNavigating);
+            IncreasePersianMonth(ref yearForNavigating, ref monthForNavigating, 1);
+            CalculateMonth(yearForNavigating, monthForNavigating);
             this.comboBoxMonths.SelectedIndex = monthForNavigating - 1;
             this.comboBoxYear.SelectedItem = yearForNavigating;
         }
@@ -913,10 +861,10 @@ namespace NeAcconting.Controls.DatePicker
         /// نمایش ماه قبل
         /// Shows the previous month
         /// </summary>
-        void previousMonth_Click(object sender, RoutedEventArgs e)
+        void PreviousMonth_Click(object sender, RoutedEventArgs e)
         {
-            decreasePersianMonth(ref yearForNavigating, ref monthForNavigating, 1);
-            calculateMonth(yearForNavigating, monthForNavigating);
+            DecreasePersianMonth(ref yearForNavigating, ref monthForNavigating, 1);
+            CalculateMonth(yearForNavigating, monthForNavigating);
             this.comboBoxMonths.SelectedIndex = monthForNavigating - 1;
             this.comboBoxYear.SelectedItem = yearForNavigating;
         }
@@ -925,46 +873,81 @@ namespace NeAcconting.Controls.DatePicker
         /// پرش به تاریخ امروز
         /// Shows the month of today
         /// </summary>
-        void goToToday_Click(object sender, RoutedEventArgs e)
+        void GoToToday_Click(object sender, RoutedEventArgs e)
         {
-            calculateMonth(this.currentYear, this.currentMonth);
+            CalculateMonth(this.currentYear, this.currentMonth);
         }
 
-        private void comboBoxMonths_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBoxMonths_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!IsCalculated)
             {
                 return;
             }
-            calculateMonth(yearForNavigating, comboBoxMonths.SelectedIndex + 1);
+            CalculateMonth(yearForNavigating, comboBoxMonths.SelectedIndex + 1);
         }
 
-        private void comboBoxYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBoxYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!IsCalculated)
             {
                 return;
             }
-            calculateMonth((int)comboBoxYear.SelectedItem, monthForNavigating);
+            CalculateMonth((int)comboBoxYear.SelectedItem, monthForNavigating);
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             int index = (sender as Button).TabIndex;
             var date = cal[index];
             SelectedDate = date;
-            PersianSelectedDate = string.Concat(yearForNavigating, "/", monthForNavigating, "/", persianCalendar.GetDayOfMonth(date));
-            Click?.Invoke(this, e);
+            //PersianSelectedDate = string.Concat(yearForNavigating, "/", monthForNavigating, "/", persianCalendar.GetDayOfMonth(date));
         }
         #endregion Events
 
-        private void UserControl_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             var _FrameworkElement = e.OriginalSource as FrameworkElement;
+            if (e.Key == Key.Left)
+            {
+                var date = cal[++selectedBtnIndex];
+                SelectedDate = date;
+                CalculateMonth(yearForNavigating, monthForNavigating);
+                return;
+            }
+            if (e.Key == Key.Right)
+            {
+                var date = cal[--selectedBtnIndex];
+                SelectedDate = date;
+                PersianSelectedDate = string.Concat(yearForNavigating, "/", monthForNavigating, "/", persianCalendar.GetDayOfMonth(date));
+                CalculateMonth(yearForNavigating, monthForNavigating);
+                return;
+            }
+            if (e.Key == Key.Up)
+            {
+                selectedBtnIndex -= 7;
+                var date = cal[selectedBtnIndex];
+                SelectedDate = date;
+                CalculateMonth(yearForNavigating, monthForNavigating);
+                return;
+            }
+            if (e.Key == Key.Down)
+            {
+                selectedBtnIndex += 7;
+                var date = cal[selectedBtnIndex];
+                SelectedDate = date;
+                CalculateMonth(yearForNavigating, monthForNavigating);
+                return;
+            }
             if (e.Key == Key.Enter)
             {
                 if (e.OriginalSource is Button) return;
-                _FrameworkElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                bool s = _FrameworkElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
+        }
+
+        private void UserControl_GotFocus(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

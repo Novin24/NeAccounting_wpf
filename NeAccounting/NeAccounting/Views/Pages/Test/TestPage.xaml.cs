@@ -1,5 +1,4 @@
 ﻿using NeAccounting.ViewModels;
-using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages.Test
@@ -18,5 +17,9 @@ namespace NeAccounting.Views.Pages.Test
             InitializeComponent();
         }
 
+    }
+    public class Person
+    {
+        public string Name { get; set; }
     }
 }
