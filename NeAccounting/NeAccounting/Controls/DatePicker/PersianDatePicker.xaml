@@ -119,14 +119,13 @@
                AllowsTransparency="True"
                PlacementTarget="{Binding ElementName=dateTextBox}"
                StaysOpen="False"
-               Opened="persianCalnedarPopup_Opened">
+               Opened="PersianCalnedarPopup_Opened">
             <Grid>
                 <local:ShamsiDate x:Name="persianCalendar"
                                   IsTabStop="True"
                                   Focusable="True"
-                                  Click="persianCalendar_Click"
-                                  SelectedDate="{Binding SelectedDate ,Mode=TwoWay , ElementName=pfp}"
-                                  PersianSelectedDate="{Binding DisplayDate , Mode=OneWayToSource ,ElementName=pfp}"/>
+                                  Click="PersianCalendar_Click"
+                                  SelectedDate="{Binding SelectedDate ,Mode=TwoWay , ElementName=pfp}"/>
 
             </Grid>
         </Popup>

@@ -12,13 +12,7 @@ namespace NeAcconting.Controls.DatePicker
         public PersianDatePicker()
         {
             InitializeComponent();
-            //dateTextBox.Text = PersianSelectedDate;
-            //persianCalendar.Click += (object sender, RoutedEventArgs e) =>
-            //{
-            //    this.persianCalnedarPopup.IsOpen = false;
-            //};
             dateTextBox.Text = persianCalendar.PersianSelectedDate;
-
         }
 
 
@@ -36,19 +30,7 @@ namespace NeAcconting.Controls.DatePicker
             DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(PersianDatePicker), new PropertyMetadata(DateTime.Now));
 
 
-        public string DisplayDate
-        {
-            get
-            {
-                var s = (string)GetValue(DisplayDateProperty);
-                return s;
-            }
-            set { SetValue(DisplayDateProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for DisplayDate.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty DisplayDateProperty =
-            DependencyProperty.Register("DisplayDate", typeof(string), typeof(PersianDatePicker), new PropertyMetadata(string.Empty));
+        public string DisplayDate { get;set; }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -56,15 +38,20 @@ namespace NeAcconting.Controls.DatePicker
             persianCalnedarPopup.IsOpen = true;
         }
 
-        private void persianCalnedarPopup_Opened(object sender, EventArgs e)
+        private void PersianCalnedarPopup_Opened(object sender, EventArgs e)
         {
             this.persianCalendar.Focus();
         }
 
-        private void persianCalendar_Click(object sender, RoutedEventArgs e)
+        private void PersianCalendar_Click(object sender, RoutedEventArgs e)
         {
             persianCalnedarPopup.IsOpen = false;
             dateTextBox.Text = persianCalendar.PersianSelectedDate;
+        }
+
+        private void PersianCalendar_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+
         }
     }
 }

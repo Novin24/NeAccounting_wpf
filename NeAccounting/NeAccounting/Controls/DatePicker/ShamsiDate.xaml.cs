@@ -61,20 +61,16 @@ namespace NeAcconting.Controls.DatePicker
             shamsiDate.InitialCalculator(selectedYear, selectedMonth, selectedDay);
         }
 
+        private string _persianSelectedDate;
 
         public string PersianSelectedDate
         {
             get
             {
-                return (string)GetValue(PersianSelectedDateProperty);
+                return _persianSelectedDate;
             }
-            set { SetValue(PersianSelectedDateProperty, value); }
+            set { _persianSelectedDate = value; }
         }
-
-        // Using a DependencyProperty as the backing store for PersianSelectedDate.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PersianSelectedDateProperty =
-            DependencyProperty.Register("PersianSelectedDate", typeof(string), typeof(ShamsiDate), new PropertyMetadata(string.Empty));
-
 
 
 
