@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NeAccounting.Views.Pages.Creditors
+namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for CreditorsListPage.xaml
