@@ -18,8 +18,4 @@ namespace NeAccounting.Views.Pages.Test
         }
 
     }
-    public class Person
-    {
-        public string Name { get; set; }
-    }
 }

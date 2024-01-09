@@ -5,7 +5,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              PreviewKeyDown="UserControl_PreviewKeyDown"
-             GotFocus="UserControl_GotFocus"
              xmlns:local="clr-namespace:NeAcconting.Controls.DatePicker"
              mc:Ignorable="d">
     <UserControl.Resources>

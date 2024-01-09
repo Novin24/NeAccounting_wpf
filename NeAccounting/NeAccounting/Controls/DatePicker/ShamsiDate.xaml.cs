@@ -16,6 +16,7 @@ namespace NeAcconting.Controls.DatePicker
 
         private static PersianCalendar persianCalendar = new PersianCalendar();
         public event RoutedEventHandler Click;
+        public event RoutedEventHandler MKeyDown;
 
         //اطلاعات تاریخ امروز 
         private readonly int currentYear = 1387;
@@ -27,7 +28,7 @@ namespace NeAcconting.Controls.DatePicker
         private static int selectedYear = 1387;
         private static int selectedMonth = 10;
         private static int selectedDay = 1;
-        private static byte selectedBtnIndex = 0;
+        private static int selectedBtnIndex = 0;
 
         //برای حرکت بین ماه ها
         //به شمسی
@@ -126,9 +127,6 @@ namespace NeAcconting.Controls.DatePicker
 
                 int thisDay = 1;
                 TextBlockThisMonth.Text = "";
-                //TextBlockThisMonth.Text =
-                //    monthForNavigating.convertToPersianMonth() + " " +
-                //    yearForNavigating.convertToPersianNumber();
 
                 //Different between first place of calendar and first place of this month
                 //اختلاف بین خانه شروع ماه و اولین خانه تقویم            
@@ -138,10 +136,8 @@ namespace NeAcconting.Controls.DatePicker
                 DecreasePersianDay(ref thisYear, ref thisMonth, ref thisDay, span);
 
                 string persianDate;//حاوی تاریخ روزهای شمسی Contains the date of Persian
-                //string christianDate;//حاوی تاریخ روزهای میلادی Contains the date of Christian
-                //string hijriDate;//حاوی تاریخ روزهای قمری Contains the date of Hijri
 
-                string tooltip_context = "";//Contains the text of tooltip
+                string tooltip_context = "";
 
                 ////////////////////////////////////
 
@@ -896,7 +892,7 @@ namespace NeAcconting.Controls.DatePicker
             int index = (sender as Button).TabIndex;
             var date = cal[index];
             SelectedDate = date;
-            //PersianSelectedDate = string.Concat(yearForNavigating, "/", monthForNavigating, "/", persianCalendar.GetDayOfMonth(date));
+            Click?.Invoke(this, e);
         }
         #endregion Events
 
@@ -905,45 +901,64 @@ namespace NeAcconting.Controls.DatePicker
             var _FrameworkElement = e.OriginalSource as FrameworkElement;
             if (e.Key == Key.Left)
             {
-                var date = cal[++selectedBtnIndex];
+                var date = SetSelectedBtnIndex(1);
                 SelectedDate = date;
-                CalculateMonth(yearForNavigating, monthForNavigating);
                 return;
             }
             if (e.Key == Key.Right)
             {
-                var date = cal[--selectedBtnIndex];
+                var date = SetSelectedBtnIndex(-1);
                 SelectedDate = date;
-                PersianSelectedDate = string.Concat(yearForNavigating, "/", monthForNavigating, "/", persianCalendar.GetDayOfMonth(date));
-                CalculateMonth(yearForNavigating, monthForNavigating);
                 return;
             }
             if (e.Key == Key.Up)
             {
-                selectedBtnIndex -= 7;
-                var date = cal[selectedBtnIndex];
+                var date = SetSelectedBtnIndex(-7);
                 SelectedDate = date;
-                CalculateMonth(yearForNavigating, monthForNavigating);
                 return;
             }
             if (e.Key == Key.Down)
             {
-                selectedBtnIndex += 7;
-                var date = cal[selectedBtnIndex];
+                var date = SetSelectedBtnIndex(7);
                 SelectedDate = date;
-                CalculateMonth(yearForNavigating, monthForNavigating);
                 return;
             }
             if (e.Key == Key.Enter)
             {
-                if (e.OriginalSource is Button) return;
-                bool s = _FrameworkElement.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                Click?.Invoke(this, e);
             }
+
+            MKeyDown?.Invoke(this, e);
         }
 
-        private void UserControl_GotFocus(object sender, RoutedEventArgs e)
+        private DateTime SetSelectedBtnIndex(int v)
         {
+            selectedBtnIndex += v;
+            if (selectedBtnIndex < 0)
+            {
+                selectedBtnIndex = 41 + selectedBtnIndex;
+                cal[selectedBtnIndex] = cal[selectedBtnIndex].AddMonths(-1);
+                monthForNavigating--;
+            }
+            else if (selectedBtnIndex > 41)
+            {
+                selectedBtnIndex -= 41;
+                cal[selectedBtnIndex] = cal[selectedBtnIndex].AddMonths(1);
+                monthForNavigating++;
 
+            }
+            if (monthForNavigating > 12)
+            {
+                yearForNavigating++;
+                cal[selectedBtnIndex] = cal[selectedBtnIndex].AddYears(1);
+                monthForNavigating = 1;
+            }
+            if (monthForNavigating < 1)
+            {
+                yearForNavigating++;
+                monthForNavigating = 1;
+            }
+            return cal[selectedBtnIndex];
         }
     }
 

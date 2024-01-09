@@ -125,6 +125,7 @@
                                   IsTabStop="True"
                                   Focusable="True"
                                   Click="PersianCalendar_Click"
+                                  PreviewKeyDown="PersianCalendar_PreviewKeyDown"
                                   SelectedDate="{Binding SelectedDate ,Mode=TwoWay , ElementName=pfp}"/>
 
             </Grid>

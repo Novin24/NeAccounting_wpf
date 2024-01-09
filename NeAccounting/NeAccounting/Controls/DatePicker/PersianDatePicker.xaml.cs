@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace NeAcconting.Controls.DatePicker
 {
@@ -49,9 +50,9 @@ namespace NeAcconting.Controls.DatePicker
             dateTextBox.Text = persianCalendar.PersianSelectedDate;
         }
 
-        private void PersianCalendar_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void PersianCalendar_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-
+            dateTextBox.Text = persianCalendar.PersianSelectedDate;
         }
     }
 }
