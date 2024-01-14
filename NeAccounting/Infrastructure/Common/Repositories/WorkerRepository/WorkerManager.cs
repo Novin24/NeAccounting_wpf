@@ -7,6 +7,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
 using System.Globalization;
+using System.Security.Cryptography;
 
 namespace Infrastructure.Repositories
 {
@@ -299,6 +300,8 @@ namespace Infrastructure.Repositories
             var worker = await TableNoTracking
                 .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
                 .ThenInclude(c => c.Aids)
+                .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
+                .ThenInclude(f => f.Functions)
                 .FirstAsync(t => t.Id == workerId);
 
 
@@ -344,7 +347,7 @@ namespace Infrastructure.Repositories
             var persianMonth = pc.GetMonth(submitDate);
             var persianYear = pc.GetYear(submitDate);
 
-            var worker = await TableNoTracking
+            var worker = await Entities
                 .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
                 .ThenInclude(c => c.Functions)
                 .FirstOrDefaultAsync(t => t.Id == workerId);
@@ -406,11 +409,11 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<List<FunctionListViewModel>> GetFunctionList(int? workerId = null)
+        public async Task<List<FunctionViewModel>> GetFunctionList(int workerId)
         {
             return await (from worker in DbContext.Set<Worker>()
                                                              .AsNoTracking()
-                                                             .Where(t => workerId == null || t.Id == workerId)
+                                                             .Where(t => workerId == -1 || t.Id == workerId)
 
                           join salary in DbContext.Set<Salary>()
                                                   on worker.Id equals salary.WorkerId
@@ -418,14 +421,79 @@ namespace Infrastructure.Repositories
                           join func in DbContext.Set<Function>()
                                                   on salary.Id equals func.SalaryId
 
-                          select new FunctionListViewModel()
+                          select new FunctionViewModel()
                           {
-                              Id = func.Id,
                               Name = worker.FullName,
-                              AmountOf = func.AmountOf,
-                              AmountOfOverTime = func.AmountOfOverTime,
-                              Date = func.SubmitDate
+                              Amountof = func.AmountOf,
+                              OverTime = func.AmountOfOverTime,
+                              Description = func.Description,
+                              PersonelId = worker.PersonnelId,
+                              Date = func.SubmitDate,
+                              Details = new FucntionDetails() { Id = func.Id, SalaryId = salary.Id, WorkerId = worker.Id }
                           }).ToListAsync();
+        }
+
+        public async Task<(string error, bool isSuccess)> UpdateFunc(
+           int workerId,
+           int salaryId,
+           int funcId,
+           byte amountOf,
+           byte overTime,
+           string? description)
+        {
+
+            var worker = await Entities
+                .Include(t => t.Salaries.Where(s => s.Id == salaryId))
+                .ThenInclude(c => c.Functions.Where(c => c.Id == funcId))
+                .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Aids.Count == 0)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+
+            var func = worker.Salaries.First().Functions.First();
+            if (func == null)
+            {
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+            }
+            func.AmountOf = amountOf;
+            func.AmountOfOverTime = overTime;
+            func.Description = description;
+
+            try
+            {
+                Entities.Update(worker);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int salaryId, int aidId)
+        {
+            var worker = await Entities
+               .Include(t => t.Salaries.Where(s => s.Id == salaryId))
+               .ThenInclude(c => c.Functions.Where(c => c.Id == aidId))
+               .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Functions.Count == 0)
+            {
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+            }
+
+            var func = worker.Salaries.First().Functions;
+            func.Remove(worker.Salaries.First().Functions.First());
+            try
+            {
+                Entities.Update(worker);
+                await DbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
         }
         #endregion
 
@@ -440,7 +508,7 @@ namespace Infrastructure.Repositories
             var persianMonth = pc.GetMonth(submitDate);
             var persianYear = pc.GetYear(submitDate);
 
-            var worker = await TableNoTracking
+            var worker = await Entities
                 .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
                 .ThenInclude(c => c.Aids)
                 .FirstOrDefaultAsync(t => t.Id == workerId);
@@ -507,7 +575,7 @@ namespace Infrastructure.Repositories
             string? description)
         {
 
-            var worker = await TableNoTracking
+            var worker = await Entities
                 .Include(t => t.Salaries.Where(s => s.Id == salaryId))
                 .ThenInclude(c => c.Aids.Where(c => c.Id == aidId))
                 .FirstOrDefaultAsync(t => t.Id == workerId);
@@ -534,11 +602,11 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<List<AidViewModel>> GetAidList(int? workerId = null)
+        public async Task<List<AidViewModel>> GetAidList(int workerId)
         {
             return await (from worker in DbContext.Set<Worker>()
                                                    .AsNoTracking()
-                                                   .Where(t => workerId == null || t.Id == workerId)
+                                                   .Where(t => workerId == -1 || t.Id == workerId)
 
                           join salary in DbContext.Set<Salary>()
                                                   on worker.Id equals salary.WorkerId
@@ -559,6 +627,32 @@ namespace Infrastructure.Repositories
 
         }
 
+
+        public async Task<(string error, bool isSuccess)> DeleteAid(int workerId, int salaryId, int aidId)
+        {
+            var worker = await Entities
+               .Include(t => t.Salaries.Where(s => s.Id == salaryId))
+               .ThenInclude(c => c.Aids.Where(c => c.Id == aidId))
+               .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Aids.Count == 0)
+            {
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+            }
+
+            var aid = worker.Salaries.First().Aids.First();
+            worker.Salaries.First().Aids.Remove(aid);
+            try
+            {
+                Entities.Update(worker);
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
         #endregion
     }
 }

@@ -77,7 +77,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private void OAddClick(string parameter)
+        private void OnAddClick(string parameter)
         {
             if (String.IsNullOrWhiteSpace(parameter))
             {

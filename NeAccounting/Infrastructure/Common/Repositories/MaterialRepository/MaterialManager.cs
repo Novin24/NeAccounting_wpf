@@ -43,6 +43,7 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> CreateMaterial(string name,
             int unitId,
+            long lastPrice,
             string serial,
             string address,
             bool isManufacturedGoods)
@@ -55,6 +56,7 @@ namespace Infrastructure.Repositories
 
                 var t = await Entities.AddAsync(new Material(name,
                                 unitId,
+                                lastPrice,
                                 serial,
                                 address,
                                 isManufacturedGoods));

@@ -75,11 +75,11 @@ namespace NeAccounting
                 #endregion
 
                 #region function
-                //services.AddTransient<FinancialAidListPage>();
-                //services.AddTransient<AidListViewModel>();
+                services.AddTransient<FunctionListPage>();
+                services.AddTransient<FunctionListViewModel>();
 
-                //services.AddTransient<CreateFinancialAidPage>();
-                //services.AddTransient<CreateFinancialAidViewModel>();
+                services.AddTransient<CreateFunctionPage>();
+                services.AddTransient<CreateFunctionViewModel>();
 
                 //services.AddTransient<UpdateFinancialAidPage>();
                 //services.AddTransient<UpdateFinancialAidViewModel>();

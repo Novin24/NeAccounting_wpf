@@ -6,6 +6,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:NeAcconting.Controls.DatePicker"
              Name="pfp"
+             Focusable="True"
+             IsTabStop="True"
              mc:Ignorable="d"
              BorderThickness="1"
              KeyboardNavigation.TabNavigation="Once">
@@ -89,10 +91,12 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid >
+    <Grid>
         <Button Style="{StaticResource openCalendarButtonStyle}"
                 Name="openCalendarButton"
                 VerticalAlignment="Center"
+                IsTabStop="True"
+                Focusable="True"
                 HorizontalAlignment="Left"
                 Click="Button_Click">
             <ui:SymbolIcon Symbol="CalendarRtl24"
@@ -104,10 +108,8 @@
                     IsReadOnly="True"
                     HorizontalAlignment="Stretch"
                     MaxLines="1"
-                    Focusable="False"
                     IsTabStop="False"
                     MinWidth="80"
-                    Text="{Binding PersianSelectedDate , Mode=OneWay , ElementName=pfp}"
                     FontSize="14"
                     Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                     TextAlignment="Center"
@@ -119,11 +121,15 @@
                AllowsTransparency="True"
                PlacementTarget="{Binding ElementName=dateTextBox}"
                StaysOpen="False"
-               Opened="persianCalnedarPopup_Opened">
+               Opened="PersianCalnedarPopup_Opened">
             <Grid>
                 <local:ShamsiDate x:Name="persianCalendar"
-                                  SelectedDate="{Binding SelectedDate ,Mode=TwoWay , ElementName=pfp}"
-                                  PersianSelectedDate="{Binding PersianSelectedDate , Mode=OneWayToSource ,ElementName=pfp}"/>
+                                  IsTabStop="True"
+                                  Focusable="True"
+                                  Click="PersianCalendar_Click"
+                                  PreviewKeyDown="PersianCalendar_PreviewKeyDown"
+                                  PersianSelectedDate="{Binding DisplayDate ,Mode=TwoWay , ElementName=pfp}"
+                                  SelectedDate="{Binding SelectedDate ,Mode=TwoWay , ElementName=pfp}"/>
 
             </Grid>
         </Popup>

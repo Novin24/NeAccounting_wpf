@@ -269,6 +269,8 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id");
+
                     b.HasIndex("UnitId");
 
                     b.ToTable("Material");
@@ -601,9 +603,9 @@ namespace Infrastructure.Migrations.NovinDb
             modelBuilder.Entity("Domain.NovinEntity.Materials.Material", b =>
                 {
                     b.HasOne("Domain.NovinEntity.Materials.Unit", "Unit")
-                        .WithMany()
+                        .WithMany("Materials")
                         .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Unit");
@@ -614,7 +616,7 @@ namespace Infrastructure.Migrations.NovinDb
                     b.HasOne("Domain.NovinEntity.Workers.Salary", "Salary")
                         .WithMany("Aids")
                         .HasForeignKey("SalaryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Salary");
@@ -625,7 +627,7 @@ namespace Infrastructure.Migrations.NovinDb
                     b.HasOne("Domain.NovinEntity.Workers.Salary", "Salary")
                         .WithMany("Functions")
                         .HasForeignKey("SalaryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Salary");
@@ -636,10 +638,15 @@ namespace Infrastructure.Migrations.NovinDb
                     b.HasOne("Domain.NovinEntity.Workers.Worker", "Worker")
                         .WithMany("Salaries")
                         .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Worker");
+                });
+
+            modelBuilder.Entity("Domain.NovinEntity.Materials.Unit", b =>
+                {
+                    b.Navigation("Materials");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Salary", b =>

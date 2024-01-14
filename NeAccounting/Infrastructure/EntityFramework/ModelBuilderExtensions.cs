@@ -1,5 +1,6 @@
 ﻿using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
+using Domain.NovinEntity.Materials;
 using Domain.NovinEntity.Workers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -41,13 +42,22 @@ namespace Infrastructure.Utilities
                 b.Property(t => t.JobTitle).IsRequired();
             });
 
+            builder.Entity<Material>(b =>
+            {
+                b.HasIndex(t => t.Id);
+                b.HasOne(t => t.Unit)
+                .WithMany(s => s.Materials)
+                .HasForeignKey(t => t.UnitId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
+
             builder.Entity<Salary>(b =>
             {
                 b.HasIndex(t => t.WorkerId);
                 b.HasOne(t => t.Worker)
                 .WithMany(s => s.Salaries)
-                .HasForeignKey(t => t.WorkerId);
-
+                .HasForeignKey(t => t.WorkerId)
+                .OnDelete(DeleteBehavior.Cascade);
             });
 
             builder.Entity<Function>(b =>
@@ -55,9 +65,20 @@ namespace Infrastructure.Utilities
                 b.HasIndex(t => t.SalaryId);
                 b.HasOne(t => t.Salary)
                 .WithMany(s => s.Functions)
-                .HasForeignKey(t => t.SalaryId);
-
+                .HasForeignKey(t => t.SalaryId)
+                .OnDelete(DeleteBehavior.Cascade);
             });
+
+            builder.Entity<FinancialAid>(b =>
+            {
+                b.HasIndex(t => t.SalaryId);
+                b.HasOne(t => t.Salary)
+                .WithMany(s => s.Aids)
+                .HasForeignKey(t => t.SalaryId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
+
+
 
         }
 

@@ -1,10 +1,12 @@
 ﻿using Domain.Common;
+using Domain.NovinEntity.Workers;
 
 namespace Domain.NovinEntity.Materials
 {
     public class Unit : LocalEntity
     {
         #region Navigation
+        public ICollection<Material> Materials { get; private set; }
         #endregion
 
         #region Property
@@ -16,13 +18,13 @@ namespace Domain.NovinEntity.Materials
         #region ctor
         internal Unit()
         {
-                
+
         }
 
         public Unit(string name,
             string description)
         {
-                Name = name;
+            Name = name;
             Descrip = description;
             Active = true;
         }

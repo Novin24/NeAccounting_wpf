@@ -71,11 +71,6 @@ namespace NeAccounting.ViewModels
 
                     new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.MoneyCalculator20} },
 
-                #region Worker
-                    new NavigationViewItem { Content = "حقوق و مساعده", TargetPageType = typeof(CreateSalaryPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonMoney20} },
-                    new NavigationViewItem { Content = "ثبت کارکرد", TargetPageType = typeof(CreateFunctionPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonClock20} },
-                #endregion
-
                 #region Doc
                     new NavigationViewItem {Content = "دریافتی از مشتری",TargetPageType = typeof(RecPage),Icon = new SymbolIcon { Symbol = SymbolRegular.CreditCardPerson20 }},
                     new NavigationViewItem {Content = "پرداختی به مشتری",TargetPageType = typeof(PayPage),Icon = new SymbolIcon { Symbol = SymbolRegular.CreditCardPerson20 }},
@@ -97,7 +92,7 @@ namespace NeAccounting.ViewModels
             new NavigationViewItem()
             {
                 Content = "پرسنل",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.Timeline20 },
+                Icon = new SymbolIcon { Symbol = SymbolRegular.LayerDiagonalPerson20 },
                 //TargetPageType = typeof(MaterailListPage)
                 MenuItems = new ObservableCollection<object>
                 {
@@ -107,14 +102,22 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem(){Content = "افزودن پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage),
                         Visibility = Visibility.Collapsed},
 
+                    new NavigationViewItem { Content = "صدور فیش حقوقی", TargetPageType = typeof(CreateSalaryPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PersonMoney20} },
 
-                    new NavigationViewItem(){Content = "مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(FinancialAidListPage)},
+
+                    new NavigationViewItem(){Content = "مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.PersonMoney20},TargetPageType = typeof(FinancialAidListPage)},
                     new NavigationViewItem(){Content = "افزودن مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateFinancialAidPage),
                         Visibility = Visibility.Collapsed},
-                    new NavigationViewItem(){Content = "ویرایش مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateSalaryPage),
+                    new NavigationViewItem(){Content = "ویرایش مساعده",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateFinancialAidPage),
                         Visibility = Visibility.Collapsed},
 
-                    new NavigationViewItem(){Content = "کارکرد",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage)},
+
+                    new NavigationViewItem(){Content = "کارکرد",Icon = new SymbolIcon { Symbol = SymbolRegular.NotepadPerson20},TargetPageType = typeof(FunctionListPage)},
+                    new NavigationViewItem(){Content = "افزودن کارکرد",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateFunctionPage),
+                        Visibility = Visibility.Collapsed},
+                    //new NavigationViewItem(){Content = "ویرایش کارکر",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateFunctionPage),
+                    //    Visibility = Visibility.Collapsed},
+
                 }
             },
             new NavigationViewItem()

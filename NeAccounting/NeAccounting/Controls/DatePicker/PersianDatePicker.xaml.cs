@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace NeAcconting.Controls.DatePicker
 {
@@ -7,30 +8,11 @@ namespace NeAcconting.Controls.DatePicker
     [DefaultProperty("SelectedDate")]
     public partial class PersianDatePicker : UserControl
     {
-
-
         public PersianDatePicker()
         {
             InitializeComponent();
-            //dateTextBox.Text = PersianSelectedDate;
-            persianCalendar.Click += (object sender, RoutedEventArgs e) =>
-            {
-                this.persianCalnedarPopup.IsOpen = false;
-                //dateTextBox.Text = persianCalendar.PersianSelectedDate;
-            };
+            dateTextBox.Text = persianCalendar.PersianSelectedDate;
         }
-
-        //[Category("Date Picker")]
-        //public DateTime SelectedDate
-        //{
-        //    get { return persianCalendar.SelectedDate; }
-        //    set
-        //    {
-        //        persianCalendar.SelectedDate = value;
-        //        dateTextBox.Text = persianCalendar.PersianSelectedDate;
-        //    }
-        //}
-
 
 
         public DateTime SelectedDate
@@ -45,51 +27,25 @@ namespace NeAcconting.Controls.DatePicker
         // Using a DependencyProperty as the backing store for SelectedDate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedDateProperty =
             DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(PersianDatePicker), new PropertyMetadata(DateTime.Now));
-
-        //private static void SelectedDayChenged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        //{
-        //    if (obj is not PersianDatePicker ps)
-        //        return;
-        //    var t = (DateTime)args.NewValue;
-        //    ps.SetDateBox();
-        //}
-
-        //private void SetDateBox()
-        //{ 
-        //    dateTextBox.Text = persianCalendar.PersianSelectedDate;
-        //}
-
-        /// <summary>
-        /// Gets or sets the date that is being displayed in the calendar.
-        /// </summary>
-        //[Category("Date Picker")]
-        //public string DisplayDate
-        //{
-        //    get { return dateTextBox.Text; }
-        //    set { dateTextBox.Text = value; }
-        //}
-
-
-
-        public string PersianSelectedDate
+        public string DisplayDate
         {
-            get 
-            { 
-                    var s = (string)GetValue(PersianSelectedDateProperty);
-                return s;
-            }
-            set { SetValue(PersianSelectedDateProperty, value); }
+            get { return (string)GetValue(DisplayDateProperty); }
+            set { SetValue(DisplayDateProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for DisplayDate.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PersianSelectedDateProperty =
-            DependencyProperty.Register("PersianSelectedDate", typeof(string), typeof(PersianDatePicker), new PropertyMetadata(string.Empty, SelectedDayChenged));
+        public static readonly DependencyProperty DisplayDateProperty =
+            DependencyProperty.Register("DisplayDate", typeof(string), typeof(PersianDatePicker), new PropertyMetadata("... تاریخ امروز",SetDate));
 
-        private static void SelectedDayChenged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        private static void SetDate(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            if (obj is not PersianDatePicker ps)
+            if (obj is not PersianDatePicker pdp)
                 return;
-            var t = (string)args.NewValue;
+
+            if (args.NewValue.ToString() == args.OldValue.ToString())
+                return;
+
+           pdp.dateTextBox.Text = args.NewValue.ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -97,15 +53,21 @@ namespace NeAcconting.Controls.DatePicker
             persianCalnedarPopup.IsOpen = true;
         }
 
-        private void persianCalnedarPopup_Opened(object sender, EventArgs e)
+        private void PersianCalnedarPopup_Opened(object sender, EventArgs e)
         {
             this.persianCalendar.Focus();
         }
 
-        protected override void OnGotFocus(RoutedEventArgs e)
+        private void PersianCalendar_Click(object sender, RoutedEventArgs e)
         {
-            base.OnGotFocus(e);
-            openCalendarButton.Focus();
+            persianCalnedarPopup.IsOpen = false;
+            //dateTextBox.Text = persianCalendar.PersianSelectedDate;
+            dateTextBox.Focus();
+        }
+
+        private void PersianCalendar_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            //dateTextBox.Text = persianCalendar.PersianSelectedDate;
         }
     }
 }

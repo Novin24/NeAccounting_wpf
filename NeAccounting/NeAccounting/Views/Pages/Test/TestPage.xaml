@@ -9,17 +9,14 @@
                                      IsDesignTimeCreatable=False}"
       xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
       mc:Ignorable="d"
-      Background="Gray"
-      Height="600"
+      Background="DarkCyan"
+      Height="800"
+      Width="600"
       Title="TestPage">
 
-    <Grid    Height="430">
-        <WrapPanel>
-
-            <ui:AutoSuggestBox Width="80"
-                               Name="txtName"></ui:AutoSuggestBox>
-            <ui:TextBox Width="100" />
-        </WrapPanel>
-
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Height="30">
+            <datepicker:PersianDatePicker />
+        </StackPanel>
     </Grid>
 </Page>

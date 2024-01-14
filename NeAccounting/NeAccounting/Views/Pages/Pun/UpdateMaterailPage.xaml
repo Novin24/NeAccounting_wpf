@@ -144,7 +144,7 @@
                                           FlowDirection="LeftToRight"
                                           TextAlignment="Center"
                                           SpinButtonPlacementMode="Hidden"
-                                          Text="{Binding ViewModel.LastSellPrice, Mode=OneWayToSource}"
+                                          Text="{Binding ViewModel.LastSellPrice, Mode=TwoWay}"
                                           FontSize="14"
                                           FontFamily="Calibri" />
                         </StackPanel>
