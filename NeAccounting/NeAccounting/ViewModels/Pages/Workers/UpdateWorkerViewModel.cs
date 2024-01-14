@@ -36,7 +36,7 @@ namespace NeAccounting.ViewModels
         private int _personalId = 0;
 
         [ObservableProperty]
-        private DateTime _startDate;
+        private DateTime _startDate = DateTime.Now;
 
         [ObservableProperty]
         private string _accountNumber;

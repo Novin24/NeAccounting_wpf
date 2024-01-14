@@ -15,7 +15,6 @@ namespace NeAccounting.ViewModels
         private readonly INavigationService _navigationService;
 
         public UpdateMaterailViewModel(ISnackbarService snackbarService, INavigationService navigationService)
-
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
@@ -34,7 +33,7 @@ namespace NeAccounting.ViewModels
         private string _address;
 
         [ObservableProperty]
-        private long? _lastSellPrice;
+        private long _lastSellPrice;
 
         [ObservableProperty]
         private int _unitId = 0;
@@ -85,14 +84,9 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مکان فیزیکی کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
                 return;
             }
-            if (LastSellPrice == null || LastSellPrice == 0)
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اخرین قیمت فروش"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
-                return;
-            }
 
             using UnitOfWork db = new();
-            (string error, bool isSuccess) = await db.materialManager.UpdateMaterial(MaterialId, MaterialName, UnitId, Serial, Address, LastSellPrice.Value, IsManufacturedGoods);
+            (string error, bool isSuccess) = await db.materialManager.UpdateMaterial(MaterialId, MaterialName, UnitId, Serial, Address, LastSellPrice, IsManufacturedGoods);
 
             if (!isSuccess)
             {

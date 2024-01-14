@@ -191,8 +191,6 @@
                                     <datepicker:PersianDatePicker FontSize="14"
                                                                   FlowDirection="LeftToRight"
                                                                   FontFamily="Calibri"
-                                                                  Focusable="True"
-                                                                  IsTabStop="True"
                                                                   x:Name="dtp"
                                                                   SelectedDate="{Binding ViewModel.PayDate , Mode=TwoWay}"
                                                                   Margin="0 4 0 0" />

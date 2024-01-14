@@ -111,7 +111,7 @@
                                                FontFamily="Calibri"
                                                FontSize="15"
                                                Padding="9 0"
-                                               Command="{Binding ViewModel.OAddClickCommand, Mode=OneWay}"
+                                               Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
                                                CommandParameter="CreateWorker"
                                                IsChevronVisible="False"
                                                HorizontalAlignment="Right">

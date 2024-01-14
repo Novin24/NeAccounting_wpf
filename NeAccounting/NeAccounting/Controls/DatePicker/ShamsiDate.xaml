@@ -770,8 +770,8 @@
                         <Button x:Name="TextBlock3Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
-                                TabIndex="23"
-                                MinWidth="31"
+                                TabIndex="31"
+                                MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
                         <Rectangle x:Name="Rectangle3Shanbe4" />

@@ -62,19 +62,17 @@ namespace NeAcconting.Controls.DatePicker
             shamsiDate.InitialCalculator(selectedYear, selectedMonth, selectedDay);
         }
 
-        private string _persianSelectedDate;
+
 
         public string PersianSelectedDate
         {
-            get
-            {
-                return _persianSelectedDate;
-            }
-            set { _persianSelectedDate = value; }
+            get { return (string)GetValue(PersianSelectedDateProperty); }
+            set { SetValue(PersianSelectedDateProperty, value); }
         }
 
-
-
+        // Using a DependencyProperty as the backing store for PersianSelectedDate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PersianSelectedDateProperty =
+            DependencyProperty.Register("PersianSelectedDate", typeof(string), typeof(ShamsiDate), new PropertyMetadata(string.Empty));
 
         #endregion
 
@@ -132,7 +130,7 @@ namespace NeAcconting.Controls.DatePicker
                 //اختلاف بین خانه شروع ماه و اولین خانه تقویم            
                 string DayOfWeek = persianCalendar.GetDayOfWeek(persianCalendar.ToDateTime(thisYear, thisMonth, 01, 01, 01, 01, 01)).ToString();
                 int span = CalculatePersianSpan(DayOfWeek.convertToPersianDay());
-
+                span += 7;
                 DecreasePersianDay(ref thisYear, ref thisMonth, ref thisDay, span);
 
                 string persianDate;//حاوی تاریخ روزهای شمسی Contains the date of Persian
@@ -141,10 +139,16 @@ namespace NeAcconting.Controls.DatePicker
 
                 ////////////////////////////////////
 
-                for (byte i = 0; i < 6 * 7; i++)
+                for (int i = -7; i < 7 * 7; i++)
                 {
                     tempDateTime = persianCalendar.ToDateTime(thisYear, thisMonth, thisDay, 01, 01, 01, 01);
                     cal.TryAdd(i, tempDateTime);
+                    if (i<0 || i > 41)
+                    {
+                        IncreasePersianDay(ref thisYear, ref thisMonth, ref thisDay, 1);
+                        continue;
+                    }
+                    
                     persianDate = thisDay.ToString(); //.convertToPersianNumber();
                     DayOfWeek = persianCalendar.GetDayOfWeek(tempDateTime).ToString();
 
@@ -416,7 +420,7 @@ namespace NeAcconting.Controls.DatePicker
         /// <param name="persianDate">Text of Persian date</param>
         /// <param name="persianTextBlockResourceName">New name of Persian date resource</param>
         /// <param name="tooltip_context">Text of tooltip</param>
-        void ChangeProperties(byte which, string persianDate, bool isCurrentDay, string persianTextBlockResourceName, string tooltip_context)
+        void ChangeProperties(int which, string persianDate, bool isCurrentDay, string persianTextBlockResourceName, string tooltip_context)
         {
             if (persianTextBlockResourceName == "TextBlockStyle24")
             {
@@ -923,9 +927,10 @@ namespace NeAcconting.Controls.DatePicker
                 SelectedDate = date;
                 return;
             }
-            if (e.Key == Key.Enter)
+            if (e.Key == Key.Space)
             {
                 Click?.Invoke(this, e);
+                return;
             }
 
             MKeyDown?.Invoke(this, e);
@@ -934,30 +939,6 @@ namespace NeAcconting.Controls.DatePicker
         private DateTime SetSelectedBtnIndex(int v)
         {
             selectedBtnIndex += v;
-            if (selectedBtnIndex < 0)
-            {
-                selectedBtnIndex = 41 + selectedBtnIndex;
-                cal[selectedBtnIndex] = cal[selectedBtnIndex].AddMonths(-1);
-                monthForNavigating--;
-            }
-            else if (selectedBtnIndex > 41)
-            {
-                selectedBtnIndex -= 41;
-                cal[selectedBtnIndex] = cal[selectedBtnIndex].AddMonths(1);
-                monthForNavigating++;
-
-            }
-            if (monthForNavigating > 12)
-            {
-                yearForNavigating++;
-                cal[selectedBtnIndex] = cal[selectedBtnIndex].AddYears(1);
-                monthForNavigating = 1;
-            }
-            if (monthForNavigating < 1)
-            {
-                yearForNavigating++;
-                monthForNavigating = 1;
-            }
             return cal[selectedBtnIndex];
         }
     }

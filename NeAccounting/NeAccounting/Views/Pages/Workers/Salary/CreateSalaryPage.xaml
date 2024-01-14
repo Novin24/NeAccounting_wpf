@@ -161,7 +161,6 @@
                                     <datepicker:PersianDatePicker FontSize="14"
                                                                   FlowDirection="LeftToRight"
                                                                   FontFamily="Calibri"
-                                                                  TabIndex="1"
                                                                   x:Name="dtp"
                                                                   SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}"
                                                                   Margin="0 4 0 0" />
