@@ -25,12 +25,12 @@ public static class NeErrorCodes
 
     public static string IsLess(string name1, string name2)
     {
-        return $"{name1} از {name2} کمتر باشد";
+        return $"{name1} باید از {name2} کمتر باشد";
     }
 
     public static string IsMore(string name1, string name2)
     {
-        return $"{name1} از {name2} بیشتر باشد";
+        return $"{name1} باید از {name2} بیشتر باشد";
     }
 
     public static string MaxLength(string name, int length)
@@ -51,16 +51,6 @@ public static class NeErrorCodes
     public static string Useing(string name)
     {
         return $"{name} مورد استفاده قرار گرفته شده است";
-    }
-
-    public static string IsLessMeetDate(DateTime? InputDate)
-    {
-        return $"تاریخ جلسه نامعتبر است ، تاریخ وارد شده باید قبل از تاریخ امروز باشد";
-    }
-
-    public static string IsLessLicenseDate(DateTime? InputDate)
-    {
-        return $"تاریخ صدور مجوز نامعتبر است ، تاریخ وارد شده باید قبل از تاریخ امروز باشد";
     }
 
 }

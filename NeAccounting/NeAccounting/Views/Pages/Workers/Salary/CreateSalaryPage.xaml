@@ -6,6 +6,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
+      xmlns:hlr="clr-namespace:NeAccounting.Helpers"
+      xmlns:nu="clr-namespace:NeAccounting.Controls.Number"
       d:DataContext="{d:DesignInstance local:CreateSalaryPage,
                                      IsDesignTimeCreatable=False}"
       Title="Salary"
@@ -13,6 +15,12 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <hlr:RoundMyNumberConverter x:Key="thousandsSeparator" />
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid>
 
@@ -132,7 +140,7 @@
                                 <StackPanel Margin="20 15 20 0 ">
                                     <DockPanel>
                                         <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
+                                                   FontSize="16"
                                                    Text="نام پرسنل"
                                                    Margin="2 0 0 7" />
                                         <TextBlock FontFamily="Calibri"
@@ -143,7 +151,7 @@
                                                    HorizontalAlignment="Right"
                                                    Margin="2 0 0 7" />
                                     </DockPanel>
-                                    <ui:AutoSuggestBox FontSize="14"
+                                    <ui:AutoSuggestBox FontSize="16"
                                                        x:Name="txt_name"
                                                        Icon="{ui:SymbolIcon Search24}"
                                                        OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
@@ -155,7 +163,7 @@
                                             Margin="20 15 20 0 ">
 
                                     <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
+                                               FontSize="16"
                                                Text="تاریخ پرداخت"
                                                Margin="1 0 0 0 " />
                                     <datepicker:PersianDatePicker FontSize="14"
@@ -166,194 +174,126 @@
                                                                   Margin="0 4 0 0" />
                                 </StackPanel>
 
-                                <StackPanel Grid.Row="1"
-                                            Margin="20 4 20 0 ">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="مبلغ حقوق"
-                                               Margin="2 0 0 0 " />
-                                    <ui:NumberBox FontSize="14"
-                                                  TextAlignment="Center"
-                                                  x:Name="txt_amountOf"
-                                                  IsEnabled="False"
-                                                  Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Grid.Row="1"
-                                            Margin="20 4 20 0 ">
+                                <nu:NumberPack Grid.Row="1"
+                                               LabelName="مبلغ حقوق"
+                                               x:Name="txt_amountOf"
+                                               ValueChanged="NumberBox_ValueChanged"
+                                               IsEnabled="False"
+                                               Value="{Binding ViewModel.AmountOf , Mode=TwoWay}" />
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="مساعده"
-                                               Margin="1 0 0 0 " />
-                                    <ui:NumberBox FontSize="14"
-                                                  TextAlignment="Center"
-                                                  IsEnabled="False"
-                                                  x:Name="txt_Aid"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  Value="{Binding ViewModel.FinancialAid , Mode=TwoWay}"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="0"
-                                            Grid.Row="2"
-                                            Margin="20 4 20 0 ">
+                                <nu:NumberPack Grid.Row="1"
+                                               Grid.Column="1"
+                                               LabelName="مساعده"
+                                               x:Name="txt_Aid"
+                                               ValueChanged="NumberMinesBox_ValueChanged"
+                                               IsEnabled="False"
+                                               Value="{Binding ViewModel.FinancialAid , Mode=TwoWay}" />
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="اضافه کاری"
-                                               Margin="2 0 0 0 " />
-                                    <ui:NumberBox FontSize="14"
-                                                  TextAlignment="Center"
-                                                  IsEnabled="False"
-                                                  x:Name="txt_overtime"
-                                                  Value="{Binding ViewModel.OverTime , Mode=TwoWay}"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="20 4 20 0 "
-                                            Grid.Row="2">
+                                <nu:NumberPack Grid.Row="2"
+                                               LabelName="اضافه کاری"
+                                               x:Name="txt_overtime"
+                                               ValueChanged="NumberBox_ValueChanged"
+                                               IsEnabled="False"
+                                               Value="{Binding ViewModel.OverTime , Mode=TwoWay}" />
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="حق بیمه"
-                                               Margin="1 0 0 0 " />
-                                    <ui:NumberBox FontSize="14"
-                                                  TextAlignment="Center"
-                                                  Value="{Binding ViewModel.Insurance , Mode=TwoWay}"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  IsEnabled="False"
-                                                  x:Name="txt_Insurance"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="0"
-                                            Grid.Row="3"
-                                            Margin="20 4 20 0">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="حق خوار و بار و مسکن"
-                                               Margin="2 0 0 0 " />
-                                    <ui:NumberBox TextAlignment="Center"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  Value="{Binding ViewModel.RightHousingAndFood , Mode=TwoWay}"
-                                                  FontSize="14"
-                                                  IsEnabled="False"
-                                                  ValueChanged="NumberBox_ValueChanged"
-                                                  x:Name="txt_RighOfFood"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="20 4 20 0 "
-                                            Grid.Row="3">
+                                <nu:NumberPack Grid.Row="2"
+                                               Grid.Column="1"
+                                               LabelName="حق بیمه"
+                                               x:Name="txt_Insurance"
+                                               ValueChanged="NumberMinesBox_ValueChanged"
+                                               IsEnabled="False"
+                                               Value="{Binding ViewModel.Insurance , Mode=TwoWay}" />
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="مالیات"
-                                               Margin="1 0 0 0 " />
-                                    <ui:NumberBox FontSize="14"
-                                                  TextAlignment="Center"
-                                                  x:Name="txt_Tax"
-                                                  IsEnabled="False"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  Value="{Binding ViewModel.Tax , Mode=TwoWay}"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="0"
-                                            Grid.Row="4"
-                                            Margin="20 4 20 0 ">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="حق اولاد"
-                                               Margin="2 0 0 0 " />
-                                    <ui:NumberBox FontSize="14"
-                                                  TextAlignment="Center"
-                                                  Value="{Binding ViewModel.ChildAllowance, Mode=TwoWay}"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  ValueChanged="NumberBox_ValueChanged"
-                                                  IsEnabled="False"
-                                                  x:Name="txt_ChildAllowance"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="20 4 20 0 "
-                                            Grid.Row="4">
+                                <nu:NumberPack Grid.Row="3"
+                                               LabelName="حق خوار و بار و مسکن"
+                                               x:Name="txt_RighOfFood"
+                                               ValueChanged="NumberBox_ValueChanged"
+                                               IsEnabled="False"
+                                               Value="{Binding ViewModel.RightHousingAndFood , Mode=TwoWay}" />
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="وام"
-                                               Margin="1 0 0 0 " />
-                                    <ui:NumberBox FontSize="14"
-                                                  TextAlignment="Center"
-                                                  Value="{Binding ViewModel.LoanInstallment, Mode=TwoWay}"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  IsEnabled="False"
-                                                  x:Name="txt_loanInstallment"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="5"
-                                            Margin="20 4 20 0 ">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="سایر اضافات"
-                                               Margin="2 0 0 0 " />
-                                    <ui:NumberBox TextAlignment="Center"
-                                                  FontSize="14"
-                                                  Value="{Binding ViewModel.OtherAdditions , Mode=TwoWay}"
-                                                  x:Name="txt_OtherAdditions"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  ValueChanged="NumberBox_ValueChanged"
-                                                  IsEnabled="False"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="20 4 20 0 "
-                                            Grid.Row="5">
+                                <nu:NumberPack Grid.Row="3"
+                                               Grid.Column="1"
+                                               LabelName="مالیات"
+                                               x:Name="txt_Tax"
+                                               ValueChanged="NumberMinesBox_ValueChanged"
+                                               IsEnabled="False"
+                                               Value="{Binding ViewModel.Tax , Mode=TwoWay}" />
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="سایر کسورات"
-                                               Margin="1 0 0 0 " />
-                                    <ui:NumberBox FontSize="14"
-                                                  Value="{Binding ViewModel.OtherDeductions , Mode=TwoWay}"
-                                                  TextAlignment="Center"
-                                                  x:Name="txt_Othere"
-                                                  IsEnabled="False"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="6"
-                                            Margin="20 4 20 0">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="جمع کل"
-                                               Margin="2 0 0 0 " />
-                                    <ui:NumberBox Grid.Column="0"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  Value="0"
-                                                  TextAlignment="Center"
-                                                  IsEnabled="False"
-                                                  x:Name="txt_totalPlus"
-                                                  FontSize="14"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="20 4 20 0 "
-                                            Grid.Row="6">
+                                <nu:NumberPack Grid.Row="4"
+                                               LabelName="حق اولاد"
+                                               x:Name="txt_ChildAllowance"
+                                               ValueChanged="NumberBox_ValueChanged"
+                                               IsEnabled="False"
+                                               Value="{Binding ViewModel.ChildAllowance , Mode=TwoWay}" />
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="جمع کل"
-                                               Margin="1 0 0 0 " />
-                                    <ui:NumberBox FontSize="14"
-                                                  TextAlignment="Center"
-                                                  Value="0"
-                                                  x:Name="txt_totalMines"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  IsEnabled="False"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
+                                <nu:NumberPack Grid.Row="4"
+                                               Grid.Column="1"
+                                               LabelName="وام"
+                                               x:Name="txt_loanInstallment"
+                                               ValueChanged="NumberMinesBox_ValueChanged"
+                                               IsEnabled="False"
+                                               Value="{Binding ViewModel.LoanInstallment , Mode=TwoWay}" />
+
+                                <nu:NumberPack Grid.Row="5"
+                                               LabelName="سایر اضافات"
+                                               x:Name="txt_OtherAdditions"
+                                               ValueChanged="NumberBox_ValueChanged"
+                                               IsEnabled="False"
+                                               Value="{Binding ViewModel.OtherAdditions , Mode=TwoWay}" />
+
+                                <nu:NumberPack Grid.Row="5"
+                                               Grid.Column="1"
+                                               LabelName="سایر کسورات"
+                                               x:Name="txt_Othere"
+                                               ValueChanged="NumberMinesBox_ValueChanged"
+                                               IsEnabled="False"
+                                               Value="{Binding ViewModel.OtherDeductions , Mode=TwoWay}" />
+
+                                <Grid Grid.Row="6"
+                                      Grid.Column="0">
+                                    <DockPanel Grid.Column="1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Grid.Row="6">
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Text="جمع کل"
+                                                   Margin="4 6" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   TextAlignment="Right"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   MinWidth="60"
+                                                   Name="txt_totalPlus"
+                                                   Text="0"
+                                                   Margin="2 4 0 0 " />
+                                    </DockPanel>
+                                </Grid>
+
+
+                                <Grid Grid.Row="6"
+                                      Grid.Column="1">
+                                    <DockPanel Grid.Column="1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Grid.Row="6">
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Text="جمع کل"
+                                                   Margin="4 6" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   TextAlignment="Right"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   MinWidth="60"
+                                                   Name="txt_totalMines"
+                                                   Text="0"
+                                                   Margin="2 4 0 0 " />
+                                    </DockPanel>
+                                </Grid>
+
                                 <Grid Grid.Row="7"
                                       Grid.ColumnSpan="2">
 
@@ -363,36 +303,52 @@
                                         <ColumnDefinition></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
 
-                                    <StackPanel Grid.Column="1"
-                                                Grid.Row="6">
+                                    <DockPanel Grid.Column="1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Grid.Row="6">
                                         <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
                                                    Text="باقی مانده"
                                                    Margin="2 4 0 0 " />
-                                        <ui:NumberBox Grid.Column="0"
-                                                      SpinButtonPlacementMode="Hidden"
+                                        <ui:TextBlock Grid.Column="0"
                                                       Margin="0 4 3 0"
                                                       IsEnabled="False"
-                                                      Value="0"
+                                                      MinWidth="100"
+                                                      Text="0"
+                                                      Name="lbl_leftOver"
                                                       TextAlignment="Center"
-                                                      FontSize="14"
+                                                      FontSize="18"
                                                       FontFamily="Calibri" />
-                                    </StackPanel>
+                                        <TextBlock FontFamily="Calibri"
+                                                   TextAlignment="Right"
+                                                   FontSize="18"
+                                                   FontWeight="ExtraBold"
+                                                   Name="lbl_status"
+                                                   Text="تسویه"
+                                                   Margin="2 4 0 0 " />
+                                    </DockPanel>
 
                                 </Grid>
 
                                 <Grid Grid.ColumnSpan="2"
                                       Grid.Row="8"
                                       Margin="20 3 20 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="142*" />
+                                        <ColumnDefinition Width="30*" />
+                                        <ColumnDefinition Width="177*" />
+                                    </Grid.ColumnDefinitions>
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="توضیحات"
-                                               Grid.Column="1" />
+                                               Grid.ColumnSpan="3" />
                                     <TextBox Margin="0,20,0,0"
                                              FontSize="14"
                                              FlowDirection="RightToLeft"
-                                             Grid.ColumnSpan="2"
+                                             Grid.ColumnSpan="3"
                                              FontFamily="Calibri"></TextBox>
                                 </Grid>
                                 <Button Content="ثبت"

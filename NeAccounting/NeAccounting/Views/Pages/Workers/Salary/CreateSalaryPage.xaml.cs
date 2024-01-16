@@ -1,4 +1,6 @@
 ﻿using DomainShared.ViewModels;
+using NeAccounting.Controls.Number;
+using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -11,6 +13,9 @@ namespace NeAccounting.Views.Pages
     {
         private readonly ISnackbarService _snackbarService;
         public CreateSalaryViewModel ViewModel { get; }
+        private long Additions = 0;
+        private long Deductions = 0;
+        private long LeftOver = 0;
         public CreateSalaryPage(CreateSalaryViewModel viewModel, ISnackbarService snackbarService)
         {
             ViewModel = viewModel;
@@ -21,8 +26,11 @@ namespace NeAccounting.Views.Pages
 
         private async void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
+            int id = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
+            if (id == ViewModel.WorkerId)
+                return;
 
-            ViewModel.WorkerId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
+            ViewModel.WorkerId = id;
             if (!await ViewModel.OnSelect())
             {
                 return;
@@ -50,20 +58,21 @@ namespace NeAccounting.Views.Pages
             }
             txt_OtherAdditions.IsEnabled = true;
             txt_Othere.IsEnabled = true;
-            SetTotalPrice();
-            SetTotalPlusPrice();
         }
-         
+
         private void SetTotalPlusPrice()
         {
-            var total = (double)(txt_amountOf.Value + txt_overtime.Value + txt_ChildAllowance.Value + txt_OtherAdditions.Value + txt_RighOfFood.Value);
-            txt_totalPlus.Text = total.ToString("N");
+            var total = txt_amountOf.Value + txt_overtime.Value + txt_ChildAllowance.Value + txt_OtherAdditions.Value + txt_RighOfFood.Value;
+            Additions = total;
+            LeftOver = Additions - Deductions;
+            txt_totalPlus.Text = total.ToString("N0");
+            lbl_leftOver.Text = Math.Abs(LeftOver).ToString("N0");
         }
 
         private void NumberBox_ValueChanged(object sender, RoutedEventArgs e)
         {
-            var input = ((NumberBox)sender).Value;
-            if (input != null && input != 0)
+            var input = ((NumberPack)sender).Value;
+            if (input != 0)
             {
                 SetTotalPlusPrice();
             }
@@ -71,17 +80,36 @@ namespace NeAccounting.Views.Pages
 
         private void SetTotalPrice()
         {
-            var total = (double)(txt_Aid.Value + txt_Insurance.Value + txt_Tax.Value + txt_loanInstallment.Value + txt_Othere.Value);
-            txt_totalPlus.Text = total.ToString("N");
+            var total = txt_Aid.Value + txt_Insurance.Value + txt_Tax.Value + txt_loanInstallment.Value + txt_Othere.Value;
+            Deductions = total;
+            LeftOver = Additions - Deductions;
+            txt_totalMines.Text = total.ToString("N0");
+            lbl_leftOver.Text = Math.Abs(LeftOver).ToString("N0");
+            if (LeftOver != 0)
+            {
+                if (LeftOver > 0)
+                {
+                    lbl_status.Text = "طلبکار";
+                    lbl_status.Foreground = new SolidColorBrush(Colors.IndianRed);
+                }
+                else
+                {
+                    lbl_status.Text = "بدهکار";
+                    lbl_status.Foreground = new SolidColorBrush(Colors.DarkSeaGreen);
+                }
+
+            }
+
         }
 
         private void NumberMinesBox_ValueChanged(object sender, RoutedEventArgs e)
         {
-            var input = ((NumberBox)sender).Value;
-            if (input != null && input != 0)
+            var input = ((NumberPack)sender).Value;
+            if (input != 0)
             {
-                SetTotalPlusPrice();
+                SetTotalPrice();
             }
         }
+
     }
 }

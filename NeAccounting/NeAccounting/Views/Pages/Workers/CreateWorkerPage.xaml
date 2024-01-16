@@ -236,6 +236,8 @@
                                                       Grid.Row="0"
                                                       SpinButtonPlacementMode="Hidden"
                                                       TabIndex="17"
+                                                      Maximum="31"
+                                                      Minimum="1"
                                                       Grid.Column="0"
                                                       x:Name="txt_dayInMonth"
                                                       Value="{Binding ViewModel.DayInMonth , Mode=TwoWay}"

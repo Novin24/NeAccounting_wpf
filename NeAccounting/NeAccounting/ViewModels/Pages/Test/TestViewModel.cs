@@ -11,6 +11,10 @@ namespace NeAccounting.ViewModels
             _navigationService = navigationService;
         }
 
+
+        [ObservableProperty]
+        private long _ts = 240000000;
+
         [RelayCommand]
         private void OnMyClick()
         {
