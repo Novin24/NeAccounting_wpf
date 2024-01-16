@@ -64,7 +64,7 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(PayPage),Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardTextEdit20 }},
                     new NavigationViewItem {Content = "حواله فروش",TargetPageType = typeof(MaterailListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PlayingCards20} },
                     new NavigationViewItem { Content = "حوله خرید", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.WalletCreditCard20} },
-                    new NavigationViewItem { Content = "حواله واسطه‌ای", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.ReceiptMoney20} },
+                    new NavigationViewItem { Content = "حواله واسطه‌ای", TargetPageType = typeof(CreateIntermediaryInvoicePage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.ReceiptMoney20} },
                     new NavigationViewItem { Content = "اجناس برگشتی", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.BoxMultipleArrowLeft20} },
                     new NavigationViewItem {Content = "سفارشات",TargetPageType = typeof(PayPage),Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardTaskListRtl20 }},
 	            #endregion
