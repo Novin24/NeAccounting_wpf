@@ -62,8 +62,8 @@ namespace NeAccounting.ViewModels
                 {
                 #region Remittance
                     new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(PayPage),Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardTextEdit20 }},
-                    new NavigationViewItem {Content = "حواله فروش",TargetPageType = typeof(MaterailListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PlayingCards20} },
-                    new NavigationViewItem { Content = "حوله خرید", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.WalletCreditCard20} },
+                    new NavigationViewItem {Content = "حواله فروش",TargetPageType = typeof(CreateSellInvoicePage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.PlayingCards20} },
+                    new NavigationViewItem { Content = "حوله خرید", TargetPageType = typeof(CreateBuyInvoicePage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.WalletCreditCard20} },
                     new NavigationViewItem { Content = "حواله واسطه‌ای", TargetPageType = typeof(CreateIntermediaryInvoicePage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.ReceiptMoney20} },
                     new NavigationViewItem { Content = "اجناس برگشتی", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.BoxMultipleArrowLeft20} },
                     new NavigationViewItem {Content = "سفارشات",TargetPageType = typeof(PayPage),Icon = new SymbolIcon { Symbol = SymbolRegular.ClipboardTaskListRtl20 }},
@@ -85,7 +85,7 @@ namespace NeAccounting.ViewModels
                 MenuItems = new ObservableCollection<object>
                 {
                     new NavigationViewItem { Content = "اتمام سال مالی کنونی", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.AlignEndHorizontal20} },
-                    new NavigationViewItem { Content = "بازگشت به سال ...", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.Rename20} },
+                    new NavigationViewItem { Content = "... بازگشت به سال", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.Rename20} },
                 }
             },
 
