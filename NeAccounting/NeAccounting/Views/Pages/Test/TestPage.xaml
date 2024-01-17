@@ -8,7 +8,6 @@
       d:DataContext="{d:DesignInstance local:TestPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
-      Background="DarkCyan"
       Height="800"
       Width="600"
       Title="TestPage">
