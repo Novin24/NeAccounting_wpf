@@ -71,7 +71,7 @@ namespace NeAccounting.Views.Pages
 
         private void NumberBox_ValueChanged(object sender, RoutedEventArgs e)
         {
-            var input = ((NumberPack)sender).Value;
+            var input = ((MoneyPack)sender).Value;
             if (input != 0)
             {
                 SetTotalPlusPrice();
@@ -104,7 +104,7 @@ namespace NeAccounting.Views.Pages
 
         private void NumberMinesBox_ValueChanged(object sender, RoutedEventArgs e)
         {
-            var input = ((NumberPack)sender).Value;
+            var input = ((MoneyPack)sender).Value;
             if (input != 0)
             {
                 SetTotalPrice();

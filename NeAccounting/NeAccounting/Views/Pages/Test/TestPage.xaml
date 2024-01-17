@@ -14,8 +14,8 @@
       Title="TestPage">
 
     <Grid>
-        <nu:NumberPack LabelName="سایر اضافات"
-                           Value="{Binding ViewModel.Ts , Mode=TwoWay}"></nu:NumberPack>
+        <nu:MoneyPack LabelName="سایر اضافات"
+                           Value="{Binding ViewModel.Ts , Mode=TwoWay}"></nu:MoneyPack>
 
         <Button Command="{Binding ViewModel.MyClickCommand}">clickMe</Button>
     </Grid>

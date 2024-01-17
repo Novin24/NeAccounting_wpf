@@ -430,7 +430,9 @@ namespace Infrastructure.Repositories
                               PersonelId = worker.PersonnelId,
                               Date = func.SubmitDate,
                               Details = new FucntionDetails() { Id = func.Id, SalaryId = salary.Id, WorkerId = worker.Id }
-                          }).ToListAsync();
+                          })
+                          .OrderByDescending(c => c.Date)
+                          .ToListAsync();
         }
 
         public async Task<(string error, bool isSuccess)> UpdateFunc(
@@ -447,7 +449,7 @@ namespace Infrastructure.Repositories
                 .ThenInclude(c => c.Functions.Where(c => c.Id == funcId))
                 .FirstOrDefaultAsync(t => t.Id == workerId);
 
-            if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Aids.Count == 0)
+            if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Functions.Count == 0)
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
 
             var func = worker.Salaries.First().Functions.First();
@@ -620,10 +622,12 @@ namespace Infrastructure.Repositories
                               AmountPrice = aid.AmountOf,
                               Description = aid.Description,
                               PersonelId = worker.PersonnelId,
-                              Price = aid.AmountOf.ToString("#,#"),
+                              Price = aid.AmountOf.ToString("N0"),
                               Date = aid.SubmitDate,
                               Details = new AidDetails() { Id = aid.Id, SalaryId = salary.Id, WorkerId = worker.Id }
-                          }).ToListAsync();
+                          })
+                          .OrderByDescending(c => c.Date)
+                          .ToListAsync();
 
         }
 

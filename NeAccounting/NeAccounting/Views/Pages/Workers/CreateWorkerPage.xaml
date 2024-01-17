@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
+      xmlns:nu="clr-namespace:NeAccounting.Controls.Number"
       d:DataContext="{d:DesignInstance local:CreateWorkerPage,
                                      IsDesignTimeCreatable=False}"
       Title="CreateWorkerPage"
@@ -108,43 +109,18 @@
                                                  HorizontalAlignment="Center"
                                                  Checked="RadioButton_Checked"
                                                  FlowDirection="LeftToRight">ساعتی - شیفتی</RadioButton>
+                                    
+                                    <nu:MoneyPack Grid.Row="1"
+                                                   LabelName="دستمزد"
+                                                   x:Name="txt_ShiftPrice"
+                                                   Value="{Binding ViewModel.ShiftSalary , Mode=TwoWay}" />
 
-                                    <StackPanel Grid.Row="1">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="دستمزد"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      FontSize="14"
-                                                      TabIndex="11"
-                                                      Grid.Row="0"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      x:Name="txt_ShiftPrice"
-                                                      Value="{Binding ViewModel.ShiftSalary , Mode=TwoWay}"
-                                                      IsEnabled="False"
-                                                      Grid.Column="0"
-                                                      Margin="0 4 3 0 "
-                                                      CaretBrush="White"
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="2">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="اضافه کاری"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      FontSize="14"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      TabIndex="12"
-                                                      Grid.Row="0"
-                                                      IsEnabled="False"
-                                                      Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay}"
-                                                      x:Name="txt_overTimeShift"
-                                                      Grid.Column="0"
-                                                      Margin="0 4 3 0 "
-                                                      CaretBrush="White"
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
+
+                                    <nu:MoneyPack Grid.Row="2"
+                                                   LabelName="اضافه کاری"
+                                                   x:Name="txt_overTimeShift"
+                                                   Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay}" />
+
                                 </Grid>
                             </Border>
                             <Border Grid.Row="1"
@@ -187,9 +163,9 @@
                                                       SpinButtonPlacementMode="Hidden"
                                                       x:Name="txt_MonthPrice"
                                                       TabIndex="14"
+                                                      IsReadOnly="True"
                                                       Grid.Column="0"
                                                       Margin="0 4 3 0 "
-                                                      CaretBrush="White"
                                                       FontFamily="Calibri" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="2">
@@ -206,7 +182,6 @@
                                                       Value="{Binding ViewModel.OvertimeSalary , Mode=TwoWay}"
                                                       Grid.Column="0"
                                                       Margin="0 4 3 0 "
-                                                      CaretBrush="White"
                                                       FontFamily="Calibri" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="3">
@@ -223,7 +198,6 @@
                                                       Grid.Column="0"
                                                       Margin="0 4 3 0 "
                                                       x:Name="txt_insurancePerimum"
-                                                      CaretBrush="White"
                                                       FontFamily="Calibri" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="4">
@@ -242,7 +216,6 @@
                                                       x:Name="txt_dayInMonth"
                                                       Value="{Binding ViewModel.DayInMonth , Mode=TwoWay}"
                                                       Margin="0 4 3 0 "
-                                                      CaretBrush="White"
                                                       FontFamily="Calibri" />
                                     </StackPanel>
                                 </Grid>
@@ -307,7 +280,6 @@
                                                 Grid.Column="0"
                                                 Margin="0 4 3 0 "
                                                 Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
-                                                CaretBrush="White"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"

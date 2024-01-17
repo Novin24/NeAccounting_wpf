@@ -124,7 +124,7 @@ namespace NeAccounting.ViewModels
                 SalaryId = parameter.SalaryId,
                 AidId = parameter.Id,
                 PayDate = aid.Date,
-                List = List.Where(t => t.Details.WorkerId == parameter.WorkerId).OrderByDescending(c => c.Date).Take(15).ToList(),
+                List = List.Where(t => t.Details.WorkerId == parameter.WorkerId).OrderByDescending(c => c.Date).Take(10).ToList(),
                 PersonnelId = aid.PersonelId
             });
 

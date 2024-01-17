@@ -81,8 +81,8 @@ namespace NeAccounting
                 services.AddTransient<CreateFunctionPage>();
                 services.AddTransient<CreateFunctionViewModel>();
 
-                //services.AddTransient<UpdateFinancialAidPage>();
-                //services.AddTransient<UpdateFinancialAidViewModel>();
+                services.AddTransient<UpdateFunctionPage>();
+                services.AddTransient<UpdateFunctionViewModel>();
                 #endregion
 
                 #endregion

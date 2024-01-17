@@ -5,14 +5,14 @@ using System.Windows.Input;
 namespace NeAccounting.Controls.Number
 {
     /// <summary>
-    /// Interaction logic for NumberPack.xaml
+    /// Interaction logic for MoneyPack.xaml
     /// </summary>
-    public partial class NumberPack : UserControl
+    public partial class MoneyPack : UserControl
     {
         public event RoutedEventHandler NumberLostFocus;
         public event TextChangedEventHandler TextChanged;
         public event RoutedEventHandler ValueChanged;
-        public NumberPack()
+        public MoneyPack()
         {
             InitializeComponent();
         }
@@ -25,11 +25,11 @@ namespace NeAccounting.Controls.Number
 
         // Using a DependencyProperty as the backing store for LableName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LableNameProperty =
-            DependencyProperty.Register("LableName", typeof(string), typeof(NumberPack), new PropertyMetadata(string.Empty, SetLabelName));
+            DependencyProperty.Register("LableName", typeof(string), typeof(MoneyPack), new PropertyMetadata(string.Empty, SetLabelName));
 
         private static void SetLabelName(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            if (obj is not NumberPack npack)
+            if (obj is not MoneyPack npack)
                 return;
 
             if (e.NewValue == e.OldValue)
@@ -46,12 +46,12 @@ namespace NeAccounting.Controls.Number
 
         // Using a DependencyProperty as the backing store for NumberValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(long), typeof(NumberPack), new PropertyMetadata(0l, SetNumber));
+            DependencyProperty.Register("Value", typeof(long), typeof(MoneyPack), new PropertyMetadata(0L, SetNumber));
 
         private static void SetNumber(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
 
-            if (obj is not NumberPack npack)
+            if (obj is not MoneyPack npack)
                 return;
 
             if (e.NewValue == e.OldValue)
@@ -71,7 +71,7 @@ namespace NeAccounting.Controls.Number
 
         // Using a DependencyProperty as the backing store for Minimum.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MinimumProperty =
-            DependencyProperty.Register("Minimum", typeof(double), typeof(NumberPack), new PropertyMetadata(0d));
+            DependencyProperty.Register("Minimum", typeof(double), typeof(MoneyPack), new PropertyMetadata(0d));
 
 
 
@@ -83,7 +83,7 @@ namespace NeAccounting.Controls.Number
 
         // Using a DependencyProperty as the backing store for Maximum.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MaximumProperty =
-            DependencyProperty.Register("Maximum", typeof(double), typeof(NumberPack), new PropertyMetadata(0d));
+            DependencyProperty.Register("Maximum", typeof(double), typeof(MoneyPack), new PropertyMetadata(0d));
 
 
 

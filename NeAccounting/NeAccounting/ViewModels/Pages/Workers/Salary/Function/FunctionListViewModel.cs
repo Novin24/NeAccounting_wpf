@@ -104,7 +104,7 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private void OnUpdateFunc(FucntionDetails parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateFucntion");
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateFunction");
 
             if (pageType == null)
             {
@@ -114,17 +114,18 @@ namespace NeAccounting.ViewModels
 
             var func = List.First(t => t.Details.Id == parameter.Id);
 
-            var context = new UpdateFinancialAidPage(new UpdateFinancialAidViewModel(_navigationService, _snackbarService)
+            var context = new UpdateFunctionPage(new UpdateFunctionViewModel(_navigationService, _snackbarService)
             {
-                //WorkerId = parameter.WorkerId,
-                //AmountOf = func.Amountof,
-                //Description = func.Description,
-                //PersonnelName = func.Name,
-                //SalaryId = parameter.SalaryId,
-                //AidId = parameter.Id,
-                //PayDate = func.Date,
-                //List = List.Where(t => t.Details.WorkerId == parameter.WorkerId),
-                //PersonnelId = func.PersonelId
+                WorkerId = parameter.WorkerId,
+                AmountOf = func.Amountof,
+                Description = func.Description,
+                PersonnelName = func.Name,
+                SalaryId = parameter.SalaryId,
+                OverTime  = func.OverTime,
+                FuncId = parameter.Id,
+                PayDate = func.Date,
+                List = List.Where(t => t.Details.WorkerId == parameter.WorkerId).OrderByDescending(c => c.Date).Take(10).ToList(),
+                PersonnelId = func.PersonelId
             });
 
             service.Navigate(pageType, context);

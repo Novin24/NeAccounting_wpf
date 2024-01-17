@@ -115,8 +115,8 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem(){Content = "کارکرد",Icon = new SymbolIcon { Symbol = SymbolRegular.NotepadPerson20},TargetPageType = typeof(FunctionListPage)},
                     new NavigationViewItem(){Content = "افزودن کارکرد",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateFunctionPage),
                         Visibility = Visibility.Collapsed},
-                    //new NavigationViewItem(){Content = "ویرایش کارکر",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateFunctionPage),
-                    //    Visibility = Visibility.Collapsed},
+                    new NavigationViewItem(){Content = "ویرایش کارکر",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateFunctionPage),
+                        Visibility = Visibility.Collapsed},
 
                 }
             },

@@ -174,14 +174,14 @@
                                                                   Margin="0 4 0 0" />
                                 </StackPanel>
 
-                                <nu:NumberPack Grid.Row="1"
+                                <nu:MoneyPack Grid.Row="1"
                                                LabelName="مبلغ حقوق"
                                                x:Name="txt_amountOf"
                                                ValueChanged="NumberBox_ValueChanged"
                                                IsEnabled="False"
                                                Value="{Binding ViewModel.AmountOf , Mode=TwoWay}" />
 
-                                <nu:NumberPack Grid.Row="1"
+                                <nu:MoneyPack Grid.Row="1"
                                                Grid.Column="1"
                                                LabelName="مساعده"
                                                x:Name="txt_Aid"
@@ -189,14 +189,14 @@
                                                IsEnabled="False"
                                                Value="{Binding ViewModel.FinancialAid , Mode=TwoWay}" />
 
-                                <nu:NumberPack Grid.Row="2"
+                                <nu:MoneyPack Grid.Row="2"
                                                LabelName="اضافه کاری"
                                                x:Name="txt_overtime"
                                                ValueChanged="NumberBox_ValueChanged"
                                                IsEnabled="False"
                                                Value="{Binding ViewModel.OverTime , Mode=TwoWay}" />
 
-                                <nu:NumberPack Grid.Row="2"
+                                <nu:MoneyPack Grid.Row="2"
                                                Grid.Column="1"
                                                LabelName="حق بیمه"
                                                x:Name="txt_Insurance"
@@ -204,14 +204,14 @@
                                                IsEnabled="False"
                                                Value="{Binding ViewModel.Insurance , Mode=TwoWay}" />
 
-                                <nu:NumberPack Grid.Row="3"
+                                <nu:MoneyPack Grid.Row="3"
                                                LabelName="حق خوار و بار و مسکن"
                                                x:Name="txt_RighOfFood"
                                                ValueChanged="NumberBox_ValueChanged"
                                                IsEnabled="False"
                                                Value="{Binding ViewModel.RightHousingAndFood , Mode=TwoWay}" />
 
-                                <nu:NumberPack Grid.Row="3"
+                                <nu:MoneyPack Grid.Row="3"
                                                Grid.Column="1"
                                                LabelName="مالیات"
                                                x:Name="txt_Tax"
@@ -219,14 +219,14 @@
                                                IsEnabled="False"
                                                Value="{Binding ViewModel.Tax , Mode=TwoWay}" />
 
-                                <nu:NumberPack Grid.Row="4"
+                                <nu:MoneyPack Grid.Row="4"
                                                LabelName="حق اولاد"
                                                x:Name="txt_ChildAllowance"
                                                ValueChanged="NumberBox_ValueChanged"
                                                IsEnabled="False"
                                                Value="{Binding ViewModel.ChildAllowance , Mode=TwoWay}" />
 
-                                <nu:NumberPack Grid.Row="4"
+                                <nu:MoneyPack Grid.Row="4"
                                                Grid.Column="1"
                                                LabelName="وام"
                                                x:Name="txt_loanInstallment"
@@ -234,14 +234,14 @@
                                                IsEnabled="False"
                                                Value="{Binding ViewModel.LoanInstallment , Mode=TwoWay}" />
 
-                                <nu:NumberPack Grid.Row="5"
+                                <nu:MoneyPack Grid.Row="5"
                                                LabelName="سایر اضافات"
                                                x:Name="txt_OtherAdditions"
                                                ValueChanged="NumberBox_ValueChanged"
                                                IsEnabled="False"
                                                Value="{Binding ViewModel.OtherAdditions , Mode=TwoWay}" />
 
-                                <nu:NumberPack Grid.Row="5"
+                                <nu:MoneyPack Grid.Row="5"
                                                Grid.Column="1"
                                                LabelName="سایر کسورات"
                                                x:Name="txt_Othere"

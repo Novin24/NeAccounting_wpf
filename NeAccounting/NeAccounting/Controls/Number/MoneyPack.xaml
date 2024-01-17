@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NeAccounting.Controls.Number.NumberPack"
+﻿<UserControl x:Class="NeAccounting.Controls.Number.MoneyPack"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -32,6 +32,7 @@
                           Minimum="{Binding Minimum, Mode=TwoWay,ElementName=npa}"
                           SpinButtonPlacementMode="Hidden"
                           LostFocus="NumberBox_LostFocus"
+                          Name="nm_box"
                           TextChanged="NumberBox_TextChanged"
                           ValueChanged="NumberBox_ValueChanged"
                           FontFamily="Calibri" />
