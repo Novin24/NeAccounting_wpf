@@ -37,16 +37,19 @@ namespace NeAcconting.Controls.DatePicker
 
         private readonly Dictionary<int, DateTime> cal = [];
 
-        public DateTime SelectedDate
+        public DateTime? SelectedDate
         {
-            get { return (DateTime)GetValue(SelectedDateProperty); }
+            get
+            {
+                return (DateTime?)GetValue(SelectedDateProperty);
+            }
             set
             { SetValue(SelectedDateProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedDate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedDateProperty =
-            DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(ShamsiDate), new PropertyMetadata(DateTime.Now, SelectedDatePropertyChenged));
+            DependencyProperty.Register("SelectedDate", typeof(DateTime?), typeof(ShamsiDate), new PropertyMetadata(null, SelectedDatePropertyChenged));
 
 
         private static void SelectedDatePropertyChenged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
@@ -54,7 +57,12 @@ namespace NeAcconting.Controls.DatePicker
             if (obj is not ShamsiDate shamsiDate)
                 return;
 
-            if (((DateTime)args.NewValue).Date == ((DateTime)args.OldValue).Date)
+            if (args.NewValue == null)
+            {
+                return;
+            }
+
+            if (args.NewValue == args.OldValue)
                 return;
             selectedYear = persianCalendar.GetYear((DateTime)args.NewValue);
             selectedMonth = persianCalendar.GetMonth((DateTime)args.NewValue);
@@ -83,9 +91,12 @@ namespace NeAcconting.Controls.DatePicker
             this.currentYear = persianCalendar.GetYear(DateTime.Now);
             this.currentMonth = persianCalendar.GetMonth(DateTime.Now);
             this.currentDay = persianCalendar.GetDayOfMonth(DateTime.Now);
-            selectedYear = persianCalendar.GetYear(SelectedDate);
-            selectedMonth = persianCalendar.GetMonth(SelectedDate);
-            selectedDay = persianCalendar.GetDayOfMonth(SelectedDate);
+            if (SelectedDate != null)
+            {
+                selectedYear = persianCalendar.GetYear(SelectedDate.Value);
+                selectedMonth = persianCalendar.GetMonth(SelectedDate.Value);
+                selectedDay = persianCalendar.GetDayOfMonth(SelectedDate.Value);
+            }
             InitialCalculator(currentYear, currentMonth, currentDay);
         }
 
@@ -143,12 +154,12 @@ namespace NeAcconting.Controls.DatePicker
                 {
                     tempDateTime = persianCalendar.ToDateTime(thisYear, thisMonth, thisDay, 01, 01, 01, 01);
                     cal.TryAdd(i, tempDateTime);
-                    if (i<0 || i > 41)
+                    if (i < 0 || i > 41)
                     {
                         IncreasePersianDay(ref thisYear, ref thisMonth, ref thisDay, 1);
                         continue;
                     }
-                    
+
                     persianDate = thisDay.ToString(); //.convertToPersianNumber();
                     DayOfWeek = persianCalendar.GetDayOfWeek(tempDateTime).ToString();
 
@@ -160,7 +171,7 @@ namespace NeAcconting.Controls.DatePicker
                             tooltip_context = GetTextOfMemo(thisYear, thisMonth, thisDay, "PERSIAN");
 
 
-                            if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
+                            if (SelectedDate != null && thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
                             {
                                 ChangeProperties(i, persianDate, true, "TextBlockStyle24", tooltip_context);
                             }
@@ -177,7 +188,7 @@ namespace NeAcconting.Controls.DatePicker
                         {
                             tooltip_context = GetTextOfMemo(thisYear, thisMonth, thisDay, "PERSIAN");
 
-                            if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
+                            if (SelectedDate != null && thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
                             {
                                 ChangeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
                             }
@@ -193,7 +204,7 @@ namespace NeAcconting.Controls.DatePicker
 
                         else
                         {
-                            if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
+                            if (SelectedDate != null && thisDay == selectedDay && thisMonth == selectedMonth && thisYear == selectedYear)
                             {
                                 ChangeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
                             }
@@ -209,7 +220,7 @@ namespace NeAcconting.Controls.DatePicker
                     }
                     else
                     {
-                        if (thisDay == selectedDay && thisMonth == selectedMonth && thisYear == currentYear)
+                        if (SelectedDate != null && thisDay == selectedDay && thisMonth == selectedMonth && thisYear == currentYear)
                         {
                             ChangeProperties(i, persianDate, false, "TextBlockStyle24", tooltip_context);
                         }

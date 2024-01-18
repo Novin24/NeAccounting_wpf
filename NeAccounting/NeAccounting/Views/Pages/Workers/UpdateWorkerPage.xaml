@@ -106,8 +106,9 @@
                                     <CheckBox TabIndex="10"
                                               VerticalAlignment="Top"
                                               x:Name="rbtn_Shift"
+                                              Margin="0 5"
                                               HorizontalAlignment="Center"
-                                              IsChecked="{Binding ViewModel.ShiftByHour, Mode=OneWay}"
+                                              IsChecked="{Binding ViewModel.ShiftByHour, Mode=TwoWay}"
                                               Checked="RadioButton_Checked"
                                               FlowDirection="LeftToRight">ساعتی - شیفتی</CheckBox>
 
@@ -151,8 +152,9 @@
                                     <CheckBox VerticalAlignment="Top"
                                               HorizontalAlignment="Center"
                                               TabIndex="13"
-                                              IsChecked="{Binding ViewModel.ShiftByMonth, Mode=OneWay}"
+                                              IsChecked="{Binding ViewModel.ShiftByMonth, Mode=TwoWay}"
                                               x:Name="rbtn_Month"
+                                              Margin="0 5"
                                               Checked="RadioButton_Checked_1"
                                               FlowDirection="LeftToRight">ثابت - ماهانه
                                     </CheckBox>

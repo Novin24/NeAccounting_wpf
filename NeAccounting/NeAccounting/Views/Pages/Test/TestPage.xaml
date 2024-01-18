@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:nu="clr-namespace:NeAccounting.Controls.Number"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages.Test"
+      xmlns:pc="clr-namespace:NeAcconting.Controls.DatePicker"
       d:DataContext="{d:DesignInstance local:TestPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
@@ -13,9 +14,13 @@
       Title="TestPage">
 
     <Grid>
-        <nu:MoneyPack LabelName="سایر اضافات"
-                           Value="{Binding ViewModel.Ts , Mode=TwoWay}"></nu:MoneyPack>
+        <StackPanel Width="400">
+            
 
+            <pc:PersianDatePicker SelectedDate="{Binding ViewModel.Tse, Mode=TwoWay}"
+                                  DisplayDate="... تاریخ امروز"
+                                  LabelName="تاریخ را وارد کنید"/>
         <Button Command="{Binding ViewModel.MyClickCommand}">clickMe</Button>
+        </StackPanel>
     </Grid>
 </Page>

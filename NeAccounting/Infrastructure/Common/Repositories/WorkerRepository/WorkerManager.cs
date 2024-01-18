@@ -208,6 +208,17 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region Salary
+        public Task<List<SalaryWorkerViewModel>> GetSalaryList(int workerId, DateTime? start, DateTime? end)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public async Task<(string error, bool isSuccess)> AddOrUpdateSalary(int workerId,
             DateTime submitDate,
             uint amountOf,
