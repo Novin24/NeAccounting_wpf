@@ -162,30 +162,38 @@
     </UserControl.Resources>
 
     <Grid>
-        <StackPanel Margin="20 5 20 5 "
-                    >
+        <StackPanel Margin="20 5 20 5 ">
             <TextBlock FontWeight="Bold"
+                       Margin="9 0 9 7"
                        FontFamily="Calibri"
                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                        x:Name="lbl_name"
                        HorizontalAlignment="Right"
                        FontSize="16" />
-            <DockPanel Margin="9 0 9 7"
-                       HorizontalAlignment="Right">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-
-                <Button Style="{StaticResource openCalendarButtonStyle}"
+                <Button Grid.Column="0"
+                        Style="{StaticResource openCalendarButtonStyle}"
                         Name="openCalendarButton"
                         VerticalAlignment="Center"
                         IsTabStop="True"
                         Focusable="True"
+                        ToolTip="تقویم"
                         HorizontalAlignment="Left"
                         Click="Button_Click">
                     <ui:SymbolIcon Symbol="CalendarRtl24"
-                                   FontSize="20" />
+                                   FontSize="25" />
                 </Button>
-                <Button Style="{StaticResource DismissButtonStyle}"
+                <Button Grid.Column="1"
+                        Margin="7 0"
+                        Style="{StaticResource DismissButtonStyle}"
                         Name="Dismiss"
+                        ToolTip="حذف"
                         VerticalAlignment="Center"
                         IsTabStop="True"
                         Focusable="True"
@@ -194,7 +202,7 @@
                     <ui:SymbolIcon Symbol="Dismiss20"
                                    FontSize="20" />
                 </Button>
-                <ui:TextBox 
+                <ui:TextBox Grid.Column="2"
                             Name="txt_date"
                             IsReadOnly="True"
                             IsTabStop="False"
@@ -221,7 +229,7 @@
 
                     </Grid>
                 </Popup>
-            </DockPanel>
+            </Grid>
 
         </StackPanel>
     </Grid>
