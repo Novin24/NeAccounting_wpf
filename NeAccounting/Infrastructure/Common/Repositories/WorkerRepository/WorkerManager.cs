@@ -318,9 +318,26 @@ namespace Infrastructure.Repositories
 
             var func = salary.Functions.First();
 
-            ssalary = worker.ShiftStatus == Shift.ByMounth ? func.AmountOf * worker.Salary : func.AmountOf * worker.ShiftSalary;
-            overtime = worker.ShiftStatus == Shift.ByMounth ? func.AmountOf * worker.OverTimeSalary : func.AmountOf * worker.ShiftOverTimeSalary;
 
+            if (worker.ShiftStatus == Shift.ByMounth)
+            {
+                if (func.AmountOf == worker.DayInMonth)
+                {
+                    ssalary = worker.Salary;
+                }
+                else
+                {
+                    ssalary = func.AmountOf * (worker.Salary / worker.DayInMonth);
+                }
+                overtime = func.AmountOfOverTime * worker.OverTimeSalary;
+
+            }
+            else
+            {
+                ssalary = func.AmountOf * worker.ShiftSalary;
+                overtime = func.AmountOfOverTime * worker.ShiftOverTimeSalary;
+
+            }
             return new SalaryWorkerViewModel()
             {
                 PersonelId = worker.PersonnelId,

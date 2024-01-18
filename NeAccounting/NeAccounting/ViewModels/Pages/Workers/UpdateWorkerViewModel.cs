@@ -81,7 +81,7 @@ namespace NeAccounting.ViewModels
         private bool _shiftByMonth;
 
         [ObservableProperty]
-        private bool _shiftByHour = true;
+        private bool _shiftByHour;
 
 
         [ObservableProperty]

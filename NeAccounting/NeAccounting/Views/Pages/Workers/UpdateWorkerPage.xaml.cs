@@ -18,9 +18,9 @@ namespace NeAccounting.Views.Pages
         {
             ViewModel = viewModel;
             DataContext = this;
+            _snackbarService = snackbarService;
             InitializeComponent();
             txt_name.Focus();
-            _snackbarService = snackbarService;
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)

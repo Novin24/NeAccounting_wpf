@@ -10,7 +10,7 @@
       d:DataContext="{d:DesignInstance local:CreateWorkerPage,
                                      IsDesignTimeCreatable=False}"
       Title="CreateWorkerPage"
-      d:DesignHeight="450"
+      d:DesignHeight="600"
       d:DesignWidth="800"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -99,7 +99,7 @@
                                       Margin="20 0 20 0"
                                       Height="auto">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height=".5*"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
@@ -109,17 +109,21 @@
                                                  HorizontalAlignment="Center"
                                                  Checked="RadioButton_Checked"
                                                  FlowDirection="LeftToRight">ساعتی - شیفتی</RadioButton>
-                                    
+
                                     <nu:MoneyPack Grid.Row="1"
-                                                   LabelName="دستمزد"
-                                                   x:Name="txt_ShiftPrice"
-                                                   Value="{Binding ViewModel.ShiftSalary , Mode=TwoWay}" />
+                                                  LabelName="دستمزد"
+                                                  IsEnabled="False"
+                                                  TabIndex="11"
+                                                  x:Name="txt_ShiftPrice"
+                                                  Value="{Binding ViewModel.ShiftSalary , Mode=TwoWay}" />
 
 
                                     <nu:MoneyPack Grid.Row="2"
-                                                   LabelName="اضافه کاری"
-                                                   x:Name="txt_overTimeShift"
-                                                   Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay}" />
+                                                  TabIndex="12"
+                                                  IsEnabled="False"
+                                                  LabelName="اضافه کاری"
+                                                  x:Name="txt_overTimeShift"
+                                                  Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay}" />
 
                                 </Grid>
                             </Border>
@@ -151,73 +155,29 @@
                                                  Checked="RadioButton_Checked_1"
                                                  FlowDirection="LeftToRight">ثابت - ماهانه
                                     </RadioButton>
-                                    <StackPanel Grid.Row="1">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="دستمزد"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      FontSize="14"
-                                                      Grid.Row="0"
-                                                      Value="{Binding ViewModel.Salary , Mode=TwoWay}"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      x:Name="txt_MonthPrice"
-                                                      TabIndex="14"
-                                                      IsReadOnly="True"
-                                                      Grid.Column="0"
-                                                      Margin="0 4 3 0 "
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="2">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="اضافه کاری"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      TabIndex="15"
-                                                      FontSize="14"
-                                                      Grid.Row="0"
-                                                      x:Name="txt_overtimePriceMonth"
-                                                      Value="{Binding ViewModel.OvertimeSalary , Mode=TwoWay}"
-                                                      Grid.Column="0"
-                                                      Margin="0 4 3 0 "
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="3">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="حق بیمه"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      FontSize="14"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      Grid.Row="0"
-                                                      Value="{Binding ViewModel.InsurancePremium , Mode=TwoWay}"
-                                                      TabIndex="16"
-                                                      Grid.Column="0"
-                                                      Margin="0 4 3 0 "
-                                                      x:Name="txt_insurancePerimum"
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="4">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="تعداد روز ها"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      FontSize="14"
-                                                      Grid.Row="0"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      TabIndex="17"
-                                                      Maximum="31"
-                                                      Minimum="1"
-                                                      Grid.Column="0"
-                                                      x:Name="txt_dayInMonth"
-                                                      Value="{Binding ViewModel.DayInMonth , Mode=TwoWay}"
-                                                      Margin="0 4 3 0 "
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
+
+                                    <nu:MoneyPack Grid.Row="1"
+                                                  LabelName="دستمزد"
+                                                  x:Name="txt_MonthPrice"
+                                                  Value="{Binding ViewModel.Salary, Mode=TwoWay}" />
+
+                                    <nu:MoneyPack Grid.Row="2"
+                                                  LabelName="اضافه کاری"
+                                                  x:Name="txt_overtimePriceMonth"
+                                                  Value="{Binding ViewModel.OvertimeSalary, Mode=TwoWay}" />
+
+                                    <nu:MoneyPack Grid.Row="3"
+                                                  LabelName="حق بیمه"
+                                                  x:Name="txt_insurancePerimum"
+                                                  Value="{Binding ViewModel.InsurancePremium, Mode=TwoWay}" />
+
+                                    <nu:NumberPack Grid.Row="4"
+                                                  LabelName="تعداد روز کاری"
+                                                   x:Name="txt_dayInMonth"
+                                                   Minimum="0"
+                                                   Maximum="31"
+                                                   Value="{Binding ViewModel.DayInMonth, Mode=TwoWay}" />
+
                                 </Grid>
                             </Border>
                         </Grid>

@@ -74,7 +74,6 @@ namespace NeAccounting.Views.Pages
                     _snackbarService.Show("خطا", "شماره موبایل وارد شده نامعتبر میباشد !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
                 }
             }
-
         }
 
         private void Txt_NationalCode_LostFocus(object sender, RoutedEventArgs e)

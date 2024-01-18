@@ -44,7 +44,7 @@ namespace NeAccounting.Controls.Number
 
         // Using a DependencyProperty as the backing store for NumberValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(long), typeof(NumberPack), new PropertyMetadata(0l));//, SetNumber));
+            DependencyProperty.Register("Value", typeof(long), typeof(NumberPack), new PropertyMetadata(0L));//, SetNumber));
 
         private static void SetNumber(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
@@ -67,7 +67,7 @@ namespace NeAccounting.Controls.Number
 
         // Using a DependencyProperty as the backing store for Minimum.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MinimumProperty =
-            DependencyProperty.Register("Minimum", typeof(double), typeof(NumberPack), new PropertyMetadata(0d));
+            DependencyProperty.Register("Minimum", typeof(double), typeof(NumberPack), new PropertyMetadata(double.MinValue));
 
 
 
@@ -79,7 +79,7 @@ namespace NeAccounting.Controls.Number
 
         // Using a DependencyProperty as the backing store for Maximum.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MaximumProperty =
-            DependencyProperty.Register("Maximum", typeof(double), typeof(NumberPack), new PropertyMetadata(0d));
+            DependencyProperty.Register("Maximum", typeof(double), typeof(NumberPack), new PropertyMetadata(double.MaxValue));
 
 
 
