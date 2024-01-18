@@ -103,7 +103,7 @@
                                                         Binding="{Binding OverTime}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" />   
+                                                        Width="*" />
                                     <DataGridTextColumn Header="عادی"
                                                         Binding="{Binding Amountof}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
@@ -174,41 +174,33 @@
                                                        SuggestionChosen="txt_name_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
                                                        Margin="0 4 3 0 "
-                                                       
                                                        FontFamily="Calibri" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="20 7 20 0 ">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontWeight="Bold"
-                                               FontSize="15"
-                                               Text="تاریخ کارکرد"
-                                               Margin="10 0 0 0 " />
-                                    <datepicker:PersianDatePicker FontSize="14"
-                                                                  FlowDirection="LeftToRight"
-                                                                  FontFamily="Calibri"
-                                                                  Focusable="True"
-                                                                  IsTabStop="True"
-                                                                  x:Name="dtp"
-                                                                  SelectedDate="{Binding ViewModel.PayDate , Mode=TwoWay}"
-                                                                  Margin="0 4 0 0" />
-                                </StackPanel>
-
+                                
+                                <datepicker:PersianDatePicker FontSize="14"
+                                                              FlowDirection="LeftToRight"
+                                                              FontFamily="Calibri"
+                                                              Focusable="True"
+                                                              IsTabStop="True"
+                                                              LabelName="تاریخ کارکرد"
+                                                              Grid.Column="1"
+                                                              x:Name="dtp"
+                                                              SelectedDate="{Binding ViewModel.PayDate , Mode=TwoWay}"
+                                                              Margin="0 4 0 0" />
 
                                 <nu:MoneyPack Grid.Column="0"
-                                               Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
-                                               Grid.Row="1"
-                                               Minimum="0"
-                                               Maximum="31"
-                                               LabelName="کارکرد عادی" />
+                                              Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
+                                              Grid.Row="1"
+                                              Minimum="0"
+                                              Maximum="31"
+                                              LabelName="کارکرد عادی" />
 
                                 <nu:MoneyPack Grid.Column="1"
-                                               LabelName="اضافه کاری"
-                                               Minimum="0"
-                                               Maximum="120"
-                                               Value="{Binding ViewModel.OverTime , Mode=TwoWay}"
-                                               Grid.Row="1" />
+                                              LabelName="اضافه کاری"
+                                              Minimum="0"
+                                              Maximum="120"
+                                              Value="{Binding ViewModel.OverTime , Mode=TwoWay}"
+                                              Grid.Row="1" />
 
                                 <Grid Grid.Column="0"
                                       Grid.ColumnSpan="2"

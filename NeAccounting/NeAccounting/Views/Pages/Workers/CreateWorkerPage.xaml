@@ -242,21 +242,17 @@
                                                 Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="3 4 20 0 ">
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="تاریخ شروع کار"
-                                               Margin="1 0 0 0 " />
-                                    <datepicker:PersianDatePicker FontSize="14"
-                                                                  FlowDirection="LeftToRight"
-                                                                  FontFamily="Calibri"
-                                                                  TabIndex="1"
-                                                                  x:Name="dtp"
-                                                                  SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay}"
-                                                                  Margin="0 4 0 0" />
-                                </StackPanel>
+                                <datepicker:PersianDatePicker FontSize="14"
+                                                              Grid.Column="1"
+                                                              LabelName="تاریخ شروع به کار"
+                                                              FlowDirection="LeftToRight"
+                                                              FontFamily="Calibri"
+                                                              TabIndex="1"
+                                                              x:Name="dtp"
+                                                              SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay}"
+                                                              Margin="0 4 0 0" />
+
                                 <StackPanel Grid.Column="0"
                                             Grid.Row="1">
 
