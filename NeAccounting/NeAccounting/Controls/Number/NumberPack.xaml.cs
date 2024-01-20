@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace NeAccounting.Controls.Number
+namespace NeAccounting.Controls
 {
     /// <summary>
     /// Interaction logic for NumberPack.xaml

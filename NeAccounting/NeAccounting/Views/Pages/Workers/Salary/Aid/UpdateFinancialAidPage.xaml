@@ -5,7 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
-      xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:UpdateFinancialAidPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
@@ -178,7 +178,7 @@
                                                 IsEnabled="False"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
-                                <datepicker:PersianDatePicker FontSize="14"
+                                <nu:PersianDatePicker FontSize="14"
                                                               FlowDirection="LeftToRight"
                                                               FontFamily="Calibri"
                                                               IsEnabled="False"

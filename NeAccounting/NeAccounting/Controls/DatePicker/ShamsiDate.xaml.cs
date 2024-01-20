@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Input;
-namespace NeAcconting.Controls.DatePicker
+namespace NeAccounting.Controls
 {
     /// <summary>
     /// Interaction logic for ShamsiDatePicker.xaml

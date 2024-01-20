@@ -5,9 +5,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
-      xmlns:pdp="clr-namespace:NeAcconting.Controls.DatePicker"
-      xmlns:hlr="clr-namespace:NeAccounting.Helpers"
-      xmlns:nu="clr-namespace:NeAccounting.Controls.Number"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:SalaryListPage,
                                      IsDesignTimeCreatable=False}"
       Title="Salary"
@@ -138,23 +136,17 @@
                                 </ui:CardAction>
                             </Grid>
                             <Grid Grid.Row="1"
-                                  FlowDirection="LeftToRight"
                                   Margin="0 ,5,0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <pdp:PersianDatePicker Grid.Column="0" />
-                                <pdp:PersianDatePicker Grid.Column="1" />
+                                <nu:PersianDatePicker Grid.Column="0"
+                                                       FlowDirection="LeftToRight"
+                                                       LabelName="از تاریخ" />
 
-                            </Grid>
-                            <Grid Grid.Row="2"
-                                  Margin="0 ,5,0,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Margin="0 0 0 0 ">
+                                <StackPanel Margin="0 0 0 0 "
+                                            Grid.Column="1">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="نام پرسنل"
@@ -169,6 +161,18 @@
                                                        Margin="0 4 3 0"
                                                        FontFamily="Calibri" />
                                 </StackPanel>
+
+
+
+                            </Grid>
+                            <Grid Grid.Row="2"
+                                  Margin="0 ,5,0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                
+                                <nu:PersianDatePicker FlowDirection="LeftToRight" LabelName="تا تاریخ" />
 
                                 <Button Margin="16 32 0 10"
                                         Padding="17 4 17 9"

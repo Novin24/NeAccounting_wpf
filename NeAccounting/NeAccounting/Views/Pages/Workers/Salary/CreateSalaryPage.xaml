@@ -5,9 +5,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
-      xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
-      xmlns:hlr="clr-namespace:NeAccounting.Helpers"
-      xmlns:nu="clr-namespace:NeAccounting.Controls.Number"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:CreateSalaryPage,
                                      IsDesignTimeCreatable=False}"
       Title="Salary"
@@ -15,12 +13,6 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
-
-    <Page.Resources>
-        <ResourceDictionary>
-            <hlr:RoundMyNumberConverter x:Key="thousandsSeparator" />
-        </ResourceDictionary>
-    </Page.Resources>
 
     <Grid>
 
@@ -160,7 +152,7 @@
                                                        FontFamily="Calibri" />
                                 </StackPanel>
 
-                                <datepicker:PersianDatePicker FontSize="14"
+                                <nu:PersianDatePicker FontSize="14"
                                                               Grid.Column="1"
                                                               FlowDirection="LeftToRight"
                                                               FontFamily="Calibri"

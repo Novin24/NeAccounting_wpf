@@ -5,8 +5,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
-      xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
-      xmlns:nu="clr-namespace:NeAccounting.Controls.Number"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:CreateWorkerPage,
                                      IsDesignTimeCreatable=False}"
       Title="CreateWorkerPage"
@@ -243,7 +242,7 @@
                                                 FontFamily="Calibri" />
                                 </StackPanel>
 
-                                <datepicker:PersianDatePicker FontSize="14"
+                                <nu:PersianDatePicker FontSize="14"
                                                               Grid.Column="1"
                                                               LabelName="تاریخ شروع به کار"
                                                               FlowDirection="LeftToRight"

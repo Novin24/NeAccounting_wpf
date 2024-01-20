@@ -1,8 +1,7 @@
-﻿using NeAccounting.Controls.Number;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace NeAcconting.Controls.DatePicker
+namespace NeAccounting.Controls
 {
     [DefaultEvent("SelectedDateChanged")]
     [DefaultProperty("SelectedDate")]

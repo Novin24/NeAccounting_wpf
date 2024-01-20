@@ -1,8 +1,6 @@
-﻿using NeAcconting.Controls.DatePicker;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
 
-namespace NeAccounting.Controls.Number
+namespace NeAccounting.Controls
 {
     /// <summary>
     /// Interaction logic for MoneyPack.xaml

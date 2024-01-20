@@ -1,5 +1,5 @@
 ﻿using DomainShared.ViewModels;
-using NeAccounting.Controls.Number;
+using NeAccounting.Controls;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
