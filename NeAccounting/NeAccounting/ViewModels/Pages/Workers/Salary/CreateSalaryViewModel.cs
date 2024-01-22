@@ -169,6 +169,10 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
 
     public async Task<bool> OnSelect()
     {
+        if (WorkerId == -1)
+        {
+            return false;
+        }
         using UnitOfWork db = new();
         var Worker = await db.workerManager.GetWorker(WorkerId);
         var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
@@ -179,13 +183,12 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
             return false;
         }
         ShiftStatus = Worker.Shift;
-        Insurance = details.InsurancePremium;
-        AmountOf = details.SalaryAmount;
-        OverTime = details.OverTimeSalary;
+        Insurance = details.Insurance;
+        AmountOf = details.AmountOf;
+        OverTime = details.OverTime;
         PersonelId = details.PersonelId;
-        FinancialAid = details.FinancialAidAmount;
-        
-        
+        FinancialAid = details.FinancialAid;
+
         return true;
     }
 }

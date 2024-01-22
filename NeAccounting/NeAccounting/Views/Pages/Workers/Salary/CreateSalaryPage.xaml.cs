@@ -27,37 +27,7 @@ namespace NeAccounting.Views.Pages
         private async void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             int id = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
-            if (id == ViewModel.WorkerId)
-                return;
-
-            ViewModel.WorkerId = id;
-            if (!await ViewModel.OnSelect())
-            {
-                return;
-            }
-            if (ViewModel.ShiftStatus == DomainShared.Enums.Shift.ByMounth)
-            {
-                txt_Tax.IsEnabled = true;
-                txt_loanInstallment.IsEnabled = true;
-                txt_RighOfFood.IsEnabled = true;
-                txt_ChildAllowance.IsEnabled = true;
-            }
-            else
-            {
-                txt_Tax.Value = 0;
-                txt_Tax.IsEnabled = false;
-
-                txt_loanInstallment.Value = 0;
-                txt_loanInstallment.IsEnabled = false;
-
-                txt_RighOfFood.Value = 0;
-                txt_RighOfFood.IsEnabled = false;
-
-                txt_ChildAllowance.Value = 0;
-                txt_ChildAllowance.IsEnabled = false;
-            }
-            txt_OtherAdditions.IsEnabled = true;
-            txt_Othere.IsEnabled = true;
+            ReloadSalary(id);
         }
 
         private void SetTotalPlusPrice()
@@ -111,5 +81,42 @@ namespace NeAccounting.Views.Pages
             }
         }
 
+        private void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            ReloadSalary(ViewModel.WorkerId);
+        }
+
+        private async void ReloadSalary(int id)
+        {
+
+            ViewModel.WorkerId = id;
+            if (!await ViewModel.OnSelect())
+            {
+                return;
+            }
+            if (ViewModel.ShiftStatus == DomainShared.Enums.Shift.ByMounth)
+            {
+                txt_Tax.IsEnabled = true;
+                txt_loanInstallment.IsEnabled = true;
+                txt_RighOfFood.IsEnabled = true;
+                txt_ChildAllowance.IsEnabled = true;
+            }
+            else
+            {
+                txt_Tax.Value = 0;
+                txt_Tax.IsEnabled = false;
+
+                txt_loanInstallment.Value = 0;
+                txt_loanInstallment.IsEnabled = false;
+
+                txt_RighOfFood.Value = 0;
+                txt_RighOfFood.IsEnabled = false;
+
+                txt_ChildAllowance.Value = 0;
+                txt_ChildAllowance.IsEnabled = false;
+            }
+            txt_OtherAdditions.IsEnabled = true;
+            txt_Othere.IsEnabled = true;
+        }
     }
 }

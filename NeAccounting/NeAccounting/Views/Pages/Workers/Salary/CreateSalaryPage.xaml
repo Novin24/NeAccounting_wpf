@@ -76,7 +76,7 @@
                                       FontSize="18"
                                       Foreground="White"
                                       Text="1402/09/18 " />
-                        <ui:TextBlock Margin="20 20 0 0"
+                        <ui:TextBlock Margin="0 20 55 0"
                                       Height="40"
                                       HorizontalAlignment="Right"
                                       FontFamily="Calibri"
@@ -129,6 +129,12 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
 
+                                <ui:InfoBar Title="تذکر"
+                                            Grid.ColumnSpan="2"
+                                            IsOpen="True"
+                                            IsClosable="False"
+                                            Message="کاربر گرامی پس از صدور فیش حقوقی امکان ویرایش کارکرد و یا  ثبت مساعده وجود ندارد !!!"
+                                            Severity="Warning" />
                                 <StackPanel Margin="20 15 20 0 ">
                                     <DockPanel>
                                         <TextBlock FontFamily="Calibri"
@@ -151,15 +157,16 @@
                                                        DisplayMemberPath="DisplayName"
                                                        FontFamily="Calibri" />
                                 </StackPanel>
-
+                                
                                 <nu:PersianDatePicker FontSize="14"
-                                                              Grid.Column="1"
-                                                              FlowDirection="LeftToRight"
-                                                              FontFamily="Calibri"
-                                                              x:Name="dtp"
-                                                              Margin="0 8 0 0"
-                                                              LabelName="تاریخ پرداخت"
-                                                              SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}" />
+                                                      Grid.Column="1"
+                                                      FlowDirection="LeftToRight"
+                                                      FontFamily="Calibri"
+                                                      x:Name="dtp"
+                                                      Margin="0 8 0 0"
+                                                      LabelName="تاریخ پرداخت"
+                                                      DateChosen="dtp_DateChosen"
+                                                      SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}" />
 
 
                                 <nu:MoneyPack Grid.Row="1"

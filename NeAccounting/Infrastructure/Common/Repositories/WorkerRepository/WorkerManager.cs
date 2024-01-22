@@ -7,7 +7,6 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
 using System.Globalization;
-using System.Security.Cryptography;
 
 namespace Infrastructure.Repositories
 {
@@ -208,9 +207,70 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region Salary
-        public Task<List<SalaryWorkerViewModel>> GetSalaryList(int workerId, DateTime? start, DateTime? end)
+        public async Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId)
         {
-            throw new NotImplementedException();
+            return await (from w in DbContext.Set<Worker>()
+                                                 .AsNoTracking()
+                                                 .Where(t => t.Id == workerId)
+
+                          join s in DbContext.Set<Salary>()
+                                                  //.Include(t => t.Aids)
+                                                  .Where(t => t.Id == salaryId)
+                                                  on w.Id equals s.WorkerId
+
+                          orderby s.CreationTime descending
+                          select new SalaryWorkerViewModel()
+                          {
+                              WorkerName = w.FullName,
+                              PersonelId = w.PersonnelId,
+                              ShiftStatus = w.ShiftStatus,
+                              Insurance = w.InsurancePremium,
+                              FinancialAid = (uint)s.Aids.Sum(c => c.AmountOf),
+                              AmountOf = s.AmountOf,
+                              OverTime = s.OverTime,
+                              ChildAllowance = s.ChildAllowance,
+                              Description = s.Description,
+                              LeftOver = s.LeftOver,
+                              LoanInstallment = s.LoanInstallment,
+                              OtherAdditions = s.OtherAdditions,
+                              OtherDeductions = s.OtherDeductions,
+                              RightHousingAndFood = s.RightHousingAndFood,
+                              Tax = s.Tax,
+                              Error = string.Empty,
+                              Success = true,
+                          })
+              .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<SalaryViewModel>> GetSalaryList(int workerId, DateTime? start, DateTime? end)
+        {
+            return await (from w in DbContext.Set<Worker>()
+                                                             .AsNoTracking()
+                                                             .Where(t => workerId == -1 || t.Id == workerId)
+
+                          join s in DbContext.Set<Salary>()
+                          //.Include(t => t.Aids)
+                          .Where(w=> w.AmountOf != 0)
+                          .Where(c => start == null || c.SubmitDate >= start)
+                          .Where(c => end == null || c.SubmitDate <= end)
+                                                  on w.Id equals s.WorkerId
+
+                          orderby s.CreationTime descending
+                          select new SalaryViewModel()
+                          {
+                              Name = w.FullName,
+                              Amountof = s.AmountOf.ToString("N0"),
+                              Date = s.SubmitDate,
+                              OverTime = s.OverTime.ToString("N0"),
+                              LeftOver = s.LeftOver.ToString("N0"),
+                              TotalDebt = (s.LoanInstallment + s.OtherDeductions + s.Tax + s.Insurance + (uint)s.Aids.Sum(c => c.AmountOf)).ToString("N0"),
+                              Details = new SalaryDetails
+                              {
+                                  Id = s.Id,
+                                  WorkerId = w.Id
+                              }
+                          })
+                          .ToListAsync();
         }
 
         public Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId)
@@ -299,6 +359,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
 
         }
+
         public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate)
         {
             PersianCalendar pc = new();
@@ -353,10 +414,10 @@ namespace Infrastructure.Repositories
             {
                 PersonelId = worker.PersonnelId,
                 ShiftStatus = worker.ShiftStatus,
-                InsurancePremium = worker.InsurancePremium,
-                FinancialAidAmount = aid,
-                SalaryAmount = ssalary,
-                OverTimeSalary = overtime,
+                Insurance = worker.InsurancePremium,
+                FinancialAid = aid,
+                AmountOf = ssalary,
+                OverTime = overtime,
                 Error = string.Empty,
                 Success = true,
             };

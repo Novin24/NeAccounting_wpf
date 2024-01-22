@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages.Test"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       d:DataContext="{d:DesignInstance local:TestPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
@@ -14,12 +15,16 @@
 
     <Grid>
         <StackPanel Width="400">
-            
 
-            <nu:PersianDatePicker SelectedDate="{Binding ViewModel.Tse, Mode=TwoWay}"
-                                  DisplayDate="... تاریخ امروز"
-                                  LabelName="تاریخ را وارد کنید"/>
-        <Button Command="{Binding ViewModel.MyClickCommand}">clickMe</Button>
+
+            <nu:PersianDatePicker DateChosen="PersianDatePicker_DateChosen" />
+
+            <ui:InfoBar Title="تذکر"
+                        Grid.Column="0"
+                        IsOpen="True"
+                        IsClosable="False"
+                        Message="کاربر گرامی پس از صدور فیش حقوقی امکان ثبت مساعده وجود ندارد !!!"
+                        Severity="Warning" />
         </StackPanel>
     </Grid>
 </Page>

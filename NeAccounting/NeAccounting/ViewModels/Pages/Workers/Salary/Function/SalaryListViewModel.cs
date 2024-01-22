@@ -2,7 +2,6 @@
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
-using NeAccounting.Views.Pages;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -24,12 +23,11 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private DateTime? _endDate;
 
-
         [ObservableProperty]
         private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
         [ObservableProperty]
-        private IEnumerable<SalaryWorkerViewModel> _list;
+        private IEnumerable<SalaryViewModel> _list;
 
         public SalaryListViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService)
         {
@@ -80,7 +78,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnRemoveAid(FucntionDetails parameter)
+        private async Task OnRemove(SalaryDetails parameter)
         {
             var result = await _contentDialogService.ShowSimpleDialogAsync(
             new SimpleContentDialogCreateOptions()
@@ -94,21 +92,21 @@ namespace NeAccounting.ViewModels
 
             if (result == ContentDialogResult.Primary)
             {
-                using UnitOfWork db = new();
-                var isSuccess = await db.workerManager.DeleteFunc(parameter.WorkerId, parameter.SalaryId, parameter.Id);
-                if (!isSuccess.isSuccess)
-                {
-                    _snackbarService.Show("کاربر گرامی", isSuccess.error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
-                    return;
-                }
-                _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+                //using UnitOfWork db = new();
+                //var isSuccess = await db.workerManager.DeleteFunc(parameter.WorkerId, parameter.SalaryId, parameter.Id);
+                //if (!isSuccess.isSuccess)
+                //{
+                //    _snackbarService.Show("کاربر گرامی", isSuccess.error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
+                //    return;
+                //}
+                //_snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
-                await OnSearchWorker();
+                //await OnSearchWorker();
             }
         }
 
         [RelayCommand]
-        private void OnUpdateFunc(FucntionDetails parameter)
+        private void OnUpdate(SalaryDetails parameter)
         {
             Type? pageType = NameToPageTypeConverter.Convert("UpdateFunction");
 

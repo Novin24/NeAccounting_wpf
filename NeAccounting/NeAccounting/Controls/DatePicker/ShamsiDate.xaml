@@ -197,18 +197,18 @@
                          Handler="Button_Click" />
         </Style>
         <!-- برای امروز  -->
-        <Style x:Key="RectangleStyleToday"
-               TargetType="Rectangle">
+        <Style x:Key="EllipseStyleToday"
+               TargetType="Ellipse">
             <Setter Property="Stroke"
                     Value="#30D340" />
+            <Setter Property="Width"
+                    Value="27" />
+            <Setter Property="Height"
+                    Value="25" />
             <Setter Property="StrokeThickness"
-                    Value="2" />
+                    Value="1" />
             <Setter Property="ToolTip"
                     Value="تاریخ امروز" />
-            <Setter Property="RadiusX"
-                    Value="15" />
-            <Setter Property="RadiusY"
-                    Value="15" />
         </Style>
     </UserControl.Resources>
 
@@ -409,7 +409,7 @@
                                 Focusable="True"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
-                        <Rectangle x:Name="RectangleJome0" />
+                        <Ellipse x:Name="EllipseJome0" />
                     </Grid>
                     <Grid x:Name="Grid5Shanbe0"
                           Style="{DynamicResource GridStyle}">
@@ -420,7 +420,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
-                        <Rectangle x:Name="Rectangle5Shanbe0" />
+                        <Ellipse x:Name="Ellipse5Shanbe0" />
                     </Grid>
                     <Grid x:Name="Grid4Shanbe0"
                           Style="{DynamicResource GridStyle}">
@@ -430,7 +430,7 @@
                                 MinHeight="16"
                                 MinWidth="16"
                                 FontFamily="arial">۴</Button>
-                        <Rectangle x:Name="Rectangle4Shanbe0" />
+                        <Ellipse x:Name="Ellipse4Shanbe0" />
                     </Grid>
                     <Grid x:Name="Grid3Shanbe0"
                           Style="{DynamicResource GridStyle}">
@@ -441,7 +441,7 @@
                                 TabIndex="3"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
-                        <Rectangle x:Name="Rectangle3Shanbe0" />
+                        <Ellipse x:Name="Ellipse3Shanbe0" />
                     </Grid>
                     <Grid x:Name="Grid2Shanbe0"
                           Style="{DynamicResource GridStyle}">
@@ -452,7 +452,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
-                        <Rectangle x:Name="Rectangle2Shanbe0" />
+                        <Ellipse x:Name="Ellipse2Shanbe0" />
                     </Grid>
                     <Grid x:Name="Grid1Shanbe0"
                           Style="{DynamicResource GridStyle}">
@@ -463,7 +463,7 @@
                                 TabIndex="1"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
-                        <Rectangle x:Name="Rectangle1Shanbe0" />
+                        <Ellipse x:Name="Ellipse1Shanbe0" />
                     </Grid>
                     <Grid x:Name="GridShanbe0"
                           Style="{DynamicResource GridStyle}">
@@ -474,7 +474,7 @@
                                 TabIndex="0"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
-                        <Rectangle x:Name="RectangleShanbe0" />
+                        <Ellipse x:Name="EllipseShanbe0" />
                     </Grid>
                 </UniformGrid>
                 <!-- second week     second week     second week -->
@@ -491,7 +491,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
-                        <Rectangle x:Name="RectangleJome1" />
+                        <Ellipse x:Name="EllipseJome1" />
                     </Grid>
                     <Grid x:Name="Grid5Shanbe1"
                           Style="{DynamicResource GridStyle}">
@@ -502,7 +502,7 @@
                                 TabIndex="12"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
-                        <Rectangle x:Name="Rectangle5Shanbe1" />
+                        <Ellipse x:Name="Ellipse5Shanbe1" />
                     </Grid>
                     <Grid x:Name="Grid4Shanbe1"
                           Style="{DynamicResource GridStyle}">
@@ -513,7 +513,7 @@
                                 TabIndex="11"
                                 Margin="2,0"
                                 FontFamily="arial">۴</Button>
-                        <Rectangle x:Name="Rectangle4Shanbe1" />
+                        <Ellipse x:Name="Ellipse4Shanbe1" />
                     </Grid>
                     <Grid x:Name="Grid3Shanbe1"
                           Style="{DynamicResource GridStyle}">
@@ -524,7 +524,7 @@
                                 TabIndex="10"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
-                        <Rectangle x:Name="Rectangle3Shanbe1" />
+                        <Ellipse x:Name="Ellipse3Shanbe1" />
                     </Grid>
                     <Grid x:Name="Grid2Shanbe1"
                           Style="{DynamicResource GridStyle}">
@@ -535,7 +535,7 @@
                                 TabIndex="9"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
-                        <Rectangle x:Name="Rectangle2Shanbe1" />
+                        <Ellipse x:Name="Ellipse2Shanbe1" />
                     </Grid>
                     <Grid x:Name="Grid1Shanbe1"
                           Style="{DynamicResource GridStyle}">
@@ -546,7 +546,7 @@
                                 TabIndex="8"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
-                        <Rectangle x:Name="Rectangle1Shanbe1" />
+                        <Ellipse x:Name="Ellipse1Shanbe1" />
                     </Grid>
                     <Grid x:Name="GridShanbe1"
                           Style="{DynamicResource GridStyle}">
@@ -557,7 +557,7 @@
                                 TabIndex="7"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
-                        <Rectangle x:Name="RectangleShanbe1" />
+                        <Ellipse x:Name="EllipseShanbe1" />
                     </Grid>
                 </UniformGrid>
                 <!--  Third week      Third week      Third week -->
@@ -574,7 +574,7 @@
                                 TabIndex="20"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
-                        <Rectangle x:Name="RectangleJome2" />
+                        <Ellipse x:Name="EllipseJome2" />
                     </Grid>
                     <Grid x:Name="Grid5Shanbe2"
                           Style="{DynamicResource GridStyle}">
@@ -585,7 +585,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
-                        <Rectangle x:Name="Rectangle5Shanbe2" />
+                        <Ellipse x:Name="Ellipse5Shanbe2" />
                     </Grid>
                     <Grid x:Name="Grid4Shanbe2"
                           Style="{DynamicResource GridStyle}">
@@ -596,7 +596,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۴</Button>
-                        <Rectangle x:Name="Rectangle4Shanbe2" />
+                        <Ellipse x:Name="Ellipse4Shanbe2" />
                     </Grid>
                     <Grid x:Name="Grid3Shanbe2"
                           Style="{DynamicResource GridStyle}">
@@ -607,7 +607,7 @@
                                 TabIndex="17"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
-                        <Rectangle x:Name="Rectangle3Shanbe2" />
+                        <Ellipse x:Name="Ellipse3Shanbe2" />
                     </Grid>
                     <Grid x:Name="Grid2Shanbe2"
                           Style="{DynamicResource GridStyle}">
@@ -618,7 +618,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
-                        <Rectangle x:Name="Rectangle2Shanbe2" />
+                        <Ellipse x:Name="Ellipse2Shanbe2" />
                     </Grid>
                     <Grid x:Name="Grid1Shanbe2"
                           Style="{DynamicResource GridStyle}">
@@ -629,7 +629,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
-                        <Rectangle x:Name="Rectangle1Shanbe2" />
+                        <Ellipse x:Name="Ellipse1Shanbe2" />
                     </Grid>
                     <Grid x:Name="GridShanbe2"
                           Style="{DynamicResource GridStyle}">
@@ -640,7 +640,7 @@
                                 TabIndex="14"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
-                        <Rectangle x:Name="RectangleShanbe2" />
+                        <Ellipse x:Name="EllipseShanbe2" />
                     </Grid>
                 </UniformGrid>
                 <!--  forth week      forth week      forth week -->
@@ -657,7 +657,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
-                        <Rectangle x:Name="RectangleJome3" />
+                        <Ellipse x:Name="EllipseJome3" />
                     </Grid>
                     <Grid x:Name="Grid5Shanbe3"
                           Style="{DynamicResource GridStyle}">
@@ -668,7 +668,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
-                        <Rectangle x:Name="Rectangle5Shanbe3" />
+                        <Ellipse x:Name="Ellipse5Shanbe3" />
                     </Grid>
                     <Grid x:Name="Grid4Shanbe3"
                           Style="{DynamicResource GridStyle}">
@@ -679,7 +679,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۴</Button>
-                        <Rectangle x:Name="Rectangle4Shanbe3" />
+                        <Ellipse x:Name="Ellipse4Shanbe3" />
                     </Grid>
                     <Grid x:Name="Grid3Shanbe3"
                           Style="{DynamicResource GridStyle}">
@@ -690,7 +690,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
-                        <Rectangle x:Name="Rectangle3Shanbe3" />
+                        <Ellipse x:Name="Ellipse3Shanbe3" />
                     </Grid>
                     <Grid x:Name="Grid2Shanbe3"
                           Style="{DynamicResource GridStyle}">
@@ -701,7 +701,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
-                        <Rectangle x:Name="Rectangle2Shanbe3" />
+                        <Ellipse x:Name="Ellipse2Shanbe3" />
                     </Grid>
                     <Grid x:Name="Grid1Shanbe3"
                           Style="{DynamicResource GridStyle}">
@@ -712,7 +712,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
-                        <Rectangle x:Name="Rectangle1Shanbe3" />
+                        <Ellipse x:Name="Ellipse1Shanbe3" />
                     </Grid>
                     <Grid x:Name="GridShanbe3"
                           Style="{DynamicResource GridStyle}">
@@ -723,7 +723,7 @@
                                 TabIndex="21"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
-                        <Rectangle x:Name="RectangleShanbe3" />
+                        <Ellipse x:Name="EllipseShanbe3" />
                     </Grid>
                 </UniformGrid>
                 <!--  fifth week      fifth week      fifth week -->
@@ -740,7 +740,7 @@
                                 TabIndex="34"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
-                        <Rectangle x:Name="RectangleJome4" />
+                        <Ellipse x:Name="EllipseJome4" />
                     </Grid>
                     <Grid x:Name="Grid5Shanbe4"
                           Style="{DynamicResource GridStyle}">
@@ -751,7 +751,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
-                        <Rectangle x:Name="Rectangle5Shanbe4" />
+                        <Ellipse x:Name="Ellipse5Shanbe4" />
                     </Grid>
                     <Grid x:Name="Grid4Shanbe4"
                           Style="{DynamicResource GridStyle}">
@@ -762,7 +762,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۴</Button>
-                        <Rectangle x:Name="Rectangle4Shanbe4" />
+                        <Ellipse x:Name="Ellipse4Shanbe4" />
                     </Grid>
                     <Grid x:Name="Grid3Shanbe4"
                           Style="{DynamicResource GridStyle}">
@@ -773,7 +773,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
-                        <Rectangle x:Name="Rectangle3Shanbe4" />
+                        <Ellipse x:Name="Ellipse3Shanbe4" />
                     </Grid>
                     <Grid x:Name="Grid2Shanbe4"
                           Style="{DynamicResource GridStyle}">
@@ -784,7 +784,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
-                        <Rectangle x:Name="Rectangle2Shanbe4" />
+                        <Ellipse x:Name="Ellipse2Shanbe4" />
                     </Grid>
                     <Grid x:Name="Grid1Shanbe4"
                           Style="{DynamicResource GridStyle}">
@@ -795,7 +795,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
-                        <Rectangle x:Name="Rectangle1Shanbe4" />
+                        <Ellipse x:Name="Ellipse1Shanbe4" />
                     </Grid>
                     <Grid x:Name="GridShanbe4"
                           Style="{DynamicResource GridStyle}">
@@ -806,7 +806,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
-                        <Rectangle x:Name="RectangleShanbe4" />
+                        <Ellipse x:Name="EllipseShanbe4" />
                     </Grid>
                 </UniformGrid>
                 <!-- *********************************************************** -->
@@ -823,6 +823,7 @@
                                 TabIndex="41"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
+                        <Ellipse x:Name="EllipseJome5" />
                     </Grid>
                     <Grid x:Name="Grid5Shanbe5"
                           Style="{DynamicResource GridStyle}">
@@ -833,6 +834,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۵</Button>
+                        <Ellipse x:Name="Ellipse5Shanbe5" />
                     </Grid>
                     <Grid x:Name="Grid4Shanbe5"
                           Style="{DynamicResource GridStyle}">
@@ -843,6 +845,7 @@
                                 TabIndex="39"
                                 Margin="2,0"
                                 FontFamily="arial">۴</Button>
+                        <Ellipse x:Name="Ellipse4Shanbe5" />
                     </Grid>
                     <Grid x:Name="Grid3Shanbe5"
                           Style="{DynamicResource GridStyle}">
@@ -853,6 +856,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
+                        <Ellipse x:Name="Ellipse3Shanbe5" />
                     </Grid>
                     <Grid x:Name="Grid2Shanbe5"
                           Style="{DynamicResource GridStyle}">
@@ -863,6 +867,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
+                        <Ellipse x:Name="Ellipse2Shanbe5" />
                     </Grid>
                     <Grid x:Name="Grid1Shanbe5"
                           Style="{DynamicResource GridStyle}">
@@ -873,6 +878,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
+                        <Ellipse x:Name="Ellipse1Shanbe5" />
                     </Grid>
                     <Grid x:Name="GridShanbe5"
                           Style="{DynamicResource GridStyle}">
@@ -883,6 +889,7 @@
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۰</Button>
+                        <Ellipse x:Name="EllipseShanbe5"/>
                     </Grid>
                 </UniformGrid>
                 <!-- *********************************************************** -->

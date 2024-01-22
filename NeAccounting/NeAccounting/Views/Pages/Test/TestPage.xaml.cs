@@ -18,5 +18,9 @@ namespace NeAccounting.Views.Pages.Test
             InitializeComponent();
         }
 
+        private void PersianDatePicker_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+
+        }
     }
 }
