@@ -4,9 +4,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:lrc="clr-namespace:NeAccounting.Helpers"
       xmlns:local="clr-namespace:NeAccounting.Pages"
-      xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
       Title="DataPage"
       d:DataContext="{d:DesignInstance local:RecPage,
                                      IsDesignTimeCreatable=False}"
@@ -202,7 +201,7 @@
                                                    FontSize="14"
                                                    Text="تاریخ دریافت"
                                                    Margin="10 4 0 0 " />
-                                        <datepicker:PersianDatePicker VerticalAlignment="Center"
+                                        <nu:PersianDatePicker VerticalAlignment="Center"
                                                                       FlowDirection="LeftToRight"
                                                                       x:Name="pdp" />
                                     </StackPanel>

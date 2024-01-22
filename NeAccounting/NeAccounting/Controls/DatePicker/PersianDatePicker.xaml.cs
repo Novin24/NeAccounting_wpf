@@ -1,23 +1,50 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
-using System.Windows.Input;
 
-namespace NeAcconting.Controls.DatePicker
+namespace NeAccounting.Controls
 {
     [DefaultEvent("SelectedDateChanged")]
     [DefaultProperty("SelectedDate")]
-    public partial class PersianDatePicker : UserControl
+    public partial class PersianDatePicker : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public PersianDatePicker()
         {
             InitializeComponent();
-            dateTextBox.Text = persianCalendar.PersianSelectedDate;
+            txt_date.Text = persianCalendar.PersianSelectedDate;
         }
 
-
-        public DateTime SelectedDate
+        #region LableName
+        public string LabelName
         {
-            get { return (DateTime)GetValue(SelectedDateProperty); }
+            get { return (string)GetValue(LableNameProperty); }
+            set { SetValue(LableNameProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for LableName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LableNameProperty =
+            DependencyProperty.Register("LableName", typeof(string), typeof(PersianDatePicker), new PropertyMetadata(string.Empty, SetLabelName));
+
+        private static void SetLabelName(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            if (obj is not PersianDatePicker npack)
+                return;
+
+            if (e.NewValue == e.OldValue)
+                return;
+
+            npack.lbl_name.Text = e.NewValue.ToString();
+        }
+        #endregion
+
+        #region SelectedDate
+        /// <summary>
+        /// تاریخ انتخاب شده
+        /// </summary>
+        public DateTime? SelectedDate
+        {
+            get { return (DateTime?)GetValue(SelectedDateProperty); }
             set
             {
                 SetValue(SelectedDateProperty, value);
@@ -26,7 +53,16 @@ namespace NeAcconting.Controls.DatePicker
 
         // Using a DependencyProperty as the backing store for SelectedDate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedDateProperty =
-            DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(PersianDatePicker), new PropertyMetadata(DateTime.Now));
+            DependencyProperty.Register("SelectedDate", propertyType: typeof(DateTime?), typeof(PersianDatePicker)
+                , new FrameworkPropertyMetadata(null
+                , new PropertyChangedCallback(OnPropertyChanged)));
+        #endregion
+
+        #region DisplayDate
+
+        /// <summary>
+        /// تاریخ قابل نمایش فارسی
+        /// </summary>
         public string DisplayDate
         {
             get { return (string)GetValue(DisplayDateProperty); }
@@ -35,19 +71,21 @@ namespace NeAcconting.Controls.DatePicker
 
         // Using a DependencyProperty as the backing store for DisplayDate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DisplayDateProperty =
-            DependencyProperty.Register("DisplayDate", typeof(string), typeof(PersianDatePicker), new PropertyMetadata("... تاریخ امروز",SetDate));
+            DependencyProperty.Register("DisplayDate", typeof(string), typeof(PersianDatePicker), new PropertyMetadata(string.Empty, SetDate));
 
         private static void SetDate(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             if (obj is not PersianDatePicker pdp)
                 return;
 
-            if (args.NewValue.ToString() == args.OldValue.ToString())
+            if (args.NewValue == args.OldValue)
                 return;
 
-           pdp.dateTextBox.Text = args.NewValue.ToString();
+            pdp.txt_date.Text = args.NewValue.ToString();
         }
+        #endregion
 
+        #region Event
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             persianCalnedarPopup.IsOpen = true;
@@ -61,13 +99,51 @@ namespace NeAcconting.Controls.DatePicker
         private void PersianCalendar_Click(object sender, RoutedEventArgs e)
         {
             persianCalnedarPopup.IsOpen = false;
-            //dateTextBox.Text = persianCalendar.PersianSelectedDate;
-            dateTextBox.Focus();
+            txt_date.Focus();
         }
 
-        private void PersianCalendar_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void Dismiss_Click(object sender, RoutedEventArgs e)
         {
-            //dateTextBox.Text = persianCalendar.PersianSelectedDate;
+            txt_date.Clear();
+            SelectedDate = null;
         }
+        #endregion
+
+        #region CustomeEvent
+        /// <summary>
+        /// Event occurs when the user selects an item from the recommended ones.
+        /// </summary>
+        public event RoutedPropertyChangedEventHandler<DateTime?> DateChosen
+        {
+            add => AddHandler(DateChosenEvent, value);
+            remove => RemoveHandler(DateChosenEvent, value);
+        }
+
+        /// <summary>
+        /// Routed event for <see cref="DateChosen"/>.
+        /// </summary>
+        public static readonly RoutedEvent DateChosenEvent = EventManager.RegisterRoutedEvent(
+            nameof(DateChosen),
+            RoutingStrategy.Bubble,
+            typeof(RoutedPropertyChangedEventHandler<DateTime?>),
+            typeof(PersianDatePicker)
+        );
+
+
+        private static void OnPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+        {
+            if (sender is PersianDatePicker c)
+            {
+                RoutedPropertyChangedEventArgs<DateTime?> e = new(args.OldValue == null ? null : (DateTime)args.OldValue, args.NewValue == null ? null : (DateTime)args.NewValue, DateChosenEvent);
+                c.OnDateChanged(e);
+            }
+        }
+
+        protected virtual void OnDateChanged(RoutedPropertyChangedEventArgs<DateTime?> args)
+        {
+            RaiseEvent(args);
+        }
+
+        #endregion
     }
 }

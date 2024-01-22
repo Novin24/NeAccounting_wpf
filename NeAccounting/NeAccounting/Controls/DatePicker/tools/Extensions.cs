@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace NeAcconting.Controls.DatePicker
+namespace NeAccounting.Controls
 {
     public static class Extensions
     {

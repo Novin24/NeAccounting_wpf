@@ -11,10 +11,20 @@ namespace NeAccounting.ViewModels
             _navigationService = navigationService;
         }
 
+
+        [ObservableProperty]
+        private long _ts = 240000000;
+
+
+        [ObservableProperty]
+        private DateTime? _tse;
+
+
+
         [RelayCommand]
         private void OnMyClick()
         {
-            var navigationView = _navigationService.GetNavigationControl();
+            //var navigationView = _navigationService.GetNavigationControl();
             //navigationView.Navigate(typeof(UpdateMaterailPage), new UpdateMaterailPage(new ViewModels.Pages.UpdateMaterailViewModel() { MaterialId = 398 }));
         }
     }

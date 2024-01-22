@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
+      xmlns:datepicker="clr-namespace:NeAccounting.Controls"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       mc:Ignorable="d"
       d:DesignHeight="450"

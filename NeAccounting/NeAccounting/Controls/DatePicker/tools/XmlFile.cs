@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Linq;
 
-namespace NeAcconting.Controls.DatePicker
+namespace NeAccounting.Controls
 {
 
     public partial class ShamsiDate

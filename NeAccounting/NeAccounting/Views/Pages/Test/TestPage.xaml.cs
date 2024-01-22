@@ -1,4 +1,5 @@
 ﻿using NeAccounting.ViewModels;
+using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages.Test
@@ -8,7 +9,7 @@ namespace NeAccounting.Views.Pages.Test
     /// </summary>
     public partial class TestPage : INavigableView<TestViewModel>
     {
-        public DateTime Nowtime { get; set; } = DateTime.Now;
+
         public TestViewModel ViewModel{ get;}
         public TestPage(TestViewModel viewModel)
         {
@@ -17,5 +18,9 @@ namespace NeAccounting.Views.Pages.Test
             InitializeComponent();
         }
 
+        private void PersianDatePicker_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+
+        }
     }
 }

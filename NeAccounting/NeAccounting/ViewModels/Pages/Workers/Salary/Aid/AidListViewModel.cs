@@ -93,10 +93,10 @@ namespace NeAccounting.ViewModels
                 if (!isSuccess)
                 {
                     await db.SaveChangesAsync();
-                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
-                _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
                 await OnSearchWorker();
             }
@@ -124,7 +124,7 @@ namespace NeAccounting.ViewModels
                 SalaryId = parameter.SalaryId,
                 AidId = parameter.Id,
                 PayDate = aid.Date,
-                List = List.Where(t => t.Details.WorkerId == parameter.WorkerId).OrderByDescending(c => c.Date).Take(15).ToList(),
+                List = List.Where(t => t.Details.WorkerId == parameter.WorkerId).OrderByDescending(c => c.Date).Take(10).ToList(),
                 PersonnelId = aid.PersonelId
             });
 

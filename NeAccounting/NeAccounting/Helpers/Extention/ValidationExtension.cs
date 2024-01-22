@@ -12,7 +12,7 @@ namespace NeAccounting.Helpers.Extention
             Regex regex = NumOnly();
             if (string.IsNullOrEmpty(code) || code.Length != 10 || !regex.IsMatch(code))
             {
-                _snackbarService.Show("کد ملی نامعتبر", "لطفا یک عدد 10 رقمی وارد کنید !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("کد ملی نامعتبر", "لطفا یک عدد 10 رقمی وارد کنید !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
                 return false;
             }
             try
@@ -35,7 +35,7 @@ namespace NeAccounting.Helpers.Extention
                     case "6666666666":
                     case "8888888888":
                     case "9999999999":
-                        _snackbarService.Show("خطا", "کد ملی وارد شده صحیح نمی باشد !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                        _snackbarService.Show("خطا", "کد ملی وارد شده صحیح نمی باشد !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
                         //MessageBox.Show("کد ملی وارد شده صحیح نمی باشد");
                         break;
                 }
@@ -47,13 +47,13 @@ namespace NeAccounting.Helpers.Extention
                 }
                 else
                 {
-                    _snackbarService.Show("خطا", "کد ملی نامعتبر است !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                    _snackbarService.Show("خطا", "کد ملی نامعتبر است !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
                     //MessageBox.Show("کد ملی نامعتبر است");
                 }
             }
             catch (Exception)
             {
-                _snackbarService.Show("خطا", "کد ملی وارد شده صحیح نمی باشد !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("خطا", "کد ملی وارد شده صحیح نمی باشد !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             }
             return false;
         }

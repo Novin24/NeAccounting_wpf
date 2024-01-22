@@ -5,7 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
-      xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DesignHeight="450"
       d:DesignWidth="800"
       d:DataContext="{d:DesignInstance local:CreateFinancialAidPage,
@@ -181,20 +181,14 @@
                                                        Margin="0 4 3 0 "
                                                        FontFamily="Calibri" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="3 7 20 0 ">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="تاریخ پرداخت"
-                                               Margin="10 0 0 0 " />
-                                    <datepicker:PersianDatePicker FontSize="14"
-                                                                  FlowDirection="LeftToRight"
-                                                                  FontFamily="Calibri"
-                                                                  x:Name="dtp"
-                                                                  SelectedDate="{Binding ViewModel.PayDate , Mode=TwoWay}"
-                                                                  Margin="0 4 0 0" />
-                                </StackPanel>
+                                <nu:PersianDatePicker FontSize="14"
+                                                      FlowDirection="LeftToRight"
+                                                      FontFamily="Calibri"
+                                                      x:Name="dtp"
+                                                      Grid.Column="1"
+                                                      LabelName="تاریخ پرداخت"
+                                                      SelectedDate="{Binding ViewModel.PayDate , Mode=TwoWay}"
+                                                      Margin="0 4 0 0" />
                                 <StackPanel Grid.Column="0"
                                             Grid.Row="1">
 

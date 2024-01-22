@@ -5,12 +5,12 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
-      xmlns:datepicker="clr-namespace:NeAcconting.Controls.DatePicker"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:CreateWorkerPage,
                                      IsDesignTimeCreatable=False}"
       Title="CreateWorkerPage"
-      d:DesignHeight="450"
-      d:DesignWidth="800"
+      d:DesignHeight="900"
+      d:DesignWidth="1100"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
@@ -98,7 +98,7 @@
                                       Margin="20 0 20 0"
                                       Height="auto">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height=".5*"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
@@ -109,42 +109,21 @@
                                                  Checked="RadioButton_Checked"
                                                  FlowDirection="LeftToRight">ساعتی - شیفتی</RadioButton>
 
-                                    <StackPanel Grid.Row="1">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="دستمزد"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      FontSize="14"
-                                                      TabIndex="11"
-                                                      Grid.Row="0"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      x:Name="txt_ShiftPrice"
-                                                      Value="{Binding ViewModel.ShiftSalary , Mode=TwoWay}"
-                                                      IsEnabled="False"
-                                                      Grid.Column="0"
-                                                      Margin="0 4 3 0 "
-                                                      CaretBrush="White"
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="2">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="اضافه کاری"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      FontSize="14"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      TabIndex="12"
-                                                      Grid.Row="0"
-                                                      IsEnabled="False"
-                                                      Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay}"
-                                                      x:Name="txt_overTimeShift"
-                                                      Grid.Column="0"
-                                                      Margin="0 4 3 0 "
-                                                      CaretBrush="White"
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
+                                    <nu:MoneyPack Grid.Row="1"
+                                                  LabelName="دستمزد"
+                                                  IsEnabled="False"
+                                                  TabIndex="11"
+                                                  x:Name="txt_ShiftPrice"
+                                                  Value="{Binding ViewModel.ShiftSalary , Mode=TwoWay}" />
+
+
+                                    <nu:MoneyPack Grid.Row="2"
+                                                  TabIndex="12"
+                                                  IsEnabled="False"
+                                                  LabelName="اضافه کاری"
+                                                  x:Name="txt_overTimeShift"
+                                                  Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay}" />
+
                                 </Grid>
                             </Border>
                             <Border Grid.Row="1"
@@ -175,74 +154,29 @@
                                                  Checked="RadioButton_Checked_1"
                                                  FlowDirection="LeftToRight">ثابت - ماهانه
                                     </RadioButton>
-                                    <StackPanel Grid.Row="1">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="دستمزد"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      FontSize="14"
-                                                      Grid.Row="0"
-                                                      Value="{Binding ViewModel.Salary , Mode=TwoWay}"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      x:Name="txt_MonthPrice"
-                                                      TabIndex="14"
-                                                      Grid.Column="0"
-                                                      Margin="0 4 3 0 "
-                                                      CaretBrush="White"
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="2">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="اضافه کاری"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      TabIndex="15"
-                                                      FontSize="14"
-                                                      Grid.Row="0"
-                                                      x:Name="txt_overtimePriceMonth"
-                                                      Value="{Binding ViewModel.OvertimeSalary , Mode=TwoWay}"
-                                                      Grid.Column="0"
-                                                      Margin="0 4 3 0 "
-                                                      CaretBrush="White"
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="3">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="حق بیمه"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      FontSize="14"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      Grid.Row="0"
-                                                      Value="{Binding ViewModel.InsurancePremium , Mode=TwoWay}"
-                                                      TabIndex="16"
-                                                      Grid.Column="0"
-                                                      Margin="0 4 3 0 "
-                                                      x:Name="txt_insurancePerimum"
-                                                      CaretBrush="White"
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
-                                    <StackPanel Grid.Row="4">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="تعداد روز ها"
-                                                   Margin="2 0 0 0 " />
-                                        <ui:NumberBox TextAlignment="Center"
-                                                      FontSize="14"
-                                                      Grid.Row="0"
-                                                      SpinButtonPlacementMode="Hidden"
-                                                      TabIndex="17"
-                                                      Grid.Column="0"
-                                                      x:Name="txt_dayInMonth"
-                                                      Value="{Binding ViewModel.DayInMonth , Mode=TwoWay}"
-                                                      Margin="0 4 3 0 "
-                                                      CaretBrush="White"
-                                                      FontFamily="Calibri" />
-                                    </StackPanel>
+
+                                    <nu:MoneyPack Grid.Row="1"
+                                                  LabelName="دستمزد"
+                                                  x:Name="txt_MonthPrice"
+                                                  Value="{Binding ViewModel.Salary, Mode=TwoWay}" />
+
+                                    <nu:MoneyPack Grid.Row="2"
+                                                  LabelName="اضافه کاری"
+                                                  x:Name="txt_overtimePriceMonth"
+                                                  Value="{Binding ViewModel.OvertimeSalary, Mode=TwoWay}" />
+
+                                    <nu:MoneyPack Grid.Row="3"
+                                                  LabelName="حق بیمه"
+                                                  x:Name="txt_insurancePerimum"
+                                                  Value="{Binding ViewModel.InsurancePremium, Mode=TwoWay}" />
+
+                                    <nu:NumberPack Grid.Row="4"
+                                                  LabelName="تعداد روز کاری"
+                                                   x:Name="txt_dayInMonth"
+                                                   Minimum="0"
+                                                   Maximum="31"
+                                                   Value="{Binding ViewModel.DayInMonth, Mode=TwoWay}" />
+
                                 </Grid>
                             </Border>
                         </Grid>
@@ -305,24 +239,19 @@
                                                 Grid.Column="0"
                                                 Margin="0 4 3 0 "
                                                 Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
-                                                CaretBrush="White"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="3 4 20 0 ">
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="تاریخ شروع کار"
-                                               Margin="1 0 0 0 " />
-                                    <datepicker:PersianDatePicker FontSize="14"
-                                                                  FlowDirection="LeftToRight"
-                                                                  FontFamily="Calibri"
-                                                                  TabIndex="1"
-                                                                  x:Name="dtp"
-                                                                  SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay}"
-                                                                  Margin="0 4 0 0" />
-                                </StackPanel>
+                                <nu:PersianDatePicker FontSize="14"
+                                                              Grid.Column="1"
+                                                              LabelName="تاریخ شروع به کار"
+                                                              FlowDirection="LeftToRight"
+                                                              FontFamily="Calibri"
+                                                              TabIndex="1"
+                                                              x:Name="dtp"
+                                                              SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay}"
+                                                              Margin="0 4 0 0" />
+
                                 <StackPanel Grid.Column="0"
                                             Grid.Row="1">
 

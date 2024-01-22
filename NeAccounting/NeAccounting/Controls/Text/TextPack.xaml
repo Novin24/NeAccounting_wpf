@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="NeAccounting.Controls.TextPack"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+             Name="npa"
+             MinHeight="70"
+             MinWidth="170">
+
+    <Grid>
+        <StackPanel Margin="20 5 20 5 ">
+            <DockPanel Margin="9 0 9 5">
+                <TextBlock FontWeight="Bold"
+                           FontFamily="Calibri"
+                           x:Name="lbl_name"
+                           FontSize="16" />
+            </DockPanel>
+
+            <ui:TextBox TextAlignment="Center"
+                        FontSize="16"
+                        Text="{Binding Text, Mode=TwoWay,ElementName=npa}"
+                        LostFocus="NumberBox_LostFocus"
+                        TextChanged="NumberBox_TextChanged"
+                        FontFamily="Calibri" />
+        </StackPanel>
+    </Grid>
+</UserControl>

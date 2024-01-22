@@ -18,9 +18,9 @@ namespace NeAccounting.Views.Pages
         {
             ViewModel = viewModel;
             DataContext = this;
+            _snackbarService = snackbarService;
             InitializeComponent();
             txt_name.Focus();
-            _snackbarService = snackbarService;
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
@@ -72,7 +72,7 @@ namespace NeAccounting.Views.Pages
                 if (!regex.IsMatch(txt.Text))
                 {
                     txt.Text = string.Empty;
-                    _snackbarService.Show("خطا", "شماره موبایل وارد شده نامعتبر میباشد !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                    _snackbarService.Show("خطا", "شماره موبایل وارد شده نامعتبر میباشد !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
                 }
             }
 

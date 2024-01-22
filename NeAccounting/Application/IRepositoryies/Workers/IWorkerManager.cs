@@ -102,11 +102,18 @@ namespace NeApplication.IRepositoryies
 
         Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate);
 
+        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId);
+
         Task<List<AidViewModel>> GetAidList(int workerId);
 
         Task<List<FunctionViewModel>> GetFunctionList(int workerId);
 
+        Task<List<SalaryViewModel>> GetSalaryList(int workerId , DateTime? start , DateTime? end);
+
         Task<(string error, bool isSuccess)> DeleteAid(int workerId, int salaryId, int aidId);
+
+        Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId);
+
         Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int salaryId, int aidId);
 
     }

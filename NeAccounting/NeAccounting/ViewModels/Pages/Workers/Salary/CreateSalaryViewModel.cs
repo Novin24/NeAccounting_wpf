@@ -68,55 +68,55 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     {
         if (WorkerId == -1)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنلی"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنلی"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
         if (AmountOf <= 0)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تعداد روز / شیفت کاری"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تعداد روز / شیفت کاری"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
         if (FinancialAid < 0)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مساعده"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مساعده"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
         if (OverTime < 0)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اضافه کاری"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اضافه کاری"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
         if (Tax < 0)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مالیات"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مالیات"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
         if (RightHousingAndFood < 0)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("حق خوار و بار و مسکن"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("حق خوار و بار و مسکن"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
         if (LoanInstallment < 0)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("وام"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("وام"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
         if (OtherAdditions < 0)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سایر اضافات"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سایر اضافات"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
         if (OtherDeductions < 0)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سایر کسورات"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سایر کسورات"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
@@ -140,13 +140,13 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
 
             if (!isSuccess)
             {
-                _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+                _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
                 return;
             }
             await db.SaveChangesAsync();
         }
 
-        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(2000));
+        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
         Type? pageType = NameToPageTypeConverter.Convert("CustomerList");
 
@@ -169,20 +169,26 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
 
     public async Task<bool> OnSelect()
     {
+        if (WorkerId == -1)
+        {
+            return false;
+        }
         using UnitOfWork db = new();
         var Worker = await db.workerManager.GetWorker(WorkerId);
         var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
 
         if (!details.Success)
         {
-            _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(2000));
+            _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
             return false;
         }
-        Insurance = details.InsurancePremium;
-        AmountOf = details.SalaryAmount;
-        OverTime = details.OverTimeSalary;
+        ShiftStatus = Worker.Shift;
+        Insurance = details.Insurance;
+        AmountOf = details.AmountOf;
+        OverTime = details.OverTime;
         PersonelId = details.PersonelId;
-        
+        FinancialAid = details.FinancialAid;
+
         return true;
     }
 }
