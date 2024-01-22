@@ -3,6 +3,7 @@ using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
+using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -93,7 +94,7 @@ namespace NeAccounting.ViewModels
                 if (!isSuccess)
                 {
                     await db.SaveChangesAsync();
-                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
+                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
                 _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));

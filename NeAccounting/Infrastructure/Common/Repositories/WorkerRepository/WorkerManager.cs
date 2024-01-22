@@ -250,7 +250,7 @@ namespace Infrastructure.Repositories
 
                           join s in DbContext.Set<Salary>()
                           //.Include(t => t.Aids)
-                          .Where(w=> w.AmountOf != 0)
+                          .Where(w => w.AmountOf != 0)
                           .Where(c => start == null || c.SubmitDate >= start)
                           .Where(c => end == null || c.SubmitDate <= end)
                                                   on w.Id equals s.WorkerId
@@ -541,11 +541,11 @@ namespace Infrastructure.Repositories
             if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Functions.Count == 0)
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
 
-            var func = worker.Salaries.First().Functions.First();
-            if (func == null)
+            if (worker.Salaries.First().AmountOf != 0)
             {
-                return new("کارگر مورد نظر یافت نشد!!!!", false);
+                return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
             }
+            var func = worker.Salaries.First().Functions.First();
             func.AmountOf = amountOf;
             func.AmountOfOverTime = overTime;
             func.Description = description;
@@ -571,6 +571,11 @@ namespace Infrastructure.Repositories
             if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Functions.Count == 0)
             {
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
+            }
+
+            if (worker.Salaries.First().AmountOf != 0)
+            {
+                return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
             }
 
             var func = worker.Salaries.First().Functions;
@@ -674,11 +679,12 @@ namespace Infrastructure.Repositories
             if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Aids.Count == 0)
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
 
-            var aid = worker.Salaries.First().Aids.First();
-            if (aid == null)
+            if (worker.Salaries.First().AmountOf != 0)
             {
-                return new("کارگر مورد نظر یافت نشد!!!!", false);
+                return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
             }
+
+            var aid = worker.Salaries.First().Aids.First();
             aid.AmountOf = amount;
             aid.Description = description;
 
@@ -732,7 +738,10 @@ namespace Infrastructure.Repositories
             {
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
             }
-
+            if (worker.Salaries.First().AmountOf != 0)
+            {
+                return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
+            }
             var aid = worker.Salaries.First().Aids.First();
             worker.Salaries.First().Aids.Remove(aid);
             try

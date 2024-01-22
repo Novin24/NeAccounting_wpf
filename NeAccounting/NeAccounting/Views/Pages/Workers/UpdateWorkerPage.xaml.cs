@@ -2,6 +2,7 @@
 using NeAccounting.Helpers.Extention;
 using NeAccounting.ViewModels;
 using System.Text.RegularExpressions;
+using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -72,7 +73,7 @@ namespace NeAccounting.Views.Pages
                 if (!regex.IsMatch(txt.Text))
                 {
                     txt.Text = string.Empty;
-                    _snackbarService.Show("خطا", "شماره موبایل وارد شده نامعتبر میباشد !!!", ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
+                    _snackbarService.Show("خطا", "شماره موبایل وارد شده نامعتبر میباشد !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 }
             }
 
