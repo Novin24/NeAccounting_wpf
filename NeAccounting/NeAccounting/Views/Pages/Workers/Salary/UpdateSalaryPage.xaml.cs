@@ -1,37 +1,26 @@
 ﻿using DomainShared.ViewModels;
 using NeAccounting.Controls;
 using System.Windows.Media;
-using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for Salary.xaml
+    /// Interaction logic for UpdateSalaryPage.xaml
     /// </summary>
-    public partial class CreateSalaryPage : INavigableView<CreateSalaryViewModel>
+    public partial class UpdateSalaryPage : INavigableView<UpdateSalaryViewModel>
     {
-
-        public CreateSalaryViewModel ViewModel { get; }
+        public UpdateSalaryViewModel ViewModel { get; }
         private long Additions = 0;
         private long Deductions = 0;
         private long LeftOver = 0;
-        public CreateSalaryPage(CreateSalaryViewModel viewModel)
+        public UpdateSalaryPage(UpdateSalaryViewModel viewModel)
         {
-            ViewModel = viewModel;
-            DataContext = this;
             InitializeComponent();
+            ViewModel = viewModel;
         }
 
-        private async void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            if (!IsInitialized)
-            {
-                return;
-            }
-            int id = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
-            await ReloadSalary(id);
-        }
+
 
         private void SetTotalPlusPrice()
         {
@@ -40,20 +29,6 @@ namespace NeAccounting.Views.Pages
             LeftOver = Additions - Deductions;
             txt_totalPlus.Text = total.ToString("N0");
             lbl_leftOver.Text = Math.Abs(LeftOver).ToString("N0");
-            if (LeftOver != 0)
-            {
-                if (LeftOver > 0)
-                {
-                    lbl_status.Text = "طلبکار";
-                    lbl_status.Foreground = new SolidColorBrush(Colors.IndianRed);
-                }
-                else
-                {
-                    lbl_status.Text = "بدهکار";
-                    lbl_status.Foreground = new SolidColorBrush(Colors.DarkSeaGreen);
-                }
-
-            }
         }
 
         private void NumberBox_ValueChanged(object sender, RoutedEventArgs e)
@@ -100,22 +75,15 @@ namespace NeAccounting.Views.Pages
 
         private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
         {
-            if (!IsInitialized)
-            {
-                return;
-            }
-            await ReloadSalary(ViewModel.WorkerId);
+           await ReloadSalary(ViewModel.WorkerId);
         }
 
         private async Task ReloadSalary(int id)
         {
+
             ViewModel.WorkerId = id;
             if (!await ViewModel.OnSelect())
             {
-                txt_Aid.Value = txt_Insurance.Value = txt_Tax.Value = txt_loanInstallment.Value = txt_Othere.Value = txt_amountOf.Value =
-                txt_overtime.Value = txt_ChildAllowance.Value = txt_OtherAdditions.Value = txt_RighOfFood.Value = 0;
-                lbl_leftOver.Text = txt_totalPlus.Text = txt_totalMines.Text = "0";
-                lbl_status.Text = "تسویه";
                 return;
             }
             if (ViewModel.ShiftStatus == DomainShared.Enums.Shift.ByMounth)

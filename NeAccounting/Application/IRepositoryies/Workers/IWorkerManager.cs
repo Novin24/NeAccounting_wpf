@@ -56,8 +56,24 @@ namespace NeApplication.IRepositoryies
             uint insurancePremium,
             byte dayInMonth);
 
-        Task<(string error, bool isSuccess)> AddOrUpdateSalary(int workerId,
+        Task<(string error, bool isSuccess)> AddSalary(int workerId,
             DateTime submitDate,
+            uint amountOf,
+            uint financialAid,
+            uint overTime,
+            uint tax,
+            uint childAllowance,
+            uint rightHousingAndFood,
+            uint insurance,
+            uint loanInstallment,
+            uint otherAdditions,
+            uint otherDeductions,
+            uint leftOver,
+            string? description);
+        
+        
+        Task<(string error, bool isSuccess)> UpdateSalary(int workerId,
+            int salaryId,
             uint amountOf,
             uint financialAid,
             uint overTime,

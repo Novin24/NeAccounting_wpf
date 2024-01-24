@@ -2,6 +2,8 @@
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Views.Pages;
+using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -92,23 +94,25 @@ namespace NeAccounting.ViewModels
 
             if (result == ContentDialogResult.Primary)
             {
-                //using UnitOfWork db = new();
-                //var isSuccess = await db.workerManager.DeleteFunc(parameter.WorkerId, parameter.SalaryId, parameter.Id);
-                //if (!isSuccess.isSuccess)
-                //{
-                //    _snackbarService.Show("کاربر گرامی", isSuccess.error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                //    return;
-                //}
-                //_snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+                using UnitOfWork db = new();
+                var isSuccess = await db.workerManager.DeleteSalary(parameter.WorkerId, parameter.Id);
+                if (!isSuccess.isSuccess)
+                {
+                    _snackbarService.Show("کاربر گرامی", isSuccess.error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+                await db.SaveChangesAsync();
 
-                //await OnSearchWorker();
+                _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+                await OnSearchWorker();
             }
         }
 
         [RelayCommand]
-        private void OnUpdate(SalaryDetails parameter)
+        private async Task OnUpdate(SalaryDetails parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateFunction");
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateSalary");
 
             if (pageType == null)
             {
@@ -116,23 +120,32 @@ namespace NeAccounting.ViewModels
             }
             var service = _navigationService.GetNavigationControl();
 
-            //var func = List.First(t => t.Details.Id == parameter.Id);
+            using UnitOfWork db = new();
+            var s = await db.workerManager.GetSalaryDetailBySalaryId(parameter.WorkerId, parameter.Id);
 
-            //var context = new UpdateFunctionPage(new UpdateFunctionViewModel(_navigationService, _snackbarService)
-            //{
-            //    WorkerId = parameter.WorkerId,
-            //    AmountOf = func.Amountof,
-            //    Description = func.Description,
-            //    PersonnelName = func.Name,
-            //    SalaryId = parameter.SalaryId,
-            //    OverTime = func.OverTime,
-            //    FuncId = parameter.Id,
-            //    PayDate = func.Date,
-            //    List = List.Where(t => t.Details.WorkerId == parameter.WorkerId).OrderByDescending(c => c.Date).Take(10).ToList(),
-            //    PersonnelId = func.PersonelId
-            //});
+            var context = new UpdateSalaryPage(new UpdateSalaryViewModel(_snackbarService, _navigationService)
+            {
+                WorkerId = parameter.WorkerId,
+                SalaryId = parameter.Id,
+                AmountOf = s.AmountOf,
+                OverTime = s.OverTime,
+                Description = s.Description,
+                PersonnelName = s.WorkerName,
+                SubmitDate = s.SubmitDate,
+                RightHousingAndFood = s.RightHousingAndFood,
+                ShiftStatus = s.ShiftStatus,
+                ChildAllowance = s.ChildAllowance,
+                FinancialAid = s.FinancialAid,
+                PersonnelId= s.PersonelId,
+                Insurance = s.Insurance,
+                LoanInstallment = s.LoanInstallment,
+                Tax = s.Tax,
+                OtherAdditions = s.OtherAdditions,
+                OtherDeductions = s.OtherDeductions,
+                LeftOver = s.LeftOver,
+            });
 
-            //service.Navigate(pageType, context);
+            service.Navigate(pageType, context);
         }
     }
 }

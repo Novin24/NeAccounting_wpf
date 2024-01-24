@@ -7,7 +7,7 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
@@ -16,7 +16,13 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     private int _workerId = -1;
 
     [ObservableProperty]
-    private int? _personelId;
+    private int _salaryId = -1;
+
+    [ObservableProperty]
+    private int? _personnelId;
+
+    [ObservableProperty]
+    private string _personnelName;
 
     [ObservableProperty]
     private DateTime _submitDate = DateTime.Now;
@@ -60,10 +66,6 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     [ObservableProperty]
     private Shift _shiftStatus;
 
-    [ObservableProperty]
-    private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
-
-
     [RelayCommand]
     private async Task OnCreate()
     {
@@ -75,7 +77,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
 
         if (AmountOf <= 0)
         {
-            _snackbarService.Show("خطا","پرسنل یا تاریخ وارد شده نامعتبر!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تعداد روز / شیفت کاری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
@@ -123,9 +125,9 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
 
         using (UnitOfWork db = new())
         {
-            var (error, isSuccess) = await db.workerManager.AddSalary(
+            var (error, isSuccess) = await db.workerManager.UpdateSalary(
                    WorkerId,
-                   SubmitDate,
+                   SalaryId,
                    AmountOf,
                    FinancialAid,
                    OverTime,
@@ -158,10 +160,9 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
         _ = _navigationService.Navigate(pageType);
     }
 
-    public async void OnNavigatedTo()
+    public void OnNavigatedTo()
     {
-        using UnitOfWork db = new();
-        AuSuBox = await db.workerManager.GetWorkers();
+
     }
 
     public void OnNavigatedFrom()
@@ -187,7 +188,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
         Insurance = details.Insurance;
         AmountOf = details.AmountOf;
         OverTime = details.OverTime;
-        PersonelId = details.PersonelId;
+        PersonnelId = details.PersonelId;
         FinancialAid = details.FinancialAid;
 
         return true;

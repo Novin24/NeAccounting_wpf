@@ -14,6 +14,11 @@ namespace DomainShared.ViewModels.Workers
         public string WorkerName { get; set; }
 
         /// <summary>
+        /// تاریخ پرداخت
+        /// </summary>
+        public DateTime SubmitDate { get; set; }
+
+        /// <summary>
         /// شماره پرسنلی
         /// </summary>
         public int PersonelId { get; set; }
