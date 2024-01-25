@@ -6,7 +6,6 @@ using DomainShared.ViewModels.Workers;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
-using System;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
@@ -210,16 +209,19 @@ namespace Infrastructure.Repositories
         #region Salary
         public async Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId)
         {
-            return await (from w in DbContext.Set<Worker>()
+            var salarise = await (from w in DbContext.Set<Worker>()
                                                  .AsNoTracking()
                                                  .Where(t => t.Id == workerId)
 
                           join s in DbContext.Set<Salary>()
-                                                  //.Include(t => t.Aids)
                                                   .Where(t => t.Id == salaryId)
                                                   on w.Id equals s.WorkerId
 
-                          orderby s.CreationTime descending
+                          join a in DbContext.Set<FinancialAid>()
+                                                  on w.Id equals a.WorkerId into ai
+                          from aid in ai.DefaultIfEmpty()
+
+                          where aid.PersianYear == s.PersianYear && aid.PersanMonth == s.PersianMonth
                           select new SalaryWorkerViewModel()
                           {
                               WorkerName = w.FullName,
@@ -227,7 +229,7 @@ namespace Infrastructure.Repositories
                               ShiftStatus = w.ShiftStatus,
                               SubmitDate = s.SubmitDate,
                               Insurance = w.InsurancePremium,
-                              FinancialAid = (uint)s.Aids.Sum(c => c.AmountOf),
+                              FinancialAid = aid.AmountOf,
                               AmountOf = s.AmountOf,
                               OverTime = s.OverTime,
                               ChildAllowance = s.ChildAllowance,
@@ -240,8 +242,11 @@ namespace Infrastructure.Repositories
                               Tax = s.Tax,
                               Error = string.Empty,
                               Success = true,
-                          })
-              .FirstOrDefaultAsync();
+                          }).ToListAsync();
+
+            uint amountOf = (uint)salarise.Sum(x => x.FinancialAid);
+            salarise.First().FinancialAid = amountOf;
+            return salarise.First();
         }
 
         public async Task<List<SalaryViewModel>> GetSalaryList(int workerId, DateTime? start, DateTime? end)
@@ -299,6 +304,24 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
+        public Task<(string error, bool isSuccess)> UpdateSalary(int workerId,
+            int salaryId,
+            DateTime submitDate,
+            uint amountOf,
+            uint financialAid,
+            uint overTime,
+            uint tax,
+            uint childAllowance,
+            uint rightHousingAndFood,
+            uint insurance,
+            uint loanInstallment,
+            uint otherAdditions,
+            uint otherDeductions,
+            uint leftOver,
+            string? description)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<(string error, bool isSuccess)> AddSalary(int workerId,
             DateTime submitDate,
@@ -454,7 +477,11 @@ namespace Infrastructure.Repositories
             };
         }
         #endregion
+    }
 
+
+    public class FunctionManager(NovinDbContext context) : Repository<Function>(context), IFunctionManager
+    {
         #region Function
         public async Task<(string error, bool isSuccess)> AddOrUpdateFunctuion(
             int workerId,
@@ -623,7 +650,10 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
         #endregion
+    }
 
+    public class AidManager(NovinDbContext context) : Repository<FinancialAid>(context), IAidManager
+    {
         #region Aid
         public async Task<(string error, bool isSuccess)> AddOrUpdateAid(
             int workerId,

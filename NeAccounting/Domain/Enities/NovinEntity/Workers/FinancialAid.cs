@@ -5,8 +5,7 @@ namespace Domain.NovinEntity.Workers
     public class FinancialAid : LocalEntity
     {
         #region Navigation
-        public int SalaryId { get; set; }
-        public Salary Salary { get; set; }
+        public int WorkerId { get; set; }
         #endregion
 
         #region Property
@@ -14,6 +13,16 @@ namespace Domain.NovinEntity.Workers
         /// تاریخ پرداخت
         /// </summary>
         public DateTime SubmitDate { get; set; }
+
+        /// <summary>
+        /// سال شمسی
+        /// </summary>
+        public int PersianYear { get; set; }
+
+        /// <summary>
+        /// ماه شمسی
+        /// </summary>
+        public byte PersanMonth { get; set; }
 
         /// <summary>
         /// مبلغ مساعده

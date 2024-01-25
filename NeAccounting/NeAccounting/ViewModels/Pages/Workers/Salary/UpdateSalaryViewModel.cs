@@ -128,6 +128,7 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
             var (error, isSuccess) = await db.workerManager.UpdateSalary(
                    WorkerId,
                    SalaryId,
+                   SubmitDate,
                    AmountOf,
                    FinancialAid,
                    OverTime,

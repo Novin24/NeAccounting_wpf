@@ -2,7 +2,7 @@
 
 namespace DomainShared.ViewModels.Workers
 {
-    public struct SalaryWorkerViewModel
+    public class SalaryWorkerViewModel
     {
         /// <summary>
         /// شیفت کاری
