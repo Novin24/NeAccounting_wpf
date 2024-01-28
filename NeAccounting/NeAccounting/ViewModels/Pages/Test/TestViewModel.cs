@@ -13,11 +13,11 @@ namespace NeAccounting.ViewModels
 
 
         [ObservableProperty]
-        private long _ts = 240000000;
+        private int _ts ;
 
 
         [ObservableProperty]
-        private DateTime? _tse;
+        private int _tse;
 
 
 

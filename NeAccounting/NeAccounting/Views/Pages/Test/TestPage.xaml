@@ -24,7 +24,15 @@
                         IsOpen="True"
                         IsClosable="False"
                         Message="کاربر گرامی پس از صدور فیش حقوقی امکان ثبت مساعده وجود ندارد !!!"
-                        Severity="Warning" />
+                        Severity="Warning" 
+                        />
+            <nu:MonthPicker
+                x:Name="mnp"
+                SelectedMonth="{Binding ViewModel.Ts , Mode=OneWayToSource}"
+                SelectedYear="{Binding ViewModel.Tse ,Mode=OneWayToSource}"/>
+            
+            <Button Content="ثبت "
+                    Command="{Binding ViewModel.MyClickCommand}"/>
         </StackPanel>
     </Grid>
 </Page>
