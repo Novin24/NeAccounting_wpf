@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using DomainShared.ViewModels.Invoice;
+using DomainShared.ViewModels.Pun;
+using System.Windows.Controls;
 
 namespace NeAccounting.Pages
 {
@@ -7,9 +9,15 @@ namespace NeAccounting.Pages
     /// </summary>
     public partial class CreateIntermediaryInvoicePage : Page
     {
+        private IEnumerable<testinviceDto> list;
         public CreateIntermediaryInvoicePage()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
