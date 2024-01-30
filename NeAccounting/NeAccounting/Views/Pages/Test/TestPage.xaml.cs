@@ -11,12 +11,14 @@ namespace NeAccounting.Views.Pages.Test
     {
 
         public TestViewModel ViewModel{ get;}
+
         public TestPage(TestViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
         }
+
 
         private void PersianDatePicker_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
         {
