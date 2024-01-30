@@ -50,6 +50,7 @@
                     Grid.ColumnSpan="3"
                     Background="{DynamicResource ApplicationBackgroundBrush}"
                     CornerRadius="10">
+
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"></RowDefinition>
@@ -70,7 +71,7 @@
                                    FontFamily="Calibri"
                                    FontWeight="Bold"
                                    FontSize="18"
-                                   Text="فاکتور خرید" />
+                                   Text="فاکتور فروش" />
                         <TextBlock Margin="60 20 0 0"
                                    Height="40"
                                    HorizontalAlignment="Center"
@@ -102,7 +103,7 @@
 
                             </Grid.RowDefinitions>
 
-                            <Grid Margin="0 ,5,0,15">
+                            <Grid Margin="0 ,5,0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -136,17 +137,29 @@
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
                                                       Grid.Column="3"
                                                       LabelName="تاریخ" />
-
+                                <Line Grid.ColumnSpan="3"
+                                      X1="0"
+                                      Y1="7"
+                                      X2="900"
+                                      Y2="7"
+                                      Margin="0 85 0 0"
+                                      StrokeThickness="8"
+                                      VerticalAlignment="Bottom"
+                                      HorizontalAlignment="Center"
+                                      Fill="#FFB5ACAC"
+                                      Stroke="#FFCCCCCC"
+                                      Height="9" />
                             </Grid>
                             <Grid Grid.Row="1"
-                                  Margin="0 0 0 16">
+                                  Margin="8 0 8 16">
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".32*" />
+                                    <ColumnDefinition Width=".23*" />
                                     <ColumnDefinition Width=".7*" />
-                                    <ColumnDefinition Width=".46*" />
-                                    <ColumnDefinition Width=".5*" />
-                                    <ColumnDefinition Width=".73*" />
+                                    <ColumnDefinition Width=".39*" />
+                                    <ColumnDefinition Width=".39*" />
+                                    <ColumnDefinition Width=".6*" />
+                                    <ColumnDefinition Width=".7*" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width=".5*" />
                                 </Grid.ColumnDefinitions>
@@ -155,7 +168,7 @@
                                             Margin="0 14 2 0 ">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
-                                               Text="ردیف"
+                                               Text="#"
                                                HorizontalAlignment="Center" />
                                     <ui:NumberBox x:Name="txt_Id"
                                                   SpinButtonPlacementMode="Hidden"
@@ -172,7 +185,6 @@
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
-                                                       SuggestionChosen=""
                                                        FontFamily="Calibri"
                                                        Margin="0 2 0 0" />
                                 </StackPanel>
@@ -208,6 +220,20 @@
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
+                                               Text="قیمت واحد"
+                                               HorizontalAlignment="Center" />
+                                    <ui:NumberBox x:Name="txt_Unit_price"
+                                                  TextAlignment="Center"
+                                                  ClearButtonEnabled="False"
+                                                  SpinButtonPlacementMode="Hidden"
+                                                  FontFamily="Calibri"
+                                                  Margin="0 2 0 0" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="5"
+                                            Margin="2 14 2 0 ">
+
+                                    <TextBlock FontFamily="Calibri"
+                                               FontSize="15"
                                                Text="قیمت کل"
                                                HorizontalAlignment="Center" />
                                     <ui:NumberBox x:Name="txt_total_price"
@@ -217,7 +243,7 @@
                                                   FontFamily="Calibri"
                                                   Margin="0 2 0 0" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="5"
+                                <StackPanel Grid.Column="6"
                                             Margin="2 14 2 0 ">
 
                                     <TextBlock FontFamily="Calibri"
@@ -230,14 +256,13 @@
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
                                 <Button Content="افزودن"
-                                        Grid.Column="6"
+                                        Grid.Column="7"
                                         Padding="8 4 "
                                         IsDefault="True"
                                         FontSize="17"
                                         FontFamily="Calibri"
-                                        VerticalAlignment="Bottom"
                                         HorizontalAlignment="Center"
-                                        Click="Button_Click" />
+                                        VerticalAlignment="Bottom" />
                             </Grid>
 
                             <DataGrid x:Name="Workersdata"
@@ -249,10 +274,10 @@
                                       FontFamily="Calibri"
                                       AutoGenerateColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ردیف"
+                                    <DataGridTextColumn Header="#"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".32*" />
+                                                        Width=".22*" />
                                     <DataGridTextColumn Header="شرح کالا"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
@@ -260,8 +285,12 @@
                                     <DataGridTextColumn Header="مقدار"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        Width=".46*" />
+                                                        Width=".37*" />
                                     <DataGridTextColumn Header="واحد"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        Width=".37*" />
+                                    <DataGridTextColumn Header="قیمت واحد"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width=".5*" />
@@ -291,6 +320,7 @@
 
                     </Border>
                 </Grid>
+
             </Border>
         </Grid>
     </Grid>
