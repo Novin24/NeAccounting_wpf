@@ -143,6 +143,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"></RowDefinition>
@@ -150,7 +151,7 @@
 
                                 </Grid.RowDefinitions>
                                 <StackPanel Grid.Column="0"
-                                            Margin="4 4 20 0 ">
+                                            Margin="0 0 8 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
@@ -163,7 +164,7 @@
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
-                                            Margin="20 4 0 0 ">
+                                            Margin="7 0 7 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
@@ -174,9 +175,8 @@
                                                 FontFamily="Calibri"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="0"
-                                            Grid.Row="1"
-                                            Margin="4 10 20 0 ">
+                                <StackPanel Grid.Column="2"
+                                            Margin="7 0 0 0 ">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
                                                Text="عنوان شغلی"
@@ -186,13 +186,9 @@
                                                 Text="{Binding ViewModel.JobTitle}"
                                                 FontFamily="Calibri"
                                                 Margin="0 5 0 0" />
-                                    <Button Margin="0 12 0 12"
-                                            Padding="17 4 17 9"
-                                            IsDefault="True"
-                                            Command="{Binding ViewModel.SearchWorkerCommand}">جستجو</Button>
+                                  
                                 </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="20 9 0 0 "
+                                <StackPanel Margin="0 8 8 0 "
                                             Grid.Row="1">
 
                                     <TextBlock FontFamily="Calibri"
@@ -210,6 +206,12 @@
                                         <ComboBoxItem Content="اخراج شده" />
                                     </ComboBox>
                                 </StackPanel>
+                                <Button Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="7 31 0 12"
+                                        Padding="17 4 17 9"
+                                        IsDefault="True"
+                                        Command="{Binding ViewModel.SearchWorkerCommand}">جستجو</Button>
                             </Grid>
                             <DataGrid Margin="0 0 0 30"
                                       x:Name="Workersdata"
