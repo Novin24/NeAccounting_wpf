@@ -197,7 +197,6 @@
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
-                                                       SuggestionChosen=""
                                                        FontFamily="Calibri"
                                                        Margin="0 2 0 0" />
                                 </StackPanel>
