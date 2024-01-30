@@ -149,8 +149,7 @@
                                                 FontFamily="Calibri"
                                                 x:Name="materialName_txb"
                                                 Text="{Binding ViewModel.PunName}"
-                                                Margin="0 4 0 0"
-                                                TextChanged="materialName_txb_TextChanged" />
+                                                Margin="0 4 0 0"/>
                                     <Button IsDefault="True"
                                             Margin="0 5 0 12"
                                             Padding="17 4 17 9"
