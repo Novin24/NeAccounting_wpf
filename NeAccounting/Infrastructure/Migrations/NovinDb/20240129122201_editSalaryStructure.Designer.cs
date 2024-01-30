@@ -4,6 +4,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.NovinDb
 {
     [DbContext(typeof(NovinDbContext))]
-    partial class NovinDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240129122201_editSalaryStructure")]
+    partial class editSalaryStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -356,14 +359,14 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("PayDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<byte>("PersanMonth")
                         .HasColumnType("tinyint");
 
                     b.Property<int>("PersianYear")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("SubmitDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("WorkerId")
                         .HasColumnType("int");
@@ -631,28 +634,6 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("Domain.NovinEntity.Workers.FinancialAid", b =>
-                {
-                    b.HasOne("Domain.NovinEntity.Workers.Worker", "Worker")
-                        .WithMany("Aids")
-                        .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Worker");
-                });
-
-            modelBuilder.Entity("Domain.NovinEntity.Workers.Function", b =>
-                {
-                    b.HasOne("Domain.NovinEntity.Workers.Worker", "Worker")
-                        .WithMany("Functions")
-                        .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Worker");
-                });
-
             modelBuilder.Entity("Domain.NovinEntity.Workers.Salary", b =>
                 {
                     b.HasOne("Domain.NovinEntity.Workers.Worker", "Worker")
@@ -671,10 +652,6 @@ namespace Infrastructure.Migrations.NovinDb
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Worker", b =>
                 {
-                    b.Navigation("Aids");
-
-                    b.Navigation("Functions");
-
                     b.Navigation("Salaries");
                 });
 #pragma warning restore 612, 618

@@ -62,6 +62,11 @@ namespace Infrastructure.Utilities
 
             builder.Entity<Function>(b =>
             {
+                b.HasOne(t => t.Worker)
+                .WithMany(s => s.Functions)
+                .HasForeignKey(t => t.WorkerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
                 b.HasIndex(t => t.PersianYear);
                 b.HasIndex(t => t.PersanMonth);
                 b.HasIndex(t => t.WorkerId);
@@ -69,6 +74,11 @@ namespace Infrastructure.Utilities
 
             builder.Entity<FinancialAid>(b =>
             {
+                b.HasOne(t => t.Worker)
+                .WithMany(s => s.Aids)
+                .HasForeignKey(t => t.WorkerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
                 b.HasIndex(t => t.PersanMonth);
                 b.HasIndex(t => t.PersianYear);
                 b.HasIndex(t => t.WorkerId);

@@ -92,7 +92,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.workerManager.UpdateFunc(WorkerId, SalaryId, FuncId, AmountOf, OverTime, Description);
+                var (error, isSuccess) = await db.functionManager.UpdateFunc(WorkerId, SalaryId, FuncId, AmountOf, OverTime, Description);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(4000));

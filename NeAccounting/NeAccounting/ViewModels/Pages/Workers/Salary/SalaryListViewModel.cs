@@ -17,13 +17,29 @@ namespace NeAccounting.ViewModels
 
 
         [ObservableProperty]
-        private int _workerId = -1;
+        private int? _workerId;
+
+        [ObservableProperty]
+        private string _totalCount;
 
         [ObservableProperty]
         private DateTime? _startDate;
 
         [ObservableProperty]
         private DateTime? _endDate;
+
+        [ObservableProperty]
+        private int? _startMonth;
+
+        [ObservableProperty]
+        private int? _startYear;
+
+        [ObservableProperty]
+        private int? _endMonth;
+
+        [ObservableProperty]
+        private int? _endYear;
+
 
         [ObservableProperty]
         private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
@@ -51,14 +67,18 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.workerManager.GetSalaryList(WorkerId, StartDate, EndDate);
+            var salaries = await db.workerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear);
+            TotalCount = salaries.TotalCount;
+            List = salaries.Items;
         }
 
         [RelayCommand]
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            List = await db.workerManager.GetSalaryList(WorkerId, StartDate, EndDate);
+            var salaries = await db.workerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear);
+            TotalCount = salaries.TotalCount;
+            List = salaries.Items;
         }
 
         [RelayCommand]
@@ -136,7 +156,7 @@ namespace NeAccounting.ViewModels
                 ShiftStatus = s.ShiftStatus,
                 ChildAllowance = s.ChildAllowance,
                 FinancialAid = s.FinancialAid,
-                PersonnelId= s.PersonelId,
+                PersonnelId = s.PersonelId,
                 Insurance = s.Insurance,
                 LoanInstallment = s.LoanInstallment,
                 Tax = s.Tax,

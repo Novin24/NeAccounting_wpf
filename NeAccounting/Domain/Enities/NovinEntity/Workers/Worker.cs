@@ -7,6 +7,8 @@ namespace Domain.NovinEntity.Workers
     {
         #region Navigation
         public ICollection<Salary> Salaries { get; private set; }
+        public ICollection<Function> Functions{ get; private set; }
+        public ICollection<FinancialAid> Aids { get; private set; }
         #endregion
 
         #region Property
@@ -147,6 +149,16 @@ namespace Domain.NovinEntity.Workers
 
         #region Methods
         public Worker AddSalary(Salary salary)
+        {
+            Salaries.Add(salary);
+            return this;
+        }
+        public Worker AddAid(Salary salary)
+        {
+            Salaries.Add(salary);
+            return this;
+        }
+        public Worker AddFunction(Salary salary)
         {
             Salaries.Add(salary);
             return this;

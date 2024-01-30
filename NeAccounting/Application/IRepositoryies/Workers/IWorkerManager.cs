@@ -1,6 +1,7 @@
 ﻿using Domain.NovinEntity.Workers;
 using DomainShared.Enums;
 using DomainShared.ViewModels;
+using DomainShared.ViewModels.PagedResul;
 using DomainShared.ViewModels.Workers;
 using NeApplication.Common;
 
@@ -97,8 +98,13 @@ namespace NeApplication.IRepositoryies
 
         Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId);
 
-
-        Task<List<SalaryViewModel>> GetSalaryList(int workerId, DateTime? start, DateTime? end);
+        Task<PagedResulViewModel<SalaryViewModel>> GetSalaryList(int? workerId,
+             int? startMonth,
+             int? startYear,
+             int? endMonth,
+             int? endYear,
+             int skipCount = 0,
+             int maxResultCount = 10);
 
         Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId);
         #endregion

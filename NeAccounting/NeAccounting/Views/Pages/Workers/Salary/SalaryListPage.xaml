@@ -186,12 +186,12 @@
                                       AutoGenerateColumns="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="نام پرسنل"
-                                                        Binding="{Binding Name}"
+                                                        Binding="{Binding FullName}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
                                     <DataGridTextColumn Header="کارکرد عادی"
-                                                        Binding="{Binding Amountof}"
+                                                        Binding="{Binding AmountOf}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width="*" />

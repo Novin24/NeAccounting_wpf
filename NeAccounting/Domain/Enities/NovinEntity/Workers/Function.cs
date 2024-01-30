@@ -5,6 +5,7 @@ namespace Domain.NovinEntity.Workers
     public class Function : LocalEntity
     {
         #region Navigation
+        public Worker Worker { get; set; }
         public int WorkerId { get; set; }
         #endregion
 

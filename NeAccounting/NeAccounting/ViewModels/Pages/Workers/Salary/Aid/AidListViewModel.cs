@@ -46,14 +46,14 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.workerManager.GetAidList(WorkerId);
+            List = await db.aidManager.GetAidList(WorkerId);
         }
 
         [RelayCommand]
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            List = await db.workerManager.GetAidList(WorkerId);
+            List = await db.aidManager.GetAidList(WorkerId);
         }
 
         [RelayCommand]
@@ -90,7 +90,7 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var (error, isSuccess) = await db.workerManager.DeleteAid(parameter.WorkerId, parameter.SalaryId, parameter.Id);
+                var (error, isSuccess) = await db.aidManager.DeleteAid(parameter.WorkerId, parameter.SalaryId, parameter.Id);
                 if (!isSuccess)
                 {
                     await db.SaveChangesAsync();
