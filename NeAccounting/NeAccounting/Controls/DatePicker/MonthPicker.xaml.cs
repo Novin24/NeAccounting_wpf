@@ -7,6 +7,7 @@ namespace NeAccounting.Controls
     /// </summary>
     public partial class MonthPicker : UserControl
     {
+        #region Propertis
         // ایا تقویم به صورت کامل بارگذازی شده
         private bool IsCalculated = false;
 
@@ -25,13 +26,32 @@ namespace NeAccounting.Controls
         //اطلاعات تاریخ امروز 
         private static int currentYear = 1387;
         private static int currentMonth = 10;
+        #endregion
 
+        #region LableName
+        public string LabelName
+        {
+            get { return (string)GetValue(LableNameProperty); }
+            set { SetValue(LableNameProperty, value); }
+        }
 
-        //اطلاعات تاریخ انتخابی 
-        private static readonly int selectedYear = 1387;
-        private static readonly int selectedMonth = 10;
+        // Using a DependencyProperty as the backing store for LableName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LableNameProperty =
+            DependencyProperty.Register("LableName", typeof(string), typeof(MonthPicker), new PropertyMetadata(string.Empty, SetLabelName));
 
+        private static void SetLabelName(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            if (obj is not MonthPicker npack)
+                return;
 
+            if (e.NewValue == e.OldValue)
+                return;
+
+            npack.lbl_name.Text = e.NewValue.ToString();
+        }
+        #endregion
+
+        #region SelectedDate
         /// <summary>
         /// سال انتخابی
         /// </summary>
@@ -45,9 +65,6 @@ namespace NeAccounting.Controls
         public static readonly DependencyProperty SelectedYearProperty =
             DependencyProperty.Register("SelectedYear", typeof(int), typeof(MonthPicker), new PropertyMetadata(currentYear));
 
-
-
-
         public int SelectedMonth
         {
             get { return (int)GetValue(SelectedMonthProperty); }
@@ -57,10 +74,9 @@ namespace NeAccounting.Controls
         // Using a DependencyProperty as the backing store for SelectedMonth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedMonthProperty =
             DependencyProperty.Register("SelectedMonth", typeof(int), typeof(MonthPicker), new PropertyMetadata(currentMonth));
+        #endregion
 
-
-
-
+        #region ctor
         public MonthPicker()
         {
             InitializeComponent();
@@ -75,13 +91,15 @@ namespace NeAccounting.Controls
         {
 
             //select correct month and year
-            this.comboBoxMonths.SelectedIndex = month - 1;
-            this.comboBoxYear.ItemsSource = LoadYear(year);
-            this.comboBoxYear.SelectedItem = year;
-            this.lbl_Display.Text = currentYear.ToString() + "/" + currentMonth.ToString();
+            comboBoxMonths.SelectedIndex = month - 1;
+            comboBoxYear.ItemsSource = LoadYear(year);
+            comboBoxYear.SelectedItem = year;
+            lbl_Display.Text = currentYear.ToString() + "/" + currentMonth.ToString();
             IsCalculated = true;
         }
+        #endregion
 
+        #region event
         private void ComboBoxMonths_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -94,7 +112,7 @@ namespace NeAccounting.Controls
                 return;
             }
             SelectedMonth = (int)cmbox.SelectedIndex + 1;
-            this.lbl_Display.Text = currentYear.ToString() + "/" + currentMonth.ToString();
+            lbl_Display.Text = SelectedYear.ToString() + "/" + SelectedMonth.ToString();
 
         }
 
@@ -110,10 +128,9 @@ namespace NeAccounting.Controls
                 return;
             }
             SelectedYear = (int)cmbox.SelectedItem;
-
-            this.lbl_Display.Text = currentYear.ToString() + "/" + currentMonth.ToString();
+            lbl_Display.Text = SelectedYear.ToString() + "/" + SelectedMonth.ToString();
 
         }
-
+        #endregion
     }
 }

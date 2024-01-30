@@ -5,87 +5,80 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:NeAccounting.Controls"
-             d:Background="{DynamicResource ApplicationBackgroundBrush}"
              Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-             Name="mnp"
-             mc:Ignorable="d">
+             Name="mnp">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0*" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="24*" />
-        </Grid.ColumnDefinitions>
-        <StackPanel Margin="0,5,20,5"
-                    Grid.Column="2">
-            <TextBlock Margin="9 0 9 3"
+        <StackPanel Margin="0,5,20,5">
+            <TextBlock Margin="0 0 15 8"
                        FontFamily="Calibri"
                        x:Name="lbl_name"
+                       FontWeight="Bold"
                        HorizontalAlignment="Right"
-                       FontSize="14" />
+                       FontSize="16" />
 
-            <Grid x:Name="header"
-                  Margin="10,0,10,7"
-                  MinHeight="38">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <ui:TextBlock Margin="0 4 0 0"
-                              MinHeight="33"
-                              MinWidth="50"
+            <Border CornerRadius="6"
+                    Background="{DynamicResource ControlSolidFillColorDefaultBrush}">
+                <Grid x:Name="header"
+                      Margin="9,1,0,3"
+                      MinHeight="38">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".7*" />
+                        <ColumnDefinition Width=".9*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <ui:TextBlock VerticalAlignment="Center"
+                                  FontSize="13"
+                                  TextAlignment="Center"
+                                  FontFamily="2  Titr"
+                                  x:Name="lbl_Display" />
+                    <ComboBox Grid.Column="1"
+                              VerticalAlignment="Center"
+                              IsSynchronizedWithCurrentItem="True"
+                              MinHeight="30"
+                              Margin="3 0"
+                              IsTabStop="False"
+                              x:Name="comboBoxYear"
+                              Background="Transparent"
+                              BorderBrush="Transparent"
+                              FontFamily="arial"
                               FontSize="13"
-                              TextAlignment="Center"
-                              FontFamily="2  Titr"
-                              x:Name="lbl_Display"
-                              Padding="2" />
+                              FontWeight="Regular"
+                              SelectionChanged="ComboBoxYear_SelectionChanged">
+                    </ComboBox>
+                    <ComboBox Grid.Column="2"
+                              VerticalAlignment="Center"
+                              IsSynchronizedWithCurrentItem="True"
+                              MinHeight="30"
+                              Margin="0,0,5,0"
+                              IsTabStop="False"
+                              x:Name="comboBoxMonths"
+                              Background="Transparent"
+                              BorderBrush="Transparent"
+                              FontFamily="arial"
+                              FontSize="15"
+                              SelectionChanged="ComboBoxMonths_SelectionChanged">
+                        <ComboBoxItem Content="فروردین"
+                                      IsSelected="True" />
+                        <ComboBoxItem Content="اردیبهشت" />
+                        <ComboBoxItem Content="خرداد" />
 
-                <ComboBox Grid.Column="1"
-                          VerticalAlignment="Center"
-                          IsSynchronizedWithCurrentItem="True"
-                          MinHeight="30"
-                          MinWidth="70"
-                          IsTabStop="False"
-                          x:Name="comboBoxYear"
-                          Background="Transparent"
-                          BorderBrush="Transparent"
-                          FontFamily="arial"
-                          FontSize="13"
-                          FontWeight="Regular"
-                          SelectionChanged="ComboBoxYear_SelectionChanged">
-                </ComboBox>
-                <ComboBox Grid.Column="2"
-                          VerticalAlignment="Center"
-                          IsSynchronizedWithCurrentItem="True"
-                          MinHeight="30"
-                          Margin="0,0,5,0"
-                          IsTabStop="False"
-                          MinWidth="60"
-                          x:Name="comboBoxMonths"
-                          Background="Transparent"
-                          BorderBrush="Transparent"
-                          FontFamily="arial"
-                          FontSize="15"
-                          SelectionChanged="ComboBoxMonths_SelectionChanged">
-                    <ComboBoxItem Content="فروردین"
-                                  IsSelected="True" />
-                    <ComboBoxItem Content="اردیبهشت" />
-                    <ComboBoxItem Content="خرداد" />
+                        <ComboBoxItem Content="تیر" />
+                        <ComboBoxItem Content="مرداد" />
+                        <ComboBoxItem Content="شهریور" />
 
-                    <ComboBoxItem Content="تیر" />
-                    <ComboBoxItem Content="مرداد" />
-                    <ComboBoxItem Content="شهریور" />
+                        <ComboBoxItem Content="مهر" />
+                        <ComboBoxItem Content="آبان" />
+                        <ComboBoxItem Content="آذر" />
 
-                    <ComboBoxItem Content="مهر" />
-                    <ComboBoxItem Content="آبان" />
-                    <ComboBoxItem Content="آذر" />
+                        <ComboBoxItem Content="دی" />
+                        <ComboBoxItem Content="بهمن" />
+                        <ComboBoxItem Content="اسفند" />
+                    </ComboBox>
 
-                    <ComboBoxItem Content="دی" />
-                    <ComboBoxItem Content="بهمن" />
-                    <ComboBoxItem Content="اسفند" />
-                </ComboBox>
-
-            </Grid>
+                </Grid>
+            </Border>
         </StackPanel>
     </Grid>
 </UserControl>
