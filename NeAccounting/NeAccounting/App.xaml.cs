@@ -66,6 +66,9 @@ namespace NeAccounting
 
                 services.AddTransient<CreateSalaryPage>();
                 services.AddTransient<CreateSalaryViewModel>();
+
+                services.AddTransient<UpdateSalaryPage>();
+                services.AddTransient<UpdateSalaryViewModel>();
                 #endregion
 
                 #region aid

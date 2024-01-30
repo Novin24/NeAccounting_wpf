@@ -14,6 +14,10 @@ namespace Infrastructure.UnitOfWork
 
         private IWorkerManager _workerManager;
 
+        private IFunctionManager _functionManager;
+
+        private IAidManager _aidManager;
+
         private IUnitManager _unitManager;
 
         public ICustomerManager customerManager
@@ -58,6 +62,24 @@ namespace Infrastructure.UnitOfWork
             {
                 _workerManager ??= new WorkerManager(NovinDb);
                 return _workerManager;
+            }
+        }
+
+        public IFunctionManager functionManager
+        {
+            get
+            {
+                _functionManager ??= new FunctionManager(NovinDb);
+                return _functionManager;
+            }
+        }
+
+        public IAidManager aidManager
+        {
+            get
+            {
+                _aidManager ??= new AidManager(NovinDb);
+                return _aidManager;
             }
         }
 

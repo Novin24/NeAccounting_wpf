@@ -2,6 +2,7 @@
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -61,16 +62,16 @@ namespace NeAccounting.ViewModels
 
             if (AmountOf <= 0)
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ مساعده"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ مساعده"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.workerManager.UpdateAid(WorkerId, SalaryId, AidId, AmountOf, Description);
+                var (error, isSuccess) = await db.aidManager.UpdateAid(WorkerId, SalaryId, AidId, AmountOf, Description);
                 if (!isSuccess)
                 {
-                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
+                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
                 await db.SaveChangesAsync();

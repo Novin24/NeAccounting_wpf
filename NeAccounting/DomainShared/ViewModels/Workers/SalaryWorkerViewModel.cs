@@ -2,7 +2,7 @@
 
 namespace DomainShared.ViewModels.Workers
 {
-    public struct SalaryWorkerViewModel
+    public class SalaryWorkerViewModel
     {
         /// <summary>
         /// شیفت کاری
@@ -12,6 +12,11 @@ namespace DomainShared.ViewModels.Workers
         /// نام کارگر
         /// </summary>
         public string WorkerName { get; set; }
+
+        /// <summary>
+        /// تاریخ پرداخت
+        /// </summary>
+        public DateTime SubmitDate { get; set; }
 
         /// <summary>
         /// شماره پرسنلی
@@ -78,7 +83,7 @@ namespace DomainShared.ViewModels.Workers
         public string? Description { get; set; }
 
 
-        public string Error{ get; set; }
+        public string Error { get; set; }
 
         public bool Success { get; set; }
     }

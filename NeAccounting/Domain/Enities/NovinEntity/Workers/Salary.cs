@@ -7,17 +7,7 @@ namespace Domain.NovinEntity.Workers
     {
         #region Navigation
         public int WorkerId { get; set; }
-        public Worker Worker { get; set; }
-
-        /// <summary>
-        /// لیست مساعده ها
-        /// </summary>
-        public ICollection<FinancialAid> Aids { get; private set; }
-
-        /// <summary>
-        /// لیست کارکرها
-        /// </summary>
-        public ICollection<Function> Functions { get; private set; }
+        public Worker Worker { get; set; } = new Worker();
         #endregion
 
         #region Property
@@ -101,7 +91,6 @@ namespace Domain.NovinEntity.Workers
         #region Constructor
         public Salary()
         {
-            Aids = new List<FinancialAid>();
         }
 
         public Salary(
@@ -119,8 +108,6 @@ namespace Domain.NovinEntity.Workers
             uint leftOver,
             string? description)
         {
-            Aids = new List<FinancialAid>();
-            Functions = new List<Function>();
             PersianCalendar pc = new();
             PersianMonth = pc.GetMonth(submitDate);
             PersianYear = pc.GetYear(submitDate);
@@ -141,17 +128,7 @@ namespace Domain.NovinEntity.Workers
         #endregion
 
         #region Methods
-        public Salary AddFinancialAid(FinancialAid aid)
-        {
-            Aids.Add(aid);
-            return this;
-        }
 
-        public Salary AddFunction(Function function)
-        {
-            Functions.Add(function);
-            return this;
-        }
         #endregion
     }
 }

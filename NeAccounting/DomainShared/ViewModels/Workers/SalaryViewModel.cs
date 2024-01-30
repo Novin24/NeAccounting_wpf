@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Globalization;
 
 namespace DomainShared.ViewModels.Workers
 {
@@ -7,12 +8,12 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// نام کارگر
         /// </summary>
-        public string Name { get; set; }
+        public string FullName { get; set; }
 
         /// <summary>
         /// کارکرد عادی
         /// </summary>
-        public string Amountof { get; set; }
+        public string AmountOf { get; set; }
 
         /// <summary>
         /// کارکرد اضافه کاری
@@ -30,18 +31,23 @@ namespace DomainShared.ViewModels.Workers
         public string LeftOver { get; set; }
 
         /// <summary>
-        /// تاریخ مربوط به کارکرد
+        /// ماه مربوط به کارکرد
         /// </summary>
-        public DateTime Date { get; set; }
+        public int PersianMonth{ get; set; }
+
+        /// <summary>
+        /// سال مربوط به کارکرد
+        /// </summary>
+        public int PersianYear{ get; set; }
 
         public readonly string DisplayDate
         {
             get
             {
-                PersianCalendar pc = new();
-                return string.Format("{0}/{1}/{2}", pc.GetYear(Date), pc.GetMonth(Date),pc.GetDayOfMonth(Date));
+                return string.Format("{0}/{1}", PersianYear, PersianMonth);
             }
         }
+
         public SalaryDetails Details { get; set; }
     }
 }

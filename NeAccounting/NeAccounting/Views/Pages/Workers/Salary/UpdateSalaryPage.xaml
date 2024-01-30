@@ -1,0 +1,369 @@
+﻿<Page x:Class="NeAccounting.Views.Pages.UpdateSalaryPage"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
+      d:DataContext="{d:DesignInstance local:UpdateSalaryPage,
+                               IsDesignTimeCreatable=False}"
+      Title="Salary"
+      mc:Ignorable="d"
+      d:DesignWidth="800"
+      d:Background="{DynamicResource ApplicationBackgroundBrush}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+
+    <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".5*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height=".5*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width=".5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="1"
+                    Grid.RowSpan="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Background="{StaticResource Rectangle Dark blue}"
+                    CornerRadius="10"></Border>
+            <Border Grid.Row="3"
+                    Grid.RowSpan="3"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="3"
+                    Background="{StaticResource Rectangle Pale blue}"
+                    CornerRadius="10"></Border>
+            <Border Grid.Row="2"
+                    Grid.RowSpan="3"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    Background="{DynamicResource ApplicationBackgroundBrush}"
+                    CornerRadius="10">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"></RowDefinition>
+                        <RowDefinition Height="6*"></RowDefinition>
+
+                    </Grid.RowDefinitions>
+                    <Grid>
+
+                        <ui:TextBlock Margin="15,0"
+                                      Padding="0,20,0,0"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Center"
+                                      FontFamily="the King &amp; Queen font"
+                                      FontSize="30"
+                                      Text="Novin" />
+
+                        <ui:TextBlock Margin="20 20 0 0"
+                                      Height="40"
+                                      HorizontalAlignment="Center"
+                                      FontFamily="Calibri"
+                                      FontWeight="Bold"
+                                      FontSize="18"
+                                      Foreground="White"
+                                      Text="1402/09/18 " />
+                        <ui:TextBlock Margin="0 20 55 0"
+                                      Height="40"
+                                      HorizontalAlignment="Right"
+                                      FontFamily="Calibri"
+                                      FontWeight="Bold"
+                                      FontSize="18"
+                                      Foreground="White"
+                                      Text="به روز رسانی فیش حقوقی" />
+                    </Grid>
+                    <Border Grid.Row="1"
+                            CornerRadius="9"
+                            Margin="4"
+                            BorderBrush="#D6D5D5"
+                            BorderThickness="0.4">
+                        <Border.Background>
+                            <SolidColorBrush Color="White"
+                                             Opacity="0.08" />
+                        </Border.Background>
+
+                    </Border>
+
+                    <Grid Grid.Column="1"
+                          Grid.Row="1">
+
+                        <Border Grid.Row="1"
+                                CornerRadius="9"
+                                BorderBrush="#D6D5D5"
+                                BorderThickness="0.4"
+                                Margin="4">
+                            <Border.Background>
+                                <SolidColorBrush Color="White"
+                                                 Opacity="0.08" />
+                            </Border.Background>
+
+                            <Grid FlowDirection="RightToLeft">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height=".5*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height=".5*"></RowDefinition>
+                                    <RowDefinition Height=".5*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height=".7*"></RowDefinition>
+
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <ui:InfoBar Title="تذکر"
+                                            Grid.ColumnSpan="2"
+                                            IsOpen="True"
+                                            IsClosable="False"
+                                            Message="کاربر گرامی پس از صدور فیش حقوقی امکان ویرایش کارکرد و یا  ثبت مساعده وجود ندارد !!!"
+                                            Severity="Warning" />
+
+                                <StackPanel Grid.Row="1"
+                                            Margin="20 15 20 0">
+                                    <DockPanel>
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="16"
+                                                   Text="نام پرسنل"
+                                                   Margin="2 0 0 7" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="16"
+                                                   x:Name="txt_Personel"
+                                                   Foreground="#BB8F60"
+                                                   Text="{Binding ViewModel.PersonnelId , Mode=OneWay}"
+                                                   HorizontalAlignment="Right"
+                                                   Margin="2 0 0 7" />
+                                    </DockPanel>
+                                    <ui:TextBox FontSize="16"
+                                                       x:Name="txt_name"
+                                                       IsEnabled="False"
+                                                       Text ="{Binding ViewModel.PersonnelName , Mode=OneWay}"
+                                                       FontFamily="Calibri" />
+                                </StackPanel>
+
+                                <nu:PersianDatePicker FontSize="14"
+                                                      Grid.Column="1"
+                                                      Grid.Row="1"
+                                                      FlowDirection="LeftToRight"
+                                                      FontFamily="Calibri"
+                                                      x:Name="dtp"
+                                                      Margin="0 8 0 0"
+                                                      LabelName="تاریخ پرداخت"
+                                                      DateChosen="dtp_DateChosen"
+                                                      SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}" />
+
+
+                                <nu:MoneyPack Grid.Row="2"
+                                              LabelName="مبلغ حقوق"
+                                              x:Name="txt_amountOf"
+                                              ValueChanged="NumberBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.AmountOf , Mode=TwoWay}" />
+
+                                <nu:MoneyPack Grid.Row="2"
+                                              Grid.Column="1"
+                                              LabelName="مساعده"
+                                              x:Name="txt_Aid"
+                                              ValueChanged="NumberMinesBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.FinancialAid , Mode=TwoWay}" />
+
+                                <nu:MoneyPack Grid.Row="3"
+                                              LabelName="اضافه کاری"
+                                              x:Name="txt_overtime"
+                                              ValueChanged="NumberBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.OverTime , Mode=TwoWay}" />
+
+                                <nu:MoneyPack Grid.Row="3"
+                                              Grid.Column="1"
+                                              LabelName="حق بیمه"
+                                              x:Name="txt_Insurance"
+                                              ValueChanged="NumberMinesBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.Insurance , Mode=TwoWay}" />
+
+                                <nu:MoneyPack Grid.Row="4"
+                                              LabelName="حق خوار و بار و مسکن"
+                                              x:Name="txt_RighOfFood"
+                                              ValueChanged="NumberBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.RightHousingAndFood , Mode=TwoWay}" />
+
+                                <nu:MoneyPack Grid.Row="4"
+                                              Grid.Column="1"
+                                              LabelName="مالیات"
+                                              x:Name="txt_Tax"
+                                              ValueChanged="NumberMinesBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.Tax , Mode=TwoWay}" />
+
+                                <nu:MoneyPack Grid.Row="5"
+                                              LabelName="حق اولاد"
+                                              x:Name="txt_ChildAllowance"
+                                              ValueChanged="NumberBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.ChildAllowance , Mode=TwoWay}" />
+
+                                <nu:MoneyPack Grid.Row="5"
+                                              Grid.Column="1"
+                                              LabelName="وام"
+                                              x:Name="txt_loanInstallment"
+                                              ValueChanged="NumberMinesBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.LoanInstallment , Mode=TwoWay}" />
+
+                                <nu:MoneyPack Grid.Row="6"
+                                              LabelName="سایر اضافات"
+                                              x:Name="txt_OtherAdditions"
+                                              ValueChanged="NumberBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.OtherAdditions , Mode=TwoWay}" />
+
+                                <nu:MoneyPack Grid.Row="6"
+                                              Grid.Column="1"
+                                              LabelName="سایر کسورات"
+                                              x:Name="txt_Othere"
+                                              ValueChanged="NumberMinesBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.OtherDeductions , Mode=TwoWay}" />
+
+                                <Grid Grid.Row="7"
+                                      Grid.Column="0">
+                                    <DockPanel Grid.Column="1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Grid.Row="6">
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Text="جمع کل"
+                                                   Margin="4 6" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   TextAlignment="Right"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   MinWidth="60"
+                                                   Name="txt_totalPlus"
+                                                   Text="0"
+                                                   Margin="2 4 0 0 " />
+                                    </DockPanel>
+                                </Grid>
+
+
+                                <Grid Grid.Row="7"
+                                      Grid.Column="1">
+                                    <DockPanel Grid.Column="1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Grid.Row="6">
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Text="جمع کل"
+                                                   Margin="4 6" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   TextAlignment="Right"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   MinWidth="60"
+                                                   Name="txt_totalMines"
+                                                   Text="0"
+                                                   Margin="2 4 0 0 " />
+                                    </DockPanel>
+                                </Grid>
+
+                                <Grid Grid.Row="8"
+                                      Grid.ColumnSpan="2">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <DockPanel Grid.Column="1"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Grid.Row="6">
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Text="باقی مانده"
+                                                   Margin="2 4 0 0 " />
+                                        <ui:TextBlock Grid.Column="0"
+                                                      Margin="0 4 3 0"
+                                                      IsEnabled="False"
+                                                      MinWidth="100"
+                                                      Text="0"
+                                                      Name="lbl_leftOver"
+                                                      TextAlignment="Center"
+                                                      FontSize="18"
+                                                      FontFamily="Calibri" />
+                                        <TextBlock FontFamily="Calibri"
+                                                   TextAlignment="Right"
+                                                   FontSize="18"
+                                                   FontWeight="ExtraBold"
+                                                   Name="lbl_status"
+                                                   Text="تسویه"
+                                                   Margin="2 4 0 0 " />
+                                    </DockPanel>
+
+                                </Grid>
+
+                                <Grid Grid.ColumnSpan="2"
+                                      Grid.Row="9"
+                                      Margin="20 3 20 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="142*" />
+                                        <ColumnDefinition Width="30*" />
+                                        <ColumnDefinition Width="177*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock FontFamily="Calibri"
+                                               FontSize="14"
+                                               Text="توضیحات"
+                                               Grid.ColumnSpan="3" />
+                                    <TextBox Margin="0,20,0,0"
+                                             FontSize="14"
+                                             FlowDirection="RightToLeft"
+                                             Grid.ColumnSpan="3"
+                                             FontFamily="Calibri"></TextBox>
+                                </Grid>
+                                <ui:Button Content="ثبت"
+                                           HorizontalAlignment="Center"
+                                           Grid.Row="10"
+                                           FontFamily="Calibri"
+                                           FontSize="15"
+                                           MinWidth="100"
+                                           Command="{Binding ViewModel.CreateCommand}"
+                                           Grid.ColumnSpan="2" />
+
+                            </Grid>
+
+
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

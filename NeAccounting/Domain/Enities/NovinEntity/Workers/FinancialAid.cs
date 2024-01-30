@@ -5,15 +5,25 @@ namespace Domain.NovinEntity.Workers
     public class FinancialAid : LocalEntity
     {
         #region Navigation
-        public int SalaryId { get; set; }
-        public Salary Salary { get; set; }
+        public Worker Worker { get; set; }
+        public int WorkerId { get; set; }
         #endregion
 
         #region Property
         /// <summary>
         /// تاریخ پرداخت
         /// </summary>
-        public DateTime SubmitDate { get; set; }
+        public DateTime PayDate { get; set; }
+
+        /// <summary>
+        /// سال شمسی
+        /// </summary>
+        public int PersianYear { get; set; }
+
+        /// <summary>
+        /// ماه شمسی
+        /// </summary>
+        public byte PersanMonth { get; set; }
 
         /// <summary>
         /// مبلغ مساعده
@@ -39,7 +49,7 @@ namespace Domain.NovinEntity.Workers
             uint amountOf,
             string? description)
         {
-            SubmitDate = submitDate;
+            PayDate = submitDate;
             AmountOf = amountOf;
             Description = description;
         }

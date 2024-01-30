@@ -1,6 +1,7 @@
 ﻿using Domain.NovinEntity.Workers;
 using DomainShared.Enums;
 using DomainShared.ViewModels;
+using DomainShared.ViewModels.PagedResul;
 using DomainShared.ViewModels.Workers;
 using NeApplication.Common;
 
@@ -8,6 +9,7 @@ namespace NeApplication.IRepositoryies
 {
     public interface IWorkerManager : IRepository<Worker>
     {
+        #region worker
 
         Task<List<PersonnerlSuggestBoxViewModel>> GetWorkers();
 
@@ -55,8 +57,11 @@ namespace NeApplication.IRepositoryies
             uint shiftOvertimeSalary,
             uint insurancePremium,
             byte dayInMonth);
+        #endregion
 
-        Task<(string error, bool isSuccess)> AddOrUpdateSalary(int workerId,
+        #region Salary
+
+        Task<(string error, bool isSuccess)> AddSalary(int workerId,
             DateTime submitDate,
             uint amountOf,
             uint financialAid,
@@ -72,6 +77,41 @@ namespace NeApplication.IRepositoryies
             string? description);
 
 
+        Task<(string error, bool isSuccess)> UpdateSalary(int workerId,
+            int salaryId,
+            DateTime submitDate,
+            uint amountOf,
+            uint financialAid,
+            uint overTime,
+            uint tax,
+            uint childAllowance,
+            uint rightHousingAndFood,
+            uint insurance,
+            uint loanInstallment,
+            uint otherAdditions,
+            uint otherDeductions,
+            uint leftOver,
+            string? description);
+
+
+        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate);
+
+        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId);
+
+        Task<PagedResulViewModel<SalaryViewModel>> GetSalaryList(int? workerId,
+             int? startMonth,
+             int? startYear,
+             int? endMonth,
+             int? endYear,
+             int skipCount = 0,
+             int maxResultCount = 10);
+
+        Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId);
+        #endregion
+    }
+
+    public interface IFunctionManager : IRepository<Function>
+    {
         Task<(string error, bool isSuccess)> AddOrUpdateFunctuion(
             int workerId,
             DateTime submitDate,
@@ -79,7 +119,22 @@ namespace NeApplication.IRepositoryies
             byte amountOfOverTime,
             string? description);
 
+        Task<(string error, bool isSuccess)> UpdateFunc(
+            int workerId,
+            int salaryId,
+            int funcId,
+            byte amountOf,
+            byte overTime,
+            string? description);
 
+        Task<List<FunctionViewModel>> GetFunctionList(int workerId);
+
+        Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int salaryId, int aidId);
+
+    }
+
+    public interface IAidManager : IRepository<FinancialAid>
+    {
         Task<(string error, bool isSuccess)> AddOrUpdateAid(
             int workerId,
             DateTime submitDate,
@@ -92,29 +147,9 @@ namespace NeApplication.IRepositoryies
             int aidId,
             uint amountOf,
             string? description);
-        Task<(string error, bool isSuccess)> UpdateFunc(
-            int workerId,
-            int salaryId,
-            int funcId,
-            byte amountOf,
-            byte overTime,
-            string? description);
-
-        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate);
-
-        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId);
 
         Task<List<AidViewModel>> GetAidList(int workerId);
 
-        Task<List<FunctionViewModel>> GetFunctionList(int workerId);
-
-        Task<List<SalaryViewModel>> GetSalaryList(int workerId , DateTime? start , DateTime? end);
-
         Task<(string error, bool isSuccess)> DeleteAid(int workerId, int salaryId, int aidId);
-
-        Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId);
-
-        Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int salaryId, int aidId);
-
     }
 }

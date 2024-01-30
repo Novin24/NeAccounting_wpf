@@ -356,15 +356,25 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SalaryId")
+                    b.Property<DateTime>("PayDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("PersanMonth")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("PersianYear")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("SubmitDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("WorkerId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SalaryId");
+                    b.HasIndex("PersanMonth");
+
+                    b.HasIndex("PersianYear");
+
+                    b.HasIndex("WorkerId");
 
                     b.ToTable("FinancialAid");
                 });
@@ -407,15 +417,25 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SalaryId")
+                    b.Property<byte>("PersanMonth")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("PersianYear")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("SubmitDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("WorkerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("SalaryId");
+                    b.HasIndex("PersanMonth");
+
+                    b.HasIndex("PersianYear");
+
+                    b.HasIndex("WorkerId");
 
                     b.ToTable("Function");
                 });
@@ -613,24 +633,24 @@ namespace Infrastructure.Migrations.NovinDb
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.FinancialAid", b =>
                 {
-                    b.HasOne("Domain.NovinEntity.Workers.Salary", "Salary")
+                    b.HasOne("Domain.NovinEntity.Workers.Worker", "Worker")
                         .WithMany("Aids")
-                        .HasForeignKey("SalaryId")
+                        .HasForeignKey("WorkerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Salary");
+                    b.Navigation("Worker");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Function", b =>
                 {
-                    b.HasOne("Domain.NovinEntity.Workers.Salary", "Salary")
+                    b.HasOne("Domain.NovinEntity.Workers.Worker", "Worker")
                         .WithMany("Functions")
-                        .HasForeignKey("SalaryId")
+                        .HasForeignKey("WorkerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Salary");
+                    b.Navigation("Worker");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Salary", b =>
@@ -649,15 +669,12 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Navigation("Materials");
                 });
 
-            modelBuilder.Entity("Domain.NovinEntity.Workers.Salary", b =>
+            modelBuilder.Entity("Domain.NovinEntity.Workers.Worker", b =>
                 {
                     b.Navigation("Aids");
 
                     b.Navigation("Functions");
-                });
 
-            modelBuilder.Entity("Domain.NovinEntity.Workers.Worker", b =>
-                {
                     b.Navigation("Salaries");
                 });
 #pragma warning restore 612, 618

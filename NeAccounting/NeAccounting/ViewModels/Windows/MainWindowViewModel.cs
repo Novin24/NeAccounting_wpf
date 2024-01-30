@@ -124,7 +124,7 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem { Content = "فیش حقوقی", TargetPageType = typeof(SalaryListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                     new NavigationViewItem(){Content = "صدور فیش حقوقی",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateSalaryPage),
                         Visibility = Visibility.Collapsed},
-                    new NavigationViewItem(){Content = "به روز رسانی فیش حقوقی",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateSalaryPage),
+                    new NavigationViewItem(){Content = "به روز رسانی فیش حقوقی",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateSalaryPage),
                         Visibility = Visibility.Collapsed},
 
 

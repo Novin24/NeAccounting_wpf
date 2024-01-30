@@ -62,24 +62,27 @@ namespace Infrastructure.Utilities
 
             builder.Entity<Function>(b =>
             {
-                b.HasIndex(t => t.SalaryId);
-                b.HasOne(t => t.Salary)
+                b.HasOne(t => t.Worker)
                 .WithMany(s => s.Functions)
-                .HasForeignKey(t => t.SalaryId)
+                .HasForeignKey(t => t.WorkerId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasIndex(t => t.PersianYear);
+                b.HasIndex(t => t.PersanMonth);
+                b.HasIndex(t => t.WorkerId);
             });
 
             builder.Entity<FinancialAid>(b =>
             {
-                b.HasIndex(t => t.SalaryId);
-                b.HasOne(t => t.Salary)
+                b.HasOne(t => t.Worker)
                 .WithMany(s => s.Aids)
-                .HasForeignKey(t => t.SalaryId)
+                .HasForeignKey(t => t.WorkerId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasIndex(t => t.PersanMonth);
+                b.HasIndex(t => t.PersianYear);
+                b.HasIndex(t => t.WorkerId);
             });
-
-
-
         }
 
 

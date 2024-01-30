@@ -3,6 +3,7 @@ using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
+using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -45,14 +46,14 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.workerManager.GetAidList(WorkerId);
+            List = await db.aidManager.GetAidList(WorkerId);
         }
 
         [RelayCommand]
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            List = await db.workerManager.GetAidList(WorkerId);
+            List = await db.aidManager.GetAidList(WorkerId);
         }
 
         [RelayCommand]
@@ -89,11 +90,11 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var (error, isSuccess) = await db.workerManager.DeleteAid(parameter.WorkerId, parameter.SalaryId, parameter.Id);
+                var (error, isSuccess) = await db.aidManager.DeleteAid(parameter.WorkerId, parameter.SalaryId, parameter.Id);
                 if (!isSuccess)
                 {
                     await db.SaveChangesAsync();
-                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
+                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
                 _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));

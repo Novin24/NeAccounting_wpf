@@ -5,6 +5,7 @@ using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using System.Windows.Media;
 
 namespace NeAccounting.ViewModels
 {
@@ -55,7 +56,7 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.workerManager.GetAidList(WorkerId);
+            List = await db.aidManager.GetAidList(WorkerId);
         }
 
         [RelayCommand]
@@ -64,21 +65,21 @@ namespace NeAccounting.ViewModels
 
             if (WorkerId < 0)
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنل"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
             if (AmountOf <= 0)
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ مساعده"), ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ مساعده"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.workerManager.AddOrUpdateAid(WorkerId, PayDate, AmountOf, Description);
+                var (error, isSuccess) = await db.aidManager.AddOrUpdateAid(WorkerId, PayDate, AmountOf, Description);
                 if (!isSuccess)
                 {
-                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Caution, new SymbolIcon(SymbolRegular.Warning20), TimeSpan.FromMilliseconds(3000));
+                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
                 await db.SaveChangesAsync();

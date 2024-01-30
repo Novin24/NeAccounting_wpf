@@ -5,8 +5,8 @@ namespace Domain.NovinEntity.Workers
     public class Function : LocalEntity
     {
         #region Navigation
-        public int SalaryId { get; set; }
-        public Salary Salary { get; set; }
+        public Worker Worker { get; set; }
+        public int WorkerId { get; set; }
         #endregion
 
         #region Property
@@ -14,6 +14,16 @@ namespace Domain.NovinEntity.Workers
         /// تاریخ کارکرد
         /// </summary>
         public DateTime SubmitDate { get; set; }
+
+        /// <summary>
+        /// سال شمسی
+        /// </summary>
+        public int PersianYear { get; set; }
+
+        /// <summary>
+        /// ماه شمسی
+        /// </summary>
+        public byte PersanMonth { get; set; }
 
         /// <summary>
         /// تعداد  کاری
