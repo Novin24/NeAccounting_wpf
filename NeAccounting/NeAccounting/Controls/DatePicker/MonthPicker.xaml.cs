@@ -1,10 +1,13 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Controls;
 namespace NeAccounting.Controls
 {
     /// <summary>
     /// Interaction logic for MonthPicker.xaml
     /// </summary>
+    [DefaultEvent("SelectedDateChanged")]
+    [DefaultProperty("SelectedMon")]
     public partial class MonthPicker : UserControl
     {
         #region Propertis
@@ -24,8 +27,12 @@ namespace NeAccounting.Controls
         private static List<int> LoadYear(int year) => Enumerable.Range(year - 50, 100).ToList();
 
         //اطلاعات تاریخ امروز 
-        private static int currentYear = 1387;
-        private static int currentMonth = 10;
+        private readonly int currentYear = 1387;
+        private readonly int currentMonth = 10;
+
+        //اطلاعات تاریخ انتخابی 
+        private static int? selectedYea;
+        private static int? selectedMonth;
         #endregion
 
         #region LableName
@@ -55,81 +62,161 @@ namespace NeAccounting.Controls
         /// <summary>
         /// سال انتخابی
         /// </summary>
-        public int SelectedYear
+        public int? SelectedYear
         {
-            get { return (int)GetValue(SelectedYearProperty); }
+            get { return (int?)GetValue(SelectedYearProperty); }
             set { SetValue(SelectedYearProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedYear.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedYearProperty =
-            DependencyProperty.Register("SelectedYear", typeof(int), typeof(MonthPicker), new PropertyMetadata(currentYear));
+            DependencyProperty.Register("SelectedYear", typeof(int?), typeof(MonthPicker), new PropertyMetadata(null, SelectYear));
 
-        public int SelectedMonth
+        private static void SelectYear(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            get { return (int)GetValue(SelectedMonthProperty); }
-            set { SetValue(SelectedMonthProperty, value); }
+            if (obj is not MonthPicker mp)
+                return;
+
+            if (args.NewValue == args.OldValue)
+                return;
+
+            if (args.NewValue != null)
+            {
+                selectedYea = (int)args.NewValue;
+            }
+            mp.InitialCalculator(selectedYea, selectedMonth);
+        }
+
+        /// <summary>
+        /// ماه انتخاب شده
+        /// </summary>
+        public int? SelectedMon
+        {
+            get { return (int?)GetValue(SelectedMonProperty); }
+            set { SetValue(SelectedMonProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedMonth.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SelectedMonthProperty =
-            DependencyProperty.Register("SelectedMonth", typeof(int), typeof(MonthPicker), new PropertyMetadata(currentMonth));
+        public static readonly DependencyProperty SelectedMonProperty =
+            DependencyProperty.Register("SelectedMon", typeof(int?), typeof(MonthPicker),
+                new PropertyMetadata(null, new PropertyChangedCallback(OnPropertyChanged)));
+
+        private static void SelectMonth(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            if (obj is not MonthPicker mp)
+                return;
+
+            if (args.NewValue == args.OldValue)
+                return;
+
+            if (args.NewValue != null)
+            {
+                selectedMonth = (int)args.NewValue;
+            }
+            mp.InitialCalculator(selectedYea, selectedMonth);
+        }
         #endregion
 
         #region ctor
         public MonthPicker()
         {
             InitializeComponent();
-            DataContext = this;
             IsCalculated = false;
-            currentYear = persianCalendar.GetYear(DateTime.Now);
-            currentMonth = persianCalendar.GetMonth(DateTime.Now);
-            InitialCalculator(currentYear, currentMonth);
+            this.currentYear = persianCalendar.GetYear(DateTime.Now);
+            this.currentMonth = persianCalendar.GetMonth(DateTime.Now);
+            if (SelectedMon != null)
+            {
+                selectedMonth = SelectedMon.Value;
+            }
+            if (SelectedYear != null)
+            {
+                selectedYea = SelectedYear.Value;
+            }
+            InitialCalculator(selectedYea, selectedMonth);
         }
 
-        protected virtual void InitialCalculator(int year, int month)
+        protected virtual void InitialCalculator(int? year, int? month)
         {
-
             //select correct month and year
-            comboBoxMonths.SelectedIndex = month - 1;
-            comboBoxYear.ItemsSource = LoadYear(year);
-            comboBoxYear.SelectedItem = year;
-            lbl_Display.Text = currentYear.ToString() + "/" + currentMonth.ToString();
+            comboBoxMonths.SelectedIndex = month - 1 ?? currentMonth - 1;
+            comboBoxYear.ItemsSource = LoadYear(year ?? currentYear);
+            comboBoxYear.SelectedItem = year ?? currentYear;
             IsCalculated = true;
+        }
+        #endregion
+
+        #region CustomeEvent
+        /// <summary>
+        /// Event occurs when the user selects an item from the recommended ones.
+        /// </summary>
+        public event RoutedPropertyChangedEventHandler<int?> DateChosen
+        {
+            add => AddHandler(DateChosenEvent, value);
+            remove => RemoveHandler(DateChosenEvent, value);
+        }
+
+        /// <summary>
+        /// Routed event for <see cref="DateChosen"/>.
+        /// </summary>
+        public static readonly RoutedEvent DateChosenEvent = EventManager.RegisterRoutedEvent(
+            nameof(DateChosen),
+            RoutingStrategy.Bubble,
+            typeof(RoutedPropertyChangedEventHandler<int?>),
+            typeof(MonthPicker)
+        );
+
+        private static void OnPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+        {
+            if (sender is MonthPicker c)
+            {
+                RoutedPropertyChangedEventArgs<int?> e = new(args.OldValue == null ? null :
+                    (int)args.OldValue, args.NewValue == null ? null : (int)args.NewValue, DateChosenEvent);
+                c.InitialCalculator(selectedYea, selectedMonth);
+                c.OnDateChanged(e);
+            }
+        }
+
+        protected virtual void OnDateChanged(RoutedPropertyChangedEventArgs<int?> args)
+        {
+            RaiseEvent(args);
         }
         #endregion
 
         #region event
         private void ComboBoxMonths_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            if (!IsCalculated)
+            if (!IsCalculated || sender is not ComboBox cmbox)
             {
                 return;
             }
-            if (sender is not ComboBox cmbox)
+            IsCalculated = false;
+            selectedMonth = cmbox.SelectedIndex + 1;
+            SelectedMon = cmbox.SelectedIndex + 1;
+            if (SelectedYear == null)
             {
-                return;
+                IsCalculated = false;
+                SelectedYear = currentYear;
+                selectedYea = currentYear;
             }
-            SelectedMonth = (int)cmbox.SelectedIndex + 1;
-            lbl_Display.Text = SelectedYear.ToString() + "/" + SelectedMonth.ToString();
-
+            lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
         }
 
         private void ComboBoxYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (!IsCalculated || sender is not ComboBox cmbox)
+            {
+                return;
+            }
 
-            if (!IsCalculated)
-            {
-                return;
-            }
-            if (sender is not ComboBox cmbox)
-            {
-                return;
-            }
+            IsCalculated = false;
+            selectedYea = (int)cmbox.SelectedItem;
             SelectedYear = (int)cmbox.SelectedItem;
-            lbl_Display.Text = SelectedYear.ToString() + "/" + SelectedMonth.ToString();
-
+            if (SelectedMon == null)
+            {
+                SelectedMon = currentMonth;
+                selectedMonth = currentMonth;
+            }
+            lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
         }
         #endregion
     }

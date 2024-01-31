@@ -98,14 +98,14 @@ namespace NeAccounting.Views.Pages
             }
         }
 
-        private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
-        {
-            if (!IsInitialized)
-            {
-                return;
-            }
-            await ReloadSalary(ViewModel.WorkerId);
-        }
+        //private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        //{
+        //    if (!IsInitialized)
+        //    {
+        //        return;
+        //    }
+        //    await ReloadSalary(ViewModel.WorkerId);
+        //}
 
         private async Task ReloadSalary(int id)
         {
@@ -142,5 +142,10 @@ namespace NeAccounting.Views.Pages
             txt_OtherAdditions.IsEnabled = true;
             txt_Othere.IsEnabled = true;
         }
+
+        //private void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<int?> e)
+        //{
+
+        //}
     }
 }

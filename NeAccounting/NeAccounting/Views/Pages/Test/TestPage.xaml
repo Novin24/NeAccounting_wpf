@@ -17,17 +17,20 @@
             <ColumnDefinition Width=".7*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
+
         <StackPanel Grid.Column="1">
-            <nu:PersianDatePicker DateChosen="PersianDatePicker_DateChosen" />
-            <nu:MonthPicker
-                x:Name="mnp"
-                LabelName="تاریخ"
-                SelectedMonth="{Binding ViewModel.Ts , Mode=TwoWay}"
-                SelectedYear="{Binding ViewModel.Tse ,Mode=TwoWay}"/>
-            
+            <nu:PersianDatePicker SelectedDate="{Binding ViewModel.Ts , Mode=TwoWay}"
+                                  DateChosen="PersianDatePicker_DateChosen" />
+
+            <nu:MonthPicker x:Name="mnp"
+                            LabelName="تاریخ"
+                            DateChosen="mnp_DateChosen"
+                            SelectedMon="{Binding ViewModel.Select , Mode=TwoWay}"
+                            SelectedYear="{Binding ViewModel.Tse ,Mode=TwoWay}" />
+
             <Button Content="ثبت "
-                    Command="{Binding ViewModel.MyClickCommand}"/>
+                    Command="{Binding ViewModel.MyClickCommand}"
+                    Click="Button_Click" />
         </StackPanel>
     </Grid>
 </Page>
