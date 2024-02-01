@@ -5,6 +5,27 @@
     <SolidColorBrush x:Key="Rectangle Pale blue"
                      Color="#C8E4EE" />
 
+    <LinearGradientBrush x:Key="NavigationItemBackground"
+                         EndPoint="0.5,1"
+                         StartPoint="0.5,0">
+        <LinearGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterY="0.5"
+                                CenterX="0.5" />
+                <SkewTransform CenterX="0.5"
+                               CenterY="0.5" />
+                <RotateTransform Angle="90"
+                                 CenterX="0.5"
+                                 CenterY="0.5" />
+                <TranslateTransform />
+            </TransformGroup>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Color="#8B6B56"
+                      Offset="1" />
+        <GradientStop Color="#543220"
+                      Offset="0.7" />
+    </LinearGradientBrush>
+    
     <Style x:Key="CenterGridHeaderStyle"
            TargetType="DataGridColumnHeader">
         <Setter Property="HorizontalContentAlignment"
