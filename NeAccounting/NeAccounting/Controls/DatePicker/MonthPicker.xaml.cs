@@ -12,7 +12,7 @@ namespace NeAccounting.Controls
     {
         #region Propertis
         // ایا تقویم به صورت کامل بارگذازی شده
-        private bool IsCalculated = false;
+        private static bool IsCalculated = false;
 
         /// <summary>
         /// تقویم فارسی
@@ -60,7 +60,7 @@ namespace NeAccounting.Controls
 
         #region SelectedDate
         /// <summary>
-        /// سال انتخابی
+        /// سال انتخاب شده
         /// </summary>
         public int? SelectedYear
         {
@@ -79,13 +79,13 @@ namespace NeAccounting.Controls
 
             if (args.NewValue == args.OldValue)
                 return;
-
-            if (args.NewValue != null)
-            {
-                selectedYea = (int)args.NewValue;
-            }
-            mp.InitialCalculator(selectedYea, selectedMonth);
+            selectedYea = (int?)args.NewValue;
+            mp.InitialYear(selectedYea);
+            IsCalculated = true;
         }
+
+
+
 
         /// <summary>
         /// ماه انتخاب شده
@@ -99,50 +99,46 @@ namespace NeAccounting.Controls
         // Using a DependencyProperty as the backing store for SelectedMonth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedMonProperty =
             DependencyProperty.Register("SelectedMon", typeof(int?), typeof(MonthPicker),
-                new PropertyMetadata(null, new PropertyChangedCallback(OnPropertyChanged)));
+                new PropertyMetadata(null, new PropertyChangedCallback(OnMonthChanged)));
 
-        private static void SelectMonth(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        private static void OnMonthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
-            if (obj is not MonthPicker mp)
-                return;
-
-            if (args.NewValue == args.OldValue)
-                return;
-
-            if (args.NewValue != null)
+            if (sender is MonthPicker c)
             {
-                selectedMonth = (int)args.NewValue;
+                RoutedPropertyChangedEventArgs<int?> e = new((int?)args.OldValue, (int?)args.NewValue, DateChosenEvent);
+                selectedMonth = (int?)args.NewValue;
+                c.InitialMonth(selectedMonth);
+                c.OnDateChanged(e);
+                IsCalculated = true;
             }
-            mp.InitialCalculator(selectedYea, selectedMonth);
         }
         #endregion
 
         #region ctor
         public MonthPicker()
         {
-            InitializeComponent();
             IsCalculated = false;
+            InitializeComponent();
             this.currentYear = persianCalendar.GetYear(DateTime.Now);
             this.currentMonth = persianCalendar.GetMonth(DateTime.Now);
-            if (SelectedMon != null)
-            {
-                selectedMonth = SelectedMon.Value;
-            }
-            if (SelectedYear != null)
-            {
-                selectedYea = SelectedYear.Value;
-            }
-            InitialCalculator(selectedYea, selectedMonth);
-        }
-
-        protected virtual void InitialCalculator(int? year, int? month)
-        {
-            //select correct month and year
-            comboBoxMonths.SelectedIndex = month - 1 ?? currentMonth - 1;
-            comboBoxYear.ItemsSource = LoadYear(year ?? currentYear);
-            comboBoxYear.SelectedItem = year ?? currentYear;
+            selectedMonth = SelectedMon;
+            selectedYea = SelectedYear;
+            InitialMonth(selectedMonth);
+            InitialYear(selectedYea);
             IsCalculated = true;
         }
+
+        protected virtual void InitialMonth(int? month)
+        {
+            comboBoxMonths.SelectedIndex = month - 1 ?? currentMonth - 1;
+        }
+
+        protected virtual void InitialYear(int? year)
+        {
+            comboBoxYear.ItemsSource = LoadYear(year ?? currentYear);
+            comboBoxYear.SelectedItem = year ?? currentYear;
+        }
+
         #endregion
 
         #region CustomeEvent
@@ -165,16 +161,6 @@ namespace NeAccounting.Controls
             typeof(MonthPicker)
         );
 
-        private static void OnPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
-        {
-            if (sender is MonthPicker c)
-            {
-                RoutedPropertyChangedEventArgs<int?> e = new(args.OldValue == null ? null :
-                    (int)args.OldValue, args.NewValue == null ? null : (int)args.NewValue, DateChosenEvent);
-                c.InitialCalculator(selectedYea, selectedMonth);
-                c.OnDateChanged(e);
-            }
-        }
 
         protected virtual void OnDateChanged(RoutedPropertyChangedEventArgs<int?> args)
         {
@@ -207,16 +193,25 @@ namespace NeAccounting.Controls
             {
                 return;
             }
-
             IsCalculated = false;
             selectedYea = (int)cmbox.SelectedItem;
             SelectedYear = (int)cmbox.SelectedItem;
             if (SelectedMon == null)
             {
+                IsCalculated = false;
                 SelectedMon = currentMonth;
                 selectedMonth = currentMonth;
             }
             lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
+        }
+
+        private void Dismiss_Click(object sender, RoutedEventArgs e)
+        {
+            lbl_Display.Text = string.Empty;
+            IsCalculated = false;
+            SelectedYear = null;
+            IsCalculated = false;
+            SelectedMon = null;
         }
         #endregion
     }

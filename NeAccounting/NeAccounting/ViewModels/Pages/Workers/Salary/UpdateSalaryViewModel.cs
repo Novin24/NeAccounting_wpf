@@ -178,19 +178,19 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
         }
         using UnitOfWork db = new();
         var Worker = await db.workerManager.GetWorker(WorkerId);
-        var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
+        //var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
 
-        if (!details.Success)
-        {
-            _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
-        }
-        ShiftStatus = Worker.Shift;
-        Insurance = details.Insurance;
-        AmountOf = details.AmountOf;
-        OverTime = details.OverTime;
-        PersonnelId = details.PersonelId;
-        FinancialAid = details.FinancialAid;
+        //if (!details.Success)
+        //{
+        //    _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+        //    return false;
+        //}
+        //ShiftStatus = Worker.Shift;
+        //Insurance = details.Insurance;
+        //AmountOf = details.AmountOf;
+        //OverTime = details.OverTime;
+        //PersonnelId = details.PersonelId;
+        //FinancialAid = details.FinancialAid;
 
         return true;
     }

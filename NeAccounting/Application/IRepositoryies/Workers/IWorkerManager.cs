@@ -62,7 +62,8 @@ namespace NeApplication.IRepositoryies
         #region Salary
 
         Task<(string error, bool isSuccess)> AddSalary(int workerId,
-            DateTime submitDate,
+            int submitMonth,
+            int submitYaer,
             uint amountOf,
             uint financialAid,
             uint overTime,
@@ -94,7 +95,7 @@ namespace NeApplication.IRepositoryies
             string? description);
 
 
-        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate);
+        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, int submitMonth, int submintYear);
 
         Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId);
 

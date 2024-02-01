@@ -373,7 +373,8 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> AddSalary(int workerId,
-            DateTime submitDate,
+            int persianMonth,
+            int persianYear,
             uint amountOf,
             uint financialAid,
             uint overTime,
@@ -389,18 +390,12 @@ namespace Infrastructure.Repositories
         {
             var worker = await Entities
                 .Include(s => s.Salaries)
-                //.ThenInclude(c => c.Functions)
                 .FirstOrDefaultAsync(t => t.Id == workerId);
 
+            if (worker == null)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
 
-            //if (worker == null)
-            //    return new("کارگر مورد نظر یافت نشد!!!!", false);
-
-            //PersianCalendar pc = new();
-            //var persianMonth = pc.GetMonth(submitDate);
-            //var persianYear = pc.GetYear(submitDate);
-
-            //var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth && t.PersianYear == persianYear);
+            var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth && t.PersianYear == persianYear);
 
 
             //if (salary == null)
@@ -463,11 +458,9 @@ namespace Infrastructure.Repositories
 
         }
 
-        public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, DateTime submitDate)
+        public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, int persianMonth,
+            int persianYear)
         {
-            PersianCalendar pc = new();
-            var persianMonth = pc.GetMonth(submitDate);
-            var persianYear = pc.GetYear(submitDate);
             uint aid = 0;
             uint ssalary = 0;
             uint overtime = 0;

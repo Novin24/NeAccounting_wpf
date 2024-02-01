@@ -54,6 +54,8 @@ namespace Infrastructure.Utilities
             builder.Entity<Salary>(b =>
             {
                 b.HasIndex(t => t.WorkerId);
+                b.HasIndex(t => t.PersianYear);
+                b.HasIndex(t => t.PersianMonth);
                 b.HasOne(t => t.Worker)
                 .WithMany(s => s.Salaries)
                 .HasForeignKey(t => t.WorkerId)
