@@ -142,13 +142,15 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <nu:PersianDatePicker Grid.Column="1"
-                                                      SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay}"
+                                <nu:MonthPicker Grid.Column="1"
+                                                      SelectedMon ="{Binding ViewModel.StartMonth, Mode=TwoWay}"
+                                                      SelectedYear ="{Binding ViewModel.StartYear, Mode=TwoWay}"
                                                       LabelName="از تاریخ" />
 
 
-                                <nu:PersianDatePicker Grid.Column="0"
-                                                      SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay}"
+                                <nu:MonthPicker Grid.Column="0"
+                                                      SelectedMon="{Binding ViewModel.EndMonth, Mode=TwoWay}"
+                                                      SelectedYear="{Binding ViewModel.EndYear, Mode=TwoWay}"
                                                       LabelName="تا تاریخ" />
 
                             </Grid>

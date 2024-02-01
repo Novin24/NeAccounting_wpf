@@ -9,30 +9,28 @@
       d:DataContext="{d:DesignInstance local:TestPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
-      Height="800"
-      Width="600"
       Title="TestPage">
 
     <Grid>
-        <StackPanel Width="400">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
+        <StackPanel Grid.Column="1">
+            <nu:PersianDatePicker SelectedDate="{Binding ViewModel.Ts , Mode=TwoWay}"
+                                  DateChosen="PersianDatePicker_DateChosen" />
 
-            <nu:PersianDatePicker DateChosen="PersianDatePicker_DateChosen" />
+            <nu:MonthPicker x:Name="mnp"
+                            LabelName="تاریخ"
+                            DateChosen="mnp_DateChosen"
+                            SelectedMon="{Binding ViewModel.Select , Mode=TwoWay}"
+                            SelectedYear="{Binding ViewModel.Tse ,Mode=TwoWay}" />
 
-            <ui:InfoBar Title="تذکر"
-                        Grid.Column="0"
-                        IsOpen="True"
-                        IsClosable="False"
-                        Message="کاربر گرامی پس از صدور فیش حقوقی امکان ثبت مساعده وجود ندارد !!!"
-                        Severity="Warning" 
-                        />
-            <nu:MonthPicker
-                x:Name="mnp"
-                SelectedMonth="{Binding ViewModel.Ts , Mode=OneWayToSource}"
-                SelectedYear="{Binding ViewModel.Tse ,Mode=OneWayToSource}"/>
-            
             <Button Content="ثبت "
-                    Command="{Binding ViewModel.MyClickCommand}"/>
+                    Command="{Binding ViewModel.MyClickCommand}"
+                    Click="Button_Click" />
         </StackPanel>
     </Grid>
 </Page>

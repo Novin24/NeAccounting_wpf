@@ -19,7 +19,10 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     private int? _personelId;
 
     [ObservableProperty]
-    private DateTime _submitDate = DateTime.Now;
+    private int _submitMonth ;
+    
+    [ObservableProperty]
+    private int _submitYear ;
 
     [ObservableProperty]
     private uint _amountOf = 0;
@@ -125,7 +128,8 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
         {
             var (error, isSuccess) = await db.workerManager.AddSalary(
                    WorkerId,
-                   SubmitDate,
+                   SubmitMonth,
+                   SubmitYear,
                    AmountOf,
                    FinancialAid,
                    OverTime,
@@ -176,19 +180,19 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
         }
         using UnitOfWork db = new();
         var Worker = await db.workerManager.GetWorker(WorkerId);
-        var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
+        //var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
 
-        if (!details.Success)
-        {
-            _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
-        }
-        ShiftStatus = Worker.Shift;
-        Insurance = details.Insurance;
-        AmountOf = details.AmountOf;
-        OverTime = details.OverTime;
-        PersonelId = details.PersonelId;
-        FinancialAid = details.FinancialAid;
+        //if (!details.Success)
+        //{
+        //    _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+        //    return false;
+        //}
+        //ShiftStatus = Worker.Shift;
+        //Insurance = details.Insurance;
+        //AmountOf = details.AmountOf;
+        //OverTime = details.OverTime;
+        //PersonelId = details.PersonelId;
+        //FinancialAid = details.FinancialAid;
 
         return true;
     }

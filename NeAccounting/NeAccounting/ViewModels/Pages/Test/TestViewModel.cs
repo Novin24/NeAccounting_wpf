@@ -11,13 +11,15 @@ namespace NeAccounting.ViewModels
             _navigationService = navigationService;
         }
 
+        [ObservableProperty]
+        public DateTime? _ts;
 
         [ObservableProperty]
-        private int _ts ;
+        private int? _select;
 
 
         [ObservableProperty]
-        private int _tse;
+        private int? _tse;
 
 
 

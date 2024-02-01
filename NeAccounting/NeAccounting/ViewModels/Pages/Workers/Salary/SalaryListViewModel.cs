@@ -23,12 +23,6 @@ namespace NeAccounting.ViewModels
         private string _totalCount;
 
         [ObservableProperty]
-        private DateTime? _startDate;
-
-        [ObservableProperty]
-        private DateTime? _endDate;
-
-        [ObservableProperty]
         private int? _startMonth;
 
         [ObservableProperty]

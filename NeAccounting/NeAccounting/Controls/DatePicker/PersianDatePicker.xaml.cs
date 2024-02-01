@@ -5,10 +5,8 @@ namespace NeAccounting.Controls
 {
     [DefaultEvent("SelectedDateChanged")]
     [DefaultProperty("SelectedDate")]
-    public partial class PersianDatePicker : UserControl, INotifyPropertyChanged
+    public partial class PersianDatePicker : UserControl
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public PersianDatePicker()
         {
             InitializeComponent();

@@ -1,5 +1,4 @@
 ﻿using NeAccounting.ViewModels;
-using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages.Test
@@ -21,6 +20,17 @@ namespace NeAccounting.Views.Pages.Test
 
 
         private void PersianDatePicker_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var s = mnp.SelectedMon;
+            var n = mnp.SelectedYear;
+        }
+
+        private void mnp_DateChosen(object sender, RoutedPropertyChangedEventArgs<int?> e)
         {
 
         }
