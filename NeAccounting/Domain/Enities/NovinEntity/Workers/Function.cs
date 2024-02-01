@@ -23,7 +23,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// ماه شمسی
         /// </summary>
-        public byte PersanMonth { get; set; }
+        public byte PersianMonth { get; set; }
 
         /// <summary>
         /// تعداد  کاری

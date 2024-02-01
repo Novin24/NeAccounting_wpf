@@ -261,7 +261,7 @@ namespace Infrastructure.Repositories
                                       WorkerName = w.FullName,
                                       PersonelId = w.PersonnelId,
                                       ShiftStatus = w.ShiftStatus,
-                                      SubmitDate = s.SubmitDate,
+                                      //SubmitDate = s.SubmitDate,
                                       Insurance = w.InsurancePremium,
                                       FinancialAid = aid.AmountOf,
                                       AmountOf = s.AmountOf,
@@ -353,9 +353,10 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public Task<(string error, bool isSuccess)> UpdateSalary(int workerId,
+        public async Task<(string error, bool isSuccess)> UpdateSalary(int workerId,
             int salaryId,
-            DateTime submitDate,
+            int persianYear,
+            int persianMonth,
             uint amountOf,
             uint financialAid,
             uint overTime,
@@ -369,7 +370,55 @@ namespace Infrastructure.Repositories
             uint leftOver,
             string? description)
         {
-            throw new NotImplementedException();
+
+            var worker = await Entities
+                .Include(s => s.Salaries.Where(t =>
+                t.))
+                .Include(s => s.Functions.Where(t =>
+                t.PersianYear == persianYear && t.PersianMonth == persianMonth))
+                .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null )
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+
+            if (worker.Salaries.Any(t =>
+            t.PersianMonth == persianMonth && t.PersianYear == persianYear))
+            {
+                return new("کاربر گرامی برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
+            }
+
+            if (worker.Functions.Count == 0)
+            {
+                return new("کاربر گرامی برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
+            }
+
+
+            worker.AddSalary(
+                new Salary(
+                    persianYear,
+                    persianMonth,
+                    amountOf,
+                    financialAid,
+                    overTime,
+                    tax,
+                    childAllowance,
+                    insurance,
+                    rightHousingAndFood,
+                    loanInstallment,
+                    otherAdditions,
+                    otherDeductions,
+                    leftOver,
+                    description));
+
+            try
+            {
+                Entities.Update(worker);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
         }
 
         public async Task<(string error, bool isSuccess)> AddSalary(int workerId,
@@ -390,61 +439,40 @@ namespace Infrastructure.Repositories
         {
             var worker = await Entities
                 .Include(s => s.Salaries)
+                .Include(s => s.Functions.Where(t =>
+                t.PersianYear == persianYear && t.PersianMonth == persianMonth))
                 .FirstOrDefaultAsync(t => t.Id == workerId);
 
             if (worker == null)
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
 
-            var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth && t.PersianYear == persianYear);
+            if (worker.Functions.Count == 0)
+            {
+                return new("کاربر گرامی برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
+            }
 
+            if (worker.Salaries.Any(t =>
+            t.PersianMonth == persianMonth && t.PersianYear == persianYear))
+            {
+                return new("کاربر گرامی برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
+            }
 
-            //if (salary == null)
-            //{
-            //    return new("کاربر گرامی برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
-            //}
-
-            //if (salary != null && salary.Functions.Count == 0)
-            //{
-            //    return new("کاربر گرامی برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
-            //}
-
-            //if (salary.AmountOf != 0)
-            //{
-            //    return new("کاربر گرامی برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
-            //}
-
-            //salary.SubmitDate = submitDate;
-            //salary.AmountOf = amountOf;
-            //salary.OverTime = overTime;
-            //salary.FinancialAid = financialAid;
-            //salary.Tax = tax;
-            //salary.RightHousingAndFood = rightHousingAndFood;
-            //salary.Insurance = insurance;
-            //salary.ChildAllowance = childAllowance;
-            //salary.LoanInstallment = loanInstallment;
-            //salary.OtherDeductions = otherDeductions;
-            //salary.OtherAdditions = otherAdditions;
-            //salary.PersianMonth = persianMonth;
-            //salary.PersianYear = persianYear;
-            //else
-            //{
-
-            //    worker.AddSalary(
-            //        new Salary(
-            //            submitDate,
-            //            amountOf,
-            //            financialAid,
-            //            overTime,
-            //            tax,
-            //            childAllowance,
-            //            insurance,
-            //            rightHousingAndFood,
-            //            loanInstallment,
-            //            otherAdditions,
-            //            otherDeductions,
-            //            leftOver,
-            //            description));
-            //}
+            worker.AddSalary(
+                new Salary(
+                    persianYear,
+                    persianMonth,
+                    amountOf,
+                    financialAid,
+                    overTime,
+                    tax,
+                    childAllowance,
+                    insurance,
+                    rightHousingAndFood,
+                    loanInstallment,
+                    otherAdditions,
+                    otherDeductions,
+                    leftOver,
+                    description));
 
             try
             {

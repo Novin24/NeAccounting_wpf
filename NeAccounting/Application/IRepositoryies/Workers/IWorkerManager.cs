@@ -80,7 +80,8 @@ namespace NeApplication.IRepositoryies
 
         Task<(string error, bool isSuccess)> UpdateSalary(int workerId,
             int salaryId,
-            DateTime submitDate,
+            int persianYear,
+            int persianMonth,
             uint amountOf,
             uint financialAid,
             uint overTime,
