@@ -1,5 +1,4 @@
-﻿using DomainShared.ViewModels;
-using NeAccounting.Controls;
+﻿using NeAccounting.Controls;
 using System.Windows.Media;
 using Wpf.Ui.Controls;
 
@@ -73,11 +72,6 @@ namespace NeAccounting.Views.Pages
             }
         }
 
-        private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
-        {
-           await ReloadSalary(ViewModel.WorkerId);
-        }
-
         private async Task ReloadSalary(int id)
         {
 
@@ -109,6 +103,13 @@ namespace NeAccounting.Views.Pages
             }
             txt_OtherAdditions.IsEnabled = true;
             txt_Othere.IsEnabled = true;
+        }
+
+        private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<int?> e)
+        {
+            if (ViewModel.WorkerId == -1)
+                return;
+            await ReloadSalary(ViewModel.WorkerId);
         }
     }
 }

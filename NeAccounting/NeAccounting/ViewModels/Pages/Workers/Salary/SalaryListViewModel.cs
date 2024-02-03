@@ -135,7 +135,7 @@ namespace NeAccounting.ViewModels
             var service = _navigationService.GetNavigationControl();
 
             using UnitOfWork db = new();
-            var s = await db.workerManager.GetSalaryDetailBySalaryId(parameter.WorkerId, parameter.Id);
+            var s = await db.workerManager.GetSalaryDetailBySalaryId(parameter.WorkerId, parameter.Id, parameter.PersianMonth, parameter.PersianYear);
 
             var context = new UpdateSalaryPage(new UpdateSalaryViewModel(_snackbarService, _navigationService)
             {
@@ -145,7 +145,8 @@ namespace NeAccounting.ViewModels
                 OverTime = s.OverTime,
                 Description = s.Description,
                 PersonnelName = s.WorkerName,
-                SubmitDate = s.SubmitDate,
+                SubmitMonth = s.SubmitMonth,
+                SubmitYear = s.SubmitYear,
                 RightHousingAndFood = s.RightHousingAndFood,
                 ShiftStatus = s.ShiftStatus,
                 ChildAllowance = s.ChildAllowance,

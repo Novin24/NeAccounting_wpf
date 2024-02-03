@@ -241,7 +241,7 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region Salary
-        public async Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId)
+        public async Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId, int persianMonth, int persianYear)
         {
             var salarise = await (from w in DbContext.Set<Worker>()
                                                  .AsNoTracking()
@@ -252,20 +252,21 @@ namespace Infrastructure.Repositories
                                                           on w.Id equals s.WorkerId
 
                                   join a in DbContext.Set<FinancialAid>()
+                                  .Where(c => c.PersanMonth == persianMonth && c.PersianYear == persianYear)
                                                           on w.Id equals a.WorkerId into ai
                                   from aid in ai.DefaultIfEmpty()
 
-                                  where aid.PersianYear == s.PersianYear && aid.PersanMonth == s.PersianMonth
                                   select new SalaryWorkerViewModel()
                                   {
                                       WorkerName = w.FullName,
                                       PersonelId = w.PersonnelId,
                                       ShiftStatus = w.ShiftStatus,
-                                      //SubmitDate = s.SubmitDate,
                                       Insurance = w.InsurancePremium,
-                                      FinancialAid = aid.AmountOf,
+                                      FinancialAid = aid.AmountOf == null ? 0 : aid.AmountOf,
                                       AmountOf = s.AmountOf,
                                       OverTime = s.OverTime,
+                                      SubmitMonth = s.PersianMonth,
+                                      SubmitYear = s.PersianYear,
                                       ChildAllowance = s.ChildAllowance,
                                       Description = s.Description,
                                       LeftOver = s.LeftOver,
@@ -321,7 +322,9 @@ namespace Infrastructure.Repositories
                     row.Details = new SalaryDetails()
                     {
                         Id = (int)dataReader[nameof(row.Details.Id)],
-                        WorkerId = (int)dataReader[nameof(row.Details.WorkerId)]
+                        WorkerId = (int)dataReader[nameof(row.Details.WorkerId)],
+                        PersianMonth = (int)dataReader[nameof(row.PersianMonth)],
+                        PersianYear = (int)dataReader[nameof(row.PersianYear)]
                     };
                     totalCount = ((int)dataReader[("TotalRecord")]).ToString("N0");
                     rows.Add(row);
@@ -372,13 +375,12 @@ namespace Infrastructure.Repositories
         {
 
             var worker = await Entities
-                .Include(s => s.Salaries.Where(t =>
-                t.))
+                .Include(s => s.Salaries.Where(t => t.Id == salaryId))
                 .Include(s => s.Functions.Where(t =>
                 t.PersianYear == persianYear && t.PersianMonth == persianMonth))
                 .FirstOrDefaultAsync(t => t.Id == workerId);
 
-            if (worker == null )
+            if (worker == null)
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
 
             if (worker.Salaries.Any(t =>

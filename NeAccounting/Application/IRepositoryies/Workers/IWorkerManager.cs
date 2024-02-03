@@ -98,7 +98,7 @@ namespace NeApplication.IRepositoryies
 
         Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, int submitMonth, int submintYear);
 
-        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId);
+        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId , int persianMonth, int persianYear);
 
         Task<PagedResulViewModel<SalaryViewModel>> GetSalaryList(int? workerId,
              int? startMonth,

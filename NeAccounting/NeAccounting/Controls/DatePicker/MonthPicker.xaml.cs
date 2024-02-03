@@ -79,6 +79,7 @@ namespace NeAccounting.Controls
 
             if (args.NewValue == args.OldValue)
                 return;
+            IsCalculated = false;
             selectedYea = (int?)args.NewValue;
             mp.InitialYear(selectedYea);
             IsCalculated = true;
@@ -103,14 +104,18 @@ namespace NeAccounting.Controls
 
         private static void OnMonthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
-            if (sender is MonthPicker c)
-            {
-                RoutedPropertyChangedEventArgs<int?> e = new((int?)args.OldValue, (int?)args.NewValue, DateChosenEvent);
-                selectedMonth = (int?)args.NewValue;
-                c.InitialMonth(selectedMonth);
-                c.OnDateChanged(e);
-                IsCalculated = true;
-            }
+            if (sender is not MonthPicker c)
+                return;
+
+            if (args.NewValue == args.OldValue)
+                return;
+
+            IsCalculated = false;
+            selectedMonth = (int?)args.NewValue;
+            c.InitialMonth(selectedMonth);
+            RoutedPropertyChangedEventArgs<int?> e = new((int?)args.OldValue, (int?)args.NewValue, DateChosenEvent);
+            c.OnDateChanged(e);
+            IsCalculated = true;
         }
         #endregion
 
@@ -131,12 +136,16 @@ namespace NeAccounting.Controls
         protected virtual void InitialMonth(int? month)
         {
             comboBoxMonths.SelectedIndex = month - 1 ?? currentMonth - 1;
+            if (SelectedMon != null && SelectedYear != null)
+                lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
         }
 
         protected virtual void InitialYear(int? year)
         {
             comboBoxYear.ItemsSource = LoadYear(year ?? currentYear);
             comboBoxYear.SelectedItem = year ?? currentYear;
+            if (SelectedMon != null && SelectedYear != null)
+                lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
         }
 
         #endregion
@@ -184,7 +193,6 @@ namespace NeAccounting.Controls
                 SelectedYear = currentYear;
                 selectedYea = currentYear;
             }
-            lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
         }
 
         private void ComboBoxYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -202,7 +210,6 @@ namespace NeAccounting.Controls
                 SelectedMon = currentMonth;
                 selectedMonth = currentMonth;
             }
-            lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
         }
 
         private void Dismiss_Click(object sender, RoutedEventArgs e)
