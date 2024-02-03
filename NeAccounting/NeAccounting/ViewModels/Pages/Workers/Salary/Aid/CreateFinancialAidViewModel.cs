@@ -30,7 +30,10 @@ namespace NeAccounting.ViewModels
         private uint _amountOf = 0;
 
         [ObservableProperty]
-        private DateTime _;
+        private int? _SubmitMonth;
+
+        [ObservableProperty]
+        private int? _SubmitYear;
 
         [ObservableProperty]
         private string? _description;
@@ -81,7 +84,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.aidManager.AddOrUpdateAid(WorkerId, PayDate, AmountOf, Description);
+                var (error, isSuccess) = await db.aidManager.AddOrUpdateAid(WorkerId, SubmitYear.Value, SubmitMonth.Value, AmountOf, Description);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

@@ -256,7 +256,7 @@ namespace Infrastructure.Repositories
                                                           on w.Id equals s.WorkerId
 
                                   join a in DbContext.Set<FinancialAid>()
-                                  .Where(c => c.PersanMonth == persianMonth && c.PersianYear == persianYear)
+                                  .Where(c => c.PersianMonth == persianMonth && c.PersianYear == persianYear)
                                                           on w.Id equals a.WorkerId into ai
                                   from aid in ai.DefaultIfEmpty()
 
@@ -559,14 +559,13 @@ namespace Infrastructure.Repositories
         #region Function
         public async Task<(string error, bool isSuccess)> AddOrUpdateFunctuion(
             int workerId,
-            DateTime submitDate,
+            int persianYear,
+            int persianMonth,
             byte amountOf,
             byte amountOfOverTime,
             string? description)
         {
-            PersianCalendar pc = new();
-            var persianMonth = pc.GetMonth(submitDate);
-            var persianYear = pc.GetYear(submitDate);
+
 
             var worker = await Entities
                 //.Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
@@ -733,13 +732,11 @@ namespace Infrastructure.Repositories
         #region Aid
         public async Task<(string error, bool isSuccess)> AddOrUpdateAid(
             int workerId,
-            DateTime submitDate,
+            int persianYear,
+            int persianMonth,
             uint amountOf,
             string? description)
         {
-            PersianCalendar pc = new();
-            var persianMonth = pc.GetMonth(submitDate);
-            var persianYear = pc.GetYear(submitDate);
 
             var worker = await Entities
                 //.Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
@@ -853,7 +850,7 @@ namespace Infrastructure.Repositories
                               Description = aid.Description,
                               PersonelId = worker.PersonnelId,
                               Price = aid.AmountOf.ToString("N0"),
-                              PersianMonth = aid.PersanMonth,
+                              PersianMonth = aid.PersianMonth,
                               PersianYear = aid.PersianYear,
                               Details = new AidDetails() { Id = aid.Id, WorkerId = worker.Id }
                           })

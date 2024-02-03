@@ -11,11 +11,6 @@ namespace Domain.NovinEntity.Workers
 
         #region Property
         /// <summary>
-        /// تاریخ کارکرد
-        /// </summary>
-        public DateTime SubmitDate { get; set; }
-
-        /// <summary>
         /// سال شمسی
         /// </summary>
         public int PersianYear { get; set; }
@@ -23,7 +18,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// ماه شمسی
         /// </summary>
-        public byte PersianMonth { get; set; }
+        public int PersianMonth { get; set; }
 
         /// <summary>
         /// تعداد  کاری
@@ -50,12 +45,14 @@ namespace Domain.NovinEntity.Workers
         }
 
         public Function(
-            DateTime submitDate,
+            int persianMonth,
+            int persianYear,
             byte amountOf,
             byte amountOfOverTime,
             string? description)
         {
-            SubmitDate = submitDate;
+            PersianMonth = persianMonth;
+            PersianYear = persianYear;
             AmountOf = amountOf;
             AmountOfOverTime = amountOfOverTime;
             Description = description;

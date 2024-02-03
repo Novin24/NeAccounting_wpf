@@ -81,7 +81,7 @@ namespace Infrastructure.Utilities
                 .HasForeignKey(t => t.WorkerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-                b.HasIndex(t => t.PersanMonth);
+                b.HasIndex(t => t.PersianMonth);
                 b.HasIndex(t => t.PersianYear);
                 b.HasIndex(t => t.WorkerId);
             });

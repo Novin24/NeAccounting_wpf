@@ -117,7 +117,7 @@ namespace NeAccounting.ViewModels
 
             var func = List.First(t => t.Details.Id == parameter.Id);
             using UnitOfWork db = new();
-            var list = await db.functionManager.GetFunctionList(WorkerId,PageNumb);
+            var list = await db.functionManager.GetFunctionList(WorkerId,PageNum);
 
             var context = new UpdateFunctionPage(new UpdateFunctionViewModel(_navigationService, _snackbarService)
             {

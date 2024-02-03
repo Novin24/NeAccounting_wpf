@@ -119,7 +119,8 @@ namespace NeApplication.IRepositoryies
     {
         Task<(string error, bool isSuccess)> AddOrUpdateFunctuion(
             int workerId,
-            DateTime submitDate,
+            int persianYear,
+            int persianMonth,
             byte amountOf,
             byte amountOfOverTime,
             string? description);
@@ -143,7 +144,8 @@ namespace NeApplication.IRepositoryies
     {
         Task<(string error, bool isSuccess)> AddOrUpdateAid(
             int workerId,
-            DateTime submitDate,
+            int persianYear,
+            int persianMonth,
             uint amountOf,
             string? description);
 

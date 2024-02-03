@@ -32,8 +32,12 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private byte _overTime = 0;
 
+
         [ObservableProperty]
-        private DateTime _payDate = DateTime.Now;
+        private int? _SubmitMonth;
+
+        [ObservableProperty]
+        private int? _SubmitYear;
 
         [ObservableProperty]
         private string? _description;
@@ -82,7 +86,11 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", "کارکرد بیشتر از سقف مجاز", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-
+            if (SubmitMonth == null || SubmitYear == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پرداخت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             if (OverTime < 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اضافه کاری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -97,7 +105,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.functionManager.AddOrUpdateFunctuion(WorkerId, PayDate, AmountOf, OverTime, Description);
+                var (error, isSuccess) = await db.functionManager.AddOrUpdateFunctuion(WorkerId, SubmitYear.Value, SubmitMonth.Value, AmountOf, OverTime, Description);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
