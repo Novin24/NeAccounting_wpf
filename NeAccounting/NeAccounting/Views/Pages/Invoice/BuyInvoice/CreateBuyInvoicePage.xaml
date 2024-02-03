@@ -293,33 +293,26 @@
                                       FontFamily="Calibri"
                                       AutoGenerateColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="#"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                    <DataGridTextColumn HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width=".22*" />
-                                    <DataGridTextColumn Header="شرح کالا"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width=".7*" />
-                                    <DataGridTextColumn Header="مقدار"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width=".37*" />
-                                    <DataGridTextColumn Header="واحد"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width=".37*" />
-                                    <DataGridTextColumn Header="قیمت واحد"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width=".5*" />
-                                    <DataGridTextColumn Header="قیمت کل"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width=".73*" />
 
-                                    <DataGridTextColumn Header="توضیحات"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width="1.5*" />
                                 </DataGrid.Columns>
