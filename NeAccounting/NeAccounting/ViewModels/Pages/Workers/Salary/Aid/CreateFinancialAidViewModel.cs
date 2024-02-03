@@ -30,7 +30,7 @@ namespace NeAccounting.ViewModels
         private uint _amountOf = 0;
 
         [ObservableProperty]
-        private DateTime _payDate = DateTime.Now;
+        private DateTime _;
 
         [ObservableProperty]
         private string? _description;
@@ -66,6 +66,11 @@ namespace NeAccounting.ViewModels
             if (WorkerId < 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            if (SubmitMonth == null || SubmitYear == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پرداخت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
             if (AmountOf <= 0)

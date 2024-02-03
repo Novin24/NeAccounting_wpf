@@ -1,4 +1,5 @@
 ﻿using Domain.NovinEntity.Workers;
+using DomainShared.Constants;
 using DomainShared.Enums;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.PagedResul;
@@ -18,7 +19,9 @@ namespace NeApplication.IRepositoryies
         Task<List<WorkerVewiModel>> GetWorkers(string fullName,
             string jobTitle,
             string nationalCode,
-            Status status);
+            Status status,
+             int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
 
         Task<(string error, bool isSuccess)> Create(
             string fullName,
@@ -98,15 +101,15 @@ namespace NeApplication.IRepositoryies
 
         Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, int submitMonth, int submintYear);
 
-        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId , int persianMonth, int persianYear);
+        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId, int persianMonth, int persianYear);
 
         Task<PagedResulViewModel<SalaryViewModel>> GetSalaryList(int? workerId,
              int? startMonth,
              int? startYear,
              int? endMonth,
              int? endYear,
-             int skipCount = 0,
-             int maxResultCount = 10);
+             int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
 
         Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId);
         #endregion
@@ -123,15 +126,16 @@ namespace NeApplication.IRepositoryies
 
         Task<(string error, bool isSuccess)> UpdateFunc(
             int workerId,
-            int salaryId,
             int funcId,
             byte amountOf,
             byte overTime,
             string? description);
 
-        Task<List<FunctionViewModel>> GetFunctionList(int workerId);
+        Task<List<FunctionViewModel>> GetFunctionList(int workerId,
+             int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
 
-        Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int salaryId, int aidId);
+        Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int aidId);
 
     }
 
@@ -145,13 +149,14 @@ namespace NeApplication.IRepositoryies
 
         Task<(string error, bool isSuccess)> UpdateAid(
             int workerId,
-            int salaryId,
             int aidId,
             uint amountOf,
             string? description);
 
-        Task<List<AidViewModel>> GetAidList(int workerId);
+        Task<List<AidViewModel>> GetAidList(int workerId,
+             int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
 
-        Task<(string error, bool isSuccess)> DeleteAid(int workerId, int salaryId, int aidId);
+        Task<(string error, bool isSuccess)> DeleteAid(int workerId, int aidId);
     }
 }

@@ -30,16 +30,20 @@ namespace DomainShared.ViewModels.Workers
         public string? Description { get; set; }
 
         /// <summary>
-        /// تاریخ مربوط به کارکرد
+        /// ماه مربوط به کارکرد
         /// </summary>
-        public DateTime Date { get; set; }
+        public int PersianMonth { get; set; }
+
+        /// <summary>
+        /// سال مربوط به کارکرد
+        /// </summary>
+        public int PersianYear { get; set; }
 
         public readonly string DisplayDate
         {
             get
             {
-                PersianCalendar pc = new();
-                return string.Format("{0}/{1}/{2}", pc.GetYear(Date), pc.GetMonth(Date),pc.GetDayOfMonth(Date));
+                return string.Format("{0}/{1}", PersianYear, PersianMonth);
             }
         }
         public FucntionDetails Details { get; set; }

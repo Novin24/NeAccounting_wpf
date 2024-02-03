@@ -19,6 +19,8 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private int _workerId = -1;
 
+        [ObservableProperty]
+        private int _pageNum = 0;
 
         [ObservableProperty]
         private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
@@ -46,14 +48,14 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.functionManager.GetFunctionList(WorkerId);
+            List = await db.functionManager.GetFunctionList(WorkerId, PageNum);
         }
 
         [RelayCommand]
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            List = await db.functionManager.GetFunctionList(WorkerId);
+            List = await db.functionManager.GetFunctionList(WorkerId, PageNum);
         }
 
         [RelayCommand]
@@ -90,7 +92,7 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var isSuccess = await db.functionManager.DeleteFunc(parameter.WorkerId, parameter.SalaryId, parameter.Id);
+                var isSuccess = await db.functionManager.DeleteFunc(parameter.WorkerId, parameter.Id);
                 if (!isSuccess.isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", isSuccess.error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -103,7 +105,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private void OnUpdateFunc(FucntionDetails parameter)
+        private async Task OnUpdateFunc(FucntionDetails parameter)
         {
             Type? pageType = NameToPageTypeConverter.Convert("UpdateFunction");
 
@@ -114,6 +116,8 @@ namespace NeAccounting.ViewModels
             var service = _navigationService.GetNavigationControl();
 
             var func = List.First(t => t.Details.Id == parameter.Id);
+            using UnitOfWork db = new();
+            var list = await db.functionManager.GetFunctionList(WorkerId,PageNumb);
 
             var context = new UpdateFunctionPage(new UpdateFunctionViewModel(_navigationService, _snackbarService)
             {
@@ -121,11 +125,11 @@ namespace NeAccounting.ViewModels
                 AmountOf = func.Amountof,
                 Description = func.Description,
                 PersonnelName = func.Name,
-                SalaryId = parameter.SalaryId,
-                OverTime  = func.OverTime,
+                OverTime = func.OverTime,
                 FuncId = parameter.Id,
-                PayDate = func.Date,
-                List = List.Where(t => t.Details.WorkerId == parameter.WorkerId).OrderByDescending(c => c.Date).Take(10).ToList(),
+                SubmitMonth = func.PersianMonth,
+                SubmitYear = func.PersianYear,
+                List = list,
                 PersonnelId = func.PersonelId
             });
 

@@ -87,7 +87,8 @@ namespace Infrastructure.Repositories
         }
 
 
-        public Task<List<WorkerVewiModel>> GetWorkers(string fullName, string jobTitle, string nationalCode, Status status)
+        public Task<List<WorkerVewiModel>> GetWorkers(string fullName, string jobTitle, string nationalCode, Status status, int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
         {
             return TableNoTracking
                 .Where(x => string.IsNullOrEmpty(fullName) || x.FullName.Contains(fullName))
@@ -116,7 +117,10 @@ namespace Infrastructure.Repositories
                     OverTimeSalary = t.OverTimeSalary,
                     DayInMonth = t.DayInMonth,
                     InsurancePremium = t.InsurancePremium,
-                }).ToListAsync();
+                })
+                .Skip(pageNum * NeAccountingConstants.PageCount)
+                .Take(NeAccountingConstants.PageCount)
+                .ToListAsync();
         }
 
         public async Task<(string error, bool isSuccess)> Create(
@@ -289,8 +293,8 @@ namespace Infrastructure.Repositories
             int? startYear,
             int? endMonth,
             int? endYear,
-            int skipCount = 0,
-            int maxResultCount = 10)
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
         {
             await EnsureConnectionOpenAsync();
             var parameters = new[] // sqlINput
@@ -300,8 +304,8 @@ namespace Infrastructure.Repositories
             new SqlParameter(nameof(startYear), startYear == null ? DBNull.Value : startYear),
             new SqlParameter(nameof(endMonth), endMonth == null ? DBNull.Value : endMonth),
             new SqlParameter(nameof(endYear), endYear == null ? DBNull.Value : endYear),
-            new SqlParameter(nameof(skipCount), skipCount),
-            new SqlParameter(nameof(maxResultCount), maxResultCount)
+            new SqlParameter("skipCount", pageNum * pageCount),
+            new SqlParameter("maxResultCount",pageCount)
         };
 
             string totalCount = "0";
@@ -373,44 +377,44 @@ namespace Infrastructure.Repositories
             uint leftOver,
             string? description)
         {
-
             var worker = await Entities
-                .Include(s => s.Salaries.Where(t => t.Id == salaryId))
-                .Include(s => s.Functions.Where(t =>
-                t.PersianYear == persianYear && t.PersianMonth == persianMonth))
+                .Include(s => s.Salaries)
+                .Include(s => s.Functions)
                 .FirstOrDefaultAsync(t => t.Id == workerId);
 
             if (worker == null)
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
 
+            if (worker.Salaries.FirstOrDefault(t => t.Id == salaryId) == null)
+                return new("فیش مورد نظر یافت نشد!!!!", false);
+
             if (worker.Salaries.Any(t =>
-            t.PersianMonth == persianMonth && t.PersianYear == persianYear))
+                t.Id != salaryId && t.PersianMonth == persianMonth && t.PersianYear == persianYear))
             {
                 return new("کاربر گرامی برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
             }
 
-            if (worker.Functions.Count == 0)
+            if (!worker.Functions.Any(t =>
+                t.PersianYear == persianYear && t.PersianMonth == persianMonth))
             {
                 return new("کاربر گرامی برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
             }
 
-
-            worker.AddSalary(
-                new Salary(
-                    persianYear,
-                    persianMonth,
-                    amountOf,
-                    financialAid,
-                    overTime,
-                    tax,
-                    childAllowance,
-                    insurance,
-                    rightHousingAndFood,
-                    loanInstallment,
-                    otherAdditions,
-                    otherDeductions,
-                    leftOver,
-                    description));
+            var salary = worker.Salaries.First(s => s.Id == salaryId);
+            salary.PersianMonth = persianMonth;
+            salary.PersianYear = persianYear;
+            salary.Insurance = insurance;
+            salary.Description = description;
+            salary.OtherDeductions = otherDeductions;
+            salary.ChildAllowance = childAllowance;
+            salary.AmountOf = amountOf;
+            salary.LeftOver = leftOver;
+            salary.OtherAdditions = otherAdditions;
+            salary.RightHousingAndFood = rightHousingAndFood;
+            salary.FinancialAid = financialAid;
+            salary.OverTime = overTime;
+            salary.Tax = tax;
+            salary.LoanInstallment = loanInstallment;
 
             try
             {
@@ -626,36 +630,37 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<List<FunctionViewModel>> GetFunctionList(int workerId)
+        public async Task<List<FunctionViewModel>> GetFunctionList(int workerId,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
         {
-            return null;
-            //await (from worker in DbContext.Set<Worker>()
-            //                                             .AsNoTracking()
-            //                                             .Where(t => workerId == -1 || t.Id == workerId)
+            return await (from worker in DbContext.Set<Worker>()
+                                                         .AsNoTracking()
+                                                         .Where(t => workerId == -1 || t.Id == workerId)
 
-            //          join salary in DbContext.Set<Salary>()
-            //                                  on worker.Id equals salary.WorkerId
+                          join func in DbContext.Set<Function>()
+                                                  on worker.Id equals func.WorkerId
 
-            //          join func in DbContext.Set<Function>()
-            //                                  on salary.Id equals func.SalaryId
-
-            //          select new FunctionViewModel()
-            //          {
-            //              Name = worker.FullName,
-            //              Amountof = func.AmountOf,
-            //              OverTime = func.AmountOfOverTime,
-            //              Description = func.Description,
-            //              PersonelId = worker.PersonnelId,
-            //              Date = func.SubmitDate,
-            //              Details = new FucntionDetails() { Id = func.Id, SalaryId = salary.Id, WorkerId = worker.Id }
-            //          })
-            //          .OrderByDescending(c => c.Date)
-            //          .ToListAsync();
+                          select new FunctionViewModel()
+                          {
+                              Name = worker.FullName,
+                              Amountof = func.AmountOf,
+                              OverTime = func.AmountOfOverTime,
+                              Description = func.Description,
+                              PersonelId = worker.PersonnelId,
+                              PersianMonth = func.PersianMonth,
+                              PersianYear = func.PersianYear,
+                              Details = new FucntionDetails() { Id = func.Id, WorkerId = worker.Id }
+                          })
+                      .OrderByDescending(c => c.PersianYear)
+                      .ThenByDescending(c => c.PersianMonth)
+                      .Skip(pageNum * pageCount)
+                      .Take(pageCount)
+                      .ToListAsync();
         }
 
         public async Task<(string error, bool isSuccess)> UpdateFunc(
            int workerId,
-           int salaryId,
            int funcId,
            byte amountOf,
            byte overTime,
@@ -690,7 +695,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int salaryId, int aidId)
+        public async Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int aidId)
         {
             var worker = await Entities
                //.Include(t => t.Salaries.Where(s => s.Id == salaryId))
@@ -797,7 +802,6 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> UpdateAid(
             int workerId,
-            int salaryId,
             int aidId,
             uint amount,
             string? description)
@@ -831,36 +835,38 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<List<AidViewModel>> GetAidList(int workerId)
+        public async Task<List<AidViewModel>> GetAidList(int workerId, int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
         {
-            return null;
-            //await (from worker in DbContext.Set<Worker>()
-            //                                   .AsNoTracking()
-            //                                   .Where(t => workerId == -1 || t.Id == workerId)
+            return await (from worker in DbContext.Set<Worker>()
+                                               .AsNoTracking()
+                                               .Where(t => workerId == -1 || t.Id == workerId)
 
-            //          join salary in DbContext.Set<Salary>()
-            //                                  on worker.Id equals salary.WorkerId
 
-            //          join aid in DbContext.Set<FinancialAid>()
-            //                                  on salary.Id equals aid.SalaryId
+                          join aid in DbContext.Set<FinancialAid>()
+                                                  on worker.Id equals aid.Id
 
-            //          select new AidViewModel()
-            //          {
-            //              Name = worker.FullName,
-            //              AmountPrice = aid.AmountOf,
-            //              Description = aid.Description,
-            //              PersonelId = worker.PersonnelId,
-            //              Price = aid.AmountOf.ToString("N0"),
-            //              Date = aid.SubmitDate,
-            //              Details = new AidDetails() { Id = aid.Id, SalaryId = salary.Id, WorkerId = worker.Id }
-            //          })
-            //          .OrderByDescending(c => c.Date)
-            //          .ToListAsync();
+                          select new AidViewModel()
+                          {
+                              Name = worker.FullName,
+                              AmountPrice = aid.AmountOf,
+                              Description = aid.Description,
+                              PersonelId = worker.PersonnelId,
+                              Price = aid.AmountOf.ToString("N0"),
+                              PersianMonth = aid.PersanMonth,
+                              PersianYear = aid.PersianYear,
+                              Details = new AidDetails() { Id = aid.Id, WorkerId = worker.Id }
+                          })
+                      .OrderByDescending(c => c.PersianYear)
+                      .ThenByDescending(c => c.PersianMonth)
+                      .Skip(pageNum * pageCount)
+                      .Take(pageCount)
+                      .ToListAsync();
 
         }
 
 
-        public async Task<(string error, bool isSuccess)> DeleteAid(int workerId, int salaryId, int aidId)
+        public async Task<(string error, bool isSuccess)> DeleteAid(int workerId, int aidId)
         {
             var worker = await Entities
                //.Include(t => t.Salaries.Where(s => s.Id == salaryId))
