@@ -15,7 +15,7 @@ namespace NeAccounting.ViewModels
         public DateTime? _ts;
 
         [ObservableProperty]
-        private int? _select;
+        private byte? _select;
 
 
         [ObservableProperty]

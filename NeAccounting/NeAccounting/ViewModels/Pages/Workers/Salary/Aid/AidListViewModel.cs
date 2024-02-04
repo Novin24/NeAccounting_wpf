@@ -47,15 +47,15 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.aidManager.GetAidList(WorkerId);
+            AuSuBox = await db.WorkerManager.GetWorkers();
+            List = await db.WorkerManager.GetAidList(WorkerId);
         }
 
         [RelayCommand]
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            List = await db.aidManager.GetAidList(WorkerId, PageNum);
+            List = await db.WorkerManager.GetAidList(WorkerId, PageNum);
         }
 
         [RelayCommand]
@@ -92,7 +92,7 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var (error, isSuccess) = await db.aidManager.DeleteAid(parameter.WorkerId, parameter.Id);
+                var (error, isSuccess) = await db.WorkerManager.DeleteAid(parameter.WorkerId, parameter.PersianYear, parameter.PersianMonth, parameter.Id);
                 if (!isSuccess)
                 {
                     await db.SaveChangesAsync();
@@ -119,7 +119,7 @@ namespace NeAccounting.ViewModels
             var aid = List.First(t => t.Details.Id == parameter.Id);
 
             using UnitOfWork db = new();
-            var list = await db.aidManager.GetAidList(WorkerId, PageNum);
+            var list = await db.WorkerManager.GetAidList(WorkerId, PageNum);
             var context = new UpdateFinancialAidPage(new UpdateFinancialAidViewModel(_navigationService, _snackbarService)
             {
                 WorkerId = parameter.WorkerId,

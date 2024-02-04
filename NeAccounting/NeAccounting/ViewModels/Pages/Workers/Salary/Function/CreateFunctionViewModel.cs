@@ -34,10 +34,10 @@ namespace NeAccounting.ViewModels
 
 
         [ObservableProperty]
-        private int? _SubmitMonth;
+        private byte? _submitMonth;
 
         [ObservableProperty]
-        private int? _SubmitYear;
+        private byte? _submitYear;
 
         [ObservableProperty]
         private string? _description;
@@ -62,8 +62,8 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.functionManager.GetFunctionList(WorkerId);
+            AuSuBox = await db.WorkerManager.GetWorkers();
+            List = await db.WorkerManager.GetFunctionList(WorkerId);
         }
 
         [RelayCommand]
@@ -105,7 +105,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.functionManager.AddOrUpdateFunctuion(WorkerId, SubmitYear.Value, SubmitMonth.Value, AmountOf, OverTime, Description);
+                var (error, isSuccess) = await db.WorkerManager.AddFunctuion(WorkerId, SubmitYear.Value, SubmitMonth.Value, AmountOf, OverTime, Description);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

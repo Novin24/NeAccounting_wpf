@@ -7,7 +7,7 @@ namespace Domain.NovinEntity.Workers
     {
         #region Navigation
         public ICollection<Salary> Salaries { get; private set; }
-        public ICollection<Function> Functions{ get; private set; }
+        public ICollection<Function> Functions { get; private set; }
         public ICollection<FinancialAid> Aids { get; private set; }
         #endregion
 
@@ -127,6 +127,9 @@ namespace Domain.NovinEntity.Workers
             uint insurancePremium,
             byte dayInMonth)
         {
+            Salaries = new List<Salary>();
+            Functions = new List<Function>();
+            Aids = new List<FinancialAid>();
             FullName = fullName;
             NationalCode = natinalCode;
             Mobile = mobile;
@@ -153,14 +156,14 @@ namespace Domain.NovinEntity.Workers
             Salaries.Add(salary);
             return this;
         }
-        public Worker AddAid(Salary salary)
+        public Worker AddAid(FinancialAid aid)
         {
-            Salaries.Add(salary);
+            Aids.Add(aid);
             return this;
         }
-        public Worker AddFunction(Salary salary)
+        public Worker AddFunction(Function func)
         {
-            Salaries.Add(salary);
+            Functions.Add(func);
             return this;
         }
         #endregion

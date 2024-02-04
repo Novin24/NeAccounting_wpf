@@ -47,15 +47,15 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            AuSuBox = await db.workerManager.GetWorkers();
-            List = await db.functionManager.GetFunctionList(WorkerId, PageNum);
+            AuSuBox = await db.WorkerManager.GetWorkers();
+            List = await db.WorkerManager.GetFunctionList(WorkerId, PageNum);
         }
 
         [RelayCommand]
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            List = await db.functionManager.GetFunctionList(WorkerId, PageNum);
+            List = await db.WorkerManager.GetFunctionList(WorkerId, PageNum);
         }
 
         [RelayCommand]
@@ -92,7 +92,7 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var isSuccess = await db.functionManager.DeleteFunc(parameter.WorkerId, parameter.Id);
+                var isSuccess = await db.WorkerManager.DeleteFunc(parameter.WorkerId, parameter.persianYear, parameter.persianMonth, parameter.Id);
                 if (!isSuccess.isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", isSuccess.error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -117,7 +117,7 @@ namespace NeAccounting.ViewModels
 
             var func = List.First(t => t.Details.Id == parameter.Id);
             using UnitOfWork db = new();
-            var list = await db.functionManager.GetFunctionList(WorkerId,PageNum);
+            var list = await db.WorkerManager.GetFunctionList(WorkerId, PageNum);
 
             var context = new UpdateFunctionPage(new UpdateFunctionViewModel(_navigationService, _snackbarService)
             {

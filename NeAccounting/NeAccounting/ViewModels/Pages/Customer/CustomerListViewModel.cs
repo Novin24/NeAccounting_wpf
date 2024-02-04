@@ -48,14 +48,14 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            List = await db.customerManager.GetCustomerList(string.Empty, string.Empty, string.Empty);
+            List = await db.CustomerManager.GetCustomerList(string.Empty, string.Empty, string.Empty);
         }
 
         [RelayCommand]
         public async Task OnSearchCus()
         {
             using UnitOfWork db = new();
-            List = await db.customerManager.GetCustomerList(Name, NationalCode, Mobile);
+            List = await db.CustomerManager.GetCustomerList(Name, NationalCode, Mobile);
         }
 
         [RelayCommand]
@@ -92,7 +92,7 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var isSuccess = await db.customerManager.DeleteAsync<Guid>(parameter);
+                var isSuccess = await db.CustomerManager.DeleteAsync<Guid>(parameter);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

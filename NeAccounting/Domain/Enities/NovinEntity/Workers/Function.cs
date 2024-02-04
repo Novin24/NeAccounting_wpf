@@ -18,7 +18,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// ماه شمسی
         /// </summary>
-        public int PersianMonth { get; set; }
+        public byte PersianMonth { get; set; }
 
         /// <summary>
         /// تعداد  کاری
@@ -45,7 +45,7 @@ namespace Domain.NovinEntity.Workers
         }
 
         public Function(
-            int persianMonth,
+            byte persianMonth,
             int persianYear,
             byte amountOf,
             byte amountOfOverTime,

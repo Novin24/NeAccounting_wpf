@@ -10,9 +10,9 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using NeApplication.IRepositoryies;
+using System;
 using System.Data;
 using System.Data.Common;
-using System.Globalization;
 
 namespace Infrastructure.Repositories
 {
@@ -245,7 +245,7 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region Salary
-        public async Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId, int persianMonth, int persianYear)
+        public async Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId, byte persianMonth, int persianYear)
         {
             var salarise = await (from w in DbContext.Set<Worker>()
                                                  .AsNoTracking()
@@ -289,7 +289,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<PagedResulViewModel<SalaryViewModel>> GetSalaryList(int? workerId,
-            int? startMonth,
+            byte? startMonth,
             int? startYear,
             int? endMonth,
             int? endYear,
@@ -321,13 +321,13 @@ namespace Infrastructure.Repositories
                     row.LeftOver = ((long)dataReader[nameof(row.LeftOver)]).ToString("N0");
                     row.OverTime = ((long)dataReader[nameof(row.OverTime)]).ToString("N0");
                     row.TotalDebt = ((long)dataReader[nameof(row.TotalDebt)]).ToString("N0");
-                    row.PersianMonth = (int)dataReader[nameof(row.PersianMonth)];
+                    row.PersianMonth = (byte)dataReader[nameof(row.PersianMonth)];
                     row.PersianYear = (int)dataReader[nameof(row.PersianYear)];
                     row.Details = new SalaryDetails()
                     {
                         Id = (int)dataReader[nameof(row.Details.Id)],
                         WorkerId = (int)dataReader[nameof(row.Details.WorkerId)],
-                        PersianMonth = (int)dataReader[nameof(row.PersianMonth)],
+                        PersianMonth = (byte)dataReader[nameof(row.PersianMonth)],
                         PersianYear = (int)dataReader[nameof(row.PersianYear)]
                     };
                     totalCount = ((int)dataReader[("TotalRecord")]).ToString("N0");
@@ -363,7 +363,7 @@ namespace Infrastructure.Repositories
         public async Task<(string error, bool isSuccess)> UpdateSalary(int workerId,
             int salaryId,
             int persianYear,
-            int persianMonth,
+            byte persianMonth,
             uint amountOf,
             uint financialAid,
             uint overTime,
@@ -379,7 +379,7 @@ namespace Infrastructure.Repositories
         {
             var worker = await Entities
                 .Include(s => s.Salaries)
-                .Include(s => s.Functions)
+                .Include(s => s.Functions.Where(t => t.PersianYear == persianYear && t.PersianMonth == persianMonth))
                 .FirstOrDefaultAsync(t => t.Id == workerId);
 
             if (worker == null)
@@ -394,8 +394,7 @@ namespace Infrastructure.Repositories
                 return new("کاربر گرامی برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
             }
 
-            if (!worker.Functions.Any(t =>
-                t.PersianYear == persianYear && t.PersianMonth == persianMonth))
+            if (worker.Functions.Count != 0)
             {
                 return new("کاربر گرامی برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
             }
@@ -428,7 +427,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> AddSalary(int workerId,
-            int persianMonth,
+            byte persianMonth,
             int persianYear,
             uint amountOf,
             uint financialAid,
@@ -492,7 +491,7 @@ namespace Infrastructure.Repositories
 
         }
 
-        public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, int persianMonth,
+        public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, byte persianMonth,
             int persianYear)
         {
             uint aid = 0;
@@ -500,44 +499,48 @@ namespace Infrastructure.Repositories
             uint overtime = 0;
 
             var worker = await TableNoTracking
-                .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
-                .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
+                .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear && s.PersianMonth == persianMonth))
+                .Include(t => t.Functions.Where(f => f.PersianYear == persianYear && f.PersianMonth == persianMonth))
+                .Include(t => t.Aids.Where(a => a.PersianYear == persianYear && a.PersianMonth == persianMonth))
                 .FirstAsync(t => t.Id == workerId);
 
 
-            var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth);
+            if (worker.Salaries.Count != 0)
+            {
+                return new SalaryWorkerViewModel() { Error = "برای پرسنل مورد نظر در این ماه فیش حقوقی صادر شده!!!", Success = false };
+            }
 
-            //if (salary == null || salary.Functions.Count == 0)
-            //    return new SalaryWorkerViewModel() { Error = "برای پرسنل مورد نظر کارکردی در این ماه ثبت نشده !!!", Success = false };
-
-
-            //if (salary.Aids.Count != 0)
-            //{
-            //    aid = (uint)salary.Aids.Sum(t => t.AmountOf);
-            //}
-
-            //var func = salary.Functions.First();
+            if (worker.Functions.Count == 0)
+                return new SalaryWorkerViewModel() { Error = "برای پرسنل مورد نظر کارکردی در این ماه ثبت نشده !!!", Success = false };
 
 
-            //if (worker.ShiftStatus == Shift.ByMounth)
-            //{
-            //    if (func.AmountOf == worker.DayInMonth)
-            //    {
-            //        ssalary = worker.Salary;
-            //    }
-            //    else
-            //    {
-            //        ssalary = func.AmountOf * (worker.Salary / worker.DayInMonth);
-            //    }
-            //    overtime = func.AmountOfOverTime * worker.OverTimeSalary;
+            if (worker.Aids.Count != 0)
+            {
+                aid = (uint)worker.Aids.Sum(t => t.AmountOf);
+            }
 
-            //}
-            //else
-            //{
-            //    ssalary = func.AmountOf * worker.ShiftSalary;
-            //    overtime = func.AmountOfOverTime * worker.ShiftOverTimeSalary;
+            var func = worker.Functions.First();
 
-            //}
+
+            if (worker.ShiftStatus == Shift.ByMounth)
+            {
+                if (func.AmountOf == worker.DayInMonth)
+                {
+                    ssalary = worker.Salary;
+                }
+                else
+                {
+                    ssalary = func.AmountOf * (worker.Salary / worker.DayInMonth);
+                }
+                overtime = func.AmountOfOverTime * worker.OverTimeSalary;
+
+            }
+            else
+            {
+                ssalary = func.AmountOf * worker.ShiftSalary;
+                overtime = func.AmountOfOverTime * worker.ShiftOverTimeSalary;
+
+            }
             return new SalaryWorkerViewModel()
             {
                 PersonelId = worker.PersonnelId,
@@ -551,75 +554,32 @@ namespace Infrastructure.Repositories
             };
         }
         #endregion
-    }
 
-
-    public class FunctionManager(NovinDbContext context) : Repository<Function>(context), IFunctionManager
-    {
         #region Function
-        public async Task<(string error, bool isSuccess)> AddOrUpdateFunctuion(
+        public async Task<(string error, bool isSuccess)> AddFunctuion(
             int workerId,
             int persianYear,
-            int persianMonth,
+            byte persianMonth,
             byte amountOf,
             byte amountOfOverTime,
             string? description)
         {
-
-
-            var worker = await Entities
-                //.Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
-                //.ThenInclude(c => c.Functions)
+            var worker = await Entities.Include(w => w.Functions.Where(c => c.PersianMonth == persianMonth && c.PersianYear == persianYear))
                 .FirstOrDefaultAsync(t => t.Id == workerId);
 
-            //if (worker == null)
-            //    return new("کارگر مورد نظر یافت نشد!!!!", false);
-
-            //var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth);
-
-
-            //if (salary != null)
-            //{
-            //    if (salary.Functions.Count != 0)
-            //    {
-            //        return new("برای این پرسنل در این ماه کارکرد ثبت شده !!!", false);
-            //    }
-
-            //    salary.AddFunction(
-            //        new Function(
-            //            submitDate,
-            //            amountOf,
-            //            amountOfOverTime,
-            //            description));
-            //}
-            //else
-            //{
-            //    worker.AddSalary(
-            //        new Salary(
-            //            submitDate,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            string.Empty)
-            //        .AddFunction(
-            //            new Function(
-            //                submitDate,
-            //                amountOf,
-            //                amountOfOverTime,
-            //                description)));
-            //}
-
+            if (worker == null)
+            {
+                return new("کارگر مورد نظر یافت نشد!!!", false);
+            }
+            if (worker.Functions.Count != 0)
+            {
+                return new("برای این پرسنل در این ماه کارکرد ثبت شده !!!", false);
+            }
+            worker.AddFunction(new Function(persianMonth, persianYear, amountOf, amountOfOverTime, description));
             try
             {
                 Entities.Update(worker);
+
             }
             catch (Exception ex)
             {
@@ -660,6 +620,8 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> UpdateFunc(
            int workerId,
+           int persianYear,
+           byte persianMonth,
            int funcId,
            byte amountOf,
            byte overTime,
@@ -667,21 +629,29 @@ namespace Infrastructure.Repositories
         {
 
             var worker = await Entities
-                //.Include(t => t.Salaries.Where(s => s.Id == salaryId))
-                //.ThenInclude(c => c.Functions.Where(c => c.Id == funcId))
+                .Include(c => c.Salaries)
+                .Include(c => c.Functions)
                 .FirstOrDefaultAsync(t => t.Id == workerId);
 
-            //if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Functions.Count == 0)
-            //    return new("کارگر مورد نظر یافت نشد!!!!", false);
+            if (worker == null)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
 
-            //if (worker.Salaries.First().AmountOf != 0)
-            //{
-            //    return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
-            //}
-            //var func = worker.Salaries.First().Functions.First();
-            //func.AmountOf = amountOf;
-            //func.AmountOfOverTime = overTime;
-            //func.Description = description;
+            var func = worker.Functions.FirstOrDefault(t => t.Id == funcId);
+
+            if (func == null)
+                return new("کارکرد مورد نظر یافت نشد!!!!", false);
+
+            if (worker.Functions.FirstOrDefault(t => t.PersianYear == persianYear && t.PersianMonth == persianMonth) != null)
+                return new("برای کارگر مورد نظر در این ماه کارکرد ثبت شده!!!!", false);
+
+            if (worker.Salaries.FirstOrDefault(t => t.PersianYear == persianYear && t.PersianMonth == persianMonth) != null)
+                return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
+
+            func.PersianMonth = persianMonth;
+            func.PersianYear = persianYear;
+            func.AmountOf = amountOf;
+            func.AmountOfOverTime = overTime;
+            func.Description = description;
 
             try
             {
@@ -694,29 +664,33 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int aidId)
+        public async Task<(string error, bool isSuccess)> DeleteFunc(int workerId,
+            int persianYear,
+            byte persianMonth,
+            int funcId)
         {
             var worker = await Entities
-               //.Include(t => t.Salaries.Where(s => s.Id == salaryId))
-               //.ThenInclude(c => c.Functions.Where(c => c.Id == aidId))
+               .Include(t => t.Salaries.Where(s => s.PersianMonth == persianMonth && s.PersianYear == persianYear))
+               .Include(c => c.Functions.Where(c => c.Id == funcId))
                .FirstOrDefaultAsync(t => t.Id == workerId);
 
-            //if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Functions.Count == 0)
-            //{
-            //    return new("کارگر مورد نظر یافت نشد!!!!", false);
-            //}
+            if (worker == null || worker.Functions.Count == 0)
+            {
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+            }
 
-            //if (worker.Salaries.First().AmountOf != 0)
-            //{
-            //    return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
-            //}
+            var func = worker.Functions.FirstOrDefault(t => t.Id == funcId);
 
-            //var func = worker.Salaries.First().Functions;
-            //func.Remove(worker.Salaries.First().Functions.First());
+            if (func == null)
+                return new("کارکرد مورد نظر یافت نشد!!!!", false);
+
+            if (worker.Salaries.FirstOrDefault(t => t.PersianYear == persianYear && t.PersianMonth == persianMonth) != null)
+                return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
+
+            worker.Functions.Remove(func);
             try
             {
                 Entities.Update(worker);
-                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -725,70 +699,28 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
         #endregion
-    }
 
-    public class AidManager(NovinDbContext context) : Repository<FinancialAid>(context), IAidManager
-    {
         #region Aid
-        public async Task<(string error, bool isSuccess)> AddOrUpdateAid(
+        public async Task<(string error, bool isSuccess)> AddAid(
             int workerId,
             int persianYear,
-            int persianMonth,
+            byte persianMonth,
             uint amountOf,
             string? description)
         {
-
             var worker = await Entities
-                //.Include(t => t.Salaries.Where(s => s.PersianYear == persianYear))
-                //.ThenInclude(c => c.Aids)
-                .FirstOrDefaultAsync(t => t.Id == workerId);
+               .FirstOrDefaultAsync(t => t.Id == workerId);
 
-            //if (worker == null)
-            //    return new("کارگر مورد نظر یافت نشد!!!!", false);
+            if (worker == null)
+            {
+                return new("کارگر مورد نظر یافت نشد!!!", false);
+            }
 
-            //var salary = worker.Salaries.FirstOrDefault(t => t.PersianMonth == persianMonth);
-
-
-            //if (salary != null)
-            //{
-            //    if (salary.AmountOf != 0)
-            //    {
-            //        return new("کاربر گرامی پس از صدور فیش حقوقی امکان ثبت مساعده در این ماه وجود ندارد !!!", false);
-            //    }
-
-            //    salary.AddFinancialAid(
-            //        new FinancialAid(
-            //            submitDate,
-            //            amountOf,
-            //            description));
-            //}
-            //else
-            //{
-            //    worker.AddSalary(
-            //        new Salary(
-            //            submitDate,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            uint.MinValue,
-            //            string.Empty)
-            //        .AddFinancialAid(
-            //            new FinancialAid(
-            //                submitDate,
-            //                amountOf,
-            //                description)));
-            //}
-
+            worker.AddAid(new FinancialAid(persianMonth, persianYear, amountOf, description));
             try
             {
                 Entities.Update(worker);
+
             }
             catch (Exception ex)
             {
@@ -799,27 +731,32 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> UpdateAid(
             int workerId,
+            int persianYear,
+            byte persianMonth,
             int aidId,
             uint amount,
             string? description)
         {
-
             var worker = await Entities
-                //.Include(t => t.Salaries.Where(s => s.Id == salaryId))
-                //.ThenInclude(c => c.Aids.Where(c => c.Id == aidId))
+                .Include(c => c.Salaries.Where(t => t.PersianMonth == persianMonth && t.PersianYear == persianYear))
+                .Include(c => c.Aids.Where(c => c.Id == aidId))
                 .FirstOrDefaultAsync(t => t.Id == workerId);
 
-            //if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Aids.Count == 0)
-            //    return new("کارگر مورد نظر یافت نشد!!!!", false);
+            if (worker == null)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
 
-            //if (worker.Salaries.First().AmountOf != 0)
-            //{
-            //    return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
-            //}
+            var aid = worker.Aids.FirstOrDefault(t => t.Id == aidId);
 
-            //var aid = worker.Salaries.First().Aids.First();
-            //aid.AmountOf = amount;
-            //aid.Description = description;
+            if (aid == null)
+                return new("مساعده مورد نظر یافت نشد!!!!", false);
+
+            if (worker.Salaries.Count != 0)
+                return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
+
+            aid.PersianMonth = persianMonth;
+            aid.PersianYear = persianYear;
+            aid.AmountOf = amount;
+            aid.Description = description;
 
             try
             {
@@ -863,27 +800,32 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<(string error, bool isSuccess)> DeleteAid(int workerId, int aidId)
+        public async Task<(string error, bool isSuccess)> DeleteAid(int workerId,
+            int persianYear,
+            byte persianMonth,
+            int aidId)
         {
-            var worker = await Entities
-               //.Include(t => t.Salaries.Where(s => s.Id == salaryId))
-               //.ThenInclude(c => c.Aids.Where(c => c.Id == aidId))
-               .FirstOrDefaultAsync(t => t.Id == workerId);
 
-            //if (worker == null || worker.Salaries.Count == 0 || worker.Salaries.First().Aids.Count == 0)
-            //{
-            //    return new("کارگر مورد نظر یافت نشد!!!!", false);
-            //}
-            //if (worker.Salaries.First().AmountOf != 0)
-            //{
-            //    return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
-            //}
-            //var aid = worker.Salaries.First().Aids.First();
-            //worker.Salaries.First().Aids.Remove(aid);
+            var worker = await Entities
+                .Include(c => c.Salaries.Where(t => t.PersianMonth == persianMonth && t.PersianYear == persianYear))
+                .Include(c => c.Aids.Where(c => c.Id == aidId))
+                .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+
+            var aid = worker.Aids.FirstOrDefault(t => t.Id == aidId);
+
+            if (aid == null)
+                return new("مساعده مورد نظر یافت نشد!!!!", false);
+
+            if (worker.Salaries.Count != 0)
+                return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
+
+            worker.Aids.Remove(aid);
             try
             {
                 Entities.Update(worker);
-                await DbContext.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {

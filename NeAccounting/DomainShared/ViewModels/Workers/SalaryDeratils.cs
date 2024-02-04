@@ -13,6 +13,6 @@
         public int WorkerId { get; set; }
 
         public int PersianYear { get; set; }
-        public int PersianMonth { get; set; }
+        public byte PersianMonth { get; set; }
     }
 }

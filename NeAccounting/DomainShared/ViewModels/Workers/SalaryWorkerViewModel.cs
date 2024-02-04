@@ -16,7 +16,7 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// ماه پرداخت
         /// </summary>
-        public int SubmitMonth{ get; set; }
+        public byte SubmitMonth { get; set; }
         
         /// <summary>
         /// سال پرداخت

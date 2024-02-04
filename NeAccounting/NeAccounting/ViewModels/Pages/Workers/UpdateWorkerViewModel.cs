@@ -179,7 +179,7 @@ namespace NeAccounting.ViewModels
             }
 
             using UnitOfWork db = new();
-            var (error, isSuccess) = await db.workerManager.Update(
+            var (error, isSuccess) = await db.WorkerManager.Update(
                        Id,
                        FullName,
                        NationalCode,

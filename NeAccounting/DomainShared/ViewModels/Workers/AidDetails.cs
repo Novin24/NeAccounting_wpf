@@ -6,6 +6,11 @@
         /// شناسه مساعده
         /// </summary>
         public int Id { get; set; }
+
+
+        public byte PersianMonth { get; set; }
+
+        public int PersianYear { get; set; }
         /// <summary>
         /// شناسه کارگر
         /// </summary>

@@ -105,7 +105,7 @@ namespace NeAccounting.Views.Pages
             txt_Othere.IsEnabled = true;
         }
 
-        private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<int?> e)
+        private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
         {
             if (ViewModel.WorkerId == -1)
                 return;

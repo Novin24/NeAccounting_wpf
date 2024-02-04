@@ -30,7 +30,8 @@ namespace NeAccounting.Views.Pages
                 return;
             }
             int id = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
-            await ReloadSalary(id);
+            ViewModel.WorkerId = id;
+            await ReloadSalary();
         }
 
         private void SetTotalPlusPrice()
@@ -98,18 +99,17 @@ namespace NeAccounting.Views.Pages
             }
         }
 
-        //private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
-        //{
-        //    if (!IsInitialized)
-        //    {
-        //        return;
-        //    }
-        //    await ReloadSalary(ViewModel.WorkerId);
-        //}
-
-        private async Task ReloadSalary(int id)
+        private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
         {
-            ViewModel.WorkerId = id;
+            if (!IsInitialized)
+            {
+                return;
+            }
+            await ReloadSalary();
+        }
+
+        private async Task ReloadSalary()
+        {
             if (!await ViewModel.OnSelect())
             {
                 txt_Aid.Value = txt_Insurance.Value = txt_Tax.Value = txt_loanInstallment.Value = txt_Othere.Value = txt_amountOf.Value =
@@ -143,9 +143,6 @@ namespace NeAccounting.Views.Pages
             txt_Othere.IsEnabled = true;
         }
 
-        //private void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<int?> e)
-        //{
 
-        //}
     }
 }

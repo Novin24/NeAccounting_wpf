@@ -65,7 +65,7 @@ namespace NeApplication.IRepositoryies
         #region Salary
 
         Task<(string error, bool isSuccess)> AddSalary(int workerId,
-            int submitMonth,
+            byte submitMonth,
             int submitYaer,
             uint amountOf,
             uint financialAid,
@@ -84,7 +84,7 @@ namespace NeApplication.IRepositoryies
         Task<(string error, bool isSuccess)> UpdateSalary(int workerId,
             int salaryId,
             int persianYear,
-            int persianMonth,
+            byte persianMonth,
             uint amountOf,
             uint financialAid,
             uint overTime,
@@ -99,12 +99,12 @@ namespace NeApplication.IRepositoryies
             string? description);
 
 
-        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, int submitMonth, int submintYear);
+        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, byte submitMonth, int submintYear);
 
-        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId, int persianMonth, int persianYear);
+        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId, byte persianMonth, int persianYear);
 
         Task<PagedResulViewModel<SalaryViewModel>> GetSalaryList(int? workerId,
-             int? startMonth,
+             byte? startMonth,
              int? startYear,
              int? endMonth,
              int? endYear,
@@ -113,20 +113,46 @@ namespace NeApplication.IRepositoryies
 
         Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId);
         #endregion
-    }
 
-    public interface IFunctionManager : IRepository<Function>
-    {
-        Task<(string error, bool isSuccess)> AddOrUpdateFunctuion(
+        #region func
+        Task<(string error, bool isSuccess)> AddAid(
             int workerId,
             int persianYear,
-            int persianMonth,
-            byte amountOf,
-            byte amountOfOverTime,
+            byte persianMonth,
+            uint amountOf,
             string? description);
+
+        Task<(string error, bool isSuccess)> UpdateAid(
+            int workerId,
+            int persianYear,
+            byte persianMonth,
+            int aidId,
+            uint amountOf,
+            string? description);
+
+        Task<List<AidViewModel>> GetAidList(int workerId,
+             int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
+
+        Task<(string error, bool isSuccess)> DeleteAid(int workerId,
+            int persianYear,
+            byte persianMonth,
+            int aidId);
+        #endregion
+
+        #region aid
+        Task<(string error, bool isSuccess)> AddFunctuion(
+           int workerId,
+           int persianYear,
+           byte persianMonth,
+           byte amountOf,
+           byte amountOfOverTime,
+           string? description);
 
         Task<(string error, bool isSuccess)> UpdateFunc(
             int workerId,
+            int persianYear,
+            byte persianMonth,
             int funcId,
             byte amountOf,
             byte overTime,
@@ -136,29 +162,10 @@ namespace NeApplication.IRepositoryies
              int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 
-        Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int aidId);
-
-    }
-
-    public interface IAidManager : IRepository<FinancialAid>
-    {
-        Task<(string error, bool isSuccess)> AddOrUpdateAid(
-            int workerId,
+        Task<(string error, bool isSuccess)> DeleteFunc(int workerId,
             int persianYear,
-            int persianMonth,
-            uint amountOf,
-            string? description);
-
-        Task<(string error, bool isSuccess)> UpdateAid(
-            int workerId,
-            int aidId,
-            uint amountOf,
-            string? description);
-
-        Task<List<AidViewModel>> GetAidList(int workerId,
-             int pageNum = 0,
-            int pageCount = NeAccountingConstants.PageCount);
-
-        Task<(string error, bool isSuccess)> DeleteAid(int workerId, int aidId);
+            byte persianMonth,
+            int aidId);
+        #endregion
     }
 }

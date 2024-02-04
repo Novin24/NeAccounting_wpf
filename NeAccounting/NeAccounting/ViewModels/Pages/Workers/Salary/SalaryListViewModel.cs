@@ -23,13 +23,13 @@ namespace NeAccounting.ViewModels
         private string _totalCount;
 
         [ObservableProperty]
-        private int? _startMonth;
+        private byte? _startMonth;
 
         [ObservableProperty]
         private int? _startYear;
 
         [ObservableProperty]
-        private int? _endMonth;
+        private byte? _endMonth;
 
         [ObservableProperty]
         private int? _endYear;
@@ -60,8 +60,8 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            AuSuBox = await db.workerManager.GetWorkers();
-            var salaries = await db.workerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear);
+            AuSuBox = await db.WorkerManager.GetWorkers();
+            var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear);
             TotalCount = salaries.TotalCount;
             List = salaries.Items;
         }
@@ -70,7 +70,7 @@ namespace NeAccounting.ViewModels
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            var salaries = await db.workerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear);
+            var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear);
             TotalCount = salaries.TotalCount;
             List = salaries.Items;
         }
@@ -109,7 +109,7 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var isSuccess = await db.workerManager.DeleteSalary(parameter.WorkerId, parameter.Id);
+                var isSuccess = await db.WorkerManager.DeleteSalary(parameter.WorkerId, parameter.Id);
                 if (!isSuccess.isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", isSuccess.error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -135,7 +135,7 @@ namespace NeAccounting.ViewModels
             var service = _navigationService.GetNavigationControl();
 
             using UnitOfWork db = new();
-            var s = await db.workerManager.GetSalaryDetailBySalaryId(parameter.WorkerId, parameter.Id, parameter.PersianMonth, parameter.PersianYear);
+            var s = await db.WorkerManager.GetSalaryDetailBySalaryId(parameter.WorkerId, parameter.Id, parameter.PersianMonth, parameter.PersianYear);
 
             var context = new UpdateSalaryPage(new UpdateSalaryViewModel(_snackbarService, _navigationService)
             {

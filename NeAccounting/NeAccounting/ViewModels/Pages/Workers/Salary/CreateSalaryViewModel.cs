@@ -19,7 +19,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     private int? _personelId;
 
     [ObservableProperty]
-    private int? _submitMonth;
+    private byte? _submitMonth;
 
     [ObservableProperty]
     private int? _submitYear;
@@ -132,7 +132,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
 
         using (UnitOfWork db = new())
         {
-            var (error, isSuccess) = await db.workerManager.AddSalary(
+            var (error, isSuccess) = await db.WorkerManager.AddSalary(
                    WorkerId,
                    SubmitMonth.Value,
                    SubmitYear.Value,
@@ -171,7 +171,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     public async void OnNavigatedTo()
     {
         using UnitOfWork db = new();
-        AuSuBox = await db.workerManager.GetWorkers();
+        AuSuBox = await db.WorkerManager.GetWorkers();
     }
 
     public void OnNavigatedFrom()
@@ -180,25 +180,25 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
 
     public async Task<bool> OnSelect()
     {
-        if (WorkerId == -1)
+        if (WorkerId == -1 || SubmitMonth == null || SubmitYear == null)
         {
             return false;
         }
         using UnitOfWork db = new();
-        var Worker = await db.workerManager.GetWorker(WorkerId);
-        //var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
+        var worker = await db.WorkerManager.GetWorker(WorkerId);
+        var details = await db.WorkerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitMonth.Value, SubmitYear.Value);
 
-        //if (!details.Success)
-        //{
-        //    _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-        //    return false;
-        //}
-        //ShiftStatus = Worker.Shift;
-        //Insurance = details.Insurance;
-        //AmountOf = details.AmountOf;
-        //OverTime = details.OverTime;
-        //PersonelId = details.PersonelId;
-        //FinancialAid = details.FinancialAid;
+        if (!details.Success)
+        {
+            _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
+        ShiftStatus = worker.Shift;
+        Insurance = details.Insurance;
+        AmountOf = details.AmountOf;
+        OverTime = details.OverTime;
+        PersonelId = details.PersonelId;
+        FinancialAid = details.FinancialAid;
 
         return true;
     }

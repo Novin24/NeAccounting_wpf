@@ -24,7 +24,7 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
     private string _personnelName;
 
     [ObservableProperty]
-    private int? _submitMonth;
+    private byte? _submitMonth;
 
     [ObservableProperty]
     private int? _submitYear;
@@ -133,11 +133,11 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
 
         using (UnitOfWork db = new())
         {
-            var (error, isSuccess) = await db.workerManager.UpdateSalary(
+            var (error, isSuccess) = await db.WorkerManager.UpdateSalary(
                    WorkerId,
                    SalaryId,
-                   SubmitMonth.Value,
                    SubmitYear.Value,
+                   SubmitMonth.Value,
                    AmountOf,
                    FinancialAid,
                    OverTime,
@@ -186,7 +186,7 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
             return false;
         }
         using UnitOfWork db = new();
-        var Worker = await db.workerManager.GetWorker(WorkerId);
+        var Worker = await db.WorkerManager.GetWorker(WorkerId);
         //var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
 
         //if (!details.Success)
