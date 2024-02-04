@@ -84,6 +84,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
+                                    <ColumnDefinition Width=".5*"/>
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Margin="4 4 20 0 ">
@@ -121,12 +122,13 @@
                                                 FontFamily="Calibri"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="1"
+                                
+                                <StackPanel Grid.Column="2"
                                             Margin="4 4 0 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
-                                               Text="پورسانت یا تخفیف"
+                                               Text="پورسانت "
                                                Margin="2 11 0 0 " />
                                     <ui:NumberBox TextAlignment="Center"
                                                   FontFamily="Calibri"
@@ -223,6 +225,7 @@
                                     <ui:NumberBox x:Name="txt_Unit_price"
                                                   TextAlignment="Center"
                                                   ClearButtonEnabled="False"
+                                                  IsEnabled="False"
                                                   SpinButtonPlacementMode="Hidden"
                                                   FontFamily="Calibri"
                                                   Margin="0 2 0 0" />
@@ -236,6 +239,7 @@
                                                HorizontalAlignment="Center" />
                                     <ui:NumberBox x:Name="txt_total_price"
                                                   TextAlignment="Center"
+                                                  IsEnabled="False"
                                                   ClearButtonEnabled="False"
                                                   SpinButtonPlacementMode="Hidden"
                                                   FontFamily="Calibri"
