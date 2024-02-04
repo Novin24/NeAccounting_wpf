@@ -111,16 +111,43 @@
                                 <StackPanel Grid.Column="0"
                                             Margin="4 4 10 0 ">
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="15"
-                                               Text="فروشنده"
-                                               Margin="2 0 0 0 " />
+
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="15"
+                                                   Text="فروشنده"
+                                                   Margin="2 11 0 0 " />
+                                        <StackPanel
+                                                DockPanel.Dock="Right">
+                                            <TextBlock Text="F3"
+                                                       TextAlignment="Center"
+                                                       FontSize="8"/>
+                                            <Button Padding="1 0 "
+                                                FontSize="12"
+                                                FontFamily="Calibri">
+
+                                                <ui:SymbolIcon Symbol="QrCode20" />
+
+                                            </Button>
+                                        </StackPanel>
+                                        <StackPanel Margin="0 0 5 0" DockPanel.Dock="Right">
+                                            <TextBlock Text="F4"
+                                                       TextAlignment="Center"
+                                                       FontSize="8"/>
+                                            <Button Padding="1 0 "
+                                                FontFamily="Calibri">
+
+                                                <ui:SymbolIcon Symbol="PersonAdd20" />
+
+                                            </Button>
+                                        </StackPanel>
+                                    </DockPanel>
                                     <ui:TextBox TextAlignment="Center"
                                                 FontFamily="Calibri"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
-                                            Margin="10 4 10 0 ">
+                                            Margin="10 16 10 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
@@ -131,7 +158,7 @@
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="2"
-                                            Margin="10 4 10 0 ">
+                                            Margin="10 16 10 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
@@ -148,26 +175,27 @@
                                 </StackPanel>
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
                                                       Grid.Column="3"
-                                                      LabelName="تاریخ" />
+                                                      LabelName="تاریخ"
+                                                      Margin="0 12 0 0"/>
 
-                                <Line Grid.ColumnSpan="7"
+                                <Line Grid.ColumnSpan="4"
                                       X1="0"
                                       Y1="7"
-                                      X2="600"
+                                      X2="970"
                                       Y2="7"
                                       Margin="0 85 0 0"
-                                      StrokeThickness="8"
+                                      StrokeThickness="3"
                                       VerticalAlignment="Bottom"
                                       HorizontalAlignment="Center"
-                                      Fill="#FFB5ACAC"
-                                      Stroke="#FFCCCCCC"
+                                      Fill="White"
+                                      Stroke="DimGray"
                                       Height="9" />
                             </Grid>
                             <Grid Grid.Row="1"
                                   Margin="0 0 0 16">
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".32*" />
+                                    <ColumnDefinition Width=".23*" />
                                     <ColumnDefinition Width=".7*" />
                                     <ColumnDefinition Width=".46*" />
                                     <ColumnDefinition Width=".5*" />
@@ -180,14 +208,8 @@
                                             Margin="0 14 2 0 ">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
-                                               Text="ردیف"
+                                               Text="#"
                                                HorizontalAlignment="Center" />
-                                    <ui:NumberBox x:Name="txt_Id"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  TextAlignment="Center"
-                                                  FontFamily="Calibri"
-                                                  Margin="0 2 0 0"
-                                                  ClearButtonEnabled="False" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
                                             Margin="2 14 2 0 ">

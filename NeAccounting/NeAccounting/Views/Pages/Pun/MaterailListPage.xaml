@@ -59,7 +59,7 @@
                         <RowDefinition Height="*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <ui:TextBlock Margin="15,0"
+                    <ui:TextBlock Margin="55,0"
                         Padding="0,20,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Center"
