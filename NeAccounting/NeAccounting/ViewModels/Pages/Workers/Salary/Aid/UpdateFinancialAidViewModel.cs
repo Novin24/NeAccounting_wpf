@@ -29,16 +29,16 @@ namespace NeAccounting.ViewModels
         private int _workerId = -1;
 
         [ObservableProperty]
-        private int _salaryId = -1;
+        private byte? _submitMonth;
+
+        [ObservableProperty]
+        private int? _submitYear;
 
         [ObservableProperty]
         private int _aidId = -1;
 
         [ObservableProperty]
         private uint _amountOf = 0;
-
-        [ObservableProperty]
-        private DateTime _payDate = DateTime.Now;
 
         [ObservableProperty]
         private string? _description;
@@ -66,9 +66,15 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
+            if (SubmitMonth == null || SubmitYear == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پرداخت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.aidManager.UpdateAid(WorkerId, SalaryId, AidId, AmountOf, Description);
+                var (error, isSuccess) = await db.WorkerManager.UpdateAid(WorkerId, SubmitYear.Value, SubmitMonth.Value, AidId, AmountOf, Description);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

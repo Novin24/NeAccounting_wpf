@@ -33,7 +33,7 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// ماه مربوط به کارکرد
         /// </summary>
-        public int PersianMonth{ get; set; }
+        public byte PersianMonth { get; set; }
 
         /// <summary>
         /// سال مربوط به کارکرد

@@ -12,14 +12,9 @@ namespace Domain.NovinEntity.Workers
 
         #region Property
         /// <summary>
-        /// تاریخ پرداخت
-        /// </summary>
-        public DateTime SubmitDate { get; set; }
-
-        /// <summary>
         /// ماه شمسی فیش
         /// </summary>
-        public int PersianMonth { get; set; }
+        public byte PersianMonth { get; set; }
 
         /// <summary>
         /// سال شمسی فیش حقوقی
@@ -94,7 +89,8 @@ namespace Domain.NovinEntity.Workers
         }
 
         public Salary(
-            DateTime submitDate,
+            int persianYear,
+            byte persianMonth,
             uint amountOf,
             uint financialAid,
             uint overTime,
@@ -108,10 +104,8 @@ namespace Domain.NovinEntity.Workers
             uint leftOver,
             string? description)
         {
-            PersianCalendar pc = new();
-            PersianMonth = pc.GetMonth(submitDate);
-            PersianYear = pc.GetYear(submitDate);
-            SubmitDate = submitDate;
+            PersianMonth = persianMonth;
+            PersianYear = persianYear;
             AmountOf = amountOf;
             FinancialAid = financialAid;
             OverTime = overTime;

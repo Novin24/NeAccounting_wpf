@@ -14,13 +14,9 @@ namespace Infrastructure.UnitOfWork
 
         private IWorkerManager _workerManager;
 
-        private IFunctionManager _functionManager;
-
-        private IAidManager _aidManager;
-
         private IUnitManager _unitManager;
 
-        public ICustomerManager customerManager
+        public ICustomerManager CustomerManager
         {
             get
             {
@@ -32,7 +28,7 @@ namespace Infrastructure.UnitOfWork
             }
         }
 
-        public IMaterialManager materialManager
+        public IMaterialManager MaterialManager
         {
             get
             {
@@ -44,7 +40,7 @@ namespace Infrastructure.UnitOfWork
             }
         }
 
-        public IUnitManager unitManager
+        public IUnitManager UnitManager
         {
             get
             {
@@ -56,7 +52,7 @@ namespace Infrastructure.UnitOfWork
             }
         }
 
-        public IWorkerManager workerManager
+        public IWorkerManager WorkerManager
         {
             get
             {
@@ -65,28 +61,7 @@ namespace Infrastructure.UnitOfWork
             }
         }
 
-        public IFunctionManager functionManager
-        {
-            get
-            {
-                _functionManager ??= new FunctionManager(NovinDb);
-                return _functionManager;
-            }
-        }
-
-        public IAidManager aidManager
-        {
-            get
-            {
-                _aidManager ??= new AidManager(NovinDb);
-                return _aidManager;
-            }
-        }
-
-        public async void Dispose()
-        {
-            await NovinDb.DisposeAsync();
-        }
+        public async void Dispose() => await NovinDb.DisposeAsync();
 
         public async Task SaveChangesAsync()
         {

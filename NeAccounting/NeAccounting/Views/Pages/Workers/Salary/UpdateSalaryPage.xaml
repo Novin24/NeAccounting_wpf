@@ -159,7 +159,7 @@
                                                        FontFamily="Calibri" />
                                 </StackPanel>
 
-                                <nu:PersianDatePicker FontSize="14"
+                                <nu:MonthPicker FontSize="14"
                                                       Grid.Column="1"
                                                       Grid.Row="1"
                                                       FlowDirection="LeftToRight"
@@ -168,7 +168,8 @@
                                                       Margin="0 8 0 0"
                                                       LabelName="تاریخ پرداخت"
                                                       DateChosen="dtp_DateChosen"
-                                                      SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}" />
+                                                      SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}" 
+                                                      SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
 
 
                                 <nu:MoneyPack Grid.Row="2"

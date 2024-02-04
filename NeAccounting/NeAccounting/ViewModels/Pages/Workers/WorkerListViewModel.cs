@@ -53,7 +53,7 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            List = await db.workerManager.GetWorkers(
+            List = await db.WorkerManager.GetWorkers(
                         FullName,
                         JobTitle,
                         NationalCode,
@@ -67,7 +67,7 @@ namespace NeAccounting.ViewModels
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            List = await db.workerManager.GetWorkers(
+            List = await db.WorkerManager.GetWorkers(
                         FullName,
                         JobTitle,
                         NationalCode,
@@ -111,7 +111,7 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var isSuccess = await db.workerManager.DeleteAsync(parameter);
+                var isSuccess = await db.WorkerManager.DeleteAsync(parameter);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -140,7 +140,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                asuBox = await db.unitManager.GetUnits();
+                asuBox = await db.UnitManager.GetUnits();
             }
 
             var context = new UpdateWorkerPage(new UpdateWorkerViewModel(_navigationService, _snackbarService)

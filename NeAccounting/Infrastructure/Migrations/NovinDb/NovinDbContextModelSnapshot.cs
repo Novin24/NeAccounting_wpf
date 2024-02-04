@@ -356,10 +356,7 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("PayDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte>("PersanMonth")
+                    b.Property<byte>("PersianMonth")
                         .HasColumnType("tinyint");
 
                     b.Property<int>("PersianYear")
@@ -370,7 +367,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersanMonth");
+                    b.HasIndex("PersianMonth");
 
                     b.HasIndex("PersianYear");
 
@@ -417,21 +414,18 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte>("PersanMonth")
+                    b.Property<byte>("PersianMonth")
                         .HasColumnType("tinyint");
 
                     b.Property<int>("PersianYear")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("SubmitDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("WorkerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PersanMonth");
+                    b.HasIndex("PersianMonth");
 
                     b.HasIndex("PersianYear");
 
@@ -499,17 +493,14 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<long>("OverTime")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("PersianMonth")
-                        .HasColumnType("int");
+                    b.Property<byte>("PersianMonth")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("PersianYear")
                         .HasColumnType("int");
 
                     b.Property<long>("RightHousingAndFood")
                         .HasColumnType("bigint");
-
-                    b.Property<DateTime>("SubmitDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<long>("Tax")
                         .HasColumnType("bigint");

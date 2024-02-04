@@ -41,14 +41,14 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            List = await db.materialManager.GetMaterails(string.Empty, string.Empty);
+            List = await db.MaterialManager.GetMaterails(string.Empty, string.Empty);
         }
 
         [RelayCommand]
         private async Task OnSearchMaterial()
         {
             using UnitOfWork db = new();
-            List = await db.materialManager.GetMaterails(PunName, Serial);
+            List = await db.MaterialManager.GetMaterails(PunName, Serial);
         }
 
         [RelayCommand]
@@ -85,7 +85,7 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var isSuccess = await db.materialManager.DeleteAsync(parameter);
+                var isSuccess = await db.MaterialManager.DeleteAsync(parameter);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -114,7 +114,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                asuBox = await db.unitManager.GetUnits();
+                asuBox = await db.UnitManager.GetUnits();
             }
 
             var context = new UpdateMaterailPage(new UpdateMaterailViewModel(_snackbarService, _navigationService)

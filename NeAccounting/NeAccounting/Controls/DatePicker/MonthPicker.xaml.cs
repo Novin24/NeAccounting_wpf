@@ -28,11 +28,11 @@ namespace NeAccounting.Controls
 
         //اطلاعات تاریخ امروز 
         private readonly int currentYear = 1387;
-        private readonly int currentMonth = 10;
+        private readonly byte currentMonth = 10;
 
         //اطلاعات تاریخ انتخابی 
         private static int? selectedYea;
-        private static int? selectedMonth;
+        private static byte? selectedMonth;
         #endregion
 
         #region LableName
@@ -79,6 +79,7 @@ namespace NeAccounting.Controls
 
             if (args.NewValue == args.OldValue)
                 return;
+            IsCalculated = false;
             selectedYea = (int?)args.NewValue;
             mp.InitialYear(selectedYea);
             IsCalculated = true;
@@ -90,27 +91,31 @@ namespace NeAccounting.Controls
         /// <summary>
         /// ماه انتخاب شده
         /// </summary>
-        public int? SelectedMon
+        public byte? SelectedMon
         {
-            get { return (int?)GetValue(SelectedMonProperty); }
+            get { return (byte?)GetValue(SelectedMonProperty); }
             set { SetValue(SelectedMonProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedMonth.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedMonProperty =
-            DependencyProperty.Register("SelectedMon", typeof(int?), typeof(MonthPicker),
+            DependencyProperty.Register("SelectedMon", typeof(byte?), typeof(MonthPicker),
                 new PropertyMetadata(null, new PropertyChangedCallback(OnMonthChanged)));
 
         private static void OnMonthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
-            if (sender is MonthPicker c)
-            {
-                RoutedPropertyChangedEventArgs<int?> e = new((int?)args.OldValue, (int?)args.NewValue, DateChosenEvent);
-                selectedMonth = (int?)args.NewValue;
-                c.InitialMonth(selectedMonth);
-                c.OnDateChanged(e);
-                IsCalculated = true;
-            }
+            if (sender is not MonthPicker c)
+                return;
+
+            if (args.NewValue == args.OldValue)
+                return;
+
+            IsCalculated = false;
+            selectedMonth = (byte?)args.NewValue;
+            c.InitialMonth(selectedMonth);
+            RoutedPropertyChangedEventArgs<byte?> e = new((byte?)args.OldValue, (byte?)args.NewValue, DateChosenEvent);
+            c.OnDateChanged(e);
+            IsCalculated = true;
         }
         #endregion
 
@@ -120,7 +125,7 @@ namespace NeAccounting.Controls
             IsCalculated = false;
             InitializeComponent();
             this.currentYear = persianCalendar.GetYear(DateTime.Now);
-            this.currentMonth = persianCalendar.GetMonth(DateTime.Now);
+            this.currentMonth = Convert.ToByte(persianCalendar.GetMonth(DateTime.Now));
             selectedMonth = SelectedMon;
             selectedYea = SelectedYear;
             InitialMonth(selectedMonth);
@@ -128,15 +133,19 @@ namespace NeAccounting.Controls
             IsCalculated = true;
         }
 
-        protected virtual void InitialMonth(int? month)
+        protected virtual void InitialMonth(byte? month)
         {
             comboBoxMonths.SelectedIndex = month - 1 ?? currentMonth - 1;
+            if (SelectedMon != null && SelectedYear != null)
+                lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
         }
 
         protected virtual void InitialYear(int? year)
         {
             comboBoxYear.ItemsSource = LoadYear(year ?? currentYear);
             comboBoxYear.SelectedItem = year ?? currentYear;
+            if (SelectedMon != null && SelectedYear != null)
+                lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
         }
 
         #endregion
@@ -145,7 +154,7 @@ namespace NeAccounting.Controls
         /// <summary>
         /// Event occurs when the user selects an item from the recommended ones.
         /// </summary>
-        public event RoutedPropertyChangedEventHandler<int?> DateChosen
+        public event RoutedPropertyChangedEventHandler<byte?> DateChosen
         {
             add => AddHandler(DateChosenEvent, value);
             remove => RemoveHandler(DateChosenEvent, value);
@@ -157,12 +166,12 @@ namespace NeAccounting.Controls
         public static readonly RoutedEvent DateChosenEvent = EventManager.RegisterRoutedEvent(
             nameof(DateChosen),
             RoutingStrategy.Bubble,
-            typeof(RoutedPropertyChangedEventHandler<int?>),
+            typeof(RoutedPropertyChangedEventHandler<byte?>),
             typeof(MonthPicker)
         );
 
 
-        protected virtual void OnDateChanged(RoutedPropertyChangedEventArgs<int?> args)
+        protected virtual void OnDateChanged(RoutedPropertyChangedEventArgs<byte?> args)
         {
             RaiseEvent(args);
         }
@@ -175,16 +184,15 @@ namespace NeAccounting.Controls
             {
                 return;
             }
-            IsCalculated = false;
-            selectedMonth = cmbox.SelectedIndex + 1;
-            SelectedMon = cmbox.SelectedIndex + 1;
             if (SelectedYear == null)
             {
                 IsCalculated = false;
                 SelectedYear = currentYear;
                 selectedYea = currentYear;
             }
-            lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
+            IsCalculated = false;
+            selectedMonth = Convert.ToByte(cmbox.SelectedIndex + 1);
+            SelectedMon = selectedMonth;
         }
 
         private void ComboBoxYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -202,7 +210,6 @@ namespace NeAccounting.Controls
                 SelectedMon = currentMonth;
                 selectedMonth = currentMonth;
             }
-            lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
         }
 
         private void Dismiss_Click(object sender, RoutedEventArgs e)

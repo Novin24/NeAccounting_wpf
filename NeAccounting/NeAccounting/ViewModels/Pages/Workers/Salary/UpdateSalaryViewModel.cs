@@ -1,6 +1,5 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
-using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using System.Windows.Media;
@@ -25,7 +24,10 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
     private string _personnelName;
 
     [ObservableProperty]
-    private DateTime _submitDate = DateTime.Now;
+    private byte? _submitMonth;
+
+    [ObservableProperty]
+    private int? _submitYear;
 
     [ObservableProperty]
     private uint _amountOf = 0;
@@ -87,6 +89,12 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
             return;
         }
 
+        if (SubmitMonth == null || SubmitYear == null)
+        {
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پرداخت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return;
+        }
+
         if (OverTime < 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اضافه کاری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -125,10 +133,11 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
 
         using (UnitOfWork db = new())
         {
-            var (error, isSuccess) = await db.workerManager.UpdateSalary(
+            var (error, isSuccess) = await db.WorkerManager.UpdateSalary(
                    WorkerId,
                    SalaryId,
-                   SubmitDate,
+                   SubmitYear.Value,
+                   SubmitMonth.Value,
                    AmountOf,
                    FinancialAid,
                    OverTime,
@@ -177,7 +186,7 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
             return false;
         }
         using UnitOfWork db = new();
-        var Worker = await db.workerManager.GetWorker(WorkerId);
+        var Worker = await db.WorkerManager.GetWorker(WorkerId);
         //var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
 
         //if (!details.Success)

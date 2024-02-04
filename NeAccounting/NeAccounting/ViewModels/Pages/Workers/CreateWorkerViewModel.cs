@@ -151,7 +151,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.workerManager.Create(
+                var (error, isSuccess) = await db.WorkerManager.Create(
                        FullName,
                        NationalCode,
                        Mobile,

@@ -7,10 +7,9 @@
         /// </summary>
         public int Id { get; set; }
 
-        /// <summary>
-        /// شناسه حقوق
-        /// </summary>
-        public int SalaryId { get; set; }
+        public int persianYear { get; set; }
+        public byte persianMonth { get; set; }
+
         /// <summary>
         /// شناسه کارگر
         /// </summary>

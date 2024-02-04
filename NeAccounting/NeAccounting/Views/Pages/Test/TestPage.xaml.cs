@@ -29,8 +29,7 @@ namespace NeAccounting.Views.Pages.Test
             var s = mnp.SelectedMon;
             var n = mnp.SelectedYear;
         }
-
-        private void mnp_DateChosen(object sender, RoutedPropertyChangedEventArgs<int?> e)
+        private void mnp_DateChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
         {
 
         }

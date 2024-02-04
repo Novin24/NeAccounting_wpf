@@ -1,4 +1,5 @@
 ﻿using Domain.NovinEntity.Workers;
+using DomainShared.Constants;
 using DomainShared.Enums;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.PagedResul;
@@ -18,7 +19,9 @@ namespace NeApplication.IRepositoryies
         Task<List<WorkerVewiModel>> GetWorkers(string fullName,
             string jobTitle,
             string nationalCode,
-            Status status);
+            Status status,
+             int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
 
         Task<(string error, bool isSuccess)> Create(
             string fullName,
@@ -62,7 +65,7 @@ namespace NeApplication.IRepositoryies
         #region Salary
 
         Task<(string error, bool isSuccess)> AddSalary(int workerId,
-            int submitMonth,
+            byte submitMonth,
             int submitYaer,
             uint amountOf,
             uint financialAid,
@@ -80,7 +83,8 @@ namespace NeApplication.IRepositoryies
 
         Task<(string error, bool isSuccess)> UpdateSalary(int workerId,
             int salaryId,
-            DateTime submitDate,
+            int persianYear,
+            byte persianMonth,
             uint amountOf,
             uint financialAid,
             uint overTime,
@@ -95,62 +99,73 @@ namespace NeApplication.IRepositoryies
             string? description);
 
 
-        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, int submitMonth, int submintYear);
+        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, byte submitMonth, int submintYear);
 
-        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId);
+        Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId, byte persianMonth, int persianYear);
 
         Task<PagedResulViewModel<SalaryViewModel>> GetSalaryList(int? workerId,
-             int? startMonth,
+             byte? startMonth,
              int? startYear,
              int? endMonth,
              int? endYear,
-             int skipCount = 0,
-             int maxResultCount = 10);
+             int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
 
         Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId);
         #endregion
-    }
 
-    public interface IFunctionManager : IRepository<Function>
-    {
-        Task<(string error, bool isSuccess)> AddOrUpdateFunctuion(
+        #region func
+        Task<(string error, bool isSuccess)> AddAid(
             int workerId,
-            DateTime submitDate,
-            byte amountOf,
-            byte amountOfOverTime,
-            string? description);
-
-        Task<(string error, bool isSuccess)> UpdateFunc(
-            int workerId,
-            int salaryId,
-            int funcId,
-            byte amountOf,
-            byte overTime,
-            string? description);
-
-        Task<List<FunctionViewModel>> GetFunctionList(int workerId);
-
-        Task<(string error, bool isSuccess)> DeleteFunc(int workerId, int salaryId, int aidId);
-
-    }
-
-    public interface IAidManager : IRepository<FinancialAid>
-    {
-        Task<(string error, bool isSuccess)> AddOrUpdateAid(
-            int workerId,
-            DateTime submitDate,
+            int persianYear,
+            byte persianMonth,
             uint amountOf,
             string? description);
 
         Task<(string error, bool isSuccess)> UpdateAid(
             int workerId,
-            int salaryId,
+            int persianYear,
+            byte persianMonth,
             int aidId,
             uint amountOf,
             string? description);
 
-        Task<List<AidViewModel>> GetAidList(int workerId);
+        Task<List<AidViewModel>> GetAidList(int workerId,
+             int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
 
-        Task<(string error, bool isSuccess)> DeleteAid(int workerId, int salaryId, int aidId);
+        Task<(string error, bool isSuccess)> DeleteAid(int workerId,
+            int persianYear,
+            byte persianMonth,
+            int aidId);
+        #endregion
+
+        #region aid
+        Task<(string error, bool isSuccess)> AddFunctuion(
+           int workerId,
+           int persianYear,
+           byte persianMonth,
+           byte amountOf,
+           byte amountOfOverTime,
+           string? description);
+
+        Task<(string error, bool isSuccess)> UpdateFunc(
+            int workerId,
+            int persianYear,
+            byte persianMonth,
+            int funcId,
+            byte amountOf,
+            byte overTime,
+            string? description);
+
+        Task<List<FunctionViewModel>> GetFunctionList(int workerId,
+             int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
+
+        Task<(string error, bool isSuccess)> DeleteFunc(int workerId,
+            int persianYear,
+            byte persianMonth,
+            int aidId);
+        #endregion
     }
 }
