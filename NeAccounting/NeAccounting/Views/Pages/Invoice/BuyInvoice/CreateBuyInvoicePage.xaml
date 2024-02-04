@@ -57,29 +57,7 @@
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <ui:TextBlock Margin="55,0"
-                                  Padding="0,20,0,0"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center"
-                                  FontFamily="the King &amp; Queen font"
-                                  FontSize="30"
-                                  Text="Novin" />
-                    <Grid>
-                        <TextBlock Margin="0 20 55 0"
-                                   Height="40"
-                                   HorizontalAlignment="Right"
-                                   FontFamily="Calibri"
-                                   FontWeight="Bold"
-                                   FontSize="18"
-                                   Text="فاکتور خرید" />
-                        <TextBlock Margin="60 20 0 0"
-                                   Height="40"
-                                   HorizontalAlignment="Center"
-                                   FontFamily="Calibri"
-                                   FontWeight="Bold"
-                                   FontSize="18"><Run Text="1402/09/13 " /></TextBlock>
-
-                    </Grid>
+                    <nu:HeaderPack/>
 
                     <Border Grid.Row="1"
                             Grid.ColumnSpan="2"
