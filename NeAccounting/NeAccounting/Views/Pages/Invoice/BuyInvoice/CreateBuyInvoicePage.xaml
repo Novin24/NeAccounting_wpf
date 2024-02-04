@@ -56,7 +56,8 @@
 
                     </Grid.RowDefinitions>
                     <nu:HeaderPack
-                        NamePpage="فاکتور خرید"/>
+                        NamePpage="فاکتور خرید"
+                        Margin="25 0"/>
 
                     <Border Grid.Row="1"
                             Grid.ColumnSpan="2"

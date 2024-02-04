@@ -5,6 +5,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:UpdateMaterailPage,
                                      IsDesignTimeCreatable=False}"
       d:DesignHeight="450"
@@ -55,27 +56,9 @@
                     <RowDefinition Height="*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <ui:TextBlock Margin="15,0"
-                              Padding="0,20,0,0"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              FontFamily="the King &amp; Queen font"
-                              FontSize="30"
-                              Text="Novin" />
 
-                <TextBlock Margin="0 20 20 0"
-                           Height="40"
-                           HorizontalAlignment="Right"
-                           FontFamily="Calibri"
-                           FontWeight="Bold"
-                           FontSize="18"
-                           Text="تعریف اجناس و کالاها" />
-                <TextBlock Margin="20 20 0 0"
-                           Height="40"
-                           HorizontalAlignment="Center"
-                           FontFamily="Calibri"
-                           FontWeight="Bold"
-                           FontSize="18"><Run Text="1402/09/13 " /></TextBlock>
+                <nu:HeaderPack NamePpage="ویرایش اجناس"/>
+
                 <Border Grid.Row="1"
                         CornerRadius="9"
                         BorderBrush="#D6D5D5"

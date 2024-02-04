@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages" xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:UpdateCustomerPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
@@ -60,25 +60,8 @@
                         <RowDefinition Height="*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <ui:TextBlock Padding="0,20,0,0"
-                                  Margin="15 0 0 0"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center"
-                                  FontFamily="the King &amp; Queen font"
-                                  FontSize="30"
-                                  Text="Novin" />
-
-                    <Grid Grid.ColumnSpan="2">
-                        <ui:TextBlock Margin="0 20 20 0"
-                                      Height="40"
-                                      HorizontalAlignment="Right"
-                                      FontFamily="Calibri"
-                                      FontWeight="Bold"
-                                      FontSize="18"
-                                      Text="تعریف مشتری" />
-
-
-                    </Grid>
+                    <nu:HeaderPack Grid.ColumnSpan="2"
+                                   NamePpage="ویرایش مشتری"/>
                     <Border Grid.Column="0"
                             Grid.Row="1"
                             Grid.ColumnSpan="2"

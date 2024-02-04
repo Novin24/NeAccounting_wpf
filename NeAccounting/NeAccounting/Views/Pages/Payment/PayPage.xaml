@@ -59,13 +59,8 @@
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <ui:TextBlock Margin="15,0"
-                              Padding="0,20,0,0"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              FontFamily="the King &amp; Queen font"
-                              FontSize="30"
-                              Text="Novin" />
+                <nu:HeaderPack Grid.ColumnSpan="2"
+                               NamePpage="آخرین سند"/>
                 <Border Grid.Row="1"
                         CornerRadius="9"
                         Margin="5"
@@ -123,31 +118,7 @@
                     </Grid>
                 </Border>
 
-                <Grid Grid.ColumnSpan="2">
-                    <ui:TextBlock Margin="0 20 20 0"
-                                  Height="40"
-                                  HorizontalAlignment="Right"
-                                  FontFamily="Calibri"
-                                  FontWeight="Bold"
-                                  FontSize="18"
-                                  Text=": شماره سند " />
-                    <ui:TextBlock Margin="0 20 20 0"
-                                  Height="40"
-                                  HorizontalAlignment="Right"
-                                  FontFamily="Calibri"
-                                  FontWeight="Bold"
-                                  FontSize="18"
-                                  Text="999                     " />
-                    <ui:TextBlock Margin="20 20 0 0"
-                                  Height="40"
-                                  HorizontalAlignment="Center"
-                                  FontFamily="Calibri"
-                                  FontWeight="Bold"
-                                  FontSize="18">
-                        <Run Text="1402/09/12" />
-                    </ui:TextBlock>
-
-                </Grid>
+                
                 <Border Grid.Row="1"
                         Grid.Column="1"
                         CornerRadius="9"
