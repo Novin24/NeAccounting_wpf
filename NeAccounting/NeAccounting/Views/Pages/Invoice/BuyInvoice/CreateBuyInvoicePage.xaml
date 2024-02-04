@@ -57,7 +57,8 @@
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <nu:HeaderPack/>
+                    <nu:HeaderPack
+                        NamePpage="فاکتور خرید"/>
 
                     <Border Grid.Row="1"
                             Grid.ColumnSpan="2"

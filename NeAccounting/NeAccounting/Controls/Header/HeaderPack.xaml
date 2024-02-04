@@ -27,10 +27,9 @@
                    Text="تاریخ"
                    x:Name="txt_date"/>
         <TextBlock Grid.Column="2"
-            Margin="0 20 0 0"
             x:Name="page_name"
             VerticalAlignment="Center"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Right"
             FontWeight="Bold"
             FontSize="18"
             FontFamily="Calibri"/>
