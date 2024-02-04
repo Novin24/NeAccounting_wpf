@@ -408,6 +408,7 @@
                                         FontFamily="Calibri"
                                         Command="{Binding ViewModel.CreateCommand}"
                                         FontSize="15"
+                                        IsDefault="True"
                                         Grid.ColumnSpan="2" />
                             </Grid>
                         </Border>

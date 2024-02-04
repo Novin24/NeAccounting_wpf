@@ -133,13 +133,14 @@
                                 </ui:CardAction>
                             </Grid>
                             <Grid Grid.Row="1"
-                                  Margin="0 ,5,0,5">
+                                  Margin="0 ,5,0,15">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
+                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0"
-                                            Margin="4 4 20 0 ">
+                                            Margin="4 4 10 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
@@ -150,13 +151,9 @@
                                                 x:Name="materialName_txb"
                                                 Text="{Binding ViewModel.PunName}"
                                                 Margin="0 4 0 0"/>
-                                    <Button IsDefault="True"
-                                            Margin="0 5 0 12"
-                                            Padding="17 4 17 9"
-                                            Command="{Binding ViewModel.SearchMaterialCommand }">جستجو</Button>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
-                                            Margin="20 4 0 0 ">
+                                            Margin="10 4 10 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
@@ -167,6 +164,12 @@
                                                 Text="{Binding ViewModel.Serial}"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
+
+                                <Button Grid.Column="2" IsDefault="True"
+                                        Margin="10 25 0 0"
+                                        HorizontalAlignment="Right"
+                                        Padding="17 4 18 9"
+                                        Command="{Binding ViewModel.SearchMaterialCommand }">جستجو</Button>
                             </Grid>
                             <DataGrid Margin="0 0 0 30"
                                       BorderThickness="10"

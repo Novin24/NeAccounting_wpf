@@ -181,7 +181,8 @@
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    Text="نام مشتری"
-                                                   Margin="22 4 0 0 " />
+                                                   Margin="22 6 0 0 "
+                                                   FontWeight="Bold" />
                                         <ui:AutoSuggestBox x:Name="ASBoxSuggestions"
                                                            Icon="{ui:SymbolIcon Search24}"
                                                            OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
@@ -193,25 +194,19 @@
                                                            Margin="20 4 3 0 "
                                                            FontFamily="Calibri" />
                                     </StackPanel>
-                                    <StackPanel Grid.Row="0"
-                                                Grid.Column="1"
-                                                Margin="0 0 15 0"
-                                                VerticalAlignment="Center">
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   Text="تاریخ دریافت"
-                                                   Margin="10 4 0 0 " />
-                                        <nu:PersianDatePicker VerticalAlignment="Center"
-                                                                      FlowDirection="LeftToRight"
-                                                                      x:Name="pdp" />
-                                    </StackPanel>
+                                    <nu:PersianDatePicker FlowDirection="LeftToRight"
+                                                          x:Name="pdp"
+                                                          LabelName="تاریخ"
+                                                          Grid.Column="1"
+                                                          Margin="0 2 15 0" />
                                     <StackPanel Margin="3 4 20 0"
                                                 Grid.Column="1"
                                                 Grid.Row="1">
 
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
-                                                   Text="نوع سند" />
+                                                   Text="نوع سند"
+                                                   FontWeight="Bold" />
                                         <ComboBox SelectedIndex="0"
                                                   FontSize="14"
                                                   Margin="0 4 0 0 ">
@@ -228,7 +223,8 @@
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    Text="مبلغ وجه"
-                                                   Margin="22 4 0 0 " />
+                                                   Margin="22 4 0 0 "
+                                                   FontWeight="Bold" />
                                         <ui:NumberBox Margin="20 4 3 2"
                                                       TextAlignment="Center"
                                                       FontSize="14"
@@ -247,7 +243,8 @@
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    Text="مبلغ تخفیف"
-                                                   Margin="22 4 0 0 " />
+                                                   Margin="22 4 0 0 "
+                                                   FontWeight="Bold" />
                                         <ui:NumberBox Grid.Column="0"
                                                       Grid.Row="2"
                                                       SpinButtonPlacementMode="Hidden"
@@ -265,17 +262,19 @@
                                               FontFamily="Calibri"
                                               Margin="0 22 0 0 "
                                               HorizontalAlignment="Center"
-                                              FontSize="14" />
+                                              FontSize="14"
+                                              FontWeight="Bold" />
                                     <Grid Grid.Column="0"
                                           Grid.ColumnSpan="2"
                                           Grid.Row="3"
-                                          Margin="20 3 20 4">
+                                          Margin="20 6 20 4">
 
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    Text="توضیحات"
-                                                   Grid.Column="1" />
-                                        <RichTextBox Margin="0,20,0,0"
+                                                   Grid.Column="1"
+                                                   FontWeight="Bold" />
+                                        <RichTextBox Margin="0,24,0,0"
                                                      FontSize="14"
                                                      FlowDirection="RightToLeft"
                                                      FontFamily="Calibri"></RichTextBox>
