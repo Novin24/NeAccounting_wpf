@@ -80,15 +80,16 @@
 
                             </Grid.RowDefinitions>
 
-                            <Grid Margin="0 ,5,0,15">
+                            <Grid Margin="0 ,0,0,15">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width=".56*" />
                                     <ColumnDefinition Width="0.5*" />
-                                    <ColumnDefinition Width="0.3*" />
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="79" />
+                                    <ColumnDefinition Width=".6*" />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0"
-                                            Margin="4 4 10 0 ">
+                                            Margin="4 2 10 0 ">
 
 
                                     <DockPanel LastChildFill="False">
@@ -96,13 +97,21 @@
                                                    FontSize="15"
                                                    Text="فروشنده"
                                                    Margin="2 11 0 0 " />
+
+                                        <TextBlock FontFamily="Calibri"
+                                                   DockPanel.Dock="Right"
+                                                   FontSize="14"
+                                                   Foreground="#BB8F60"
+                                                   Text="99999"
+                                                   VerticalAlignment="Center"
+                                                   Margin="6 21 4 0" />
                                         <StackPanel
                                                 DockPanel.Dock="Right">
                                             <TextBlock Text="F3"
                                                        TextAlignment="Center"
-                                                       FontSize="8"/>
+                                                       FontSize="11"/>
                                             <Button Padding="1 0 "
-                                                FontSize="12"
+                                                FontSize="21"
                                                 FontFamily="Calibri">
 
                                                 <ui:SymbolIcon Symbol="QrCode20" />
@@ -112,11 +121,12 @@
                                         <StackPanel Margin="0 0 5 0" DockPanel.Dock="Right">
                                             <TextBlock Text="F4"
                                                        TextAlignment="Center"
-                                                       FontSize="8"/>
+                                                       FontSize="11"/>
                                             <Button Padding="1 0 "
                                                 FontFamily="Calibri">
 
-                                                <ui:SymbolIcon Symbol="PersonAdd20" />
+                                                <ui:SymbolIcon Symbol="PersonAdd20" 
+                                                FontSize="21"/>
 
                                             </Button>
                                         </StackPanel>
@@ -126,7 +136,22 @@
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
-                                            Margin="10 16 10 0 ">
+                                            Margin="4 23.3 5 0 ">
+
+                                    <TextBlock FontFamily="Calibri"
+                                               FontSize="15"
+                                               Text="آخرین فاکتور "
+                                               Margin="2 0 0 0 " 
+                                               HorizontalAlignment="Center"/>
+                                    <ui:NumberBox TextAlignment="Center"
+                                                  FontFamily="Calibri"
+                                                  Margin="0 4 0 0"
+                                                  IsEnabled="False"
+                                                  SpinButtonPlacementMode="Hidden"
+                                                  FlowDirection="LeftToRight" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2"
+                                            Margin="5 23.3 5 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
@@ -136,8 +161,8 @@
                                                 FontFamily="Calibri"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="2"
-                                            Margin="10 16 10 0 ">
+                                <StackPanel Grid.Column="3"
+                                            Margin="5 23.3 0 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
@@ -147,26 +172,27 @@
                                                   FontFamily="Calibri"
                                                   FlowDirection="LeftToRight"
                                                   ClearButtonEnabled="False"
+                                                  Maximum="100"
+                                                  Minimum="0"
                                                   Icon="{ui:SymbolIcon ShoppingBagPercent24}"
                                                   Margin="0 4 0 0"
                                                   Padding="0 8 5 8  "
                                                   SpinButtonPlacementMode="Hidden" />
                                 </StackPanel>
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
-                                                      Grid.Column="3"
+                                                      Grid.Column="4"
                                                       LabelName="تاریخ"
-                                                      Margin="0 12 0 0"/>
+                                                      Margin="0 19.5 0 0"/>
 
-                                <Line Grid.ColumnSpan="4"
+                                <Line Grid.ColumnSpan="5"
                                       X1="0"
-                                      Y1="7"
-                                      X2="970"
-                                      Y2="7"
+                                      Y1="9.5"
+                                      X2="1300"
+                                      Y2="9.5"
                                       Margin="0 85 0 0"
                                       StrokeThickness="3"
                                       VerticalAlignment="Bottom"
                                       HorizontalAlignment="Center"
-                                      Fill="White"
                                       Stroke="DimGray"
                                       Height="9" />
                             </Grid>
@@ -183,13 +209,11 @@
                                     <ColumnDefinition Width=".5*" />
                                 </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="0"
-                                            Margin="0 14 2 0 ">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="15"
-                                               Text="#"
-                                               HorizontalAlignment="Center" />
-                                </StackPanel>
+                                <TextBlock FontFamily="Calibri"
+                                           Margin="0 40 0 0 "
+                                           FontSize="15"
+                                           Text="#"
+                                           HorizontalAlignment="Center" />
                                 <StackPanel Grid.Column="1"
                                             Margin="2 14 2 0 ">
                                     <TextBlock FontFamily="Calibri"
@@ -251,17 +275,20 @@
                                     <ui:TextBox x:Name="txt_description"
                                                 TextAlignment="Center"
                                                 FontFamily="Calibri"
-                                                Margin="0 2 0 0" />
+                                                Margin="0 2 4 0" />
                                 </StackPanel>
-                                <Button Content="افزودن"
-                                        Grid.Column="6"
-                                        Padding="8 4 "
+                                <Button Grid.Column="7"
+                                        Padding="4 5 "
                                         IsDefault="True"
                                         FontSize="17"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        HorizontalAlignment="Center"
-                                        Click="Button_Click" />
+                                        HorizontalAlignment="Center" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="افزودن"/>
+                                        <TextBlock Text="  (F1)" FontSize="12" VerticalAlignment="Center" Foreground="#FFA3A3A3" />
+                                    </StackPanel>
+                                </Button>
                             </Grid>
                             <DataGrid ItemsSource="{Binding ViewModel.List, Mode=OneWay}"
                                       BorderThickness="2"

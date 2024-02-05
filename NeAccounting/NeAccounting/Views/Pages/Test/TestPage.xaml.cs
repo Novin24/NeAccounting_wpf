@@ -1,4 +1,5 @@
 ﻿using NeAccounting.ViewModels;
+using System.Windows.Media;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages.Test
@@ -8,6 +9,7 @@ namespace NeAccounting.Views.Pages.Test
     /// </summary>
     public partial class TestPage : INavigableView<TestViewModel>
     {
+        private int click;
 
         public TestViewModel ViewModel{ get;}
 
@@ -16,22 +18,14 @@ namespace NeAccounting.Views.Pages.Test
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+            click = 0;
         }
 
+        //private void btn_font_Click(object sender, RoutedEventArgs e)
+        //{
+        //    click++;
+        //    txt.Text = click.ToString();
 
-        private void PersianDatePicker_DateChosen(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var s = mnp.SelectedMon;
-            var n = mnp.SelectedYear;
-        }
-        private void mnp_DateChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
-        {
-
-        }
+        //}
     }
 }
