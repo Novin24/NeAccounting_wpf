@@ -40,12 +40,12 @@ namespace Domain.NovinEntity.Customers
             Buyer = isBuyer;
             Seller = isSeller;
             Type = type;
-
         }
         #endregion
 
         #region properties
         public string Name { get; set; }
+        public long CusId { get; set; }
         public string Mobile { get; set; }
         public uint TotalCredit { get; set; }
         public uint ChequeCredit { get; set; }

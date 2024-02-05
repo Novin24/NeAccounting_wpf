@@ -28,9 +28,4 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Application\NeApplication.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Common\Repositories\FunctionRepository\" />
-	  <Folder Include="Common\Repositories\FinancialAidRepository\" />
-	</ItemGroup>
 </Project>

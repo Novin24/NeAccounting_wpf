@@ -22,6 +22,124 @@ namespace Infrastructure.Migrations.NovinDb
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Enities.NovinEntity.Remittances.BuyRemittance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<double>("AmountOf")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastModifireId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("SubmitDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("BuyRemittance");
+                });
+
+            modelBuilder.Entity("Domain.Enities.NovinEntity.Remittances.SellRemittance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<double>("AmountOf")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastModifireId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("SubmitDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TotalPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("SellRemittance");
+                });
+
             modelBuilder.Entity("Domain.NovinEntity.Bank.Bank", b =>
                 {
                     b.Property<int>("Id")
@@ -96,6 +214,12 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.Property<Guid>("CreatorId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("CusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CusId"));
 
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uniqueidentifier");
@@ -187,8 +311,8 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("ReceivedOrPaid")
                         .HasColumnType("bit");
@@ -615,6 +739,44 @@ namespace Infrastructure.Migrations.NovinDb
                     b.ToTable("Worker");
                 });
 
+            modelBuilder.Entity("Domain.Enities.NovinEntity.Remittances.BuyRemittance", b =>
+                {
+                    b.HasOne("Domain.NovinEntity.Documents.Document", "Document")
+                        .WithMany("BuyRemittances")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.NovinEntity.Materials.Material", "Material")
+                        .WithMany("BuyRemittances")
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+
+                    b.Navigation("Material");
+                });
+
+            modelBuilder.Entity("Domain.Enities.NovinEntity.Remittances.SellRemittance", b =>
+                {
+                    b.HasOne("Domain.NovinEntity.Documents.Document", "Document")
+                        .WithMany("SellRemittances")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.NovinEntity.Materials.Material", "Material")
+                        .WithMany("SellRemittances")
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+
+                    b.Navigation("Material");
+                });
+
             modelBuilder.Entity("Domain.NovinEntity.Materials.Material", b =>
                 {
                     b.HasOne("Domain.NovinEntity.Materials.Unit", "Unit")
@@ -657,6 +819,20 @@ namespace Infrastructure.Migrations.NovinDb
                         .IsRequired();
 
                     b.Navigation("Worker");
+                });
+
+            modelBuilder.Entity("Domain.NovinEntity.Documents.Document", b =>
+                {
+                    b.Navigation("BuyRemittances");
+
+                    b.Navigation("SellRemittances");
+                });
+
+            modelBuilder.Entity("Domain.NovinEntity.Materials.Material", b =>
+                {
+                    b.Navigation("BuyRemittances");
+
+                    b.Navigation("SellRemittances");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Materials.Unit", b =>

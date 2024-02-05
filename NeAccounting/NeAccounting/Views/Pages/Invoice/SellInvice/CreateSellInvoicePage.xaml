@@ -1,11 +1,13 @@
-﻿<Page x:Class="NeAccounting.Pages.CreateSellInvoicePage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Page x:Class="NeAccounting.Views.Pages.CreateSellInvoicePage"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:NeAccounting.Pages"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
+      d:DataContext="{d:DesignInstance local:CreateSellInvoicePage,
+                               IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
       d:DesignHeight="800"
       d:DesignWidth="1200"
@@ -206,7 +208,6 @@
                                                Text="شرح کالا"
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
-                                                       Icon=""
                                                        FontFamily="Calibri"
                                                        Margin="0 2 0 0" />
                                 </StackPanel>
@@ -284,7 +285,8 @@
                                         FontSize="17"
                                         FontFamily="Calibri"
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Bottom" />
+                                        VerticalAlignment="Bottom"
+                                        Click="Button_Click" />
                             </Grid>
 
                             <DataGrid x:Name="Workersdata"

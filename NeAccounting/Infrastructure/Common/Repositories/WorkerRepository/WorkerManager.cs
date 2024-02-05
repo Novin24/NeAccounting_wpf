@@ -10,7 +10,6 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using NeApplication.IRepositoryies;
-using System;
 using System.Data;
 using System.Data.Common;
 

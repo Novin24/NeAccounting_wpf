@@ -16,14 +16,16 @@ namespace Infrastructure.Repositories
         public CustomerManager(NovinDbContext context) : base(context) { }
 
 
-        public Task<List<SuggestBoxViewModel<Guid>>> GetDisplayUser()
+        public Task<List<SuggestBoxViewModel<Guid>>> GetDisplayUser(bool? seller = null, bool? buyer = null)
         {
-            return TableNoTracking.Select(x => new SuggestBoxViewModel<Guid>
-            {
-                Id = x.Id,
-                DisplayName = x.Name
+            return TableNoTracking.Where(t => seller == null || t.Seller)
+                .Where(b=> buyer == null || b.Seller == seller)
+                .Select(x => new SuggestBoxViewModel<Guid>
+                {
+                    Id = x.Id,
+                    DisplayName = x.Name
 
-            }).ToListAsync();
+                }).ToListAsync();
         }
 
         public Task<List<CustomerListDto>> GetCustomerList(string name, string nationalCode, string mobile)

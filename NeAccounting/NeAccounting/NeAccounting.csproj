@@ -33,7 +33,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1 " />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1 " />
-    <PackageReference Include="WPF-UI" Version="1.18.0" />
+    <PackageReference Include="WPF-UI" Version="1.19.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +50,10 @@
     <Resource Include="Assets\persone.png" />
     <Resource Include="Assets\pexels-johannes-plenio-1103970.jpg" />
     <Resource Include="Assets\user9.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\Pages\Document\" />
   </ItemGroup>
 
 </Project>
