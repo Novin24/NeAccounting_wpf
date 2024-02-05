@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:datepicker="clr-namespace:NeAccounting.Controls"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       mc:Ignorable="d"
       d:DesignHeight="450"
@@ -54,29 +54,12 @@
                 <Grid>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="60"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <ui:TextBlock Margin="15 -35 0 -50"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center"
-                                  FontFamily="the King &amp; Queen font"
-                                  FontSize="30"
-                                  Text="Novin" />
-                    <TextBlock Margin="0 20 20 0"
-                               Height="40"
-                               HorizontalAlignment="Right"
-                               FontFamily="Calibri"
-                               FontWeight="Bold"
-                               FontSize="18"
-                               Text="هزینه ها" />
-                    <TextBlock Margin="20 20 0 0"
-                               Height="40"
-                               HorizontalAlignment="Center"
-                               FontFamily="Calibri"
-                               FontWeight="Bold"
-                               FontSize="18"><Run Text="1402/10/03 " /></TextBlock>
+                    <nu:HeaderPack NamePpage="هزینه ها"/>
+
                     <Border Grid.Row="1"
                             CornerRadius="9"
                             BorderBrush="#D6D5D5"
@@ -114,18 +97,12 @@
                                          CaretBrush="White"
                                          FontFamily="Calibri" />
                             </StackPanel>
-                            <StackPanel Grid.Row="0"
-                                        Grid.Column="1"
-                                        Margin="0 11 15 0"
-                                        VerticalAlignment="Center">
-                                <TextBlock FontFamily="Calibri"
-                                           FontSize="14"
-                                           Text="تاریخ"
-                                           Margin="10 4 0 0 " />
-                                <datepicker:PersianDatePicker VerticalAlignment="Center"
-                                                              FlowDirection="LeftToRight"
-                                                              x:Name="pdp" />
-                            </StackPanel>
+                            <nu:PersianDatePicker VerticalAlignment="Center"
+                                                  FlowDirection="LeftToRight"
+                                                  x:Name="pdp" 
+                                                  Grid.Column="1"
+                                                  Margin="0 11 15 0"
+                                                  LabelName="تاریخ"/>
                             <StackPanel Margin="20 4 0 0"
                                         Grid.Row="1">
 
@@ -203,5 +180,5 @@
                 </Grid>
             </Border>
         </Grid>
-                        </Grid>
+    </Grid>
 </Page>

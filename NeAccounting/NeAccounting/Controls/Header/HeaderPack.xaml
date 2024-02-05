@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NeAccounting.Controls"
              mc:Ignorable="d" >
-    <Grid Margin="55 0">
+    <Grid Margin="30 0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition/>
