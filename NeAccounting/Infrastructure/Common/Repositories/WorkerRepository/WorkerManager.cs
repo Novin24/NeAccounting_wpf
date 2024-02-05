@@ -146,10 +146,10 @@ namespace Infrastructure.Repositories
             if (worker != null)
             {
                 if (worker.NationalCode == natinalCode)
-                    return new($"کاربر گرامی کارگر {worker.FullName} با این کد ملی در پایگاه داده موجود می‌باشد!!!", false);
+                    return new($" کارگر {worker.FullName} با این کد ملی در پایگاه داده موجود می‌باشد!!!", false);
 
                 if (worker.PersonnelId == personalId)
-                    return new($"کاربر گرامی کارگر {worker.FullName} با این کد پرسنلی در پایگاه داده موجود می‌باشد!!!", false);
+                    return new($" کارگر {worker.FullName} با این کد پرسنلی در پایگاه داده موجود می‌باشد!!!", false);
             }
 
             try
@@ -391,12 +391,12 @@ namespace Infrastructure.Repositories
             if (worker.Salaries.Any(t =>
                 t.Id != salaryId && t.PersianMonth == persianMonth && t.PersianYear == persianYear))
             {
-                return new("کاربر گرامی برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
+                return new(" برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
             }
 
-            if (worker.Functions.Count != 0)
+            if (worker.Functions.Count == 0)
             {
-                return new("کاربر گرامی برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
+                return new(" برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
             }
 
             var salary = worker.Salaries.First(s => s.Id == salaryId);
@@ -453,13 +453,13 @@ namespace Infrastructure.Repositories
 
             if (worker.Functions.Count == 0)
             {
-                return new("کاربر گرامی برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
+                return new(" برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
             }
 
             if (worker.Salaries.Any(t =>
             t.PersianMonth == persianMonth && t.PersianYear == persianYear))
             {
-                return new("کاربر گرامی برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
+                return new(" برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
             }
 
             worker.AddSalary(
@@ -641,7 +641,7 @@ namespace Infrastructure.Repositories
             if (func == null)
                 return new("کارکرد مورد نظر یافت نشد!!!!", false);
 
-            if (worker.Functions.FirstOrDefault(t => t.PersianYear == persianYear && t.PersianMonth == persianMonth) != null)
+            if (worker.Functions.FirstOrDefault(t => t.Id != funcId && t.PersianYear == persianYear && t.PersianMonth == persianMonth) != null)
                 return new("برای کارگر مورد نظر در این ماه کارکرد ثبت شده!!!!", false);
 
             if (worker.Salaries.FirstOrDefault(t => t.PersianYear == persianYear && t.PersianMonth == persianMonth) != null)
@@ -778,7 +778,7 @@ namespace Infrastructure.Repositories
 
 
                           join aid in DbContext.Set<FinancialAid>()
-                                                  on worker.Id equals aid.Id
+                                                  on worker.Id equals aid.WorkerId
 
                           select new AidViewModel()
                           {

@@ -210,6 +210,11 @@ namespace NeAccounting.Controls
                 SelectedMon = currentMonth;
                 selectedMonth = currentMonth;
             }
+            else
+            {
+                RoutedPropertyChangedEventArgs<byte?> re = new(selectedMonth, selectedMonth, DateChosenEvent);
+                RaiseEvent(re);
+            }
         }
 
         private void Dismiss_Click(object sender, RoutedEventArgs e)

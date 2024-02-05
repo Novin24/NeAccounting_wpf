@@ -106,7 +106,9 @@ namespace Domain.NovinEntity.Workers
         #region Constructor
         public Worker()
         {
-
+            Salaries = new List<Salary>();
+            Functions = new List<Function>();
+            Aids = new List<FinancialAid>();
         }
 
         public Worker(
@@ -127,9 +129,7 @@ namespace Domain.NovinEntity.Workers
             uint insurancePremium,
             byte dayInMonth)
         {
-            Salaries = new List<Salary>();
-            Functions = new List<Function>();
-            Aids = new List<FinancialAid>();
+
             FullName = fullName;
             NationalCode = natinalCode;
             Mobile = mobile;

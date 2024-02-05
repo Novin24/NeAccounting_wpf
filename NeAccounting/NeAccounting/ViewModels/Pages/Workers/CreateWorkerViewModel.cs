@@ -91,31 +91,31 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("آدرس"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            if (PersonalId == null || PersonalId <= 0)
+            if (PersonalId <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("شماره پرسنلی", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
 
-            if (Salary <= 0)
+            if (Shift == Shift.ByMounth && Salary <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد ماهانه", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
 
-            if (OvertimeSalary <= 0)
+            if (Shift == Shift.ByMounth && OvertimeSalary <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری ماهانه", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
 
-            if (ShiftSalary <= 0)
+            if (Shift == Shift.ByHour && ShiftSalary <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد ", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
 
-            if (ShiftovertimeSalary <= 0)
+            if (Shift == Shift.ByHour && ShiftovertimeSalary <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد اضافه کاری", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;

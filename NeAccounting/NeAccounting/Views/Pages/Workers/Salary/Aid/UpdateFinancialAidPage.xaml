@@ -178,15 +178,15 @@
                                                 IsEnabled="False"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
-                                <nu:PersianDatePicker FontSize="14"
-                                                              FlowDirection="LeftToRight"
-                                                              FontFamily="Calibri"
-                                                              IsEnabled="False"
-                                                              x:Name="dtp"
-                                                              Grid.Column="1"
-                                                              LabelName="تاریخ پرداخت"
-                                                              SelectedDate="{Binding ViewModel.PayDate , Mode=OneWay}"
-                                                              Margin="0 4 0 0" />
+                                <nu:MonthPicker FontSize="14"
+                                                FlowDirection="LeftToRight"
+                                                FontFamily="Calibri"
+                                                x:Name="dtp"
+                                                Grid.Column="1"
+                                                LabelName="تاریخ پرداخت"
+                                                SelectedMon="{Binding ViewModel.SubmitMonth, Mode=OneWay}"
+                                                SelectedYear="{Binding ViewModel.SubmitYear, Mode=OneWay}"
+                                                Margin="0 4 0 0" />
                                 <StackPanel Grid.Column="0"
                                             Grid.Row="1">
 
