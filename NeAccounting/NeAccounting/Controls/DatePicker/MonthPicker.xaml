@@ -93,21 +93,9 @@
                        FontWeight="Bold"
                        HorizontalAlignment="Right"
                        FontSize="16" />
+            <StackPanel Orientation="Horizontal">
 
-            <Border CornerRadius="6"
-                    Background="{DynamicResource ControlSolidFillColorDefaultBrush}">
-                <Grid x:Name="header"
-                      Margin="0,1,0,3"
-                      MinHeight="38">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".4*" />
-                        <ColumnDefinition Width=".7*" />
-                        <ColumnDefinition Width=".9*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    
-                    <Button Style="{StaticResource DismissButtonStyle}"
+                <Button Style="{StaticResource DismissButtonStyle}"
                             Name="Dismiss"
                             ToolTip="حذف"
                             VerticalAlignment="Center"
@@ -115,16 +103,28 @@
                             Focusable="True"
                             HorizontalAlignment="Center"
                             Click="Dismiss_Click">
-                        <ui:SymbolIcon Symbol="Dismiss20"
+                    <ui:SymbolIcon Symbol="Dismiss20"
                                        FontSize="20" />
-                    </Button>
-                    <ui:TextBlock VerticalAlignment="Center"
+                </Button>
+                <Border CornerRadius="6"
+                    Background="{DynamicResource ControlSolidFillColorDefaultBrush}">
+                    <Grid x:Name="header"
+                      Margin="0,1,0,3"
+                      MinHeight="38">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".7*" />
+                            <ColumnDefinition Width=".9*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <ui:TextBlock VerticalAlignment="Center"
                                   FontSize="16"
-                                  Grid.Column="1"
+                                  Grid.Column="0"
                                   TextAlignment="Center"
                                   FontFamily="Calibri"
                                   x:Name="lbl_Display" />
-                    <ComboBox Grid.Column="2"
+                        <ComboBox Grid.Column="1"
                               VerticalAlignment="Center"
                               IsSynchronizedWithCurrentItem="True"
                               MinHeight="30"
@@ -137,8 +137,8 @@
                               FontSize="13"
                               FontWeight="Regular"
                               SelectionChanged="ComboBoxYear_SelectionChanged">
-                    </ComboBox>
-                    <ComboBox Grid.Column="3"
+                        </ComboBox>
+                        <ComboBox Grid.Column="2"
                               VerticalAlignment="Center"
                               IsSynchronizedWithCurrentItem="True"
                               MinHeight="30"
@@ -150,25 +150,26 @@
                               FontFamily="arial"
                               FontSize="15"
                               SelectionChanged="ComboBoxMonths_SelectionChanged">
-                        <ComboBoxItem Content="فروردین"
+                            <ComboBoxItem Content="فروردین"
                                       IsSelected="True" />
-                        <ComboBoxItem Content="اردیبهشت" />
-                        <ComboBoxItem Content="خرداد" />
+                            <ComboBoxItem Content="اردیبهشت" />
+                            <ComboBoxItem Content="خرداد" />
 
-                        <ComboBoxItem Content="تیر" />
-                        <ComboBoxItem Content="مرداد" />
-                        <ComboBoxItem Content="شهریور" />
+                            <ComboBoxItem Content="تیر" />
+                            <ComboBoxItem Content="مرداد" />
+                            <ComboBoxItem Content="شهریور" />
 
-                        <ComboBoxItem Content="مهر" />
-                        <ComboBoxItem Content="آبان" />
-                        <ComboBoxItem Content="آذر" />
+                            <ComboBoxItem Content="مهر" />
+                            <ComboBoxItem Content="آبان" />
+                            <ComboBoxItem Content="آذر" />
 
-                        <ComboBoxItem Content="دی" />
-                        <ComboBoxItem Content="بهمن" />
-                        <ComboBoxItem Content="اسفند" />
-                    </ComboBox>
-                </Grid>
-            </Border>
+                            <ComboBoxItem Content="دی" />
+                            <ComboBoxItem Content="بهمن" />
+                            <ComboBoxItem Content="اسفند" />
+                        </ComboBox>
+                    </Grid>
+                </Border>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>
