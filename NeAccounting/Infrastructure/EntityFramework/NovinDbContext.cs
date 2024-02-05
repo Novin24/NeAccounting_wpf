@@ -1,13 +1,10 @@
 ﻿using Domain.Common;
+using DomainShared.Constants;
 using Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using System;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System.Security.Principal;
 using System.Linq.Expressions;
-using System.Threading;
-using DomainShared.Constants;
+using System.Reflection;
 
 namespace Infrastructure.EntityFramework
 {

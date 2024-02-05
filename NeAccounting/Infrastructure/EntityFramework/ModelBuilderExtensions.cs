@@ -1,4 +1,5 @@
-﻿using Domain.NovinEntity.Customers;
+﻿using Domain.Enities.NovinEntity.Remittances;
+using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
 using Domain.NovinEntity.Materials;
 using Domain.NovinEntity.Workers;
@@ -25,6 +26,7 @@ namespace Infrastructure.Utilities
             builder.Entity<Customer>(b =>
             {
                 b.HasIndex(b => b.Id);
+                b.Property(b => b.CusId).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
                 b.Property(r => r.Name).IsRequired();
                 b.Property(r => r.NationalCode).IsRequired();
                 b.Property(r => r.Mobile).IsRequired();
@@ -84,6 +86,36 @@ namespace Infrastructure.Utilities
                 b.HasIndex(t => t.PersianMonth);
                 b.HasIndex(t => t.PersianYear);
                 b.HasIndex(t => t.WorkerId);
+            });
+            
+            builder.Entity<BuyRemittance>(b =>
+            {
+                b.HasOne(t => t.Material)
+                .WithMany(s => s.BuyRemittances)
+                .HasForeignKey(t => t.MaterialId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasOne(t => t.Document)
+                .WithMany(s => s.BuyRemittances)
+                .HasForeignKey(t => t.DocumentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasIndex(t => t.DocumentId);
+            });
+            
+            builder.Entity<SellRemittance>(b =>
+            {
+                b.HasOne(t => t.Material)
+                .WithMany(s => s.SellRemittances)
+                .HasForeignKey(t => t.MaterialId)
+                .OnDelete(DeleteBehavior.Cascade);
+                
+                b.HasOne(t => t.Document)
+                .WithMany(s => s.SellRemittances)
+                .HasForeignKey(t => t.DocumentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasIndex(t => t.DocumentId);
             });
         }
 

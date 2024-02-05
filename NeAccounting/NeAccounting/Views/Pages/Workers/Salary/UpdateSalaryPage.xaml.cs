@@ -15,8 +15,9 @@ namespace NeAccounting.Views.Pages
         private long LeftOver = 0;
         public UpdateSalaryPage(UpdateSalaryViewModel viewModel)
         {
-            InitializeComponent();
             ViewModel = viewModel;
+            DataContext = this;
+            InitializeComponent();
         }
 
 

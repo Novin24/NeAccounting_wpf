@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Enities.NovinEntity.Remittances;
 
 namespace Domain.NovinEntity.Documents
 {
@@ -6,6 +7,8 @@ namespace Domain.NovinEntity.Documents
     {
         #region Navigation
         public Guid CustomerId { get; private set; }
+        public IEnumerable<SellRemittance> SellRemittances { get;private set; }
+        public IEnumerable<BuyRemittance> BuyRemittances { get;private set; }
         #endregion
 
         #region Ctor
@@ -13,7 +16,7 @@ namespace Domain.NovinEntity.Documents
 
         internal Document(Guid id,
             Guid customerId,
-            int price,
+            uint price,
             string descripion,
             DateTime submitDate,
             bool receivedOrPaid
@@ -29,7 +32,7 @@ namespace Domain.NovinEntity.Documents
         #endregion
 
         #region Properties
-        public int Price { get; private set; }
+        public uint Price { get; private set; }
         public string Description { get; private set; }
         public DateTime SubmitDate { get; private set; }
         public bool ReceivedOrPaid { get; private set; }
