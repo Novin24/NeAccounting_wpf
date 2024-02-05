@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using DomainShared.ViewModels;
+using System.Windows.Controls;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Pages
 {
@@ -11,5 +13,10 @@ namespace NeAccounting.Pages
         {
             InitializeComponent();
         }
+        private void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+
+        }
+
     }
 }

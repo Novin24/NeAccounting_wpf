@@ -11,26 +11,20 @@
       mc:Ignorable="d"
       Title="TestPage">
 
+
+    <!--<Page.Resources>
+        <RoutedUICommand x:Key="cmd1"></RoutedUICommand>
+    </Page.Resources>
+    <Page.CommandBindings>
+        <CommandBinding Command="{StaticResource cmd1}" Executed="btn_font_Click"></CommandBinding>
+    </Page.CommandBindings>
+    <Page.InputBindings>
+        <KeyBinding  Key="F1" Command="{StaticResource cmd1}"></KeyBinding>
+    </Page.InputBindings>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
-        <StackPanel Grid.Column="1">
-            <nu:PersianDatePicker SelectedDate="{Binding ViewModel.Ts , Mode=TwoWay}"
-                                  DateChosen="PersianDatePicker_DateChosen" />
-
-            <nu:MonthPicker x:Name="mnp"
-                            LabelName="تاریخ"
-                            DateChosen="mnp_DateChosen"
-                            SelectedMon="{Binding ViewModel.Select , Mode=TwoWay}"
-                            SelectedYear="{Binding ViewModel.Tse ,Mode=TwoWay}" />
-
-            <Button Content="ثبت "
-                    Command="{Binding ViewModel.MyClickCommand}"
-                    Click="Button_Click" />
-        </StackPanel>
-    </Grid>
+        <TextBlock Name="txt" Text="0" Height="100" Width="100" />
+        <Button  Command="{StaticResource cmd1}" Name="btn_font" Grid.Column="2" Grid.Row="1" Width="60" Height="35" Content="Enter"  Margin="10,2" VerticalAlignment="Top"/>
+    <Button  Grid.Column="2" Grid.Row="1" Width="60" Height="35" Content="Enter" Margin="10,2" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+    
+    </Grid>-->
 </Page>
