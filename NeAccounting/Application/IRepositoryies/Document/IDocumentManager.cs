@@ -5,6 +5,6 @@ namespace NeApplication.IRepositoryies
 {
     public interface IDocumentManager : IRepository<Document>
     {
-
+        Task<string> GetLastDocumntNumber(DocumntType type);
     }
 }

@@ -1,10 +1,8 @@
 ﻿using Domain.NovinEntity.Customers;
-using Domain.NovinEntity.Materials;
 using DomainShared.Enums;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Customer;
-using DomainShared.ViewModels.Pun;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
@@ -16,15 +14,15 @@ namespace Infrastructure.Repositories
         public CustomerManager(NovinDbContext context) : base(context) { }
 
 
-        public Task<List<SuggestBoxViewModel<Guid>>> GetDisplayUser(bool? seller = null, bool? buyer = null)
+        public Task<List<SuggestBoxViewModel<Guid,long>>> GetDisplayUser(bool? seller = null, bool? buyer = null)
         {
             return TableNoTracking.Where(t => seller == null || t.Seller)
-                .Where(b=> buyer == null || b.Seller == seller)
-                .Select(x => new SuggestBoxViewModel<Guid>
+                .Where(b=> buyer == null || b.Buyer)
+                .Select(x => new SuggestBoxViewModel<Guid, long>
                 {
                     Id = x.Id,
-                    DisplayName = x.Name
-
+                    DisplayName = x.Name,
+                    UniqNumber = x.CusId
                 }).ToListAsync();
         }
 

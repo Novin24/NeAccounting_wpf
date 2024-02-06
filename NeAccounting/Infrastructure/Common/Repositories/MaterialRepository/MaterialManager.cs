@@ -1,5 +1,4 @@
 ﻿using Domain.NovinEntity.Materials;
-using DomainShared.ViewModels;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -9,14 +8,16 @@ namespace Infrastructure.Repositories
 {
     public class MaterialManager(NovinDbContext context) : Repository<Material>(context), IMaterialManager
     {
-        public Task<List<SuggestBoxViewModel<int>>> GetMaterails()
+        public Task<List<MatListDto>> GetMaterails()
         {
 
-            return TableNoTracking.Select(x => new SuggestBoxViewModel<int>
+            return TableNoTracking.Select(x => new MatListDto
             {
                 Id = x.Id,
-                DisplayName = x.Name
-
+                MaterialName = x.Name,
+                Entity = x.Entity,
+                LastPrice = x.LastPrice,    
+                UnitName = x.Unit.Name
             }).ToListAsync();
         }
 
@@ -91,7 +92,7 @@ namespace Infrastructure.Repositories
                 mt.PhysicalAddress = address;
                 mt.IsManufacturedGoods = isManufacturedGoods;
 
-                Update(mt,false);
+                Update(mt, false);
             }
             catch (Exception ex)
             {
