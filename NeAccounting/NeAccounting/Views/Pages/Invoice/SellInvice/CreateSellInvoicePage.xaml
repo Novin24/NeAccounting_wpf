@@ -6,6 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
+      xmlns:s="clr-namespace:System;assembly=mscorlib"
       d:DataContext="{d:DesignInstance local:CreateSellInvoicePage,
                                IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
@@ -60,7 +61,7 @@
 
                     </Grid.RowDefinitions>
                     <nu:HeaderPack NamePpage="فاکتور فروش"
-                                   Margin="30 0"/>
+                                   Margin="30 0" />
 
                     <Border Grid.Row="1"
                             Grid.ColumnSpan="2"
@@ -87,12 +88,11 @@
                             <Grid Margin="0 ,5,0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition  Width=".56*"/>
-                                    <ColumnDefinition Width="78"/>
+                                    <ColumnDefinition  Width=".56*" />
+                                    <ColumnDefinition Width="78" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Margin="4 4 5 0 ">
-
+                                <StackPanel  Margin="4 4 5 0 ">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
@@ -101,39 +101,42 @@
                                         <TextBlock FontFamily="Calibri"
                                                    DockPanel.Dock="Right"
                                                    FontSize="14"
+                                                   x:Name="lbl_cusId"
                                                    Foreground="#BB8F60"
-                                                   Text="99999"
                                                    VerticalAlignment="Center"
                                                    Margin="6 21 4 0" />
-                                        <StackPanel
-                                                DockPanel.Dock="Right">
+                                        <StackPanel DockPanel.Dock="Right">
                                             <TextBlock Text="F3"
                                                        TextAlignment="Center"
-                                                       FontSize="11"/>
+                                                       FontSize="11" />
                                             <Button Padding="1 0 "
-                                                FontSize="21"
-                                                FontFamily="Calibri">
+                                                    FontSize="21"
+                                                    FontFamily="Calibri">
 
                                                 <ui:SymbolIcon Symbol="QrCode20" />
 
                                             </Button>
                                         </StackPanel>
-                                        <StackPanel Margin="0 0 5 0" DockPanel.Dock="Right">
+                                        <StackPanel Margin="0 0 5 0"
+                                                    DockPanel.Dock="Right">
                                             <TextBlock Text="F4"
                                                        TextAlignment="Center"
-                                                       FontSize="11"/>
+                                                       FontSize="11" />
                                             <Button Padding="1 0 "
-                                                FontFamily="Calibri">
+                                                    FontFamily="Calibri">
 
-                                                <ui:SymbolIcon Symbol="PersonAdd20" 
-                                                FontSize="21"/>
+                                                <ui:SymbolIcon Symbol="PersonAdd20"
+                                                               FontSize="21" />
 
                                             </Button>
                                         </StackPanel>
                                     </DockPanel>
-                                    <ui:TextBox TextAlignment="Center"
-                                                FontFamily="Calibri"
-                                                Margin="0 4 0 0" />
+                                    <ui:AutoSuggestBox FontFamily="Calibri"
+                                                       OriginalItemsSource="{Binding ViewModel.Cuslist}"
+                                                       SuggestionChosen="Txt_name_SuggestionChosen"
+                                                       DisplayMemberPath="DisplayName"
+                                                       Uid=""
+                                                       Margin="0 4 0 0" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1"
@@ -142,14 +145,14 @@
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
                                                Text="آخرین فاکتور "
-                                               Margin="2 0 0 0 " 
-                                               HorizontalAlignment="Center"/>
-                                    <ui:NumberBox TextAlignment="Center"
-                                                  FontFamily="Calibri"
-                                                  Margin="0 4 0 0"
-                                                  IsEnabled="False"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  FlowDirection="LeftToRight" />
+                                               Margin="2 0 0 0 "
+                                               HorizontalAlignment="Center" />
+                                    <TextBox TextAlignment="Center"
+                                             FontFamily="Calibri"
+                                             Margin="0 4 0 0"
+                                             IsTabStop="False"
+                                             Text="{Binding ViewModel.LastInvoice}"
+                                             IsReadOnly="True" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="2"
                                             Margin="5 29 0 0 ">
@@ -170,8 +173,8 @@
 
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
                                                       Grid.Column="3"
-                                                      LabelName="تاریخ" 
-                                                      Margin="0 21 0 0 "/>
+                                                      LabelName="تاریخ"
+                                                      Margin="0 21 0 0 " />
 
 
                                 <Line Grid.ColumnSpan="5"
@@ -202,10 +205,10 @@
 
 
                                 <TextBlock FontFamily="Calibri"
-                                               FontSize="15"
+                                           FontSize="15"
                                            Margin="0 40 0 0 "
                                            Text="#"
-                                               HorizontalAlignment="Center" />
+                                           HorizontalAlignment="Center" />
                                 <StackPanel Grid.Column="1"
                                             Margin="2 14 2 0 ">
                                     <TextBlock FontFamily="Calibri"
@@ -214,6 +217,9 @@
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
+                                                       OriginalItemsSource="{Binding ViewModel.MatList}"
+                                                       DisplayMemberPath="MaterialName"
+                                                       SuggestionChosen="Txt_mat_SuggestionChosen"
                                                        FontFamily="Calibri"
                                                        Margin="0 2 0 0" />
                                 </StackPanel>
@@ -228,6 +234,8 @@
                                                   TextAlignment="Center"
                                                   ClearButtonEnabled="False"
                                                   FontFamily="Calibri"
+                                                  Value="{Binding ViewModel.AmountOf, Mode=TwoWay}"
+                                                  LostFocus="txt_amount_LostFocus"
                                                   SpinButtonPlacementMode="Hidden"
                                                   Margin="0 2 0 0" />
                                 </StackPanel>
@@ -240,6 +248,7 @@
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_UnitName"
                                                 TextAlignment="Center"
+                                                IsEnabled="False"
                                                 ClearButtonEnabled="False"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
@@ -251,12 +260,14 @@
                                                FontSize="15"
                                                Text="قیمت واحد"
                                                HorizontalAlignment="Center" />
-                                    <ui:NumberBox x:Name="txt_Unit_price"
-                                                  TextAlignment="Center"
-                                                  ClearButtonEnabled="False"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  FontFamily="Calibri"
-                                                  Margin="0 2 0 0" />
+                                    <ui:TextBox x:Name="txt_Unit_price"
+                                                TextAlignment="Center"
+                                                ClearButtonEnabled="False"
+                                                LostFocus="txt_Unit_price_LostFocus"
+                                                PreviewTextInput="txt_Unit_price_PreviewTextInput"
+                                                TextChanged="txt_Unit_price_TextChanged"
+                                                FontFamily="Calibri"
+                                                Margin="0 2 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="5"
                                             Margin="2 14 2 0 ">
@@ -265,12 +276,12 @@
                                                FontSize="15"
                                                Text="قیمت کل"
                                                HorizontalAlignment="Center" />
-                                    <ui:NumberBox x:Name="txt_total_price"
-                                                  TextAlignment="Center"
-                                                  ClearButtonEnabled="False"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  FontFamily="Calibri"
-                                                  Margin="0 2 0 0" />
+                                    <ui:TextBox x:Name="txt_total_price"
+                                                TextAlignment="Center"
+                                                ClearButtonEnabled="False"
+                                                IsEnabled="False"
+                                                FontFamily="Calibri"
+                                                Margin="0 2 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="6"
                                             Margin="2 14 4 0 ">
@@ -281,6 +292,7 @@
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_description"
                                                 TextAlignment="Center"
+                                                Text="{Binding ViewModel.Description, Mode=TwoWay}"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
@@ -291,43 +303,55 @@
                                         FontSize="17"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        HorizontalAlignment="Center" >
+                                        Click="Button_Click"
+                                        HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="افزودن"/>
-                                        <TextBlock Text=" (F1)" FontSize="12" VerticalAlignment="Center" Foreground="#FFA3A3A3" />
+                                        <TextBlock Text="افزودن" />
+                                        <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
                                     </StackPanel>
                                 </Button>
                             </Grid>
 
-                            <DataGrid x:Name="Workersdata"
+                            <DataGrid x:Name="dgv_Inv"
                                       BorderThickness="10"
                                       Grid.Row="2"
                                       CanUserResizeColumns="False"
                                       FontSize="15"
+                                      CanUserDeleteRows="False"
+                                      IsReadOnly="True"
                                       CanUserResizeRows="False"
+                                      HeadersVisibility="None"
+                                      ItemsSource="{Binding ViewModel.List, Mode=OneWay}"
                                       FontFamily="Calibri"
                                       AutoGenerateColumns="False">
+
+                                <DataGrid.Resources>
+                                    <s:String x:Key="format">{0:N0}</s:String>
+                                </DataGrid.Resources>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".22*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        Binding="{Binding RowId}"
+                                                        Width=".22*" />
+                                    <DataGridTextColumn Binding="{Binding MatName}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width=".7*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        Binding="{Binding AmountOf}"
                                                         Width=".37*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        Binding="{Binding UnitName}"
                                                         Width=".37*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        Binding="{Binding Price, StringFormat={StaticResource format}}"
                                                         Width=".5*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        Binding="{Binding TotalPrice, StringFormat={StaticResource format}}"
                                                         Width=".73*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        Binding="{Binding Description}"
                                                         Width="1.5*" />
                                 </DataGrid.Columns>
                             </DataGrid>

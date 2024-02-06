@@ -18,7 +18,6 @@ namespace Infrastructure.Utilities
             builder.Entity<Document>(b =>
             {
                 b.Property(r => r.Serial).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-
                 b.HasIndex(b => b.Id);
                 b.HasIndex(b => b.Serial);
             });

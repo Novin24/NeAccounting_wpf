@@ -15,6 +15,8 @@ namespace Infrastructure.UnitOfWork
         private IWorkerManager _workerManager;
 
         private IUnitManager _unitManager;
+        
+        private IDocumentManager _documentManager;
 
         public ICustomerManager CustomerManager
         {
@@ -58,6 +60,15 @@ namespace Infrastructure.UnitOfWork
             {
                 _workerManager ??= new WorkerManager(NovinDb);
                 return _workerManager;
+            }
+        }
+        
+        public IDocumentManager DocumentManager
+        {
+            get
+            {
+                _documentManager ??= new DocumentManager(NovinDb);
+                return _documentManager;
             }
         }
 

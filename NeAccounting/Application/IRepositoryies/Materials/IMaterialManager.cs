@@ -7,7 +7,7 @@ namespace NeApplication.IRepositoryies
 {
     public interface IMaterialManager : IRepository<Material>
     {
-        Task<List<SuggestBoxViewModel<int>>> GetMaterails();
+        Task<List<MatListDto>> GetMaterails();
         Task<List<PunListDto>> GetMaterails(string name, string serial);
         Task<(string error, PunListDto pun)> GetMaterailById(int Id);
         Task<(string error, bool isSuccess)> CreateMaterial(string name,

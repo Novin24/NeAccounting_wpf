@@ -5,6 +5,12 @@
         public T Id { get; set; }
         public string DisplayName { get; set; }
     }
+    public class SuggestBoxViewModel<T,S>
+    {
+        public T Id { get; set; }
+        public string DisplayName { get; set; }
+        public S UniqNumber { get; set; }
+    }
 
     public class PersonnerlSuggestBoxViewModel
     {
@@ -12,4 +18,5 @@
         public string DisplayName { get; set; }
         public int PersonnelId { get; set; }
     }
+
 }

@@ -32,11 +32,12 @@ namespace Domain.NovinEntity.Documents
         #endregion
 
         #region Properties
-        public uint Price { get; private set; }
-        public string Description { get; private set; }
-        public DateTime SubmitDate { get; private set; }
-        public bool ReceivedOrPaid { get; private set; }
-        public long Serial { get; private set; }
+        public uint Price { get; set; }
+        public string Description { get; set; }
+        public DateTime SubmitDate { get; set; }
+        public DocumntType Type { get; set; }
+        public bool ReceivedOrPaid { get; set; }
+        public long Serial { get; set; }
         #endregion
     }
 }
