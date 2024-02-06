@@ -163,8 +163,7 @@
 
     <Grid>
         <StackPanel Margin="0 1 20 5 ">
-            <TextBlock FontWeight="Bold"
-                       Margin="9 0 9 7"
+            <TextBlock Margin="9 0 9 7"
                        FontFamily="Calibri"
                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                        x:Name="lbl_name"

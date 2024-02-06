@@ -87,7 +87,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition Width=".56*"/>
-                                    <ColumnDefinition Width="77"/>
+                                    <ColumnDefinition Width="78"/>
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Margin="4 4 5 0 ">
@@ -97,14 +97,7 @@
                                                    Text="نام مشتری"
                                                    Margin="2 21 0 0 " />
 
-                                        <TextBlock FontFamily="Calibri"
-                                                   DockPanel.Dock="Right"
-                                                   FontSize="14"
-                                                   Foreground="#BB8F60"
-                                                   Text="99999"
-                                                   VerticalAlignment="Center"
-                                                   Margin="6 21 4 0" />
-                                        <StackPanel
+                                        <StackPanel Margin="0 0 3 0" 
                                                 DockPanel.Dock="Right">
                                             <TextBlock Text="F3"
                                                        TextAlignment="Center"
@@ -129,13 +122,20 @@
 
                                             </Button>
                                         </StackPanel>
+                                        <TextBlock FontFamily="Calibri"
+                                                   DockPanel.Dock="Right"
+                                                   FontSize="14"
+                                                   Foreground="#BB8F60"
+                                                   Text="99999"
+                                                   VerticalAlignment="Center"
+                                                   Margin="0 22 6 0" />
                                     </DockPanel>
                                     <ui:AutoSuggestBox FontFamily="Calibri"
                                                        Margin="0 3 0 0" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1"
-                                            Margin="5 24 5 0 ">
+                                            Margin="5 23 5 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
@@ -144,13 +144,13 @@
                                                HorizontalAlignment="Center"/>
                                     <ui:TextBox TextAlignment="Center"
                                                   FontFamily="Calibri"
-                                                  Margin="0 4 0 0"
+                                                  Margin="0 5 0 0"
                                                   IsEnabled="False"
                                                   Text="AAAAAAAAAA"
                                                   FlowDirection="LeftToRight" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="2"
-                                            Margin="5 24 0 0 ">
+                                            Margin="5 23 0 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
@@ -160,7 +160,7 @@
                                                   FontFamily="Calibri"
                                                   Maximum="100"
                                                   Minimum="0"
-                                                  Margin="0 4 0 0"
+                                                  Margin="0 5 0 0"
                                                   ClearButtonEnabled="False"
                                                   Icon="{ui:SymbolIcon ShoppingBagPercent24}"
                                                   SpinButtonPlacementMode="Hidden"
@@ -238,6 +238,7 @@
                                     <ui:TextBox x:Name="txt_UnitName"
                                                 TextAlignment="Center"
                                                 ClearButtonEnabled="False"
+                                                IsEnabled="False"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
@@ -251,7 +252,6 @@
                                     <ui:NumberBox x:Name="txt_Unit_price"
                                                   TextAlignment="Center"
                                                   ClearButtonEnabled="False"
-                                                  IsEnabled="False"
                                                   SpinButtonPlacementMode="Hidden"
                                                   FontFamily="Calibri"
                                                   Margin="0 2 0 0" />
