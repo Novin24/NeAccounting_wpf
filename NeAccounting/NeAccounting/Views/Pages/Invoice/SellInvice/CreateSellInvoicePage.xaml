@@ -92,19 +92,15 @@
                                     <ColumnDefinition Width="78" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <StackPanel  Margin="4 4 5 0 ">
+                                <StackPanel  Margin="4 4 5 0 " 
+                                             MaxWidth="300"
+                                             MinWidth="190"
+                                             HorizontalAlignment="Right">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
                                                    Text="نام مشتری"
-                                                   Margin="2 11 0 0 " />
-                                        <TextBlock FontFamily="Calibri"
-                                                   DockPanel.Dock="Right"
-                                                   FontSize="14"
-                                                   x:Name="lbl_cusId"
-                                                   Foreground="#BB8F60"
-                                                   VerticalAlignment="Center"
-                                                   Margin="6 21 4 0" />
+                                                   Margin="2 21 0 0 " />
                                         <StackPanel DockPanel.Dock="Right">
                                             <TextBlock Text="F3"
                                                        TextAlignment="Center"
@@ -130,8 +126,17 @@
 
                                             </Button>
                                         </StackPanel>
+                                        <TextBlock FontFamily="Calibri"
+                                                   DockPanel.Dock="Right"
+                                                   FontSize="14"
+                                                   x:Name="lbl_cusId"
+                                                   Foreground="#BB8F60"
+                                                   VerticalAlignment="Center"
+                                                   Text="222222"
+                                                   Margin="6 22 6 0" />
                                     </DockPanel>
                                     <ui:AutoSuggestBox FontFamily="Calibri"
+                                                       TabIndex="0"
                                                        OriginalItemsSource="{Binding ViewModel.Cuslist}"
                                                        SuggestionChosen="Txt_name_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
@@ -162,6 +167,7 @@
                                                Text="پورسانت"
                                                Margin="2 0 0 0 " />
                                     <ui:NumberBox TextAlignment="Center"
+                                                  TabIndex="1"
                                                   FontFamily="Calibri"
                                                   ClearButtonEnabled="False"
                                                   Maximum="100"
@@ -173,6 +179,10 @@
 
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
                                                       Grid.Column="3"
+                                                      TabIndex="2"
+                                                      MinWidth="230"
+                                                      HorizontalAlignment="Left"
+                                                      MaxWidth="250"
                                                       LabelName="تاریخ"
                                                       Margin="0 21 0 0 " />
 
@@ -216,6 +226,7 @@
                                                Text="شرح کالا"
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
+                                                       TabIndex="3"
                                                        Icon=""
                                                        OriginalItemsSource="{Binding ViewModel.MatList}"
                                                        DisplayMemberPath="MaterialName"
@@ -234,6 +245,7 @@
                                                   TextAlignment="Center"
                                                   ClearButtonEnabled="False"
                                                   FontFamily="Calibri"
+                                                  TabIndex="4"
                                                   Value="{Binding ViewModel.AmountOf, Mode=TwoWay}"
                                                   LostFocus="txt_amount_LostFocus"
                                                   SpinButtonPlacementMode="Hidden"
@@ -263,6 +275,7 @@
                                     <ui:TextBox x:Name="txt_Unit_price"
                                                 TextAlignment="Center"
                                                 ClearButtonEnabled="False"
+                                                TabIndex="5"
                                                 LostFocus="txt_Unit_price_LostFocus"
                                                 PreviewTextInput="txt_Unit_price_PreviewTextInput"
                                                 TextChanged="txt_Unit_price_TextChanged"
@@ -294,6 +307,7 @@
                                                 TextAlignment="Center"
                                                 Text="{Binding ViewModel.Description, Mode=TwoWay}"
                                                 FontFamily="Calibri"
+                                                TabIndex="6"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
 
@@ -301,6 +315,7 @@
                                         Padding="4 5 "
                                         IsDefault="True"
                                         FontSize="17"
+                                        TabIndex="7"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
                                         Click="Button_Click"

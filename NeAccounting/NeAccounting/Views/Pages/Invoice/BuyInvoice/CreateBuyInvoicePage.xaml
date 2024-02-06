@@ -90,7 +90,11 @@
                                     <ColumnDefinition Width="78"/>
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Margin="4 4 5 0 ">
+                                <StackPanel Margin="4 4 5 0 " 
+                                             MaxWidth="300"
+                                             MinWidth="190"
+                                             HorizontalAlignment="Right">
+
                                     <DockPanel LastChildFill="False">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
@@ -169,6 +173,8 @@
 
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
                                                       Grid.Column="3"
+                                                      MinWidth="230"
+                                                      HorizontalAlignment="Left"
                                                       Margin="0 20 0 0"
                                                       LabelName="تاریخ" />
 
