@@ -26,8 +26,8 @@ namespace Infrastructure.Utilities
             {
                 b.HasIndex(b => b.Id);
                 b.Property(b => b.CusId).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-                b.Property(r => r.Name).IsRequired();
-                b.Property(r => r.NationalCode).IsRequired();
+                b.Property(r => r.Name).HasMaxLength(50).IsRequired();
+                b.Property(r => r.NationalCode).HasMaxLength(10).IsRequired();
                 b.Property(r => r.Mobile).IsRequired();
             });
 
@@ -35,16 +35,19 @@ namespace Infrastructure.Utilities
             builder.Entity<Worker>(b =>
             {
                 b.HasIndex(t => t.PersonnelId);
-                b.Property(t => t.FullName).IsRequired();
+                b.Property(t => t.FullName).HasMaxLength(50).IsRequired();
                 b.Property(t => t.Mobile).IsRequired();
-                b.Property(t => t.NationalCode).IsRequired();
-                b.Property(t => t.Address).IsRequired();
-                b.Property(t => t.AccountNumber).IsRequired();
-                b.Property(t => t.JobTitle).IsRequired();
+                b.Property(t => t.NationalCode).HasMaxLength(10).IsRequired();
+                b.Property(t => t.Address).HasMaxLength(100).IsRequired();
+                b.Property(t => t.AccountNumber).HasMaxLength(26).IsRequired();
+                b.Property(t => t.JobTitle).HasMaxLength(30).IsRequired();
             });
 
             builder.Entity<Material>(b =>
             {
+
+                b.Property(t => t.Unit).HasMaxLength(30);
+
                 b.HasIndex(t => t.Id);
                 b.HasOne(t => t.Unit)
                 .WithMany(s => s.Materials)
