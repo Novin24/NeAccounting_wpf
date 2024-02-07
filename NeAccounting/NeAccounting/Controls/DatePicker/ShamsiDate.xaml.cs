@@ -28,7 +28,7 @@ namespace NeAccounting.Controls
         private static int selectedYear = 1387;
         private static int selectedMonth = 10;
         private static int selectedDay = 1;
-        private static int selectedBtnIndex = 0;
+        private static int selectedBtnIndex = -1;
 
         //برای حرکت بین ماه ها
         //به شمسی
@@ -109,7 +109,7 @@ namespace NeAccounting.Controls
             this.comboBoxMonths.SelectedIndex = month - 1;
             this.comboBoxYear.ItemsSource = LoadYear(year);
             this.comboBoxYear.SelectedItem = year;
-
+            selectedBtnIndex = -1;
             //Fill the selected date
             PersianSelectedDate = string.Concat(year, "/", month, "/", day);
             CalculateMonth(year, month);
@@ -432,7 +432,7 @@ namespace NeAccounting.Controls
         /// <param name="tooltip_context">Text of tooltip</param>
         void ChangeProperties(int which, string persianDate, bool isCurrentDay, string persianTextBlockResourceName, string tooltip_context)
         {
-            if (persianTextBlockResourceName == "TextBlockStyle24")
+            if (selectedBtnIndex == -1 && ((SelectedDate.HasValue && persianTextBlockResourceName == "TextBlockStyle24") || (SelectedDate == null && isCurrentDay)))
             {
                 selectedBtnIndex = which;
             }
@@ -940,7 +940,6 @@ namespace NeAccounting.Controls
 
         private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            var _FrameworkElement = e.OriginalSource as FrameworkElement;
             if (e.Key == Key.Left)
             {
                 var date = SetSelectedBtnIndex(1);
