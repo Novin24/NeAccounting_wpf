@@ -210,7 +210,7 @@
                             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                             TextAlignment="Center"
                             FontFamily="2  Titr"
-                            Padding="2">
+                            Padding="2 8 2 2">
                 </ui:TextBox>
                 <Popup Name="persianCalnedarPopup"
                        HorizontalAlignment="Right"
