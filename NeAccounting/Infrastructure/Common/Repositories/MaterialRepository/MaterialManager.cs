@@ -16,7 +16,7 @@ namespace Infrastructure.Repositories
                 Id = x.Id,
                 MaterialName = x.Name,
                 Entity = x.Entity,
-                LastPrice = x.LastPrice,    
+                LastPrice = x.LastPrice,
                 UnitName = x.Unit.Name
             }).ToListAsync();
         }
@@ -121,6 +121,30 @@ namespace Infrastructure.Repositories
                 LastPrice = mt.LastPrice,
                 UnitName = mt.Unit.Name
             });
+        }
+
+        public async Task<(string errore, bool isSuccess)> UpdateMaterialEntity(int materialId,
+            double entity,
+            bool sellOrBuy)
+        {
+            try
+            {
+                var mt = await Entities.FindAsync(materialId);
+
+                if (mt == null)
+                    return new("کالای مورد نظر یافت نشد !!!", false);
+
+                if (sellOrBuy)
+                    mt.Entity -= entity;
+                else mt.Entity += entity;
+
+                Update(mt, false);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
         }
     }
 }

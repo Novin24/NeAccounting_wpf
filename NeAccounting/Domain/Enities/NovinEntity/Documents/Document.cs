@@ -7,27 +7,50 @@ namespace Domain.NovinEntity.Documents
     {
         #region Navigation
         public Guid CustomerId { get; private set; }
-        public IEnumerable<SellRemittance> SellRemittances { get;private set; }
-        public IEnumerable<BuyRemittance> BuyRemittances { get;private set; }
+        public IEnumerable<SellRemittance> SellRemittances { get; private set; }
+        public IEnumerable<BuyRemittance> BuyRemittances { get; private set; }
         #endregion
 
         #region Ctor
-        internal Document() { }
+        internal Document()
+        {
+            SellRemittances = new List<SellRemittance>();
+            BuyRemittances = new List<BuyRemittance>();
+        }
 
-        internal Document(Guid id,
+        public Document(
             Guid customerId,
             uint price,
             string descripion,
             DateTime submitDate,
-            bool receivedOrPaid
-            )
+            bool receivedOrPaid)
         {
-            Id = id;
             CustomerId = customerId;
             Price = price;
             Description = descripion;
             SubmitDate = submitDate;
             ReceivedOrPaid = receivedOrPaid;
+        }
+        public Document(
+            Guid customerId,
+            uint price,
+            string descripion,
+            DateTime submitDate,
+            bool receivedOrPaid,
+            List<SellRemittance> sellRemittances) : this(customerId, price, descripion, submitDate, receivedOrPaid)
+        {
+            SellRemittances = sellRemittances;
+        }
+        
+        public Document(
+            Guid customerId,
+            uint price,
+            string descripion,
+            DateTime submitDate,
+            bool receivedOrPaid,
+            List<BuyRemittance> buyRemittances) : this(customerId, price, descripion, submitDate, receivedOrPaid)
+        {
+            BuyRemittances = buyRemittances;
         }
         #endregion
 

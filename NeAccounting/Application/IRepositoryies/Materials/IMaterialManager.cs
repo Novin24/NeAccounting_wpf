@@ -1,5 +1,4 @@
 ﻿using Domain.NovinEntity.Materials;
-using DomainShared.ViewModels;
 using DomainShared.ViewModels.Pun;
 using NeApplication.Common;
 
@@ -14,7 +13,7 @@ namespace NeApplication.IRepositoryies
             int unitId,
             long lastPrice,
             string serial,
-            string address , 
+            string address,
             bool isManufacturedGoods);
 
         Task<(string error, bool isSuccess)> UpdateMaterial(
@@ -22,8 +21,12 @@ namespace NeApplication.IRepositoryies
             string name,
             int unitId,
             string serial,
-            string address, 
+            string address,
             long lastPrice,
             bool isManufacturedGoods);
+
+        Task<(string errore, bool isSuccess)> UpdateMaterialEntity(int materialId,
+            double entity, 
+            bool sellOrBuy);
     }
 }

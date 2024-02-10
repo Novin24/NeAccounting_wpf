@@ -46,13 +46,17 @@ namespace Infrastructure.Utilities
             builder.Entity<Material>(b =>
             {
 
-                b.Property(t => t.Unit).HasMaxLength(30);
-
                 b.HasIndex(t => t.Id);
                 b.HasOne(t => t.Unit)
                 .WithMany(s => s.Materials)
                 .HasForeignKey(t => t.UnitId)
                 .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            builder.Entity<Unit>(b =>
+            {
+                b.HasIndex(t => t.Id);
+                b.Property(t => t.Name).HasMaxLength(30);
             });
 
             builder.Entity<Salary>(b =>
@@ -89,7 +93,7 @@ namespace Infrastructure.Utilities
                 b.HasIndex(t => t.PersianYear);
                 b.HasIndex(t => t.WorkerId);
             });
-            
+
             builder.Entity<BuyRemittance>(b =>
             {
                 b.HasOne(t => t.Material)
@@ -104,14 +108,14 @@ namespace Infrastructure.Utilities
 
                 b.HasIndex(t => t.DocumentId);
             });
-            
+
             builder.Entity<SellRemittance>(b =>
             {
                 b.HasOne(t => t.Material)
                 .WithMany(s => s.SellRemittances)
                 .HasForeignKey(t => t.MaterialId)
                 .OnDelete(DeleteBehavior.Cascade);
-                
+
                 b.HasOne(t => t.Document)
                 .WithMany(s => s.SellRemittances)
                 .HasForeignKey(t => t.DocumentId)

@@ -42,6 +42,7 @@ namespace NeAccounting.Views.Pages
                 txt_Unit_price.Text = string.Empty;
                 txt_total_price.Text = string.Empty;
                 txt_description.Text = string.Empty;
+                txt_MaterialName.Focus();
             }
             dgv_Inv.Items.Refresh();
         }

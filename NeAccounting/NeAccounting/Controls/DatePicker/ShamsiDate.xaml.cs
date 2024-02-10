@@ -964,7 +964,7 @@ namespace NeAccounting.Controls
                 SelectedDate = date;
                 return;
             }
-            if (e.Key == Key.Space)
+            if (e.Key == Key.Enter)
             {
                 Click?.Invoke(this, e);
                 return;
