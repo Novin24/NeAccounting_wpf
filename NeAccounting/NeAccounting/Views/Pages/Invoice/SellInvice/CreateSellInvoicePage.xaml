@@ -118,7 +118,7 @@
                                             <TextBlock Text="F4"
                                                        TextAlignment="Center"
                                                        FontSize="11" />
-                                            <Button Padding="1 0 "
+                                            <Button Padding="1 0"
                                                     FontFamily="Calibri">
 
                                                 <ui:SymbolIcon Symbol="PersonAdd20"
@@ -132,11 +132,9 @@
                                                    x:Name="lbl_cusId"
                                                    Foreground="#BB8F60"
                                                    VerticalAlignment="Center"
-                                                   Text="222222"
                                                    Margin="6 22 6 0" />
                                     </DockPanel>
                                     <ui:AutoSuggestBox FontFamily="Calibri"
-                                                       TabIndex="0"
                                                        OriginalItemsSource="{Binding ViewModel.Cuslist}"
                                                        SuggestionChosen="Txt_name_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
@@ -167,7 +165,6 @@
                                                Text="پورسانت"
                                                Margin="2 0 0 0 " />
                                     <ui:NumberBox TextAlignment="Center"
-                                                  TabIndex="1"
                                                   FontFamily="Calibri"
                                                   ClearButtonEnabled="False"
                                                   Maximum="100"
@@ -179,7 +176,6 @@
 
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
                                                       Grid.Column="3"
-                                                      TabIndex="2"
                                                       MinWidth="230"
                                                       HorizontalAlignment="Left"
                                                       MaxWidth="250"
@@ -226,7 +222,6 @@
                                                Text="شرح کالا"
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
-                                                       TabIndex="3"
                                                        Icon=""
                                                        OriginalItemsSource="{Binding ViewModel.MatList}"
                                                        DisplayMemberPath="MaterialName"
@@ -245,7 +240,6 @@
                                                   TextAlignment="Center"
                                                   ClearButtonEnabled="False"
                                                   FontFamily="Calibri"
-                                                  TabIndex="4"
                                                   Value="{Binding ViewModel.AmountOf, Mode=TwoWay}"
                                                   LostFocus="txt_amount_LostFocus"
                                                   SpinButtonPlacementMode="Hidden"
@@ -275,7 +269,6 @@
                                     <ui:TextBox x:Name="txt_Unit_price"
                                                 TextAlignment="Center"
                                                 ClearButtonEnabled="False"
-                                                TabIndex="5"
                                                 LostFocus="txt_Unit_price_LostFocus"
                                                 PreviewTextInput="txt_Unit_price_PreviewTextInput"
                                                 TextChanged="txt_Unit_price_TextChanged"
@@ -307,22 +300,19 @@
                                                 TextAlignment="Center"
                                                 Text="{Binding ViewModel.Description, Mode=TwoWay}"
                                                 FontFamily="Calibri"
-                                                TabIndex="6"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
 
                                 <Button Grid.Column="7"
                                         Padding="4 5 "
-                                        IsDefault="True"
                                         FontSize="17"
-                                        TabIndex="7"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
                                         Click="Button_Click"
                                         HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="افزودن" />
-                                        <TextBlock Text=" (F1)"
+                                        <TextBlock Text=" (F2)"
                                                    FontSize="12"
                                                    VerticalAlignment="Center"
                                                    Foreground="#FFA3A3A3" />
@@ -370,16 +360,23 @@
                                                         Width="1.5*" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button Content="ثبت"
+                            <Button 
                                     Grid.Row="3"
                                     Padding="30 4 "
                                     Margin="0 20"
                                     Grid.ColumnSpan="2"
-                                    IsDefault="True"
                                     FontSize="17"
                                     FontFamily="Calibri"
                                     VerticalAlignment="Bottom"
-                                    HorizontalAlignment="Center" />
+                                    HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="ثبت" />
+                                    <TextBlock Text=" (F1)"
+                                               FontSize="12"
+                                               VerticalAlignment="Center"
+                                               Foreground="#FFA3A3A3" />
+                                </StackPanel>
+                            </Button>
                         </Grid>
 
 

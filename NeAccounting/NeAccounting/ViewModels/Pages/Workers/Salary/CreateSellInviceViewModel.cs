@@ -112,4 +112,11 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         rowId++;
         return true;
     }
+
+    [RelayCommand]
+    private async Task OnSumbit()
+    {
+        using UnitOfWork db = new UnitOfWork();
+        
+    }
 }
