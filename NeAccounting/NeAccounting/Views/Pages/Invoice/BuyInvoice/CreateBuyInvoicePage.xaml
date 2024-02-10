@@ -191,7 +191,7 @@
                                       Height="9" />
                             </Grid>
                             <Grid Grid.Row="1"
-                                  Margin="8 0 8 16">
+                                  Margin="10 0 10 16">
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width=".23*" />
@@ -201,7 +201,7 @@
                                     <ColumnDefinition Width=".6*" />
                                     <ColumnDefinition Width=".7*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width=".5*" />
+                                    <ColumnDefinition Width="95" />
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock FontFamily="Calibri"
@@ -287,7 +287,7 @@
                                     <ui:TextBox x:Name="txt_description"
                                                 TextAlignment="Center"
                                                 FontFamily="Calibri"
-                                                Margin="0 2 4 0" />
+                                                Margin="0 2 0 0" />
                                 </StackPanel>
 
                                 <Button Grid.Column="7"
@@ -313,28 +313,44 @@
                                       FontFamily="Calibri"
                                       AutoGenerateColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".22*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        Width=".23*" />
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width=".7*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        Width=".37*" />
+                                                        Width=".39*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        Width=".37*" />
+                                                        Width=".39*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        Width=".5*" />
+                                                        Width=".6*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        Width=".73*" />
+                                                        Width=".7*" />
 
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        Width="1.5*" />
+                                                        Width="*" />
+
+                                    <DataGridTemplateColumn Width="95">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center">
+                                                    <Button  BorderBrush="Transparent"
+                                                             Margin="2"
+                                                             CommandParameter="{Binding Id , Mode=OneWay}"
+                                                             Command="{Binding Path=DataContext.ViewModel.UpdateMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                             Padding="7,5">
+                                                        <ui:SymbolIcon Symbol="Pen16" />
+                                                    </Button>
+                                                    <Button Margin="3"
+                                                            CommandParameter="{Binding Id , Mode=OneWay}"
+                                                            Command="{Binding Path=DataContext.ViewModel.RemoveMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                            Padding="7,5">
+                                                        <ui:SymbolIcon Symbol="Delete16" />
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <Button Content="ثبت (F1)"

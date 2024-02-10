@@ -133,7 +133,6 @@
                                     </DockPanel>
                                     <ui:TextBox TextAlignment="Center"
                                                 FontFamily="Calibri"
-                                                TabIndex="0"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
@@ -159,7 +158,6 @@
                                                Text="خریدار"
                                                Margin="2 0 0 0 " />
                                     <ui:TextBox TextAlignment="Center"
-                                                TabIndex="1"
                                                 FontFamily="Calibri"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
@@ -176,7 +174,6 @@
                                                   ClearButtonEnabled="False"
                                                   Maximum="100"
                                                   Minimum="0"
-                                                  TabIndex="2"
                                                   Icon="{ui:SymbolIcon ShoppingBagPercent24}"
                                                   Margin="0 4 0 0"
                                                   Padding="0 8 5 8  "
@@ -184,7 +181,6 @@
                                 </StackPanel>
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
                                                       Grid.Column="4"
-                                                      TabIndex="3"
                                                       LabelName="تاریخ"
                                                       Margin="0 19.5 0 0"/>
 
@@ -210,7 +206,7 @@
                                     <ColumnDefinition Width=".5*" />
                                     <ColumnDefinition Width=".73*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width=".5*" />
+                                    <ColumnDefinition Width="95" />
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock FontFamily="Calibri"
@@ -225,7 +221,6 @@
                                                Text="شرح کالا"
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
-                                                       TabIndex="4"
                                                        Icon=""
                                                        FontFamily="Calibri"
                                                        Margin="0 2 0 0" />
@@ -241,7 +236,6 @@
                                                   TextAlignment="Center"
                                                   ClearButtonEnabled="False"
                                                   FontFamily="Calibri"
-                                                  TabIndex="5"
                                                   SpinButtonPlacementMode="Hidden"
                                                   Margin="0 2 0 0" />
                                 </StackPanel>
@@ -282,13 +276,11 @@
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_description"
                                                 TextAlignment="Center"
-                                                TabIndex="6"
                                                 FontFamily="Calibri"
-                                                Margin="0 2 4 0" />
+                                                Margin="0 2 0 0" />
                                 </StackPanel>
                                 <Button Grid.Column="7"
                                         Padding="4 5 "
-                                        TabIndex="7"
                                         IsDefault="True"
                                         FontSize="17"
                                         FontFamily="Calibri"
@@ -310,29 +302,46 @@
                                       AutoGenerateColumns="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding Id}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".32*" />
+                                                        Width=".23*" />
                                     <DataGridTextColumn Binding="{Binding MaterialName}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width=".7*" />
                                     <DataGridTextColumn Binding="{Binding amount}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width=".46*" />
                                     <DataGridTextColumn Binding="{Binding UnitName}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width=".5*" />
                                     <DataGridTextColumn Binding="{Binding Total_price}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width=".73*" />
                                     <DataGridTextColumn Binding="{Binding Description}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        Width="1.5*" />
+                                                        Width="*" />
+
+                                    <DataGridTemplateColumn Width="95">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center">
+                                                    <Button  BorderBrush="Transparent"
+                                                             Margin="2"
+                                                             CommandParameter="{Binding Id , Mode=OneWay}"
+                                                             Command="{Binding Path=DataContext.ViewModel.UpdateMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                             Padding="7,5">
+                                                        <ui:SymbolIcon Symbol="Pen16" />
+                                                    </Button>
+                                                    <Button Margin="3"
+                                                            CommandParameter="{Binding Id , Mode=OneWay}"
+                                                            Command="{Binding Path=DataContext.ViewModel.RemoveMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                            Padding="7,5">
+                                                        <ui:SymbolIcon Symbol="Delete16" />
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
 
