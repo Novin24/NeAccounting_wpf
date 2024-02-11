@@ -175,10 +175,11 @@
                                                        Icon="{ui:SymbolIcon Search24}"
                                                        PlaceholderText="جستجو ..."
                                                        FontSize="14"
+                                                       Height="37"
                                                        OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
                                                        SuggestionChosen="txt_name_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
-                                                       Margin="0 4 3 0 "
+                                                       Margin="0 6 3 0 "
                                                        FontFamily="Calibri" />
                                 </StackPanel>
                                 <nu:MonthPicker FontSize="14"
@@ -188,8 +189,7 @@
                                                 Grid.Column="1"
                                                 LabelName="تاریخ پرداخت"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
-                                                SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}"
-                                                Margin="0 4 0 0" />
+                                                SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
                                 <StackPanel Grid.Column="0"
                                             Grid.Row="1">
 

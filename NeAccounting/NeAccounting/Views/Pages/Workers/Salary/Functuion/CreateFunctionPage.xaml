@@ -53,7 +53,7 @@
                     CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="1.2*"></ColumnDefinition>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
@@ -107,7 +107,7 @@
                                                         Binding="{Binding Amountof}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" />
+                                                        Width="45" />
                                     <DataGridTextColumn Header="کد پرسنلی"
                                                         Binding="{Binding PersonelId}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
@@ -150,7 +150,7 @@
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Margin="20 5 20 5">
+                                <StackPanel Margin="20 4 20 5">
                                     <DockPanel>
                                         <TextBlock FontFamily="Calibri"
                                                    FontWeight="Bold"
@@ -169,6 +169,7 @@
                                                        Icon="{ui:SymbolIcon Search24}"
                                                        PlaceholderText="جستجو ..."
                                                        FontSize="16"
+                                                       MinHeight="37"
                                                        OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
                                                        SuggestionChosen="txt_name_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
@@ -184,9 +185,9 @@
                                                               LabelName="تاریخ کارکرد"
                                                               Grid.Column="1"
                                                               x:Name="dtp"
+                                                LabelVisibility="Collapsed"
                                                               SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
-                                                              SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}"
-                                                              Margin="0 4 0 0" />
+                                                              SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
 
                                 <nu:MoneyPack Grid.Column="0"
                                               Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
