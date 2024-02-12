@@ -213,7 +213,7 @@
                                     <ColumnDefinition Width=".6*" />
                                     <ColumnDefinition Width=".7*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width=".5*" />
+                                    <ColumnDefinition Width="95" />
                                 </Grid.ColumnDefinitions>
 
 
@@ -346,25 +346,48 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding RowId}"
-                                                        Width=".22*" />
+                                                        Width=".23*" />
                                     <DataGridTextColumn Binding="{Binding MatName}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width=".7*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding AmountOf}"
-                                                        Width=".37*" />
+                                                        Width=".39*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding UnitName}"
-                                                        Width=".37*" />
+                                                        Width=".39*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding Price, StringFormat={StaticResource format}}"
-                                                        Width=".5*" />
+                                                        Width=".6*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding TotalPrice, StringFormat={StaticResource format}}"
-                                                        Width=".73*" />
+                                                        Width=".7*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding Description}"
-                                                        Width="1.5*" />
+                                                        Width="*" />
+
+                                    <DataGridTemplateColumn Width="95">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center">
+                                                    <Button  BorderBrush="Transparent"
+                                                             Margin="2"
+                                                             CommandParameter="{Binding Id , Mode=OneWay}"
+                                                             Command="{Binding Path=DataContext.ViewModel.UpdateMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                             Padding="7,5">
+                                                        <ui:SymbolIcon Symbol="Pen16" />
+                                                    </Button>
+                                                    <Button Margin="3"
+                                                            CommandParameter="{Binding Id , Mode=OneWay}"
+                                                            Command="{Binding Path=DataContext.ViewModel.RemoveMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                            Padding="7,5">
+                                                        <ui:SymbolIcon Symbol="Delete16" />
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <Button Grid.Row="3"
