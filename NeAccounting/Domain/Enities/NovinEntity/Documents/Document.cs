@@ -21,12 +21,14 @@ namespace Domain.NovinEntity.Documents
         public Document(
             Guid customerId,
             uint price,
-            string descripion,
+            DocumntType type,
+            string? descripion,
             DateTime submitDate,
             bool receivedOrPaid)
         {
             CustomerId = customerId;
             Price = price;
+            Type = type;
             Description = descripion;
             SubmitDate = submitDate;
             ReceivedOrPaid = receivedOrPaid;
@@ -34,21 +36,23 @@ namespace Domain.NovinEntity.Documents
         public Document(
             Guid customerId,
             uint price,
-            string descripion,
+            DocumntType type,
+            string? descripion,
             DateTime submitDate,
             bool receivedOrPaid,
-            List<SellRemittance> sellRemittances) : this(customerId, price, descripion, submitDate, receivedOrPaid)
+            List<SellRemittance> sellRemittances) : this(customerId, price, type, descripion, submitDate, receivedOrPaid)
         {
             SellRemittances = sellRemittances;
         }
-        
+
         public Document(
             Guid customerId,
             uint price,
-            string descripion,
+            DocumntType type,
+            string? descripion,
             DateTime submitDate,
             bool receivedOrPaid,
-            List<BuyRemittance> buyRemittances) : this(customerId, price, descripion, submitDate, receivedOrPaid)
+            List<BuyRemittance> buyRemittances) : this(customerId, price, type, descripion, submitDate, receivedOrPaid)
         {
             BuyRemittances = buyRemittances;
         }
@@ -56,7 +60,7 @@ namespace Domain.NovinEntity.Documents
 
         #region Properties
         public uint Price { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public DateTime SubmitDate { get; set; }
         public DocumntType Type { get; set; }
         public bool ReceivedOrPaid { get; set; }

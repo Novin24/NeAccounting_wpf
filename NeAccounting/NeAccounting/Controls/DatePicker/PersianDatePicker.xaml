@@ -6,8 +6,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:NeAccounting.Controls"
              Name="pfp"
-             Focusable="True"
-             IsTabStop="True"
              mc:Ignorable="d"
              BorderThickness="1"
              KeyboardNavigation.TabNavigation="Once">
@@ -180,8 +178,8 @@
                         Style="{StaticResource openCalendarButtonStyle}"
                         Name="openCalendarButton"
                         VerticalAlignment="Center"
+                        TabIndex="0"
                         IsTabStop="True"
-                        Focusable="True"
                         ToolTip="تقویم"
                         HorizontalAlignment="Left"
                         Click="Button_Click">
@@ -193,9 +191,9 @@
                         Style="{StaticResource DismissButtonStyle}"
                         Name="Dismiss"
                         ToolTip="حذف"
+                        TabIndex="1"
                         VerticalAlignment="Center"
                         IsTabStop="True"
-                        Focusable="True"
                         HorizontalAlignment="Left"
                         Click="Dismiss_Click">
                     <ui:SymbolIcon Symbol="Dismiss20"
