@@ -153,6 +153,12 @@ namespace NeAccounting
                 services.AddTransient<PayViewModel>();
                 #endregion
 
+                #region Units 
+
+                services.AddTransient<UnitsListPage>();
+
+                #endregion
+
                 #region materials
                 services.AddTransient<CreateMaterailPage>();
                 services.AddTransient<CreateMaterailViewModel>();
