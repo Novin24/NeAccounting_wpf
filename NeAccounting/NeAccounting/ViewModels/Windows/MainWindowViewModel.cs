@@ -79,7 +79,7 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem {Content = "دریافتی از مشتری",TargetPageType = typeof(RecPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem {Content = "پرداختی به مشتری",TargetPageType = typeof(PayPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 	            #endregion
-                    new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(WorkersListPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+                    new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(CreateCostsPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 
                 }
             },
