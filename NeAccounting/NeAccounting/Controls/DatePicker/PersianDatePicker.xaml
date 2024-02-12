@@ -174,8 +174,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0"
-                        Style="{StaticResource openCalendarButtonStyle}"
+                <Button Style="{StaticResource openCalendarButtonStyle}"
                         Name="openCalendarButton"
                         VerticalAlignment="Center"
                         TabIndex="0"
@@ -208,7 +207,7 @@
                             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                             TextAlignment="Center"
                             FontFamily="2  Titr"
-                            Padding="2 8 2 2">
+                            Padding="2 7 2 2">
                 </ui:TextBox>
                 <Popup Name="persianCalnedarPopup"
                        HorizontalAlignment="Right"

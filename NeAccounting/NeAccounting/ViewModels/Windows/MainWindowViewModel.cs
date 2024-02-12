@@ -95,8 +95,8 @@ namespace NeAccounting.ViewModels
 
                 MenuItems = new ObservableCollection<object>
                 {
-                    new NavigationViewItem { Content = "صورتحساب", TargetPageType = typeof(DebtorsListPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
-                    new NavigationViewItem { Content = "صورتحساب جرییات", TargetPageType = typeof(DebtorsListPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20 } },
+                    new NavigationViewItem { Content = "صورتحساب", TargetPageType = typeof(Bill) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
+                    new NavigationViewItem { Content = "صورتحساب جزییات", TargetPageType = typeof(Invoicedetails) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20 } },
                     new NavigationViewItem { Content = "بدهکاران", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem { Content = "طلبکاران", TargetPageType = typeof(CreditorsListPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem { Content = "دفتر روزانه", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20}},
