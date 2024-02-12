@@ -1,8 +1,7 @@
-﻿using DomainShared.ViewModels;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.Pages
+namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for CreateBuyInvoicePage.xaml
