@@ -48,13 +48,6 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
     [ObservableProperty]
     private string? _description;
 
-    [RelayCommand]
-    private async Task OnCreate()
-    {
-
-
-    }
-
     public async void OnNavigatedTo()
     {
         await InitializeViewModel();
@@ -121,10 +114,33 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             Description = Description,
             MaterialId = MaterialId,
         });
-        rowId++;
+        RefreshRow(ref rowId);
         return true;
     }
 
+    internal (bool, RemittanceListViewModel) OnUpdate(int rowId)
+    {
+        var itm = List.FirstOrDefault(t => t.RowId == rowId);
+        if (itm == null)
+            return new(false, new RemittanceListViewModel());
+        MaterialId = itm.MaterialId;
+        AmountOf = itm.AmountOf;
+        MatPrice = itm.Price;
+        Description = itm.Description;
+        List.Remove(itm);
+        RefreshRow(ref rowId);
+        return new(true, itm);
+    }
+
+    internal void OnRemove(int rowId)
+    {
+        var itm = List.FirstOrDefault(t => t.RowId == rowId);
+        if (itm != null)
+        {
+            List.Remove(itm);
+            RefreshRow(ref rowId);
+        }
+    }
 
     internal async Task<bool> OnSumbit()
     {
@@ -141,9 +157,9 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             return false;
         }
 
-        if (List == null)
+        if (List == null || List.Count == 0)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            _snackbarService.Show("خطا", "وارد کردن حداقل یک ردیف الزامیست !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
         #endregion
@@ -193,6 +209,18 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         await Reload();
         return true;
         #endregion
+    }
+
+
+    private void RefreshRow(ref int rowId)
+    {
+        int row = 1;
+        foreach (var item in List.OrderBy(t => t.RowId))
+        {
+            item.RowId = row;
+            row++;
+        }
+        rowId = row;
     }
 
     private async Task Reload()

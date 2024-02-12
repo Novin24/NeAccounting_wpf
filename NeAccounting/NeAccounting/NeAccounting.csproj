@@ -52,8 +52,4 @@
     <Resource Include="Assets\user9.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\Pages\Document\" />
-  </ItemGroup>
-
 </Project>

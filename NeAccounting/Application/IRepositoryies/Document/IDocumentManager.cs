@@ -8,6 +8,16 @@ namespace NeApplication.IRepositoryies
     {
         Task<string> GetLastDocumntNumber(DocumntType type);
 
+        /// <summary>
+        /// received => true
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="price"></param>
+        /// <param name="type"></param>
+        /// <param name="descripion"></param>
+        /// <param name="submitDate"></param>
+        /// <param name="receivedOrPaid"></param>
+        /// <returns></returns>
         Task<(string error, bool isSuccess, string docSerial)> CreateDocument(Guid customerId,
             uint price,
             DocumntType type,
@@ -15,6 +25,16 @@ namespace NeApplication.IRepositoryies
             DateTime submitDate,
             bool receivedOrPaid);
 
+        /// <summary>
+        /// received => true
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="price"></param>
+        /// <param name="descripion"></param>
+        /// <param name="submitDate"></param>
+        /// <param name="receivedOrPaid"></param>
+        /// <param name="remittances"></param>
+        /// <returns></returns>
         Task<(string error, bool isSuccess , string docSerial)> CreateSellDocument(Guid customerId,
                 uint price,
                 string? descripion,

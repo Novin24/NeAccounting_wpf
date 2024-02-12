@@ -9,11 +9,6 @@ namespace Infrastructure.Repositories
 {
     public class DocumentManager(NovinDbContext context) : Repository<Document>(context), IDocumentManager
     {
-        public async Task<(string error, bool isSuccess, string docSerial)> CreateBuyDocument(Guid customerId, uint price, string? descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<(string error, bool isSuccess, string docSerial)> CreateDocument(Guid customerId,
             uint price,
             DocumntType type,
@@ -43,7 +38,25 @@ namespace Infrastructure.Repositories
             try
             {
                 var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.SellInv, descripion, submitDate, receivedOrPaid, list));
-               await DbContext.SaveChangesAsync();
+                await DbContext.SaveChangesAsync();
+                serial = t.Entity.Serial.ToString();
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false, string.Empty);
+            }
+            return new(string.Empty, true, serial);
+        }
+
+        public async Task<(string error, bool isSuccess, string docSerial)> CreateBuyDocument(Guid customerId, uint price, string? descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
+        {
+            List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, descripion)).ToList();
+
+            string serial;
+            try
+            {
+                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.SellInv, descripion, submitDate, receivedOrPaid, list));
+                await DbContext.SaveChangesAsync();
                 serial = t.Entity.Serial.ToString();
             }
             catch (Exception ex)
@@ -55,8 +68,7 @@ namespace Infrastructure.Repositories
 
         public async Task<string> GetLastDocumntNumber(DocumntType type)
         {
-            return (await TableNoTracking.OrderByDescending(t => t.CreationTime).Select(c => c.Serial)
-                .FirstOrDefaultAsync()).ToString();
+            return (await TableNoTracking.OrderByDescending(t => t.CreationTime).Where(t => t.Type == type).Select(c => c.Serial).FirstOrDefaultAsync()).ToString();
         }
     }
 }

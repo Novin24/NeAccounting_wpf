@@ -151,7 +151,7 @@
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
-                                               Text="آخرین فاکتور "
+                                               Text="آخرین فاکتور فروش"
                                                Margin="2 0 0 0 "
                                                HorizontalAlignment="Center" />
                                     <TextBox TextAlignment="Center"
