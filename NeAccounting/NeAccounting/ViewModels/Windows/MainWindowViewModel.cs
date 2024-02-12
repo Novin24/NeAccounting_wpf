@@ -62,9 +62,9 @@ namespace NeAccounting.ViewModels
                 {
                 #region Remittance
                     new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(PayPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
-                    new NavigationViewItem {Content = "حواله فروش",TargetPageType = typeof(CreateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
-                    new NavigationViewItem { Content = "حوله خرید", TargetPageType = typeof(CreateBuyInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
-                    new NavigationViewItem { Content = "حواله واسطه‌ای", TargetPageType = typeof(CreateIntermediaryInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
+                    new NavigationViewItem {Content = "فاکتور فروش",TargetPageType = typeof(CreateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
+                    new NavigationViewItem { Content = "فاکتور خرید", TargetPageType = typeof(CreateBuyInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
+                    new NavigationViewItem { Content = "فاکتور واسطه‌ای", TargetPageType = typeof(CreateIntermediaryInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                     new NavigationViewItem { Content = "اجناس برگشتی", TargetPageType = typeof(WorkersListPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem {Content = "سفارشات",TargetPageType = typeof(PayPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 	            #endregion
