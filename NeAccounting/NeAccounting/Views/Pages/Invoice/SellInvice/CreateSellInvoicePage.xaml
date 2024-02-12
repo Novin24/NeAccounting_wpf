@@ -139,10 +139,10 @@
                                                    Margin="6 22 6 0" />
                                     </DockPanel>
                                     <ui:AutoSuggestBox FontFamily="Calibri"
+                                                       x:Name="txt_CustomerName"
                                                        OriginalItemsSource="{Binding ViewModel.Cuslist}"
                                                        SuggestionChosen="Txt_name_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
-                                                       Uid=""
                                                        Margin="0 4 0 0" />
                                 </StackPanel>
 
@@ -173,7 +173,7 @@
                                                   ClearButtonEnabled="False"
                                                   Maximum="100"
                                                   Minimum="0"
-                                                  Value="{Binding ViewModel.Commission , Mode=OneWayToSource}"
+                                                  Value="{Binding ViewModel.Commission , Mode=TwoWay}"
                                                   Name="txt_Commission"
                                                   Icon="{ui:SymbolIcon ShoppingBagPercent24}"
                                                   SpinButtonPlacementMode="Hidden"
@@ -185,7 +185,7 @@
                                                       MinWidth="230"
                                                       HorizontalAlignment="Left"
                                                       MaxWidth="250"
-                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=OneWayToSource}"
+                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}"
                                                       LabelName="تاریخ"
                                                       Margin="0 21 0 0 " />
 
@@ -248,7 +248,7 @@
                                                   ClearButtonEnabled="False"
                                                   FontFamily="Calibri"
                                                   Value="{Binding ViewModel.AmountOf, Mode=TwoWay}"
-                                                  LostFocus="txt_amount_LostFocus"
+                                                  LostFocus="Txt_amount_LostFocus"
                                                   SpinButtonPlacementMode="Hidden"
                                                   Margin="0 2 0 0" />
                                 </StackPanel>
@@ -276,9 +276,9 @@
                                     <ui:TextBox x:Name="txt_Unit_price"
                                                 TextAlignment="Center"
                                                 ClearButtonEnabled="False"
-                                                LostFocus="txt_Unit_price_LostFocus"
-                                                PreviewTextInput="txt_Unit_price_PreviewTextInput"
-                                                TextChanged="txt_Unit_price_TextChanged"
+                                                LostFocus="Txt_Unit_price_LostFocus"
+                                                PreviewTextInput="Txt_Unit_price_PreviewTextInput"
+                                                TextChanged="Txt_Unit_price_TextChanged"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
@@ -303,7 +303,7 @@
                                                FontSize="15"
                                                Text="توضیحات"
                                                HorizontalAlignment="Center" />
-                                    <ui:TextBox x:Name="txt_description"
+                                    <ui:TextBox x:Name="txt_UnitDescription"
                                                 TextAlignment="Center"
                                                 Text="{Binding ViewModel.Description, Mode=TwoWay}"
                                                 FontFamily="Calibri"
@@ -372,7 +372,7 @@
                                     Margin="0 20"
                                     Grid.ColumnSpan="2"
                                     FontSize="17"
-                                    Command="{Binding ViewModel.SumbitCommand}"
+                                    Click="BtnSubmit_Click"
                                     FontFamily="Calibri"
                                     VerticalAlignment="Bottom"
                                     HorizontalAlignment="Center">

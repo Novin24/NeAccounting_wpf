@@ -9,7 +9,7 @@ namespace Infrastructure.Repositories
 {
     public class DocumentManager(NovinDbContext context) : Repository<Document>(context), IDocumentManager
     {
-        public async Task<(string error, bool isSuccess, string docSerial)> CreateBuyDocument(Guid customerId, uint price, string descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
+        public async Task<(string error, bool isSuccess, string docSerial)> CreateBuyDocument(Guid customerId, uint price, string? descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
         {
             throw new NotImplementedException();
         }
@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
         public async Task<(string error, bool isSuccess, string docSerial)> CreateDocument(Guid customerId,
             uint price,
             DocumntType type,
-            string descripion,
+            string? descripion,
             DateTime submitDate,
             bool receivedOrPaid)
         {

@@ -126,26 +126,25 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
     }
 
 
-    [RelayCommand]
-    private async Task OnSumbit()
+    internal async Task<bool> OnSumbit()
     {
         #region validation
         if (CusId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return;
+            return false;
         }
 
         if (SubmitDate == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return;
+            return false;
         }
 
         if (List == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return;
+            return false;
         }
         #endregion
 
@@ -157,7 +156,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             if (!isSuccess)
             {
                 _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
+                return false;
             }
         }
         #endregion
@@ -169,29 +168,30 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return;
+            return false;
         }
         #endregion
 
         #region create_Commission_Doc
         if (Commission != null && Commission != 0)
         {
-            var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, totalInvoicePrice * (uint)(Commission / 100),
-                DocumntType.Rec, Description, SubmitDate.Value, true);
+            var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (uint)(totalInvoicePrice * (Commission / 100)),
+                DocumntType.Rec, $"{serial} پورسانت فاکتور", SubmitDate.Value, true);
 
             if (!su)
             {
                 _snackbarService.Show("خطا", er, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
+                return false;
             }
         }
         await db.SaveChangesAsync();
         #endregion
 
         #region reload
-        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+        _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور به شماره {serial}", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
         await Reload();
+        return true;
         #endregion
     }
 
