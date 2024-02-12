@@ -16,18 +16,15 @@ namespace Domain.Enities.NovinEntity.Remittances
         #region Ctor
         internal SellRemittance() { }
 
-        internal SellRemittance(Guid id,
+        public SellRemittance(
             int materialId,
-            Guid documentId,
             double amountOf,
             uint price,
-            int toatalPrice,
+            uint toatalPrice,
             DateTime submitDate,
-            string descripion)
+            string? descripion)
         {
-            Id = id;
             MaterialId = materialId;
-            DocumentId = documentId;
             TotalPrice = toatalPrice;
             AmountOf = amountOf;
             Price = price;
@@ -38,9 +35,9 @@ namespace Domain.Enities.NovinEntity.Remittances
 
         #region Properties
         public uint Price { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public DateTime SubmitDate { get; set; }
-        public int TotalPrice { get; set; }
+        public uint TotalPrice { get; set; }
         public double AmountOf { get; set; }
         #endregion
     }

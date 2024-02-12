@@ -16,7 +16,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
     private int rowId = 1;
 
     [ObservableProperty]
-    private ICollection<RemittanceListViewModel> _list = new List<RemittanceListViewModel>();
+    private List<RemittanceListViewModel> _list = [];
 
     [ObservableProperty]
     private List<SuggestBoxViewModel<Guid, long>> _cuslist;
@@ -26,6 +26,12 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
 
     [ObservableProperty]
     private Guid? _CusId;
+
+    [ObservableProperty]
+    private DateTime? _submitDate;
+
+    [ObservableProperty]
+    private int? _commission;
 
     [ObservableProperty]
     private string _lastInvoice;
@@ -75,6 +81,12 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             return false;
         }
 
+        if (SubmitDate == null)
+        {
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
+
         if (MaterialId < 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -103,7 +115,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             AmountOf = AmountOf.Value,
             UnitName = mat.UnitName,
             MatName = mat.MaterialName,
-            Price = MatPrice.Value,
+            Price = (uint)MatPrice.Value,
             RowId = rowId,
             TotalPrice = (uint)(MatPrice.Value * AmountOf.Value),
             Description = Description,
@@ -113,10 +125,86 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         return true;
     }
 
-    [RelayCommand]
-    private async Task OnSumbit()
+
+    internal async Task<bool> OnSumbit()
     {
-        using UnitOfWork db = new UnitOfWork();
-        
+        #region validation
+        if (CusId == null)
+        {
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
+
+        if (SubmitDate == null)
+        {
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
+
+        if (List == null)
+        {
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
+        #endregion
+
+        #region UpdateMaterial
+        using UnitOfWork db = new();
+        foreach (var item in List)
+        {
+            var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, false);
+            if (!isSuccess)
+            {
+                _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return false;
+            }
+        }
+        #endregion
+
+        #region CreateSellDoc
+        var totalInvoicePrice = (uint)List.Sum(t => t.TotalPrice);
+
+        var (e, s, serial) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, Description, SubmitDate.Value, false, List);
+        if (!s)
+        {
+            _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
+        #endregion
+
+        #region create_Commission_Doc
+        if (Commission != null && Commission != 0)
+        {
+            var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (uint)(totalInvoicePrice * (Commission / 100)),
+                DocumntType.Rec, $"{serial} پورسانت فاکتور", SubmitDate.Value, true);
+
+            if (!su)
+            {
+                _snackbarService.Show("خطا", er, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return false;
+            }
+        }
+        await db.SaveChangesAsync();
+        #endregion
+
+        #region reload
+        _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور به شماره {serial}", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+        await Reload();
+        return true;
+        #endregion
+    }
+
+    private async Task Reload()
+    {
+        using UnitOfWork db = new();
+        LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
+        List = [];
+        CusId = null;
+        Commission = null;
+        MaterialId = -1;
+        Description = null;
+        SubmitDate = null;
+        MatPrice = null;
     }
 }

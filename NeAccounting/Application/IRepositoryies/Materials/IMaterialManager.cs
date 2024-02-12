@@ -25,8 +25,15 @@ namespace NeApplication.IRepositoryies
             long lastPrice,
             bool isManufacturedGoods);
 
+        /// <summary>
+        /// Increase => true
+        /// </summary>
+        /// <param name="materialId"></param>
+        /// <param name="entity"></param>
+        /// <param name="DecreaseOrIncrease"></param>
+        /// <returns></returns>
         Task<(string errore, bool isSuccess)> UpdateMaterialEntity(int materialId,
             double entity, 
-            bool sellOrBuy);
+            bool DecreaseOrIncrease);
     }
 }
