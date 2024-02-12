@@ -119,6 +119,19 @@ namespace NeAccounting.Controls
         }
         #endregion
 
+
+
+        public Visibility LabelVisibility
+        {
+            get { return (Visibility)GetValue(LabelVisibilityProperty); }
+            set { SetValue(LabelVisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Visibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty LabelVisibilityProperty =
+            DependencyProperty.Register("LabelVisibility", typeof(Visibility), typeof(MonthPicker), new PropertyMetadata(Visibility.Visible));
+
+
         #region ctor
         public MonthPicker()
         {

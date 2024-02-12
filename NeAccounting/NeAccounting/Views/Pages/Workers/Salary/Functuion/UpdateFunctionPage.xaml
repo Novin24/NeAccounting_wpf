@@ -76,7 +76,7 @@
                                FontFamily="Calibri"
                                FontWeight="Bold"
                                FontSize="18"
-                               Text="ثبت کارکرد" />
+                               Text="ویرایش کارکرد" />
                     <Border Grid.Row="1"
                             CornerRadius="9"
                             Margin="4"
@@ -167,9 +167,10 @@
                                     </DockPanel>
                                     <ui:TextBox x:Name="txt_sugName"
                                                 FontSize="14"
+                                                Height="37"
                                                 Text="{Binding ViewModel.PersonnelName, Mode=OneWay}"
                                                 IsEnabled="False"
-                                                Margin="0 4 3 0 "
+                                                Margin="0 3 3 0 "
                                                 FontFamily="Calibri" />
                                 </StackPanel>
                                 <nu:MonthPicker FontSize="14"
@@ -179,8 +180,7 @@
                                                 x:Name="dtp"
                                                 LabelName="تاریخ کارکرد"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth, Mode=TwoWay}"
-                                                SelectedYear="{Binding ViewModel.SubmitYear, Mode=TwoWay}"
-                                                Margin="0 4 0 0" />
+                                                SelectedYear="{Binding ViewModel.SubmitYear, Mode=TwoWay}"/>
                                 <nu:MoneyPack Grid.Column="0"
                                               Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
                                               Grid.Row="1"

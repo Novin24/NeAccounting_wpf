@@ -93,8 +93,11 @@
                        FontWeight="Bold"
                        HorizontalAlignment="Right"
                        FontSize="16" />
-            <StackPanel Orientation="Horizontal">
-
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
                 <Button Style="{StaticResource DismissButtonStyle}"
                             Name="Dismiss"
                             ToolTip="حذف"
@@ -106,29 +109,31 @@
                     <ui:SymbolIcon Symbol="Dismiss20"
                                        FontSize="20" />
                 </Button>
-                <Border CornerRadius="6"
+                <Border CornerRadius="6" Grid.Column="1"
                     Background="{DynamicResource ControlSolidFillColorDefaultBrush}">
                     <Grid x:Name="header"
                       Margin="0,1,0,3"
-                      MinHeight="38">
+                      Height="33">
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width=".7*" />
+                            <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width=".9*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <ui:TextBlock VerticalAlignment="Center"
                                   FontSize="16"
-                                  Grid.Column="0"
+                                      Margin="3 0 0 0"
                                   TextAlignment="Center"
                                   FontFamily="Calibri"
-                                  x:Name="lbl_Display" />
+                                  x:Name="lbl_Display"
+                                      Visibility="{Binding LabelVisibility,Mode=OneWay , ElementName=mnp}"/>
+                        
                         <ComboBox Grid.Column="1"
                               VerticalAlignment="Center"
                               IsSynchronizedWithCurrentItem="True"
                               MinHeight="30"
-                              Margin="3 0"
+                              Margin="2 0"
                               IsTabStop="True"
                               x:Name="comboBoxYear"
                               Background="Transparent"
@@ -142,7 +147,7 @@
                               VerticalAlignment="Center"
                               IsSynchronizedWithCurrentItem="True"
                               MinHeight="30"
-                              Margin="0,0,5,0"
+                              Margin="0,0,2,0"
                               IsTabStop="True"
                               x:Name="comboBoxMonths"
                               Background="Transparent"
@@ -169,7 +174,7 @@
                         </ComboBox>
                     </Grid>
                 </Border>
-            </StackPanel>
+            </Grid>
         </StackPanel>
     </Grid>
 </UserControl>
