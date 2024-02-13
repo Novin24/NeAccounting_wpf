@@ -115,25 +115,24 @@ namespace NeAccounting
                 #endregion
 
                 #region Invoice
-                services.AddTransient<CreateSellInvoicePage>();
-                //services.AddTransient<CreateSellInvoiceViewModel>();
-                services.AddTransient<UpdateSellInvoicePage>();
-                //services.AddTransient<UpdateSellInvoiceViewModel>();
 
+                #region BuyInvoice
                 services.AddTransient<CreateBuyInvoicePage>();
-                //services.AddTransient<CreateBuyInvoiceViewModel>();
+                services.AddTransient<CreateBuyInviceViewModel>();
                 services.AddTransient<UpdateBuyInvoicePage>();
                 //services.AddTransient<UpdateBuyInvoiceViewModel>();
-
+                #endregion
                 services.AddTransient<CreateIntermediaryInvoicePage>();
                 //services.AddTransient<CreateIntermediaryInvoiceViewModel>();
                 services.AddTransient<UpdateIntermediaryInvoicePage>();
                 //services.AddTransient<UpdateIntermediaryInvoiceViewModel>();
-                #endregion
 
                 #region SellInvoice
                 services.AddTransient<CreateSellInvoicePage>();
                 services.AddTransient<CreateSellInviceViewModel>();
+                services.AddTransient<UpdateSellInvoicePage>();
+                //services.AddTransient<UpdateSellInvoiceViewModel>();
+                #endregion
 
                 #endregion
 

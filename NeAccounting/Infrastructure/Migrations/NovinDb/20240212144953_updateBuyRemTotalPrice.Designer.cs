@@ -4,6 +4,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.NovinDb
 {
     [DbContext(typeof(NovinDbContext))]
-    partial class NovinDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240212144953_updateBuyRemTotalPrice")]
+    partial class updateBuyRemTotalPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,9 +307,6 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsReceived")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
@@ -315,6 +315,9 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.Property<long>("Price")
                         .HasColumnType("bigint");
+
+                    b.Property<bool>("ReceivedOrPaid")
+                        .HasColumnType("bit");
 
                     b.Property<long>("Serial")
                         .ValueGeneratedOnAdd()

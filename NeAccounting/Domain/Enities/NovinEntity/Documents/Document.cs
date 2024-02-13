@@ -24,14 +24,14 @@ namespace Domain.NovinEntity.Documents
             DocumntType type,
             string? descripion,
             DateTime submitDate,
-            bool receivedOrPaid)
+            bool isReceived)
         {
             CustomerId = customerId;
             Price = price;
             Type = type;
             Description = descripion;
             SubmitDate = submitDate;
-            ReceivedOrPaid = receivedOrPaid;
+            IsReceived = IsReceived;
         }
         public Document(
             Guid customerId,
@@ -39,8 +39,8 @@ namespace Domain.NovinEntity.Documents
             DocumntType type,
             string? descripion,
             DateTime submitDate,
-            bool receivedOrPaid,
-            List<SellRemittance> sellRemittances) : this(customerId, price, type, descripion, submitDate, receivedOrPaid)
+            bool isReceived,
+            List<SellRemittance> sellRemittances) : this(customerId, price, type, descripion, submitDate, isReceived)
         {
             SellRemittances = sellRemittances;
         }
@@ -51,8 +51,8 @@ namespace Domain.NovinEntity.Documents
             DocumntType type,
             string? descripion,
             DateTime submitDate,
-            bool receivedOrPaid,
-            List<BuyRemittance> buyRemittances) : this(customerId, price, type, descripion, submitDate, receivedOrPaid)
+            bool isReceived,
+            List<BuyRemittance> buyRemittances) : this(customerId, price, type, descripion, submitDate, isReceived)
         {
             BuyRemittances = buyRemittances;
         }
@@ -63,7 +63,7 @@ namespace Domain.NovinEntity.Documents
         public string? Description { get; set; }
         public DateTime SubmitDate { get; set; }
         public DocumntType Type { get; set; }
-        public bool ReceivedOrPaid { get; set; }
+        public bool IsReceived { get; set; }
         public long Serial { get; set; }
         #endregion
     }

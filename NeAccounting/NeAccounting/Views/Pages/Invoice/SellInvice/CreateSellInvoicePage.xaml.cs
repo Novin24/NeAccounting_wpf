@@ -1,5 +1,4 @@
-﻿using DomainShared.Errore;
-using DomainShared.ViewModels;
+﻿using DomainShared.ViewModels;
 using DomainShared.ViewModels.Pun;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -15,8 +14,6 @@ namespace NeAccounting.Views.Pages
     public partial class CreateSellInvoicePage : INavigableView<CreateSellInviceViewModel>
     {
         private readonly ISnackbarService _snackbarService;
-
-
         public CreateSellInviceViewModel ViewModel { get; }
         private double _totalEntity;
         private long _price;

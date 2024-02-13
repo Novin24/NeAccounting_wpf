@@ -135,8 +135,8 @@ namespace Infrastructure.Repositories
                     return new("کالای مورد نظر یافت نشد !!!", false);
 
                 if (sellOrBuy)
-                    mt.Entity -= entity;
-                else mt.Entity += entity;
+                    mt.Entity += entity;
+                else mt.Entity -= entity;
 
                 Update(mt, false);
             }
