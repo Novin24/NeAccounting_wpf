@@ -26,7 +26,8 @@ namespace NeApplication.IRepositoryies
             bool isManufacturedGoods);
 
         /// <summary>
-        /// Increase => true
+        /// Increase =
+        /// buy => true
         /// </summary>
         /// <param name="materialId"></param>
         /// <param name="entity"></param>

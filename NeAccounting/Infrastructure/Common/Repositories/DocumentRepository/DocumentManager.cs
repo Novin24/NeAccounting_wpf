@@ -55,7 +55,7 @@ namespace Infrastructure.Repositories
             string serial;
             try
             {
-                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.SellInv, descripion, submitDate, receivedOrPaid, list));
+                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.BuyInv, descripion, submitDate, receivedOrPaid, list));
                 await DbContext.SaveChangesAsync();
                 serial = t.Entity.Serial.ToString();
             }
