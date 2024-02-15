@@ -89,15 +89,17 @@
 
                                 </Grid.RowDefinitions>
                                 <nu:PersianDatePicker VerticalAlignment="Center"
-                                                      Margin="4 4 20 0 "
                                                       FlowDirection="LeftToRight" 
-                                                      LabelName="از"/>
+                                                      LabelName="از تاریخ"
+                                                      MinWidth="200"
+                                                      MaxWidth="300"/>
 
                                 <nu:PersianDatePicker VerticalAlignment="Center"
                                                           Grid.Column="1"
-                                                          Margin="4 4 0 0 "
                                                           FlowDirection="LeftToRight"
-                                                          LabelName="تا"/>
+                                                          LabelName="تا تاریخ"
+                                                      MinWidth="200"
+                                                      MaxWidth="300"/>
                             </Grid>
                             <DataGrid x:Name="Workersdata"
                                       BorderThickness="10"

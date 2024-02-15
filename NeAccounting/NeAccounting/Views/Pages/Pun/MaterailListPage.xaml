@@ -196,7 +196,7 @@
                                                         x:Name="Address"
                                                         Binding="{Binding Address}" />
                                     <DataGridTemplateColumn Header="عملیات"
-                                                            Width="*"
+                                                            Width="90"
                                                             HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
