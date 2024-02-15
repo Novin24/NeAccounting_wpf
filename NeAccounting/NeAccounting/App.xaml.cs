@@ -173,6 +173,12 @@ namespace NeAccounting
                 services.AddTransient<Bill>();
 
                 services.AddTransient<Invoicedetails>();
+
+                services.AddTransient<DebtorsListPage>();
+
+                services.AddTransient<CreditorsListPage>();
+
+                services.AddTransient<DailyBook>();
                 #endregion
 
                 #region Setting

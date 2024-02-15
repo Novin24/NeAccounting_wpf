@@ -55,7 +55,7 @@
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <nu:HeaderPack NamePpage="بستانکار"/>
+                    <nu:HeaderPack NamePpage="طلبکاران"/>
 
 
                     <Border Grid.Row="1"
@@ -91,13 +91,15 @@
                                 </Grid.RowDefinitions>
                                 <nu:PersianDatePicker VerticalAlignment="Center"
                                                           FlowDirection="LeftToRight"
-                                                          LabelName="از"
-                                            Margin="4 4 20 0 "/>
+                                                          LabelName="از تاریخ"
+                                                      MinWidth="200"
+                                                      MaxWidth="300"/>
                                 <nu:PersianDatePicker VerticalAlignment="Center"
                                                       FlowDirection="LeftToRight" 
                                                       Grid.Column="1"
-                                                      Margin="4 4 0 0 "
-                                                      LabelName="تا"/>
+                                                      LabelName="تا تاریخ"
+                                                      MinWidth="200"
+                                                      MaxWidth="300"/>
                             </Grid>
                             <DataGrid x:Name="Workersdata"
                                       BorderThickness="10"

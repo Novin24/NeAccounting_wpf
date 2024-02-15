@@ -128,7 +128,7 @@
                                         VerticalAlignment="Bottom"
                                         HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="افزودن" />
+                                        <TextBlock Text="ثبت" />
                                         <TextBlock Text=" (F1)"
                                                    FontSize="12"
                                                    VerticalAlignment="Center"
@@ -145,7 +145,6 @@
                                       CanUserDeleteRows="False"
                                       IsReadOnly="True"
                                       CanUserResizeRows="False"
-                                      HeadersVisibility="None"
                                       ItemsSource="{Binding ViewModel.List, Mode=OneWay}"
                                       FontFamily="Calibri"
                                       AutoGenerateColumns="False">
@@ -178,16 +177,6 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Button Content="ثبت"
-                                    Grid.Row="3"
-                                    Padding="30 4 "
-                                    Margin="0 20"
-                                    Grid.ColumnSpan="2"
-                                    IsDefault="True"
-                                    FontSize="17"
-                                    FontFamily="Calibri"
-                                    VerticalAlignment="Bottom"
-                                    HorizontalAlignment="Center" />
                         </Grid>
 
 

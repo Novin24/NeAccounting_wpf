@@ -72,27 +72,24 @@
                     </Border.Background>
 
                     <Grid FlowDirection="RightToLeft"
-                              Margin="50 15 50 0">
+                              Margin="50 10 50 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
 
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="1"
-                                  Margin="0 ,5,0,15">
+                        <Grid >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <StackPanel Grid.Column="0"
-                                            Margin="4 5.2 10 0 ">
+                            <StackPanel Margin="23 0 7 0 ">
 
                                 <TextBlock FontFamily="Calibri"
                                                FontSize="14"
@@ -104,7 +101,7 @@
                                                 Margin="0 4 0 0"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1"
-                                        Margin="10 5.2 10 0 ">
+                                        Margin="20 0 7 0 ">
 
                                 <TextBlock FontFamily="Calibri"
                                                FontSize="14"
@@ -115,30 +112,31 @@
                                                 Margin="0 4 0 0" />
                             </StackPanel>
 
-                            <nu:PersianDatePicker VerticalAlignment="Center"
-                                                  FlowDirection="LeftToRight"
-                                                  LabelName="از"
-                                                  Grid.Column="2"/>
-                            <nu:PersianDatePicker VerticalAlignment="Center"
-                                                  FlowDirection="LeftToRight"
-                                                  LabelName="تا"
-                                                  Grid.Column="3"/>
                             <CheckBox Content="به احتساب مانده قبلی"
-                                              Grid.Column="1"
-                                      Grid.Row="1"
-                                              FontFamily="Calibri"
-                                              Margin="0 10 10 0 "
-                                              HorizontalAlignment="Right"
-                                              FontSize="14"/>
+                                      Grid.Column="2"
+                                      FontFamily="Calibri"
+                                      Margin="10 22 10 0 "
+                                      HorizontalAlignment="Left"
+                                      FontSize="14"/>
+
+                            <nu:PersianDatePicker VerticalAlignment="Center"
+                                                  FlowDirection="LeftToRight"
+                                                  LabelName="از تاریخ"
+                                                  Grid.Row="1"
+                                                  Grid.Column="1"/>
+                            <nu:PersianDatePicker VerticalAlignment="Center"
+                                                  FlowDirection="LeftToRight"
+                                                  LabelName="تا تاریخ"
+                                                  Grid.Row="1"/>
                             <Button Grid.Column="2" IsDefault="True"
-                                        Margin="10 7 0 0"
+                                    Margin="0 20 0 0"
                                     Grid.Row="1"
-                                        HorizontalAlignment="Left"
+                                        HorizontalAlignment="Center"
                                         Padding="17 4 18 9">جستجو</Button>
                         </Grid>
-                        <DataGrid Margin="0 0 0 30"
+                        <DataGrid Margin="0 10 0 0"
                                       BorderThickness="10"
-                                      Grid.Row="2"
+                                      Grid.Row="1"
                                       CanUserResizeColumns="False"
                                       CanUserResizeRows="False"
                                       FontFamily="Calibri"
@@ -173,8 +171,68 @@
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="1.3*"/>
+
+                                <DataGridTemplateColumn Header="عملیات"
+                                                            Width="90"
+                                                            HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center">
+                                                <Button  BorderBrush="Transparent"
+                                                             Margin="2"
+                                                             CommandParameter="{Binding Id , Mode=OneWay}"
+                                                             Command="{Binding Path=DataContext.ViewModel.UpdateMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                             Padding="7,5">
+                                                    <ui:SymbolIcon Symbol="Pen16" />
+                                                </Button>
+                                                <Button Margin="3"
+                                                            CommandParameter="{Binding Id , Mode=OneWay}"
+                                                            Command="{Binding Path=DataContext.ViewModel.RemoveMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                            Padding="7,5">
+                                                    <ui:SymbolIcon Symbol="Delete16" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
+
+                        <Grid Grid.Row="2"
+                              Margin="15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Padding="10 4 "
+                                    FontSize="17"
+                                    FontFamily="Calibri"
+                                    HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="نمایش" />
+                                    <TextBlock Text=" (F6)"
+                                               FontSize="11.5"
+                                               VerticalAlignment="Center"
+                                               Foreground="#FFA3A3A3" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button Padding="10 4 "
+                                    Grid.Column="1"
+                                    FontSize="17"
+                                    FontFamily="Calibri"
+                                    HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="پرینت" />
+                                    <TextBlock Text=" (Ctrl+P)"
+                                               FontSize="11.5"
+                                               VerticalAlignment="Center"
+                                               Foreground="#FFA3A3A3" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Border>
             </Grid>
