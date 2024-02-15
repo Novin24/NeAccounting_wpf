@@ -179,7 +179,6 @@
                                                   SpinButtonPlacementMode="Hidden"
                                                   FlowDirection="LeftToRight" />
                                 </StackPanel>
-
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
                                                       Grid.Column="3"
                                                       MinWidth="230"
@@ -326,7 +325,6 @@
                                     </StackPanel>
                                 </Button>
                             </Grid>
-
                             <DataGrid x:Name="dgv_Inv"
                                       BorderThickness="10"
                                       Grid.Row="2"
@@ -416,7 +414,7 @@
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
                                                    Margin="10,0,0,0"
-                                                   Text="وضعیت شخصی:"
+                                                   Text="وضعیت شخصی :"
                                                    HorizontalAlignment="Right" />
 
                                         <TextBlock FontFamily="Calibri"
@@ -429,7 +427,7 @@
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
                                                    Grid.Row="1"
-                                                   Text="طلبکاری:"
+                                                   Text="طلبکاری :"
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
@@ -442,7 +440,7 @@
                                         <TextBlock FontFamily="Calibri"
                                                    Grid.Row="2"
                                                    FontSize="15"
-                                                   Text="بدهکاری:"
+                                                   Text="بدهکاری :"
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
@@ -458,6 +456,7 @@
                                             Margin="25,0"
                                             FontFamily="Calibri"
                                             Height="33"
+                                            Text="{Binding ViewModel.InvDescription, Mode=TwoWay}"
                                             PlaceholderText="خلاصه فاکتور"
                                             VerticalAlignment="Top"
                                             HorizontalAlignment="Center" />
@@ -495,7 +494,7 @@
                                         </Grid.RowDefinitions>
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="مبلغ کل:"
+                                                   Text="مبلغ کل :"
                                                    HorizontalAlignment="Right" />
 
                                         <TextBlock FontFamily="Calibri"
@@ -508,7 +507,7 @@
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
                                                    Grid.Row="1"
-                                                   Text="پورسانت:"
+                                                   Text="پورسانت :"
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
@@ -522,7 +521,7 @@
                                                    Grid.Row="2"
                                                    Margin="10,0,0,0"
                                                    FontSize="15"
-                                                   Text="مبلغ قابل پرداخت:"
+                                                   Text="مبلغ قابل پرداخت :"
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"

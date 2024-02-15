@@ -31,7 +31,7 @@ namespace Domain.NovinEntity.Documents
             Type = type;
             Description = descripion;
             SubmitDate = submitDate;
-            IsReceived = IsReceived;
+            IsReceived = isReceived;
         }
         public Document(
             Guid customerId,

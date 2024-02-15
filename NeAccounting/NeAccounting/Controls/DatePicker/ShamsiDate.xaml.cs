@@ -111,7 +111,14 @@ namespace NeAccounting.Controls
             this.comboBoxYear.SelectedItem = year;
             selectedBtnIndex = -1;
             //Fill the selected date
-            PersianSelectedDate = string.Concat(year, "/", month, "/", day);
+            if (SelectedDate == null)
+            {
+                PersianSelectedDate = string.Empty;
+            }
+            else
+            {
+                PersianSelectedDate = string.Concat(year, "/", month, "/", day);
+            }
             CalculateMonth(year, month);
 
             IsCalculated = true;
