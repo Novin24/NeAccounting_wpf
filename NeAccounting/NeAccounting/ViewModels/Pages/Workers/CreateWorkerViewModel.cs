@@ -49,19 +49,19 @@ namespace NeAccounting.ViewModels
         private Shift _shift = Shift.ByMounth;
 
         [ObservableProperty]
-        private uint _salary = 0;
+        private long _salary = 0;
 
         [ObservableProperty]
-        private uint _overtimeSalary = 0;
+        private long _overtimeSalary = 0;
 
         [ObservableProperty]
-        private uint _shiftSalary = 0;
+        private long _shiftSalary = 0;
 
         [ObservableProperty]
-        private uint _shiftovertimeSalary = 0;
+        private long _shiftovertimeSalary = 0;
 
         [ObservableProperty]
-        private uint _insurancePremium = 0;
+        private long _insurancePremium = 0;
 
         [ObservableProperty]
         private byte _dayInMonth = 0;

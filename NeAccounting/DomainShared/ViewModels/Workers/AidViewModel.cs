@@ -5,7 +5,7 @@ namespace DomainShared.ViewModels.Workers
     public struct AidViewModel
     {
         public string Name { get; set; }
-        public uint AmountPrice { get; set; }
+        public long AmountPrice { get; set; }
         public int PersonelId { get; set; }
         public string Price { get; set; }
         public string? Description { get; set; }

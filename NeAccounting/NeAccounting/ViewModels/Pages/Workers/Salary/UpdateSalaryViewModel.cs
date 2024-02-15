@@ -30,37 +30,37 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
     private int? _submitYear;
 
     [ObservableProperty]
-    private uint _amountOf = 0;
+    private long _amountOf = 0;
 
     [ObservableProperty]
-    private uint _financialAid = 0;
+    private long _financialAid = 0;
 
     [ObservableProperty]
-    private uint _overTime = 0;
+    private long _overTime = 0;
 
     [ObservableProperty]
-    private uint _tax = 0;
+    private long _tax = 0;
 
     [ObservableProperty]
-    private uint _childAllowance = 0;
+    private long _childAllowance = 0;
 
     [ObservableProperty]
-    private uint _insurance = 0;
+    private long _insurance = 0;
 
     [ObservableProperty]
-    private uint _rightHousingAndFood = 0;
+    private long _rightHousingAndFood = 0;
 
     [ObservableProperty]
-    private uint _loanInstallment = 0;
+    private long _loanInstallment = 0;
 
     [ObservableProperty]
-    private uint _otherAdditions = 0;
+    private long _otherAdditions = 0;
 
     [ObservableProperty]
-    private uint _otherDeductions = 0;
+    private long _otherDeductions = 0;
 
     [ObservableProperty]
-    private uint _leftOver = 0;
+    private long _leftOver = 0;
 
     [ObservableProperty]
     private string? _description;

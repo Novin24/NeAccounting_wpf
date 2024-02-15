@@ -30,57 +30,57 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// حقوق پرداختی
         /// </summary>
-        public uint AmountOf { get; set; }
+        public long AmountOf { get; set; }
 
         /// <summary>
         /// مساعده مالی
         /// </summary>
-        public uint FinancialAid { get; set; }
+        public long FinancialAid { get; set; }
 
         /// <summary>
         /// اضافه کاری
         /// </summary>
-        public uint OverTime { get; set; }
+        public long OverTime { get; set; }
 
         /// <summary>
         /// مالیات
         /// </summary>
-        public uint Tax { get; set; }
+        public long Tax { get; set; }
 
         /// <summary>
         /// حق اولاد
         /// </summary>
-        public uint ChildAllowance { get; set; }
+        public long ChildAllowance { get; set; }
 
         /// <summary>
         /// حق خوار و بار و مسکن
         /// </summary>
-        public uint RightHousingAndFood { get; set; }
+        public long RightHousingAndFood { get; set; }
 
         /// <summary>
         /// بیمه
         /// </summary>
-        public uint Insurance { get; set; }
+        public long Insurance { get; set; }
 
         /// <summary>
         /// قسط وام 
         /// </summary>
-        public uint LoanInstallment { get; set; }
+        public long LoanInstallment { get; set; }
 
         /// <summary>
         /// سایر اضافات
         /// </summary>
-        public uint OtherAdditions { get; set; }
+        public long OtherAdditions { get; set; }
 
         /// <summary>
         /// سایر کسورات
         /// </summary>
-        public uint OtherDeductions { get; set; }
+        public long OtherDeductions { get; set; }
 
         /// <summary>
         /// باقی مانده
         /// </summary>
-        public uint LeftOver { get; set; }
+        public long LeftOver { get; set; }
 
         /// <summary>
         /// توضیحات

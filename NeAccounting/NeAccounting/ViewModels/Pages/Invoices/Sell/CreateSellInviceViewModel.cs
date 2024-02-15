@@ -77,11 +77,11 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             return false;
         }
 
-        if (SubmitDate == null)
-        {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
-        }
+        //if (SubmitDate == null)
+        //{
+        //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+        //    return false;
+        //}
 
         if (MaterialId < 0)
         {
@@ -111,9 +111,9 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             AmountOf = AmountOf.Value,
             UnitName = mat.UnitName,
             MatName = mat.MaterialName,
-            Price = (uint)MatPrice.Value,
+            Price = (long)MatPrice.Value,
             RowId = rowId,
-            TotalPrice = (uint)(MatPrice.Value * AmountOf.Value),
+            TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
             Description = Description,
             MaterialId = MaterialId,
         });
@@ -181,7 +181,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         #endregion
 
         #region CreateSellDoc
-        var totalInvoicePrice = (uint)List.Sum(t => t.TotalPrice);
+        var totalInvoicePrice = (long)List.Sum(t => t.TotalPrice);
 
         var (e, s, serial) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, InvDescription, SubmitDate, false, List);
         if (!s)
@@ -194,7 +194,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         #region create_Commission_Doc
         if (Commission != null && Commission != 0)
         {
-            var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (uint)(totalInvoicePrice * (Commission / 100)),
+            var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (long)(totalInvoicePrice * (Commission / 100)),
                 DocumntType.Rec, $"{serial} پورسانت فاکتور", SubmitDate, true);
 
             if (!su)

@@ -58,17 +58,17 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// دستمزد
         /// </summary>
-        public uint Salary { get; set; }
+        public long Salary { get; set; }
 
         /// <summary>
         /// دسمتزد اضافه کاری
         /// </summary>
-        public uint OverTimeSalary { get; set; }
+        public long OverTimeSalary { get; set; }
 
         /// <summary>
         /// حق بیمه
         /// </summary>
-        public uint InsurancePremium { get; set; }
+        public long InsurancePremium { get; set; }
 
         /// <summary>
         /// تعداد روز کاری در ماه
@@ -78,11 +78,11 @@ namespace DomainShared.ViewModels.Workers
         /// <summary>
         /// دستمزد هر شیفت
         /// </summary>
-        public uint ShiftSalary { get; set; }
+        public long ShiftSalary { get; set; }
 
         /// <summary>
         /// دسمتزد اضافه کاری شیفتی
         /// </summary>
-        public uint ShiftOverTimeSalary { get; set; }
+        public long ShiftOverTimeSalary { get; set; }
     }
 }

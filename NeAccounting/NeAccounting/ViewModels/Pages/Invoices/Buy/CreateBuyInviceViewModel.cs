@@ -115,9 +115,9 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
             AmountOf = AmountOf.Value,
             UnitName = mat.UnitName,
             MatName = mat.MaterialName,
-            Price = (uint)MatPrice.Value,
+            Price = (long)MatPrice.Value,
             RowId = rowId,
-            TotalPrice = (uint)(MatPrice.Value * AmountOf.Value),
+            TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
             Description = Description,
             MaterialId = MaterialId,
         });
@@ -198,7 +198,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         #endregion
 
         #region CreateBuyDoc
-        var totalInvoicePrice = (uint)List.Sum(t => t.TotalPrice);
+        var totalInvoicePrice = (long)List.Sum(t => t.TotalPrice);
 
         var (e, s, serial) = await db.DocumentManager.CreateBuyDocument(CusId.Value, totalInvoicePrice, InvDescription, SubmitDate, true, List);
         if (!s)
@@ -211,7 +211,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         #region create_Commission_Doc
         if (Commission != null && Commission != 0)
         {
-            var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (uint)(totalInvoicePrice * (Commission / 100)),
+            var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (long)(totalInvoicePrice * (Commission / 100)),
                 DocumntType.Pay, $"{serial} پورسانت فاکتور", SubmitDate, false);
 
             if (!su)

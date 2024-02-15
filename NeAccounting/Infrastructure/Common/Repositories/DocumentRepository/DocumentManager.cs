@@ -10,7 +10,7 @@ namespace Infrastructure.Repositories
     public class DocumentManager(NovinDbContext context) : Repository<Document>(context), IDocumentManager
     {
         public async Task<(string error, bool isSuccess, string docSerial)> CreateDocument(Guid customerId,
-            uint price,
+            long price,
             DocumntType type,
             string? descripion,
             DateTime submitDate,
@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true, serial);
         }
 
-        public async Task<(string error, bool isSuccess, string docSerial)> CreateSellDocument(Guid customerId, uint price, string? descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
+        public async Task<(string error, bool isSuccess, string docSerial)> CreateSellDocument(Guid customerId, long price, string? descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
         {
             List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, descripion)).ToList();
 
@@ -48,7 +48,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true, serial);
         }
 
-        public async Task<(string error, bool isSuccess, string docSerial)> CreateBuyDocument(Guid customerId, uint price, string? descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
+        public async Task<(string error, bool isSuccess, string docSerial)> CreateBuyDocument(Guid customerId, long price, string? descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
         {
             List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, descripion)).ToList();
 
@@ -66,9 +66,24 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true, serial);
         }
 
+
         public async Task<string> GetLastDocumntNumber(DocumntType type)
         {
             return (await TableNoTracking.OrderByDescending(t => t.CreationTime).Where(t => t.Type == type).Select(c => c.Serial).FirstOrDefaultAsync()).ToString();
+        }
+
+
+        public async Task<long> GetDebt(Guid customerId)
+        {
+            return await TableNoTracking.Where(p => !p.IsReceived && p.CustomerId == customerId)
+                .Select(p => p.Price).SumAsync();
+
+        }
+
+        public async Task<long> GetCredit(Guid customerId)
+        {
+            return await TableNoTracking.Where(p => p.IsReceived && p.CustomerId == customerId)
+                .Select(p => p.Price).SumAsync();
         }
     }
 }

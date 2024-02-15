@@ -34,11 +34,11 @@ namespace NeApplication.IRepositoryies
             string jobTitle,
             DateTime startDate,
             Shift shift,
-            uint salary,
-            uint overtimeSalary,
-            uint shiftSalary,
-            uint shiftOvertimeSalary,
-            uint insurancePremium,
+            long salary,
+            long overtimeSalary,
+            long shiftSalary,
+            long shiftOvertimeSalary,
+            long insurancePremium,
             byte dayInMonth);
 
         Task<(string error, bool isSuccess)> Update(
@@ -54,11 +54,11 @@ namespace NeApplication.IRepositoryies
             string jobTitle,
             Status status,
             Shift shift,
-            uint salary,
-            uint overtimeSalary,
-            uint shiftSalary,
-            uint shiftOvertimeSalary,
-            uint insurancePremium,
+            long salary,
+            long overtimeSalary,
+            long shiftSalary,
+            long shiftOvertimeSalary,
+            long insurancePremium,
             byte dayInMonth);
         #endregion
 
@@ -67,17 +67,17 @@ namespace NeApplication.IRepositoryies
         Task<(string error, bool isSuccess)> AddSalary(int workerId,
             byte submitMonth,
             int submitYaer,
-            uint amountOf,
-            uint financialAid,
-            uint overTime,
-            uint tax,
-            uint childAllowance,
-            uint rightHousingAndFood,
-            uint insurance,
-            uint loanInstallment,
-            uint otherAdditions,
-            uint otherDeductions,
-            uint leftOver,
+            long amountOf,
+            long financialAid,
+            long overTime,
+            long tax,
+            long childAllowance,
+            long rightHousingAndFood,
+            long insurance,
+            long loanInstallment,
+            long otherAdditions,
+            long otherDeductions,
+            long leftOver,
             string? description);
 
 
@@ -85,17 +85,17 @@ namespace NeApplication.IRepositoryies
             int salaryId,
             int persianYear,
             byte persianMonth,
-            uint amountOf,
-            uint financialAid,
-            uint overTime,
-            uint tax,
-            uint childAllowance,
-            uint rightHousingAndFood,
-            uint insurance,
-            uint loanInstallment,
-            uint otherAdditions,
-            uint otherDeductions,
-            uint leftOver,
+            long amountOf,
+            long financialAid,
+            long overTime,
+            long tax,
+            long childAllowance,
+            long rightHousingAndFood,
+            long insurance,
+            long loanInstallment,
+            long otherAdditions,
+            long otherDeductions,
+            long leftOver,
             string? description);
 
 
@@ -119,7 +119,7 @@ namespace NeApplication.IRepositoryies
             int workerId,
             int persianYear,
             byte persianMonth,
-            uint amountOf,
+            long amountOf,
             string? description);
 
         Task<(string error, bool isSuccess)> UpdateAid(
@@ -127,7 +127,7 @@ namespace NeApplication.IRepositoryies
             int persianYear,
             byte persianMonth,
             int aidId,
-            uint amountOf,
+            long amountOf,
             string? description);
 
         Task<List<AidViewModel>> GetAidList(int workerId,

@@ -133,11 +133,11 @@ namespace Infrastructure.Repositories
             string jobTitle,
             DateTime startDate,
             Shift shift,
-            uint salary,
-            uint overtimeSalary,
-            uint shiftSalary,
-            uint shiftOvertimeSalary,
-            uint insurancePremium,
+            long salary,
+            long overtimeSalary,
+            long shiftSalary,
+            long shiftOvertimeSalary,
+            long insurancePremium,
             byte dayInMonth)
         {
             var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.NationalCode == natinalCode || t.PersonnelId == personalId);
@@ -191,11 +191,11 @@ namespace Infrastructure.Repositories
             string jobTitle,
             Status status,
             Shift shift,
-            uint salary,
-            uint overtimeSalary,
-            uint shiftSalary,
-            uint shiftOvertimeSalary,
-            uint insurancePremium,
+            long salary,
+            long overtimeSalary,
+            long shiftSalary,
+            long shiftOvertimeSalary,
+            long insurancePremium,
             byte dayInMonth)
         {
             var worker = await TableNoTracking.FirstOrDefaultAsync(t => t.Id == id);
@@ -282,7 +282,7 @@ namespace Infrastructure.Repositories
                                       Success = true,
                                   }).ToListAsync();
 
-            uint amountOf = (uint)salarise.Sum(x => x.FinancialAid);
+            long amountOf = (long)salarise.Sum(x => x.FinancialAid);
             salarise.First().FinancialAid = amountOf;
             return salarise.First();
         }
@@ -363,17 +363,17 @@ namespace Infrastructure.Repositories
             int salaryId,
             int persianYear,
             byte persianMonth,
-            uint amountOf,
-            uint financialAid,
-            uint overTime,
-            uint tax,
-            uint childAllowance,
-            uint rightHousingAndFood,
-            uint insurance,
-            uint loanInstallment,
-            uint otherAdditions,
-            uint otherDeductions,
-            uint leftOver,
+            long amountOf,
+            long financialAid,
+            long overTime,
+            long tax,
+            long childAllowance,
+            long rightHousingAndFood,
+            long insurance,
+            long loanInstallment,
+            long otherAdditions,
+            long otherDeductions,
+            long leftOver,
             string? description)
         {
             var worker = await Entities
@@ -428,17 +428,17 @@ namespace Infrastructure.Repositories
         public async Task<(string error, bool isSuccess)> AddSalary(int workerId,
             byte persianMonth,
             int persianYear,
-            uint amountOf,
-            uint financialAid,
-            uint overTime,
-            uint tax,
-            uint childAllowance,
-            uint rightHousingAndFood,
-            uint insurance,
-            uint loanInstallment,
-            uint otherAdditions,
-            uint otherDeductions,
-            uint leftOver,
+            long amountOf,
+            long financialAid,
+            long overTime,
+            long tax,
+            long childAllowance,
+            long rightHousingAndFood,
+            long insurance,
+            long loanInstallment,
+            long otherAdditions,
+            long otherDeductions,
+            long leftOver,
             string? description)
         {
             var worker = await Entities
@@ -493,9 +493,9 @@ namespace Infrastructure.Repositories
         public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, byte persianMonth,
             int persianYear)
         {
-            uint aid = 0;
-            uint ssalary = 0;
-            uint overtime = 0;
+            long aid = 0;
+            long ssalary = 0;
+            long overtime = 0;
 
             var worker = await TableNoTracking
                 .Include(t => t.Salaries.Where(s => s.PersianYear == persianYear && s.PersianMonth == persianMonth))
@@ -515,7 +515,7 @@ namespace Infrastructure.Repositories
 
             if (worker.Aids.Count != 0)
             {
-                aid = (uint)worker.Aids.Sum(t => t.AmountOf);
+                aid = (long)worker.Aids.Sum(t => t.AmountOf);
             }
 
             var func = worker.Functions.First();
@@ -704,7 +704,7 @@ namespace Infrastructure.Repositories
             int workerId,
             int persianYear,
             byte persianMonth,
-            uint amountOf,
+            long amountOf,
             string? description)
         {
             var worker = await Entities
@@ -733,7 +733,7 @@ namespace Infrastructure.Repositories
             int persianYear,
             byte persianMonth,
             int aidId,
-            uint amount,
+            long amount,
             string? description)
         {
             var worker = await Entities

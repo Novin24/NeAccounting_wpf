@@ -75,27 +75,27 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// دستمزد
         /// </summary>
-        public uint Salary { get; set; }
+        public long Salary { get; set; }
 
         /// <summary>
         /// دسمتزد اضافه کاری
         /// </summary>
-        public uint OverTimeSalary { get; set; }
+        public long OverTimeSalary { get; set; }
 
         /// <summary>
         /// دستمزد هر شیفت
         /// </summary>
-        public uint ShiftSalary { get; set; }
+        public long ShiftSalary { get; set; }
 
         /// <summary>
         /// دسمتزد اضافه کاری شیفتی
         /// </summary>
-        public uint ShiftOverTimeSalary { get; set; }
+        public long ShiftOverTimeSalary { get; set; }
 
         /// <summary>
         /// حق بیمه
         /// </summary>
-        public uint InsurancePremium { get; set; }
+        public long InsurancePremium { get; set; }
 
         /// <summary>
         /// تعداد روز کاری در ماه
@@ -122,11 +122,11 @@ namespace Domain.NovinEntity.Workers
             string jobTitle,
             DateTime startDate,
             Shift shift,
-            uint salary,
-            uint overtimeSalary,
-            uint shiftSalary,
-            uint shiftOvertimeSalary,
-            uint insurancePremium,
+            long salary,
+            long overtimeSalary,
+            long shiftSalary,
+            long shiftOvertimeSalary,
+            long insurancePremium,
             byte dayInMonth)
         {
 
