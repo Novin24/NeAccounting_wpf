@@ -28,7 +28,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     private Guid? _CusId;
 
     [ObservableProperty]
-    private DateTime? _submitDate;
+    private DateTime _submitDate = DateTime.Now;
 
     [ObservableProperty]
     private int? _commission;
@@ -48,6 +48,9 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     [ObservableProperty]
     private string? _description;
 
+    [ObservableProperty]
+    private string? _invDescription;
+
     public async void OnNavigatedTo()
     {
         await InitializeViewModel();
@@ -56,7 +59,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     private async Task InitializeViewModel()
     {
         using UnitOfWork db = new();
-        Cuslist = await db.CustomerManager.GetDisplayUser(null, false);
+        Cuslist = await db.CustomerManager.GetDisplayUser(true);
         LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.BuyInv);
         MatList = await db.MaterialManager.GetMaterails();
     }
@@ -65,6 +68,10 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     {
     }
 
+    /// <summary>
+    /// افزودن ردیف
+    /// </summary>
+    /// <returns></returns>
     internal bool OnAdd()
     {
 
@@ -118,6 +125,11 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         return true;
     }
 
+    /// <summary>
+    /// ویرایش ردیف
+    /// </summary>
+    /// <param name="rowId"></param>
+    /// <returns></returns>
     internal (bool, RemittanceListViewModel) OnUpdate(int rowId)
     {
         var itm = List.FirstOrDefault(t => t.RowId == rowId);
@@ -132,6 +144,10 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         return new(true, itm);
     }
 
+    /// <summary>
+    /// حذف ردیف
+    /// </summary>
+    /// <param name="rowId"></param>
     internal void OnRemove(int rowId)
     {
         var itm = List.FirstOrDefault(t => t.RowId == rowId);
@@ -142,6 +158,10 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         }
     }
 
+    /// <summary>
+    /// ثبت فاکتور
+    /// </summary>
+    /// <returns></returns>
     internal async Task<bool> OnSumbit()
     {
         #region validation
@@ -180,7 +200,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         #region CreateBuyDoc
         var totalInvoicePrice = (uint)List.Sum(t => t.TotalPrice);
 
-        var (e, s, serial) = await db.DocumentManager.CreateBuyDocument(CusId.Value, totalInvoicePrice, Description, SubmitDate.Value, true, List);
+        var (e, s, serial) = await db.DocumentManager.CreateBuyDocument(CusId.Value, totalInvoicePrice, InvDescription, SubmitDate, true, List);
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -192,7 +212,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         if (Commission != null && Commission != 0)
         {
             var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (uint)(totalInvoicePrice * (Commission / 100)),
-                DocumntType.Pay, $"{serial} پورسانت فاکتور", SubmitDate.Value, false);
+                DocumntType.Pay, $"{serial} پورسانت فاکتور", SubmitDate, false);
 
             if (!su)
             {
@@ -211,6 +231,10 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         #endregion
     }
 
+    /// <summary>
+    /// به روز رسانی شماره ردیف ها
+    /// </summary>
+    /// <param name="rowId"></param>
     private void RefreshRow(ref int rowId)
     {
         int row = 1;
@@ -222,6 +246,10 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         rowId = row;
     }
 
+    /// <summary>
+    /// بارگیری مجدد صفحه 
+    /// </summary>
+    /// <returns></returns>
     private async Task Reload()
     {
         using UnitOfWork db = new();
@@ -231,7 +259,8 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         Commission = null;
         MaterialId = -1;
         Description = null;
-        SubmitDate = null;
+        InvDescription = null;
+        SubmitDate = DateTime.Now;
         MatPrice = null;
     }
 }

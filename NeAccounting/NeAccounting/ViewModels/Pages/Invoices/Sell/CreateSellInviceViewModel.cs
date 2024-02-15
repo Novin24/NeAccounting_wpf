@@ -28,7 +28,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
     private Guid? _CusId;
 
     [ObservableProperty]
-    private DateTime? _submitDate;
+    private DateTime _submitDate = DateTime.Now;
 
     [ObservableProperty]
     private int? _commission;
@@ -47,6 +47,9 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
 
     [ObservableProperty]
     private string? _description;
+
+    [ObservableProperty]
+    private string? _invDescription;
 
     public async void OnNavigatedTo()
     {
@@ -180,7 +183,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         #region CreateSellDoc
         var totalInvoicePrice = (uint)List.Sum(t => t.TotalPrice);
 
-        var (e, s, serial) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, Description, SubmitDate.Value, false, List);
+        var (e, s, serial) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, InvDescription, SubmitDate, false, List);
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -192,7 +195,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         if (Commission != null && Commission != 0)
         {
             var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (uint)(totalInvoicePrice * (Commission / 100)),
-                DocumntType.Rec, $"{serial} پورسانت فاکتور", SubmitDate.Value, true);
+                DocumntType.Rec, $"{serial} پورسانت فاکتور", SubmitDate, true);
 
             if (!su)
             {
@@ -210,7 +213,6 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         return true;
         #endregion
     }
-
 
     private void RefreshRow(ref int rowId)
     {
@@ -231,8 +233,9 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         CusId = null;
         Commission = null;
         MaterialId = -1;
+        InvDescription  = null;
         Description = null;
-        SubmitDate = null;
+        SubmitDate = DateTime.Now;
         MatPrice = null;
     }
 }

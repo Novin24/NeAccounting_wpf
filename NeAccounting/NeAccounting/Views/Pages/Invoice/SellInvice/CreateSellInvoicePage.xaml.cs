@@ -85,7 +85,6 @@ namespace NeAccounting.Views.Pages
             e.Handled = MyRegex().IsMatch(e.Text);
         }
 
-
         private void Txt_Unit_price_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             if (sender is not TextBox txt_price)
