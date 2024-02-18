@@ -184,6 +184,11 @@ namespace NeAccounting
                 services.AddTransient<CreditorsListPage>();
 
                 services.AddTransient<DailyBook>();
+
+                services.AddTransient<Chequebook>();
+
+                services.AddTransient<CreateCostsPage>();
+
                 #endregion
 
                 #region Setting
