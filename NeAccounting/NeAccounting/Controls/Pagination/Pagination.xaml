@@ -1,27 +1,60 @@
 ﻿<UserControl x:Class="NeAccounting.Controls.Pagination"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:local="clr-namespace:NeAccounting.Controls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:Background="{DynamicResource ApplicationBackgroundBrush}"
              Foreground="{DynamicResource TextFillColorPrimaryBrush}">
-        <StackPanel Orientation="Horizontal">
-            <Button Padding="7">
+    <StackPanel Orientation="Horizontal" x:Name="stk_btns">
+        <Button x:Name="btn_back"
+                Padding="7">
             <ui:SymbolIcon Symbol="ChevronLeft28" />
         </Button>
-            <Button Content="1" Margin="2 0"></Button>
-            <Button Content="2" Margin="2 0"></Button>
-            <ui:TextBox PlaceholderText=". . ." Height="31.4" Padding="8 0 8 5" Margin="2 0" ></ui:TextBox>
-            <Button Content="98" Margin="2 0"></Button>
-            <Button Content="99" Margin="2 0"></Button>
-        <Button Padding="7">
+        <Button x:Name="btn_le"
+                Visibility="Collapsed"
+                Content="..."
+                IsEnabled="False"
+                Margin="2 0"></Button>
+        <Button x:Name="btn_1"
+                Visibility="Collapsed"
+                Content="1"
+                Margin="2 0"></Button>
+        <Button x:Name="btn_2"
+                Visibility="Collapsed"
+                Content="2"
+                Margin="2 0"></Button>
+        <Button x:Name="btn_mid"
+                Visibility="Collapsed"
+                Content="..."
+                IsEnabled="False"
+                Margin="2 0"></Button>
+        <ui:NumberBox ClearButtonEnabled="False"
+                      SpinButtonPlacementMode="Hidden"
+                      Visibility="Collapsed"
+                      x:Name="txt_mid"
+                      PlaceholderText=". . ."></ui:NumberBox>
+        <Button x:Name="btn_3"
+                Visibility="Collapsed"
+                Content="98"
+                Margin="2 0"></Button>
+        <Button x:Name="btn_4"
+                Visibility="Collapsed"
+                Content="99"
+                Margin="2 0"></Button>
+        <Button x:Name="btn_ri"
+                Visibility="Collapsed"
+                Content="..."
+                IsEnabled="False"
+                Margin="2 0"></Button>
+        <Button x:Name="btn_forward"
+                Padding="7">
             <ui:SymbolIcon Symbol="ChevronRight28" />
         </Button>
 
-        </StackPanel>
+    </StackPanel>
 
 
 </UserControl>

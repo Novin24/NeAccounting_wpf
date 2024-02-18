@@ -27,4 +27,11 @@
     <Button  Grid.Column="2" Grid.Row="1" Width="60" Height="35" Content="Enter" Margin="10,2" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
     
     </Grid>-->
+
+    <Grid>
+        <StackPanel>
+            <nu:Pagination PageCount="5"
+                           CurrntPage="1" />
+        </StackPanel>
+    </Grid>
 </Page>

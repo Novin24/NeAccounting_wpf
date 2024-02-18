@@ -7,6 +7,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NeAccounting.Controls;
 using NeAccounting.Pages;
 using NeAccounting.Services;
 using NeAccounting.ViewModels;
@@ -185,6 +186,10 @@ namespace NeAccounting
                 services.AddTransient<CreditorsListPage>();
 
                 services.AddTransient<DailyBook>();
+                #endregion
+
+                #region UserControl
+                    services.AddTransient<Pagination>();
                 #endregion
 
                 #region Setting
