@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace NeAccounting.Controls
 {
@@ -19,84 +20,80 @@ namespace NeAccounting.Controls
 
         private void CalculatePages(int pageCount, int currentPage)
         {
-            btn_1.Visibility = Visibility.Collapsed;
-            btn_2.Visibility = Visibility.Collapsed;
-            btn_3.Visibility = Visibility.Collapsed;
-            btn_4.Visibility = Visibility.Collapsed;
-
+            stk_btns.Children.Clear();
             if (currentPage > 1)
             {
-                btn_back.Tag = currentPage - 1;
-                btn_back.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                btn_back.Visibility = Visibility.Collapsed;
+                Button btn = new()
+                {
+                    Tag = currentPage - 1,
+                    Padding = new Thickness(6),
+                    Margin = new Thickness(0, 0, 4, 0),
+                    Content = "<"
+                    //Content = Wpf.Ui.Controls.SymbolIcon.MouseLeftButtonDownEvent
+                };
+                btn.Click += ChagePage;
+                stk_btns.Children.Add(btn);
             }
 
-
-            int b = 1;
             for (int i = 1; i < pageCount + 1; i++)
             {
                 if (pageCount >= 5 && i == currentPage - 3)
                 {
-                    btn_le.Visibility = Visibility.Visible;
+                    Button btn = new()
+                    {
+                        IsEnabled = false,
+                        Content = "..."
+                    };
+                    stk_btns.Children.Add(btn);
                     continue;
                 }
                 else if (i == currentPage)
                 {
                     if (pageCount > 10)
                     {
-                        btn_mid.Visibility = Visibility.Collapsed;
-                        txt_mid.Visibility = Visibility.Visible;
-                        txt_mid.Value = i;
+                        Wpf.Ui.Controls.NumberBox number = new()
+                        {
+                            SpinButtonPlacementMode = Wpf.Ui.Controls.NumberBoxSpinButtonPlacementMode.Hidden,
+                            ClearButtonEnabled = false,
+                            Padding = new Thickness(8, 6, 8, 6),
+                            Value = i
+                        };
+                        number.KeyDown += OnEnter;
+                        stk_btns.Children.Add(number);
                     }
                     else
                     {
-                        btn_mid.Visibility = Visibility.Visible;
-                        txt_mid.Visibility = Visibility.Collapsed;
-                        btn_mid.Content = i;
+                        Button btn = new()
+                        {
+                            IsEnabled = false,
+                            Content = i,
+                            Margin = new Thickness(2)
+                        };
+                        stk_btns.Children.Add(btn);
                     }
+
                     continue;
                 }
                 else if (i < currentPage + 3 && i > currentPage - 3)
                 {
-                    if (b == 1)
+                    Button btn = new()
                     {
-                        btn_1.Visibility = Visibility.Visible;
-                        btn_1.Content = i;
-                        btn_1.Tag = i;
-                        b++;
-                        continue;
-                    }
-                    if (b == 2)
-                    {
-                        btn_2.Visibility = Visibility.Visible;
-                        btn_2.Content = i;
-                        btn_2.Tag = i;
-                        b++;
-                        continue;
-                    }
-                    if (b == 3)
-                    {
-                        btn_3.Visibility = Visibility.Visible;
-                        btn_3.Content = i;
-                        btn_3.Tag = i;
-                        b++;
-                        continue;
-                    }
-                    if (b == 4)
-                    {
-                        btn_4.Visibility = Visibility.Visible;
-                        btn_4.Content = i;
-                        btn_4.Tag = i;
-                        b++;
-                        continue;
-                    }
+                        Content = i,
+                        Tag = i,
+                        Margin = new Thickness(2)
+                    };
+                    btn.Click += ChagePage;
+                    stk_btns.Children.Add(btn);
+                    continue;
                 }
                 else if (pageCount >= 5 && i == currentPage + 3)
                 {
-                    btn_ri.Visibility = Visibility.Visible;
+                    Button btn = new()
+                    {
+                        IsEnabled = false,
+                        Content = "..."
+                    };
+                    stk_btns.Children.Add(btn);
                     continue;
                 }
             }
@@ -104,13 +101,55 @@ namespace NeAccounting.Controls
 
             if (currentPage < pageCount)
             {
-                btn_forward.Tag = currentPage + 1;
-                btn_forward.Visibility = Visibility.Visible;
+                Button btn = new()
+                {
+                    Tag = currentPage + 1,
+                    Margin = new Thickness(4, 0, 0, 0),
+                    Padding = new Thickness(6),
+                    Content = ">"
+                    //Content = Wpf.Ui.Controls.SymbolIcon.MouseLeftButtonDownEvent
+                };
+                btn.Click += ChagePage;
+                stk_btns.Children.Add(btn);
             }
-            else
+        }
+
+        private void OnEnter(object sender, KeyEventArgs e)
+        {
+            if (sender is not Wpf.Ui.Controls.NumberBox txt)
+                return;
+
+            if (!txt.Value.HasValue)
             {
-                btn_forward.Visibility = Visibility.Collapsed;
+                return;
             }
+
+            int selecterPage = (int)txt.Value;
+            if (selecterPage <= 0)
+            {
+                selecterPage = 1;
+            }
+
+            if (selecterPage > PageCount)
+            {
+                selecterPage = PageCount;
+            }
+
+            if (e.Key == Key.Enter)
+            {
+                CurrntPage = selecterPage;
+            }
+        }
+
+        private void ChagePage(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button btn)
+                return;
+
+            if (btn.Tag == null)
+                return;
+
+            int id = int.Parse(btn.Tag.ToString());
         }
 
         public int PageCount

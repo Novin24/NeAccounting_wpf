@@ -30,8 +30,8 @@
 
     <Grid>
         <StackPanel>
-            <nu:Pagination PageCount="5"
-                           CurrntPage="1" />
+            <nu:Pagination PageCount="53"
+                           CurrntPage="5" />
         </StackPanel>
     </Grid>
 </Page>
