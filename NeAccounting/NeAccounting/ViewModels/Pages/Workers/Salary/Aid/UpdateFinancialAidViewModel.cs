@@ -38,7 +38,7 @@ namespace NeAccounting.ViewModels
         private int _aidId = -1;
 
         [ObservableProperty]
-        private uint _amountOf = 0;
+        private long _amountOf = 0;
 
         [ObservableProperty]
         private string? _description;

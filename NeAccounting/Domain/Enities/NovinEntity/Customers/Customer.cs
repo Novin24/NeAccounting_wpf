@@ -15,9 +15,9 @@ namespace Domain.NovinEntity.Customers
         public Customer(
             string name,
             string mobile,
-            uint totalCredit,
-            uint cashCredit,
-            uint promissoryNote,
+            long totalCredit,
+            long cashCredit,
+            long promissoryNote,
             string nationalCode,
             string address,
             CustomerType type,
@@ -47,10 +47,10 @@ namespace Domain.NovinEntity.Customers
         public string Name { get; set; }
         public long CusId { get; set; }
         public string Mobile { get; set; }
-        public uint TotalCredit { get; set; }
-        public uint ChequeCredit { get; set; }
-        public uint CashCredit { get; set; }
-        public uint PromissoryNote { get; set; }
+        public long TotalCredit { get; set; }
+        public long ChequeCredit { get; set; }
+        public long CashCredit { get; set; }
+        public long PromissoryNote { get; set; }
         public string NationalCode { get; set; }
         public string Address { get; set; }
         public bool Buyer { get; set; }

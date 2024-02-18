@@ -44,13 +44,14 @@ namespace NeAccounting.Views.Pages
             dgv_Inv.Items.Refresh();
         }
 
-        private void Txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private async void Txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             if (!IsInitialized)
                 return;
             var user = (SuggestBoxViewModel<Guid, long>)args.SelectedItem;
             ViewModel.CusId = user.Id;
             lbl_cusId.Text = user.UniqNumber.ToString();
+            await ViewModel.OnSelectCus(user.Id);
         }
 
         private void Txt_mat_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
@@ -61,8 +62,8 @@ namespace NeAccounting.Views.Pages
             ViewModel.MaterialId = mat.Id;
             _totalEntity = mat.Entity;
             txt_UnitName.Text = mat.UnitName;
-            txt_Unit_price.Text = mat.LastPrice.ToString("N0");
-            _price = mat.LastPrice;
+            txt_Unit_price.Text = mat.LastSellPrice.ToString("N0");
+            _price = mat.LastSellPrice;
         }
 
         private void Txt_amount_LostFocus(object sender, RoutedEventArgs e)
@@ -111,6 +112,7 @@ namespace NeAccounting.Views.Pages
 
             txt_total_price.Text = (ViewModel.AmountOf.Value * _price).ToString("N0");
         }
+
         private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
             if (!Validation())
@@ -129,6 +131,44 @@ namespace NeAccounting.Views.Pages
                 lbl_cusId.Text = string.Empty;
             }
 
+        }
+
+        private void BtnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button btn)
+                return;
+
+            if (btn.Tag == null)
+                return;
+
+            if (!Validation())
+            {
+                _snackbarService.Show("اخطار", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ویرایش مجدد نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
+            int id = int.Parse(btn.Tag.ToString());
+            var (s, itm) = ViewModel.OnUpdate(id);
+            if (!s) return;
+            txt_MaterialName.Text = itm.MatName;
+            txt_total_price.Text = itm.TotalPrice.ToString("N0");
+            txt_UnitName.Text = itm.UnitName;
+            _price = itm.Price;
+            txt_Unit_price.Text = itm.Price.ToString();
+            dgv_Inv.Items.Refresh();
+        }
+
+        private void BtnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button btn)
+                return;
+
+            if (btn.Tag == null)
+                return;
+
+            int id = int.Parse(btn.Tag.ToString());
+            ViewModel.OnRemove(id);
+            dgv_Inv.Items.Refresh();
         }
 
         private bool Validation()

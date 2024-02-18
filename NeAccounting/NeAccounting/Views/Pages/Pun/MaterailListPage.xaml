@@ -63,7 +63,7 @@
 
 
                     <nu:HeaderPack NamePpage="اجناس و کالاها"
-                                   Margin="28 0"/>
+                                   Margin="28 0" />
 
                     <Border Grid.Row="1"
                             CornerRadius="9"
@@ -121,7 +121,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0"
                                             Margin="4 4 10 0 ">
@@ -134,7 +134,7 @@
                                                 FontFamily="Calibri"
                                                 x:Name="materialName_txb"
                                                 Text="{Binding ViewModel.PunName}"
-                                                Margin="0 4 0 0"/>
+                                                Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
                                             Margin="10 4 10 0 ">
@@ -149,7 +149,8 @@
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
 
-                                <Button Grid.Column="2" IsDefault="True"
+                                <Button Grid.Column="2"
+                                        IsDefault="True"
                                         Margin="10 25 0 0"
                                         HorizontalAlignment="Right"
                                         Padding="17 4 18 9"
@@ -171,6 +172,12 @@
                                                         Width="*"
                                                         x:Name="MaterialName"
                                                         Binding="{Binding MaterialName}" />
+                                    <DataGridTextColumn Header="موجودی انبار"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Width="*"
+                                                        x:Name="Entity"
+                                                        Binding="{Binding Entity}" />
                                     <DataGridTextColumn Header="واحد"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
@@ -183,12 +190,6 @@
                                                         Width="*"
                                                         x:Name="Serial"
                                                         Binding="{Binding Serial}" />
-                                    <DataGridTextColumn Header="موجودی انبار"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*"
-                                                        x:Name="Entity"
-                                                        Binding="{Binding Entity}" />
                                     <DataGridTextColumn Header="محل نگهداری"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"

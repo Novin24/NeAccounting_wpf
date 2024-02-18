@@ -371,14 +371,14 @@
                                                             HorizontalAlignment="Center">
                                                     <Button  BorderBrush="Transparent"
                                                              Margin="2"
-                                                             CommandParameter="{Binding Id , Mode=OneWay}"
-                                                             Command="{Binding Path=DataContext.ViewModel.UpdateMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                             Tag="{Binding RowId , Mode=OneWay}"
+                                                             Click="BtnUpdate_Click"
                                                              Padding="7,5">
                                                         <ui:SymbolIcon Symbol="Pen16" />
                                                     </Button>
                                                     <Button Margin="3"
-                                                            CommandParameter="{Binding Id , Mode=OneWay}"
-                                                            Command="{Binding Path=DataContext.ViewModel.RemoveMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                            Tag="{Binding RowId , Mode=OneWay}"
+                                                            Click="BtnRemove_Click"
                                                             Padding="7,5">
                                                         <ui:SymbolIcon Symbol="Delete16" />
                                                     </Button>
@@ -419,7 +419,7 @@
 
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="تسویه"
+                                                   Text="{Binding ViewModel.Status}"
                                                    Margin="15 0 0 0"
                                                    Grid.Column="1"
                                                    HorizontalAlignment="Center" />
@@ -431,7 +431,7 @@
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="0"
+                                                   Text="{Binding ViewModel.Credit}"
                                                    Grid.Column="1"
                                                    Grid.Row="1"
                                                    Margin="15 0 4 0"
@@ -444,7 +444,7 @@
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="0"
+                                                   Text="{Binding ViewModel.Debt}"
                                                    Grid.Row="2"
                                                    Grid.Column="1"
                                                    Margin="15 0 4 0"
@@ -499,7 +499,7 @@
 
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="0"
+                                                   Text="{Binding ViewModel.TotalPrice}"
                                                    Margin="15 0 4 0"
                                                    Grid.Column="1"
                                                    HorizontalAlignment="Center" />
@@ -511,7 +511,7 @@
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="0"
+                                                   Text="{Binding ViewModel.Totalcommission}"
                                                    Grid.Column="1"
                                                    Grid.Row="1"
                                                    Margin="15 0 4 0"
@@ -525,7 +525,7 @@
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="0"
+                                                   Text="{Binding ViewModel.RemainPrice}"
                                                    Grid.Row="2"
                                                    Grid.Column="1"
                                                    Margin="15 0 4 0"

@@ -1,6 +1,5 @@
 ﻿using DomainShared.ViewModels;
 using DomainShared.ViewModels.Pun;
-using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
@@ -44,13 +43,14 @@ namespace NeAccounting.Views.Pages
             dgv_Inv.Items.Refresh();
         }
 
-        private void Txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private async void Txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             if (!IsInitialized)
                 return;
             var user = (SuggestBoxViewModel<Guid, long>)args.SelectedItem;
             ViewModel.CusId = user.Id;
             lbl_cusId.Text = user.UniqNumber.ToString();
+            await ViewModel.OnSelectCus(user.Id);
         }
 
         private void Txt_mat_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
@@ -61,8 +61,8 @@ namespace NeAccounting.Views.Pages
             ViewModel.MaterialId = mat.Id;
             _totalEntity = mat.Entity;
             txt_UnitName.Text = mat.UnitName;
-            txt_Unit_price.Text = mat.LastPrice.ToString("N0");
-            _price = mat.LastPrice;
+            txt_Unit_price.Text = mat.LastBuyPrice.ToString("N0");
+            _price = mat.LastBuyPrice;
         }
 
         private void Txt_amount_LostFocus(object sender, RoutedEventArgs e)

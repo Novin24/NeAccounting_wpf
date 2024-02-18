@@ -20,7 +20,7 @@ namespace Domain.NovinEntity.Documents
 
         public Document(
             Guid customerId,
-            uint price,
+            long price,
             DocumntType type,
             string? descripion,
             DateTime submitDate,
@@ -35,7 +35,7 @@ namespace Domain.NovinEntity.Documents
         }
         public Document(
             Guid customerId,
-            uint price,
+            long price,
             DocumntType type,
             string? descripion,
             DateTime submitDate,
@@ -47,7 +47,7 @@ namespace Domain.NovinEntity.Documents
 
         public Document(
             Guid customerId,
-            uint price,
+            long price,
             DocumntType type,
             string? descripion,
             DateTime submitDate,
@@ -59,10 +59,13 @@ namespace Domain.NovinEntity.Documents
         #endregion
 
         #region Properties
-        public uint Price { get; set; }
+        public long Price { get; set; }
         public string? Description { get; set; }
         public DateTime SubmitDate { get; set; }
         public DocumntType Type { get; set; }
+        /// <summary>
+        /// ما دریافت کردیم
+        /// </summary>
         public bool IsReceived { get; set; }
         public long Serial { get; set; }
         #endregion

@@ -67,13 +67,13 @@ namespace NeAccounting.ViewModels
         private byte _statusByte;
 
         [ObservableProperty]
-        private uint _salary = 0;
+        private long _salary = 0;
 
         [ObservableProperty]
-        private uint _overtimeSalary = 0;
+        private long _overtimeSalary = 0;
 
         [ObservableProperty]
-        private uint _insurancePremium = 0;
+        private long _insurancePremium = 0;
 
         [ObservableProperty]
         private byte _dayInMonth = 0;
@@ -86,10 +86,10 @@ namespace NeAccounting.ViewModels
 
 
         [ObservableProperty]
-        private uint _shiftSalary;
+        private long _shiftSalary;
 
         [ObservableProperty]
-        private uint _shiftovertimeSalary;
+        private long _shiftovertimeSalary;
 
 
         public void OnNavigatedFrom()

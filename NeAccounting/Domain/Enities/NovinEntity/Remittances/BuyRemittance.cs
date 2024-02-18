@@ -19,8 +19,8 @@ namespace Domain.Enities.NovinEntity.Remittances
         public BuyRemittance(
             int materialId,
             double amountOf,
-            uint price,
-            uint toatalPrice,
+            long price,
+            long toatalPrice,
             DateTime submitDate,
             string? descripion)
         {
@@ -34,10 +34,10 @@ namespace Domain.Enities.NovinEntity.Remittances
         #endregion
 
         #region Properties
-        public uint Price { get; set; }
+        public long Price { get; set; }
         public string? Description { get; set; }
         public DateTime SubmitDate { get; set; }
-        public uint TotalPrice { get; set; }
+        public long TotalPrice { get; set; }
         public double AmountOf { get; set; }
         #endregion
     }

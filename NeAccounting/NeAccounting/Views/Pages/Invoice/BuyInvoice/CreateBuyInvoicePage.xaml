@@ -377,7 +377,7 @@
                                                     </ui:Button>
                                                     <ui:Button Margin="3"
                                                                Tag="{Binding RowId , Mode=OneWay}"
-                                                               Click="BtnUpdate_Click"
+                                                               Click="BtnRemove_Click"
                                                                Padding="7,5">
                                                         <ui:SymbolIcon Symbol="Delete16" />
                                                     </ui:Button>
@@ -418,7 +418,7 @@
 
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="تسویه"
+                                                   Text="{Binding ViewModel.Status}"
                                                    Margin="15 0 0 0"
                                                    Grid.Column="1"
                                                    HorizontalAlignment="Center" />
@@ -430,7 +430,7 @@
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="0"
+                                                   Text="{Binding ViewModel.Credit}"
                                                    Grid.Column="1"
                                                    Grid.Row="1"
                                                    Margin="15 0 4 0"
@@ -443,7 +443,7 @@
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="0"
+                                                   Text="{Binding ViewModel.Debt}"
                                                    Grid.Row="2"
                                                    Grid.Column="1"
                                                    Margin="15 0 4 0"
@@ -498,7 +498,7 @@
 
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="0"
+                                                   Text="{Binding ViewModel.TotalPrice}"
                                                    Margin="15 0 4 0"
                                                    Grid.Column="1"
                                                    HorizontalAlignment="Center" />
@@ -508,10 +508,10 @@
                                                    Grid.Row="1"
                                                    Text="پورسانت :"
                                                    HorizontalAlignment="Right" />
-                                        
+
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="0"
+                                                   Text="{Binding ViewModel.Totalcommission}"
                                                    Grid.Column="1"
                                                    Grid.Row="1"
                                                    Margin="15 0 4 0"
@@ -523,10 +523,10 @@
                                                    FontSize="15"
                                                    Text="مبلغ قابل پرداخت :"
                                                    HorizontalAlignment="Right" />
-                                        
+
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="0"
+                                                   Text="{Binding ViewModel.RemainPrice}"
                                                    Grid.Row="2"
                                                    Grid.Column="1"
                                                    Margin="15 0 4 0"

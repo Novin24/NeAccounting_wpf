@@ -24,7 +24,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// مبلغ مساعده
         /// </summary>
-        public uint AmountOf { get; set; }
+        public long AmountOf { get; set; }
 
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Domain.NovinEntity.Workers
         public FinancialAid(
             byte persianMonth,
             int persianYear,
-            uint amountOf,
+            long amountOf,
             string? description)
         {
             PersianMonth = persianMonth;

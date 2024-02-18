@@ -1,5 +1,5 @@
 ﻿using DomainShared.ViewModels;
-using DomainShared.ViewModels.Pun;
+using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
@@ -9,28 +9,53 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class MaterailListViewModel : ObservableObject, INavigationAware
+    public partial class BillListViewModel : ObservableObject, INavigationAware
     {
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
-        public MaterailListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
+
+        public BillListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
             _snackbarService = snackbarService;
         }
 
-        [ObservableProperty]
-        private string _punName = "";
 
         [ObservableProperty]
-        private string _serial = "";
+        private Guid? _cusId;
 
         [ObservableProperty]
-        private IEnumerable<PunListDto> _list;
+        private string _desc = "";
+
+        [ObservableProperty]
+        private DateTime? _startDate;
+
+        [ObservableProperty]
+        private DateTime? _name;
+
+        /// <summary>
+        /// به احتساب مانده قبلی
+        /// </summary>
+        [ObservableProperty]
+        private bool _leftOver;
+
+        /// <summary>
+        /// لیست مشتری ها
+        /// </summary>
+        [ObservableProperty]
+        private List<SuggestBoxViewModel<Guid, long>> _cuslist;
+        
+        /// <summary>
+        /// لیست فاکتور
+        /// </summary>
+        [ObservableProperty]
+        private List<InvoiceListDto> _invList;
+
         public void OnNavigatedFrom()
         {
+
         }
 
         public async void OnNavigatedTo()
@@ -41,14 +66,14 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            List = await db.MaterialManager.GetMaterails(string.Empty, string.Empty);
+            Cuslist = await db.CustomerManager.GetDisplayUser();
         }
 
         [RelayCommand]
-        private async Task OnSearchMaterial()
+        public async Task OnSearchCus()
         {
             using UnitOfWork db = new();
-            List = await db.MaterialManager.GetMaterails(PunName, Serial);
+            //List = await db.CustomerManager.GetCustomerList(Name, NationalCode, Mobile);
         }
 
         [RelayCommand]
@@ -70,7 +95,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnRemoveMaterial(int parameter)
+        private async Task OnRemoveCus(Guid parameter)
         {
             var result = await _contentDialogService.ShowSimpleDialogAsync(
             new SimpleContentDialogCreateOptions()
@@ -85,7 +110,7 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var isSuccess = await db.MaterialManager.DeleteAsync(parameter);
+                var isSuccess = await db.CustomerManager.DeleteAsync<Guid>(parameter);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -93,14 +118,14 @@ namespace NeAccounting.ViewModels
                 }
                 _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
-                await OnSearchMaterial();
+                await OnSearchCus();
             }
         }
 
         [RelayCommand]
-        private async Task OnUpdateMaterial(int parameter)
+        private void OnUpdateCus(Guid parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateMaterail");
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateCustomer");
 
             if (pageType == null)
             {
@@ -108,28 +133,48 @@ namespace NeAccounting.ViewModels
             }
             var servise = _navigationService.GetNavigationControl();
 
-            var pun = List.First(t => t.Id == parameter);
+            //var cus = List.First(t => t.Id == parameter);
 
-            IEnumerable<SuggestBoxViewModel<int>> asuBox;
+            //var context = new UpdateCustomerPage(new UpdateCustomerViewModel(_snackbarService, _navigationService)
+            //{
+            //    Id = cus.Id,
+            //    FullName = cus.Name,
+            //    Seller = cus.Seller,
+            //    Buyer = cus.Buyer,
+            //    Address = cus.Address,
+            //    CashCredit = cus.CashCredit,
+            //    ChequeCredit = cus.ChequeCredit,
+            //    TotalCredit = cus.TotalCredit,
+            //    PromissoryNote = cus.PromissoryNote,
+            //    HavePromissoryNote = cus.HavePromissoryNote,
+            //    CusType = (byte)cus.CusType,
+            //    HaveCashCredit = cus.HaveCashCredit,
+            //    Mobile = cus.Mobile,
+            //    NationalCode = cus.NationalCode
+            //});
 
-            using (UnitOfWork db = new())
+            //servise.Navigate(pageType, context);
+        }
+
+        [RelayCommand]
+        private void OnAddGaranteeCheque(Guid parameter)
+        {
+            Type? pageType = NameToPageTypeConverter.Convert("AddCheque");
+
+            if (pageType == null)
             {
-                asuBox = await db.UnitManager.GetUnits();
+                return;
             }
+            var servise = _navigationService.GetNavigationControl();
 
-            var context = new UpdateMaterailPage(new UpdateMaterailViewModel(_snackbarService, _navigationService)
-            {
-                MaterialId = pun.Id,
-                Serial = pun.Serial,
-                LastSellPrice = pun.LastSellPrice,
-                Address = pun.Address,
-                IsManufacturedGoods = pun.IsManufacturedGoods,
-                MaterialName = pun.MaterialName,
-                UnitId = pun.UnitId,
-                AsuBox = asuBox
-            });
+            //var cus = List.First(t => t.Id == parameter);
 
-            servise.Navigate(pageType, context);
+            //var context = new AddChequePage(new Pages.AddChequeViewModel(_snackbarService, _navigationService)
+            //{
+
+            //});
+
+            //servise.Navigate(pageType, context);
         }
     }
 }

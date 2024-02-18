@@ -27,7 +27,7 @@ namespace NeAccounting.ViewModels
         private int _workerId = -1;
 
         [ObservableProperty]
-        private uint _amountOf = 0;
+        private long _amountOf = 0;
 
         [ObservableProperty]
         private byte? _submitMonth;

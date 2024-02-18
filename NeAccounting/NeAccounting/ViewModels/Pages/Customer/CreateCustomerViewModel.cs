@@ -40,10 +40,10 @@ namespace NeAccounting.ViewModels
         private bool _havePromissoryNote = false;
 
         [ObservableProperty]
-        private uint? _promissoryNote = 0;
+        private long? _promissoryNote = 0;
 
         [ObservableProperty]
-        private uint? _cashCredit = 0;
+        private long? _cashCredit = 0;
 
 
 

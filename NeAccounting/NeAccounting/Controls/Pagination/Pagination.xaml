@@ -14,7 +14,7 @@
         </Button>
             <Button Content="1" Margin="2 0"></Button>
             <Button Content="2" Margin="2 0"></Button>
-            <TextBox Text="..." Height="31.4" Padding="8 0 8 5" Margin="2 0" IsEnabled="False"></TextBox>
+            <ui:TextBox PlaceholderText=". . ." Height="31.4" Padding="8 0 8 5" Margin="2 0" ></ui:TextBox>
             <Button Content="98" Margin="2 0"></Button>
             <Button Content="99" Margin="2 0"></Button>
         <Button Padding="7">
