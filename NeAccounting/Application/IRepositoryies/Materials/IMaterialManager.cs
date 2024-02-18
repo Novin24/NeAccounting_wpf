@@ -32,9 +32,11 @@ namespace NeApplication.IRepositoryies
         /// <param name="materialId"></param>
         /// <param name="entity"></param>
         /// <param name="DecreaseOrIncrease"></param>
+        /// <param name="lastPrice"></param>
         /// <returns></returns>
         Task<(string errore, bool isSuccess)> UpdateMaterialEntity(int materialId,
-            double entity, 
-            bool DecreaseOrIncrease);
+            double entity,
+            bool DecreaseOrIncrease,
+            long? lastPrice = null);
     }
 }

@@ -15,39 +15,108 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
 
     private int rowId = 1;
 
+    /// <summary>
+    /// لیست اجناس  فاکتور
+    /// </summary>
     [ObservableProperty]
     private List<RemittanceListViewModel> _list = [];
 
+    /// <summary>
+    /// لیست مشتری ها
+    /// </summary>
     [ObservableProperty]
     private List<SuggestBoxViewModel<Guid, long>> _cuslist;
 
+    /// <summary>
+    /// لیست کلیه اجناس
+    /// </summary>
     [ObservableProperty]
     private List<MatListDto> _matList;
 
+    /// <summary>
+    /// شناسه مشتری
+    /// </summary>
     [ObservableProperty]
     private Guid? _CusId;
 
     [ObservableProperty]
     private DateTime _submitDate = DateTime.Now;
 
+    /// <summary>
+    /// مقدار پورسانت
+    /// </summary>
     [ObservableProperty]
-    private int? _commission;
+    private double? _commission;
 
+    /// <summary>
+    /// وضعیت مشتری
+    /// </summary>
+    [ObservableProperty]
+    private string _status = "تسویه";
+
+    /// <summary>
+    /// بدهکاری مشتری
+    /// </summary>
+    [ObservableProperty]
+    private string _debt = "0";
+
+    /// <summary>
+    /// طلبکاری مشتری
+    /// </summary>
+    [ObservableProperty]
+    private string _credit = "0";
+
+    /// <summary>
+    /// مبلغ کل فاکتور
+    /// </summary>
+    [ObservableProperty]
+    private string _totalPrice = "0";
+
+    /// <summary>
+    /// مبلغ کل پورسانت
+    /// </summary>
+    [ObservableProperty]
+    private string _totalcommission = "0";
+
+    /// <summary>
+    /// مبلغ باقی مانده
+    /// </summary>
+    [ObservableProperty]
+    private string _remainPrice = "0";
+
+    /// <summary>
+    /// شماره اخرین فاکتور
+    /// </summary>
     [ObservableProperty]
     private string _lastInvoice;
 
+    /// <summary>
+    /// شناسه جنس انتخاب شده در سلکت باکس
+    /// </summary>
     [ObservableProperty]
     private int _materialId = -1;
 
+    /// <summary>
+    /// مقدار انتخاب شده
+    /// </summary>
     [ObservableProperty]
     private double? _amountOf;
 
+    /// <summary>
+    /// مبلغ انتخابی 
+    /// </summary>
     [ObservableProperty]
     private long? _matPrice;
 
+    /// <summary>
+    /// توضیحات ردیف
+    /// </summary>
     [ObservableProperty]
     private string? _description;
 
+    /// <summary>
+    /// توضیحات فاکتور
+    /// </summary>
     [ObservableProperty]
     private string? _invDescription;
 
@@ -74,16 +143,11 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     /// <returns></returns>
     internal bool OnAdd()
     {
+        #region validaion
 
         if (CusId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
-        }
-
-        if (SubmitDate == null)
-        {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
 
@@ -99,16 +163,13 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
             return false;
         }
 
-        //if (AmountOf > MatList.First(t => t.Id == MaterialId).Entity)
-        //{
-        //    _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
-        //}
-
         if (MatPrice == null || MatPrice == 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
+        #endregion
+
         var mat = MatList.First(t => t.Id == MaterialId);
         List.Add(new RemittanceListViewModel()
         {
@@ -121,8 +182,36 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
             Description = Description,
             MaterialId = MaterialId,
         });
+        SetCommisionValue();
         RefreshRow(ref rowId);
         return true;
+    }
+
+    /// <summary>
+    /// انتخاب مشتری
+    /// </summary>
+    /// <param name="custId"></param>
+    /// <returns></returns>
+    internal async Task OnSelectCus(Guid custId)
+    {
+        using UnitOfWork db = new();
+        var (am, stu) = await db.DocumentManager.GetStatus(custId);
+        Status = stu;
+        if (am == 0)
+        {
+            Credit = "0";
+            Debt = "0";
+        }
+        if (am > 0)
+        {
+            Debt = am.ToString("N0");
+            Credit = "0";
+        }
+        if (am < 0)
+        {
+            Debt = "0";
+            Credit = Math.Abs(am).ToString("N0");
+        }
     }
 
     /// <summary>
@@ -188,7 +277,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         using UnitOfWork db = new();
         foreach (var item in List)
         {
-            var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, true);
+            var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, true, item.Price);
             if (!isSuccess)
             {
                 _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -247,7 +336,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     }
 
     /// <summary>
-    /// بارگیری مجدد صفحه 
+    /// بارگیری مجدد صفحه و خالی کردن تمام اینپوت ها
     /// </summary>
     /// <returns></returns>
     private async Task Reload()
@@ -262,5 +351,31 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         InvDescription = null;
         SubmitDate = DateTime.Now;
         MatPrice = null;
+        Totalcommission = "0";
+        TotalPrice = "0";
+        RemainPrice = "0";
+        Status = "تسویه";
+        Debt = "0";
+        Credit = "0";
+    }
+
+    /// <summary>
+    /// به روز رسانی مبلغ پورسانت
+    /// </summary>
+    private void SetCommisionValue()
+    {
+        long total = List.Sum(t => t.TotalPrice);
+        TotalPrice = total.ToString("N0");
+        if (Commission != null && Commission != 0)
+        {
+            var com = (long)(total * (Commission.Value / 100));
+            Totalcommission = com.ToString("N0");
+            total -= com;
+        }
+        else
+        {
+            Totalcommission = "0";
+        }
+        RemainPrice = total.ToString("N0");
     }
 }

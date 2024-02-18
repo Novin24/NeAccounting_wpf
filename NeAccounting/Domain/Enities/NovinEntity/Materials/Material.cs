@@ -16,7 +16,8 @@ namespace Domain.NovinEntity.Materials
         public string Name { get; set; }
         public string Serial { get; set; }
         public double Entity { get; set; }
-        public long LastPrice { get; set; }
+        public long LastSellPrice { get; set; }
+        public long LastBuyPrice { get; set; }
         public bool IsManufacturedGoods { get; set; }
         public string PhysicalAddress { get; set; }
         public bool Active { get; set; }
@@ -30,7 +31,7 @@ namespace Domain.NovinEntity.Materials
 
         public Material(string name,
             int unitId,
-            long lastPrice,
+            long lastSellPrice,
             string serial,
             string physicalAddress,
             bool isManufacturedGoods)
@@ -40,7 +41,8 @@ namespace Domain.NovinEntity.Materials
             UnitId = unitId;
             Serial = serial;
             Entity = 0;
-            LastPrice = lastPrice;
+            LastBuyPrice = 0;
+            LastSellPrice = lastSellPrice;
             PhysicalAddress = physicalAddress;
             Active = true;
         }

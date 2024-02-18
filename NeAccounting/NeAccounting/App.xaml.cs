@@ -175,7 +175,8 @@ namespace NeAccounting
                 #endregion
 
                 #region Reports
-                services.AddTransient<Bill>();
+                services.AddTransient<BillPage>();
+                services.AddTransient<BillListViewModel>();
 
                 services.AddTransient<Invoicedetails>();
 

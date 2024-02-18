@@ -6,6 +6,7 @@ namespace NeApplication.IRepositoryies
 {
     public interface IDocumentManager : IRepository<Document>
     {
+        #region Invoice
         Task<string> GetLastDocumntNumber(DocumntType type);
 
         /// <summary>
@@ -58,6 +59,8 @@ namespace NeApplication.IRepositoryies
                 DateTime submitDate,
                 bool receivedOrPaid,
                 List<RemittanceListViewModel> remittances);
+        #endregion
+        #region status
 
         /// <summary>
         /// مبلغ بدهی به ما
@@ -72,6 +75,15 @@ namespace NeApplication.IRepositoryies
         /// <param name="customerId"></param>
         /// <returns></returns>
         Task<long> GetCredit(Guid customerId);
+
+        Task<(long, string)> GetStatus(Guid customerId);
+        #endregion
+
+        #region report
+        Task<IEnumerable<InvoiceListDto>> GetInvoicesByDate(DateTime? StartTime, DateTime? EndTime, Guid? CusId, bool LeftOver);
+
+        Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime, DateTime EndTime, Guid CusId, bool LeftOver, string Description);
+        #endregion
     }
 }
 

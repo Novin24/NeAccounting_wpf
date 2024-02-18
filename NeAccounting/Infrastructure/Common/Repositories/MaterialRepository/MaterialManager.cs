@@ -16,7 +16,8 @@ namespace Infrastructure.Repositories
                 Id = x.Id,
                 MaterialName = x.Name,
                 Entity = x.Entity,
-                LastPrice = x.LastPrice,
+                LastSellPrice = x.LastSellPrice,
+                LastBuyPrice = x.LastBuyPrice,
                 UnitName = x.Unit.Name
             }).ToListAsync();
         }
@@ -36,7 +37,7 @@ namespace Infrastructure.Repositories
                     IsManufacturedGoods = x.IsManufacturedGoods,
                     Entity = x.Entity,
                     UnitId = x.UnitId,
-                    LastPrice = x.LastPrice,
+                    LastSellPrice = x.LastSellPrice,
                     UnitName = x.Unit.Name
                 }).ToListAsync();
         }
@@ -88,7 +89,7 @@ namespace Infrastructure.Repositories
                 mt.Name = name;
                 mt.UnitId = unitId;
                 mt.Serial = serial;
-                mt.LastPrice = lastPrice;
+                mt.LastSellPrice = lastPrice;
                 mt.PhysicalAddress = address;
                 mt.IsManufacturedGoods = isManufacturedGoods;
 
@@ -118,14 +119,15 @@ namespace Infrastructure.Repositories
                 IsManufacturedGoods = mt.IsManufacturedGoods,
                 Entity = mt.Entity,
                 Id = Id,
-                LastPrice = mt.LastPrice,
+                LastSellPrice = mt.LastSellPrice,
                 UnitName = mt.Unit.Name
             });
         }
 
         public async Task<(string errore, bool isSuccess)> UpdateMaterialEntity(int materialId,
             double entity,
-            bool sellOrBuy)
+            bool sellOrBuy,
+            long? lastPrice = null)
         {
             try
             {
@@ -137,6 +139,16 @@ namespace Infrastructure.Repositories
                 if (sellOrBuy)
                     mt.Entity += entity;
                 else mt.Entity -= entity;
+
+                if (lastPrice != null && !sellOrBuy)
+                {
+                    mt.LastSellPrice = lastPrice.Value;
+                }
+
+                if (lastPrice != null && sellOrBuy)
+                {
+                    mt.LastBuyPrice = lastPrice.Value;
+                }
 
                 Update(mt, false);
             }
