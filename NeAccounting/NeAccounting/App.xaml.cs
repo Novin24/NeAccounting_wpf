@@ -189,7 +189,8 @@ namespace NeAccounting
                 #endregion
 
                 #region UserControl
-                    services.AddTransient<Pagination>();
+                services.AddTransient<Pagination>();
+                services.AddTransient<PersianDatePicker>();
                 #endregion
 
                 #region Setting

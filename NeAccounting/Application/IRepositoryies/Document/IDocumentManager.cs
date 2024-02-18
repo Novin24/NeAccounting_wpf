@@ -1,5 +1,7 @@
 ﻿using Domain.NovinEntity.Documents;
+using DomainShared.Constants;
 using DomainShared.ViewModels.Document;
+using DomainShared.ViewModels.PagedResul;
 using NeApplication.Common;
 
 namespace NeApplication.IRepositoryies
@@ -80,7 +82,13 @@ namespace NeApplication.IRepositoryies
         #endregion
 
         #region report
-        Task<IEnumerable<InvoiceListDto>> GetInvoicesByDate(DateTime? StartTime, DateTime? EndTime, Guid? CusId, bool LeftOver);
+        Task<PagedResulViewModel<InvoiceListDto>> GetInvoicesByDate(DateTime StartTime,
+            DateTime EndTime,
+            string desc,
+            Guid CusId,
+            bool LeftOver,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
 
         Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime, DateTime EndTime, Guid CusId, bool LeftOver, string Description);
         #endregion

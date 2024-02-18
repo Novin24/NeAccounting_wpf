@@ -271,11 +271,11 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             return false;
         }
 
-        if (SubmitDate == null)
-        {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
-        }
+        //if (SubmitDate == null)
+        //{
+        //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+        //    return false;
+        //}
 
         if (List == null || List.Count == 0)
         {

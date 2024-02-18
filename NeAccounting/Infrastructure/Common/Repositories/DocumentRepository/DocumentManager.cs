@@ -1,7 +1,9 @@
 ﻿using Domain.Enities.NovinEntity.Remittances;
 using Domain.NovinEntity.Documents;
+using DomainShared.Constants;
 using DomainShared.Extension;
 using DomainShared.ViewModels.Document;
+using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
@@ -115,15 +117,22 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region report
-        public async Task<IEnumerable<InvoiceListDto>> GetInvoicesByDate(DateTime? StartTime, DateTime? EndTime, Guid? CusId, bool LeftOver)
+        public async Task<PagedResulViewModel<InvoiceListDto>> GetInvoicesByDate(DateTime StartTime,
+            DateTime EndTime,
+            string desc,
+            Guid CusId,
+            bool LeftOver,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
         {
             int i = 1;
             PersianCalendar pc = new();
             List<InvoiceListDto> Remittances = [];
-            var MyDoc = await TableNoTracking
-                .Where(st => LeftOver || !StartTime.HasValue || st.SubmitDate > StartTime.Value)
-                .Where(et => !EndTime.HasValue || et.SubmitDate < EndTime)
-                .Where(p => !CusId.HasValue || p.CustomerId == CusId)
+            var query = TableNoTracking
+                .Where(st => st.SubmitDate > StartTime)
+                .Where(et => et.SubmitDate < EndTime)
+                .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
+                .Where(p => p.CustomerId == CusId)
                 .Select(t => new InvoiceDto()
                 {
                     Date = t.SubmitDate,
@@ -131,19 +140,24 @@ namespace Infrastructure.Repositories
                     Description = t.Description,
                     Price = t.Price,
                     ReceivedOrPaid = t.IsReceived
-                }).OrderBy(p => p.Date).ToListAsync();
+                }).OrderBy(p => p.Date)
+                .AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+            var MyDoc = await query
+                .Skip(--pageNum * pageCount)
+                .Take(pageCount)
+                .ToListAsync();
 
             if (LeftOver)
             {
-                if (!StartTime.HasValue)
-                {
-                    StartTime = DateTime.Now;
-                }
+
                 InvoiceListDto rem = new()
                 {
                     Row = 0,
-                    Date = StartTime.Value,
-                    ShamsiDate = StartTime.Value.ToShamsiDate(pc),
+                    Date = StartTime,
+                    ShamsiDate = StartTime.ToShamsiDate(pc),
                     Description = "باقی مانده از قبل",
                     Bed = MyDoc.Where(p => p.Date < StartTime && !p.ReceivedOrPaid).Sum(p => p.Price),
                     Bes = MyDoc.Where(p => p.Date < StartTime && p.ReceivedOrPaid).Sum(p => p.Price),
@@ -151,9 +165,9 @@ namespace Infrastructure.Repositories
                 Remittances.Add(rem);
             }
 
-            Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid == false && p.Date >= StartTime).Select(t => new InvoiceListDto
+            Remittances.AddRange(MyDoc.Where(p => !p.ReceivedOrPaid && p.Date >= StartTime).Select(t => new InvoiceListDto
             {
-                Description = $"({t.Serial})  {t.Description}",
+                Description = $"( {t.Serial} )  {t.Description}",
                 Date = t.Date,
                 ShamsiDate = t.Date.ToShamsiDate(pc),
                 Bed = t.Price,
@@ -161,9 +175,9 @@ namespace Infrastructure.Repositories
                 Serial = t.Serial
             }).ToList());
 
-            Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid == true && p.Date >= StartTime).Select(t => new InvoiceListDto
+            Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date >= StartTime).Select(t => new InvoiceListDto
             {
-                Description = $"({t.Serial})  {t.Description}",
+                Description = $"( {t.Serial} )  {t.Description}",
                 Date = t.Date,
                 ShamsiDate = t.Date.ToShamsiDate(pc),
                 Bed = 0,
@@ -203,7 +217,7 @@ namespace Infrastructure.Repositories
                 i++;
             }
 
-            return Remittances;
+            return new PagedResulViewModel<InvoiceListDto>(totalCount, pageCount, Remittances);
         }
 
         public Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime, DateTime EndTime, Guid CusId, bool LeftOver, string Description)
