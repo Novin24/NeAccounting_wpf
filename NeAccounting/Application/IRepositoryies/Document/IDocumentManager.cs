@@ -22,9 +22,10 @@ namespace NeApplication.IRepositoryies
         /// <param name="submitDate"></param>
         /// <param name="receivedOrPaid"></param>
         /// <returns></returns>
-        Task<(string error, bool isSuccess, string docSerial)> CreateDocument(Guid customerId,
+        Task<(string error, bool isSuccess)> CreateDocument(Guid customerId,
             long price,
             DocumntType type,
+            PaymentType payType,
             string? descripion,
             DateTime submitDate,
             bool receivedOrPaid);
@@ -39,8 +40,9 @@ namespace NeApplication.IRepositoryies
         /// <param name="receivedOrPaid"></param>
         /// <param name="remittances"></param>
         /// <returns></returns>
-        Task<(string error, bool isSuccess, string docSerial)> CreateSellDocument(Guid customerId,
+        Task<(string error, bool isSuccess)> CreateSellDocument(Guid customerId,
                 long price,
+                double? commission,
                 string? descripion,
                 DateTime submitDate,
                 bool receivedOrPaid,
@@ -56,8 +58,9 @@ namespace NeApplication.IRepositoryies
         /// <param name="receivedOrPaid"></param>
         /// <param name="remittances"></param>
         /// <returns></returns>
-        Task<(string error, bool isSuccess, string docSerial)> CreateBuyDocument(Guid customerId,
+        Task<(string error, bool isSuccess)> CreateBuyDocument(Guid customerId,
                 long price,
+                double? commission,
                 string? descripion,
                 DateTime submitDate,
                 bool receivedOrPaid,

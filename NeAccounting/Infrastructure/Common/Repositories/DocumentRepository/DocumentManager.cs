@@ -14,62 +14,81 @@ namespace Infrastructure.Repositories
 {
     public class DocumentManager(NovinDbContext context) : Repository<Document>(context), IDocumentManager
     {
-        public async Task<(string error, bool isSuccess, string docSerial)> CreateDocument(Guid customerId,
+        public async Task<(string error, bool isSuccess)> CreateDocument(Guid customerId,
             long price,
             DocumntType type,
+            PaymentType payType,
             string? descripion,
             DateTime submitDate,
             bool receivedOrPaid)
         {
-            string serial;
             try
             {
-                var t = await Entities.AddAsync(new Document(customerId, price, type, descripion, submitDate, receivedOrPaid));
-                await DbContext.SaveChangesAsync();
-                serial = t.Entity.Serial.ToString();
+                var t = await Entities.AddAsync(new Document(customerId, price, type, payType, descripion, submitDate, receivedOrPaid));
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false, string.Empty);
+                return new("خطا دراتصال به پایگاه داده!!!", false);
             }
-            return new(string.Empty, true, serial);
+            return new(string.Empty, true);
         }
 
         #region Invoice(CRUD)
-        public async Task<(string error, bool isSuccess, string docSerial)> CreateSellDocument(Guid customerId, long price, string? descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
+        public async Task<(string error, bool isSuccess)> CreateSellDocument(Guid customerId,
+            long price,
+            double? commission,
+            string? descripion,
+            DateTime submitDate,
+            bool receivedOrPaid,
+            List<RemittanceListViewModel> remittances)
         {
-            List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, descripion)).ToList();
+            List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
 
-            string serial;
+
+
             try
             {
-                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.SellInv, descripion, submitDate, receivedOrPaid, list));
-                await DbContext.SaveChangesAsync();
-                serial = t.Entity.Serial.ToString();
+                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.SellInv, PaymentType.Other, descripion, submitDate, receivedOrPaid)
+                .AddSellRemittance(list));
+                if (commission != null && commission != 0)
+                {
+                    await DbContext.SaveChangesAsync();
+                    var comDoc = new List<Document>()
+                    {
+                        new (customerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom, PaymentType.Other,$"{t.Entity.Serial} پورسانت فاکتور",submitDate,true)
+                    };
+                    t.Entity.AddDocument(comDoc);
+                    Entities.Update(t.Entity);
+                }
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false, string.Empty);
+                return new("خطا دراتصال به پایگاه داده!!!", false);
             }
-            return new(string.Empty, true, serial);
+            return new(string.Empty, true);
         }
 
-        public async Task<(string error, bool isSuccess, string docSerial)> CreateBuyDocument(Guid customerId, long price, string? descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
+        public async Task<(string error, bool isSuccess)> CreateBuyDocument(Guid customerId,
+            long price,
+            double? commission,
+            string? descripion,
+            DateTime submitDate,
+            bool receivedOrPaid,
+            List<RemittanceListViewModel> remittances)
         {
             List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, descripion)).ToList();
 
-            string serial;
             try
             {
-                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.BuyInv, descripion, submitDate, receivedOrPaid, list));
+                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.BuyInv, PaymentType.Other, descripion, submitDate, receivedOrPaid)
+                    .AddBuyRemittance(list));
                 await DbContext.SaveChangesAsync();
-                serial = t.Entity.Serial.ToString();
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false, string.Empty);
+                return new("خطا دراتصال به پایگاه داده!!!", false);
             }
-            return new(string.Empty, true, serial);
+            return new(string.Empty, true);
         }
 
         public async Task<string> GetLastDocumntNumber(DocumntType type)
@@ -141,7 +160,7 @@ namespace Infrastructure.Repositories
                     Id = t.Id,
                     Type = t.Type,
                     Date = t.SubmitDate,
-                    Serial = t.Serial.ToString(),
+                    Serial = t.Serial,
                     Description = t.Description,
                     Price = t.Price,
                     ReceivedOrPaid = t.IsReceived
@@ -167,9 +186,10 @@ namespace Infrastructure.Repositories
 
             Remittances.AddRange(MyDoc.Where(p => !p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDto
             {
-                Description = $"( {t.Serial} )  {t.Description}",
+                Description = t.Description,
                 Date = t.Date,
                 Type = t.Type,
+                Serial = t.Serial.ToString(),
                 Id = t.Id,
                 IsEditable = true,
                 IsDeletable = true,
@@ -180,10 +200,11 @@ namespace Infrastructure.Repositories
 
             Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDto
             {
-                Description = $"( {t.Serial} )  {t.Description}",
+                Description = t.Description,
                 Date = t.Date,
                 Type = t.Type,
                 Id = t.Id,
+                Serial = t.Serial.ToString(),
                 IsEditable = true,
                 IsDeletable = true,
                 ShamsiDate = t.Date.ToShamsiDate(pc),

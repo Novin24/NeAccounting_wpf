@@ -300,31 +300,18 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         #region CreateSellDoc
         var totalInvoicePrice = (long)List.Sum(t => t.TotalPrice);
 
-        var (e, s, serial) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, InvDescription, SubmitDate, false, List);
+        var (e, s) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, Commission, InvDescription, SubmitDate, false, List);
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
-        #endregion
-
-        #region create_Commission_Doc
-        if (Commission != null && Commission != 0)
-        {
-            var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (long)(totalInvoicePrice * (Commission / 100)),
-                DocumntType.RecDoc, $"{serial} پورسانت فاکتور", SubmitDate, true);
-
-            if (!su)
-            {
-                _snackbarService.Show("خطا", er, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return false;
-            }
-        }
         await db.SaveChangesAsync();
         #endregion
 
+
         #region reload
-        _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور به شماره {serial}", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+        _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور با موفقیت انجام شد", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
         await Reload();
         return true;
