@@ -215,8 +215,7 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal"
                                                         HorizontalAlignment="Center">
-                                                <Button  BorderBrush="Transparent"
-                                                         Margin="2"
+                                                <Button  Margin="2"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                          Padding="7,5" ToolTip="ویرایش">
