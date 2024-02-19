@@ -44,8 +44,6 @@ namespace Infrastructure.Repositories
         {
             List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
 
-
-
             try
             {
                 var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.SellInv, PaymentType.Other, descripion, submitDate, receivedOrPaid)
@@ -55,7 +53,7 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom, PaymentType.Other,$"{t.Entity.Serial} پورسانت فاکتور",submitDate,true)
+                        new (customerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom, PaymentType.Other,$" پورسانت فاکتور ( {t.Entity.Serial} )",submitDate,true)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -81,8 +79,17 @@ namespace Infrastructure.Repositories
             try
             {
                 var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.BuyInv, PaymentType.Other, descripion, submitDate, receivedOrPaid)
-                    .AddBuyRemittance(list));
-                await DbContext.SaveChangesAsync();
+                .AddBuyRemittance(list));
+                if (commission != null && commission != 0)
+                {
+                    await DbContext.SaveChangesAsync();
+                    var comDoc = new List<Document>()
+                    {
+                        new (customerId, (long)(price * (commission.Value / 100)), DocumntType.RecCom, PaymentType.Other,$" پورسانت فاکتور( {t.Entity.Serial} )",submitDate,false)
+                    };
+                    t.Entity.AddDocument(comDoc);
+                    Entities.Update(t.Entity);
+                };
             }
             catch (Exception ex)
             {

@@ -18,9 +18,7 @@ namespace Domain.NovinEntity.Documents
         #region Ctor
         internal Document()
         {
-            RelatedDocuments = [];
-            SellRemittances = [];
-            BuyRemittances = [];
+
         }
 
         public Document(
@@ -39,6 +37,9 @@ namespace Domain.NovinEntity.Documents
             Description = descripion;
             SubmitDate = submitDate;
             IsReceived = isReceived;
+            RelatedDocuments = [];
+            SellRemittances = [];
+            BuyRemittances = [];
         }
         #endregion
 

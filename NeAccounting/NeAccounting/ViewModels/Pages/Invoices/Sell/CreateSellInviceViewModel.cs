@@ -298,7 +298,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         #endregion
 
         #region CreateSellDoc
-        var totalInvoicePrice = (long)List.Sum(t => t.TotalPrice);
+        var totalInvoicePrice = List.Sum(t => t.TotalPrice);
 
         var (e, s) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, Commission, InvDescription, SubmitDate, false, List);
         if (!s)
