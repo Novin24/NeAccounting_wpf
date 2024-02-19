@@ -88,31 +88,13 @@ namespace NeAccounting.ViewModels
                 return;
             }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetInvoicesByDate(StartDate, EndDate, Desc, CusId.Value, LeftOver, CurrentPage, 2);
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate, EndDate, Desc, CusId.Value, LeftOver, false, CurrentPage, 3);
             InvList = t.Items;
             PageCount = t.PageCount;
         }
 
         [RelayCommand]
-        private void OnAddClick(string parameter)
-        {
-            if (string.IsNullOrWhiteSpace(parameter))
-            {
-                return;
-            }
-
-            Type? pageType = NameToPageTypeConverter.Convert(parameter);
-
-            if (pageType == null)
-            {
-                return;
-            }
-
-            _ = _navigationService.Navigate(pageType);
-        }
-
-        [RelayCommand]
-        private async Task OnRemoveCus(Guid parameter)
+        private async Task OnRemoveDoc(Guid parameter)
         {
             var result = await _contentDialogService.ShowSimpleDialogAsync(
             new SimpleContentDialogCreateOptions()
@@ -126,29 +108,64 @@ namespace NeAccounting.ViewModels
 
             if (result == ContentDialogResult.Primary)
             {
-                using UnitOfWork db = new();
-                var isSuccess = await db.CustomerManager.DeleteAsync<Guid>(parameter);
-                if (!isSuccess)
+                var doc = InvList.FirstOrDefault(x => x.Id == parameter);
+                if (doc == null)
                 {
-                    _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    _snackbarService.Show("کاربر گرامی", "ردیف مورد نظر برای ویرایش یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
-                _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
-                await OnSearchInvoice();
+
+                // اول باید موجودی انبار نسبت به فاکتور خرید یا فروش بازگردانی شود سپس فاکتور حذف شود
+
+
+
+                //using UnitOfWork db = new();
+                //var isSuccess = await db.DocumentManager.DeleteAsync<Guid>(parameter);
+                //if (!isSuccess)
+                //{
+                //    _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                //    return;
+                //}
+                //_snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+                //await OnSearchInvoice();
             }
         }
 
         [RelayCommand]
-        private void OnUpdateCus(Guid parameter)
+        private void OnUpdateDoc(Guid parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateCustomer");
-
-            if (pageType == null)
+            var doc = InvList.FirstOrDefault(x => x.Id == parameter);
+            if (doc == null)
             {
+                _snackbarService.Show("کاربر گرامی", "ردیف مورد نظر برای ویرایش یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            var servise = _navigationService.GetNavigationControl();
+
+            switch (doc.Type)
+            {
+                case DomainShared.Enums.DocumntType.Pay:
+                    break;
+                case DomainShared.Enums.DocumntType.Rec:
+                    break;
+                case DomainShared.Enums.DocumntType.SellInv:
+                    break;
+                case DomainShared.Enums.DocumntType.BuyInv:
+                    break;
+                case DomainShared.Enums.DocumntType.Cheque:
+                    break;
+                default:
+                    break;
+            }
+
+            //Type? pageType = NameToPageTypeConverter.Convert("UpdateCustomer");
+
+            //if (pageType == null)
+            //{
+            //    return;
+            //}
+            //var servise = _navigationService.GetNavigationControl();
 
             //var cus = List.First(t => t.Id == parameter);
 
@@ -173,25 +190,5 @@ namespace NeAccounting.ViewModels
             //servise.Navigate(pageType, context);
         }
 
-        [RelayCommand]
-        private void OnAddGaranteeCheque(Guid parameter)
-        {
-            Type? pageType = NameToPageTypeConverter.Convert("AddCheque");
-
-            if (pageType == null)
-            {
-                return;
-            }
-            var servise = _navigationService.GetNavigationControl();
-
-            //var cus = List.First(t => t.Id == parameter);
-
-            //var context = new AddChequePage(new Pages.AddChequeViewModel(_snackbarService, _navigationService)
-            //{
-
-            //});
-
-            //servise.Navigate(pageType, context);
-        }
     }
 }

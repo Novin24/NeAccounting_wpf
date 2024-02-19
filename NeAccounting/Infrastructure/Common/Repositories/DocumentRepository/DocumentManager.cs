@@ -1,6 +1,7 @@
 ﻿using Domain.Enities.NovinEntity.Remittances;
 using Domain.NovinEntity.Documents;
 using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Extension;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.PagedResul;
@@ -34,7 +35,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true, serial);
         }
 
-        #region Invoice
+        #region Invoice(CRUD)
         public async Task<(string error, bool isSuccess, string docSerial)> CreateSellDocument(Guid customerId, long price, string? descripion, DateTime submitDate, bool receivedOrPaid, List<RemittanceListViewModel> remittances)
         {
             List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, descripion)).ToList();
@@ -75,6 +76,7 @@ namespace Infrastructure.Repositories
         {
             return (await TableNoTracking.OrderByDescending(t => t.CreationTime).Where(t => t.Type == type).Select(c => c.Serial).FirstOrDefaultAsync()).ToString();
         }
+
         #endregion
 
         #region Status
@@ -117,72 +119,76 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region report
-        public async Task<PagedResulViewModel<InvoiceListDto>> GetInvoicesByDate(DateTime StartTime,
-            DateTime EndTime,
+        public async Task<PagedResulViewModel<InvoiceListDto>> GetInvoicesByDate(DateTime startTime,
+            DateTime endTime,
             string desc,
-            Guid CusId,
-            bool LeftOver,
+            Guid cusId,
+            bool leftOver,
+            bool ignorePagination,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
             int i = 1;
             PersianCalendar pc = new();
             List<InvoiceListDto> Remittances = [];
-            var query = TableNoTracking
-                .Where(st => st.SubmitDate > StartTime)
-                .Where(et => et.SubmitDate < EndTime)
+            var MyDoc = await TableNoTracking
+                .Where(st => st.SubmitDate > startTime)
+                .Where(et => et.SubmitDate < endTime)
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
-                .Where(p => p.CustomerId == CusId)
+                .Where(p => p.CustomerId == cusId)
                 .Select(t => new InvoiceDto()
                 {
+                    Id = t.Id,
+                    Type = t.Type,
                     Date = t.SubmitDate,
                     Serial = t.Serial.ToString(),
                     Description = t.Description,
                     Price = t.Price,
                     ReceivedOrPaid = t.IsReceived
                 }).OrderBy(p => p.Date)
-                .AsQueryable();
-
-            var totalCount = await query.CountAsync();
-
-            var MyDoc = await query
-                .Skip(--pageNum * pageCount)
-                .Take(pageCount)
                 .ToListAsync();
 
-            if (LeftOver)
-            {
 
+            if (leftOver)
+            {
                 InvoiceListDto rem = new()
                 {
                     Row = 0,
-                    Date = StartTime,
-                    ShamsiDate = StartTime.ToShamsiDate(pc),
+                    Date = startTime,
+                    IsDeletable = false,
+                    IsEditable = false,
+                    ShamsiDate = startTime.ToShamsiDate(pc),
                     Description = "باقی مانده از قبل",
-                    Bed = MyDoc.Where(p => p.Date < StartTime && !p.ReceivedOrPaid).Sum(p => p.Price),
-                    Bes = MyDoc.Where(p => p.Date < StartTime && p.ReceivedOrPaid).Sum(p => p.Price),
+                    Bed = MyDoc.Where(p => p.Date < startTime && !p.ReceivedOrPaid).Sum(p => p.Price),
+                    Bes = MyDoc.Where(p => p.Date < startTime && p.ReceivedOrPaid).Sum(p => p.Price),
                 };
                 Remittances.Add(rem);
             }
 
-            Remittances.AddRange(MyDoc.Where(p => !p.ReceivedOrPaid && p.Date >= StartTime).Select(t => new InvoiceListDto
+            Remittances.AddRange(MyDoc.Where(p => !p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDto
             {
                 Description = $"( {t.Serial} )  {t.Description}",
                 Date = t.Date,
+                Type = t.Type,
+                Id = t.Id,
+                IsEditable = true,
+                IsDeletable = true,
                 ShamsiDate = t.Date.ToShamsiDate(pc),
                 Bed = t.Price,
                 Bes = 0,
-                Serial = t.Serial
             }).ToList());
 
-            Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date >= StartTime).Select(t => new InvoiceListDto
+            Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDto
             {
                 Description = $"( {t.Serial} )  {t.Description}",
                 Date = t.Date,
+                Type = t.Type,
+                Id = t.Id,
+                IsEditable = true,
+                IsDeletable = true,
                 ShamsiDate = t.Date.ToShamsiDate(pc),
                 Bed = 0,
                 Bes = t.Price,
-                Serial = t.Serial
             }).ToList());
 
             Remittances = [.. Remittances.OrderBy(t => t.Date)];
@@ -193,14 +199,6 @@ namespace Infrastructure.Repositories
                 long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Sum(p => p.Bed);
                 long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Sum(p => p.Bes);
 
-                //try
-                //{
-                //    item.ShamsiDate = item.Date.ToShortDateString();
-                //}
-                //catch
-                //{
-                //    item.ShamsiDate = "-";
-                //}
                 item.LeftOver = Math.Abs(bed - bes);
                 if (bes > bed)
                 {
@@ -215,6 +213,13 @@ namespace Infrastructure.Repositories
                     item.Status = "تسویه";
                 }
                 i++;
+            }
+
+            var totalCount = Remittances.Count;
+
+            if (!ignorePagination)
+            {
+                Remittances = Remittances.SkipLast(--pageNum * pageCount).TakeLast(pageCount).ToList();
             }
 
             return new PagedResulViewModel<InvoiceListDto>(totalCount, pageCount, Remittances);
