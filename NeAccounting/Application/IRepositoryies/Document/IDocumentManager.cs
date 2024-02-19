@@ -1,5 +1,6 @@
 ﻿using Domain.NovinEntity.Documents;
 using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.PagedResul;
 using NeApplication.Common;
@@ -87,6 +88,7 @@ namespace NeApplication.IRepositoryies
             string desc,
             Guid CusId,
             bool LeftOver,
+            bool ignorePagination,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 

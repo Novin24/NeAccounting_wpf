@@ -1,4 +1,5 @@
 ﻿using Domain.NovinEntity.Documents;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
