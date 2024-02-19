@@ -9,8 +9,6 @@
       Title="DataPage"
       d:DataContext="{d:DesignInstance local:PayPage,
                                      IsDesignTimeCreatable=False}"
-      d:DesignHeight="450"
-      d:DesignWidth="800"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
@@ -60,7 +58,7 @@
 
                 </Grid.RowDefinitions>
                 <nu:HeaderPack Grid.ColumnSpan="2"
-                               NamePpage="آخرین سند"/>
+                               NamePpage="اسناد پرداختی"/>
                 <Border Grid.Row="1"
                         CornerRadius="9"
                         Margin="5"
@@ -118,7 +116,7 @@
                     </Grid>
                 </Border>
 
-                
+
                 <Border Grid.Row="1"
                         Grid.Column="1"
                         CornerRadius="9"
@@ -142,6 +140,7 @@
                                     <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="auto"></RowDefinition>
 
@@ -154,7 +153,7 @@
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="نام مشتری"
-                                               Margin="22 6 0 0 "
+                                               Margin="23 6 0 0 "
                                                FontWeight="Bold" />
 
 
@@ -167,18 +166,35 @@
                                                        Grid.Row="0"
                                                        SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
                                                        Grid.Column="0"
-                                                       Margin="20 4 3 0 "
+                                                       Margin="21 4 20 0 "
                                                        FontFamily="Calibri" />
                                 </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                           Grid.Column="1"
+                                           Margin="11 33 0 0 ">
 
+                                    <TextBlock FontFamily="Calibri"
+                                           FontSize="14"
+                                           Text="بدهکار"
+                                           FontWeight="Bold" />
+                                    <TextBlock FontFamily="Calibri"
+                                           Grid.Column="1"
+                                           FontSize="14"
+                                           Text="100000"
+                                           Margin="7 0 0 0 "
+                                           FontWeight="Bold" />
+                                </StackPanel>
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
                                                       LabelName="تاریخ"
                                                       x:Name="pdp"
                                                       Margin="0 2 15 0"
-                                                      Grid.Column="1"/>
+                                                      Grid.Row="1"/>
+                                <nu:MoneyPack Grid.Row="2"
+                                              FontFamily="Calibri" LabelName="مبلغ وجه"/>
+
                                 <StackPanel Margin="20 4 20 0"
                                             Grid.Row="1"
-                                            Grid.Column="1">
+                                                  Grid.Column="1">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
@@ -194,51 +210,21 @@
                                         <ComboBoxItem Content="نقدی" />
                                     </ComboBox>
                                 </StackPanel>
-                                <StackPanel Grid.Column="0"
-                                            Grid.Row="1">
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="مبلغ وجه"
-                                               Margin="22 4 0 0 "
-                                               FontWeight="Bold" />
-                                    <ui:NumberBox Margin="20 4 3 2"
-                                                  TextAlignment="Center"
-                                                  Name="Price"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  FontSize="18"
-                                                  FontFamily="Calibri" />
-
-                                </StackPanel>
-
-                                <StackPanel Grid.Column="0"
-                                            Grid.Row="2">
-                                    <ui:TextBlock FontFamily="Calibri"
-                                                  FontSize="14"
-                                                  FontTypography="BodyStrong"
-                                                  Text="مبلغ تخفیف"
-                                                  Margin="22 4 0 0 "
-                                                  FontWeight="Bold" />
-                                    <ui:NumberBox Grid.Column="0"
-                                                  Grid.Row="2"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  Margin="20 4 3 0"
-                                                  TextAlignment="Center"
-                                                  FontSize="14"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
-
+                                <nu:MoneyPack Grid.Column="1"
+                                              Grid.Row="2"
+                                                  LabelName="مبلغ تخفیف"/>
 
                                 <CheckBox Content="تسویه کامل"
-                                          Grid.Column="1"
-                                          Grid.Row="2"
+                                          Grid.ColumnSpan="2"
+                                          Grid.Row="3"
                                           FontFamily="Calibri"
-                                          Margin="0 22 0 0 "
                                           HorizontalAlignment="Center"
+                                          Margin="0 11 0 11 "
                                           FontWeight="Bold"
                                           FontSize="14" />
                                 <Grid Grid.ColumnSpan="2"
-                                      Grid.Row="3"
+                                      Grid.Row="4"
                                       Grid.RowSpan="2"
                                       Margin="20 6 20 4">
 
@@ -271,6 +257,7 @@
                                     <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="auto"></RowDefinition>
 
@@ -279,18 +266,34 @@
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Margin="22 4 3 0 ">
+                                <StackPanel>
+                                    <TextBlock FontFamily="Calibri"
+                                               FontSize="14"
+                                               Text="نام مشتری"
+                                               Margin="23 6 0 0 "
+                                               FontWeight="Bold" />
+                                    <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
+                                                       PlaceholderText="Search..."
+                                                       DisplayMemberPath="DisplayName"
+                                                       FontSize="14"
+                                                       SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
+                                                       Grid.Column="0"
+                                                       Margin="21 4 3 0 "
+                                                       FontFamily="Calibri" />
+                                </StackPanel>
+                                <StackPanel Margin="21 5 20 5 "
+                                            Grid.Column="1">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="بانک"
-                                               Margin="1 0 0 0 " />
+                                               Margin="1 0 0 6 " />
                                     <ui:TextBox TextAlignment="Center"
                                                 FontFamily="Calibri"
                                                 FontSize="14" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="3 4 20 0 ">
+                                <StackPanel Grid.Row="1"
+                                            Margin="20 5 3 5 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
@@ -300,8 +303,8 @@
                                                 TextAlignment="Center"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
-                                <StackPanel Margin="20 4 3 0 "
-                                            Grid.Column="0"
+                                <StackPanel Margin="21 5 20 5 "
+                                            Grid.Column="1"
                                             Grid.Row="1">
 
                                     <TextBlock FontFamily="Calibri"
@@ -312,33 +315,38 @@
                                                 FontSize="14"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
-                                <StackPanel Margin="3 4 20 0 "
-                                            Grid.Row="1"
-                                            Grid.Column="1">
+                                <StackPanel Margin="21 6 3 0 "
+                                            Grid.Row="2">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="شماره حساب"
-                                               Margin="1 0 0 0 " />
+                                               Margin="2 0 3 4"/>
                                     <ui:TextBox TextAlignment="Center"
                                                 FontSize="14"
+                                                Height="36"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
-                                <StackPanel Margin="20 4 3 0 "
-                                            Grid.Column="0"
-                                            Grid.Row="2">
+
+                                <nu:MoneyPack Grid.Column="1"
+                                              Grid.Row="2"
+                                                  LabelName="مبلغ چک"/>
+                                <StackPanel Margin="20 5 3 5 "
+                                            Grid.Row="3">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="صاحب حساب"
-                                               Margin="1 0 0 0 " />
+                                               Margin="2 0 3 3"/>
                                     <ui:TextBox FontSize="14"
                                                 TextAlignment="Center"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
-                                <StackPanel Margin="3 4 20 0"
-                                            Grid.Column="1"
-                                            Grid.Row="2">
+                                <StackPanel Margin="21 5 20 5 "
+                                            HorizontalAlignment="Center"
+                                            Width="200"
+                                            Grid.Row="3"
+                                            Grid.Column="1">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="وضعیت چک"
@@ -353,9 +361,8 @@
                                         <ComboBoxItem Content="بدون نیاز به ثبت" />
                                     </ComboBox>
                                 </StackPanel>
-                                <Grid Grid.Column="0"
-                                      Grid.ColumnSpan="2"
-                                      Grid.Row="3"
+                                <Grid Grid.ColumnSpan="2"
+                                      Grid.Row="4"
                                       Margin="20 3 20 4">
 
                                     <TextBlock FontFamily="Calibri"
@@ -371,7 +378,7 @@
                                 <Button Content="ثبت چک"
                                         Margin="10"
                                         HorizontalAlignment="Center"
-                                        Grid.Row="6"
+                                        Grid.Row="7"
                                         FontFamily="Calibri"
                                         FontSize="15"
                                         Grid.ColumnSpan="2" />
