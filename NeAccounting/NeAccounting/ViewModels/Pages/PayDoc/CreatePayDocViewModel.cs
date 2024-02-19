@@ -1,7 +1,6 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
-using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
 using System.Windows.Media;
 using Wpf.Ui;
@@ -62,13 +61,27 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
     /// مبلغ وارد شده 
     /// </summary>
     [ObservableProperty]
-    private long? _price;
+    private long _price = 0;
+
+    /// <summary>
+    /// مبلغ وارد شده 
+    /// </summary>
+    [ObservableProperty]
+    private long? _discount = ;
 
     /// <summary>
     /// توضیحات 
     /// </summary>
     [ObservableProperty]
     private string? _description;
+
+    /// <summary>
+    /// تسویه کامل
+    /// </summary>
+    [ObservableProperty]
+    private bool _over;
+
+
 
     public async void OnNavigatedTo()
     {

@@ -6,6 +6,7 @@
         RecDoc = 2,
         SellInv = 3,
         BuyInv = 4,
+        Discount,
         Cheque
     }
 }
