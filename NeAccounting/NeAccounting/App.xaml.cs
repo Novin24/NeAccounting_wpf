@@ -155,7 +155,7 @@ namespace NeAccounting
 
                 #region Payment
                 services.AddTransient<PayPage>();
-                services.AddTransient<PayViewModel>();
+                services.AddTransient<CreatePayDocViewModel>();
                 #endregion
 
                 #region Units 

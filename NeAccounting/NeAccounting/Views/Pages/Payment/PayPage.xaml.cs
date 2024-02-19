@@ -7,45 +7,26 @@ namespace NeAccounting.Pages
     /// <summary>
     /// Interaction logic for PayPage.xaml
     /// </summary>
-    public partial class PayPage : INavigableView<PayViewModel>
+    public partial class PayPage : INavigableView<CreatePayDocViewModel>
     {
-        public PayViewModel ViewModel { get; }
+        public CreatePayDocViewModel ViewModel { get; }
         public Guid CusId { get; set; }
 
-        public PayPage(PayViewModel viewModel)
+        public PayPage(CreatePayDocViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-            Lastchecks One = new()
-            {
-                LastchecksAmount = "286,000",
-                LastchecksDate = "12/12/1402"
-            };
-            LastChecksdata.Items.Add(One);
-
-            Lastchecks two = new()
-            {
-                LastchecksAmount = "286,000",
-                LastchecksDate = "12/12/1402"
-            };
-            LastChecksdata.Items.Add(two);
         }
 
-        public class Lastchecks
+        private async void AutoSuggestBoxSuggestions_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            public string LastchecksAmount { set; get; }
-            public string LastchecksDate { set; get; }
-
-        }
-
-        private void AutoSuggestBoxSuggestions_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            //var t =   ViewModel.AutoSuggestBoxSuggestions.FirstOrDefault(a => a.Id == 
-            //((SuggestBoxViewModel<Guid>)args.SelectedItem).Id);
-
-            CusId = ((SuggestBoxViewModel<Guid>)args.SelectedItem).Id;
-
+            if (!IsInitialized)
+                return;
+            var user = (SuggestBoxViewModel<Guid, long>)args.SelectedItem;
+            ViewModel.CusId = user.Id;
+            lbl_cusId.Text = user.UniqNumber.ToString();
+            await ViewModel.OnSelectCus(user.Id);
         }
     }
 }

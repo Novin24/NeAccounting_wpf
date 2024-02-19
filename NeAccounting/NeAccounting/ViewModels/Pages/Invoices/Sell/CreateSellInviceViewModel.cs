@@ -1,5 +1,4 @@
-﻿using Domain.NovinEntity.Documents;
-using DomainShared.Enums;
+﻿using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
@@ -313,7 +312,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         if (Commission != null && Commission != 0)
         {
             var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (long)(totalInvoicePrice * (Commission / 100)),
-                DocumntType.Rec, $"{serial} پورسانت فاکتور", SubmitDate, true);
+                DocumntType.RecDoc, $"{serial} پورسانت فاکتور", SubmitDate, true);
 
             if (!su)
             {
