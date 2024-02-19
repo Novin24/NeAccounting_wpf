@@ -307,7 +307,7 @@ namespace Infrastructure.Repositories
             new SqlParameter("maxResultCount",pageCount)
         };
 
-            string totalCount = "0";
+            int totalCount = 0;
             List<SalaryViewModel> rows = new();
             using (var command = CreateCommand(SqlStoredProcedureConstants.GetSalaryList, CommandType.StoredProcedure, parameters))
             {
@@ -329,11 +329,11 @@ namespace Infrastructure.Repositories
                         PersianMonth = (byte)dataReader[nameof(row.PersianMonth)],
                         PersianYear = (int)dataReader[nameof(row.PersianYear)]
                     };
-                    totalCount = ((int)dataReader[("TotalRecord")]).ToString("N0");
+                    totalCount = ((int)dataReader[("TotalRecord")]);
                     rows.Add(row);
                 }
             }
-            return new PagedResulViewModel<SalaryViewModel>(totalCount, rows);
+            return new PagedResulViewModel<SalaryViewModel>(totalCount, pageCount, rows);
         }
 
         public async Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId)

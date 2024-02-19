@@ -1,4 +1,5 @@
-﻿using NeAccounting.ViewModels;
+﻿using DomainShared.ViewModels;
+using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -14,6 +15,26 @@ namespace NeAccounting.Views.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+        }
+
+        private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
+        {
+            if (!IsInitialized)
+            {
+                return;
+            }
+            ViewModel.SearchInvoiceCommand.Execute(null);
+        }
+
+        private void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            if (!IsInitialized)
+            {
+                return;
+            }
+            var us = ((SuggestBoxViewModel<Guid, long>)args.SelectedItem);
+            ViewModel.CusId = us.Id;
+            ViewModel.PersonelId = us.UniqNumber;
         }
     }
 }

@@ -62,7 +62,7 @@ namespace NeAccounting.ViewModels
             using UnitOfWork db = new();
             AuSuBox = await db.WorkerManager.GetWorkers();
             var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear);
-            TotalCount = salaries.TotalCount;
+            TotalCount = salaries.TotalCount.ToString("N0");
             List = salaries.Items;
         }
 
@@ -71,7 +71,7 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear);
-            TotalCount = salaries.TotalCount;
+            TotalCount = salaries.TotalCount.ToString("N0");
             List = salaries.Items;
         }
 

@@ -195,6 +195,7 @@
                             <DataGrid Margin="0 0 0 30"
                                       x:Name="Workersdata"
                                       BorderThickness="10"
+                                      CanUserReorderColumns="False"
                                       Grid.Row="2"
                                       CanUserResizeColumns="False"
                                       FontSize="15"
@@ -229,7 +230,7 @@
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width="*" />
                                     <DataGridTemplateColumn Header="عملیات"
-                                                            Width="*"
+                                                            Width="80"
                                                             HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>

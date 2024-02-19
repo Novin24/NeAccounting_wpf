@@ -8,12 +8,18 @@ namespace NeAccounting.Controls
     /// </summary>
     public partial class Pagination : UserControl
     {
+
+        #region ctor
+        private static int pageCount = 1;
+        private static int currentPage = 1;
         public Pagination()
         {
             InitializeComponent();
         }
+        #endregion
 
-        protected virtual void InitialPage(int currentPage)
+        #region event
+        protected virtual void InitialPage(int pageCount, int currentPage)
         {
             CalculatePages(PageCount, currentPage);
         }
@@ -98,7 +104,6 @@ namespace NeAccounting.Controls
                 }
             }
 
-
             if (currentPage < pageCount)
             {
                 Button btn = new()
@@ -150,7 +155,13 @@ namespace NeAccounting.Controls
                 return;
 
             int id = int.Parse(btn.Tag.ToString());
+            CurrntPage = id;
         }
+
+
+        #endregion
+
+        #region Propertys
 
         public int PageCount
         {
@@ -160,7 +171,19 @@ namespace NeAccounting.Controls
 
         // Using a DependencyProperty as the backing store for Minpage.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PageCountProperty =
-            DependencyProperty.Register("PageCount", typeof(int), typeof(Pagination), new PropertyMetadata(0));
+            DependencyProperty.Register("PageCount", typeof(int), typeof(Pagination), new PropertyMetadata(0, CountChage));
+
+        private static void CountChage(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            if (obj is not Pagination pg)
+                return;
+
+            if (args.NewValue == args.OldValue)
+                return;
+
+            pageCount = (int)args.NewValue;
+            pg.InitialPage(pageCount, currentPage);
+        }
 
         public int CurrntPage
         {
@@ -171,8 +194,6 @@ namespace NeAccounting.Controls
         // Using a DependencyProperty as the backing store for Maxpage.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrntPageProperty =
             DependencyProperty.Register("CurrntPage", typeof(int), typeof(Pagination), new PropertyMetadata(0, PropertyChenged));
-
-
         private static void PropertyChenged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             if (obj is not Pagination pg)
@@ -180,10 +201,38 @@ namespace NeAccounting.Controls
 
             if (args.NewValue == args.OldValue)
                 return;
+            currentPage = (int)args.NewValue;
+            pg.InitialPage(pageCount, currentPage);
+            RoutedPropertyChangedEventArgs<int> e = new((int)args.OldValue, (int)args.NewValue, PageChosenEvent);
+            pg.OnPageChanged(e);
+        }
+        #endregion
 
-            pg.InitialPage((int)args.NewValue);
+        #region CustomeEvent
+        /// <summary>
+        /// Event occurs when the user selects an item from the recommended ones.
+        /// </summary>
+        public event RoutedPropertyChangedEventHandler<int> PageChosen
+        {
+            add => AddHandler(PageChosenEvent, value);
+            remove => RemoveHandler(PageChosenEvent, value);
         }
 
+        /// <summary>
+        /// Routed event for <see cref="PageChosen"/>.
+        /// </summary>
+        public static readonly RoutedEvent PageChosenEvent = EventManager.RegisterRoutedEvent(
+            nameof(PageChosen),
+            RoutingStrategy.Bubble,
+            typeof(RoutedPropertyChangedEventHandler<int>),
+            typeof(Pagination)
+        );
 
+
+        protected virtual void OnPageChanged(RoutedPropertyChangedEventArgs<int> args)
+        {
+            RaiseEvent(args);
+        }
+        #endregion
     }
 }

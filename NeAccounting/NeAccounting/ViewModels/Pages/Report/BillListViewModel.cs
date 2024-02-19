@@ -1,8 +1,8 @@
-﻿using DomainShared.ViewModels;
+﻿using DomainShared.Errore;
+using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
-using NeAccounting.Views.Pages;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -24,16 +24,25 @@ namespace NeAccounting.ViewModels
 
 
         [ObservableProperty]
+        private long? _personelId;
+
+        [ObservableProperty]
+        private int _pageCount = 1;
+
+        [ObservableProperty]
+        private int _currentPage = 1;
+
+        [ObservableProperty]
         private Guid? _cusId;
 
         [ObservableProperty]
         private string _desc = "";
 
         [ObservableProperty]
-        private DateTime? _startDate;
+        private DateTime _startDate = DateTime.Now;
 
         [ObservableProperty]
-        private DateTime? _name;
+        private DateTime _endDate = DateTime.Now;
 
         /// <summary>
         /// به احتساب مانده قبلی
@@ -46,12 +55,12 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private List<SuggestBoxViewModel<Guid, long>> _cuslist;
-        
+
         /// <summary>
         /// لیست فاکتور
         /// </summary>
         [ObservableProperty]
-        private List<InvoiceListDto> _invList;
+        private IEnumerable<InvoiceListDto> _invList;
 
         public void OnNavigatedFrom()
         {
@@ -70,10 +79,18 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        public async Task OnSearchCus()
+        public async Task OnSearchInvoice()
         {
+            if (!CusId.HasValue)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+
+                return;
+            }
             using UnitOfWork db = new();
-            //List = await db.CustomerManager.GetCustomerList(Name, NationalCode, Mobile);
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate, EndDate, Desc, CusId.Value, LeftOver, CurrentPage, 2);
+            InvList = t.Items;
+            PageCount = t.PageCount;
         }
 
         [RelayCommand]
@@ -118,7 +135,7 @@ namespace NeAccounting.ViewModels
                 }
                 _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
-                await OnSearchCus();
+                await OnSearchInvoice();
             }
         }
 
