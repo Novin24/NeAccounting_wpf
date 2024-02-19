@@ -302,7 +302,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         if (Commission != null && Commission != 0)
         {
             var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (long)(totalInvoicePrice * (Commission / 100)),
-                DocumntType.Pay, $"{serial} پورسانت فاکتور", SubmitDate, false);
+                DocumntType.PayDoc, $"{serial} پورسانت فاکتور", SubmitDate, false);
 
             if (!su)
             {

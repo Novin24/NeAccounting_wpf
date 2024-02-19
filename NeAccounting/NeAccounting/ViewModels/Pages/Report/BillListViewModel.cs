@@ -145,9 +145,9 @@ namespace NeAccounting.ViewModels
 
             switch (doc.Type)
             {
-                case DomainShared.Enums.DocumntType.Pay:
+                case DomainShared.Enums.DocumntType.PayDoc:
                     break;
-                case DomainShared.Enums.DocumntType.Rec:
+                case DomainShared.Enums.DocumntType.RecDoc:
                     break;
                 case DomainShared.Enums.DocumntType.SellInv:
                     break;
