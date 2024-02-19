@@ -113,6 +113,9 @@
                                                    OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
                                                    SuggestionChosen="txt_name_SuggestionChosen"
                                                    DisplayMemberPath="DisplayName"
+                                                  HorizontalAlignment="Left"
+                                                   MinWidth="155"
+                                                   MaxWidth="200"
                                                    FontFamily="Calibri" />
                             </StackPanel>
 
@@ -138,10 +141,12 @@
                                       FontSize="14" />
 
                             <nu:PersianDatePicker VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
                                                   FlowDirection="LeftToRight"
                                                   SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay}"
                                                   LabelName="از تاریخ"
-                                                  Grid.Row="1" />
+                                                  Grid.Row="1" 
+                                                  Width="250"/>
 
                             <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
@@ -156,7 +161,8 @@
                                     Grid.Row="1"
                                     FontSize="17"
                                     FontFamily="Calibri"
-                                    HorizontalAlignment="Right">
+                                    HorizontalAlignment="Right"
+                                    Margin="0 20 0 0">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="پرینت" />
                                     <TextBlock Text=" (Ctrl+P)"
@@ -173,7 +179,7 @@
                                     Grid.Row="1"
                                     Command="{Binding ViewModel.SearchInvoiceCommand}"
                                     HorizontalAlignment="Center"
-                                    Padding="17 4 18 9">
+                                    Padding="10 4">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="نمایش"
                                                FontSize="16" />
@@ -185,6 +191,7 @@
                             </Button>
                         </Grid>
                         <DataGrid Grid.Row="1"
+                                  IsReadOnly="True"
                                   Margin="0 10 0 0"
                                   BorderThickness="10"
                                   CanUserResizeColumns="False"

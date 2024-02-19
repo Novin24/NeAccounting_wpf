@@ -176,6 +176,7 @@
                                   BorderThickness="10"
                                   Grid.Row="2"
                                   CanUserResizeColumns="False"
+                                  CanUserReorderColumns="False"
                                   FontSize="15"
                                   ItemsSource="{Binding ViewModel.List, Mode=TwoWay}"
                                   CanUserResizeRows="False"

@@ -160,6 +160,7 @@
                                       BorderThickness="10"
                                       Grid.Row="2"
                                       CanUserResizeColumns="False"
+                                      CanUserReorderColumns="False"
                                       CanUserResizeRows="False"
                                       ItemsSource="{Binding ViewModel.List, Mode=TwoWay}"
                                       FontFamily="Calibri"
