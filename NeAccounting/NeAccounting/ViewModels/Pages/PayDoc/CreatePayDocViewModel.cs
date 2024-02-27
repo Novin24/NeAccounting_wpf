@@ -67,7 +67,7 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
     /// مبلغ وارد شده 
     /// </summary>
     [ObservableProperty]
-    private long? _discount = ;
+    private long? _discount = 0;
 
     /// <summary>
     /// توضیحات 
