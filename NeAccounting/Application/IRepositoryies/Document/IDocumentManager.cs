@@ -45,7 +45,6 @@ namespace NeApplication.IRepositoryies
                 double? commission,
                 string? descripion,
                 DateTime submitDate,
-                bool receivedOrPaid,
                 List<RemittanceListViewModel> remittances);
 
         /// <summary>
@@ -63,9 +62,9 @@ namespace NeApplication.IRepositoryies
                 double? commission,
                 string? descripion,
                 DateTime submitDate,
-                bool receivedOrPaid,
                 List<RemittanceListViewModel> remittances);
         #endregion
+
         #region status
 
         /// <summary>
@@ -96,6 +95,24 @@ namespace NeApplication.IRepositoryies
             int pageCount = NeAccountingConstants.PageCount);
 
         Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime, DateTime EndTime, Guid CusId, bool LeftOver, string Description);
+
+        Task<List<SummaryDoc>> GetSummaryDocs(Guid? CusId, DocumntType type);
+        #endregion
+
+        #region Doc
+        Task<(string error, bool isSuccess)> CreateRecDocument(Guid customerId,
+            PaymentType paymentType,
+            long price,
+            long? discount,
+            string? descripion,
+            DateTime submitDate);
+
+        Task<(string error, bool isSuccess)> CreatePayDocument(Guid customerId,
+            PaymentType paymentType,
+            long price,
+            long? discount,
+            string? descripion,
+            DateTime submitDate);
         #endregion
     }
 }

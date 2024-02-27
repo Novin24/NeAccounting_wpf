@@ -1,6 +1,4 @@
-﻿using DomainShared.ViewModels;
-using NeAccounting.ViewModels;
-using System.Windows.Controls;
+﻿using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -18,15 +16,6 @@ namespace NeAccounting.Views.Pages
             DataContext = this;
             InitializeComponent();
             MaterialName.Focus();
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (sender is ComboBox cmb)
-            {
-                ViewModel.UnitId = ((SuggestBoxViewModel<int>)cmb.SelectedItem).Id;
-            }
-
         }
     }
 }

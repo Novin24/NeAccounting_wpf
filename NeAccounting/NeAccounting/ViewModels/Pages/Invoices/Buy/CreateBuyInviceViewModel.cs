@@ -40,7 +40,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     private Guid? _CusId;
 
     [ObservableProperty]
-    private DateTime _submitDate = DateTime.Now;
+    private DateTime? _submitDate = DateTime.Now;
 
     /// <summary>
     /// مقدار پورسانت
@@ -289,7 +289,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         #region CreateBuyDoc
         var totalInvoicePrice = List.Sum(t => t.TotalPrice);
 
-        var (e, s) = await db.DocumentManager.CreateBuyDocument(CusId.Value, totalInvoicePrice, Commission, InvDescription, SubmitDate, true, List);
+        var (e, s) = await db.DocumentManager.CreateBuyDocument(CusId.Value, totalInvoicePrice, Commission, InvDescription, SubmitDate.Value, List);
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -297,7 +297,6 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         }
         await db.SaveChangesAsync();
         #endregion
-
 
         #region reload
         _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور با موفقیت انجام شد", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));

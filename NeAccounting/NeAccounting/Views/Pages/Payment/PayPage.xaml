@@ -72,51 +72,6 @@
                     </Border.Background>
                     <!--اخرین چک ها-->
                     <Grid>
-                        <Grid.RowDefinitions>
-
-                            <RowDefinition></RowDefinition>
-                            <RowDefinition Height="2*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <StackPanel Margin="10 10 10 10">
-                            <TextBlock FontFamily="Calibri"
-                                       FontSize="15"
-                                       Text="آخرین چک ها"
-                                       HorizontalAlignment="Center" />
-                            <DataGrid Margin="0 6 0 6"
-                                      x:Name="LastChecksdata"
-                                      BorderThickness="10">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="مبلغ"
-                                                        Binding="{Binding LastchecksAmount}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" />
-                                    <DataGridTextColumn Header="شخص"
-                                                        Binding="{Binding LastchecksAmount}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" />
-                                    <DataGridTextColumn Header="تاریخ سررسید"
-                                                        Binding="{Binding LastchecksDate}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" />
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
-                        <Line Grid.Row="0"
-                              X1="0"
-                              Y1="7"
-                              X2="500"
-                              Y2="7"
-                              StrokeThickness="8"
-                              VerticalAlignment="Bottom"
-                              Fill="#FFB5ACAC"
-                              Stroke="#FFCCCCCC"
-                              Height="9"
-                              Margin="10 0 ">
-
-                        </Line>
                         <StackPanel Grid.Row="1">
 
                             <TextBlock FontFamily="Calibri"
@@ -124,21 +79,29 @@
                                        Margin="0,10"
                                        Text="آخرین اسناد پرداختی"
                                        HorizontalAlignment="Center" />
-                            <DataGrid                                   Margin="10 10 10 10"
-                                                                        BorderThickness="10">
+
+                            <DataGrid Margin="10 10 10 10"
+                                      CanUserAddRows="False"
+                                      AutoGenerateColumns="False"
+                                      CanUserDeleteRows="False"
+                                      CanUserResizeRows="False"
+                                      CanUserResizeColumns="False"
+                                      ItemsSource="{Binding ViewModel.DocList, Mode=TwoWay}"
+                                      CanUserSortColumns="False"
+                                      BorderThickness="10">
                                 <DataGrid.Columns>
+                                    <DataGridTextColumn Header="تاریخ پرداخت"
+                                                        Binding="{Binding ShamsiDate}"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Width="*" />
                                     <DataGridTextColumn Header="مبلغ"
-                                                        Binding="{Binding LastchecksAmount}"
+                                                        Binding="{Binding Price}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
                                     <DataGridTextColumn Header="شخص"
-                                                        Binding="{Binding LastchecksAmount}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" />
-                                    <DataGridTextColumn Header="تاریخ پرداخت"
-                                                        Binding="{Binding LastchecksDate}"
+                                                        Binding="{Binding Cus_Name}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
@@ -158,281 +121,165 @@
                         <SolidColorBrush Color="White"
                                          Opacity="0.08" />
                     </Border.Background>
+                    <Grid FlowDirection="RightToLeft">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
 
-                    <TabControl Margin="8,8,8,8"
-                                Grid.Row="1"
-                                FlowDirection="RightToLeft"
-                                Background="{DynamicResource ApplicationBackgroundBrush}">
-                        <TabItem IsSelected="True"
-                                 Header="اسناد پرداختی">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel>
-                                    <DockPanel>
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="16"
-                                                   Text="نام مشتری"
-                                                   Margin="2 0 0 7" />
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="14"
-                                                   x:Name="lbl_cusId"
-                                                   Foreground="#BB8F60"
-                                                   HorizontalAlignment="Right"
-                                                   Margin="2 0 0 7" />
-                                    </DockPanel>
-                                    <ui:AutoSuggestBox x:Name="AutoSuggestBoxSuggestions"
-                                                       Icon="{ui:SymbolIcon Search24}"
-                                                       OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
-                                                       PlaceholderText="Search..."
-                                                       DisplayMemberPath="DisplayName"
-                                                       FontSize="14"
-                                                       Grid.Row="0"
-                                                       SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
-                                                       Grid.Column="0"
-                                                       Margin="21 4 20 0 "
-                                                       FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal"
-                                            Grid.Column="1"
-                                            Margin="11 33 0 0 ">
-
-                                    <TextBlock FontFamily="Calibri"
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <DockPanel>
+                                <TextBlock FontFamily="Calibri"
+                                           FontSize="16"
+                                           Text="نام مشتری"
+                                           Margin="2 0 0 7" />
+                                <TextBlock FontFamily="Calibri"
+                                           FontSize="14"
+                                           x:Name="lbl_cusId"
+                                           Foreground="#BB8F60"
+                                           HorizontalAlignment="Right"
+                                           Margin="2 0 0 7" />
+                            </DockPanel>
+                            <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
+                                               OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
+                                               PlaceholderText="Search..."
+                                               DisplayMemberPath="DisplayName"
                                                FontSize="14"
-                                               x:Name="lbl_status"
-                                               Text="{Binding ViewModel.Status}"
-                                               FontWeight="Bold" />
-
-                                    <TextBlock FontFamily="Calibri"
-                                               Grid.Column="1"
-                                               HorizontalAlignment="Center"
-                                               FontSize="14"
-                                               Text="{Binding ViewModel.TotalPrice}"
-                                               Margin="7 0 0 0 "
-                                               FontWeight="Bold" />
-                                </StackPanel>
-                                <nu:PersianDatePicker FlowDirection="LeftToRight"
-                                                      LabelName="تاریخ"
-                                                      x:Name="pdp"
-                                                      SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}"
-                                                      Margin="0 2 15 0"
-                                                      Grid.Row="1" />
-                                <nu:MoneyPack Grid.Row="2"
-                                              Value="{Binding ViewModel.Price, Mode=TwoWay}"
-                                              FontFamily="Calibri"
-                                              LabelName="مبلغ وجه" />
-
-                                <StackPanel Margin="20 4 20 0"
-                                            Grid.Row="1"
-                                            Grid.Column="1">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="نوع سند"
-                                               FontWeight="Bold" />
-                                    <ComboBox SelectedIndex="0"
-                                              FontSize="14"
-                                              Margin="0 4 0 0 ">
-                                        <ComboBoxItem Content="کارت به کارت" />
-                                        <ComboBoxItem Content="حواله بانکی" />
-                                        <ComboBoxItem Content="شبا ، ساتنا" />
-                                        <ComboBoxItem Content="کارتخوان" />
-                                        <ComboBoxItem Content="نقدی" />
-                                        <ComboBoxItem Content="سایر" />
-                                    </ComboBox>
-                                </StackPanel>
-
-                                <nu:MoneyPack Grid.Column="1"
-                                              Grid.Row="2"
-                                              LabelName="مبلغ تخفیف" />
-
-                                <CheckBox Content="تسویه کامل"
-                                          Grid.ColumnSpan="2"
-                                          Grid.Row="3"
-                                          FontFamily="Calibri"
-                                          HorizontalAlignment="Center"
-                                          Margin="0 11 0 11 "
-                                          FontWeight="Bold"
-                                          FontSize="14" />
-                                <Grid Grid.ColumnSpan="2"
-                                      Grid.Row="4"
-                                      Grid.RowSpan="2"
-                                      Margin="20 6 20 4">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="توضیحات"
-                                               Grid.Column="1"
-                                               FontWeight="Bold" />
-                                    <RichTextBox Margin="0,24,5,0"
-                                                 FontSize="14"
-                                                 FlowDirection="RightToLeft"
-                                                 Grid.ColumnSpan="2"
-                                                 FontFamily="Calibri"></RichTextBox>
-                                </Grid>
-                                <Button Content="ثبت سند"
-                                        Margin="10"
-                                        HorizontalAlignment="Center"
-                                        Grid.Row="6"
-                                        FontFamily="Calibri"
-                                        FontSize="15"
-                                        Grid.ColumnSpan="2" />
-
-                            </Grid>
-                        </TabItem>
-                        <TabItem Margin="0,0,2,0"
-                                 Header="چک پرداختی">
-
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel>
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="نام مشتری"
-                                               Margin="23 6 0 0 "
-                                               FontWeight="Bold" />
-                                    <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
-                                                       PlaceholderText="Search..."
-                                                       DisplayMemberPath="DisplayName"
-                                                       FontSize="14"
-                                                       SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
-                                                       Grid.Column="0"
-                                                       Margin="21 4 3 0 "
-                                                       FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Margin="21 5 20 5 "
-                                            Grid.Column="1">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="بانک"
-                                               Margin="1 0 0 6 " />
-                                    <ui:TextBox TextAlignment="Center"
-                                                FontFamily="Calibri"
-                                                FontSize="14" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="1"
-                                            Margin="20 5 3 5 ">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="شعبه"
-                                               Margin="1 0 0 0 " />
-                                    <ui:TextBox FontSize="14"
-                                                TextAlignment="Center"
-                                                FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Margin="21 5 20 5 "
-                                            Grid.Column="1"
-                                            Grid.Row="1">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="شماره چک"
-                                               Margin="1 0 0 0 " />
-                                    <ui:TextBox TextAlignment="Center"
-                                                FontSize="14"
-                                                FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Margin="21 6 3 0 "
-                                            Grid.Row="2">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="شماره حساب"
-                                               Margin="2 0 3 4" />
-                                    <ui:TextBox TextAlignment="Center"
-                                                FontSize="14"
-                                                Height="36"
-                                                FontFamily="Calibri" />
-                                </StackPanel>
-
-                                <nu:MoneyPack Grid.Column="1"
-                                              Grid.Row="2"
-                                              LabelName="مبلغ چک" />
-                                <StackPanel Margin="20 5 3 5 "
-                                            Grid.Row="3">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="صاحب حساب"
-                                               Margin="2 0 3 3" />
-                                    <ui:TextBox FontSize="14"
-                                                TextAlignment="Center"
-                                                FontFamily="Calibri" />
-                                </StackPanel>
-                                <StackPanel Margin="21 5 20 5 "
-                                            HorizontalAlignment="Center"
-                                            Width="200"
-                                            Grid.Row="3"
-                                            Grid.Column="1">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="وضعیت چک"
-                                               Margin="1 0 0 0 " />
-                                    <ComboBox SelectedIndex="3"
-                                              Margin="0 0 0 0 "
-                                              FontFamily="Calibri"
-                                              FontSize="14">
-
-                                        <ComboBoxItem Content="ثبت شده" />
-                                        <ComboBoxItem Content="ثبت نشده" />
-                                        <ComboBoxItem Content="بدون نیاز به ثبت" />
-                                    </ComboBox>
-                                </StackPanel>
-                                <Grid Grid.ColumnSpan="2"
-                                      Grid.Row="4"
-                                      Margin="20 3 20 4">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="توضیحات"
-                                               Grid.Column="1" />
-                                    <RichTextBox Margin="0,20,0,0"
-                                                 FontSize="14"
-                                                 FlowDirection="RightToLeft"
-                                                 FontFamily="Calibri"></RichTextBox>
-                                </Grid>
-
-                                <Button Content="ثبت چک"
-                                        Margin="10"
-                                        HorizontalAlignment="Center"
-                                        Grid.Row="7"
-                                        FontFamily="Calibri"
-                                        FontSize="15"
-                                        Grid.ColumnSpan="2" />
-
-                            </Grid>
-                        </TabItem>
-                    </TabControl>
+                                               Grid.Row="0"
+                                               x:Name="aus_CusName"
+                                               SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
+                                               Grid.Column="0"
+                                               Margin="21 4 20 0 "
+                                               FontFamily="Calibri" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    Margin="11 33 0 0 ">
 
 
+                            <ItemsControl FontFamily="Calibri"
+                                          Grid.Column="1"
+                                          Focusable="False"
+                                          FontSize="16"
+                                          Margin="7 0 0 0 "
+                                          ItemsSource="{Binding ViewModel.TotalPrice}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel FlowDirection="LeftToRight"
+                                                    Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock  Text="{Binding}"
+                                                    Margin="0,0,3,0" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="18"
+                                       Focusable="False"
+                                       x:Name="lbl_status"
+                                       Margin="10,0"
+                                       Text="{Binding ViewModel.Status}"
+                                       FontWeight="ExtraBold" />
+
+
+                        </StackPanel>
+                        <StackPanel Margin="20 4 20 0"
+                                    Grid.Row="1">
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="نوع سند"
+                                       FontWeight="Bold" />
+                            <ComboBox SelectedIndex="0"
+                                      FontSize="14"
+                                      x:Name="Cmb_PayType"
+                                      SelectedValuePath="Tag"
+                                      SelectedValue="{Binding ViewModel.Type , Mode=TwoWay}"
+                                      FontFamily="Calibri"
+                                      Margin="0 4 0 0 ">
+                                <ComboBoxItem Content="کارت به کارت"
+                                              Tag="1" />
+                                <ComboBoxItem Content="حواله بانکی"
+                                              Tag="2" />
+                                <ComboBoxItem Content="شبا ، ساتنا"
+                                              Tag="3" />
+                                <ComboBoxItem Content="کارتخوان"
+                                              Tag="4" />
+                                <ComboBoxItem Content="نقدی"
+                                              Tag="5" />
+                                <ComboBoxItem Content="سایر"
+                                              Tag="6" />
+                            </ComboBox>
+                        </StackPanel>
+
+                        <nu:PersianDatePicker Grid.Row="1"
+                                              FlowDirection="LeftToRight"
+                                              LabelName="تاریخ"
+                                              x:Name="pdp"
+                                              Grid.Column="1"
+                                              SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}"
+                                              Margin="0 2 15 0" />
+
+                        <nu:MoneyPack Grid.Row="2"
+                                      Value="{Binding ViewModel.Price, Mode=TwoWay}"
+                                      FontFamily="Calibri"
+                                      LabelName="مبلغ وجه" />
+
+                        <nu:MoneyPack Grid.Column="1"
+                                      Value="{Binding ViewModel.Discount, Mode=TwoWay}"
+                                      Grid.Row="2"
+                                      LabelName="مبلغ تخفیف" />
+
+                        <CheckBox Content="تسویه کامل"
+                                  Grid.ColumnSpan="2"
+                                  Grid.Row="3"
+                                  FontFamily="Calibri"
+                                  HorizontalAlignment="Center"
+                                  Margin="0 11 0 11 "
+                                  FontWeight="Bold"
+                                  FontSize="14" />
+                        <Grid Grid.ColumnSpan="2"
+                              Grid.Row="4"
+                              Grid.RowSpan="2"
+                              Margin="20 6 20 4">
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="توضیحات"
+                                       Grid.Column="1"
+                                       FontWeight="Bold" />
+                            <TextBox Margin="0,24,5,0"
+                                     FontSize="14"
+                                     Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                     FlowDirection="RightToLeft"
+                                     Grid.ColumnSpan="2"
+                                     FontFamily="Calibri"></TextBox>
+                        </Grid>
+                        <Button Content="ثبت سند"
+                                Margin="10"
+                                x:Name="btn_submit"
+                                HorizontalAlignment="Center"
+                                Grid.Row="6"
+                                Click="btn_submit_Click"
+                                FontFamily="Calibri"
+                                FontSize="15"
+                                Grid.ColumnSpan="2" />
+                    </Grid>
                 </Border>
-
             </Grid>
         </Border>
     </Grid>

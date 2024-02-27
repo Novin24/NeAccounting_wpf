@@ -40,7 +40,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
     private Guid? _CusId;
 
     [ObservableProperty]
-    private DateTime _submitDate = DateTime.Now;
+    private DateTime? _submitDate = DateTime.Now;
 
     /// <summary>
     /// مقدار پورسانت
@@ -271,11 +271,11 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             return false;
         }
 
-        //if (SubmitDate == null)
-        //{
-        //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-        //    return false;
-        //}
+        if (SubmitDate == null)
+        {
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
 
         if (List == null || List.Count == 0)
         {
@@ -300,7 +300,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         #region CreateSellDoc
         var totalInvoicePrice = List.Sum(t => t.TotalPrice);
 
-        var (e, s) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, Commission, InvDescription, SubmitDate, false, List);
+        var (e, s) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, Commission, InvDescription, SubmitDate.Value, List);
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

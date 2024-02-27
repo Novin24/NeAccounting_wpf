@@ -47,6 +47,9 @@
         Sheba_Satna = 3,
         Pos = 4,
         Cash,
+        /// <summary>
+        /// systemic
+        /// </summary>
         Other
     }
 }

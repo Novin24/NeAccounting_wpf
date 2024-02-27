@@ -41,6 +41,30 @@ namespace Domain.NovinEntity.Documents
             SellRemittances = [];
             BuyRemittances = [];
         }
+
+
+        public Document(
+            Guid customerId,
+            long price,
+            DocumntType type,
+            PaymentType payType,
+            string? descripion,
+            DateTime submitDate,
+            bool isReceived,
+            byte commission)
+        {
+            CustomerId = customerId;
+            Price = price;
+            Commission = commission;
+            Type = type;
+            PayType = payType;
+            Description = descripion;
+            SubmitDate = submitDate;
+            IsReceived = isReceived;
+            RelatedDocuments = [];
+            SellRemittances = [];
+            BuyRemittances = [];
+        }
         #endregion
 
         #region Properties
@@ -53,6 +77,7 @@ namespace Domain.NovinEntity.Documents
         /// ما دریافت کردیم
         /// </summary>
         public bool IsReceived { get; set; }
+        public byte? Commission { get; set; }
         public long Serial { get; set; }
         #endregion
 

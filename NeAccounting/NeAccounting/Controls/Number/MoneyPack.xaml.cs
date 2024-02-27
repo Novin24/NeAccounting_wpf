@@ -55,7 +55,7 @@ namespace NeAccounting.Controls
             if (e.NewValue == e.OldValue)
                 return;
 
-            npack.txb_num.Text = ((long)e.NewValue).ToString("N0");
+            npack.txb_num.ItemsSource = ((long)e.NewValue).ToString("N0");
         }
 
 
