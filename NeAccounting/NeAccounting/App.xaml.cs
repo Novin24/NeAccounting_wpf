@@ -186,6 +186,7 @@ namespace NeAccounting
                 services.AddTransient<CreditorsListPage>();
 
                 services.AddTransient<DailyBookPage>();
+                services.AddTransient<DalyBookViewModel>();
 
                 services.AddTransient<Chequebook>();
 

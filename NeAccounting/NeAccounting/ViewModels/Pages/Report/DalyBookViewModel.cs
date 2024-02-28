@@ -1,6 +1,4 @@
-﻿using DomainShared.Errore;
-using DomainShared.ViewModels;
-using DomainShared.ViewModels.Document;
+﻿using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
 using System.Windows.Media;
 using Wpf.Ui;
@@ -8,58 +6,27 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class BillListViewModel : ObservableObject, INavigationAware
+    public partial class DalyBookViewModel : ObservableObject, INavigationAware
     {
-        private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
 
-        public BillListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
+        public DalyBookViewModel(IContentDialogService contentDialogService, ISnackbarService snackbarService)
         {
-            _navigationService = navigationService;
             _contentDialogService = contentDialogService;
             _snackbarService = snackbarService;
         }
-
-
+        /// <summary>
+        /// لیست فاکتور
+        /// </summary>
         [ObservableProperty]
-        private long? _personelId;
+        private IEnumerable<DalyBookDto> _invList = [];
 
         [ObservableProperty]
         private int _pageCount = 1;
 
         [ObservableProperty]
         private int _currentPage = 1;
-
-        [ObservableProperty]
-        private Guid? _cusId;
-
-        [ObservableProperty]
-        private string _desc = "";
-
-        [ObservableProperty]
-        private DateTime _startDate = DateTime.Now;
-
-        [ObservableProperty]
-        private DateTime _endDate = DateTime.Now;
-
-        /// <summary>
-        /// به احتساب مانده قبلی
-        /// </summary>
-        [ObservableProperty]
-        private bool _leftOver;
-
-        /// <summary>
-        /// لیست مشتری ها
-        /// </summary>
-        [ObservableProperty]
-        private List<SuggestBoxViewModel<Guid, long>> _cuslist;
-
-        /// <summary>
-        /// لیست فاکتور
-        /// </summary>
-        [ObservableProperty]
-        private IEnumerable<InvoiceListDto> _invList;
 
         public void OnNavigatedFrom()
         {
@@ -74,23 +41,11 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            Cuslist = await db.CustomerManager.GetDisplayUser();
+            var result = await db.DocumentManager.GetDalyBook(CurrentPage);
+            PageCount = result.PageCount;
+            InvList = result.Items;
         }
 
-        [RelayCommand]
-        public async Task OnSearchInvoice()
-        {
-            if (!CusId.HasValue)
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
-
-                return;
-            }
-            using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetInvoicesByDate(StartDate, EndDate, Desc, CusId.Value, LeftOver, false, CurrentPage);
-            InvList = t.Items;
-            PageCount = t.PageCount;
-        }
 
         [RelayCommand]
         private async Task OnRemoveDoc(Guid parameter)
@@ -189,5 +144,13 @@ namespace NeAccounting.ViewModels
             //servise.Navigate(pageType, context);
         }
 
+        [RelayCommand]
+        private async Task OnPageChenge()
+        {
+            using UnitOfWork db = new();
+            var result = await db.DocumentManager.GetDalyBook(CurrentPage);
+            PageCount = result.PageCount;
+            InvList = result.Items;
+        }
     }
 }

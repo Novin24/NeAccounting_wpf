@@ -213,12 +213,12 @@
                                                     Binding="{Binding Row}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="28" />
+                                                    Width="30" />
                                 <DataGridTextColumn Header="تاریخ"
                                                     Binding="{Binding ShamsiDate}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".9*" />
+                                                    Width="85" />
                                 <DataGridTextColumn Header="شرح"
                                                     Binding="{Binding Description}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
@@ -228,27 +228,27 @@
                                                     Binding="{Binding Serial}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="70" />
+                                                    Width="50" />
                                 <DataGridTextColumn Header="بدهکاری"
                                                     Binding="{Binding Bed, StringFormat={StaticResource format}}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="*" />
+                                                    Width=".8*" />
                                 <DataGridTextColumn Header="طلبکاری"
                                                     Binding="{Binding Bes, StringFormat={StaticResource format}}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="*" />
+                                                    Width=".8*" />
                                 <DataGridTextColumn Header="مانده"
                                                     Binding="{Binding LeftOver, StringFormat={StaticResource format}}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="*" />
-                                <DataGridTextColumn Header="وضعیت شخصی"
+                                                    Width=".8*" />
+                                <DataGridTextColumn Header="وض شخصی"
                                                     Binding="{Binding Status}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="1.3*" />
+                                                    Width="70" />
 
                                 <DataGridTemplateColumn Header="عملیات"
                                                         Width="90"

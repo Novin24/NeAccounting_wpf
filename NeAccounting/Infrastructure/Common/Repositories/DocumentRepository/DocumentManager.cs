@@ -9,6 +9,7 @@ using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
+using System;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
@@ -279,7 +280,7 @@ namespace Infrastructure.Repositories
                 Bes = t.Price,
             }).ToList());
 
-            Remittances = [.. Remittances.OrderBy(t => t.Date)];
+            Remittances = [.. Remittances.OrderByDescending(t => t.Date)];
 
             foreach (var item in Remittances)
             {
@@ -347,9 +348,40 @@ namespace Infrastructure.Repositories
             return list;
         }
 
-        public Task<List<DalyBookDto>> GetDalyBook()
+        public async Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
         {
-            return null;
+            var list = await (from doc in DbContext.Set<Document>()
+                                               .AsNoTracking()
+                                               .Where(t => t.CreationTime.Day == DateTime.Now.Day)
+                              join cus in DbContext.Set<Customer>()
+                                                                       on doc.CustomerId equals cus.Id
+
+                              orderby doc.CreationTime descending
+                              select new DalyBookDto()
+                              {
+                                  SubmitDate = doc.SubmitDate,
+                                  Bed = !doc.IsReceived ? doc.Price.ToString("N0") : "0",
+                                  Bes = doc.IsReceived ? doc.Price.ToString("N0") : "0",
+                                  CustomerName = cus.Name,
+                                  Description = doc.Description,
+                                  Id = doc.Id,
+                                  Type = doc.Type,
+                                  Serial = doc.Serial.ToString()
+                              })
+                      .ToListAsync();
+
+            int row = 1;
+            PersianCalendar pc = new();
+            foreach (var item in list)
+            {
+                item.ShamsiDate = item.SubmitDate.ToShamsiDate(pc);
+                item.Row = row;
+                row++;
+            }
+            var totalCount = list.Count;
+            list = list.Skip(--pageNum * pageCount).Take(pageCount).ToList();
+            return new PagedResulViewModel<DalyBookDto>(totalCount, pageCount, list);
         }
         #endregion
     }

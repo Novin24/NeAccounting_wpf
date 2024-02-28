@@ -8,9 +8,11 @@ namespace DomainShared.ViewModels.Document
         public string? ShamsiDate { get; set; }
         public string? CustomerName { get; set; }
         public string? Description { get; set; }
-        public long Bed { get; set; }
-        public long Bes { get; set; }
+        public string? Serial { get; set; }
+        public string? Bed { get; set; }
+        public string? Bes { get; set; }
         public Guid Id { get; set; }
-        public DocumntType Type{ get; set; }
+        public DocumntType Type { get; set; }
+        public DateTime SubmitDate { get; set; }
     }
 }

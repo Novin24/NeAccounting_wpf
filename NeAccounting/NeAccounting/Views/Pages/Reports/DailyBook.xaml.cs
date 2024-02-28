@@ -22,7 +22,7 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            //ViewModel.SearchInvoiceCommand.Execute(null);
+            ViewModel.PageChengeCommand.Execute(null);
         }
     }
 }

@@ -114,7 +114,8 @@ namespace NeApplication.IRepositoryies
             string? descripion,
             DateTime submitDate);
 
-        Task<List<DalyBookDto>> GetDalyBook();
+        Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
         #endregion
     }
 }
