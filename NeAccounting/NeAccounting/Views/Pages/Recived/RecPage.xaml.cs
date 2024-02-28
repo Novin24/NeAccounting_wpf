@@ -1,4 +1,7 @@
-﻿using NeAccounting.ViewModels;
+﻿using DomainShared.ViewModels;
+using NeAccounting.ViewModels;
+using System.Windows.Media;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Pages
@@ -8,29 +11,51 @@ namespace NeAccounting.Pages
     /// </summary>
     public partial class RecPage : INavigableView<RecViewModel>
     {
+        private readonly ISnackbarService _snackbarService;
         public RecViewModel ViewModel { get; }
+        public Guid CusId { get; set; }
 
-        public RecPage(RecViewModel viewModel)
+        public RecPage(RecViewModel viewModel, ISnackbarService snackbarService)
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-           
-            Lastchecks One = new Lastchecks();
-            One.LastchecksAmount = "286,000";
-            One.LastchecksDate = "12/12/1402";
-            LastChecksdata.Items.Add(One);
-
-            Lastchecks two = new Lastchecks();
-            two.LastchecksAmount = "286,000";
-            two.LastchecksDate = "12/12/1402";
-            LastChecksdata.Items.Add(two);
+            _snackbarService = snackbarService;
         }
-        public class Lastchecks
-        {
-            public string LastchecksAmount { set; get; }
-            public string LastchecksDate { set; get; }
 
+        private async void AutoSuggestBoxSuggestions_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            if (!IsInitialized)
+                return;
+            var user = (SuggestBoxViewModel<Guid, long>)args.SelectedItem;
+            ViewModel.CusId = user.Id;
+            lbl_cusId.Text = user.UniqNumber.ToString();
+            await ViewModel.OnSelectCus(user.Id);
+            if (ViewModel.Status == "بدهکار")
+            {
+                lbl_status.Foreground = new SolidColorBrush(Colors.IndianRed);
+            }
+
+            else if (ViewModel.Status == "طلبکار")
+            {
+                lbl_status.Foreground = new SolidColorBrush(Colors.DarkGreen);
+            }
+
+            else
+            {
+                lbl_status.Foreground = (Brush)FindResource("TextFillColorPrimaryBrush");
+            }
+        }
+
+        private async void btn_submit_Click(object sender, RoutedEventArgs e)
+        {
+            if (await ViewModel.OnSumbit())
+            {
+                aus_CusName.Text = string.Empty;
+                Cmb_PayType.SelectedIndex = 0;
+                lbl_cusId.Text = string.Empty;
+                lbl_status.Foreground = (Brush)FindResource("TextFillColorPrimaryBrush");
+            }
         }
 
     }

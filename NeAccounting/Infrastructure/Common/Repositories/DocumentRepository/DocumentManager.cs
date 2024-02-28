@@ -330,14 +330,14 @@ namespace Infrastructure.Repositories
                               join cus in DbContext.Set<Customer>()
                                                       on doc.CustomerId equals cus.Id
 
+                              orderby doc.CreationTime descending
                               select new SummaryDoc()
                               {
                                   SubmitDate = doc.SubmitDate,
                                   Cus_Name = cus.Name,
                                   Price = doc.Price.ToString("N0"),
                               })
-                      .OrderByDescending(c => c.SubmitDate)
-                      .Take(10)
+                      .Take(15)
                       .ToListAsync();
 
             list.ForEach(c =>

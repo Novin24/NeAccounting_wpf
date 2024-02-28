@@ -1,5 +1,6 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
+using DomainShared.Utilities;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
@@ -84,7 +85,7 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
     private async Task InitializeViewModel()
     {
         using UnitOfWork db = new();
-        Cuslist = await db.CustomerManager.GetDisplayUser(null, true);
+        Cuslist = await db.CustomerManager.GetDisplayUser(null, null);
         DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.PayDoc);
     }
 
@@ -133,6 +134,11 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
             return false;
         }
 
+        if (string.IsNullOrEmpty(Description))
+        {
+            Description = $"{Type.ToDisplay()} دریافتی";
+        }
+
         #endregion
 
         #region CreatePayDocumetn
@@ -142,7 +148,7 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
         {
             await db.SaveChangesAsync();
             _snackbarService.Show("کاربر گرامی", $"ثبت سند با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
-            Reload();
+            await Reload();
             return true;
         }
 
@@ -151,8 +157,9 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
         #endregion
     }
 
-    private void Reload()
+    private async Task Reload()
     {
+        using UnitOfWork db = new();
         SubmitDate = DateTime.Now;
         Description = string.Empty;
         Status = "تسویه";
@@ -160,5 +167,7 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
         TotalPricee = 0;
         Price = 0;
         Discount = 0;
+        CusId = null;
+        DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.PayDoc);
     }
 }

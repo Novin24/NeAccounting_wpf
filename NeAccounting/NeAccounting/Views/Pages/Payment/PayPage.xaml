@@ -84,6 +84,7 @@
                                       CanUserAddRows="False"
                                       AutoGenerateColumns="False"
                                       CanUserDeleteRows="False"
+                                      CanUserReorderColumns="False"
                                       CanUserResizeRows="False"
                                       CanUserResizeColumns="False"
                                       ItemsSource="{Binding ViewModel.DocList, Mode=TwoWay}"
