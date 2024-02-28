@@ -1,5 +1,4 @@
 ﻿using Infrastructure.UnitOfWork;
-using NeAccounting.Pages;
 using NeAccounting.Views.Pages;
 using NeAccounting.Views.Pages.Test;
 using System.Collections.ObjectModel;
@@ -105,7 +104,7 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem { Content = "صورتحساب جزییات", TargetPageType = typeof(Invoicedetails) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20 } },
                     new NavigationViewItem { Content = "بدهکاران", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem { Content = "طلبکاران", TargetPageType = typeof(CreditorsListPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
-                    new NavigationViewItem { Content = "دفتر روزانه", TargetPageType = typeof(DailyBook) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20}},
+                    new NavigationViewItem { Content = "دفتر روزانه", TargetPageType = typeof(DailyBookPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem { Content = "دفتر چک", TargetPageType = typeof(Chequebook) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
                     new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(CreateCostsPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
                     new NavigationViewItem { Content = "بیلان سالانه", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},

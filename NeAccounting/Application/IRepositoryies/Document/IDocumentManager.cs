@@ -113,6 +113,8 @@ namespace NeApplication.IRepositoryies
             long? discount,
             string? descripion,
             DateTime submitDate);
+
+        Task<List<DalyBookDto>> GetDalyBook();
         #endregion
     }
 }

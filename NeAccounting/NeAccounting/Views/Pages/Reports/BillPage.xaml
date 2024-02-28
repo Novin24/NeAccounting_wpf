@@ -224,6 +224,11 @@
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     Width="1.8*" />
+                                <DataGridTextColumn Header="ش سریال"
+                                                    Binding="{Binding Serial}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="70" />
                                 <DataGridTextColumn Header="بدهکاری"
                                                     Binding="{Binding Bed, StringFormat={StaticResource format}}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"

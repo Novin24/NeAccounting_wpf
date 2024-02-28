@@ -1,8 +1,7 @@
 ﻿using DomainShared.ViewModels.Invoice;
-using DomainShared.ViewModels.Pun;
 using System.Windows.Controls;
 
-namespace NeAccounting.Pages
+namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for CreateIntermediaryInvoicePage.xaml

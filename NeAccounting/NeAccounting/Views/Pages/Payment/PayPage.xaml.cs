@@ -3,7 +3,7 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.Pages
+namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for PayPage.xaml

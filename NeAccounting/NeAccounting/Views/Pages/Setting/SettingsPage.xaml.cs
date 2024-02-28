@@ -6,7 +6,7 @@
 using NeAccounting.ViewModels.Pages;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.Pages
+namespace NeAccounting.Views.Pages
 {
     public partial class SettingsPage : INavigableView<SettingsViewModel>
     {

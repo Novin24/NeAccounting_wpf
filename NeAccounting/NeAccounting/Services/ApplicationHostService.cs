@@ -5,7 +5,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NeAccounting.Pages;
+using NeAccounting.Views.Pages;
 using NeAccounting.Windows;
 
 namespace NeAccounting.Services

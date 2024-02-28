@@ -346,6 +346,11 @@ namespace Infrastructure.Repositories
             });
             return list;
         }
+
+        public Task<List<DalyBookDto>> GetDalyBook()
+        {
+            return null;
+        }
         #endregion
     }
 }
