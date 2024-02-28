@@ -1,5 +1,4 @@
-﻿using Domain.NovinEntity.Documents;
-using DomainShared.Enums;
+﻿using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
@@ -41,7 +40,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     private Guid? _CusId;
 
     [ObservableProperty]
-    private DateTime _submitDate = DateTime.Now;
+    private DateTime? _submitDate = DateTime.Now;
 
     /// <summary>
     /// مقدار پورسانت
@@ -177,7 +176,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
             AmountOf = AmountOf.Value,
             UnitName = mat.UnitName,
             MatName = mat.MaterialName,
-            Price = (long)MatPrice.Value,
+            Price = MatPrice.Value,
             RowId = rowId,
             TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
             Description = Description,
@@ -288,33 +287,19 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         #endregion
 
         #region CreateBuyDoc
-        var totalInvoicePrice = (long)List.Sum(t => t.TotalPrice);
+        var totalInvoicePrice = List.Sum(t => t.TotalPrice);
 
-        var (e, s, serial) = await db.DocumentManager.CreateBuyDocument(CusId.Value, totalInvoicePrice, InvDescription, SubmitDate, true, List);
+        var (e, s) = await db.DocumentManager.CreateBuyDocument(CusId.Value, totalInvoicePrice, Commission, InvDescription, SubmitDate.Value, List);
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
-        #endregion
-
-        #region create_Commission_Doc
-        if (Commission != null && Commission != 0)
-        {
-            var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (long)(totalInvoicePrice * (Commission / 100)),
-                DocumntType.PayDoc, $"{serial} پورسانت فاکتور", SubmitDate, false);
-
-            if (!su)
-            {
-                _snackbarService.Show("خطا", er, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return false;
-            }
-        }
         await db.SaveChangesAsync();
         #endregion
 
         #region reload
-        _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور به شماره {serial}", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+        _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور با موفقیت انجام شد", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
         await Reload();
         return true;

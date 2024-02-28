@@ -22,9 +22,10 @@ namespace NeApplication.IRepositoryies
         /// <param name="submitDate"></param>
         /// <param name="receivedOrPaid"></param>
         /// <returns></returns>
-        Task<(string error, bool isSuccess, string docSerial)> CreateDocument(Guid customerId,
+        Task<(string error, bool isSuccess)> CreateDocument(Guid customerId,
             long price,
             DocumntType type,
+            PaymentType payType,
             string? descripion,
             DateTime submitDate,
             bool receivedOrPaid);
@@ -39,11 +40,11 @@ namespace NeApplication.IRepositoryies
         /// <param name="receivedOrPaid"></param>
         /// <param name="remittances"></param>
         /// <returns></returns>
-        Task<(string error, bool isSuccess, string docSerial)> CreateSellDocument(Guid customerId,
+        Task<(string error, bool isSuccess)> CreateSellDocument(Guid customerId,
                 long price,
+                double? commission,
                 string? descripion,
                 DateTime submitDate,
-                bool receivedOrPaid,
                 List<RemittanceListViewModel> remittances);
 
         /// <summary>
@@ -56,13 +57,14 @@ namespace NeApplication.IRepositoryies
         /// <param name="receivedOrPaid"></param>
         /// <param name="remittances"></param>
         /// <returns></returns>
-        Task<(string error, bool isSuccess, string docSerial)> CreateBuyDocument(Guid customerId,
+        Task<(string error, bool isSuccess)> CreateBuyDocument(Guid customerId,
                 long price,
+                double? commission,
                 string? descripion,
                 DateTime submitDate,
-                bool receivedOrPaid,
                 List<RemittanceListViewModel> remittances);
         #endregion
+
         #region status
 
         /// <summary>
@@ -93,6 +95,24 @@ namespace NeApplication.IRepositoryies
             int pageCount = NeAccountingConstants.PageCount);
 
         Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime, DateTime EndTime, Guid CusId, bool LeftOver, string Description);
+
+        Task<List<SummaryDoc>> GetSummaryDocs(Guid? CusId, DocumntType type);
+        #endregion
+
+        #region Doc
+        Task<(string error, bool isSuccess)> CreateRecDocument(Guid customerId,
+            PaymentType paymentType,
+            long price,
+            long? discount,
+            string? descripion,
+            DateTime submitDate);
+
+        Task<(string error, bool isSuccess)> CreatePayDocument(Guid customerId,
+            PaymentType paymentType,
+            long price,
+            long? discount,
+            string? descripion,
+            DateTime submitDate);
         #endregion
     }
 }

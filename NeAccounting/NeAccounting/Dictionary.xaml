@@ -25,7 +25,7 @@
         <GradientStop Color="#543220"
                       Offset="0.7" />
     </LinearGradientBrush>
-    
+
     <Style x:Key="CenterGridHeaderStyle"
            TargetType="DataGridColumnHeader">
         <Setter Property="HorizontalContentAlignment"

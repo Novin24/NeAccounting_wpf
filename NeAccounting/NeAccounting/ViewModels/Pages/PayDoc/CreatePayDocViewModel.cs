@@ -1,6 +1,8 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
+using DomainShared.Utilities;
 using DomainShared.ViewModels;
+using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
 using System.Windows.Media;
 using Wpf.Ui;
@@ -19,19 +21,19 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
     private List<SuggestBoxViewModel<Guid, long>> _cuslist;
 
     /// <summary>
+    /// لیست مشتری ها
+    /// </summary>
+    [ObservableProperty]
+    private List<SummaryDoc> _docList;
+
+    /// <summary>
     /// شناسه مشتری
     /// </summary>
     [ObservableProperty]
     private Guid? _CusId;
 
     [ObservableProperty]
-    private DateTime _submitDate = DateTime.Now;
-
-    /// <summary>
-    /// مقدار پورسانت
-    /// </summary>
-    [ObservableProperty]
-    private double? _commission;
+    private DateTime? _submitDate = DateTime.Now;
 
     /// <summary>
     /// وضعیت مشتری
@@ -52,22 +54,16 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
     private long _totalPricee = 0;
 
     /// <summary>
-    /// شماره اخرین سند
-    /// </summary>
-    [ObservableProperty]
-    private string _lastInvoice;
-
-    /// <summary>
     /// مبلغ وارد شده 
     /// </summary>
     [ObservableProperty]
     private long _price = 0;
 
     /// <summary>
-    /// مبلغ وارد شده 
+    /// تخفیف اعمال شده 
     /// </summary>
     [ObservableProperty]
-    private long? _discount = ;
+    private long? _discount = 0;
 
     /// <summary>
     /// توضیحات 
@@ -76,12 +72,10 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
     private string? _description;
 
     /// <summary>
-    /// تسویه کامل
+    /// نوع سند 
     /// </summary>
     [ObservableProperty]
-    private bool _over;
-
-
+    private PaymentType _type;
 
     public async void OnNavigatedTo()
     {
@@ -91,8 +85,8 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
     private async Task InitializeViewModel()
     {
         using UnitOfWork db = new();
-        Cuslist = await db.CustomerManager.GetDisplayUser(null, true);
-        LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.PayDoc);
+        Cuslist = await db.CustomerManager.GetDisplayUser(null, null);
+        DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.PayDoc);
     }
 
     public void OnNavigatedFrom()
@@ -107,6 +101,7 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
     internal async Task OnSelectCus(Guid custId)
     {
         using UnitOfWork db = new();
+        DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.PayDoc);
         var (am, stu) = await db.DocumentManager.GetStatus(custId);
         Status = stu;
         TotalPricee = Math.Abs(am);
@@ -127,35 +122,52 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
             return false;
         }
 
-        #endregion
-
-        using UnitOfWork db = new();
-        //var (e, s, serial) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, InvDescription, SubmitDate, false, List);
-        //if (!s)
-        //{
-        //    _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-        //    return false;
-        //}
-
-        #region create_Commission_Doc
-        if (Commission != null && Commission != 0)
+        if (SubmitDate == null)
         {
-            //var (er, su, sr) = await db.DocumentManager.CreateDocument(CusId.Value, (long)(totalInvoicePrice * (Commission / 100)),
-            //    DocumntType.Rec, $"{serial} پورسانت فاکتور", SubmitDate, true);
-
-            //if (!su)
-            //{
-            //    _snackbarService.Show("خطا", er, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            //    return false;
-            //}
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
         }
-        await db.SaveChangesAsync();
+
+        if (Price == 0)
+        {
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ وجه"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(Description))
+        {
+            Description = $"{Type.ToDisplay()} پرداختی به مشتری";
+        }
+
         #endregion
 
-        #region reload
-        _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور به شماره ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+        #region CreatePayDocumetn
+        using UnitOfWork db = new();
+        var (e, s) = await db.DocumentManager.CreatePayDocument(CusId.Value, Type, Price, Discount, Description, SubmitDate.Value);
+        if (s)
+        {
+            await db.SaveChangesAsync();
+            _snackbarService.Show("کاربر گرامی", $"ثبت سند با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+            await Reload();
+            return true;
+        }
 
-        return true;
+        _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+        return false;
         #endregion
+    }
+
+    private async Task Reload()
+    {
+        using UnitOfWork db = new();
+        SubmitDate = DateTime.Now;
+        Description = string.Empty;
+        Status = "تسویه";
+        TotalPrice = "0";
+        TotalPricee = 0;
+        Price = 0;
+        Discount = 0;
+        CusId = null;
+        DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.PayDoc);
     }
 }

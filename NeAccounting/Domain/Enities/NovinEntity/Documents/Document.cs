@@ -8,21 +8,24 @@ namespace Domain.NovinEntity.Documents
     {
         #region Navigation
         public Guid CustomerId { get; private set; }
-        public IEnumerable<SellRemittance> SellRemittances { get; private set; }
-        public IEnumerable<BuyRemittance> BuyRemittances { get; private set; }
+        public Guid? DocumentId { get; private set; }
+        public Document P_Document { get; set; }
+        public List<Document> RelatedDocuments { get; private set; }
+        public List<SellRemittance> SellRemittances { get; private set; }
+        public List<BuyRemittance> BuyRemittances { get; private set; }
         #endregion
 
         #region Ctor
         internal Document()
         {
-            SellRemittances = new List<SellRemittance>();
-            BuyRemittances = new List<BuyRemittance>();
+
         }
 
         public Document(
             Guid customerId,
             long price,
             DocumntType type,
+            PaymentType payType,
             string? descripion,
             DateTime submitDate,
             bool isReceived)
@@ -30,32 +33,37 @@ namespace Domain.NovinEntity.Documents
             CustomerId = customerId;
             Price = price;
             Type = type;
+            PayType = payType;
             Description = descripion;
             SubmitDate = submitDate;
             IsReceived = isReceived;
+            RelatedDocuments = [];
+            SellRemittances = [];
+            BuyRemittances = [];
         }
-        public Document(
-            Guid customerId,
-            long price,
-            DocumntType type,
-            string? descripion,
-            DateTime submitDate,
-            bool isReceived,
-            List<SellRemittance> sellRemittances) : this(customerId, price, type, descripion, submitDate, isReceived)
-        {
-            SellRemittances = sellRemittances;
-        }
+
 
         public Document(
             Guid customerId,
             long price,
             DocumntType type,
+            PaymentType payType,
             string? descripion,
             DateTime submitDate,
             bool isReceived,
-            List<BuyRemittance> buyRemittances) : this(customerId, price, type, descripion, submitDate, isReceived)
+            byte commission)
         {
-            BuyRemittances = buyRemittances;
+            CustomerId = customerId;
+            Price = price;
+            Commission = commission;
+            Type = type;
+            PayType = payType;
+            Description = descripion;
+            SubmitDate = submitDate;
+            IsReceived = isReceived;
+            RelatedDocuments = [];
+            SellRemittances = [];
+            BuyRemittances = [];
         }
         #endregion
 
@@ -63,12 +71,34 @@ namespace Domain.NovinEntity.Documents
         public long Price { get; set; }
         public string? Description { get; set; }
         public DateTime SubmitDate { get; set; }
+        public PaymentType PayType { get; set; }
         public DocumntType Type { get; set; }
         /// <summary>
         /// ما دریافت کردیم
         /// </summary>
         public bool IsReceived { get; set; }
+        public byte? Commission { get; set; }
         public long Serial { get; set; }
+        #endregion
+
+        #region Methods
+        public Document AddSellRemittance(List<SellRemittance> list)
+        {
+            SellRemittances.AddRange(list);
+            return this;
+        }
+
+        public Document AddBuyRemittance(List<BuyRemittance> list)
+        {
+            BuyRemittances.AddRange(list);
+            return this;
+        }
+
+        public Document AddDocument(List<Document> list)
+        {
+            RelatedDocuments.AddRange(list);
+            return this;
+        }
         #endregion
     }
 }

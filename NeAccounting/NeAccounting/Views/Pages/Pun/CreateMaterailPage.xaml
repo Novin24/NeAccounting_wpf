@@ -117,7 +117,6 @@
                                       TabIndex="1"
                                       FontFamily="Calibri"
                                       SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay}"
-                                      SelectionChanged="ComboBox_SelectionChanged"
                                       DisplayMemberPath="DisplayName"
                                       SelectedValuePath="Id"
                                       ItemsSource="{Binding ViewModel.AsuBox}"

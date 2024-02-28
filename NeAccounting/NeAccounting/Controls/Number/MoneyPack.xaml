@@ -16,12 +16,27 @@
             <DockPanel Margin="2 0 3 3">
                 <TextBlock FontFamily="Calibri"
                            x:Name="lbl_name"
-                           FontSize="14"/>
-                <TextBlock FontFamily="Calibri"
+                           FontSize="14" />
+
+                <ItemsControl FontFamily="Calibri"
                               FontSize="16"
+                              Focusable="False"
                               x:Name="txb_num"
                               Foreground="#BB8F60"
-                              HorizontalAlignment="Right" />
+                              HorizontalAlignment="Right">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel FlowDirection="LeftToRight"
+                                        Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock  Text="{Binding}"
+                                        Margin="0,0,1.2,0" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </DockPanel>
 
             <ui:NumberBox TextAlignment="Center"
