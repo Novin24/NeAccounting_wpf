@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeAccounting.Controls;
-using NeAccounting.Pages;
 using NeAccounting.Services;
 using NeAccounting.ViewModels;
 using NeAccounting.ViewModels.Pages;
@@ -128,6 +127,7 @@ namespace NeAccounting
                 services.AddTransient<UpdateBuyInvoicePage>();
                 //services.AddTransient<UpdateBuyInvoiceViewModel>();
                 #endregion
+
                 services.AddTransient<CreateIntermediaryInvoicePage>();
                 //services.AddTransient<CreateIntermediaryInvoiceViewModel>();
                 services.AddTransient<UpdateIntermediaryInvoicePage>();
@@ -185,7 +185,8 @@ namespace NeAccounting
 
                 services.AddTransient<CreditorsListPage>();
 
-                services.AddTransient<DailyBook>();
+                services.AddTransient<DailyBookPage>();
+                services.AddTransient<DalyBookViewModel>();
 
                 services.AddTransient<Chequebook>();
 

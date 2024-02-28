@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace NeAccounting.Pages
+namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for UpdateSellInvoicePage.xaml

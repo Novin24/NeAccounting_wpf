@@ -2,6 +2,7 @@
 using DomainShared.Enums;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Customer;
+using DomainShared.ViewModels.Document;
 using NeApplication.Common;
 
 namespace NeApplication.IRepositoryies

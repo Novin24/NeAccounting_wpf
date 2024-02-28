@@ -1,12 +1,14 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.DailyBook"
+﻿<Page x:Class="NeAccounting.Views.Pages.DailyBookPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages" xmlns:nu="clr-namespace:NeAccounting.Controls"
-      mc:Ignorable="d" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
+      mc:Ignorable="d"
       d:DesignHeight="450"
       d:DesignWidth="800"
+      d:DataContext="{d:DesignInstance local:DailyBookPage ,IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="DailyBook">
@@ -30,83 +32,110 @@
             <ColumnDefinition Width=".5*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
-                    Grid.RowSpan="3"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Background="{StaticResource Rectangle Dark blue}"
-                    CornerRadius="10"></Border>
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Background="{StaticResource Rectangle Dark blue}"
+                CornerRadius="10"></Border>
         <Border Grid.Row="3"
-                    Grid.RowSpan="3"
-                    Grid.Column="2"
-                    Grid.ColumnSpan="3"
-                    Background="{StaticResource Rectangle Pale blue}"
-                    CornerRadius="10"></Border>
+                Grid.RowSpan="3"
+                Grid.Column="2"
+                Grid.ColumnSpan="3"
+                Background="{StaticResource Rectangle Pale blue}"
+                CornerRadius="10"></Border>
         <Border Grid.Row="2"
-                    Grid.RowSpan="3"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="3"
-                    Background="{DynamicResource ApplicationBackgroundBrush}"
-                    CornerRadius="10">
-            <Grid >
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Background="{DynamicResource ApplicationBackgroundBrush}"
+                CornerRadius="10">
+            <Grid>
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="80"></RowDefinition>
 
                 </Grid.RowDefinitions>
 
 
                 <nu:HeaderPack NamePpage="دفتر روزانه"
-                        Margin="28 0"/>
+                               Margin="28 0" />
 
                 <Border Grid.Row="1"
                         CornerRadius="9"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4"
-                        Margin="55 10 55 35"
+                        Margin="55 10 55 0"
                         FlowDirection="RightToLeft">
                     <Border.Background>
                         <SolidColorBrush Color="White"
-                                  Opacity="0.08" />
+                                         Opacity="0.08" />
 
                     </Border.Background>
 
                     <DataGrid Margin="0 0 0 0"
-                                      BorderThickness="10"
-                                      Grid.Row="2"
-                                      CanUserResizeColumns="False"
-                                      CanUserResizeRows="False"
-                                      FontFamily="Calibri"
-                                      AutoGenerateColumns="False">
+                              BorderThickness="10"
+                              Grid.Row="2"
+                              CanUserResizeColumns="False"
+                              CanUserDeleteRows="False"
+                              CanUserResizeRows="False"
+                              CanUserAddRows="False"
+                              CanUserSortColumns="False"
+                              CanUserReorderColumns="False"
+                              FontFamily="Calibri"
+                              IsReadOnly="True"
+                              FontSize="15"
+                              ItemsSource="{Binding ViewModel.InvList}"
+                              AutoGenerateColumns="False">
                         <DataGrid.Columns>
 
-                            <DataGridTextColumn Header="ردیف"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".24*" />
+                            <DataGridTextColumn Header="#"
+                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                Binding="{Binding Row}"
+                                                Width="30" />
                             <DataGridTextColumn Header="تاریخ"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".44*" />
+                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                Binding="{Binding ShamsiDate}"
+                                                Width="85" />
                             <DataGridTextColumn Header="نام مشتری"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".44*"/>
+                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                Binding="{Binding CustomerName}"
+                                                Width="*" />
                             <DataGridTextColumn Header="شرح"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" />
+                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                Binding="{Binding Description}"
+                                                Width="*" />
+                            <DataGridTextColumn Header="سریال"
+                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                Binding="{Binding Serial}"
+                                                Width="65" />
                             <DataGridTextColumn Header="بدهکاری"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".6*"/>
+                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                Binding="{Binding Bed}"
+                                                Width=".8*" />
                             <DataGridTextColumn Header="طلبکاری"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".6*"/>
+                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                Binding="{Binding Bes}"
+                                                Width=".8*" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
+
+                <nu:Pagination  Grid.Row="2"
+                                Margin="0,10"
+                                PageCount="{Binding ViewModel.PageCount}"
+                                CurrntPage="{Binding ViewModel.CurrentPage, Mode=TwoWay}"
+                                PageChosen="Pagination_PageChosen"
+                                HorizontalAlignment="Center"
+                                FlowDirection="LeftToRight" />
             </Grid>
 
         </Border>
