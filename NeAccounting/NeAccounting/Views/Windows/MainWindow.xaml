@@ -15,12 +15,10 @@
                  ExtendsContentIntoTitleBar="True"
                  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                  WindowBackdropType="Mica"
-                 WindowStyle="None"
                  x:Name="mainWin"
                  WindowCornerPreference="Round"
                  WindowStartupLocation="CenterScreen"
-                 mc:Ignorable="d"
-                 MouseDown="Window_MouseDown">
+                 mc:Ignorable="d">
     <Grid>
         <Grid x:Name="mainGrid"
               IsEnabled="False"
