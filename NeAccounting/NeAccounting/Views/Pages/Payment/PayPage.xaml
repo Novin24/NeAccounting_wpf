@@ -245,14 +245,6 @@
                                       Grid.Row="2"
                                       LabelName="مبلغ تخفیف" />
 
-                        <CheckBox Content="تسویه کامل"
-                                  Grid.ColumnSpan="2"
-                                  Grid.Row="3"
-                                  FontFamily="Calibri"
-                                  HorizontalAlignment="Center"
-                                  Margin="0 11 0 11 "
-                                  FontWeight="Bold"
-                                  FontSize="14" />
                         <Grid Grid.ColumnSpan="2"
                               Grid.Row="4"
                               Grid.RowSpan="2"

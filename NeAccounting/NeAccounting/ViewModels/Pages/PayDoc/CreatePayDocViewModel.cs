@@ -136,7 +136,7 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
 
         if (string.IsNullOrEmpty(Description))
         {
-            Description = $"{Type.ToDisplay()} دریافتی";
+            Description = $"{Type.ToDisplay()} پرداختی به مشتری";
         }
 
         #endregion

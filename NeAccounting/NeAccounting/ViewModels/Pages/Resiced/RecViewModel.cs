@@ -138,7 +138,7 @@ namespace NeAccounting.ViewModels
 
             if (string.IsNullOrEmpty(Description))
             {
-                Description = $"{Type.ToDisplay()} پرداختی";
+                Description = $"{Type.ToDisplay()} دریافتی از مشتری";
             }
 
             #endregion
