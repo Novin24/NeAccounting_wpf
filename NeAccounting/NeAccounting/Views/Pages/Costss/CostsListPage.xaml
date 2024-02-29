@@ -23,13 +23,13 @@
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width=".7*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width=".7*"></ColumnDefinition>
-            <ColumnDefinition Width="3*">
+            <ColumnDefinition Width="2*">
             </ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
@@ -93,7 +93,7 @@
                                                       Grid.Column="1"
                                                       LabelName="تا تاریخ"/>
                             <Button Grid.Column="2"
-                                        Margin="7 32 0 12"
+                                        Margin="10 32 15 12"
                                         Padding="17 5 17 8"
                                         IsDefault="True">جستجو</Button>
                         </Grid>
