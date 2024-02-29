@@ -9,7 +9,6 @@ using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
-using System;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
