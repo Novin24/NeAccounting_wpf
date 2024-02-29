@@ -10,6 +10,26 @@ namespace NeApplication.IRepositoryies
     public interface IDocumentManager : IRepository<Document>
     {
         #region Invoice
+
+        /// <summary>
+        /// دریافت جزییات فاکتور فروش
+        /// </summary>
+        /// <param name="invoiceId"></param>
+        /// <returns></returns>
+        Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetSellInvoiceDetail(Guid invoiceId);
+
+        /// <summary>
+        /// دریافت جزییات فاکتور خرید
+        /// </summary>
+        /// <param name="invoiceId"></param>
+        /// <returns></returns>
+        Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetBuyInvoiceDetail(Guid invoiceId);
+
+        /// <summary>
+        /// دریافت اخرین شماره فاکتور
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         Task<string> GetLastDocumntNumber(DocumntType type);
 
         /// <summary>
@@ -81,7 +101,7 @@ namespace NeApplication.IRepositoryies
         /// <returns></returns>
         Task<long> GetCredit(Guid customerId);
 
-        Task<(long, string)> GetStatus(Guid customerId);
+        Task<UserDebtStatus> GetStatus(Guid customerId);
         #endregion
 
         #region report

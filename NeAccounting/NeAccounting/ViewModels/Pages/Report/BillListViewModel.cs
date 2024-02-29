@@ -1,7 +1,11 @@
-﻿using DomainShared.Errore;
+﻿using Common.Utilities;
+using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
+using NeAccounting.Views.Pages;
+using System.Diagnostics;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -133,7 +137,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private void OnUpdateDoc(Guid parameter)
+        private async Task OnUpdateDoc(Guid parameter)
         {
             var doc = InvList.FirstOrDefault(x => x.Id == parameter);
             if (doc == null)
@@ -142,6 +146,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
+            using UnitOfWork db = new();
             switch (doc.Type)
             {
                 case DomainShared.Enums.DocumntType.PayDoc:
@@ -149,6 +154,50 @@ namespace NeAccounting.ViewModels
                 case DomainShared.Enums.DocumntType.RecDoc:
                     break;
                 case DomainShared.Enums.DocumntType.SellInv:
+                    Type? pageType = NameToPageTypeConverter.Convert("UpdateSellInvoice");
+
+                    if (pageType == null)
+                    {
+                        return;
+                    }
+                    var servise = _navigationService.GetNavigationControl();
+
+                    var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
+                    if (!isSuccess)
+                    {
+                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+                    var cus = await db.CustomerManager.GetDisplayUser(null, true);
+                    var mat = await db.MaterialManager.GetMaterails();
+                    var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                    int i = 1;
+                    foreach (var item in itm.RemList)
+                    {
+                        item.RowId = i++;
+                        item.MatName = mat.First(t => t.Id == item.MaterialId).MaterialName;
+                        item.UnitName = mat.First(t => t.Id == item.MaterialId).UnitName;
+                    }
+
+                    var context = new UpdateSellInvoicePage(_snackbarService, new UpdateSellInvoiceViewModel(_snackbarService, _navigationService)
+                    {
+                        Cuslist = cus,
+                        MatList = mat,
+                        CusId = itm.CustomerId,
+                        Status = stu.Status,
+                        Debt = stu.Debt,
+                        Credit = stu.Credit,
+                        SubmitDate = itm.Date,
+                        InvDescription = itm.InvoiceDescription,
+                        Commission = itm.Commission,
+                        LastInvoice = itm.Serial,
+                        List = itm.RemList,
+                        TotalPrice = itm.TotalPrice.ToString("0"),
+                        Totalcommission = itm.Commission.HasValue ? (itm.TotalPrice * (itm.Commission.Value / 100)).ToString("N0") : "0",
+                        InvoiceId = parameter
+                    });
+
+                    servise.Navigate(pageType, context);
                     break;
                 case DomainShared.Enums.DocumntType.BuyInv:
                     break;

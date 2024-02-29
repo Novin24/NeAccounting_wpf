@@ -23,7 +23,7 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            ViewModel.SearchInvoiceCommand.Execute(null);
+            ViewModel.SearchInvoiceCommand.ExecuteAsync(null);
         }
 
         private void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)

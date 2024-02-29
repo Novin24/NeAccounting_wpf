@@ -163,6 +163,71 @@ namespace Infrastructure.Repositories
             return (await TableNoTracking.OrderByDescending(t => t.CreationTime).Where(t => t.Type == type).Select(c => c.Serial).FirstOrDefaultAsync()).ToString();
         }
 
+        public async Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetSellInvoiceDetail(Guid invoiceId)
+        {
+            var inv = await TableNoTracking
+                .Include(r => r.SellRemittances)
+                .Include(r => r.RelatedDocuments)
+                .Where(t => t.Id == invoiceId)
+                .Select(c => new InvoiceDetailUpdateDto()
+                {
+                    CustomerId = c.CustomerId,
+                    Serial = c.Serial.ToString(),
+                    Date = c.SubmitDate,
+                    TotalPrice = c.Price,
+                    Commission = c.RelatedDocuments.Sum(t => t.Commission),
+                    InvoiceDescription = c.Description,
+                    RemList = c.SellRemittances.Select(t => new RemittanceListViewModel()
+                    {
+                        AmountOf = t.AmountOf,
+                        Description = t.Description,
+                        MaterialId = t.MaterialId,
+                        Price = t.Price,
+                        RremId = t.Id,
+                        TotalPrice = t.TotalPrice
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+
+            if (inv == null)
+            {
+                return new(false, new InvoiceDetailUpdateDto());
+            }
+
+            return new(true, inv);
+        }
+
+        public async Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetBuyInvoiceDetail(Guid invoiceId)
+        {
+            var inv = await TableNoTracking
+                .Include(r => r.SellRemittances)
+                .Include(r => r.RelatedDocuments)
+                .Where(t => t.Id == invoiceId)
+                .Select(c => new InvoiceDetailUpdateDto()
+                {
+                    CustomerId = c.CustomerId,
+                    Serial = c.Serial.ToString(),
+                    Date = c.SubmitDate,
+                    TotalPrice = c.Price,
+                    Commission = c.RelatedDocuments.Sum(t => t.Commission),
+                    InvoiceDescription = c.Description,
+                    RemList = c.BuyRemittances.Select(t => new RemittanceListViewModel()
+                    {
+                        AmountOf = t.AmountOf,
+                        Description = t.Description,
+                        MaterialId = t.MaterialId,
+                        Price = t.Price,
+                        RremId = t.Id,
+                        TotalPrice = t.TotalPrice
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+
+            if (inv == null)
+            {
+                return new(false, new InvoiceDetailUpdateDto());
+            }
+
+            return new(true, inv);
+        }
         #endregion
 
         #region Status
@@ -179,7 +244,7 @@ namespace Infrastructure.Repositories
                 .Select(p => p.Price).SumAsync();
         }
 
-        public async Task<(long, string)> GetStatus(Guid customerId)
+        public async Task<UserDebtStatus> GetStatus(Guid customerId)
         {
             var tal = await TableNoTracking.Where(p => !p.IsReceived && p.CustomerId == customerId)
                 .Select(p => p.Price).SumAsync();
@@ -188,19 +253,34 @@ namespace Infrastructure.Repositories
                 .Select(p => p.Price).SumAsync();
 
             long res = tal - bed;
-            if (res == 0)
-            {
-                return (0, "تسویه");
-            }
             if (res > 0)
             {
-                return (res, "بدهکار");
+                return new UserDebtStatus
+                {
+                    Status = "بدهکار",
+                    Amount = res,
+                    Credit = "0",
+                    Debt = Math.Abs(res).ToString("N0"),
+
+                };
             }
             if (res < 0)
             {
-                return (res, "طلبکار");
+                return new UserDebtStatus()
+                {
+                    Status = "طلبکار",
+                    Amount = res,
+                    Debt = "0",
+                    Credit = Math.Abs(res).ToString("N0")
+                };
             }
-            return new(0, "خطا");
+            return new UserDebtStatus()
+            {
+                Status = "تسویه",
+                Amount = 0,
+                Credit = "0",
+                Debt = "0"
+            };
         }
         #endregion
 

@@ -8,12 +8,14 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class CreateSellInviceViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+public partial class UpdateSellInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
 
     private int rowId = 1;
+
+    public Guid InvoiceId = Guid.Empty;
 
     /// <summary>
     /// لیست اجناس  فاکتور
@@ -127,10 +129,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
 
     private async Task InitializeViewModel()
     {
-        using UnitOfWork db = new();
-        Cuslist = await db.CustomerManager.GetDisplayUser(null, true);
-        LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
-        MatList = await db.MaterialManager.GetMaterails();
+       customerName خالیه ؟؟؟؟
     }
 
     public void OnNavigatedFrom()
@@ -205,11 +204,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
     /// <returns></returns>
     internal async Task OnSelectCus(Guid custId)
     {
-        using UnitOfWork db = new();
-        var s = await db.DocumentManager.GetStatus(custId);
-        Status = s.Status;
-        Credit = s.Credit;
-        Debt = s.Debt;
+        await SetStatus(custId);
     }
 
     /// <summary>
@@ -296,7 +291,6 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
         await db.SaveChangesAsync();
         #endregion
 
-
         #region reload
         _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور با موفقیت انجام شد", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
@@ -362,5 +356,14 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             Totalcommission = "0";
         }
         RemainPrice = total.ToString("N0");
+    }
+
+    private async Task SetStatus(Guid custId)
+    {
+        using UnitOfWork db = new();
+        var s = await db.DocumentManager.GetStatus(custId);
+        Status = s.Status;
+        Credit = s.Credit;
+        Debt = s.Debt;
     }
 }

@@ -195,23 +195,10 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     internal async Task OnSelectCus(Guid custId)
     {
         using UnitOfWork db = new();
-        var (am, stu) = await db.DocumentManager.GetStatus(custId);
-        Status = stu;
-        if (am == 0)
-        {
-            Credit = "0";
-            Debt = "0";
-        }
-        if (am > 0)
-        {
-            Debt = am.ToString("N0");
-            Credit = "0";
-        }
-        if (am < 0)
-        {
-            Debt = "0";
-            Credit = Math.Abs(am).ToString("N0");
-        }
+        var s = await db.DocumentManager.GetStatus(custId);
+        Status = s.Status;
+        Credit = s.Credit;
+        Debt = s.Debt;
     }
 
     /// <summary>

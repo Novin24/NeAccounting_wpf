@@ -137,7 +137,7 @@ namespace NeAccounting
                 services.AddTransient<CreateSellInvoicePage>();
                 services.AddTransient<CreateSellInviceViewModel>();
                 services.AddTransient<UpdateSellInvoicePage>();
-                //services.AddTransient<UpdateSellInvoiceViewModel>();
+                services.AddTransient<UpdateSellInvoiceViewModel>();
                 #endregion
 
                 #endregion

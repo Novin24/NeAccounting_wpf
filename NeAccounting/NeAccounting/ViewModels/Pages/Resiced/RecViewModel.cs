@@ -104,10 +104,10 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.RecDoc);
-            var (am, stu) = await db.DocumentManager.GetStatus(custId);
-            Status = stu;
-            TotalPricee = Math.Abs(am);
-            TotalPrice = Math.Abs(am).ToString("N0");
+            var s = await db.DocumentManager.GetStatus(custId);
+            Status = s.Status;
+            TotalPricee = Math.Abs(s.Amount);
+            TotalPrice = Math.Abs(s.Amount).ToString("N0");
         }
 
 

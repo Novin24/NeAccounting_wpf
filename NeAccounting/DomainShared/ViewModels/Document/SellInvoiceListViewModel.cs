@@ -3,7 +3,7 @@
     public class RemittanceListViewModel
     {
         public int RowId { get; set; }
-        public int RremId { get; set; }
+        public Guid RremId { get; set; }
         public string MatName { get; set; }
         public string UnitName { get; set; }
         public long Price { get; set; }
