@@ -308,7 +308,7 @@ namespace Infrastructure.Repositories
 
             if (!ignorePagination)
             {
-                Remittances = Remittances.SkipLast(--pageNum * pageCount).TakeLast(pageCount).ToList();
+                Remittances = Remittances.Skip(--pageNum * pageCount).Take(pageCount).ToList();
             }
 
             return new PagedResulViewModel<InvoiceListDto>(totalCount, pageCount, Remittances);
