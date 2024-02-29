@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Domain.NovinEntity.Workers;
 
 namespace Domain.NovinEntity.Materials
 {
@@ -10,9 +9,9 @@ namespace Domain.NovinEntity.Materials
         #endregion
 
         #region Property
-        public string Name { get; private set; }
-        public string Descrip { get; private set; }
-        public bool Active { get; private set; }
+        public string Name { get;  set; }
+        public string Descrip { get;  set; }
+        public bool Active { get;  set; }
         #endregion
 
         #region ctor

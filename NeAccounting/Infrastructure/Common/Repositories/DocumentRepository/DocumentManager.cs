@@ -361,7 +361,7 @@ namespace Infrastructure.Repositories
                               select new DalyBookDto()
                               {
                                   SubmitDate = doc.SubmitDate,
-                                  Bed = !doc.IsReceived ? doc.Price.ToString("N0") : "0",
+                                  Bed = doc.IsReceived ? "0" : doc.Price.ToString("N0"),
                                   Bes = doc.IsReceived ? doc.Price.ToString("N0") : "0",
                                   CustomerName = cus.Name,
                                   Description = doc.Description,

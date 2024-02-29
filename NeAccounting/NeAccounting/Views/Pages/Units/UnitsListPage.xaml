@@ -2,14 +2,17 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance local:UnitsListPage,
+                                     IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800"
+      d:DesignWidth="1200"
       Title="UnitsListPage">
     <Grid>
 
@@ -34,23 +37,23 @@
                 </ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
-        Grid.RowSpan="3"
-        Grid.Column="1"
-        Grid.ColumnSpan="3"
-        Background="{StaticResource Rectangle Dark blue}"
-        CornerRadius="10"></Border>
+                    Grid.RowSpan="3"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    Background="{StaticResource Rectangle Dark blue}"
+                    CornerRadius="10"></Border>
             <Border Grid.Row="3"
-        Grid.RowSpan="3"
-        Grid.Column="3"
-        Grid.ColumnSpan="3"
-        Background="{StaticResource Rectangle Pale blue}"
-        CornerRadius="10"></Border>
+                    Grid.RowSpan="3"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="3"
+                    Background="{StaticResource Rectangle Pale blue}"
+                    CornerRadius="10"></Border>
             <Border Grid.Row="2"
-        Grid.RowSpan="3"
-        Grid.Column="2"
-        Grid.ColumnSpan="3"
-        Background="{DynamicResource ApplicationBackgroundBrush}"
-        CornerRadius="10">
+                    Grid.RowSpan="3"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="3"
+                    Background="{DynamicResource ApplicationBackgroundBrush}"
+                    CornerRadius="10">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"></RowDefinition>
@@ -65,7 +68,7 @@
                             CornerRadius="9"
                             BorderBrush="#D6D5D5"
                             BorderThickness="0.4"
-                            Margin="4">
+                            Margin="15">
                         <Border.Background>
                             <SolidColorBrush Color="White"
                                              Opacity="0.08" />
@@ -98,12 +101,12 @@
                                                Text="نام واحد"
                                                Margin="3 0 0 0 "
                                                HorizontalAlignment="Left" />
-                                    <ui:NumberBox x:Name="txt_amount"
-                                                  TextAlignment="Center"
-                                                  ClearButtonEnabled="False"
-                                                  FontFamily="Calibri"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  Margin="0 2 0 0" />
+                                    <ui:TextBox x:Name="txt_name"
+                                                TextAlignment="Center"
+                                                ClearButtonEnabled="False"
+                                                Text="{Binding ViewModel.UnitName, Mode=TwoWay}"
+                                                FontFamily="Calibri"
+                                                Margin="0 2 0 0" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1"
@@ -113,9 +116,10 @@
                                                FontSize="15"
                                                Text="توضیحات"
                                                Margin="3 0 0 0 "
-                                               HorizontalAlignment="Left"  />
+                                               HorizontalAlignment="Left" />
                                     <ui:TextBox x:Name="txt_description"
                                                 TextAlignment="Center"
+                                                Text="{Binding ViewModel.Description, Mode=TwoWay}"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
@@ -125,6 +129,7 @@
                                         IsDefault="True"
                                         FontSize="17"
                                         FontFamily="Calibri"
+                                        Command="{Binding ViewModel.CreateUnitCommand}"
                                         VerticalAlignment="Bottom"
                                         HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
@@ -140,11 +145,15 @@
                             <DataGrid x:Name="dgv_Inv"
                                       BorderThickness="10"
                                       Grid.Row="1"
-                                      CanUserResizeColumns="False"
-                                      FontSize="15"
-                                      CanUserDeleteRows="False"
                                       IsReadOnly="True"
+                                      FontSize="15"
+                                      CanUserResizeColumns="False"
+                                      CanUserDeleteRows="False"
+                                      HeadersVisibility="None"
                                       CanUserResizeRows="False"
+                                      CanUserAddRows="False"
+                                      CanUserSortColumns="False"
+                                      CanUserReorderColumns="False"
                                       ItemsSource="{Binding ViewModel.List, Mode=OneWay}"
                                       FontFamily="Calibri"
                                       AutoGenerateColumns="False">
@@ -156,22 +165,35 @@
                                                         Width=".4*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding Description}"
-                                                        Width="1*" />
-                                    <DataGridTemplateColumn Width=".33*">
+                                                        Width="*" />
+                                    <DataGridTemplateColumn Width="40">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal"
                                                             HorizontalAlignment="Center">
-                                                    <Button  Margin="2"
-                                                             Padding="7,5"
-                                                             ToolTip="ویرایش">
-                                                        <ui:SymbolIcon Symbol="Pen16" />
-                                                    </Button>
-                                                    <Button Margin="3"
-                                                            Padding="7,5"
-                                                             ToolTip="حذف">
-                                                        <ui:SymbolIcon Symbol="Delete16" />
-                                                    </Button>
+                                                    <CheckBox IsChecked="{Binding IsActive}"
+                                                              Tag="{Binding Id}"
+                                                              Margin="10 0 0 0"
+                                                              Padding="0"
+                                                              Checked="CheckBox_Status_Chkecked"
+                                                              Unchecked="CheckBox_Status_Unckecked" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Width="45">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center">
+                                                    <ui:Button  Margin="5"
+                                                                Padding="7,5"
+                                                                x:Name="btn_Update"
+                                                                Tag="{Binding Id}"
+                                                                Click="btn_Update_Click"
+                                                                ToolTip="ویرایش">
+                                                        <ui:SymbolIcon  Symbol="Pen16" />
+                                                    </ui:Button>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>

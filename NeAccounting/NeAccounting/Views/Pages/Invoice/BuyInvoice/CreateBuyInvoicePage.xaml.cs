@@ -128,7 +128,6 @@ namespace NeAccounting.Views.Pages
                 txt_UnitDescription.Text = string.Empty;
                 lbl_cusId.Text = string.Empty;
             }
-
         }
 
 

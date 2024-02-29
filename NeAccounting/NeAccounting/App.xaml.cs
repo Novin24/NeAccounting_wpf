@@ -161,6 +161,7 @@ namespace NeAccounting
                 #region Units 
 
                 services.AddTransient<UnitsListPage>();
+                services.AddTransient<UnitViewModel>();
 
                 #endregion
 
