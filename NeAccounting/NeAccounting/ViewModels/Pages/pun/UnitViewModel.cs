@@ -26,7 +26,7 @@ namespace NeAccounting.ViewModels
         private string _description;
 
         [ObservableProperty]
-        private IEnumerable<UnitListDto> _list;
+        private List<UnitListDto> _list;
 
         public void OnNavigatedFrom()
         {
@@ -61,6 +61,18 @@ namespace NeAccounting.ViewModels
             using UnitOfWork db = new();
             if (UnitId != null)
             {
+                var (error, isSuccess) = await db.UnitManager.UpdateUnit(UnitId.Value, UnitName, Description);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+                await db.SaveChangesAsync();
+                UnitId = null;
+                UnitName = string.Empty;
+                Description = string.Empty;
+
+                _snackbarService.Show("کاربر گرامی", "عملیات ویرایش با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
             }
             else
             {
@@ -73,19 +85,25 @@ namespace NeAccounting.ViewModels
                 await db.SaveChangesAsync();
                 _snackbarService.Show("کاربر گرامی", "عملیات ثبت با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
             }
-
             List = await db.UnitManager.GetUnitList();
-
-
         }
 
         [RelayCommand]
-        private async Task OnRemove(int id)
+        private async Task OnActive(int id)
         {
             using UnitOfWork db = new();
-            await db.UnitManager.ChangeStatus(id);
+            await db.UnitManager.ChangeStatus(id, true);
+            await db.SaveChangesAsync();
             List = await db.UnitManager.GetUnitList();
         }
 
+        [RelayCommand]
+        private async Task OnDeActive(int id)
+        {
+            using UnitOfWork db = new();
+            await db.UnitManager.ChangeStatus(id, false);
+            await db.SaveChangesAsync();
+            List = await db.UnitManager.GetUnitList();
+        }
     }
 }

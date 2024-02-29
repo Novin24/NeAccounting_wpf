@@ -19,6 +19,6 @@ namespace NeApplication.IRepositoryies
             string name,
             string description);
 
-        Task<(string error, bool isSuccess)> ChangeStatus(int id);
+        Task<(string error, bool isSuccess)> ChangeStatus(int id, bool active);
     }
 }

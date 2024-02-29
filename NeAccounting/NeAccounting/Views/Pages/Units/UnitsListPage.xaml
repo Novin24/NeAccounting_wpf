@@ -68,7 +68,7 @@
                             CornerRadius="9"
                             BorderBrush="#D6D5D5"
                             BorderThickness="0.4"
-                            Margin="4">
+                            Margin="15">
                         <Border.Background>
                             <SolidColorBrush Color="White"
                                              Opacity="0.08" />
@@ -149,6 +149,7 @@
                                       FontSize="15"
                                       CanUserResizeColumns="False"
                                       CanUserDeleteRows="False"
+                                      HeadersVisibility="None"
                                       CanUserResizeRows="False"
                                       CanUserAddRows="False"
                                       CanUserSortColumns="False"
@@ -164,30 +165,35 @@
                                                         Width=".4*" />
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding Description}"
-                                                        Width="1*" />
-                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding IsActive}"
-                                                        Width="25" />
-                                    <DataGridTemplateColumn Width=".33*">
+                                                        Width="*" />
+                                    <DataGridTemplateColumn Width="40">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal"
                                                             HorizontalAlignment="Center">
-                                                    <Button  Margin="2"
-                                                             Padding="7,5"
-                                                             x:Name="btn_Update"
-                                                             Tag="{Binding Id}"
-                                                             Click="btn_Update_Click"
-                                                             ToolTip="ویرایش">
-                                                        <ui:SymbolIcon Symbol="Pen16" />
-                                                    </Button>
-                                                    <Button Margin="3"
-                                                            Padding="7,5"
-                                                            CommandParameter="{Binding Id , Mode=OneWay}"
-                                                            Command="{Binding Path=DataContext.ViewModel.RemoveCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                            ToolTip="حذف">
-                                                        <ui:SymbolIcon Symbol="Delete16" />
-                                                    </Button>
+                                                    <CheckBox IsChecked="{Binding IsActive}"
+                                                              Tag="{Binding Id}"
+                                                              Margin="10 0 0 0"
+                                                              Padding="0"
+                                                              Checked="CheckBox_Status_Chkecked"
+                                                              Unchecked="CheckBox_Status_Unckecked" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Width="45">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center">
+                                                    <ui:Button  Margin="5"
+                                                                Padding="7,5"
+                                                                x:Name="btn_Update"
+                                                                Tag="{Binding Id}"
+                                                                Click="btn_Update_Click"
+                                                                ToolTip="ویرایش">
+                                                        <ui:SymbolIcon  Symbol="Pen16" />
+                                                    </ui:Button>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>

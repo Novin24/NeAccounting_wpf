@@ -81,16 +81,14 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> ChangeStatus(
-            int id)
+            int id, bool active)
         {
-
-
-            var unit = await Table.FirstOrDefaultAsync(t => t.Id == id);
+            var unit = await Entities.FirstOrDefaultAsync(t => t.Id == id);
             if (unit == null)
             {
                 return new("واحد مورد نظر یافت نشد!!", false);
             }
-            unit.Active = !unit.Active;
+            unit.Active = active;
 
             try
             {

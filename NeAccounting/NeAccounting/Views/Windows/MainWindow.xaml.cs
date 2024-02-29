@@ -62,6 +62,7 @@ namespace NeAccounting.Windows
                 LoginGrid.Visibility = Visibility.Collapsed;
                 LoginGrid.IsEnabled = false;
 
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
                 mainGrid.Visibility = Visibility.Visible;
                 mainGrid.IsEnabled = true;
                 mainWin.WindowState = WindowState.Maximized;

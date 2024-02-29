@@ -1,6 +1,6 @@
 ﻿namespace DomainShared.ViewModels.unit
 {
-    public struct UnitListDto
+    public class UnitListDto
     {
         public int Id { get; set; }
         public string UnitName { get; set; }
