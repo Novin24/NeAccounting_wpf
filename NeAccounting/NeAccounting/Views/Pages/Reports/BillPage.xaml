@@ -86,7 +86,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition />
-                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -113,9 +113,6 @@
                                                    OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
                                                    SuggestionChosen="txt_name_SuggestionChosen"
                                                    DisplayMemberPath="DisplayName"
-                                                   HorizontalAlignment="Left"
-                                                   MinWidth="155"
-                                                   MaxWidth="200"
                                                    FontFamily="Calibri" />
                             </StackPanel>
 
@@ -137,49 +134,34 @@
                                       FontFamily="Calibri"
                                       Margin="10 22 10 0 "
                                       IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay}"
-                                      HorizontalAlignment="Left"
+                                      HorizontalAlignment="Center"
                                       FontSize="14" />
 
                             <nu:PersianDatePicker VerticalAlignment="Center"
-                                                  HorizontalAlignment="Left"
                                                   FlowDirection="LeftToRight"
                                                   SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay}"
                                                   LabelName="از تاریخ"
-                                                  Grid.Row="1"
-                                                  Width="250" />
+                                                  Grid.Row="1" />
 
                             <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
                                                   SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay}"
                                                   LabelName="تا تاریخ"
                                                   Grid.Row="1"
-                                                  HorizontalAlignment="Left"
                                                   Grid.Column="1" />
-
-                            <Button Padding="10 4 "
-                                    Grid.Column="1"
-                                    Grid.Row="1"
-                                    FontSize="17"
-                                    FontFamily="Calibri"
-                                    HorizontalAlignment="Right"
-                                    Margin="0 20 0 0">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="پرینت" />
-                                    <TextBlock Text=" (Ctrl+P)"
-                                               FontSize="11.5"
-                                               VerticalAlignment="Center"
-                                               Foreground="#FFA3A3A3" />
-                                </StackPanel>
-                            </Button>
-
+                            <StackPanel Grid.Column="2"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        Margin="20 20 20 0"
+                                        Grid.Row="1">
                             <Button Grid.Column="2"
                                     IsDefault="True"
-                                    Margin="0 20 0 0"
                                     FontFamily="Calibri"
                                     Grid.Row="1"
                                     Command="{Binding ViewModel.SearchInvoiceCommand}"
                                     HorizontalAlignment="Center"
-                                    Padding="10 4">
+                                    Padding="10 4"
+                                    Margin="0 0 10 0">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="نمایش"
                                                FontSize="16" />
@@ -189,6 +171,22 @@
                                                Foreground="#FFA3A3A3" />
                                 </StackPanel>
                             </Button>
+
+                            <Button Padding="10 4 "
+                                    Grid.Column="2"
+                                    Grid.Row="1"
+                                    FontSize="17"
+                                    FontFamily="Calibri"
+                                    HorizontalAlignment="Right">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="پرینت" />
+                                    <TextBlock Text=" (Ctrl+P)"
+                                               FontSize="11.5"
+                                               VerticalAlignment="Center"
+                                               Foreground="#FFA3A3A3" />
+                                </StackPanel>
+                            </Button>
+                            </StackPanel>
                         </Grid>
                         <DataGrid Grid.Row="1"
                                   IsReadOnly="True"
