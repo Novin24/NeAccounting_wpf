@@ -9,7 +9,6 @@ using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
-using System;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
@@ -308,7 +307,7 @@ namespace Infrastructure.Repositories
 
             if (!ignorePagination)
             {
-                Remittances = Remittances.SkipLast(--pageNum * pageCount).TakeLast(pageCount).ToList();
+                Remittances = Remittances.Skip(--pageNum * pageCount).Take(pageCount).ToList();
             }
 
             return new PagedResulViewModel<InvoiceListDto>(totalCount, pageCount, Remittances);
