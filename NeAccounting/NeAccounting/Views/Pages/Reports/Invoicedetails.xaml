@@ -89,27 +89,34 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <StackPanel Margin="23 0 7 0 ">
-
-                                <TextBlock FontFamily="Calibri"
+                            <StackPanel Margin="21 0 7 4">
+                                <DockPanel>
+                                    <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="مشتری"
-                                               Margin="2 0 0 0 " />
-                                <ui:TextBox TextAlignment="Center"
-                                                FontFamily="Calibri"
-                                                x:Name="materialName_txb"
-                                                Margin="0 4 0 0"/>
+                                           Margin="5 0 0 4" />
+                                    <TextBlock FontFamily="Calibri"
+                                               FontSize="14"
+                                               Foreground="#BB8F60"
+                                               HorizontalAlignment="Right"
+                                               Margin="2 0 0 0" />
+                                </DockPanel>
+                                <ui:AutoSuggestBox FontSize="16"
+                                                   x:Name="txt_name"
+                                                   Icon="{ui:SymbolIcon Search24}"
+                                                   SuggestionChosen="txt_name_SuggestionChosen"
+                                                   DisplayMemberPath="DisplayName"
+                                                   FontFamily="Calibri" />
                             </StackPanel>
                             <StackPanel Grid.Column="1"
-                                        Margin="20 0 7 0 ">
+                                        Margin="21 0 7 4 ">
 
                                 <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="جزییات"
-                                               Margin="2 0 0 0 " />
+                                               Margin="5 0 0 4 " />
                                 <ui:TextBox TextAlignment="Center"
-                                                FontFamily="Calibri"
-                                                Margin="0 4 0 0" />
+                                                FontFamily="Calibri" />
                             </StackPanel>
 
                             <CheckBox Content="به احتساب مانده قبلی"
