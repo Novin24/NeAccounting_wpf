@@ -137,18 +137,18 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <StackPanel>
+                        <StackPanel Margin="21 8 20 0 ">
                             <DockPanel>
                                 <TextBlock FontFamily="Calibri"
-                                           FontSize="16"
+                                           FontSize="15"
                                            Text="نام مشتری"
-                                           Margin="2 0 0 7" />
+                                           Margin="7 0 0 3" />
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="14"
                                            x:Name="lbl_cusId"
                                            Foreground="#BB8F60"
                                            HorizontalAlignment="Right"
-                                           Margin="2 0 0 7" />
+                                           Margin="0 3 3 1" />
                             </DockPanel>
                             <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
                                                OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
@@ -158,8 +158,6 @@
                                                Grid.Row="0"
                                                x:Name="aus_CusName"
                                                SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
-                                               Grid.Column="0"
-                                               Margin="21 4 20 0 "
                                                FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
@@ -198,20 +196,19 @@
 
 
                         </StackPanel>
-                        <StackPanel Margin="20 4 20 0"
+                        <StackPanel Margin="20 6 20 0"
                                     Grid.Row="1">
 
                             <TextBlock FontFamily="Calibri"
-                                       FontSize="14"
+                                       FontSize="15"
                                        Text="نوع سند"
-                                       FontWeight="Bold" />
+                                       Margin="7 0 0 4" />
                             <ComboBox SelectedIndex="0"
                                       FontSize="14"
                                       x:Name="Cmb_PayType"
                                       SelectedValuePath="Tag"
                                       SelectedValue="{Binding ViewModel.Type , Mode=TwoWay}"
-                                      FontFamily="Calibri"
-                                      Margin="0 4 0 0 ">
+                                      FontFamily="Calibri">
                                 <ComboBoxItem Content="کارت به کارت"
                                               Tag="1" />
                                 <ComboBoxItem Content="حواله بانکی"
@@ -251,10 +248,9 @@
                               Margin="20 6 20 4">
 
                             <TextBlock FontFamily="Calibri"
-                                       FontSize="14"
+                                       FontSize="15"
                                        Text="توضیحات"
-                                       Grid.Column="1"
-                                       FontWeight="Bold" />
+                                       Grid.Column="1"/>
                             <TextBox Margin="0,24,5,0"
                                      FontSize="14"
                                      Text="{Binding ViewModel.Description, Mode=TwoWay}"
