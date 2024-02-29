@@ -109,9 +109,10 @@ namespace NeAccounting
                 services.AddTransient<TestPage>();
                 services.AddTransient<TestViewModel>();
 
-                #region CreateCosts
+                #region Costs
 
                 services.AddTransient<CreateCostsPage>();
+                services.AddTransient<CostsListPage>();
                 #endregion
 
                 #region Recived
