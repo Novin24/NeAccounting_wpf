@@ -137,7 +137,7 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Margin="21 8 20 0 ">
+                        <StackPanel Margin="20 8 20 0 ">
                             <DockPanel>
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="15"
