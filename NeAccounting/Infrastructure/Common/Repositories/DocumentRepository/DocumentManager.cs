@@ -35,6 +35,67 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
+        #region Document
+        public async Task<(string error, bool isSuccess)> CreatePayDocument(Guid customerId,
+            PaymentType paymentType,
+            long price,
+            long? discount,
+            string? descripion,
+            DateTime submitDate)
+        {
+            try
+            {
+                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.PayDoc, paymentType, descripion, submitDate, false));
+
+                if (discount != null && discount != 0)
+                {
+                    await DbContext.SaveChangesAsync();
+                    var comDoc = new List<Document>()
+                    {
+                        new (customerId, discount.Value, DocumntType.RecCom, PaymentType.Other,$" تخفیف فاکتور( {t.Entity.Serial} )",submitDate,false)
+                    };
+                    t.Entity.AddDocument(comDoc);
+                    Entities.Update(t.Entity);
+                };
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> CreateRecDocument(Guid customerId,
+            PaymentType paymentType,
+            long price,
+            long? discount,
+            string? descripion,
+            DateTime submitDate)
+        {
+
+            try
+            {
+                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.RecDoc, paymentType, descripion, submitDate, true));
+
+                if (discount != null && discount != 0)
+                {
+                    await DbContext.SaveChangesAsync();
+                    var comDoc = new List<Document>()
+                    {
+                        new (customerId, discount.Value, DocumntType.PayDiscount, PaymentType.Other,$" تخفیف فاکتور( {t.Entity.Serial} )",submitDate,true)
+                    };
+                    t.Entity.AddDocument(comDoc);
+                    Entities.Update(t.Entity);
+                };
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+        #endregion
+
         #region Invoice(CRUD)
         public async Task<(string error, bool isSuccess)> CreateSellDocument(Guid customerId,
             long price,
@@ -87,65 +148,6 @@ namespace Infrastructure.Repositories
                     var comDoc = new List<Document>()
                     {
                         new (customerId, (long)(price * (commission.Value / 100)), DocumntType.RecCom, PaymentType.Other,$" پورسانت فاکتور( {t.Entity.Serial} )",submitDate,false,(byte)commission.Value)
-                    };
-                    t.Entity.AddDocument(comDoc);
-                    Entities.Update(t.Entity);
-                };
-            }
-            catch (Exception ex)
-            {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
-            }
-            return new(string.Empty, true);
-        }
-
-        public async Task<(string error, bool isSuccess)> CreatePayDocument(Guid customerId,
-            PaymentType paymentType,
-            long price,
-            long? discount,
-            string? descripion,
-            DateTime submitDate)
-        {
-            try
-            {
-                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.PayDoc, paymentType, descripion, submitDate, false));
-
-                if (discount != null && discount != 0)
-                {
-                    await DbContext.SaveChangesAsync();
-                    var comDoc = new List<Document>()
-                    {
-                        new (customerId, discount.Value, DocumntType.RecCom, PaymentType.Other,$" تخفیف فاکتور( {t.Entity.Serial} )",submitDate,false)
-                    };
-                    t.Entity.AddDocument(comDoc);
-                    Entities.Update(t.Entity);
-                };
-            }
-            catch (Exception ex)
-            {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
-            }
-            return new(string.Empty, true);
-        }
-
-        public async Task<(string error, bool isSuccess)> CreateRecDocument(Guid customerId,
-            PaymentType paymentType,
-            long price,
-            long? discount,
-            string? descripion,
-            DateTime submitDate)
-        {
-
-            try
-            {
-                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.RecDoc, paymentType, descripion, submitDate, true));
-
-                if (discount != null && discount != 0)
-                {
-                    await DbContext.SaveChangesAsync();
-                    var comDoc = new List<Document>()
-                    {
-                        new (customerId, discount.Value, DocumntType.PayDiscount, PaymentType.Other,$" تخفیف فاکتور( {t.Entity.Serial} )",submitDate,true)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);

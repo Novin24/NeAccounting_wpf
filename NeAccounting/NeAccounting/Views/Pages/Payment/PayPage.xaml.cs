@@ -10,16 +10,14 @@ namespace NeAccounting.Views.Pages
     /// </summary>
     public partial class PayPage : INavigableView<CreatePayDocViewModel>
     {
-        private readonly ISnackbarService _snackbarService;
         public CreatePayDocViewModel ViewModel { get; }
         public Guid CusId { get; set; }
 
-        public PayPage(CreatePayDocViewModel viewModel, ISnackbarService snackbarService)
+        public PayPage(CreatePayDocViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-            _snackbarService = snackbarService;
         }
 
         private async void AutoSuggestBoxSuggestions_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)

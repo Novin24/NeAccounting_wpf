@@ -27,7 +27,6 @@ namespace NeAccounting.Views.Pages
             {
                 ViewModel.UnitId = ((SuggestBoxViewModel<int>)cmb.SelectedItem).Id;
             }
-
         }
     }
 }

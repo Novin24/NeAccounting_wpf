@@ -2,14 +2,13 @@
 using DomainShared.Enums;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Customer;
-using DomainShared.ViewModels.Document;
 using NeApplication.Common;
 
 namespace NeApplication.IRepositoryies
 {
     public interface ICustomerManager : IRepository<Customer>
     {
-        Task<List<SuggestBoxViewModel<Guid,long>>> GetDisplayUser(bool? seller = null, bool? buyer = null);
+        Task<List<SuggestBoxViewModel<Guid,long>>> GetDisplayUser(bool includeDeArchive = false, bool? seller = null, bool? buyer = null);
         Task<List<CustomerListDto>> GetCustomerList(string name, string nationalCode, string mobile);
         Task<(string error, CustomerListDto cus)> GetCustomerById(Guid Id);
         Task<(string error, bool isSuccess)> CreateCustomer(string name,
@@ -23,6 +22,10 @@ namespace NeApplication.IRepositoryies
             bool haveCashCredit,
             bool isBuyer,
             bool isSeller);
+
+        Task<(string error, bool isSuccess)> ArchiveCustomer(
+            Guid Id,
+            bool isActive);
 
         Task<(string error, bool isSuccess)> UpdateCustomer(
             Guid Id,

@@ -8,10 +8,9 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+public partial class CreatePayDocViewModel(ISnackbarService snackbarService) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
-    private readonly INavigationService _navigationService = navigationService;
 
 
     /// <summary>
@@ -85,7 +84,7 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService, INa
     private async Task InitializeViewModel()
     {
         using UnitOfWork db = new();
-        Cuslist = await db.CustomerManager.GetDisplayUser(null, null);
+        Cuslist = await db.CustomerManager.GetDisplayUser();
         DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.PayDoc);
     }
 

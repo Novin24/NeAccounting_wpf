@@ -4,7 +4,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages" xmlns:nu="clr-namespace:NeAccounting.Controls"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:UpdateCustomerPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
@@ -61,7 +62,7 @@
 
                     </Grid.RowDefinitions>
                     <nu:HeaderPack Grid.ColumnSpan="2"
-                                   NamePpage="ویرایش مشتری"/>
+                                   NamePpage="ویرایش مشتری" />
                     <Border Grid.Column="0"
                             Grid.Row="1"
                             Grid.ColumnSpan="2"

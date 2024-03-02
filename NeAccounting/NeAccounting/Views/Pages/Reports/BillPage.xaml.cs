@@ -36,5 +36,10 @@ namespace NeAccounting.Views.Pages
             ViewModel.CusId = us.Id;
             ViewModel.PersonelId = us.UniqNumber;
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_name.Focus();
+        }
     }
 }

@@ -76,8 +76,7 @@ namespace NeAccounting.ViewModels
             _ = _navigationService.Navigate(pageType);
         }
 
-        [RelayCommand]
-        private async Task OnRemoveCus(Guid parameter)
+        private async Task OnArchiveCus(Guid parameter, bool isArchive)
         {
             var result = await _contentDialogService.ShowSimpleDialogAsync(
             new SimpleContentDialogCreateOptions()
@@ -92,10 +91,10 @@ namespace NeAccounting.ViewModels
             if (result == ContentDialogResult.Primary)
             {
                 using UnitOfWork db = new();
-                var isSuccess = await db.CustomerManager.DeleteAsync<Guid>(parameter);
-                if (!isSuccess)
+                var (e, s) = await db.CustomerManager.ArchiveCustomer(parameter, isArchive);
+                if (!s)
                 {
-                    _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
                 _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
@@ -113,7 +112,6 @@ namespace NeAccounting.ViewModels
             {
                 return;
             }
-            var servise = _navigationService.GetNavigationControl();
 
             var cus = List.First(t => t.Id == parameter);
 
@@ -135,6 +133,7 @@ namespace NeAccounting.ViewModels
                 NationalCode = cus.NationalCode
             });
 
+            var servise = _navigationService.GetNavigationControl();
             servise.Navigate(pageType, context);
         }
 

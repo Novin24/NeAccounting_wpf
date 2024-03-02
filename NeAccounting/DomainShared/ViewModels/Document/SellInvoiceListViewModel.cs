@@ -11,5 +11,6 @@
         public double AmountOf { get; set; }
         public long TotalPrice { get; set; }
         public string? Description { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

@@ -1,9 +1,6 @@
-﻿using DomainShared.ViewModels;
-using DomainShared.ViewModels.Pun;
+﻿using DomainShared.ViewModels.Pun;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Windows.Media;
-using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -13,16 +10,12 @@ namespace NeAccounting.Views.Pages
     /// </summary>
     public partial class UpdateSellInvoicePage : INavigableView<UpdateSellInvoiceViewModel>
     {
-        private readonly ISnackbarService _snackbarService;
         public UpdateSellInvoiceViewModel ViewModel { get; }
-        private double _totalEntity;
-        private long _price;
-        public UpdateSellInvoicePage(ISnackbarService snackbarService, UpdateSellInvoiceViewModel viewModel)
+        public UpdateSellInvoicePage( UpdateSellInvoiceViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-            _snackbarService = snackbarService;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -43,26 +36,16 @@ namespace NeAccounting.Views.Pages
             dgv_Inv.Items.Refresh();
         }
 
-        private async void Txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            if (!IsInitialized)
-                return;
-            var user = (SuggestBoxViewModel<Guid, long>)args.SelectedItem;
-            ViewModel.CusId = user.Id;
-            lbl_cusId.Text = user.UniqNumber.ToString();
-            await ViewModel.OnSelectCus(user.Id);
-        }
-
         private void Txt_mat_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             if (!IsInitialized)
                 return;
             var mat = (MatListDto)args.SelectedItem;
             ViewModel.MaterialId = mat.Id;
-            _totalEntity = mat.Entity;
+            //_totalEntity = mat.Entity;
             txt_UnitName.Text = mat.UnitName;
             txt_Unit_price.Text = mat.LastSellPrice.ToString("N0");
-            _price = mat.LastSellPrice;
+            //_price = mat.LastSellPrice;
         }
 
         private void Txt_amount_LostFocus(object sender, RoutedEventArgs e)
@@ -73,11 +56,11 @@ namespace NeAccounting.Views.Pages
             if (nb.Value == null)
                 return;
 
-            if (nb.Value > _totalEntity)
+            //if (nb.Value > _totalEntity)
             {
-                _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+                //_snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
             }
-            txt_total_price.Text = (nb.Value.Value * _price).ToString("N0");
+            //txt_total_price.Text = (nb.Value.Value * _price).ToString("N0");
         }
 
         private void Txt_Unit_price_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
@@ -93,7 +76,7 @@ namespace NeAccounting.Views.Pages
             if (txt_price.Text == "" || txt_price.Text == "0") return;
             CultureInfo culture = new("en-US");
             long valueBefore = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
-            _price = valueBefore;
+            //_price = valueBefore;
             txt_price.Text = String.Format(culture, "{0:N0}", valueBefore);
             txt_price.Select(txt_price.Text.Length, 0);
         }
@@ -107,16 +90,16 @@ namespace NeAccounting.Views.Pages
                 return;
 
 
-            ViewModel.MatPrice = _price = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
+            //ViewModel.MatPrice = _price = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
 
-            txt_total_price.Text = (ViewModel.AmountOf.Value * _price).ToString("N0");
+            //txt_total_price.Text = (ViewModel.AmountOf.Value * _price).ToString("N0");
         }
 
         private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
             if (!Validation())
             {
-                _snackbarService.Show("اخطار", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ثبت فاکتور نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+                //_snackbarService.Show("اخطار", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ثبت فاکتور نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
             if (await ViewModel.OnSumbit())
@@ -142,7 +125,7 @@ namespace NeAccounting.Views.Pages
 
             if (!Validation())
             {
-                _snackbarService.Show("اخطار", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ویرایش مجدد نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+                //_snackbarService.Show("اخطار", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ویرایش مجدد نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
 
@@ -152,7 +135,7 @@ namespace NeAccounting.Views.Pages
             txt_MaterialName.Text = itm.MatName;
             txt_total_price.Text = itm.TotalPrice.ToString("N0");
             txt_UnitName.Text = itm.UnitName;
-            _price = itm.Price;
+            //_price = itm.Price;
             txt_Unit_price.Text = itm.Price.ToString();
             dgv_Inv.Items.Refresh();
         }

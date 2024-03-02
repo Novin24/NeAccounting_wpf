@@ -10,7 +10,9 @@
       mc:Ignorable="d"
       d:DesignHeight="900"
       d:DesignWidth="1200"
-      d:DataContext="{d:DesignInstance local:BillPage ,IsDesignTimeCreatable=False}"
+      Loaded="Page_Loaded"
+      d:DataContext="{d:DesignInstance local:BillPage,
+                                        IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="Bill">
@@ -21,7 +23,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="auto" MinHeight="500"/>
+            <RowDefinition Height="auto"
+                           MinHeight="500" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />

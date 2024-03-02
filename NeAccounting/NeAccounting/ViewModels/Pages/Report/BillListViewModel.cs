@@ -1,11 +1,10 @@
-﻿using Common.Utilities;
-using DomainShared.Errore;
+﻿using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
+using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
-using System.Diagnostics;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -78,7 +77,7 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            Cuslist = await db.CustomerManager.GetDisplayUser();
+            Cuslist = await db.CustomerManager.GetDisplayUser(true);
         }
 
         [RelayCommand]
@@ -150,9 +149,35 @@ namespace NeAccounting.ViewModels
             switch (doc.Type)
             {
                 case DomainShared.Enums.DocumntType.PayDoc:
+                    Type? pagetyp = NameToPageTypeConverter.Convert("UpdatePay");
+
+                    if (pagetyp == null)
+                    {
+                        return;
+                    }
+                    var servis = _navigationService.GetNavigationControl();
+                    var contex = new UpdatePayPage()
+                    {
+                        ViewModel = new UpdatePayDocViewModel(_snackbarService, _navigationService)
+                        {
+                            Status = "aklfjaskd",
+                            SubmitDate = DateTime.Now.AddDays(12),
+                            Description = "aaaaaaaaaaaaaa",
+                            Discount = 10000,
+                            Type = DomainShared.Enums.PaymentType.CardToCard,
+                            DocId = Guid.Empty,
+                            DocList = [],
+                            Price = 500000,
+                            TotalPrice = "9000000",
+                            TotalPricee = 0,
+                        }
+                    };
+                    servis.Navigate(pagetyp, contex);
                     break;
+
                 case DomainShared.Enums.DocumntType.RecDoc:
                     break;
+
                 case DomainShared.Enums.DocumntType.SellInv:
                     Type? pageType = NameToPageTypeConverter.Convert("UpdateSellInvoice");
 
@@ -160,7 +185,6 @@ namespace NeAccounting.ViewModels
                     {
                         return;
                     }
-                    var servise = _navigationService.GetNavigationControl();
 
                     var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
                     if (!isSuccess)
@@ -168,7 +192,6 @@ namespace NeAccounting.ViewModels
                         _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                         return;
                     }
-                    var cus = await db.CustomerManager.GetDisplayUser(null, true);
                     var mat = await db.MaterialManager.GetMaterails();
                     var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
                     int i = 1;
@@ -179,11 +202,11 @@ namespace NeAccounting.ViewModels
                         item.UnitName = mat.First(t => t.Id == item.MaterialId).UnitName;
                     }
 
-                    var context = new UpdateSellInvoicePage(_snackbarService, new UpdateSellInvoiceViewModel(_snackbarService, _navigationService)
+                    var context = new UpdateSellInvoicePage(new UpdateSellInvoiceViewModel(_snackbarService, _navigationService)
                     {
-                        Cuslist = cus,
                         MatList = mat,
-                        CusId = itm.CustomerId,
+                        CusName = Cuslist.First(t => t.Id == itm.CustomerId).DisplayName,
+                        CusNumber = Cuslist.First(t => t.Id == itm.CustomerId).UniqNumber,
                         Status = stu.Status,
                         Debt = stu.Debt,
                         Credit = stu.Credit,
@@ -197,6 +220,7 @@ namespace NeAccounting.ViewModels
                         InvoiceId = parameter
                     });
 
+                    var servise = _navigationService.GetNavigationControl();
                     servise.Navigate(pageType, context);
                     break;
                 case DomainShared.Enums.DocumntType.BuyInv:

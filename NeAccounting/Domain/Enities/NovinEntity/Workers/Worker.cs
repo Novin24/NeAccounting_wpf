@@ -101,6 +101,11 @@ namespace Domain.NovinEntity.Workers
         /// تعداد روز کاری در ماه
         /// </summary>
         public byte DayInMonth { get; set; }
+
+        /// <summary>
+        /// وضعیت فعال
+        /// </summary>
+        public bool IsActive { get; set; }
         #endregion
 
         #region Constructor
@@ -129,7 +134,7 @@ namespace Domain.NovinEntity.Workers
             long insurancePremium,
             byte dayInMonth)
         {
-
+            IsActive = true;
             FullName = fullName;
             NationalCode = natinalCode;
             Mobile = mobile;

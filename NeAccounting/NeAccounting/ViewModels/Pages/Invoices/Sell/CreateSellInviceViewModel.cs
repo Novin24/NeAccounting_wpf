@@ -128,7 +128,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
     private async Task InitializeViewModel()
     {
         using UnitOfWork db = new();
-        Cuslist = await db.CustomerManager.GetDisplayUser(null, true);
+        Cuslist = await db.CustomerManager.GetDisplayUser(false,null, true);
         LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
         MatList = await db.MaterialManager.GetMaterails();
     }
