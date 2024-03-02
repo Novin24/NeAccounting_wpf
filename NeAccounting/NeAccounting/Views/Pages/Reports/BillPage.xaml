@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       xmlns:s="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d"
@@ -13,8 +14,11 @@
       d:DataContext="{d:DesignInstance local:BillPage ,IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="Bill">
-
+      Title="Bill"
+      x:Name="root">
+    <Page.Resources>
+        <cnt:Converters x:Key="ConvertHeight"/>
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -51,6 +55,16 @@
                 Grid.ColumnSpan="3"
                 Background="{DynamicResource ApplicationBackgroundBrush}"
                 CornerRadius="10">
+
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=800}" Value="false">
+                            <Setter Property="Height" Value="630"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <Grid>
 
                 <Grid.RowDefinitions>

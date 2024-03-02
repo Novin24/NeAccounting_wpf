@@ -5,13 +5,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:nu="clr-namespace:NeAccounting.Controls"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages" 
+      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="Invoicedetails">
-
+      Title="Invoicedetails"
+      x:Name="root">
+    <Page.Resources>
+        <cnt:Converters x:Key="ConvertHeight"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -47,6 +51,19 @@
                     Grid.ColumnSpan="3"
                     Background="{DynamicResource ApplicationBackgroundBrush}"
                     CornerRadius="10">
+
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=850}" Value="false">
+                            <Setter Property="Height" Value="660"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=800}" Value="false">
+                            <Setter Property="Height" Value="630"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <Grid>
 
                 <Grid.RowDefinitions>
@@ -75,7 +92,6 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="5*"></RowDefinition>
-                            <RowDefinition Height="auto"></RowDefinition>
 
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0"
@@ -104,7 +120,6 @@
                                 <ui:AutoSuggestBox FontSize="16"
                                                    x:Name="txt_name"
                                                    Icon="{ui:SymbolIcon Search24}"
-                                                   SuggestionChosen="txt_name_SuggestionChosen"
                                                    DisplayMemberPath="DisplayName"
                                                    FontFamily="Calibri" />
                             </StackPanel>
@@ -173,7 +188,7 @@
                                 </Button>
                             </StackPanel>
                         </Grid>
-                        <DataGrid Margin="0 0 0 0"
+                        <DataGrid Margin="0 0 0 20"
                                   BorderThickness="10"
                                   Grid.Row="1"
                                   CanUserResizeColumns="False"
@@ -221,40 +236,6 @@
                                                     Width="1.1*"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Grid Grid.Row="2"
-                              Margin="15">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-
-                            <Button Padding="10 4 "
-                                    FontSize="17"
-                                    FontFamily="Calibri"
-                                    HorizontalAlignment="Center">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="نمایش" />
-                                    <TextBlock Text=" (F6)"
-                                               FontSize="11.5"
-                                               VerticalAlignment="Center"
-                                               Foreground="#FFA3A3A3" />
-                                </StackPanel>
-                            </Button>
-
-                            <Button Padding="10 4 "
-                                    Grid.Column="1"
-                                    FontSize="17"
-                                    FontFamily="Calibri"
-                                    HorizontalAlignment="Center">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="پرینت" />
-                                    <TextBlock Text=" (Ctrl+P)"
-                                               FontSize="11.5"
-                                               VerticalAlignment="Center"
-                                               Foreground="#FFA3A3A3" />
-                                </StackPanel>
-                            </Button>
-                        </Grid>
                     </Grid>
                 </Border>
             </Grid>
