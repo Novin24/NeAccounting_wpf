@@ -83,18 +83,6 @@
                 HorizontalAlignment="Center"
                 BorderThickness="0.4">
 
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=850}" Value="false">
-                            <Setter Property="MaxHeight" Value="680"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=810}" Value="false">
-                            <Setter Property="MaxHeight" Value="660"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
             <Border.Background>
                 <SolidColorBrush Color="White"
                                  Opacity="0.08" />
@@ -102,6 +90,19 @@
             <StackPanel>
                 <Grid Margin="10,0"
                       ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=1080}" Value="false">
+                                    <Setter Property="MaxHeight" Value="755"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=920}" Value="false">
+                                    <Setter Property="MaxHeight" Value="630"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
                     <ui:VirtualizingItemsControl Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                  ItemsSource="{Binding ViewModel.Notifs, Mode=OneWay}"
                                                  VirtualizingPanel.CacheLengthUnit="Item">
@@ -111,6 +112,7 @@
                                                Grid.Column="0"
                                                Margin="0,20,20,0"
                                                Padding="0"
+                                               MaxWidth="180"
                                                VerticalAlignment="Stretch"
                                                CommandParameter="BasicInput"
                                                IsChevronVisible="False">

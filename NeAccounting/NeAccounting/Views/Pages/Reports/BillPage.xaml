@@ -59,8 +59,14 @@
             <Border.Style>
                 <Style TargetType="Border">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=800}" Value="false">
-                            <Setter Property="Height" Value="630"/>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}" Value="false">
+                            <Setter Property="MaxHeight" Value="770"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}" Value="false">
+                            <Setter Property="MaxHeight" Value="720"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}" Value="false">
+                            <Setter Property="MaxHeight" Value="670"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -168,7 +174,7 @@
                                         HorizontalAlignment="Center"
                                         Margin="20 20 20 0"
                                         Grid.Row="1">
-                            <Button Grid.Column="2"
+                                <Button Grid.Column="2"
                                     IsDefault="True"
                                     FontFamily="Calibri"
                                     Grid.Row="1"
@@ -176,30 +182,30 @@
                                     HorizontalAlignment="Center"
                                     Padding="10 4"
                                     Margin="0 0 10 0">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="نمایش"
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="نمایش"
                                                FontSize="16" />
-                                    <TextBlock Text=" (F6)"
+                                        <TextBlock Text=" (F6)"
                                                FontSize="14"
                                                VerticalAlignment="Center"
                                                Foreground="#FFA3A3A3" />
-                                </StackPanel>
-                            </Button>
+                                    </StackPanel>
+                                </Button>
 
-                            <Button Padding="10 4 "
+                                <Button Padding="10 4 "
                                     Grid.Column="2"
                                     Grid.Row="1"
                                     FontSize="17"
                                     FontFamily="Calibri"
                                     HorizontalAlignment="Right">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="پرینت" />
-                                    <TextBlock Text=" (Ctrl+P)"
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="پرینت" />
+                                        <TextBlock Text=" (Ctrl+P)"
                                                FontSize="11.5"
                                                VerticalAlignment="Center"
                                                Foreground="#FFA3A3A3" />
-                                </StackPanel>
-                            </Button>
+                                    </StackPanel>
+                                </Button>
                             </StackPanel>
                         </Grid>
                         <DataGrid Grid.Row="1"
