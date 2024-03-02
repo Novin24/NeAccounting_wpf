@@ -1,4 +1,4 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.PayPage"
+﻿<Page x:Class="NeAccounting.Views.Pages.CreatePayDocPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       Title="DataPage"
-      d:DataContext="{d:DesignInstance local:PayPage,
+      d:DataContext="{d:DesignInstance local:CreatePayDocPage,
                                      IsDesignTimeCreatable=False}"
       d:DesignHeight="800"
       d:DesignWidth="1200"

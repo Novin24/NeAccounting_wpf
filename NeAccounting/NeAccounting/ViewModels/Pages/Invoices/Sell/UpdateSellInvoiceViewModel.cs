@@ -137,6 +137,7 @@ public partial class UpdateSellInvoiceViewModel : ObservableObject, INavigationA
     public void OnNavigatedFrom()
     {
     }
+
     private void InitializeViewModel()
     {
         _isInitialized = true;

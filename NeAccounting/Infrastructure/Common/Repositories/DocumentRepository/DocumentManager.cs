@@ -52,7 +52,7 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, discount.Value, DocumntType.RecCom, PaymentType.Other,$" تخفیف فاکتور( {t.Entity.Serial} )",submitDate,false)
+                        new (customerId, discount.Value, DocumntType.PayDiscount, PaymentType.Other,$" تخفیف فاکتور( {t.Entity.Serial} )",submitDate,false)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -82,7 +82,7 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, discount.Value, DocumntType.PayDiscount, PaymentType.Other,$" تخفیف فاکتور( {t.Entity.Serial} )",submitDate,true)
+                        new (customerId, discount.Value, DocumntType.RecDiscount, PaymentType.Other,$" تخفیف فاکتور( {t.Entity.Serial} )",submitDate,true)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -201,7 +201,7 @@ namespace Infrastructure.Repositories
         public async Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetBuyInvoiceDetail(Guid invoiceId)
         {
             var inv = await TableNoTracking
-                .Include(r => r.SellRemittances)
+                .Include(r => r.BuyRemittances)
                 .Include(r => r.RelatedDocuments)
                 .Where(t => t.Id == invoiceId)
                 .Select(c => new InvoiceDetailUpdateDto()
@@ -226,6 +226,30 @@ namespace Infrastructure.Repositories
             if (inv == null)
             {
                 return new(false, new InvoiceDetailUpdateDto());
+            }
+
+            return new(true, inv);
+        }
+
+        public async Task<(bool isSuccess, PayDocUpdateDto itm)> GetPayDocumentById(Guid docId)
+        {
+            var inv = await TableNoTracking
+                 .Where(t => t.Id == docId)
+                 .Include(r=> r.RelatedDocuments)
+                 .Select(c => new PayDocUpdateDto()
+                 {
+                     CustomerId = c.CustomerId,
+                     Serial = c.Serial.ToString(),
+                     Date = c.SubmitDate,
+                     Type = c.PayType,
+                     DocDescription = c.Description,
+                     Price = c.Price,
+                     Dicount = c.RelatedDocuments.Sum(t=> t.Price)
+                 }).FirstOrDefaultAsync();
+
+            if (inv == null)
+            {
+                return new(false, new PayDocUpdateDto());
             }
 
             return new(true, inv);

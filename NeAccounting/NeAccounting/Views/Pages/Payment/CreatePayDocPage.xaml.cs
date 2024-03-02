@@ -1,6 +1,5 @@
 ﻿using DomainShared.ViewModels;
 using System.Windows.Media;
-using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -8,12 +7,12 @@ namespace NeAccounting.Views.Pages
     /// <summary>
     /// Interaction logic for PayPage.xaml
     /// </summary>
-    public partial class PayPage : INavigableView<CreatePayDocViewModel>
+    public partial class CreatePayDocPage : INavigableView<CreatePayDocViewModel>
     {
         public CreatePayDocViewModel ViewModel { get; }
         public Guid CusId { get; set; }
 
-        public PayPage(CreatePayDocViewModel viewModel)
+        public CreatePayDocPage(CreatePayDocViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;

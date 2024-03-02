@@ -1,4 +1,5 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Enums;
+using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
@@ -149,33 +150,44 @@ namespace NeAccounting.ViewModels
             switch (doc.Type)
             {
                 case DomainShared.Enums.DocumntType.PayDoc:
-                    Type? pagetyp = NameToPageTypeConverter.Convert("UpdatePay");
+                    Type? pagetyp = NameToPageTypeConverter.Convert("UpdatePayDoc");
 
                     if (pagetyp == null)
                     {
                         return;
                     }
-                    var servis = _navigationService.GetNavigationControl();
-                    var contex = new UpdatePayPage()
+
+                    var (isSucces, itme) = await db.DocumentManager.GetPayDocumentById(parameter);
+                    if (!isSucces)
                     {
-                        ViewModel = new UpdatePayDocViewModel(_snackbarService, _navigationService)
-                        {
-                            Status = "aklfjaskd",
-                            SubmitDate = DateTime.Now.AddDays(12),
-                            Description = "aaaaaaaaaaaaaa",
-                            Discount = 10000,
-                            Type = DomainShared.Enums.PaymentType.CardToCard,
-                            DocId = Guid.Empty,
-                            DocList = [],
-                            Price = 500000,
-                            TotalPrice = "9000000",
-                            TotalPricee = 0,
-                        }
-                    };
+                        _snackbarService.Show("خطا", "سند مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var st = await db.DocumentManager.GetStatus(itme.CustomerId);
+                    var docs = await db.DocumentManager.GetSummaryDocs(itme.CustomerId, DocumntType.PayDoc);
+
+                    var contex = new UpdatePayDocPage(new UpdatePayDocViewModel(_snackbarService, _navigationService)
+                    {
+                        Status = st.Status,
+                        SubmitDate = itme.Date,
+                        Description = itme.DocDescription,
+                        Discount = itme.Dicount,
+                        PayTypeId = (byte)itme.Type,
+                        DocId = parameter,
+                        DocList = docs,
+                        Price = 500000,
+                        TotalPrice = Math.Abs(st.Amount).ToString("N0"),
+                        TotalPricee = Math.Abs(st.Amount),
+                        CusNumber = Cuslist.First(t => t.Id == itme.CustomerId).UniqNumber,
+                        CusName = Cuslist.First(t => t.Id == itme.CustomerId).DisplayName
+                    });
+                    var servis = _navigationService.GetNavigationControl();
                     servis.Navigate(pagetyp, contex);
                     break;
 
                 case DomainShared.Enums.DocumntType.RecDoc:
+
                     break;
 
                 case DomainShared.Enums.DocumntType.SellInv:
@@ -192,6 +204,7 @@ namespace NeAccounting.ViewModels
                         _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                         return;
                     }
+
                     var mat = await db.MaterialManager.GetMaterails();
                     var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
                     int i = 1;

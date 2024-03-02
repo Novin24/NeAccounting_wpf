@@ -66,19 +66,19 @@ namespace NeAccounting.ViewModels
                 MenuItems = new ObservableCollection<object>
                 {
                 #region Remittance
-                    new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(PayPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+                    new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(CreatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem {Content = "فاکتور فروش",TargetPageType = typeof(CreateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
-                    new NavigationViewItem {Content = "به روز رسانی فاکتور فروش",TargetPageType = typeof(UpdateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
+                    new NavigationViewItem {Content = "به روز رسانی فاکتور فروش",TargetPageType = typeof(UpdateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility =Visibility.Collapsed },
                     new NavigationViewItem { Content = "فاکتور خرید", TargetPageType = typeof(CreateBuyInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                     new NavigationViewItem { Content = "فاکتور واسطه‌ای", TargetPageType = typeof(CreateIntermediaryInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                     new NavigationViewItem { Content = "اجناس برگشتی", TargetPageType = typeof(WorkersListPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
-                    new NavigationViewItem {Content = "سفارشات",TargetPageType = typeof(PayPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+                    new NavigationViewItem {Content = "سفارشات",TargetPageType = typeof(CreatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 	            #endregion
 
                 #region Doc
                     new NavigationViewItem {Content = "دریافتی از مشتری",TargetPageType = typeof(RecPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
-                    new NavigationViewItem {Content = "پرداختی به مشتری",TargetPageType = typeof(PayPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
-                    new NavigationViewItem {Content = "به روز رسانی پرداختی به مشتری",TargetPageType = typeof(UpdatePayPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility = Visibility.Collapsed},
+                    new NavigationViewItem {Content = "پرداختی به مشتری",TargetPageType = typeof(CreatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+                    new NavigationViewItem {Content = "به روز رسانی پرداختی به مشتری",TargetPageType = typeof(UpdatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility = Visibility.Collapsed},
 	            #endregion
                     new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(CreateCostsPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 

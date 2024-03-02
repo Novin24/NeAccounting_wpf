@@ -1,4 +1,6 @@
-﻿using DomainShared.ViewModels;
+﻿using DomainShared.Enums;
+using DomainShared.Utilities;
+using DomainShared.ViewModels;
 using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 

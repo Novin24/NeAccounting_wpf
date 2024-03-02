@@ -35,6 +35,12 @@ public partial class UpdatePayDocViewModel : ObservableObject, INavigationAware
     [ObservableProperty]
     private string? _cusName;
 
+    /// <summary>
+    ///شماره مشتری
+    /// </summary>
+    [ObservableProperty]
+    private long _cusNumber;
+
     [ObservableProperty]
     private DateTime? _submitDate = DateTime.Now;
 
@@ -75,10 +81,11 @@ public partial class UpdatePayDocViewModel : ObservableObject, INavigationAware
     private string? _description;
 
     /// <summary>
-    /// نوع سند 
+    /// Enum Id 
     /// </summary>
-    [ObservableProperty]
-    private PaymentType _type;
+    public byte PayTypeId {  get; set; }
+
+
 
     public void OnNavigatedTo()
     {
@@ -99,7 +106,8 @@ public partial class UpdatePayDocViewModel : ObservableObject, INavigationAware
     /// ثبت سند
     /// </summary>
     /// <returns></returns>
-    internal async Task<bool> OnSumbit()
+    [RelayCommand]
+    private async Task OnSumbit()
     {
         #region validation
         //if (CusId == null)
@@ -111,18 +119,18 @@ public partial class UpdatePayDocViewModel : ObservableObject, INavigationAware
         if (SubmitDate == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
+            return;
         }
 
         if (Price == 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ وجه"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
+            return;
         }
 
         if (string.IsNullOrEmpty(Description))
         {
-            Description = $"{Type.ToDisplay()} پرداختی به مشتری";
+            Description = $"{((PaymentType)PayTypeId).ToDisplay()} پرداختی به مشتری";
         }
 
         #endregion
@@ -138,7 +146,6 @@ public partial class UpdatePayDocViewModel : ObservableObject, INavigationAware
         //}
 
         //_snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-        return false;
         #endregion
     }
 }
