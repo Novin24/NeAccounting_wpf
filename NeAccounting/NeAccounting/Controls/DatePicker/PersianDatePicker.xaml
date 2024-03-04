@@ -161,12 +161,12 @@
 
     <Grid>
         <StackPanel Margin="0 1 20 5 ">
-            <TextBlock Margin="9 0 9 7"
+            <TextBlock Margin="7 0 7 5"
                        FontFamily="Calibri"
                        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                        x:Name="lbl_name"
                        HorizontalAlignment="Right"
-                       FontSize="14" />
+                       FontSize="15" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
