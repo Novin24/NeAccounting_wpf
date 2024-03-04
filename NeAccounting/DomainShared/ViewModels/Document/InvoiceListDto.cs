@@ -15,7 +15,7 @@ namespace DomainShared.ViewModels.Document
         public long LeftOver { get; set; }
         public string? Serial { get; set; }
         public string? Status { get; set; }
-        public bool IsDeletable { get; set; }
-        public bool IsEditable { get; set; }
+        public bool IsDeletable { get; set; } = false;
+        public bool IsEditable { get; set; } = false;
     }
 }

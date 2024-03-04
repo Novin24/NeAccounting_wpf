@@ -1,4 +1,6 @@
-﻿using DomainShared.ViewModels;
+﻿using DomainShared.Enums;
+using DomainShared.Utilities;
+using DomainShared.ViewModels;
 using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
@@ -23,7 +25,7 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            ViewModel.SearchInvoiceCommand.Execute(null);
+            ViewModel.SearchInvoiceCommand.ExecuteAsync(null);
         }
 
         private void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
@@ -35,6 +37,11 @@ namespace NeAccounting.Views.Pages
             var us = ((SuggestBoxViewModel<Guid, long>)args.SelectedItem);
             ViewModel.CusId = us.Id;
             ViewModel.PersonelId = us.UniqNumber;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_name.Focus();
         }
     }
 }

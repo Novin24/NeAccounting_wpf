@@ -1,7 +1,12 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Enums;
+using DomainShared.Errore;
+using DomainShared.Utilities;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
+using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
+using NeAccounting.Views.Pages;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -74,7 +79,7 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            Cuslist = await db.CustomerManager.GetDisplayUser();
+            Cuslist = await db.CustomerManager.GetDisplayUser(true);
         }
 
         [RelayCommand]
@@ -133,7 +138,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private void OnUpdateDoc(Guid parameter)
+        private async Task OnUpdateDoc(Guid parameter)
         {
             var doc = InvList.FirstOrDefault(x => x.Id == parameter);
             if (doc == null)
@@ -142,13 +147,130 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
+            using UnitOfWork db = new();
             switch (doc.Type)
             {
                 case DomainShared.Enums.DocumntType.PayDoc:
+                    Type? pagetyp = NameToPageTypeConverter.Convert("UpdatePayDoc");
+
+                    if (pagetyp == null)
+                    {
+                        return;
+                    }
+                    var servis = _navigationService.GetNavigationControl();
+
+                    var (isSucces, itme) = await db.DocumentManager.GetDocumentById(parameter);
+                    if (!isSucces)
+                    {
+                        _snackbarService.Show("خطا", "سند مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var st = await db.DocumentManager.GetStatus(itme.CustomerId);
+                    var docs = await db.DocumentManager.GetSummaryDocs(itme.CustomerId, DocumntType.PayDoc);
+
+                    var contex = new UpdatePayDocPage(new UpdatePayDocViewModel(_snackbarService, _navigationService)
+                    {
+                        Status = st.Status,
+                        SubmitDate = itme.Date,
+                        Description = itme.DocDescription,
+                        Discount = itme.Dicount,
+                        PayTypeEnum = PaymentType.CardToCard.ToDictionary(),
+                        PayTypeId = (byte)itme.Type,
+                        DocId = parameter,
+                        DocList = docs,
+                        Price = itme.Price,
+                        TotalPrice = Math.Abs(st.Amount).ToString("N0"),
+                        TotalPricee = Math.Abs(st.Amount),
+                        CusNumber = Cuslist.First(t => t.Id == itme.CustomerId).UniqNumber,
+                        CusName = Cuslist.First(t => t.Id == itme.CustomerId).DisplayName
+                    });
+                    servis.Navigate(pagetyp, contex);
                     break;
+
                 case DomainShared.Enums.DocumntType.RecDoc:
+                    Type? pagety = NameToPageTypeConverter.Convert("UpdateRecDoc");
+
+                    if (pagety == null)
+                    {
+                        return;
+                    }
+                    var servi = _navigationService.GetNavigationControl();
+
+                    var (isSucce, item) = await db.DocumentManager.GetDocumentById(parameter);
+                    if (!isSucce)
+                    {
+                        _snackbarService.Show("خطا", "سند مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var s = await db.DocumentManager.GetStatus(item.CustomerId);
+                    var dc = await db.DocumentManager.GetSummaryDocs(item.CustomerId, DocumntType.RecDoc);
+
+                    var conte = new UpdateRecDocPage(new UpdateRecDocViewModel(_snackbarService, _navigationService)
+                    {
+                        Status = s.Status,
+                        SubmitDate = item.Date,
+                        Description = item.DocDescription,
+                        Discount = item.Dicount,
+                        PayTypeEnum = PaymentType.CardToCard.ToDictionary(),
+                        PayTypeId = (byte)item.Type,
+                        DocId = parameter,
+                        DocList = dc,
+                        Price = item.Price,
+                        TotalPrice = Math.Abs(s.Amount).ToString("N0"),
+                        TotalPricee = Math.Abs(s.Amount),
+                        CusNumber = Cuslist.First(t => t.Id == item.CustomerId).UniqNumber,
+                        CusName = Cuslist.First(t => t.Id == item.CustomerId).DisplayName
+                    });
+                    servi.Navigate(pagety, conte);
                     break;
+
                 case DomainShared.Enums.DocumntType.SellInv:
+                    Type? pageType = NameToPageTypeConverter.Convert("UpdateSellInvoice");
+
+                    if (pageType == null)
+                    {
+                        return;
+                    }
+
+                    var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
+                    if (!isSuccess)
+                    {
+                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var mat = await db.MaterialManager.GetMaterails();
+                    var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                    int i = 1;
+                    foreach (var it in itm.RemList)
+                    {
+                        it.RowId = i++;
+                        it.MatName = mat.First(t => t.Id == it.MaterialId).MaterialName;
+                        it.UnitName = mat.First(t => t.Id == it.MaterialId).UnitName;
+                    }
+
+                    var context = new UpdateSellInvoicePage(new UpdateSellInvoiceViewModel(_snackbarService, _navigationService)
+                    {
+                        MatList = mat,
+                        CusName = Cuslist.First(t => t.Id == itm.CustomerId).DisplayName,
+                        CusNumber = Cuslist.First(t => t.Id == itm.CustomerId).UniqNumber,
+                        Status = stu.Status,
+                        Debt = stu.Debt,
+                        Credit = stu.Credit,
+                        SubmitDate = itm.Date,
+                        InvDescription = itm.InvoiceDescription,
+                        Commission = itm.Commission,
+                        LastInvoice = itm.Serial,
+                        List = itm.RemList,
+                        TotalPrice = itm.TotalPrice.ToString("0"),
+                        Totalcommission = itm.Commission.HasValue ? (itm.TotalPrice * (itm.Commission.Value / 100)).ToString("N0") : "0",
+                        InvoiceId = parameter
+                    });
+
+                    var servise = _navigationService.GetNavigationControl();
+                    servise.Navigate(pageType, context);
                     break;
                 case DomainShared.Enums.DocumntType.BuyInv:
                     break;

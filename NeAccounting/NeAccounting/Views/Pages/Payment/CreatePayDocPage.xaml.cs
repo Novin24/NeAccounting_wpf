@@ -1,26 +1,22 @@
 ﻿using DomainShared.ViewModels;
-using NeAccounting.ViewModels;
 using System.Windows.Media;
-using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for DataView.xaml
+    /// Interaction logic for PayPage.xaml
     /// </summary>
-    public partial class RecPage : INavigableView<RecViewModel>
+    public partial class CreatePayDocPage : INavigableView<CreatePayDocViewModel>
     {
-        private readonly ISnackbarService _snackbarService;
-        public RecViewModel ViewModel { get; }
+        public CreatePayDocViewModel ViewModel { get; }
         public Guid CusId { get; set; }
 
-        public RecPage(RecViewModel viewModel, ISnackbarService snackbarService)
+        public CreatePayDocPage(CreatePayDocViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-            _snackbarService = snackbarService;
         }
 
         private async void AutoSuggestBoxSuggestions_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)

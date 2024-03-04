@@ -1,4 +1,5 @@
 ﻿using DomainShared.ViewModels;
+using NeAccounting.ViewModels;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -6,15 +7,15 @@ using Wpf.Ui.Controls;
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for PayPage.xaml
+    /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class PayPage : INavigableView<CreatePayDocViewModel>
+    public partial class CreateRecPage : INavigableView<CreateRecViewModel>
     {
         private readonly ISnackbarService _snackbarService;
-        public CreatePayDocViewModel ViewModel { get; }
+        public CreateRecViewModel ViewModel { get; }
         public Guid CusId { get; set; }
 
-        public PayPage(CreatePayDocViewModel viewModel, ISnackbarService snackbarService)
+        public CreateRecPage(CreateRecViewModel viewModel, ISnackbarService snackbarService)
         {
             ViewModel = viewModel;
             DataContext = this;

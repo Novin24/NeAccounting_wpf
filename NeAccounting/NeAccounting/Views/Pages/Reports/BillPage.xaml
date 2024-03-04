@@ -10,10 +10,13 @@
       mc:Ignorable="d"
       d:DesignHeight="900"
       d:DesignWidth="1200"
-      d:DataContext="{d:DesignInstance local:BillPage ,IsDesignTimeCreatable=False}"
+      Loaded="Page_Loaded"
+      d:DataContext="{d:DesignInstance local:BillPage,
+                                        IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="Bill">
+
 
 
     <Grid>
@@ -21,7 +24,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="auto" MinHeight="500"/>
+            <RowDefinition Height="auto"
+                           MinHeight="500" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -207,6 +211,7 @@
 
                             <DataGrid.Resources>
                                 <s:String x:Key="format">{0:N0}</s:String>
+                                <BooleanToVisibilityConverter x:Key="BoolToVis" />
                             </DataGrid.Resources>
 
                             <DataGrid.Columns>
@@ -259,14 +264,14 @@
                                             <StackPanel Orientation="Horizontal"
                                                         HorizontalAlignment="Center">
                                                 <Button  Margin="2"
-                                                         IsEnabled="{Binding IsEditable}"
+                                                         Visibility="{Binding IsEditable ,  Converter={StaticResource BoolToVis}}"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                          Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Pen16" />
                                                 </Button>
                                                 <Button Margin="3"
-                                                        IsEnabled="{Binding IsDeletable}"
+                                                        Visibility="{Binding IsDeletable,  Converter={StaticResource BoolToVis}}"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
                                                         Command="{Binding Path=DataContext.ViewModel.RemoveDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                         Padding="7,5">

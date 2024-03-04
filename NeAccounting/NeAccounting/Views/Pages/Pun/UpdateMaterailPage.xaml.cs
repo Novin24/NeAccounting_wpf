@@ -12,7 +12,6 @@ namespace NeAccounting.Views.Pages
     {
         public UpdateMaterailViewModel ViewModel { get; }
 
-
         public UpdateMaterailPage(UpdateMaterailViewModel viewModel)
         {
             ViewModel = viewModel;
@@ -27,7 +26,6 @@ namespace NeAccounting.Views.Pages
             {
                 ViewModel.UnitId = ((SuggestBoxViewModel<int>)cmb.SelectedItem).Id;
             }
-
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.RecPage"
+﻿<Page x:Class="NeAccounting.Views.Pages.UpdatePayDocPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
-      Title="DataPage"
-      d:DataContext="{d:DesignInstance local:RecPage,
+      d:DataContext="{d:DesignInstance local:UpdatePayDocPage,
                                      IsDesignTimeCreatable=False}"
       d:DesignHeight="800"
       d:DesignWidth="1200"
@@ -60,7 +59,7 @@
 
                 </Grid.RowDefinitions>
                 <nu:HeaderPack Grid.ColumnSpan="2"
-                               NamePpage="اسناد دریافتی" />
+                               NamePpage="ویرایش اسناد پرداختی" />
                 <Border Grid.Row="1"
                         CornerRadius="9"
                         Margin="5"
@@ -77,7 +76,7 @@
                             <TextBlock FontFamily="Calibri"
                                        FontSize="15"
                                        Margin="0,10"
-                                       Text="آخرین اسناد دریافتی"
+                                       Text="آخرین اسناد پرداختی"
                                        HorizontalAlignment="Center" />
 
                             <DataGrid Margin="10 10 10 10"
@@ -146,21 +145,19 @@
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="14"
                                            x:Name="lbl_cusId"
+                                           Text="{Binding ViewModel.CusNumber}"
                                            Foreground="#BB8F60"
                                            HorizontalAlignment="Right"
                                            Margin="2 0 0 7" />
                             </DockPanel>
-                            <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
-                                               OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
-                                               PlaceholderText="Search..."
-                                               DisplayMemberPath="DisplayName"
-                                               FontSize="14"
-                                               Grid.Row="0"
-                                               x:Name="aus_CusName"
-                                               SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
-                                               Grid.Column="0"
-                                               Margin="21 4 20 0 "
-                                               FontFamily="Calibri" />
+                            <ui:TextBox Icon="{ui:SymbolIcon Search24}"
+                                        FontSize="14"
+                                        Grid.Row="0"
+                                        IsEnabled="False"
+                                        Text="{Binding ViewModel.CusName , Mode=TwoWay}"
+                                        Grid.Column="0"
+                                        Margin="21 4 20 0"
+                                        FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
                                     Grid.Column="1"
@@ -205,25 +202,14 @@
                                        FontSize="14"
                                        Text="نوع سند"
                                        FontWeight="Bold" />
-                            <ComboBox SelectedIndex="0"
-                                      FontSize="14"
+                            <ComboBox FontSize="14"
                                       x:Name="Cmb_PayType"
-                                      SelectedValuePath="Tag"
-                                      SelectedValue="{Binding ViewModel.Type , Mode=TwoWay}"
+                                      SelectedValuePath="Key"
+                                      SelectedValue="{Binding ViewModel.PayTypeId , Mode=TwoWay}"
+                                      ItemsSource="{Binding ViewModel.PayTypeEnum}"
+                                      DisplayMemberPath="Value"
                                       FontFamily="Calibri"
                                       Margin="0 4 0 0 ">
-                                <ComboBoxItem Content="کارت به کارت"
-                                              Tag="1" />
-                                <ComboBoxItem Content="حواله بانکی"
-                                              Tag="2" />
-                                <ComboBoxItem Content="شبا ، ساتنا"
-                                              Tag="3" />
-                                <ComboBoxItem Content="کارتخوان"
-                                              Tag="4" />
-                                <ComboBoxItem Content="نقدی"
-                                              Tag="5" />
-                                <ComboBoxItem Content="سایر"
-                                              Tag="6" />
                             </ComboBox>
                         </StackPanel>
 
@@ -236,6 +222,7 @@
                                               Margin="0 2 15 0" />
 
                         <nu:MoneyPack Grid.Row="2"
+                                      x:Name="nm_price"
                                       Value="{Binding ViewModel.Price, Mode=TwoWay}"
                                       FontFamily="Calibri"
                                       LabelName="مبلغ وجه" />
@@ -244,6 +231,7 @@
                                       Value="{Binding ViewModel.Discount, Mode=TwoWay}"
                                       Grid.Row="2"
                                       LabelName="مبلغ تخفیف" />
+
                         <Grid Grid.ColumnSpan="2"
                               Grid.Row="4"
                               Grid.RowSpan="2"
@@ -266,7 +254,7 @@
                                 x:Name="btn_submit"
                                 HorizontalAlignment="Center"
                                 Grid.Row="6"
-                                Click="btn_submit_Click"
+                                Command="{Binding ViewModel.SumbitCommand}"
                                 FontFamily="Calibri"
                                 FontSize="15"
                                 Grid.ColumnSpan="2" />

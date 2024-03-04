@@ -10,7 +10,7 @@ using DomainShared.Utilities;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class RecViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+    public partial class CreateRecViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
     {
         private readonly ISnackbarService _snackbarService = snackbarService;
         private readonly INavigationService _navigationService = navigationService;
@@ -87,7 +87,7 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            Cuslist = await db.CustomerManager.GetDisplayUser(null, null);
+            Cuslist = await db.CustomerManager.GetDisplayUser();
             DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.RecDoc);
         }
 
@@ -104,10 +104,10 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.RecDoc);
-            var (am, stu) = await db.DocumentManager.GetStatus(custId);
-            Status = stu;
-            TotalPricee = Math.Abs(am);
-            TotalPrice = Math.Abs(am).ToString("N0");
+            var s = await db.DocumentManager.GetStatus(custId);
+            Status = s.Status;
+            TotalPricee = Math.Abs(s.Amount);
+            TotalPrice = Math.Abs(s.Amount).ToString("N0");
         }
 
 
