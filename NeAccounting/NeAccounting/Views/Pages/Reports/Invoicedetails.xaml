@@ -5,13 +5,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:nu="clr-namespace:NeAccounting.Controls"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages" 
+      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="Invoicedetails">
-
+      Title="Invoicedetails"
+      x:Name="root">
+    <Page.Resources>
+        <cnt:Converters x:Key="ConvertHeight"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -47,6 +51,22 @@
                     Grid.ColumnSpan="3"
                     Background="{DynamicResource ApplicationBackgroundBrush}"
                     CornerRadius="10">
+
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}" Value="false">
+                            <Setter Property="MaxHeight" Value="770"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}" Value="false">
+                            <Setter Property="MaxHeight" Value="720"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}" Value="false">
+                            <Setter Property="MaxHeight" Value="670"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <Grid>
 
                 <Grid.RowDefinitions>
@@ -75,7 +95,6 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="5*"></RowDefinition>
-                            <RowDefinition Height="auto"></RowDefinition>
 
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0"
@@ -89,34 +108,40 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <StackPanel Margin="23 0 7 0 ">
-
-                                <TextBlock FontFamily="Calibri"
+                            <StackPanel Margin="21 0 7 4">
+                                <DockPanel>
+                                    <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="مشتری"
-                                               Margin="2 0 0 0 " />
-                                <ui:TextBox TextAlignment="Center"
-                                                FontFamily="Calibri"
-                                                x:Name="materialName_txb"
-                                                Margin="0 4 0 0"/>
+                                           Margin="5 0 0 4" />
+                                    <TextBlock FontFamily="Calibri"
+                                               FontSize="14"
+                                               Foreground="#BB8F60"
+                                               HorizontalAlignment="Right"
+                                               Margin="2 0 0 0" />
+                                </DockPanel>
+                                <ui:AutoSuggestBox FontSize="16"
+                                                   x:Name="txt_name"
+                                                   Icon="{ui:SymbolIcon Search24}"
+                                                   DisplayMemberPath="DisplayName"
+                                                   FontFamily="Calibri" />
                             </StackPanel>
                             <StackPanel Grid.Column="1"
-                                        Margin="20 0 7 0 ">
+                                        Margin="21 0 7 4 ">
 
                                 <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="جزییات"
-                                               Margin="2 0 0 0 " />
+                                               Margin="5 0 0 4 " />
                                 <ui:TextBox TextAlignment="Center"
-                                                FontFamily="Calibri"
-                                                Margin="0 4 0 0" />
+                                                FontFamily="Calibri" />
                             </StackPanel>
 
                             <CheckBox Content="به احتساب مانده قبلی"
                                       Grid.Column="2"
                                       FontFamily="Calibri"
                                       Margin="10 22 10 0 "
-                                      HorizontalAlignment="Left"
+                                      HorizontalAlignment="Center"
                                       FontSize="14"/>
 
                             <nu:PersianDatePicker VerticalAlignment="Center"
@@ -128,13 +153,45 @@
                                                   FlowDirection="LeftToRight"
                                                   LabelName="تا تاریخ"
                                                   Grid.Row="1"/>
-                            <Button Grid.Column="2" IsDefault="True"
-                                    Margin="0 20 0 0"
-                                    Grid.Row="1"
+                            <StackPanel Grid.Column="2"
+                                        Orientation="Horizontal"
                                         HorizontalAlignment="Center"
-                                        Padding="17 4 18 9">جستجو</Button>
+                                        Margin="20 20 20 0"
+                                        Grid.Row="1">
+                                <Button Grid.Column="2"
+                                    IsDefault="True"
+                                    FontFamily="Calibri"
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Center"
+                                    Padding="10 4"
+                                    Margin="0 0 10 0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="نمایش"
+                                               FontSize="16" />
+                                        <TextBlock Text=" (F6)"
+                                               FontSize="14"
+                                               VerticalAlignment="Center"
+                                               Foreground="#FFA3A3A3" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Padding="10 4 "
+                                    Grid.Column="2"
+                                    Grid.Row="1"
+                                    FontSize="17"
+                                    FontFamily="Calibri"
+                                    HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="پرینت" />
+                                        <TextBlock Text=" (Ctrl+P)"
+                                               FontSize="11.5"
+                                               VerticalAlignment="Center"
+                                               Foreground="#FFA3A3A3" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
                         </Grid>
-                        <DataGrid Margin="0 0 0 0"
+                        <DataGrid Margin="0 0 0 20"
                                   BorderThickness="10"
                                   Grid.Row="1"
                                   CanUserResizeColumns="False"
@@ -182,40 +239,6 @@
                                                     Width="1.1*"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Grid Grid.Row="2"
-                              Margin="15">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-
-                            <Button Padding="10 4 "
-                                    FontSize="17"
-                                    FontFamily="Calibri"
-                                    HorizontalAlignment="Center">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="نمایش" />
-                                    <TextBlock Text=" (F6)"
-                                               FontSize="11.5"
-                                               VerticalAlignment="Center"
-                                               Foreground="#FFA3A3A3" />
-                                </StackPanel>
-                            </Button>
-
-                            <Button Padding="10 4 "
-                                    Grid.Column="1"
-                                    FontSize="17"
-                                    FontFamily="Calibri"
-                                    HorizontalAlignment="Center">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="پرینت" />
-                                    <TextBlock Text=" (Ctrl+P)"
-                                               FontSize="11.5"
-                                               VerticalAlignment="Center"
-                                               Foreground="#FFA3A3A3" />
-                                </StackPanel>
-                            </Button>
-                        </Grid>
                     </Grid>
                 </Border>
             </Grid>
