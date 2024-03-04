@@ -14,7 +14,7 @@ namespace DomainShared.ViewModels.Document
         public long TotalPrice { get; set; }
     }
 
-    public class PayDocUpdateDto
+    public class DocUpdateDto
     {
         public string? DocDescription { get; set; }
         public Guid CustomerId { get; set; }

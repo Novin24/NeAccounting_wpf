@@ -10,7 +10,7 @@ using DomainShared.Utilities;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class RecViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+    public partial class CreateRecViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
     {
         private readonly ISnackbarService _snackbarService = snackbarService;
         private readonly INavigationService _navigationService = navigationService;

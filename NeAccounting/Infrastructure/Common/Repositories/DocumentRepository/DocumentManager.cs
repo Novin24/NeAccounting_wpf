@@ -52,7 +52,7 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, discount.Value, DocumntType.PayDiscount, PaymentType.Other,$" تخفیف فاکتور( {t.Entity.Serial} )",submitDate,false)
+                        new (customerId, discount.Value, DocumntType.PayDiscount, PaymentType.Other,$" تخفیف سند( {t.Entity.Serial} )",submitDate,false)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -82,11 +82,58 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, discount.Value, DocumntType.RecDiscount, PaymentType.Other,$" تخفیف فاکتور( {t.Entity.Serial} )",submitDate,true)
+                        new (customerId, discount.Value, DocumntType.RecDiscount, PaymentType.Other,$" تخفیف سند( {t.Entity.Serial} )",submitDate,true)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
                 };
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> UpdatePayOrRecDocument(Guid docId,
+            PaymentType paymentType,
+            long price,
+            long? discount,
+            string? descripion,
+            DateTime submitDate)
+        {
+            try
+            {
+                var doc = await Entities.Include(t => t.RelatedDocuments)
+                     .FirstOrDefaultAsync(t => t.Id == docId);
+
+                if (doc == null)
+                    return new("سند مورد نظر یافت نشد!!!", false);
+
+                doc.PayType = paymentType;
+                doc.Price = price;
+                doc.Description = descripion;
+                doc.SubmitDate = submitDate;
+                if (doc.RelatedDocuments.Count > 0)
+                {
+                    if (discount == null || discount == 0)
+                    {
+                        Entities.Remove(doc.RelatedDocuments.First());
+                    }
+                    else
+                    {
+                        doc.RelatedDocuments.First().Price = discount.Value;
+                    }
+                }
+                else
+                {
+                    if (discount != null && discount != 0)
+                    {
+                        doc.RelatedDocuments.Add(new(doc.CustomerId, discount.Value, DocumntType.PayDiscount,
+                            PaymentType.Other, $" تخفیف فاکتور( {doc.Serial} )", submitDate, false));
+                    }
+                }
+                Entities.Update(doc);
             }
             catch (Exception ex)
             {
@@ -231,12 +278,12 @@ namespace Infrastructure.Repositories
             return new(true, inv);
         }
 
-        public async Task<(bool isSuccess, PayDocUpdateDto itm)> GetPayDocumentById(Guid docId)
+        public async Task<(bool isSuccess, DocUpdateDto itm)> GetDocumentById(Guid docId)
         {
             var inv = await TableNoTracking
                  .Where(t => t.Id == docId)
-                 .Include(r=> r.RelatedDocuments)
-                 .Select(c => new PayDocUpdateDto()
+                 .Include(r => r.RelatedDocuments)
+                 .Select(c => new DocUpdateDto()
                  {
                      CustomerId = c.CustomerId,
                      Serial = c.Serial.ToString(),
@@ -244,12 +291,12 @@ namespace Infrastructure.Repositories
                      Type = c.PayType,
                      DocDescription = c.Description,
                      Price = c.Price,
-                     Dicount = c.RelatedDocuments.Sum(t=> t.Price)
+                     Dicount = c.RelatedDocuments.Sum(t => t.Price)
                  }).FirstOrDefaultAsync();
 
             if (inv == null)
             {
-                return new(false, new PayDocUpdateDto());
+                return new(false, new DocUpdateDto());
             }
 
             return new(true, inv);
@@ -347,12 +394,11 @@ namespace Infrastructure.Repositories
                 {
                     Row = 0,
                     Date = startTime,
-                    IsDeletable = false,
-                    IsEditable = false,
                     ShamsiDate = startTime.ToShamsiDate(pc),
                     Description = "باقی مانده از قبل",
                     Bed = MyDoc.Where(p => p.Date < startTime && !p.ReceivedOrPaid).Sum(p => p.Price),
                     Bes = MyDoc.Where(p => p.Date < startTime && p.ReceivedOrPaid).Sum(p => p.Price),
+                    Type = DocumntType.Other
                 };
                 Remittances.Add(rem);
             }
@@ -364,8 +410,6 @@ namespace Infrastructure.Repositories
                 Type = t.Type,
                 Serial = t.Serial.ToString(),
                 Id = t.Id,
-                IsEditable = true,
-                IsDeletable = true,
                 ShamsiDate = t.Date.ToShamsiDate(pc),
                 Bed = t.Price,
                 Bes = 0,
@@ -378,20 +422,23 @@ namespace Infrastructure.Repositories
                 Type = t.Type,
                 Id = t.Id,
                 Serial = t.Serial.ToString(),
-                IsEditable = true,
-                IsDeletable = true,
                 ShamsiDate = t.Date.ToShamsiDate(pc),
                 Bed = 0,
                 Bes = t.Price,
             }).ToList());
 
-            Remittances = [.. Remittances.OrderByDescending(t => t.Date)];
+            Remittances = [.. Remittances.OrderBy(t => t.Date)];
 
             foreach (var item in Remittances)
             {
                 item.Row = i;
                 long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Sum(p => p.Bed);
                 long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Sum(p => p.Bes);
+                if (item.Type == DocumntType.PayDoc || item.Type == DocumntType.RecDoc || item.Type == DocumntType.SellInv || item.Type == DocumntType.BuyInv)
+                {
+                    item.IsDeletable = true;
+                    item.IsEditable = true;
+                }
 
                 item.LeftOver = Math.Abs(bed - bes);
                 if (bes > bed)
@@ -413,7 +460,7 @@ namespace Infrastructure.Repositories
 
             if (!ignorePagination)
             {
-                Remittances = Remittances.Skip(--pageNum * pageCount).Take(pageCount).ToList();
+                Remittances = Remittances.SkipLast(--pageNum * pageCount).TakeLast(pageCount).ToList();
             }
 
             return new PagedResulViewModel<InvoiceListDto>(totalCount, pageCount, Remittances);

@@ -1,4 +1,5 @@
 ﻿using DomainShared.ViewModels.Pun;
+using NeAccounting.ViewModels;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Wpf.Ui.Controls;
@@ -93,26 +94,6 @@ namespace NeAccounting.Views.Pages
             //ViewModel.MatPrice = _price = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
 
             //txt_total_price.Text = (ViewModel.AmountOf.Value * _price).ToString("N0");
-        }
-
-        private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
-        {
-            if (!Validation())
-            {
-                //_snackbarService.Show("اخطار", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ثبت فاکتور نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
-            if (await ViewModel.OnSumbit())
-            {
-                txt_CustomerName.Text = string.Empty;
-                txt_MaterialName.Text = string.Empty;
-                txt_UnitName.Text = string.Empty;
-                txt_Unit_price.Text = string.Empty;
-                txt_total_price.Text = string.Empty;
-                txt_UnitDescription.Text = string.Empty;
-                lbl_cusId.Text = string.Empty;
-            }
-
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)

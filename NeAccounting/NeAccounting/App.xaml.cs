@@ -115,8 +115,11 @@ namespace NeAccounting
                 #endregion
 
                 #region Recived
-                services.AddTransient<RecPage>();
-                services.AddTransient<RecViewModel>();
+                services.AddTransient<CreateRecPage>();
+                services.AddTransient<CreateRecViewModel>();
+                
+                services.AddTransient<UpdateRecDocPage>();
+                services.AddTransient<UpdateRecDocViewModel>();
                 #endregion
 
                 #region Invoice

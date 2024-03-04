@@ -9,13 +9,13 @@ namespace NeAccounting.Views.Pages
     /// <summary>
     /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class RecPage : INavigableView<RecViewModel>
+    public partial class CreateRecPage : INavigableView<CreateRecViewModel>
     {
         private readonly ISnackbarService _snackbarService;
-        public RecViewModel ViewModel { get; }
+        public CreateRecViewModel ViewModel { get; }
         public Guid CusId { get; set; }
 
-        public RecPage(RecViewModel viewModel, ISnackbarService snackbarService)
+        public CreateRecPage(CreateRecViewModel viewModel, ISnackbarService snackbarService)
         {
             ViewModel = viewModel;
             DataContext = this;

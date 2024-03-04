@@ -12,7 +12,6 @@ namespace NeAccounting.Views.Pages
     {
         public UpdateMaterailViewModel ViewModel { get; }
 
-
         public UpdateMaterailPage(UpdateMaterailViewModel viewModel)
         {
             ViewModel = viewModel;

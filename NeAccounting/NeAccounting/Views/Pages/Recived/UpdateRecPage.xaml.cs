@@ -4,13 +4,13 @@ using Wpf.Ui.Controls;
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for UpdatePayPage.xaml
+    /// Interaction logic for eRecPagePage1.xaml
     /// </summary>
-    public partial class UpdatePayDocPage : INavigableView<UpdatePayDocViewModel>
+    public partial class UpdateRecDocPage : INavigableView<UpdateRecDocViewModel>
     {
-        public UpdatePayDocViewModel ViewModel { get; }
+        public UpdateRecDocViewModel ViewModel { get; }
 
-        public UpdatePayDocPage(UpdatePayDocViewModel viewModel)
+        public UpdateRecDocPage(UpdateRecDocViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;

@@ -436,7 +436,7 @@
                                 <Button Padding="30 4 "
                                         Grid.Column="1"
                                         FontSize="17"
-                                        Click="BtnSubmit_Click"
+                                        Command="{Binding ViewModel.SumbitCommand}"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
                                         HorizontalAlignment="Center">

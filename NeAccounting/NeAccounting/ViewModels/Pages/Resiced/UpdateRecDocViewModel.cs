@@ -11,13 +11,13 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class UpdatePayDocViewModel : ObservableObject, INavigationAware
+    public partial class UpdateRecDocViewModel : ObservableObject, INavigationAware
     {
         private bool _isInitialized = false;
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
 
-        public UpdatePayDocViewModel(ISnackbarService snackbarService, INavigationService navigationService)
+        public UpdateRecDocViewModel(ISnackbarService snackbarService, INavigationService navigationService)
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
@@ -134,7 +134,7 @@ namespace NeAccounting.ViewModels
 
             if (string.IsNullOrEmpty(Description))
             {
-                Description = $"{((PaymentType)PayTypeId).ToDisplay()} پرداختی به مشتری";
+                Description = $"{((PaymentType)PayTypeId).ToDisplay()} دریافتی از مشتری";
             }
 
             #endregion

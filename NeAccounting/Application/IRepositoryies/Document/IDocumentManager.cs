@@ -134,8 +134,15 @@ namespace NeApplication.IRepositoryies
             string? descripion,
             DateTime submitDate);
 
+        Task<(string error, bool isSuccess)> UpdatePayOrRecDocument(Guid docId,
+            PaymentType paymentType,
+            long price,
+            long? discount,
+            string? descripion,
+            DateTime submitDate);
 
-        Task<(bool isSuccess, PayDocUpdateDto itm)> GetPayDocumentById(Guid docId);
+
+        Task<(bool isSuccess, DocUpdateDto itm)> GetDocumentById(Guid docId);
 
         Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
