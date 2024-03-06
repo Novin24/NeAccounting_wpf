@@ -3,10 +3,10 @@ using DomainShared.Errore;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
-using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
+using System.Diagnostics;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -214,6 +214,7 @@ namespace NeAccounting.ViewModels
                         Description = item.DocDescription,
                         Discount = item.Dicount,
                         PayTypeEnum = PaymentType.CardToCard.ToDictionary(),
+                        //PayTypeEnum = Enum.GetValues(typeof(PaymentType)).Cast<PaymentType>(),
                         PayTypeId = (byte)item.Type,
                         DocId = parameter,
                         DocList = dc,
@@ -234,6 +235,7 @@ namespace NeAccounting.ViewModels
                         return;
                     }
 
+                    var servise = _navigationService.GetNavigationControl();
                     var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
                     if (!isSuccess)
                     {
@@ -243,14 +245,20 @@ namespace NeAccounting.ViewModels
 
                     var mat = await db.MaterialManager.GetMaterails();
                     var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                    var oc = new System.Collections.ObjectModel.ObservableCollection<RemittanceListViewModel>();
                     int i = 1;
                     foreach (var it in itm.RemList)
                     {
                         it.RowId = i++;
                         it.MatName = mat.First(t => t.Id == it.MaterialId).MaterialName;
                         it.UnitName = mat.First(t => t.Id == it.MaterialId).UnitName;
+                        oc.Add(it);
                     }
-
+                    long stx = itm.TotalPrice;
+                    if (itm.CommissionPrice.HasValue && itm.CommissionPrice.Value != 0)
+                    {
+                        stx -= itm.CommissionPrice.Value;
+                    }
                     var context = new UpdateSellInvoicePage(new UpdateSellInvoiceViewModel(_snackbarService, _navigationService)
                     {
                         MatList = mat,
@@ -260,16 +268,17 @@ namespace NeAccounting.ViewModels
                         Debt = stu.Debt,
                         Credit = stu.Credit,
                         SubmitDate = itm.Date,
+                        StaticList = itm.RemList,
+                        RemainPrice = stx.ToString("N0"),
                         InvDescription = itm.InvoiceDescription,
                         Commission = itm.Commission,
                         LastInvoice = itm.Serial,
-                        List = itm.RemList,
-                        TotalPrice = itm.TotalPrice.ToString("0"),
+                        List = oc,
+                        TotalPrice = itm.TotalPrice.ToString("N0"),
                         Totalcommission = itm.Commission.HasValue ? (itm.TotalPrice * (itm.Commission.Value / 100)).ToString("N0") : "0",
                         InvoiceId = parameter
-                    });
+                    }, _snackbarService);
 
-                    var servise = _navigationService.GetNavigationControl();
                     servise.Navigate(pageType, context);
                     break;
                 case DomainShared.Enums.DocumntType.BuyInv:
@@ -310,6 +319,5 @@ namespace NeAccounting.ViewModels
 
             //servise.Navigate(pageType, context);
         }
-
     }
 }

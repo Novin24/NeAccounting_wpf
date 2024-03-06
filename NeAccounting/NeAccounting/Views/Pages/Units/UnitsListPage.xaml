@@ -176,7 +176,11 @@
                                                               Margin="10 0 0 0"
                                                               Padding="0"
                                                               Checked="CheckBox_Status_Chkecked"
-                                                              Unchecked="CheckBox_Status_Unckecked" />
+                                                              Unchecked="CheckBox_Status_Unckecked">
+                                                        <CheckBox.ToolTip>
+                                                            <TextBlock>حذف</TextBlock>
+                                                        </CheckBox.ToolTip>
+                                                    </CheckBox>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>

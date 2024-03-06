@@ -15,7 +15,7 @@ namespace Infrastructure.Repositories
 {
     public class DocumentManager(NovinDbContext context) : Repository<Document>(context), IDocumentManager
     {
-
+        #region Document
         public async Task<(string error, bool isSuccess)> CreateDocument(Guid customerId,
             long price,
             DocumntType type,
@@ -35,7 +35,6 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        #region Document
         public async Task<(string error, bool isSuccess)> CreatePayDocument(Guid customerId,
             PaymentType paymentType,
             long price,
@@ -114,6 +113,8 @@ namespace Infrastructure.Repositories
                 doc.Price = price;
                 doc.Description = descripion;
                 doc.SubmitDate = submitDate;
+
+                // به روز رسانی تخفیف
                 if (doc.RelatedDocuments.Count > 0)
                 {
                     if (discount == null || discount == 0)
@@ -130,9 +131,10 @@ namespace Infrastructure.Repositories
                     if (discount != null && discount != 0)
                     {
                         doc.RelatedDocuments.Add(new(doc.CustomerId, discount.Value, DocumntType.PayDiscount,
-                            PaymentType.Other, $" تخفیف فاکتور( {doc.Serial} )", submitDate, false));
+                            PaymentType.Other, $" تخفیف سند( {doc.Serial} )", submitDate, false));
                     }
                 }
+
                 Entities.Update(doc);
             }
             catch (Exception ex)
@@ -176,6 +178,83 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
+        public async Task<(string error, bool isSuccess)> UpdateSellDocument(Guid docId,
+            long price,
+            double? commission,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances)
+        {
+            var doc = await Entities.Include(t => t.RelatedDocuments)
+                .Include(s => s.SellRemittances)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null)
+                return new("سند مورد نظر یافت نشد!!!", false);
+
+            doc.Price = price;
+            doc.Description = descripion;
+            doc.SubmitDate = submitDate;
+
+            // به روز رسانی تک تک قلم های فاکتور
+            foreach (var item in remittances)
+            {
+                if (item.RremId == Guid.Empty)
+                {
+                    doc.SellRemittances.Add(new SellRemittance(
+                        item.MaterialId,
+                        item.AmountOf,
+                        item.Price,
+                        item.TotalPrice,
+                        submitDate,
+                        item.Description));
+                }
+                else
+                {
+                    var rem = doc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem == null)
+                        continue;
+                    rem.MaterialId = item.MaterialId;
+                    rem.AmountOf = item.AmountOf;
+                    rem.Price = item.Price;
+                    rem.TotalPrice = item.TotalPrice;
+                    rem.SubmitDate = submitDate;
+                    rem.Description = item.Description;
+                }
+            }
+
+            // به روز رسانی پورسانت فاکتور
+            if (doc.RelatedDocuments.Count > 0)
+            {
+                if (commission != null && commission != 0)
+                {
+                    doc.RelatedDocuments.First().Price = (long)(price * (commission.Value / 100));
+                }
+                else
+                {
+                    Entities.Remove(doc.RelatedDocuments.First());
+                }
+            }
+            else
+            {
+                if (commission != null && commission != 0)
+                {
+                    doc.RelatedDocuments.Add(new(doc.CustomerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
+                     PaymentType.Other, $" پورسانت فاکتور ( {doc.Serial} )", submitDate, true, (byte)commission.Value));
+                }
+            }
+
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
         public async Task<(string error, bool isSuccess)> CreateBuyDocument(Guid customerId,
             long price,
             double? commission,
@@ -207,6 +286,83 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
+        public async Task<(string error, bool isSuccess)> UpdateBuyDocument(Guid docId,
+            long price,
+            double? commission,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances)
+        {
+            var doc = await Entities.Include(t => t.RelatedDocuments)
+                .Include(s => s.BuyRemittances)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null)
+                return new("سند مورد نظر یافت نشد!!!", false);
+
+            doc.Price = price;
+            doc.Description = descripion;
+            doc.SubmitDate = submitDate;
+
+            // به روز رسانی تک تک قلم های فاکتور
+            foreach (var item in remittances)
+            {
+                if (item.RremId == Guid.Empty)
+                {
+                    doc.BuyRemittances.Add(new BuyRemittance(
+                        item.MaterialId,
+                        item.AmountOf,
+                        item.Price,
+                        item.TotalPrice,
+                        submitDate,
+                        item.Description));
+                }
+                else
+                {
+                    var rem = doc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem == null)
+                        continue;
+                    rem.MaterialId = item.MaterialId;
+                    rem.AmountOf = item.AmountOf;
+                    rem.Price = item.Price;
+                    rem.TotalPrice = item.TotalPrice;
+                    rem.SubmitDate = submitDate;
+                    rem.Description = item.Description;
+                }
+            }
+
+            // به روز رسانی پورسانت فاکتور
+            if (doc.RelatedDocuments.Count > 0)
+            {
+                if (commission != null && commission != 0)
+                {
+                    doc.RelatedDocuments.First().Price = (long)(price * (commission.Value / 100));
+                }
+                else
+                {
+                    Entities.Remove(doc.RelatedDocuments.First());
+                }
+            }
+            else
+            {
+                if (commission != null && commission != 0)
+                {
+                    doc.RelatedDocuments.Add(new(doc.CustomerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
+                     PaymentType.Other, $" پورسانت فاکتور ( {doc.Serial} )", submitDate, true, (byte)commission.Value));
+                }
+            }
+
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
         public async Task<string> GetLastDocumntNumber(DocumntType type)
         {
             return (await TableNoTracking.OrderByDescending(t => t.CreationTime).Where(t => t.Type == type).Select(c => c.Serial).FirstOrDefaultAsync()).ToString();
@@ -225,6 +381,7 @@ namespace Infrastructure.Repositories
                     Date = c.SubmitDate,
                     TotalPrice = c.Price,
                     Commission = c.RelatedDocuments.Sum(t => t.Commission),
+                    CommissionPrice = c.RelatedDocuments.Sum(t => t.Price),
                     InvoiceDescription = c.Description,
                     RemList = c.SellRemittances.Select(t => new RemittanceListViewModel()
                     {
@@ -258,6 +415,7 @@ namespace Infrastructure.Repositories
                     Date = c.SubmitDate,
                     TotalPrice = c.Price,
                     Commission = c.RelatedDocuments.Sum(t => t.Commission),
+                    CommissionPrice = c.RelatedDocuments.Sum(t => t.Price),
                     InvoiceDescription = c.Description,
                     RemList = c.BuyRemittances.Select(t => new RemittanceListViewModel()
                     {

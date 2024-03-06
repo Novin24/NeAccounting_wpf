@@ -130,7 +130,6 @@ namespace NeAccounting.Views.Pages
             }
         }
 
-
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not Button btn)

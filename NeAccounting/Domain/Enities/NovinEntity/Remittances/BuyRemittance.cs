@@ -8,7 +8,7 @@ namespace Domain.Enities.NovinEntity.Remittances
     {
         #region Navigation
         public Material Material { get; private set; }
-        public int MaterialId { get; private set; }
+        public int MaterialId { get;  set; }
         public Document Document { get; private set; }
         public Guid DocumentId { get; private set; }
         #endregion
