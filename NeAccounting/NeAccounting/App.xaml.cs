@@ -109,10 +109,6 @@ namespace NeAccounting
                 services.AddTransient<TestPage>();
                 services.AddTransient<TestViewModel>();
 
-                #region CreateCosts
-
-                services.AddTransient<CreateCostsPage>();
-                #endregion
 
                 #region Recived
                 services.AddTransient<CreateRecPage>();
@@ -148,15 +144,15 @@ namespace NeAccounting
 
                 #endregion
 
-                #region Expence
+                #region Expense
                 services.AddTransient<CreateExpencePage>();
-                //services.AddTransient<CreateExpenceViewModel>();
+                services.AddTransient<CreateExpenceViewModel>();
 
                 services.AddTransient<UpdateExpencePage>();
                 //services.AddTransient<UpdateExpenceViewModel>();
 
                 services.AddTransient<ExpencesListPage>();
-                //services.AddTransient<ExpencesListViewModel>();
+                services.AddTransient<ExpencelistViewModel>();
                 #endregion
 
                 #region Payment
@@ -200,7 +196,6 @@ namespace NeAccounting
 
                 services.AddTransient<Chequebook>();
 
-                services.AddTransient<CreateCostsPage>();
 
                 #endregion
 

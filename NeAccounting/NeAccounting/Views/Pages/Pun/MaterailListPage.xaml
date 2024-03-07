@@ -198,7 +198,7 @@
                                                         x:Name="Address"
                                                         Binding="{Binding Address}" />
                                     <DataGridTemplateColumn Header="عملیات"
-                                                            Width="90"
+                                                            Width="50"
                                                             HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -210,13 +210,6 @@
                                                              Padding="7,5"
                                                              ToolTip="ویرایش">
                                                         <ui:SymbolIcon Symbol="Pen16" />
-                                                    </Button>
-                                                    <Button Margin="3"
-                                                            CommandParameter="{Binding Id , Mode=OneWay}"
-                                                            Command="{Binding Path=DataContext.ViewModel.RemoveMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                            Padding="7,5"
-                                                            ToolTip="حذف">
-                                                        <ui:SymbolIcon Symbol="Delete16" />
                                                     </Button>
                                                 </StackPanel>
                                             </DataTemplate>
