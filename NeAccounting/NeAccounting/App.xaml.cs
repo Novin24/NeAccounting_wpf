@@ -187,6 +187,8 @@ namespace NeAccounting
 
                 services.AddTransient<Invoicedetails>();
 
+                services.AddTransient<MaterialReport>();
+
                 services.AddTransient<DebtorsListPage>();
 
                 services.AddTransient<CreditorsListPage>();

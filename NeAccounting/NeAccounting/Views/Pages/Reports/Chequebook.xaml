@@ -197,11 +197,21 @@
                                                   IsSelected="True" />
                                 </ComboBox>
                             </StackPanel>
-                            <Button Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="20 22.5 0 15"
-                                    Padding="17 4 17 10"
-                                    IsDefault="True">جستجو</Button>
+                            <Button Grid.Column="1"
+                                    IsDefault="True"
+                                    FontFamily="Calibri"
+                                    Grid.Row="1"
+                                    Command="{Binding ViewModel.SearchInvoiceCommand}"
+                                    Margin="20 22.5 0 15">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="نمایش"
+                                               FontSize="16" />
+                                    <TextBlock Text=" (F6)"
+                                               FontSize="14"
+                                               VerticalAlignment="Center"
+                                               Foreground="#FFA3A3A3" />
+                                </StackPanel>
+                            </Button>
                         </Grid>
                         <DataGrid BorderThickness="10"
                                   Grid.Row="2"
