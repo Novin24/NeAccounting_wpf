@@ -13,6 +13,8 @@ namespace Infrastructure.UnitOfWork
 
         private IMaterialManager _materialManager;
 
+        private IServiceManager _servicManager;
+
         private IWorkerManager _workerManager;
 
         private IUnitManager _unitManager;
@@ -42,6 +44,14 @@ namespace Infrastructure.UnitOfWork
                     _materialManager = new MaterialManager(NovinDb);
                 }
                 return _materialManager;
+            }
+        }
+        public IServiceManager ServiceManager
+        {
+            get
+            {
+                _servicManager ??= new ServiceManager(NovinDb);
+                return _servicManager;
             }
         }
 

@@ -181,6 +181,11 @@ namespace NeAccounting
                 services.AddTransient<UpdateMaterailViewModel>();
                 #endregion
 
+                #region Services
+                services.AddTransient<ServicesListPage>();
+
+                #endregion
+
                 #region Reports
                 services.AddTransient<BillPage>();
                 services.AddTransient<BillListViewModel>();

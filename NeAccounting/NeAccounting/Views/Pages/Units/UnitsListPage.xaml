@@ -90,7 +90,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width=".4*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width=".33*" />
+                                    <ColumnDefinition Width="85" />
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0"
