@@ -27,18 +27,39 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.9.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="WPF-UI" Version="1.21.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Application\NeApplication.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Stimulsoft.Base">
+      <HintPath>bin\Debug\Stimulsoft.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Client.Designer">
+      <HintPath>bin\Debug\Stimulsoft.Client.Designer.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Data">
+      <HintPath>bin\Debug\Stimulsoft.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report">
+      <HintPath>bin\Debug\Stimulsoft.Report.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Wpf">
+      <HintPath>bin\Debug\Stimulsoft.Report.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.WpfDesign">
+      <HintPath>bin\Debug\Stimulsoft.Report.WpfDesign.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

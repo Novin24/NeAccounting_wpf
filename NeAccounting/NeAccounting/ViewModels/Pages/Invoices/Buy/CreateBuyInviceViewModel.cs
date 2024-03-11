@@ -144,7 +144,10 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     internal bool OnAdd()
     {
         #region validaion
-
+        if (string.IsNullOrEmpty(Description))
+        {
+            Description = "فاکتور خرید";
+        }
         if (CusId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

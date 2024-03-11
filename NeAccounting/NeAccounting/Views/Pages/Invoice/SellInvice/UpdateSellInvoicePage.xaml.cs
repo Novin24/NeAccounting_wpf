@@ -1,5 +1,4 @@
-﻿using DomainShared.ViewModels;
-using DomainShared.ViewModels.Document;
+﻿using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using NeAccounting.ViewModels;
 using System.Globalization;

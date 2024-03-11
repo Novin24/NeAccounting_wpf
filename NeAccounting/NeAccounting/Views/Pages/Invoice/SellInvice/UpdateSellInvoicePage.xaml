@@ -58,7 +58,7 @@
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <nu:HeaderPack NamePpage="فاکتور فروش"
+                    <nu:HeaderPack NamePpage="ویرایش فاکتور فروش"
                                    Margin="30 0" />
 
                     <Border Grid.Row="1"
@@ -127,7 +127,7 @@
                                              FontFamily="Calibri"
                                              Margin="0 4 0 0"
                                              IsTabStop="False"
-                                             Text="{Binding ViewModel.LastInvoice,Mode=TwoWay}"
+                                             Text="{Binding ViewModel.LastInvoice}"
                                              IsReadOnly="True" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="2"
