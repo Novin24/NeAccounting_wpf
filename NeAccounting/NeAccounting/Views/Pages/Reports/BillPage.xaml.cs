@@ -1,10 +1,7 @@
-﻿using Domain.NovinEntity.Customers;
-using DomainShared.Extension;
+﻿using DomainShared.Extension;
 using DomainShared.ViewModels;
-using DomainShared.ViewModels.Document;
 using NeAccounting.ViewModels;
 using Stimulsoft.Report;
-using Stimulsoft.Report.Dictionary;
 using System.Globalization;
 using System.Windows.Media;
 using Wpf.Ui;
@@ -62,32 +59,31 @@ namespace NeAccounting.Views.Pages
                 _snackbarService.Show("خطا", "در بازه انتخابی موردی برای نمایش یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
+
+            Dictionary<string, string> dic = new()
+            {
+                {"","" }
+            };
+
+            PrintInvoice(dic, list, "InvoiceListDtos");
+        }
+
+        private (string error, bool isSuccess) PrintInvoice(Dictionary<string, string> dic, object list, string listName)
+        {
             try
             {
                 #region StimulSoft
-                var t = new List<Customers>()
-            {
-                new() { Name = "1" },
-                new() { Name = "2" },
-                new() { Name = "4" },
-                new() { Name = "4" },
-                new() { Name = "4" },
-                new() { Name = "4" },
-                new() { Name = "4" },
-                new() { Name = "5" }
-            };
-                var li = t.ToDataTable();
-
                 PersianCalendar pc = new();
+                var time = DateTime.Now.ToShamsiDate(pc);
                 var cus = ViewModel.Cuslist.First(t => t.Id == ViewModel.CusId);
                 StiReport report = new();
-                report.Load(@"Reports\Report.mrt");
+                report.Load(@"Reports\ReportInvoices.mrt");
                 report.Compile();
-                report.RegBusinessObject("Customers", li);
+                report.RegBusinessObject(listName, list);
                 report["Customer_Name"] = $"({cus.UniqNumber}) _ {cus.DisplayName}";
                 report["Start_Date"] = $"{Dtp_Start.DisplayDate}";
                 report["End_Date"] = $"{Dtp_End.DisplayDate}";
-                report["PrintTime"] = DateTime.Now.ToShamsiDate(pc);
+                report["PrintTime"] = time;
                 report["Total_Debt"] = list.Select(p => p.Bed).Sum().ToString("N0");
                 report["Total_Credit"] = list.Select(p => p.Bes).Sum().ToString("N0");
                 report["Total_LeftOVver"] = list.Last().LeftOver.ToString("N0");
@@ -95,7 +91,7 @@ namespace NeAccounting.Views.Pages
                 report["Status"] = $"{list.Last().Status}";
 
                 #region ForEach On Report dataSours
-
+                // زمانی که کامپایل میکردیم اینا کار نمیکنن دیگ
                 //var collection = report.Dictionary;
                 //foreach (StiDataSource item in collection.DataSources)
                 //{
@@ -149,22 +145,20 @@ namespace NeAccounting.Views.Pages
                 //            break;
                 //    }
                 //}
+                //report.Dictionary.Synchronize();
+                //StiBusinessObject dataSource = report.Dictionary.BusinessObjects[0];
+                //StiVariable vr = report.Dictionary.Variables[0];
                 #endregion
-                StiBusinessObject dataSource = report.Dictionary.BusinessObjects[0];
-                StiVariable vr = report.Dictionary.Variables[0];
+
                 report.RenderWithWpf();
                 report.ShowWithWpf();
                 #endregion
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                return new(ex.Message, false);
             }
+            return new(string.Empty, true);
         }
-    }
-
-    public class Customers
-    {
-        public string Name { get; set; }
     }
 }

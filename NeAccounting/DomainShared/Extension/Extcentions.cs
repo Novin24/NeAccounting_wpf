@@ -36,18 +36,19 @@ namespace DomainShared.Extension
         #region NumberToPersianString
         public static string NumberToPersianString(this string TXT)
         {
-            string RET = " ", STRVA = " ";
+            string RET = string.Empty, STRVA;
             string[] MainStr = STR_To_Int(TXT);
             int Q = 0;
             for (int i = MainStr.Length - 1; i >= 0; i--)
             {
-                STRVA = " ";
-                if (RET != " " && RET != null)
+                if (Convert.ToInt32(MainStr[i]) == 0) { Q++; continue; }
+                STRVA = string.Empty;
+                if (RET != "" && RET != null)
                     STRVA = " و ";
                 RET = Convert_STR(GETCountStr(MainStr[i]), Q) + STRVA + RET;
                 Q++;
             }
-            if (RET == " " || RET == null || RET == "  ")
+            if (RET.Trim() == "" || RET == null)
                 RET = "صفر";
             return RET;
         }
@@ -83,7 +84,8 @@ namespace DomainShared.Extension
 
         private static string Convert_STR(string INT, int Count)
         {
-            string RET = "";
+            string RET = string.Empty;
+            if (Convert.ToInt32(INT) == 0) return RET;
             //یک صد
             if (Count == 0)
             {
