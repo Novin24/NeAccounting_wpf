@@ -7,9 +7,4 @@
         public static string CurrentName;
         public static Guid CurrentUserId;
     }
-    
-    public static class InvoiceDetails
-    {
-        public static Guid InvoiceId;
-    }
 }

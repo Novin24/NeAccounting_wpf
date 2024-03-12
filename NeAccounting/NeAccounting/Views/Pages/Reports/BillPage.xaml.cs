@@ -1,7 +1,7 @@
 ﻿using DomainShared.Extension;
 using DomainShared.ViewModels;
 using NeAccounting.ViewModels;
-using Stimulsoft.Report;
+using NeApplication.Services;
 using System.Globalization;
 using System.Windows.Media;
 using Wpf.Ui;
@@ -16,12 +16,14 @@ namespace NeAccounting.Views.Pages
     {
         public BillListViewModel ViewModel { get; }
         private readonly ISnackbarService _snackbarService;
-        public BillPage(BillListViewModel viewModel, ISnackbarService snackbarService)
+        private readonly IPrintServices _printServices;
+        public BillPage(BillListViewModel viewModel, ISnackbarService snackbarService, IPrintServices printServices)
         {
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
             _snackbarService = snackbarService;
+            _printServices = printServices;
         }
 
         private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
@@ -51,7 +53,7 @@ namespace NeAccounting.Views.Pages
 
         private async void btn_Print_Click(object sender, RoutedEventArgs e)
         {
-            var (list, isSuccess) = await ViewModel.PrintInvoice();
+            var (list, isSuccess) = await ViewModel.PrintInvoices();
             if (!isSuccess)
                 return;
             if (!list.Any())
@@ -59,106 +61,20 @@ namespace NeAccounting.Views.Pages
                 _snackbarService.Show("خطا", "در بازه انتخابی موردی برای نمایش یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-
+            var cus = ViewModel.Cuslist.First(t => t.Id == ViewModel.CusId);
             Dictionary<string, string> dic = new()
             {
-                {"","" }
-            };
+                {"Customer_Name",$"({cus.UniqNumber}) _ {cus.DisplayName}"},
+                {"Start_Date",$"{Dtp_Start.DisplayDate}"},
+                {"End_Date",$"{Dtp_End.DisplayDate}"},
+                {"PrintTime",DateTime.Now.ToShamsiDate(new PersianCalendar()) },
+                {"Total_Debt",list.Select(p => p.Bed).Sum().ToString("N0")},
+                {"Total_Credit",list.Select(p => p.Bes).Sum().ToString("N0")},
+                {"Total_LeftOVver",list.Last().LeftOver.ToString("N0")},
+                {"TotalSLeftOver",list.Last().LeftOver.ToString().NumberToPersianString()},
+                {"Status",$"{list.Last().Status}"}};
 
-            PrintInvoice(dic, list, "InvoiceListDtos");
-        }
-
-        private (string error, bool isSuccess) PrintInvoice(Dictionary<string, string> dic, object list, string listName)
-        {
-            try
-            {
-                #region StimulSoft
-                PersianCalendar pc = new();
-                var time = DateTime.Now.ToShamsiDate(pc);
-                var cus = ViewModel.Cuslist.First(t => t.Id == ViewModel.CusId);
-                StiReport report = new();
-                report.Load(@"Reports\ReportInvoices.mrt");
-                report.Compile();
-                report.RegBusinessObject(listName, list);
-                report["Customer_Name"] = $"({cus.UniqNumber}) _ {cus.DisplayName}";
-                report["Start_Date"] = $"{Dtp_Start.DisplayDate}";
-                report["End_Date"] = $"{Dtp_End.DisplayDate}";
-                report["PrintTime"] = time;
-                report["Total_Debt"] = list.Select(p => p.Bed).Sum().ToString("N0");
-                report["Total_Credit"] = list.Select(p => p.Bes).Sum().ToString("N0");
-                report["Total_LeftOVver"] = list.Last().LeftOver.ToString("N0");
-                report["TotalSLeftOver"] = list.Last().LeftOver.ToString().NumberToPersianString();
-                report["Status"] = $"{list.Last().Status}";
-
-                #region ForEach On Report dataSours
-                // زمانی که کامپایل میکردیم اینا کار نمیکنن دیگ
-                //var collection = report.Dictionary;
-                //foreach (StiDataSource item in collection.DataSources)
-                //{
-                //    if (item.Name == "Customers")
-                //    {
-                //        item.DataTable = list.ToList().ToDataTable();
-                //    }
-                //}
-
-                //foreach (StiVariable item in collection.Variables)
-                //{
-                //    switch (item.Name)
-                //    {
-                //        case "Customer_Name":
-                //            item.Value = $"({cus.UniqNumber}) _ {cus.DisplayName}";
-                //            break;
-
-                //        case "Start_Date":
-                //            item.Value = $"{Dtp_Start.DisplayDate}";
-                //            break;
-
-                //        case "End_Date":
-                //            item.Value = $"{Dtp_End.DisplayDate}";
-                //            break;
-
-                //        case "PrintTime":
-                //            item.Value = DateTime.Now.ToShamsiDate(pc);
-                //            break;
-
-                //        case "Total_Debt":
-                //            item.Value = list.Select(p => p.Bed).Sum().ToString("N0");
-                //            break;
-
-                //        case "Total_Credit":
-                //            item.Value = list.Select(p => p.Bes).Sum().ToString("N0");
-                //            break;
-
-                //        case "Total_LeftOVver":
-                //            item.Value = list.Last().LeftOver.ToString("N0");
-                //            break;
-
-                //        case "TotalSLeftOver":
-                //            item.Value = list.Last().LeftOver.ToString().NumberToPersianString();
-                //            break;
-
-                //        case "Status":
-                //            item.Value = $"{list.Last().Status}";
-                //            break;
-
-                //        default:
-                //            break;
-                //    }
-                //}
-                //report.Dictionary.Synchronize();
-                //StiBusinessObject dataSource = report.Dictionary.BusinessObjects[0];
-                //StiVariable vr = report.Dictionary.Variables[0];
-                #endregion
-
-                report.RenderWithWpf();
-                report.ShowWithWpf();
-                #endregion
-            }
-            catch (Exception ex)
-            {
-                return new(ex.Message, false);
-            }
-            return new(string.Empty, true);
+            _printServices.PrintInvoice(@"Reports\ReportInvoices.mrt", "InvoiceListDtos", list, dic);
         }
     }
 }

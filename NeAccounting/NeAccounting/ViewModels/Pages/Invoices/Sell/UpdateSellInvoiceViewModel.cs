@@ -11,7 +11,7 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class UpdateSellInvoiceViewModel : ObservableObject
+    public partial class UpdateSellInvoiceViewModel : ObservableObject 
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;

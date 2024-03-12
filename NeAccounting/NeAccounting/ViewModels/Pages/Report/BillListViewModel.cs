@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
@@ -108,7 +109,7 @@ namespace NeAccounting.ViewModels
         }
 
 
-        public async Task<(IEnumerable<InvoiceListDtos> list, bool isSuccess)> PrintInvoice()
+        public async Task<(IEnumerable<InvoiceListDtos> list, bool isSuccess)> PrintInvoices()
         {
             if (!CusId.HasValue)
             {
