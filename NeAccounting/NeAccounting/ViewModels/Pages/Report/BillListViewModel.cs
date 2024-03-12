@@ -270,51 +270,52 @@ namespace NeAccounting.ViewModels
                         return;
                     }
 
-                    var servise = _navigationService.GetNavigationControl();
-                    var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
-                    if (!isSuccess)
-                    {
-                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                        return;
-                    }
+                    EditInvoiceDetails.InvoiceId = parameter;
 
-                    var mat = await db.MaterialManager.GetMaterails();
-                    var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
-                    var oc = new System.Collections.ObjectModel.ObservableCollection<RemittanceListViewModel>();
-                    int i = 1;
-                    foreach (var it in itm.RemList)
-                    {
-                        it.RowId = i++;
-                        it.MatName = mat.First(t => t.Id == it.MaterialId).MaterialName;
-                        it.UnitName = mat.First(t => t.Id == it.MaterialId).UnitName;
-                        oc.Add(it);
-                    }
-                    long stx = itm.TotalPrice;
-                    if (itm.CommissionPrice.HasValue && itm.CommissionPrice.Value != 0)
-                    {
-                        stx -= itm.CommissionPrice.Value;
-                    }
-                    var context = new UpdateSellInvoicePage(new UpdateSellInvoiceViewModel(_snackbarService, _navigationService)
-                    {
-                        MatList = mat,
-                        CusName = Cuslist.First(t => t.Id == itm.CustomerId).DisplayName,
-                        CusNumber = Cuslist.First(t => t.Id == itm.CustomerId).UniqNumber,
-                        Status = stu.Status,
-                        Debt = stu.Debt,
-                        Credit = stu.Credit,
-                        SubmitDate = itm.Date,
-                        StaticList = itm.RemList,
-                        RemainPrice = stx.ToString("N0"),
-                        InvDescription = itm.InvoiceDescription,
-                        Commission = itm.Commission,
-                        LastInvoice = itm.Serial,
-                        List = oc,
-                        TotalPrice = itm.TotalPrice.ToString("N0"),
-                        Totalcommission = itm.Commission.HasValue ? (itm.TotalPrice * (itm.Commission.Value / 100)).ToString("N0") : "0",
-                        InvoiceId = parameter
-                    }, _snackbarService);
+                     _navigationService.Navigate(pageType);
 
-                    servise.Navigate(pageType, context);
+                    //var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
+                    //if (!isSuccess)
+                    //{
+                    //    _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    //    return;
+                    //}
+                    //var mat = await db.MaterialManager.GetMaterails();
+                    //var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                    //var oc = new System.Collections.ObjectModel.ObservableCollection<RemittanceListViewModel>();
+                    //int i = 1;
+                    //foreach (var it in itm.RemList)
+                    //{
+                    //    it.RowId = i++;
+                    //    it.MatName = mat.First(t => t.Id == it.MaterialId).MaterialName;
+                    //    it.UnitName = mat.First(t => t.Id == it.MaterialId).UnitName;
+                    //    oc.Add(it);
+                    //}
+                    //long stx = itm.TotalPrice;
+                    //if (itm.CommissionPrice.HasValue && itm.CommissionPrice.Value != 0)
+                    //{
+                    //    stx -= itm.CommissionPrice.Value;
+                    //}
+                    //var context = new UpdateSellInvoicePage(new UpdateSellInvoiceViewModel(_snackbarService, _navigationService)
+                    //{
+                    //    MatList = mat,
+                    //    CusName = Cuslist.First(t => t.Id == itm.CustomerId).DisplayName,
+                    //    CusNumber = Cuslist.First(t => t.Id == itm.CustomerId).UniqNumber,
+                    //    Status = stu.Status,
+                    //    Debt = stu.Debt,
+                    //    Credit = stu.Credit,
+                    //    SubmitDate = itm.Date,
+                    //    StaticList = itm.RemList,
+                    //    RemainPrice = stx.ToString("N0"),
+                    //    InvDescription = itm.InvoiceDescription,
+                    //    Commission = itm.Commission,
+                    //    LastInvoice = itm.Serial,
+                    //    List = oc,
+                    //    TotalPrice = itm.TotalPrice.ToString("N0"),
+                    //    Totalcommission = itm.Commission.HasValue ? (itm.TotalPrice * (itm.Commission.Value / 100)).ToString("N0") : "0",
+                    //    InvoiceId = parameter
+                    //}, _snackbarService);
+
                     break;
                 case DocumntType.BuyInv:
                     break;

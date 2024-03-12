@@ -115,60 +115,60 @@
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
 
-                                <StackPanel Grid.Column="1"
-                                            Margin="5 25 5 0 ">
+                                    <StackPanel Grid.Column="1"
+                                                Margin="5 25 5 0 ">
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="15"
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="15"
                                                Text="سریال فاکتور"
-                                               Margin="2 0 0 0 "
-                                               HorizontalAlignment="Center" />
-                                    <TextBox TextAlignment="Center"
-                                             FontFamily="Calibri"
-                                             Margin="0 4 0 0"
-                                             IsTabStop="False"
-                                             Text="{Binding ViewModel.LastInvoice}"
-                                             IsReadOnly="True" />
-                                </StackPanel>
-                                <StackPanel Grid.Column="2"
-                                            Margin="5 29 0 0 ">
+                                                   Margin="2 0 0 0 "
+                                                   HorizontalAlignment="Center" />
+                                        <TextBox TextAlignment="Center"
+                                                 FontFamily="Calibri"
+                                                 Margin="0 4 0 0"
+                                                 IsTabStop="False"
+                                                 Text="{Binding ViewModel.LastInvoice}"
+                                                 IsReadOnly="True" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2"
+                                                Margin="5 29 0 0 ">
 
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="15"
-                                               Text="پورسانت"
-                                               Margin="2 0 0 0 " />
-                                    <ui:NumberBox TextAlignment="Center"
-                                                  FontFamily="Calibri"
-                                                  ClearButtonEnabled="False"
-                                                  Maximum="100"
-                                                  Minimum="0"
-                                                  Value="{Binding ViewModel.Commission , Mode=TwoWay}"
-                                                  Name="txt_Commission"
-                                                  Icon="{ui:SymbolIcon ShoppingBagPercent24}"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  FlowDirection="LeftToRight" />
-                                </StackPanel>
-                                <nu:PersianDatePicker FlowDirection="LeftToRight"
-                                                      Grid.Column="3"
-                                                      MinWidth="230"
-                                                      HorizontalAlignment="Left"
-                                                      MaxWidth="250"
-                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}"
-                                                      LabelName="تاریخ"
-                                                      Margin="0 21 0 0 " />
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="15"
+                                                   Text="پورسانت"
+                                                   Margin="2 0 0 0 " />
+                                        <ui:NumberBox TextAlignment="Center"
+                                                      FontFamily="Calibri"
+                                                      ClearButtonEnabled="False"
+                                                      Maximum="100"
+                                                      Minimum="0"
+                                                      Value="{Binding ViewModel.Commission , Mode=TwoWay}"
+                                                      Name="txt_Commission"
+                                                      Icon="{ui:SymbolIcon ShoppingBagPercent24}"
+                                                      SpinButtonPlacementMode="Hidden"
+                                                      FlowDirection="LeftToRight" />
+                                    </StackPanel>
+                                    <nu:PersianDatePicker FlowDirection="LeftToRight"
+                                                          Grid.Column="3"
+                                                          MinWidth="230"
+                                                          HorizontalAlignment="Left"
+                                                          MaxWidth="250"
+                                                          SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}"
+                                                          LabelName="تاریخ"
+                                                          Margin="0 21 0 0 " />
 
 
-                                <Line Grid.ColumnSpan="5"
-                                      X1="0"
-                                      Y1="9.5"
-                                      X2="1300"
-                                      Y2="9.5"
-                                      Margin="0 85 0 0"
-                                      StrokeThickness="3"
-                                      VerticalAlignment="Bottom"
-                                      HorizontalAlignment="Center"
-                                      Stroke="DimGray"
-                                      Height="9" />
+                                    <Line Grid.ColumnSpan="5"
+                                          X1="0"
+                                          Y1="9.5"
+                                          X2="1300"
+                                          Y2="9.5"
+                                          Margin="0 85 0 0"
+                                          StrokeThickness="3"
+                                          VerticalAlignment="Bottom"
+                                          HorizontalAlignment="Center"
+                                          Stroke="DimGray"
+                                          Height="9" />
                             </Grid>
                             <Grid Grid.Row="1"
                                   Margin="8 0 8 16">
@@ -195,12 +195,6 @@
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
                                                Text="شرح کالا"
-                                               HorizontalAlignment="Center" />
-                                    <TextBlock FontFamily="Calibri"
-                                               Visibility="Collapsed"
-                                               FontSize="15"
-                                               x:Name="lbl_matId"
-                                               Text="{Binding ViewModel.MaterialId, Mode=TwoWay}"
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
@@ -235,9 +229,7 @@
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_UnitName"
                                                 TextAlignment="Center"
-                                                Text="{Binding ViewModel.UnitName,Mode=TwoWay}"
-                                                IsReadOnly="True"
-                                                IsTabStop="False"
+                                                IsEnabled="False"
                                                 ClearButtonEnabled="False"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
@@ -247,17 +239,10 @@
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
-                                               x:Name="lbl_MatPrice"
-                                               Text="{Binding ViewModel.MatPrice,Mode=TwoWay}"
-                                               Visibility="Collapsed"
-                                               HorizontalAlignment="Center" />
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="15"
                                                Text="قیمت واحد"
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_Unit_price"
                                                 TextAlignment="Center"
-                                                Text="{Binding ViewModel.UnitPrice,Mode=TwoWay}"
                                                 ClearButtonEnabled="False"
                                                 LostFocus="Txt_Unit_price_LostFocus"
                                                 PreviewTextInput="Txt_Unit_price_PreviewTextInput"
@@ -273,12 +258,9 @@
                                                Text="قیمت کل"
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_total_price"
-                                                Text="{Binding ViewModel.TPrice,Mode=TwoWay}"
                                                 TextAlignment="Center"
                                                 ClearButtonEnabled="False"
-                                                IsEnabled="True"
-                                                IsTabStop="False"
-                                                IsReadOnly="True"
+                                                IsEnabled="False"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
@@ -302,7 +284,6 @@
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
                                         Click="Button_Click"
-                                        Command="{Binding ViewModel.AddCommand}"
                                         HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="افزودن" />
@@ -331,7 +312,7 @@
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding RowId, Mode=OneWay}"
+                                                        Binding="{Binding RowId}"
                                                         Width=".23*" />
                                     <DataGridTextColumn Binding="{Binding MatName}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
@@ -361,8 +342,6 @@
                                                                 Margin="4"
                                                                 Tag="{Binding RowId , Mode=OneWay}"
                                                                 Click="BtnUpdate_Click"
-                                                                CommandParameter="{Binding RowId , Mode=OneWay}"
-                                                                Command="{Binding Path=DataContext.ViewModel.UpdateCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                                 Padding="7,5"
                                                                 ToolTip="ویرایش">
                                                         <ui:SymbolIcon Symbol="Pen16" />

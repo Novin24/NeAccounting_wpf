@@ -6,6 +6,7 @@ namespace DomainShared.ViewModels.Customer
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public long UniqNumber { get; set; }
         public string Mobile { get; set; }
         public long TotalCredit { get; set; }
         public long ChequeCredit { get; set; }

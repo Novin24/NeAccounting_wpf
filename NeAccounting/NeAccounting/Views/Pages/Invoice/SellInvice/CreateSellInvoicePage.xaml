@@ -369,21 +369,21 @@
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal"
                                                             HorizontalAlignment="Center">
-                                                    <Button  BorderBrush="Transparent"
-                                                             Margin="2"
-                                                             Tag="{Binding RowId , Mode=OneWay}"
-                                                             Click="BtnUpdate_Click"
-                                                             Padding="7,5"
-                                                             ToolTip="ویرایش">
+                                                    <ui:Button  BorderBrush="Transparent"
+                                                                Margin="2"
+                                                                Tag="{Binding RowId , Mode=OneWay}"
+                                                                Click="BtnUpdate_Click"
+                                                                Padding="7,5"
+                                                                ToolTip="ویرایش">
                                                         <ui:SymbolIcon Symbol="Pen16" />
-                                                    </Button>
-                                                    <Button Margin="3"
-                                                            Tag="{Binding RowId , Mode=OneWay}"
-                                                            Click="BtnRemove_Click"
-                                                            Padding="7,5"
-                                                            ToolTip="حذف">
+                                                    </ui:Button>
+                                                    <ui:Button Margin="3"
+                                                               Tag="{Binding RowId , Mode=OneWay}"
+                                                               Click="BtnRemove_Click"
+                                                               Padding="7,5"
+                                                               ToolTip="حذف">
                                                         <ui:SymbolIcon Symbol="Delete16" />
-                                                    </Button>
+                                                    </ui:Button>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>

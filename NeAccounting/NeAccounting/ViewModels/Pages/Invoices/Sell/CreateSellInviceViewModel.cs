@@ -151,10 +151,6 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
             return false;
         }
 
-        if (string.IsNullOrEmpty(Description))
-        {
-            Description = "فاکتور فروش";
-        }
 
         if (MaterialId < 0)
         {
@@ -242,6 +238,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
             List.Remove(itm);
             RefreshRow(ref rowId);
         }
+        SetCommisionValue();
     }
 
     /// <summary>
@@ -267,6 +264,11 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         {
             _snackbarService.Show("خطا", "وارد کردن حداقل یک ردیف الزامیست !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
+        }
+
+        if (string.IsNullOrEmpty(InvDescription))
+        {
+            InvDescription = "فاکتور فروش";
         }
         #endregion
 
@@ -294,7 +296,6 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         }
         await db.SaveChangesAsync();
         #endregion
-
 
         #region reload
         _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور با موفقیت انجام شد", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
