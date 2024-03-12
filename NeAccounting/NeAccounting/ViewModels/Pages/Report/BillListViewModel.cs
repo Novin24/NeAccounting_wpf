@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
@@ -43,10 +44,10 @@ namespace NeAccounting.ViewModels
         private string _desc = "";
 
         [ObservableProperty]
-        private DateTime _startDate = DateTime.Now;
+        private DateTime? _startDate = DateTime.Now;
 
         [ObservableProperty]
-        private DateTime _endDate = DateTime.Now;
+        private DateTime? _endDate = DateTime.Now;
 
         /// <summary>
         /// به احتساب مانده قبلی
@@ -64,7 +65,7 @@ namespace NeAccounting.ViewModels
         /// لیست فاکتور
         /// </summary>
         [ObservableProperty]
-        private IEnumerable<InvoiceListDto> _invList;
+        private IEnumerable<InvoiceListDtos> _invList;
 
         public void OnNavigatedFrom()
         {
@@ -83,18 +84,52 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        public async Task OnSearchInvoice()
+        private async Task OnSearchInvoice()
         {
             if (!CusId.HasValue)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            if (StartDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ شروع"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
 
+            if (EndDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پایان"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetInvoicesByDate(StartDate, EndDate, Desc, CusId.Value, LeftOver, false, CurrentPage);
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, CurrentPage);
             InvList = t.Items;
             PageCount = t.PageCount;
+        }
+
+
+        public async Task<(IEnumerable<InvoiceListDtos> list, bool isSuccess)> PrintInvoices()
+        {
+            if (!CusId.HasValue)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+                return (new List<InvoiceListDtos>(), false);
+            }
+            if (StartDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ شروع"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return (new List<InvoiceListDtos>(), false);
+            }
+
+            if (EndDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پایان"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return (new List<InvoiceListDtos>(), false);
+            }
+            using UnitOfWork db = new();
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, CurrentPage);
+            return new(t.Items, true);
         }
 
         [RelayCommand]

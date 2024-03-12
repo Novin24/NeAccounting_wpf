@@ -19,7 +19,7 @@
       Title="Bill"
       x:Name="root">
     <Page.Resources>
-        <cnt:Converters x:Key="ConvertHeight"/>
+        <cnt:Converters x:Key="ConvertHeight" />
     </Page.Resources>
 
 
@@ -64,14 +64,20 @@
             <Border.Style>
                 <Style TargetType="Border">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}" Value="false">
-                            <Setter Property="MaxHeight" Value="770"/>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}"
+                                     Value="false">
+                            <Setter Property="MaxHeight"
+                                    Value="770" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}" Value="false">
-                            <Setter Property="MaxHeight" Value="720"/>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}"
+                                     Value="false">
+                            <Setter Property="MaxHeight"
+                                    Value="720" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}" Value="false">
-                            <Setter Property="MaxHeight" Value="670"/>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}"
+                                     Value="false">
+                            <Setter Property="MaxHeight"
+                                    Value="670" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -111,7 +117,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition />
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -123,7 +129,7 @@
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="مشتری"
-                                           Margin="7 0 0 4" />
+                                               Margin="7 0 0 4" />
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                x:Name="txt_Personel"
@@ -164,12 +170,14 @@
 
                             <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
+                                                  x:Name="Dtp_Start"
                                                   SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay}"
                                                   LabelName="از تاریخ"
                                                   Grid.Row="1" />
 
                             <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
+                                                  x:Name="Dtp_End"
                                                   SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay}"
                                                   LabelName="تا تاریخ"
                                                   Grid.Row="1"
@@ -180,35 +188,37 @@
                                         Margin="20 20 20 0"
                                         Grid.Row="1">
                                 <Button Grid.Column="2"
-                                    IsDefault="True"
-                                    FontFamily="Calibri"
-                                    Grid.Row="1"
-                                    Command="{Binding ViewModel.SearchInvoiceCommand}"
-                                    HorizontalAlignment="Center"
-                                    Padding="10 4"
-                                    Margin="0 0 10 0">
+                                        IsDefault="True"
+                                        FontFamily="Calibri"
+                                        Grid.Row="1"
+                                        Command="{Binding ViewModel.SearchInvoiceCommand}"
+                                        HorizontalAlignment="Center"
+                                        Padding="10 4"
+                                        Margin="0 0 10 0">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="نمایش"
-                                               FontSize="16" />
+                                                   FontSize="16" />
                                         <TextBlock Text=" (F6)"
-                                               FontSize="14"
-                                               VerticalAlignment="Center"
-                                               Foreground="#FFA3A3A3" />
+                                                   FontSize="14"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
                                     </StackPanel>
                                 </Button>
 
                                 <Button Padding="10 4 "
-                                    Grid.Column="2"
-                                    Grid.Row="1"
-                                    FontSize="17"
-                                    FontFamily="Calibri"
-                                    HorizontalAlignment="Right">
+                                        Grid.Column="2"
+                                        Grid.Row="1"
+                                        FontSize="17"
+                                        x:Name="btn_Print"
+                                        FontFamily="Calibri"
+                                        Click="btn_Print_Click"
+                                        HorizontalAlignment="Right">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="پرینت" />
                                         <TextBlock Text=" (Ctrl+P)"
-                                               FontSize="11.5"
-                                               VerticalAlignment="Center"
-                                               Foreground="#FFA3A3A3" />
+                                                   FontSize="11.5"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
                                     </StackPanel>
                                 </Button>
                             </StackPanel>

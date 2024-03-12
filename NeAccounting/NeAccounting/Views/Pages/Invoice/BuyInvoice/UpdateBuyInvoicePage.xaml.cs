@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using DomainShared.ViewModels.Document;
 
 namespace NeAccounting.Views.Pages
 {
@@ -21,45 +22,26 @@ namespace NeAccounting.Views.Pages
         {
             InitializeComponent();
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.OnAdd())
-            {
-                ViewModel.AmountOf = null;
-                ViewModel.MaterialId = -1;
-                ViewModel.Description = null;
-                ViewModel.MatPrice = null;
-                txt_MaterialName.Text = string.Empty;
-                txt_UnitName.Text = string.Empty;
-                txt_Unit_price.Text = string.Empty;
-                txt_total_price.Text = string.Empty;
-                txt_UnitDescription.Text = string.Empty;
-                txt_MaterialName.Focus();
-            }
+
+            txt_MaterialName.Text = string.Empty;
+            txt_MaterialName.Focus();
             dgv_Inv.Items.Refresh();
         }
 
-        private async void Txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            if (!IsInitialized)
-                return;
-            var user = (SuggestBoxViewModel<Guid, long>)args.SelectedItem;
-            ViewModel.CusId = user.Id;
-            lbl_cusId.Text = user.UniqNumber.ToString();
-            await ViewModel.OnSelectCus(user.Id);
-        }
 
         private void Txt_mat_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             if (!IsInitialized)
                 return;
             var mat = (MatListDto)args.SelectedItem;
-            ViewModel.MaterialId = mat.Id;
+            lbl_matId.Text = mat.Id.ToString();
             _totalEntity = mat.Entity;
             txt_UnitName.Text = mat.UnitName;
-            txt_Unit_price.Text = mat.LastBuyPrice.ToString("N0");
-            _price = mat.LastBuyPrice;
+            txt_Unit_price.Text = mat.LastSellPrice.ToString("N0");
+            _price = mat.LastSellPrice;
+            lbl_MatPrice.Text = _price.ToString();
         }
 
         private void Txt_amount_LostFocus(object sender, RoutedEventArgs e)
@@ -70,10 +52,6 @@ namespace NeAccounting.Views.Pages
             if (nb.Value == null)
                 return;
 
-            //if (nb.Value > _totalEntity)
-            //{
-            //    _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
-            //}
             txt_total_price.Text = (nb.Value.Value * _price).ToString("N0");
         }
 
@@ -84,7 +62,8 @@ namespace NeAccounting.Views.Pages
 
         private void Txt_Unit_price_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            if (sender is not TextBox txt_price) return;
+            if (sender is not TextBox txt_price)
+                return;
 
             if (txt_price.Text == "" || txt_price.Text == "0") return;
             CultureInfo culture = new("en-US");
@@ -99,32 +78,14 @@ namespace NeAccounting.Views.Pages
             if (sender is not TextBox txt_price)
                 return;
 
-            if (ViewModel.AmountOf == null)
+            if (txt_amount.Value == null || txt_amount.Value == 0)
                 return;
 
 
-            ViewModel.MatPrice = _price = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
+            _price = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
+            lbl_MatPrice.Text = _price.ToString();
 
-            txt_total_price.Text = (ViewModel.AmountOf.Value * _price).ToString("N0");
-        }
-
-        private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
-        {
-            if (!Validation())
-            {
-                _snackbarService.Show("اخطار", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ثبت فاکتور نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
-            if (await ViewModel.OnSumbit())
-            {
-                txt_CustomerName.Text = string.Empty;
-                txt_MaterialName.Text = string.Empty;
-                txt_UnitName.Text = string.Empty;
-                txt_Unit_price.Text = string.Empty;
-                txt_total_price.Text = string.Empty;
-                txt_UnitDescription.Text = string.Empty;
-                lbl_cusId.Text = string.Empty;
-            }
+            txt_total_price.Text = (txt_amount.Value.Value * _price).ToString("N0");
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
@@ -142,45 +103,30 @@ namespace NeAccounting.Views.Pages
             }
 
             int id = int.Parse(btn.Tag.ToString());
-            var (s, itm) = ViewModel.OnUpdate(id);
-            if (!s) return;
-            txt_MaterialName.Text = itm.MatName;
-            txt_total_price.Text = itm.TotalPrice.ToString("N0");
-            txt_UnitName.Text = itm.UnitName;
-            _price = itm.Price;
-            txt_Unit_price.Text = itm.Price.ToString();
+            var mat = dgv_Inv.ItemsSource.Cast<RemittanceListViewModel>().FirstOrDefault(t => t.RowId == id);
+            if (mat == null)
+                return;
+            txt_MaterialName.Text = mat.MatName;
             dgv_Inv.Items.Refresh();
         }
 
-        private void BtnRemove_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is not Button btn)
-                return;
-
-            if (btn.Tag == null)
-                return;
-
-            int id = int.Parse(btn.Tag.ToString());
-            ViewModel.OnRemove(id);
-            dgv_Inv.Items.Refresh();
-        }
 
         private bool Validation()
         {
-            if (txt_MaterialName.Text != string.Empty)
+            if (!string.IsNullOrEmpty(txt_MaterialName.Text.Trim()))
                 return false;
 
             if (txt_amount.Value != null && txt_amount.Value != 0)
                 return false;
 
-            if (txt_Unit_price.Text != string.Empty)
+            if (!string.IsNullOrEmpty(txt_Unit_price.Text.Trim()))
                 return false;
 
             return true;
         }
 
-
         [GeneratedRegex("[^0-9]+")]
         private static partial Regex MyRegex();
+
     }
 }

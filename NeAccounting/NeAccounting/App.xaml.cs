@@ -14,6 +14,7 @@ using NeAccounting.ViewModels.Pages;
 using NeAccounting.Views.Pages;
 using NeAccounting.Views.Pages.Test;
 using NeAccounting.Windows;
+using NeApplication.Services;
 using System.IO;
 using System.Reflection;
 using System.Windows.Threading;
@@ -113,7 +114,7 @@ namespace NeAccounting
                 #region Recived
                 services.AddTransient<CreateRecPage>();
                 services.AddTransient<CreateRecViewModel>();
-                
+
                 services.AddTransient<UpdateRecDocPage>();
                 services.AddTransient<UpdateRecDocViewModel>();
                 #endregion
@@ -158,7 +159,7 @@ namespace NeAccounting
                 #region Payment
                 services.AddTransient<CreatePayDocPage>();
                 services.AddTransient<CreatePayDocViewModel>();
-                
+
                 services.AddTransient<UpdatePayDocPage>();
                 services.AddTransient<UpdatePayDocViewModel>();
                 #endregion
@@ -212,6 +213,10 @@ namespace NeAccounting
                 #region DbContext
                 services.AddDbContext<NovinDbContext>();
                 services.AddDbContext<BaseDomainDbContext>();
+                #endregion
+
+                #region Services
+                services.AddTransient<IPrintServices, PrintServices>();
                 #endregion
 
             }).Build();

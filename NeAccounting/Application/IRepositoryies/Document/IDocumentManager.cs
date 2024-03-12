@@ -119,7 +119,7 @@ namespace NeApplication.IRepositoryies
         #endregion
 
         #region report
-        Task<PagedResulViewModel<InvoiceListDto>> GetInvoicesByDate(DateTime StartTime,
+        Task<PagedResulViewModel<InvoiceListDtos>> GetInvoicesByDate(DateTime StartTime,
             DateTime EndTime,
             string desc,
             Guid CusId,

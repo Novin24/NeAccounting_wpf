@@ -516,7 +516,7 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region report
-        public async Task<PagedResulViewModel<InvoiceListDto>> GetInvoicesByDate(DateTime startTime,
+        public async Task<PagedResulViewModel<InvoiceListDtos>> GetInvoicesByDate(DateTime startTime,
             DateTime endTime,
             string desc,
             Guid cusId,
@@ -527,7 +527,7 @@ namespace Infrastructure.Repositories
         {
             int i = 1;
             PersianCalendar pc = new();
-            List<InvoiceListDto> Remittances = [];
+            List<InvoiceListDtos> Remittances = [];
             var MyDoc = await TableNoTracking
                 .Where(st => st.SubmitDate > startTime)
                 .Where(et => et.SubmitDate < endTime)
@@ -548,7 +548,7 @@ namespace Infrastructure.Repositories
 
             if (leftOver)
             {
-                InvoiceListDto rem = new()
+                InvoiceListDtos rem = new()
                 {
                     Row = 0,
                     Date = startTime,
@@ -561,7 +561,7 @@ namespace Infrastructure.Repositories
                 Remittances.Add(rem);
             }
 
-            Remittances.AddRange(MyDoc.Where(p => !p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDto
+            Remittances.AddRange(MyDoc.Where(p => !p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDtos
             {
                 Description = t.Description,
                 Date = t.Date,
@@ -573,7 +573,7 @@ namespace Infrastructure.Repositories
                 Bes = 0,
             }).ToList());
 
-            Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDto
+            Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDtos
             {
                 Description = t.Description,
                 Date = t.Date,
@@ -621,7 +621,7 @@ namespace Infrastructure.Repositories
                 Remittances = Remittances.SkipLast(--pageNum * pageCount).TakeLast(pageCount).ToList();
             }
 
-            return new PagedResulViewModel<InvoiceListDto>(totalCount, pageCount, Remittances);
+            return new PagedResulViewModel<InvoiceListDtos>(totalCount, pageCount, Remittances);
         }
 
         public Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime, DateTime EndTime, Guid CusId, bool LeftOver, string Description)

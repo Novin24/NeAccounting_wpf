@@ -1,8 +1,8 @@
-﻿using DomainShared.Enums;
-using DomainShared.Errore;
+﻿using DomainShared.Errore;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using Wpf.Ui;
@@ -11,9 +11,8 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class UpdateSellInvoiceViewModel : ObservableObject, INavigationAware
+    public partial class UpdateSellInvoiceViewModel : ObservableObject 
     {
-        private bool _isInitialized = false;
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
 
@@ -22,6 +21,7 @@ namespace NeAccounting.ViewModels
             _snackbarService = snackbarService;
             _navigationService = navigationService;
         }
+        #region properties
 
         private int RowId = 1;
 
@@ -77,7 +77,6 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private string _debt = "0";
-
 
         /// <summary>
         /// نام واحد
@@ -162,22 +161,9 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private string? _invDescription;
+        #endregion
 
-        public void OnNavigatedTo()
-        {
-            if (!_isInitialized)
-                InitializeViewModel();
-        }
-
-        public void OnNavigatedFrom()
-        {
-        }
-
-        private void InitializeViewModel()
-        {
-            _isInitialized = true;
-        }
-
+        #region Commands
         /// <summary>
         /// افزودن ردیف
         /// </summary>
@@ -286,6 +272,11 @@ namespace NeAccounting.ViewModels
         private async Task OnSumbit()
         {
             #region validation
+            if (string.IsNullOrEmpty(Description))
+            {
+                Description = "فاکتور فروش";
+            }
+
             if (RemId != null)
             {
                 _snackbarService.Show("خطا", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ثبت فاکتور نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -298,7 +289,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
-            if (List == null || List.Where(t=> !t.IsDeleted).Count() == 0)
+            if (List == null || !List.Any(t => !t.IsDeleted))
             {
                 _snackbarService.Show("خطا", "وارد کردن حداقل یک ردیف الزامیست !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -349,8 +340,8 @@ namespace NeAccounting.ViewModels
             }
             #endregion
 
-            #region CreateSellDoc
-            var totalInvoicePrice = li.Where(t=> !t.IsDeleted).Sum(t => t.TotalPrice);
+            #region UpdateSellDoc
+            var totalInvoicePrice = li.Where(t => !t.IsDeleted).Sum(t => t.TotalPrice);
             var (e, s) = await db.DocumentManager.UpdateSellDocument(InvoiceId, totalInvoicePrice, Commission, InvDescription, SubmitDate.Value, li);
             if (!s)
             {
@@ -361,6 +352,15 @@ namespace NeAccounting.ViewModels
             _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور با موفقیت انجام شد", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
             #endregion
 
+            #region reDirect
+            Type? pageType = NameToPageTypeConverter.Convert("Bill");
+
+            if (pageType == null)
+            {
+                return;
+            }
+            _ = _navigationService.Navigate(pageType);
+            #endregion
         }
 
         /// <summary>
@@ -398,5 +398,6 @@ namespace NeAccounting.ViewModels
             }
             RemainPrice = total.ToString("N0");
         }
+        #endregion
     }
 }
