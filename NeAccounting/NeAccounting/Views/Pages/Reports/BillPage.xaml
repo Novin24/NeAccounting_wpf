@@ -1,19 +1,27 @@
 ﻿<Page x:Class="NeAccounting.Views.Pages.BillPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
+      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:s="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d"
       d:DesignHeight="900"
       d:DesignWidth="1200"
-      d:DataContext="{d:DesignInstance local:BillPage ,IsDesignTimeCreatable=False}"
+      Loaded="Page_Loaded"
+      d:DataContext="{d:DesignInstance local:BillPage,
+                                        IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="Bill">
+      Title="Bill"
+      x:Name="root">
+    <Page.Resources>
+        <cnt:Converters x:Key="ConvertHeight" />
+    </Page.Resources>
+
 
 
     <Grid>
@@ -21,7 +29,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="10*" />
+            <RowDefinition Height="auto"
+                           MinHeight="500" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -51,6 +60,28 @@
                 Grid.ColumnSpan="3"
                 Background="{DynamicResource ApplicationBackgroundBrush}"
                 CornerRadius="10">
+
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}"
+                                     Value="false">
+                            <Setter Property="MaxHeight"
+                                    Value="770" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}"
+                                     Value="false">
+                            <Setter Property="MaxHeight"
+                                    Value="720" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}"
+                                     Value="false">
+                            <Setter Property="MaxHeight"
+                                    Value="670" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <Grid>
 
                 <Grid.RowDefinitions>
@@ -78,7 +109,7 @@
                           Margin="50 10 50 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
 
                         </Grid.RowDefinitions>
@@ -93,19 +124,19 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <StackPanel Grid.Row="0"
-                                        Margin="23 0 7 0">
+                                        Margin="23 0 7 4">
                                 <DockPanel>
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="مشتری"
-                                               Margin="2 0 0 0 " />
+                                               Margin="7 0 0 4" />
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                x:Name="txt_Personel"
                                                Foreground="#BB8F60"
                                                Text="{Binding ViewModel.PersonelId , Mode=OneWay}"
                                                HorizontalAlignment="Right"
-                                               Margin="2 0 0 7" />
+                                               Margin="2 0 0 0" />
                                 </DockPanel>
                                 <ui:AutoSuggestBox FontSize="16"
                                                    x:Name="txt_name"
@@ -113,14 +144,11 @@
                                                    OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
                                                    SuggestionChosen="txt_name_SuggestionChosen"
                                                    DisplayMemberPath="DisplayName"
-                                                   HorizontalAlignment="Left"
-                                                   MinWidth="155"
-                                                   MaxWidth="200"
                                                    FontFamily="Calibri" />
                             </StackPanel>
 
                             <StackPanel Grid.Column="1"
-                                        Margin="20 0 7 0 ">
+                                        Margin="20 0 7 4 ">
 
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="14"
@@ -137,60 +165,66 @@
                                       FontFamily="Calibri"
                                       Margin="10 22 10 0 "
                                       IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay}"
-                                      HorizontalAlignment="Left"
+                                      HorizontalAlignment="Center"
                                       FontSize="14" />
 
                             <nu:PersianDatePicker VerticalAlignment="Center"
-                                                  HorizontalAlignment="Left"
                                                   FlowDirection="LeftToRight"
+                                                  x:Name="Dtp_Start"
                                                   SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay}"
                                                   LabelName="از تاریخ"
-                                                  Grid.Row="1"
-                                                  Width="250" />
+                                                  Grid.Row="1" />
 
                             <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
+                                                  x:Name="Dtp_End"
                                                   SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay}"
                                                   LabelName="تا تاریخ"
                                                   Grid.Row="1"
-                                                  HorizontalAlignment="Left"
                                                   Grid.Column="1" />
+                            <StackPanel Grid.Column="2"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        Margin="20 20 20 0"
+                                        Grid.Row="1">
+                                <Button Grid.Column="2"
+                                        IsDefault="True"
+                                        FontFamily="Calibri"
+                                        Grid.Row="1"
+                                        Command="{Binding ViewModel.SearchInvoiceCommand}"
+                                        HorizontalAlignment="Center"
+                                        Padding="10 4"
+                                        Margin="0 0 10 0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="نمایش"
+                                                   FontSize="16" />
+                                        <TextBlock Text=" (F6)"
+                                                   FontSize="14"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                                    </StackPanel>
+                                </Button>
 
-                            <Button Padding="10 4 "
-                                    Grid.Column="1"
-                                    Grid.Row="1"
-                                    FontSize="17"
-                                    FontFamily="Calibri"
-                                    HorizontalAlignment="Right"
-                                    Margin="0 20 0 0">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="پرینت" />
-                                    <TextBlock Text=" (Ctrl+P)"
-                                               FontSize="11.5"
-                                               VerticalAlignment="Center"
-                                               Foreground="#FFA3A3A3" />
-                                </StackPanel>
-                            </Button>
-
-                            <Button Grid.Column="2"
-                                    IsDefault="True"
-                                    Margin="0 20 0 0"
-                                    FontFamily="Calibri"
-                                    Grid.Row="1"
-                                    Command="{Binding ViewModel.SearchInvoiceCommand}"
-                                    HorizontalAlignment="Center"
-                                    Padding="10 4">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="نمایش"
-                                               FontSize="16" />
-                                    <TextBlock Text=" (F6)"
-                                               FontSize="14"
-                                               VerticalAlignment="Center"
-                                               Foreground="#FFA3A3A3" />
-                                </StackPanel>
-                            </Button>
+                                <Button Padding="10 4 "
+                                        Grid.Column="2"
+                                        Grid.Row="1"
+                                        FontSize="17"
+                                        x:Name="btn_Print"
+                                        FontFamily="Calibri"
+                                        Click="btn_Print_Click"
+                                        HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="پرینت" />
+                                        <TextBlock Text=" (Ctrl+P)"
+                                                   FontSize="11.5"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
                         </Grid>
                         <DataGrid Grid.Row="1"
+                                  MaxHeight="570"
                                   IsReadOnly="True"
                                   Margin="0 10 0 0"
                                   BorderThickness="10"
@@ -206,6 +240,7 @@
 
                             <DataGrid.Resources>
                                 <s:String x:Key="format">{0:N0}</s:String>
+                                <BooleanToVisibilityConverter x:Key="BoolToVis" />
                             </DataGrid.Resources>
 
                             <DataGrid.Columns>
@@ -258,14 +293,14 @@
                                             <StackPanel Orientation="Horizontal"
                                                         HorizontalAlignment="Center">
                                                 <Button  Margin="2"
-                                                         IsEnabled="{Binding IsEditable}"
+                                                         Visibility="{Binding IsEditable ,  Converter={StaticResource BoolToVis}}"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                          Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Pen16" />
                                                 </Button>
                                                 <Button Margin="3"
-                                                        IsEnabled="{Binding IsDeletable}"
+                                                        Visibility="{Binding IsDeletable,  Converter={StaticResource BoolToVis}}"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
                                                         Command="{Binding Path=DataContext.ViewModel.RemoveDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                         Padding="7,5">

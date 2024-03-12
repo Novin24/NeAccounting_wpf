@@ -6,14 +6,18 @@
       xmlns:models="clr-namespace:DomainShared.Notifications;assembly=DomainShared"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       Title="DashboardPage"
       d:DataContext="{d:DesignInstance local:DashboardPage, IsDesignTimeCreatable=False}"
       d:DesignHeight="800"
       d:DesignWidth="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      mc:Ignorable="d">
-
+      mc:Ignorable="d"
+      x:Name="root">
+    <Page.Resources>
+        <cnt:Converters x:Key="ConvertHeight"/>
+    </Page.Resources>
     <Grid Margin="30,0"
           VerticalAlignment="Top">
         <Grid.RowDefinitions>
@@ -78,14 +82,27 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 BorderThickness="0.4">
+
             <Border.Background>
                 <SolidColorBrush Color="White"
                                  Opacity="0.08" />
             </Border.Background>
             <StackPanel>
                 <Grid Margin="10,0"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      Height="440">
+                      ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=1080}" Value="false">
+                                    <Setter Property="MaxHeight" Value="755"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=920}" Value="false">
+                                    <Setter Property="MaxHeight" Value="630"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
                     <ui:VirtualizingItemsControl Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                                  ItemsSource="{Binding ViewModel.Notifs, Mode=OneWay}"
                                                  VirtualizingPanel.CacheLengthUnit="Item">
@@ -95,6 +112,7 @@
                                                Grid.Column="0"
                                                Margin="0,20,20,0"
                                                Padding="0"
+                                               MaxWidth="180"
                                                VerticalAlignment="Stretch"
                                                CommandParameter="BasicInput"
                                                IsChevronVisible="False">

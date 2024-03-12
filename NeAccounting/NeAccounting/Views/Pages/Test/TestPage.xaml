@@ -3,35 +3,37 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages.Test"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       d:DataContext="{d:DesignInstance local:TestPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
-      Title="TestPage">
+      Title="TestPage"
+      x:Name="root">
 
-
-    <!--<Page.Resources>
-        <RoutedUICommand x:Key="cmd1"></RoutedUICommand>
+    <Page.Resources>
+        <cnt:Converters x:Key="ConvertHeight"/>
     </Page.Resources>
-    <Page.CommandBindings>
-        <CommandBinding Command="{StaticResource cmd1}" Executed="btn_font_Click"></CommandBinding>
-    </Page.CommandBindings>
-    <Page.InputBindings>
-        <KeyBinding  Key="F1" Command="{StaticResource cmd1}"></KeyBinding>
-    </Page.InputBindings>
-    <Grid>
-        <TextBlock Name="txt" Text="0" Height="100" Width="100" />
-        <Button  Command="{StaticResource cmd1}" Name="btn_font" Grid.Column="2" Grid.Row="1" Width="60" Height="35" Content="Enter"  Margin="10,2" VerticalAlignment="Top"/>
-    <Button  Grid.Column="2" Grid.Row="1" Width="60" Height="35" Content="Enter" Margin="10,2" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-    
-    </Grid>-->
 
-    <Grid>
-        <StackPanel>
-            <nu:Pagination PageCount="53"
-                           CurrntPage="5" />
-        </StackPanel>
-    </Grid>
+   
+
+    <Border BorderBrush="#D6D5D5">
+
+        <Border.Style>
+            <Style TargetType="Border">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=810}" Value="true">
+                        <Setter Property="Height" Value="100"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        <Border.Background>
+            <SolidColorBrush Color="White"
+                                         Opacity="0.08" />
+
+        </Border.Background>
+    </Border>
 </Page>

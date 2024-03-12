@@ -136,6 +136,9 @@ namespace Infrastructure.Repositories
                 if (mt == null)
                     return new("کالای مورد نظر یافت نشد !!!", false);
 
+                if (!sellOrBuy && mt.Entity < entity)
+                    return new("موجودی منفی میشود!!!", false);
+
                 if (sellOrBuy)
                     mt.Entity += entity;
                 else mt.Entity -= entity;

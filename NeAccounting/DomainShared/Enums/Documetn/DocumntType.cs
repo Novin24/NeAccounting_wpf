@@ -37,6 +37,8 @@
         /// <summary>
         /// چک
         /// </summary>
-        Cheque
+        Cheque,
+        Other
+
     }
 }

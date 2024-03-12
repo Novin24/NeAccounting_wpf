@@ -1,6 +1,7 @@
 ﻿using Infrastructure.EntityFramework;
 using Infrastructure.Repositories;
 using NeApplication.IRepositoryies;
+using NeApplication.IRepositoryies.Expens;
 
 namespace Infrastructure.UnitOfWork
 {
@@ -15,8 +16,10 @@ namespace Infrastructure.UnitOfWork
         private IWorkerManager _workerManager;
 
         private IUnitManager _unitManager;
-        
+
         private IDocumentManager _documentManager;
+
+        private IExpenseManager _expenseManager;
 
         public ICustomerManager CustomerManager
         {
@@ -62,13 +65,22 @@ namespace Infrastructure.UnitOfWork
                 return _workerManager;
             }
         }
-        
+
         public IDocumentManager DocumentManager
         {
             get
             {
                 _documentManager ??= new DocumentManager(NovinDb);
                 return _documentManager;
+            }
+        }
+
+        public IExpenseManager ExpenseManager
+        {
+            get
+            {
+                _expenseManager ??= new ExpenseManager(NovinDb);
+                return _expenseManager;
             }
         }
 

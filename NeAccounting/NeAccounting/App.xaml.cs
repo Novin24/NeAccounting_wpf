@@ -14,6 +14,7 @@ using NeAccounting.ViewModels.Pages;
 using NeAccounting.Views.Pages;
 using NeAccounting.Views.Pages.Test;
 using NeAccounting.Windows;
+using NeApplication.Services;
 using System.IO;
 using System.Reflection;
 using System.Windows.Threading;
@@ -109,14 +110,13 @@ namespace NeAccounting
                 services.AddTransient<TestPage>();
                 services.AddTransient<TestViewModel>();
 
-                #region CreateCosts
-
-                services.AddTransient<CreateCostsPage>();
-                #endregion
 
                 #region Recived
-                services.AddTransient<RecPage>();
-                services.AddTransient<RecViewModel>();
+                services.AddTransient<CreateRecPage>();
+                services.AddTransient<CreateRecViewModel>();
+
+                services.AddTransient<UpdateRecDocPage>();
+                services.AddTransient<UpdateRecDocViewModel>();
                 #endregion
 
                 #region Invoice
@@ -132,39 +132,46 @@ namespace NeAccounting
                 //services.AddTransient<UpdateBuyInvoiceViewModel>();
                 #endregion
 
+                #region IntermediaryInvoice
                 services.AddTransient<CreateIntermediaryInvoicePage>();
                 //services.AddTransient<CreateIntermediaryInvoiceViewModel>();
                 services.AddTransient<UpdateIntermediaryInvoicePage>();
                 //services.AddTransient<UpdateIntermediaryInvoiceViewModel>();
+                #endregion
 
                 #region SellInvoice
                 services.AddTransient<CreateSellInvoicePage>();
-                services.AddTransient<CreateSellInviceViewModel>();
+                services.AddTransient<CreateSellInvoiceViewModel>();
+
                 services.AddTransient<UpdateSellInvoicePage>();
-                //services.AddTransient<UpdateSellInvoiceViewModel>();
+                services.AddTransient<UpdateSellInvoiceViewModel>();
                 #endregion
 
                 #endregion
 
-                #region Expence
+                #region Expense
                 services.AddTransient<CreateExpencePage>();
-                //services.AddTransient<CreateExpenceViewModel>();
+                services.AddTransient<CreateExpenceViewModel>();
 
                 services.AddTransient<UpdateExpencePage>();
                 //services.AddTransient<UpdateExpenceViewModel>();
 
                 services.AddTransient<ExpencesListPage>();
-                //services.AddTransient<ExpencesListViewModel>();
+                services.AddTransient<ExpencelistViewModel>();
                 #endregion
 
                 #region Payment
-                services.AddTransient<PayPage>();
+                services.AddTransient<CreatePayDocPage>();
                 services.AddTransient<CreatePayDocViewModel>();
+
+                services.AddTransient<UpdatePayDocPage>();
+                services.AddTransient<UpdatePayDocViewModel>();
                 #endregion
 
                 #region Units 
 
                 services.AddTransient<UnitsListPage>();
+                services.AddTransient<UnitViewModel>();
 
                 #endregion
 
@@ -194,7 +201,6 @@ namespace NeAccounting
 
                 services.AddTransient<Chequebook>();
 
-                services.AddTransient<CreateCostsPage>();
 
                 #endregion
 
@@ -211,6 +217,10 @@ namespace NeAccounting
                 #region DbContext
                 services.AddDbContext<NovinDbContext>();
                 services.AddDbContext<BaseDomainDbContext>();
+                #endregion
+
+                #region Services
+                services.AddTransient<IPrintServices, PrintServices>();
                 #endregion
 
             }).Build();

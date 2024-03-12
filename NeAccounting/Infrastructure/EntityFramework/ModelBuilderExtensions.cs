@@ -30,6 +30,7 @@ namespace Infrastructure.Utilities
                 b.Property(r => r.Name).HasMaxLength(50).IsRequired();
                 b.Property(r => r.NationalCode).HasMaxLength(10).IsRequired();
                 b.Property(r => r.Mobile).IsRequired();
+                b.Property(r => r.IsActive).HasDefaultValue(true);
             });
 
 
@@ -41,6 +42,7 @@ namespace Infrastructure.Utilities
                 b.Property(t => t.NationalCode).HasMaxLength(10).IsRequired();
                 b.Property(t => t.Address).HasMaxLength(100).IsRequired();
                 b.Property(t => t.AccountNumber).HasMaxLength(26).IsRequired();
+                b.Property(r => r.IsActive).HasDefaultValue(true);
                 b.Property(t => t.JobTitle).HasMaxLength(30).IsRequired();
             });
 
@@ -52,6 +54,7 @@ namespace Infrastructure.Utilities
                 .WithMany(s => s.Materials)
                 .HasForeignKey(t => t.UnitId)
                 .OnDelete(DeleteBehavior.Cascade);
+                b.Property(r => r.IsActive).HasDefaultValue(true);
             });
 
             builder.Entity<Unit>(b =>

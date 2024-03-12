@@ -20,7 +20,7 @@ namespace Domain.NovinEntity.Materials
         public long LastBuyPrice { get; set; }
         public bool IsManufacturedGoods { get; set; }
         public string PhysicalAddress { get; set; }
-        public bool Active { get; set; }
+        public bool IsActive { get; set; }
         #endregion
 
         #region Constructor
@@ -44,7 +44,7 @@ namespace Domain.NovinEntity.Materials
             LastBuyPrice = 0;
             LastSellPrice = lastSellPrice;
             PhysicalAddress = physicalAddress;
-            Active = true;
+            IsActive = true;
         }
         #endregion
     }

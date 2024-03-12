@@ -14,10 +14,11 @@ namespace Infrastructure.Repositories
         public CustomerManager(NovinDbContext context) : base(context) { }
 
 
-        public Task<List<SuggestBoxViewModel<Guid,long>>> GetDisplayUser(bool? seller = null, bool? buyer = null)
+        public Task<List<SuggestBoxViewModel<Guid, long>>> GetDisplayUser(bool includeDeArchive = false, bool? seller = null, bool? buyer = null)
         {
             return TableNoTracking.Where(t => seller == null || t.Seller)
-                .Where(b=> buyer == null || b.Buyer)
+                .Where(b => buyer == null || b.Buyer)
+                .Where(b => includeDeArchive || b.IsActive)
                 .Select(x => new SuggestBoxViewModel<Guid, long>
                 {
                     Id = x.Id,
@@ -67,7 +68,7 @@ namespace Infrastructure.Repositories
             bool isSeller)
         {
             if (await TableNoTracking.AnyAsync(t => t.Name == name))
-                return new("کاربر گرامی این کالا از قبل تعریف شده می‌باشد!!!", false);
+                return new("کاربر گرامی این مشتری از قبل تعریف شده می‌باشد!!!", false);
 
             try
             {
@@ -112,7 +113,7 @@ namespace Infrastructure.Repositories
                 var mt = await Entities.FindAsync(Id);
 
                 if (mt == null)
-                    return new("کالای مورد نظر یافت نشد !!!", false);
+                    return new("مشتری مورد نظر یافت نشد !!!", false);
 
                 mt.Name = name;
                 mt.NationalCode = nationalCode;
@@ -131,7 +132,28 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new($"خطا دراتصال به پایگاه داده!!!\n {ex}", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> ArchiveCustomer(
+            Guid Id,
+            bool isActive)
+        {
+            try
+            {
+                var cus = await Entities.FindAsync(Id);
+
+                if (cus == null)
+                    return new("مشتری مورد نظر یافت نشد !!!", false);
+
+                cus.IsActive = isActive;
+                Update(cus, false);
+            }
+            catch (Exception ex)
+            {
+                return new($"خطا دراتصال به پایگاه داده!!!\n {ex}", false);
             }
             return new(string.Empty, true);
         }

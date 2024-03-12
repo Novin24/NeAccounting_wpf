@@ -40,6 +40,7 @@ namespace Domain.NovinEntity.Customers
             Buyer = isBuyer;
             Seller = isSeller;
             Type = type;
+            IsActive = true;
         }
         #endregion
 
@@ -59,6 +60,7 @@ namespace Domain.NovinEntity.Customers
         public bool HaveChequeGuarantee { get; set; }
         public bool HaveCashCredit { get; set; }
         public bool HavePromissoryNote { get; set; }
+        public bool IsActive{ get; set; }
         #endregion
     }
 }

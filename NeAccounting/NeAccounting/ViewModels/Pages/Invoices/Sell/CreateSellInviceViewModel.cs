@@ -8,7 +8,7 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class CreateSellInviceViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
@@ -128,7 +128,7 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
     private async Task InitializeViewModel()
     {
         using UnitOfWork db = new();
-        Cuslist = await db.CustomerManager.GetDisplayUser(null, true);
+        Cuslist = await db.CustomerManager.GetDisplayUser(false,null, true);
         LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
         MatList = await db.MaterialManager.GetMaterails();
     }
@@ -151,11 +151,10 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
             return false;
         }
 
-        //if (SubmitDate == null)
-        //{
-        //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-        //    return false;
-        //}
+        if (string.IsNullOrEmpty(Description))
+        {
+            Description = "فاکتور فروش";
+        }
 
         if (MaterialId < 0)
         {
@@ -206,23 +205,10 @@ public partial class CreateSellInviceViewModel(ISnackbarService snackbarService,
     internal async Task OnSelectCus(Guid custId)
     {
         using UnitOfWork db = new();
-        var (am, stu) = await db.DocumentManager.GetStatus(custId);
-        Status = stu;
-        if (am == 0)
-        {
-            Credit = "0";
-            Debt = "0";
-        }
-        if (am > 0)
-        {
-            Debt = am.ToString("N0");
-            Credit = "0";
-        }
-        if (am < 0)
-        {
-            Debt = "0";
-            Credit = Math.Abs(am).ToString("N0");
-        }
+        var s = await db.DocumentManager.GetStatus(custId);
+        Status = s.Status;
+        Credit = s.Credit;
+        Debt = s.Debt;
     }
 
     /// <summary>

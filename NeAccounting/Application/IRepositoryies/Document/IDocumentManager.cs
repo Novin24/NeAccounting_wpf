@@ -10,6 +10,26 @@ namespace NeApplication.IRepositoryies
     public interface IDocumentManager : IRepository<Document>
     {
         #region Invoice
+
+        /// <summary>
+        /// دریافت جزییات فاکتور فروش
+        /// </summary>
+        /// <param name="invoiceId"></param>
+        /// <returns></returns>
+        Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetSellInvoiceDetail(Guid invoiceId);
+
+        /// <summary>
+        /// دریافت جزییات فاکتور خرید
+        /// </summary>
+        /// <param name="invoiceId"></param>
+        /// <returns></returns>
+        Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetBuyInvoiceDetail(Guid invoiceId);
+
+        /// <summary>
+        /// دریافت اخرین شماره فاکتور
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         Task<string> GetLastDocumntNumber(DocumntType type);
 
         /// <summary>
@@ -47,6 +67,13 @@ namespace NeApplication.IRepositoryies
                 DateTime submitDate,
                 List<RemittanceListViewModel> remittances);
 
+        Task<(string error, bool isSuccess)> UpdateSellDocument(Guid docId,
+            long price,
+            double? commission,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances);
+
         /// <summary>
         /// received => true
         /// </summary>
@@ -63,6 +90,13 @@ namespace NeApplication.IRepositoryies
                 string? descripion,
                 DateTime submitDate,
                 List<RemittanceListViewModel> remittances);
+
+        Task<(string error, bool isSuccess)> UpdateBuyDocument(Guid docId,
+            long price,
+            double? commission,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances);
         #endregion
 
         #region status
@@ -81,11 +115,11 @@ namespace NeApplication.IRepositoryies
         /// <returns></returns>
         Task<long> GetCredit(Guid customerId);
 
-        Task<(long, string)> GetStatus(Guid customerId);
+        Task<UserDebtStatus> GetStatus(Guid customerId);
         #endregion
 
         #region report
-        Task<PagedResulViewModel<InvoiceListDto>> GetInvoicesByDate(DateTime StartTime,
+        Task<PagedResulViewModel<InvoiceListDtos>> GetInvoicesByDate(DateTime StartTime,
             DateTime EndTime,
             string desc,
             Guid CusId,
@@ -113,6 +147,16 @@ namespace NeApplication.IRepositoryies
             long? discount,
             string? descripion,
             DateTime submitDate);
+
+        Task<(string error, bool isSuccess)> UpdatePayOrRecDocument(Guid docId,
+            PaymentType paymentType,
+            long price,
+            long? discount,
+            string? descripion,
+            DateTime submitDate);
+
+
+        Task<(bool isSuccess, DocUpdateDto itm)> GetDocumentById(Guid docId);
 
         Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);

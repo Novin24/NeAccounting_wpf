@@ -11,19 +11,19 @@ namespace NeAccounting.Views.Pages
     /// <summary>
     /// Interaction logic for CreateSellInvoicePage.xaml
     /// </summary>
-    public partial class CreateSellInvoicePage : INavigableView<CreateSellInviceViewModel>
+    public partial class CreateSellInvoicePage : INavigableView<CreateSellInvoiceViewModel>
     {
         private readonly ISnackbarService _snackbarService;
-        public CreateSellInviceViewModel ViewModel { get; }
+        public CreateSellInvoiceViewModel ViewModel { get; }
         private double _totalEntity;
         private long _price;
 
-        public CreateSellInvoicePage(CreateSellInviceViewModel viewModel, ISnackbarService snackbarService)
+        public CreateSellInvoicePage(CreateSellInvoiceViewModel viewModel, ISnackbarService snackbarService)
         {
             ViewModel = viewModel;
             DataContext = this;
-            InitializeComponent();
             _snackbarService = snackbarService;
+            InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

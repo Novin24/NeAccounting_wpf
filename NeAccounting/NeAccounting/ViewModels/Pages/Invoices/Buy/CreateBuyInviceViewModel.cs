@@ -128,7 +128,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     private async Task InitializeViewModel()
     {
         using UnitOfWork db = new();
-        Cuslist = await db.CustomerManager.GetDisplayUser(true);
+        Cuslist = await db.CustomerManager.GetDisplayUser(false,true);
         LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.BuyInv);
         MatList = await db.MaterialManager.GetMaterails();
     }
@@ -144,7 +144,10 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     internal bool OnAdd()
     {
         #region validaion
-
+        if (string.IsNullOrEmpty(Description))
+        {
+            Description = "فاکتور خرید";
+        }
         if (CusId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -195,23 +198,10 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
     internal async Task OnSelectCus(Guid custId)
     {
         using UnitOfWork db = new();
-        var (am, stu) = await db.DocumentManager.GetStatus(custId);
-        Status = stu;
-        if (am == 0)
-        {
-            Credit = "0";
-            Debt = "0";
-        }
-        if (am > 0)
-        {
-            Debt = am.ToString("N0");
-            Credit = "0";
-        }
-        if (am < 0)
-        {
-            Debt = "0";
-            Credit = Math.Abs(am).ToString("N0");
-        }
+        var s = await db.DocumentManager.GetStatus(custId);
+        Status = s.Status;
+        Credit = s.Credit;
+        Debt = s.Debt;
     }
 
     /// <summary>
