@@ -66,7 +66,9 @@ namespace NeAccounting.ViewModels
                 MenuItems = new ObservableCollection<object>
                 {
                 #region Remittance
-                    new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(CreatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+
+                    new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(Previewinvoice),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+
                     new NavigationViewItem {Content = "فاکتور فروش",TargetPageType = typeof(CreateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                     
                     new NavigationViewItem { Content = "فاکتور خرید", TargetPageType = typeof(CreateBuyInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
@@ -116,7 +118,6 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem { Content = "بیلان مشخص", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }}
                 }
             },
-
             new NavigationViewItem()
             {
                 Content = "پرسنل",

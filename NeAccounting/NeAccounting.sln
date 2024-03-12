@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeAccounting", "NeAccounting\NeAccounting.csproj", "{89A58C50-930A-4817-95D4-6E0D79F37BFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeAccounting", "NeAccounting\NeAccounting.csproj", "{89A58C50-930A-4817-95D4-6E0D79F37BFC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeApplication", "Application\NeApplication.csproj", "{281B1F50-7BE4-4874-A8EE-78B6B5C3394D}"
 EndProject

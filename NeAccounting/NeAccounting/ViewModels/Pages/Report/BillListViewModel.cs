@@ -1,12 +1,13 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
-using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
+using System.Diagnostics;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -43,10 +44,10 @@ namespace NeAccounting.ViewModels
         private string _desc = "";
 
         [ObservableProperty]
-        private DateTime _startDate = DateTime.Now;
+        private DateTime? _startDate = DateTime.Now;
 
         [ObservableProperty]
-        private DateTime _endDate = DateTime.Now;
+        private DateTime? _endDate = DateTime.Now;
 
         /// <summary>
         /// به احتساب مانده قبلی
@@ -64,7 +65,7 @@ namespace NeAccounting.ViewModels
         /// لیست فاکتور
         /// </summary>
         [ObservableProperty]
-        private IEnumerable<InvoiceListDto> _invList;
+        private IEnumerable<InvoiceListDtos> _invList;
 
         public void OnNavigatedFrom()
         {
@@ -83,18 +84,52 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        public async Task OnSearchInvoice()
+        private async Task OnSearchInvoice()
         {
             if (!CusId.HasValue)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            if (StartDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ شروع"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
 
+            if (EndDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پایان"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetInvoicesByDate(StartDate, EndDate, Desc, CusId.Value, LeftOver, false, CurrentPage);
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, CurrentPage);
             InvList = t.Items;
             PageCount = t.PageCount;
+        }
+
+
+        public async Task<(IEnumerable<InvoiceListDtos> list, bool isSuccess)> PrintInvoices()
+        {
+            if (!CusId.HasValue)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+                return (new List<InvoiceListDtos>(), false);
+            }
+            if (StartDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ شروع"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return (new List<InvoiceListDtos>(), false);
+            }
+
+            if (EndDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پایان"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return (new List<InvoiceListDtos>(), false);
+            }
+            using UnitOfWork db = new();
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, CurrentPage);
+            return new(t.Items, true);
         }
 
         [RelayCommand]
@@ -214,6 +249,7 @@ namespace NeAccounting.ViewModels
                         Description = item.DocDescription,
                         Discount = item.Dicount,
                         PayTypeEnum = PaymentType.CardToCard.ToDictionary(),
+                        //PayTypeEnum = Enum.GetValues(typeof(PaymentType)).Cast<PaymentType>(),
                         PayTypeId = (byte)item.Type,
                         DocId = parameter,
                         DocList = dc,
@@ -234,6 +270,7 @@ namespace NeAccounting.ViewModels
                         return;
                     }
 
+                    var servise = _navigationService.GetNavigationControl();
                     var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
                     if (!isSuccess)
                     {
@@ -243,14 +280,20 @@ namespace NeAccounting.ViewModels
 
                     var mat = await db.MaterialManager.GetMaterails();
                     var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                    var oc = new System.Collections.ObjectModel.ObservableCollection<RemittanceListViewModel>();
                     int i = 1;
                     foreach (var it in itm.RemList)
                     {
                         it.RowId = i++;
                         it.MatName = mat.First(t => t.Id == it.MaterialId).MaterialName;
                         it.UnitName = mat.First(t => t.Id == it.MaterialId).UnitName;
+                        oc.Add(it);
                     }
-
+                    long stx = itm.TotalPrice;
+                    if (itm.CommissionPrice.HasValue && itm.CommissionPrice.Value != 0)
+                    {
+                        stx -= itm.CommissionPrice.Value;
+                    }
                     var context = new UpdateSellInvoicePage(new UpdateSellInvoiceViewModel(_snackbarService, _navigationService)
                     {
                         MatList = mat,
@@ -260,16 +303,17 @@ namespace NeAccounting.ViewModels
                         Debt = stu.Debt,
                         Credit = stu.Credit,
                         SubmitDate = itm.Date,
+                        StaticList = itm.RemList,
+                        RemainPrice = stx.ToString("N0"),
                         InvDescription = itm.InvoiceDescription,
                         Commission = itm.Commission,
                         LastInvoice = itm.Serial,
-                        List = itm.RemList,
-                        TotalPrice = itm.TotalPrice.ToString("0"),
+                        List = oc,
+                        TotalPrice = itm.TotalPrice.ToString("N0"),
                         Totalcommission = itm.Commission.HasValue ? (itm.TotalPrice * (itm.Commission.Value / 100)).ToString("N0") : "0",
                         InvoiceId = parameter
-                    });
+                    }, _snackbarService);
 
-                    var servise = _navigationService.GetNavigationControl();
                     servise.Navigate(pageType, context);
                     break;
                 case DomainShared.Enums.DocumntType.BuyInv:
@@ -310,6 +354,5 @@ namespace NeAccounting.ViewModels
 
             //servise.Navigate(pageType, context);
         }
-
     }
 }

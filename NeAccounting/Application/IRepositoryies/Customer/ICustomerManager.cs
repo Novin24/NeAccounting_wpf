@@ -8,7 +8,7 @@ namespace NeApplication.IRepositoryies
 {
     public interface ICustomerManager : IRepository<Customer>
     {
-        Task<List<SuggestBoxViewModel<Guid,long>>> GetDisplayUser(bool includeDeArchive = false, bool? seller = null, bool? buyer = null);
+        Task<List<SuggestBoxViewModel<Guid, long>>> GetDisplayUser(bool includeDeArchive = false, bool? seller = null, bool? buyer = null);
         Task<List<CustomerListDto>> GetCustomerList(string name, string nationalCode, string mobile);
         Task<(string error, CustomerListDto cus)> GetCustomerById(Guid Id);
         Task<(string error, bool isSuccess)> CreateCustomer(string name,
