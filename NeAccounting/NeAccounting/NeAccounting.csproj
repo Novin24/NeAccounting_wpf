@@ -42,22 +42,22 @@
 
   <ItemGroup>
     <Reference Include="Stimulsoft.Base">
-      <HintPath>bin\Debug\Stimulsoft.Base.dll</HintPath>
+      <HintPath>..\..\pack\Lib\Stimulsoft.Base.dll</HintPath>
     </Reference>
     <Reference Include="Stimulsoft.Client.Designer">
-      <HintPath>bin\Debug\Stimulsoft.Client.Designer.dll</HintPath>
+      <HintPath>..\..\pack\Lib\Stimulsoft.Client.Designer.dll</HintPath>
     </Reference>
     <Reference Include="Stimulsoft.Data">
-      <HintPath>bin\Debug\Stimulsoft.Data.dll</HintPath>
+      <HintPath>..\..\pack\Lib\Stimulsoft.Data.dll</HintPath>
     </Reference>
     <Reference Include="Stimulsoft.Report">
-      <HintPath>bin\Debug\Stimulsoft.Report.dll</HintPath>
+      <HintPath>..\..\pack\Lib\Stimulsoft.Report.dll</HintPath>
     </Reference>
     <Reference Include="Stimulsoft.Report.Wpf">
-      <HintPath>bin\Debug\Stimulsoft.Report.Wpf.dll</HintPath>
+      <HintPath>..\..\pack\Lib\Stimulsoft.Report.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Stimulsoft.Report.WpfDesign">
-      <HintPath>bin\Debug\Stimulsoft.Report.WpfDesign.dll</HintPath>
+      <HintPath>..\..\pack\Lib\Stimulsoft.Report.WpfDesign.dll</HintPath>
     </Reference>
   </ItemGroup>
 

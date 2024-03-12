@@ -185,7 +185,7 @@ namespace NeAccounting.ViewModels
             using UnitOfWork db = new();
             switch (doc.Type)
             {
-                case DomainShared.Enums.DocumntType.PayDoc:
+                case DocumntType.PayDoc:
                     Type? pagetyp = NameToPageTypeConverter.Convert("UpdatePayDoc");
 
                     if (pagetyp == null)
@@ -223,7 +223,7 @@ namespace NeAccounting.ViewModels
                     servis.Navigate(pagetyp, contex);
                     break;
 
-                case DomainShared.Enums.DocumntType.RecDoc:
+                case DocumntType.RecDoc:
                     Type? pagety = NameToPageTypeConverter.Convert("UpdateRecDoc");
 
                     if (pagety == null)
@@ -262,7 +262,7 @@ namespace NeAccounting.ViewModels
                     servi.Navigate(pagety, conte);
                     break;
 
-                case DomainShared.Enums.DocumntType.SellInv:
+                case DocumntType.SellInv:
                     Type? pageType = NameToPageTypeConverter.Convert("UpdateSellInvoice");
 
                     if (pageType == null)
@@ -316,9 +316,9 @@ namespace NeAccounting.ViewModels
 
                     servise.Navigate(pageType, context);
                     break;
-                case DomainShared.Enums.DocumntType.BuyInv:
+                case DocumntType.BuyInv:
                     break;
-                case DomainShared.Enums.DocumntType.Cheque:
+                case DocumntType.Cheque:
                     break;
                 default:
                     break;
