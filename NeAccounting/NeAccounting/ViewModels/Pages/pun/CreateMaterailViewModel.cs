@@ -30,7 +30,7 @@ namespace NeAccounting.ViewModels
         private string _serial;
 
         [ObservableProperty]
-        private string? _address;
+        private string _address;
 
         [ObservableProperty]
         private long _lastSellPrice = 0;
@@ -85,10 +85,15 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
+            if (string.IsNullOrEmpty(Address))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مکان فیزیکی کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(MaterialName, UnitId,false, LastSellPrice, Serial, Address =string.Empty, IsManufacturedGoods);
+                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(MaterialName, UnitId, false, LastSellPrice, Serial, Address, IsManufacturedGoods);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

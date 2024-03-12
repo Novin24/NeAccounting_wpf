@@ -1,4 +1,6 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Constants;
+using DomainShared.Errore;
+using DomainShared.ViewModels.Customer;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
@@ -11,7 +13,7 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class UpdateSellInvoiceViewModel : ObservableObject 
+    public partial class UpdateSellInvoiceViewModel : ObservableObject, INavigationAware
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
@@ -77,24 +79,6 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private string _debt = "0";
-
-        /// <summary>
-        /// نام واحد
-        /// </summary>
-        [ObservableProperty]
-        private string? _unitName = string.Empty;
-
-        /// <summary>
-        /// قیمت واحد
-        /// </summary>
-        [ObservableProperty]
-        private string? _unitPrice = string.Empty;
-
-        /// <summary>
-        /// جمع کل قیمت در تعداد
-        /// </summary>
-        [ObservableProperty]
-        private string? _tPrice = string.Empty;
 
         /// <summary>
         /// طلبکاری مشتری
@@ -164,31 +148,83 @@ namespace NeAccounting.ViewModels
         #endregion
 
         #region Commands
+
+        public async void OnNavigatedTo()
+        {
+            InvoiceId = EditInvoiceDetails.InvoiceId;
+            using UnitOfWork db = new();
+            var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(InvoiceId);
+            if (!isSuccess)
+            {
+                _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                Type? pageType = NameToPageTypeConverter.Convert("Dashboard");
+
+                if (pageType == null)
+                {
+                    return;
+                }
+
+                _navigationService.Navigate(pageType);
+                return;
+            }
+            MatList = await db.MaterialManager.GetMaterails();
+            var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+            (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
+            foreach (var it in itm.RemList)
+            {
+                it.RowId = RowId++;
+                it.MatName = MatList.First(t => t.Id == it.MaterialId).MaterialName;
+                it.UnitName = MatList.First(t => t.Id == it.MaterialId).UnitName;
+                List.Add(it);
+            }
+            CusName = cus.Name;
+            CusNumber = cus.UniqNumber;
+            Status = stu.Status;
+            Debt = stu.Debt;
+            Credit = stu.Credit;
+            SubmitDate = itm.Date;
+            StaticList = itm.RemList;
+            InvDescription = itm.InvoiceDescription;
+            Commission = itm.Commission;
+            LastInvoice = itm.Serial;
+            TotalPrice = itm.TotalPrice.ToString("N0");
+            Totalcommission = itm.Commission.HasValue ? (itm.TotalPrice * (itm.Commission.Value / 100)).ToString("N0") : "0";
+            RemainPrice = itm.TotalPrice.ToString("N0");
+            if (itm.CommissionPrice.HasValue && itm.CommissionPrice.Value != 0)
+            {
+                RemainPrice = (itm.TotalPrice - itm.CommissionPrice.Value).ToString("N0");
+            }
+        }
+
+        public void OnNavigatedFrom()
+        {
+
+        }
+
         /// <summary>
         /// افزودن ردیف
         /// </summary>
         /// <returns></returns>
-        [RelayCommand]
-        private void OnAdd()
+        internal bool OnAdd()
         {
             #region validation
 
             if (MaterialId < 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
+                return false;
             }
 
             if (AmountOf == null || AmountOf <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مقدار"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
+                return false;
             }
 
             if (MatPrice == null || MatPrice == 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
+                return false;
             }
             #endregion
 
@@ -211,15 +247,9 @@ namespace NeAccounting.ViewModels
             MaterialId = -1;
             Description = null;
             MatPrice = null;
-            UnitName = null;
             RemId = null;
-            UnitPrice = null;
-            TPrice = null;
-            UnitName = string.Empty;
-            UnitPrice = string.Empty;
-            TPrice = string.Empty;
             RefreshRow(ref RowId);
-            return;
+            return true;
         }
 
         /// <summary>
@@ -227,27 +257,18 @@ namespace NeAccounting.ViewModels
         /// </summary>
         /// <param name="rowId"></param>
         /// <returns></returns>
-        [RelayCommand]
-        private void OnUpdate(int rowId)
+        internal (bool, RemittanceListViewModel) OnUpdate(int rowId)
         {
-            if (RemId != null)
-            {
-                return;
-            }
             var itm = List.FirstOrDefault(t => t.RowId == rowId);
             if (itm == null)
-                return;
+                return new(false, new RemittanceListViewModel());
             MaterialId = itm.MaterialId;
-            RemId = itm.RremId;
             AmountOf = itm.AmountOf;
             MatPrice = itm.Price;
-            TPrice = itm.TotalPrice.ToString("N0");
-            UnitName = itm.UnitName;
-            UnitPrice = itm.Price.ToString("N0");
             Description = itm.Description;
             List.Remove(itm);
             RefreshRow(ref rowId);
-            SetCommisionValue();
+            return new(true, itm);
         }
 
         /// <summary>
@@ -260,7 +281,15 @@ namespace NeAccounting.ViewModels
             var itm = List.FirstOrDefault(t => t.RowId == rowId);
             if (itm == null)
                 return;
-            itm.IsDeleted = !itm.IsDeleted;
+            if (itm.RremId != Guid.Empty)
+            {
+                itm.IsDeleted = !itm.IsDeleted;
+            }
+            else
+            {
+                List.Remove(itm);
+                RefreshRow(ref rowId);
+            }
             SetCommisionValue();
         }
 
@@ -398,6 +427,8 @@ namespace NeAccounting.ViewModels
             }
             RemainPrice = total.ToString("N0");
         }
+
+
         #endregion
     }
 }

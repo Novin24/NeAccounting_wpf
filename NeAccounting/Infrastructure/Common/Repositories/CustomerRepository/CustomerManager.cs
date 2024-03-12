@@ -170,6 +170,7 @@ namespace Infrastructure.Repositories
             {
                 Id = mt.Id,
                 Name = mt.Name,
+                UniqNumber = mt.CusId,
                 NationalCode = mt.NationalCode,
                 Mobile = mt.Mobile,
                 Seller = mt.Seller,

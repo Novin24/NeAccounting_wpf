@@ -1,4 +1,4 @@
-﻿using DomainShared.ViewModels.Document;
+﻿using DomainShared.ViewModels;
 using DomainShared.ViewModels.Pun;
 using NeAccounting.ViewModels;
 using System.Globalization;
@@ -29,9 +29,19 @@ namespace NeAccounting.Views.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-            txt_MaterialName.Text = string.Empty;
-            txt_MaterialName.Focus();
+            if (ViewModel.OnAdd())
+            {
+                ViewModel.AmountOf = null;
+                ViewModel.MaterialId = -1;
+                ViewModel.Description = null;
+                ViewModel.MatPrice = null;
+                txt_MaterialName.Text = string.Empty;
+                txt_UnitName.Text = string.Empty;
+                txt_Unit_price.Text = string.Empty;
+                txt_total_price.Text = string.Empty;
+                txt_UnitDescription.Text = string.Empty;
+                txt_MaterialName.Focus();
+            }
             dgv_Inv.Items.Refresh();
         }
 
@@ -41,12 +51,12 @@ namespace NeAccounting.Views.Pages
             if (!IsInitialized)
                 return;
             var mat = (MatListDto)args.SelectedItem;
-            lbl_matId.Text = mat.Id.ToString();
+            ViewModel.MaterialId = mat.Id;
+            ViewModel.MatPrice= mat.LastSellPrice;
             _totalEntity = mat.Entity;
             txt_UnitName.Text = mat.UnitName;
             txt_Unit_price.Text = mat.LastSellPrice.ToString("N0");
             _price = mat.LastSellPrice;
-            lbl_MatPrice.Text = _price.ToString();
         }
 
         private void Txt_amount_LostFocus(object sender, RoutedEventArgs e)
@@ -83,14 +93,13 @@ namespace NeAccounting.Views.Pages
             if (sender is not TextBox txt_price)
                 return;
 
-            if (txt_amount.Value == null || txt_amount.Value == 0)
+            if (ViewModel.AmountOf == null)
                 return;
 
 
-            _price = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
-            lbl_MatPrice.Text = _price.ToString();
+            ViewModel.MatPrice = _price = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
 
-            txt_total_price.Text = (txt_amount.Value.Value * _price).ToString("N0");
+            txt_total_price.Text = (ViewModel.AmountOf.Value * _price).ToString("N0");
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
@@ -108,10 +117,13 @@ namespace NeAccounting.Views.Pages
             }
 
             int id = int.Parse(btn.Tag.ToString());
-            var mat = dgv_Inv.ItemsSource.Cast<RemittanceListViewModel>().FirstOrDefault(t => t.RowId == id);
-            if (mat == null)
-                return;
-            txt_MaterialName.Text = mat.MatName;
+            var (s, itm) = ViewModel.OnUpdate(id);
+            if (!s) return;
+            txt_MaterialName.Text = itm.MatName;
+            txt_total_price.Text = itm.TotalPrice.ToString("N0");
+            txt_UnitName.Text = itm.UnitName;
+            _price = itm.Price;
+            txt_Unit_price.Text = itm.Price.ToString();
             dgv_Inv.Items.Refresh();
         }
 
