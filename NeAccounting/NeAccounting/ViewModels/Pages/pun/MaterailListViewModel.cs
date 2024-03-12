@@ -3,6 +3,7 @@ using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
+using System.Windows.Documents;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -28,7 +29,7 @@ namespace NeAccounting.ViewModels
         private string _serial = "";
 
         [ObservableProperty]
-        private IEnumerable<PunListDto> _list;
+        private List<PunListDto> _list;
         public void OnNavigatedFrom()
         {
         }
@@ -131,5 +132,22 @@ namespace NeAccounting.ViewModels
 
             servise.Navigate(pageType, context);
         }
+        [RelayCommand]
+        private async Task OnActive(int id)
+        {
+            using UnitOfWork db = new();
+            await db.MaterialManager.ChangeStatus(id, true);
+            await db.SaveChangesAsync();
+            List = await db.MaterialManager.GetMaterails(string.Empty, string.Empty);
+        }
+        [RelayCommand]
+        private async Task OnDeActive(int id)
+        {
+            using UnitOfWork db = new();
+            await db.MaterialManager.ChangeStatus(id, false);
+            await db.SaveChangesAsync();
+            List = await db.MaterialManager.GetMaterails(string.Empty, string.Empty);
+        }
+
     }
 }

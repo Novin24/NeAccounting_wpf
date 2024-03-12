@@ -240,21 +240,29 @@
                                                 <Button  Margin="2"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                         Padding="7,5" ToolTip="ویرایش">
+                                                         Padding="3,3" ToolTip="ویرایش">
                                                     <ui:SymbolIcon Symbol="Pen16" />
                                                 </Button>
                                                 <Button  Margin="2"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                         Padding="7,5" ToolTip="افزودن چک ضمانتی">
+                                                         Padding="3,3" ToolTip="افزودن چک ضمانتی">
                                                     <ui:SymbolIcon Symbol=" TableCellEdit16" />
                                                 </Button>
                                                 <Button Margin="3"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
                                                         Command="{Binding Path=DataContext.ViewModel.RemoveCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                        Padding="7,5" ToolTip="حذف">
+                                                        Padding="3,3" ToolTip="حذف">
                                                     <ui:SymbolIcon Symbol="Delete16" />
                                                 </Button>
+                                                <CheckBox IsChecked="{Binding IsActive}"
+                                                              Tag="{Binding Id}"
+                                                              Margin="2 0 -6 0"
+                                                              Padding="0">
+                                                    <CheckBox.ToolTip>
+                                                        <TextBlock>حذف</TextBlock>
+                                                    </CheckBox.ToolTip>
+                                                </CheckBox>
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>

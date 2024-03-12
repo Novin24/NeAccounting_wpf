@@ -188,6 +188,23 @@
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding Description}"
                                                         Width="*" />
+                                    <DataGridTemplateColumn Width="45">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center">
+                                                    <ui:Button  Margin="5"
+                                                                Padding="7,5"
+                                                                x:Name="btn_Update"
+                                                                Tag="{Binding Id}"
+                                                                Click="btn_Update_Click"
+                                                                ToolTip="ویرایش">
+                                                        <ui:SymbolIcon  Symbol="Pen16" />
+                                                    </ui:Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                     <DataGridTemplateColumn Width="40">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -203,23 +220,6 @@
                                                             <TextBlock>حذف</TextBlock>
                                                         </CheckBox.ToolTip>
                                                     </CheckBox>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTemplateColumn Width="45">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal"
-                                                            HorizontalAlignment="Center">
-                                                    <ui:Button  Margin="5"
-                                                                Padding="7,5"
-                                                                x:Name="btn_Update"
-                                                                Tag="{Binding Id}"
-                                                                Click="btn_Update_Click"
-                                                                ToolTip="ویرایش">
-                                                        <ui:SymbolIcon  Symbol="Pen16" />
-                                                    </ui:Button>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>

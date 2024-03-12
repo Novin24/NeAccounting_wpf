@@ -29,7 +29,7 @@ namespace Infrastructure.Repositories
                 .Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name))
                 .Where(x => string.IsNullOrEmpty(serial) || x.Serial.Contains(serial))
                 .Select(x => new PunListDto
-                {
+                {   IsActive = x.IsActive,
                     Id = x.Id,
                     MaterialName = x.Name,
                     Serial = x.Serial,
@@ -157,6 +157,26 @@ namespace Infrastructure.Repositories
                 }
 
                 Update(mt, false);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+        public async Task<(string error, bool isSuccess)> ChangeStatus(
+           int id, bool active)
+        {
+            var unit = await Entities.FirstOrDefaultAsync(t => t.Id == id);
+            if (unit == null)
+            {
+                return new("مورد مدنظر یافت نشد!!", false);
+            }
+            unit.IsActive = active;
+
+            try
+            {
+                var t = Entities.Update(unit);
             }
             catch (Exception ex)
             {
