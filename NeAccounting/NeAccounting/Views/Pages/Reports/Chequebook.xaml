@@ -77,71 +77,11 @@
                             <RowDefinition Height="auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Right"
-                                    Margin="0 15 0 0">
-
-                            <ui:CardAction FontFamily="Calibri"
-                                           Margin="0 0 0 10"
-                                           FontSize="15"
-                                           Padding="9 0"
-                                           IsChevronVisible="False"
-                                           HorizontalAlignment="Right">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <ui:SymbolIcon FontSize="22"
-                                                   Symbol="ReadingListAdd28" />
-
-                                    <StackPanel Grid.Column="1"
-                                                Margin="8 4"
-                                                VerticalAlignment="Center">
-                                        <ui:TextBlock Margin="0"
-                                                      FontTypography="BodyStrong"
-                                                      Text="ثبت"
-                                                      TextWrapping="WrapWithOverflow" />
-                                        <ui:TextBlock Appearance="Tertiary"
-                                                      Text="چک پرداختی به مشتری ..."
-                                                      TextWrapping="WrapWithOverflow" />
-                                    </StackPanel>
-                                </Grid>
-                            </ui:CardAction>
-                            <ui:CardAction FontFamily="Calibri"
-                                           Margin="20 0 0 10"
-                                           FontSize="15"
-                                           Padding="9 0"
-                                           IsChevronVisible="False">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <ui:SymbolIcon FontSize="22"
-                                                   Symbol="ReadingListAdd28" />
-
-                                    <StackPanel Grid.Column="1"
-                                                Margin="8 4"
-                                                VerticalAlignment="Center">
-                                        <ui:TextBlock Margin="0"
-                                                      FontTypography="BodyStrong"
-                                                      Text="ثبت"
-                                                      TextWrapping="WrapWithOverflow" />
-                                        <ui:TextBlock Appearance="Tertiary"
-                                                      Text="چک دریافتی از مشتری ..."
-                                                      TextWrapping="WrapWithOverflow" />
-                                    </StackPanel>
-                                </Grid>
-                            </ui:CardAction>
-                        </StackPanel>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -153,40 +93,30 @@
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="مشتری"
-                                               Margin="2 0 0 0 " />
+                                               Margin="5 0 0 3 " />
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Foreground="#BB8F60"
                                                HorizontalAlignment="Right"
-                                               Margin="2 0 0 7" />
+                                               Margin="2 0 0 3" />
                                 </DockPanel>
                                 <ui:AutoSuggestBox FontSize="16"
                                                    Icon="{ui:SymbolIcon Search24}"
                                                    OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
                                                    DisplayMemberPath="DisplayName"
-                                                   FontFamily="Calibri" />
+                                                   FontFamily="Calibri"
+                                                   Height="35.5"/>
                             </StackPanel>
 
-                            <nu:PersianDatePicker Grid.Column="1"
-                                                  VerticalAlignment="Center"
-                                                  FlowDirection="LeftToRight"
-                                                  LabelName="از تاریخ" />
-
-                            <nu:PersianDatePicker Grid.Column="2"
-                                                  VerticalAlignment="Center"
-                                                  FlowDirection="LeftToRight"
-                                                  LabelName="تا تاریخ" />
-
-                            <StackPanel Margin="23 0 7 0 "
-                                        Grid.Row="1">
+                            <StackPanel Margin="23 0 20 0 "
+                                        Grid.Column="1">
 
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="15"
                                            Text="وضعیت"
-                                           Margin="1 0 0 0 " />
+                                           Margin="5 0 0 4 " />
                                 <ComboBox FontSize="14"
-                                          FontFamily="Calibri"
-                                          Margin="0 4 0 0 ">
+                                          FontFamily="Calibri">
                                     <ComboBoxItem Content="ضمانتی" />
                                     <ComboBoxItem Content="دریافتی" />
                                     <ComboBoxItem Content="پرداختی" />
@@ -197,10 +127,84 @@
                                                   IsSelected="True" />
                                 </ComboBox>
                             </StackPanel>
+
+                            <StackPanel Grid.Column="2"
+                                        Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    Margin="0 15 0 0">
+
+                                <ui:CardAction FontFamily="Calibri"
+                                           FontSize="15"
+                                           Padding="9 0"
+                                           IsChevronVisible="False"
+                                           HorizontalAlignment="Right">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ui:SymbolIcon FontSize="22"
+                                                   Symbol="ReadingListAdd28" />
+
+                                        <StackPanel Grid.Column="1"
+                                                Margin="8 4"
+                                                VerticalAlignment="Center">
+                                            <ui:TextBlock Margin="0"
+                                                      FontTypography="BodyStrong"
+                                                      Text="ثبت"
+                                                      TextWrapping="WrapWithOverflow" />
+                                            <ui:TextBlock Appearance="Tertiary"
+                                                      Text="چک پرداختی..."
+                                                      TextWrapping="WrapWithOverflow" />
+                                        </StackPanel>
+                                    </Grid>
+                                </ui:CardAction>
+                                <ui:CardAction FontFamily="Calibri"
+                                           Margin="13 0 0 0"
+                                           FontSize="15"
+                                           Padding="9 0"
+                                           IsChevronVisible="False">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ui:SymbolIcon FontSize="22"
+                                                   Symbol="ReadingListAdd28" />
+
+                                        <StackPanel Grid.Column="1"
+                                                Margin="8 4"
+                                                VerticalAlignment="Center">
+                                            <ui:TextBlock Margin="0"
+                                                      FontTypography="BodyStrong"
+                                                      Text="ثبت"
+                                                      TextWrapping="WrapWithOverflow" />
+                                            <ui:TextBlock Appearance="Tertiary"
+                                                      Text="چک دریافتی..."
+                                                      TextWrapping="WrapWithOverflow" />
+                                        </StackPanel>
+                                    </Grid>
+                                </ui:CardAction>
+                            </StackPanel>
+                            <nu:PersianDatePicker Grid.Row="1"
+                                                  VerticalAlignment="Center"
+                                                  FlowDirection="LeftToRight"
+                                                  LabelName="از تاریخ"
+                                                  Margin="0 0 0 6" />
+
+                            <nu:PersianDatePicker Grid.Column="1"
+                                                  Grid.Row="1"
+                                                  VerticalAlignment="Center"
+                                                  FlowDirection="LeftToRight"
+                                                  LabelName="تا تاریخ"
+                                                  Margin="0 0 0 6"/>
                             <Button Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="20 22.5 0 15"
+                                    Grid.Column="2"
+                                    Margin="0 26 0 10"
                                     Padding="17 4 17 10"
+                                    HorizontalAlignment="Center"
                                     IsDefault="True">جستجو</Button>
                         </Grid>
                         <DataGrid BorderThickness="10"

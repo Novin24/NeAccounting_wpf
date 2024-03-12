@@ -121,6 +121,10 @@ namespace NeAccounting
 
                 #region Invoice
 
+                #region Previewinvoice
+                services.AddTransient<Previewinvoice>();
+                #endregion
+
                 #region BuyInvoice
                 services.AddTransient<CreateBuyInvoicePage>();
                 services.AddTransient<CreateBuyInviceViewModel>();
