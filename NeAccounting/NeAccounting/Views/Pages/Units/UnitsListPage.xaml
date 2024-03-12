@@ -6,6 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
+      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       mc:Ignorable="d"
       d:DataContext="{d:DesignInstance local:UnitsListPage,
                                      IsDesignTimeCreatable=False}"
@@ -13,7 +14,13 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       d:DesignHeight="800"
       d:DesignWidth="1200"
-      Title="UnitsListPage">
+      Title="UnitsListPage"
+      x:Name="root">
+    <Page.Resources>
+        <cnt:Converters x:Key="ConvertHeight"/>
+    </Page.Resources>
+    
+    
     <Grid>
 
         <Grid>
@@ -54,6 +61,21 @@
                     Grid.ColumnSpan="3"
                     Background="{DynamicResource ApplicationBackgroundBrush}"
                     CornerRadius="10">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}" Value="false">
+                                <Setter Property="MaxHeight" Value="710"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}" Value="false">
+                                <Setter Property="MaxHeight" Value="660"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}" Value="false">
+                                <Setter Property="MaxHeight" Value="610"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"></RowDefinition>
@@ -76,7 +98,7 @@
                         </Border.Background>
 
                         <Grid FlowDirection="RightToLeft"
-                              Margin="50 15 50 0">
+                              Margin="45 5 45 15">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="4*"></RowDefinition>

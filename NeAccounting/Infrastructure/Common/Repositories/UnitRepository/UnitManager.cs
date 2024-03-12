@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
             {
                 Id = x.Id,
                 UnitName = x.Name,
-                IsActive = x.Active,
+                IsActive = x.IsActive,
                 Description = x.Descrip
 
             }).ToListAsync();
@@ -28,7 +28,7 @@ namespace Infrastructure.Repositories
 
         public Task<List<SuggestBoxViewModel<int>>> GetUnits()
         {
-            return TableNoTracking.Where(t => t.Active).Select(x => new SuggestBoxViewModel<int>
+            return TableNoTracking.Where(t => t.IsActive).Select(x => new SuggestBoxViewModel<int>
             {
                 Id = x.Id,
                 DisplayName = x.Name
@@ -88,7 +88,7 @@ namespace Infrastructure.Repositories
             {
                 return new("واحد مورد نظر یافت نشد!!", false);
             }
-            unit.Active = active;
+            unit.IsActive = active;
 
             try
             {

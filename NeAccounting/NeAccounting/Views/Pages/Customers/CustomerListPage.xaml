@@ -4,18 +4,25 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages" xmlns:nu="clr-namespace:NeAccounting.Controls"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages" 
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
+      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       mc:Ignorable="d"
-      d:DesignHeight="450"
-      d:DesignWidth="800"
+      d:DesignHeight="800"
+      d:DesignWidth="1200"
       d:DataContext="{d:DesignInstance local:CustomerListPage ,IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="Customer">
+      Title="Customer"
+      x:Name="root">
+    <Page.Resources>
+        <cnt:Converters x:Key="ConvertHeight"/>
+    </Page.Resources>
 
+    
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
@@ -48,6 +55,21 @@
                 Grid.ColumnSpan="3"
                 Background="{DynamicResource ApplicationBackgroundBrush}"
                 CornerRadius="10">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}" Value="false">
+                            <Setter Property="MaxHeight" Value="770"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}" Value="false">
+                            <Setter Property="MaxHeight" Value="720"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}" Value="false">
+                            <Setter Property="MaxHeight" Value="670"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"></RowDefinition>
@@ -70,7 +92,7 @@
                     </Border.Background>
 
                     <Grid FlowDirection="RightToLeft"
-                          Margin="50 15 50 0">
+                          Margin="50 5 50 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
@@ -78,46 +100,13 @@
 
                         </Grid.RowDefinitions>
 
-                        <Grid>
-
-
-                            <ui:CardAction Grid.Row="4"
-                                           FontFamily="Calibri"
-                                           FontSize="15"
-                                           Padding="9 0"
-                                           Command="{Binding ViewModel.AddClickCommand}"
-                                           CommandParameter="CreateCustomer"
-                                           IsChevronVisible="False"
-                                           HorizontalAlignment="Right">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <ui:SymbolIcon FontSize="22"
-                                                   Symbol="ReadingListAdd28" />
-
-                                    <StackPanel Grid.Column="1"
-                                                Margin="8 4"
-                                                VerticalAlignment="Center">
-                                        <ui:TextBlock Margin="0"
-                                                      FontTypography="BodyStrong"
-                                                      Text="افزودن"
-                                                      TextWrapping="WrapWithOverflow" />
-                                        <ui:TextBlock Appearance="Tertiary"
-                                                      Text="اضافه کردن مشتری"
-                                                      TextWrapping="WrapWithOverflow" />
-                                    </StackPanel>
-                                </Grid>
-                            </ui:CardAction>
-                        </Grid>
                         <Grid Grid.Row="1"
                               Margin="0 ,5,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition Width=".8*"/>
                                 <ColumnDefinition Width=".9*"/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Margin="0 4 4 0 ">
@@ -164,14 +153,47 @@
                             </StackPanel>
 
 
-                            <Button Margin="4 27 0 0"
+                            <Button Margin="4 25 8 0"
                                     Padding="17 4 17 9"
                                     Grid.Column="3"
                                     Command="{Binding ViewModel.SearchCusCommand}"
                                     HorizontalAlignment="Left"
                                     IsDefault="True">جستجو</Button>
+
+
+                            <ui:CardAction Grid.Column="4"
+                                           FontFamily="Calibri"
+                                           FontSize="15"
+                                           Padding="9 0"
+                                           Command="{Binding ViewModel.AddClickCommand}"
+                                           CommandParameter="CreateCustomer"
+                                           IsChevronVisible="False"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Bottom">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ui:SymbolIcon FontSize="22"
+                                                   Symbol="ReadingListAdd28" />
+
+                                    <StackPanel Grid.Column="1"
+                                                Margin="8 4"
+                                                VerticalAlignment="Center">
+                                        <ui:TextBlock Margin="0"
+                                                      FontTypography="BodyStrong"
+                                                      Text="افزودن"
+                                                      TextWrapping="WrapWithOverflow" />
+                                        <ui:TextBlock Appearance="Tertiary"
+                                                      Text="اضافه کردن مشتری"
+                                                      TextWrapping="WrapWithOverflow" />
+                                    </StackPanel>
+                                </Grid>
+                            </ui:CardAction>
                         </Grid>
-                        <DataGrid Margin="0 20 0 30"
+                        <DataGrid Margin="0 20 0 15"
                                   x:Name="Workersdata"
                                   BorderThickness="10"
                                   Grid.Row="2"

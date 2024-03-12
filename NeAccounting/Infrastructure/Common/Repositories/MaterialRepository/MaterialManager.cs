@@ -33,6 +33,7 @@ namespace Infrastructure.Repositories
                     Id = x.Id,
                     MaterialName = x.Name,
                     Serial = x.Serial,
+                    IsServise = x.IsService,
                     Address = x.PhysicalAddress,
                     IsManufacturedGoods = x.IsManufacturedGoods,
                     Entity = x.Entity,
@@ -45,6 +46,7 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> CreateMaterial(string name,
             int unitId,
+            bool isService,
             long lastPrice,
             string serial,
             string address,
@@ -58,6 +60,7 @@ namespace Infrastructure.Repositories
 
                 var t = await Entities.AddAsync(new Material(name,
                                 unitId,
+                                isService,
                                 lastPrice,
                                 serial,
                                 address,

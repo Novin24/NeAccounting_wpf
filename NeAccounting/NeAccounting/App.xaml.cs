@@ -182,7 +182,12 @@ namespace NeAccounting
                 #endregion
 
                 #region Services
-                services.AddTransient<ServicesListPage>();
+                services.AddTransient<CreateServicePage>();
+                services.AddTransient<CreateServiceViewModel>();
+
+                services.AddTransient<UpdateServicePage>();
+                services.AddTransient<UpdateServiceViewModel>();
+
 
                 #endregion
 
