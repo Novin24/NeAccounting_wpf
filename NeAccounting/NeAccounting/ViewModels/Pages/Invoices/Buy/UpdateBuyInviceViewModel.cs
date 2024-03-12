@@ -1,4 +1,6 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Constants;
+using DomainShared.Errore;
+using DomainShared.ViewModels.Customer;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
@@ -8,7 +10,7 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class UpdateBuyInviceViewModel : ObservableObject
+public partial class UpdateBuyInviceViewModel : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService;
     private readonly INavigationService _navigationService;
@@ -74,24 +76,6 @@ public partial class UpdateBuyInviceViewModel : ObservableObject
     /// </summary>
     [ObservableProperty]
     private string _debt = "0";
-
-    /// <summary>
-    /// نام واحد
-    /// </summary>
-    [ObservableProperty]
-    private string? _unitName = string.Empty;
-
-    /// <summary>
-    /// قیمت واحد
-    /// </summary>
-    [ObservableProperty]
-    private string? _unitPrice = string.Empty;
-
-    /// <summary>
-    /// جمع کل قیمت در تعداد
-    /// </summary>
-    [ObservableProperty]
-    private string? _tPrice = string.Empty;
 
     /// <summary>
     /// طلبکاری مشتری
@@ -161,12 +145,64 @@ public partial class UpdateBuyInviceViewModel : ObservableObject
     #endregion
 
     #region Commands
+    public async void OnNavigatedTo()
+    {
+        InvoiceId = EditInvoiceDetails.InvoiceId;
+        using UnitOfWork db = new();
+        var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(InvoiceId);
+        if (!isSuccess)
+        {
+            _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            Type? pageType = NameToPageTypeConverter.Convert("Dashboard");
+
+            if (pageType == null)
+            {
+                return;
+            }
+
+            _navigationService.Navigate(pageType);
+            return;
+        }
+        MatList = (await db.MaterialManager.GetMaterails()).Where(t => !t.IsService).ToList();
+        var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+        (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
+        foreach (var it in itm.RemList)
+        {
+            it.RowId = RowId++;
+            it.MatName = MatList.First(t => t.Id == it.MaterialId).MaterialName;
+            it.UnitName = MatList.First(t => t.Id == it.MaterialId).UnitName;
+            List.Add(it);
+        }
+        CusName = cus.Name;
+        CusNumber = cus.UniqNumber;
+        Status = stu.Status;
+        Debt = stu.Debt;
+        Credit = stu.Credit;
+        SubmitDate = itm.Date;
+        StaticList = itm.RemList;
+        InvDescription = itm.InvoiceDescription;
+        Commission = itm.Commission;
+        LastInvoice = itm.Serial;
+        TotalPrice = itm.TotalPrice.ToString("N0");
+        Totalcommission = itm.Commission.HasValue ? (itm.TotalPrice * (itm.Commission.Value / 100)).ToString("N0") : "0";
+        RemainPrice = itm.TotalPrice.ToString("N0");
+        if (itm.CommissionPrice.HasValue && itm.CommissionPrice.Value != 0)
+        {
+            RemainPrice = (itm.TotalPrice - itm.CommissionPrice.Value).ToString("N0");
+        }
+    }
+
+    public void OnNavigatedFrom()
+    {
+        EditInvoiceDetails.InvoiceId = Guid.Empty;
+    }
+
+
     /// <summary>
     /// افزودن ردیف
     /// </summary>
     /// <returns></returns>
-    [RelayCommand]
-    private void OnAdd()
+    internal bool OnAdd()
     {
         #region validation
         if (MaterialId < 0)
@@ -203,17 +239,6 @@ public partial class UpdateBuyInviceViewModel : ObservableObject
             MaterialId = MaterialId,
         });
         SetCommisionValue();
-        AmountOf = null;
-        MaterialId = -1;
-        Description = null;
-        MatPrice = null;
-        UnitName = null;
-        RemId = null;
-        UnitPrice = null;
-        TPrice = null;
-        UnitName = string.Empty;
-        UnitPrice = string.Empty;
-        TPrice = string.Empty;
         RefreshRow(ref RowId);
         return;
     }
@@ -223,40 +248,43 @@ public partial class UpdateBuyInviceViewModel : ObservableObject
     /// </summary>
     /// <param name="rowId"></param>
     /// <returns></returns>
-    [RelayCommand]
-    private void OnUpdate(int rowId)
+    internal (bool, RemittanceListViewModel) OnUpdate(int rowId)
     {
-        if (RemId != null)
-        {
-            return;
-        }
+        if (RemId != null) return (false, new RemittanceListViewModel());
+
         var itm = List.FirstOrDefault(t => t.RowId == rowId);
-        if (itm == null)
-            return;
+
+        if (itm == null) return (false, new RemittanceListViewModel());
+
         MaterialId = itm.MaterialId;
         RemId = itm.RremId;
         AmountOf = itm.AmountOf;
         MatPrice = itm.Price;
-        TPrice = itm.TotalPrice.ToString("N0");
-        UnitName = itm.UnitName;
-        UnitPrice = itm.Price.ToString("N0");
         Description = itm.Description;
         List.Remove(itm);
         RefreshRow(ref rowId);
         SetCommisionValue();
+        return new(true, itm);
     }
 
     /// <summary>
     /// حذف ردیف
     /// </summary>
     /// <param name="rowId"></param>s
-    [RelayCommand]
     private void OnRemove(int rowId)
     {
         var itm = List.FirstOrDefault(t => t.RowId == rowId);
         if (itm == null)
             return;
-        itm.IsDeleted = !itm.IsDeleted;
+        if (itm.RremId != Guid.Empty)
+        {
+            itm.IsDeleted = !itm.IsDeleted;
+        }
+        else
+        {
+            List.Remove(itm);
+            RefreshRow(ref rowId);
+        }
         SetCommisionValue();
     }
 
@@ -268,15 +296,15 @@ public partial class UpdateBuyInviceViewModel : ObservableObject
     private async Task OnSumbit()
     {
         #region validation
+        if (string.IsNullOrEmpty(Description))
+        {
+            Description = "فاکتور خرید";
+        }
+
         if (RemId != null)
         {
             _snackbarService.Show("خطا", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ثبت فاکتور نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
-        }
-
-        if (string.IsNullOrEmpty(Description))
-        {
-            Description = "فاکتور خرید";
         }
 
         if (SubmitDate == null)
@@ -349,6 +377,8 @@ public partial class UpdateBuyInviceViewModel : ObservableObject
         #endregion
 
         #region reDirect
+        EditInvoiceDetails.InvoiceId = Guid.Empty;
+
         Type? pageType = NameToPageTypeConverter.Convert("Bill");
 
         if (pageType == null)

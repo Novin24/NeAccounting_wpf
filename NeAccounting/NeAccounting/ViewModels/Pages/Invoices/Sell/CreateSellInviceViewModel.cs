@@ -128,7 +128,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     private async Task InitializeViewModel()
     {
         using UnitOfWork db = new();
-        Cuslist = await db.CustomerManager.GetDisplayUser(false,null, true);
+        Cuslist = await db.CustomerManager.GetDisplayUser(false, null, true);
         LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
         MatList = await db.MaterialManager.GetMaterails();
     }
@@ -181,6 +181,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         {
             AmountOf = AmountOf.Value,
             UnitName = mat.UnitName,
+            IsService = mat.IsService,
             MatName = mat.MaterialName,
             Price = MatPrice.Value,
             RowId = rowId,
@@ -276,6 +277,8 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         using UnitOfWork db = new();
         foreach (var item in List)
         {
+            if (item.IsService) continue;
+
             var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, false, item.Price);
             if (!isSuccess)
             {

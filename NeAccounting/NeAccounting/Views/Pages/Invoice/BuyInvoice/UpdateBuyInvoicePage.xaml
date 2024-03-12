@@ -132,15 +132,14 @@
                                                    DockPanel.Dock="Right"
                                                    FontSize="14"
                                                    Foreground="#BB8F60"
-                                                   Text="{Binding ViewModel.CusNumber}"
                                                    x:Name="lbl_cusId"
                                                    VerticalAlignment="Center"
                                                    Margin="6 22 6 0" />
                                     </DockPanel>
                                     <ui:TextBox FontFamily="Calibri"
-                                                x:Name="txt_CustomerName"
+                                                       x:Name="txt_CustomerName"
                                                 Text="{Binding ViewModel.CusName}"
-                                                Margin="0 4 0 0" />
+                                                       Margin="0 4 0 0" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1"
@@ -223,12 +222,6 @@
                                                FontSize="15"
                                                Text="شرح کالا"
                                                HorizontalAlignment="Center" />
-                                    <TextBlock FontFamily="Calibri"
-                                               Visibility="Collapsed"
-                                               FontSize="15"
-                                               x:Name="lbl_matId"
-                                               Text="{Binding ViewModel.MaterialId, Mode=TwoWay}"
-                                               HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
                                                        FontFamily="Calibri"
@@ -264,18 +257,12 @@
                                                 TextAlignment="Center"
                                                 ClearButtonEnabled="False"
                                                 IsEnabled="False"
-                                                Text="{Binding ViewModel.UnitName,Mode=TwoWay}"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="4"
                                             Margin="2 14 2 0 ">
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="15"
-                                               x:Name="lbl_MatPrice"
-                                               Text="{Binding ViewModel.MatPrice,Mode=TwoWay}"
-                                               Visibility="Collapsed"
-                                               HorizontalAlignment="Center" />
+
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
                                                Text="قیمت واحد"
@@ -283,7 +270,6 @@
                                     <ui:TextBox x:Name="txt_Unit_price"
                                                 TextAlignment="Center"
                                                 ClearButtonEnabled="False"
-                                                Text="{Binding ViewModel.UnitPrice,Mode=TwoWay}"
                                                 LostFocus="Txt_Unit_price_LostFocus"
                                                 PreviewTextInput="Txt_Unit_price_PreviewTextInput"
                                                 TextChanged="Txt_Unit_price_TextChanged"
@@ -299,7 +285,6 @@
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_total_price"
                                                 TextAlignment="Center"
-                                                Text="{Binding ViewModel.TPrice,Mode=TwoWay}"
                                                 IsEnabled="False"
                                                 ClearButtonEnabled="False"
                                                 FontFamily="Calibri"
@@ -324,7 +309,6 @@
                                            FontSize="17"
                                            FontFamily="Calibri"
                                            VerticalAlignment="Bottom"
-                                           Command="{Binding ViewModel.AddCommand}"
                                            Click="Button_Click"
                                            HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
@@ -385,8 +369,6 @@
                                                                 Margin="2"
                                                                 Tag="{Binding RowId , Mode=OneWay}"
                                                                 Click="BtnUpdate_Click"
-                                                                CommandParameter="{Binding RowId , Mode=OneWay}"
-                                                                Command="{Binding Path=DataContext.ViewModel.UpdateCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                                 Padding="7,5">
                                                         <ui:SymbolIcon Symbol="Pen16" />
                                                     </ui:Button>
@@ -489,8 +471,8 @@
                                 <Button Padding="30 4 "
                                         Grid.Column="1"
                                         FontSize="17"
+                                        Click="BtnSubmit_Click"
                                         FontFamily="Calibri"
-                                        Command="{Binding ViewModel.SumbitCommand}"
                                         VerticalAlignment="Bottom"
                                         HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">

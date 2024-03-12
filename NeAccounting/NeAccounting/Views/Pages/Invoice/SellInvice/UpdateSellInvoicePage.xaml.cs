@@ -45,7 +45,6 @@ namespace NeAccounting.Views.Pages
             dgv_Inv.Items.Refresh();
         }
 
-
         private void Txt_mat_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             if (!IsInitialized)
