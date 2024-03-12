@@ -49,7 +49,7 @@ namespace NeAccounting.ViewModels
         private int? _materialId;
 
         [ObservableProperty] 
-        private string? _address;
+        private string _address = string.Empty;
 
         public void OnNavigatedFrom()
         {
@@ -74,9 +74,9 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("عنوان خدمت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            if (UnitId is null or 0)
+            if (UnitId is null or 0  )
             {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد خدمت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
             if (Price == null || Price == 0)
@@ -85,7 +85,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
             using UnitOfWork db = new();
-            (string error, bool isSuccess)=await db.MaterialManager.UpdateMaterial(MaterialId.Value, SrvicName,UnitId.Value, string.Empty, Address = string.Empty, Price.Value,false);
+            (string error, bool isSuccess)=await db.MaterialManager.UpdateMaterial(MaterialId.Value, SrvicName,UnitId.Value, string.Empty, Address , Price.Value,false);
 
             if (!isSuccess)
             {

@@ -42,7 +42,6 @@ namespace Domain.NovinEntity.Materials
             IsManufacturedGoods = isManufacturedGoods;
             UnitId = unitId;
             Serial = serial;
-            IsService = isService;
             Entity = 0;
             LastBuyPrice = 0;
             LastSellPrice = lastSellPrice;

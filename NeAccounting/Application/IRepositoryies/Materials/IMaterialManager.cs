@@ -39,5 +39,7 @@ namespace NeApplication.IRepositoryies
             double entity,
             bool DecreaseOrIncrease,
             long? lastPrice = null);
+        Task<(string error, bool isSuccess)> ChangeStatus(
+           int id, bool active);
     }
 }
