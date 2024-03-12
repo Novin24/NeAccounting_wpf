@@ -67,6 +67,13 @@ namespace NeApplication.IRepositoryies
                 DateTime submitDate,
                 List<RemittanceListViewModel> remittances);
 
+        Task<(string error, bool isSuccess)> UpdateSellDocument(Guid docId,
+            long price,
+            double? commission,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances);
+
         /// <summary>
         /// received => true
         /// </summary>
@@ -83,6 +90,13 @@ namespace NeApplication.IRepositoryies
                 string? descripion,
                 DateTime submitDate,
                 List<RemittanceListViewModel> remittances);
+
+        Task<(string error, bool isSuccess)> UpdateBuyDocument(Guid docId,
+            long price,
+            double? commission,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances);
         #endregion
 
         #region status

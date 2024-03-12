@@ -9,6 +9,7 @@ namespace DomainShared.ViewModels.Document
         public Guid CustomerId { get; set; }
         public DateTime Date { get; set; }
         public double? Commission { get; set; }
+        public long? CommissionPrice { get; set; }
         public DocumntType Type { get; set; }
         public string Serial { get; set; }
         public long TotalPrice { get; set; }

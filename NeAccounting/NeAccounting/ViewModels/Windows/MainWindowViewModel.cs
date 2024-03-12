@@ -102,10 +102,10 @@ namespace NeAccounting.ViewModels
                 MenuItems = new ObservableCollection<object>
                 {
                     new NavigationViewItem { Content = "صورتحساب", TargetPageType = typeof(BillPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
-                    new NavigationViewItem {Content = "به روز رسانی پرداختی به مشتری",TargetPageType = typeof(UpdatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility = Visibility.Collapsed},
-                    new NavigationViewItem {Content = "به روز رسانی دریافتی به مشتری",TargetPageType = typeof(UpdateRecDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility = Visibility.Collapsed},
-                    new NavigationViewItem {Content = "به روز رسانی فاکتور فروش",TargetPageType = typeof(UpdateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility =Visibility.Collapsed },
-                    new NavigationViewItem { Content = "صورتحساب جزییات", TargetPageType = typeof(Invoicedetails) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20 } },
+                    new NavigationViewItem { Content = "به روز رسانی پرداختی به مشتری",TargetPageType = typeof(UpdatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility = Visibility.Collapsed},
+                    new NavigationViewItem { Content = "به روز رسانی دریافتی به مشتری",TargetPageType = typeof(UpdateRecDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility = Visibility.Collapsed},
+                    new NavigationViewItem { Content = "به روز رسانی فاکتور فروش",TargetPageType = typeof(UpdateSellInvoicePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility =Visibility.Collapsed },
+                    new NavigationViewItem { Content = "صورتحساب جزییات", TargetPageType = typeof(Invoicedetails) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20 }},
                     new NavigationViewItem { Content = "بدهکاران", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem { Content = "طلبکاران", TargetPageType = typeof(CreditorsListPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem { Content = "دفتر روزانه", TargetPageType = typeof(DailyBookPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20}},
@@ -115,7 +115,6 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem { Content = "بیلان مشخص", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }}
                 }
             },
-
             new NavigationViewItem()
             {
                 Content = "پرسنل",
