@@ -5,6 +5,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       mc:Ignorable="d"
       d:DesignHeight="800"
@@ -13,11 +14,14 @@
                                      IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="PunList">
+      Title="PunList"
+      x:Name="root">
+    <Page.Resources>
+        <cnt:Converters x:Key="ConvertHeight"/>
+    </Page.Resources>
 
+    
     <Grid>
-
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -52,13 +56,26 @@
                     Grid.Column="1"
                     Grid.ColumnSpan="3"
                     Background="{DynamicResource ApplicationBackgroundBrush}"
-                    CornerRadius="10">
+                    CornerRadius="10"><Border.Style>
+    <Style TargetType="Border">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}" Value="false">
+                <Setter Property="MaxHeight" Value="770"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}" Value="false">
+                <Setter Property="MaxHeight" Value="720"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}" Value="false">
+                <Setter Property="MaxHeight" Value="670"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</Border.Style>
                 <Grid>
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-
                     </Grid.RowDefinitions>
 
 
@@ -80,14 +97,24 @@
                               Margin="50 15 50 0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
-                                <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="5*"></RowDefinition>
 
                             </Grid.RowDefinitions>
-                            <Grid>
-                                <ui:CardAction Grid.Row="4"
+                            <Grid Margin="0 ,5,0,15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <ui:CardAction Grid.Column="2"
                                                FontFamily="Calibri"
                                                FontSize="15"
+                                               Margin="15 10 0 0"
                                                Padding="9 0"
                                                Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
                                                CommandParameter="CreateMaterail"
@@ -115,16 +142,40 @@
                                         </StackPanel>
                                     </Grid>
                                 </ui:CardAction>
-                            </Grid>
-                            <Grid Grid.Row="1"
-                                  Margin="0 ,5,0,15">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0"
-                                            Margin="4 4 10 0 ">
+
+                                <ui:CardAction Grid.Column="1"
+                                               FontFamily="Calibri"
+                                               FontSize="15"
+                                               Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
+                                               CommandParameter="CreateService"
+                                               Margin="0 10 15 0"
+                                               Padding="9 0"
+                                               IsChevronVisible="False"
+                                               HorizontalAlignment="Right">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ui:SymbolIcon FontSize="22"
+                                                       Symbol="ReadingListAdd28" />
+
+                                        <StackPanel Grid.Column="1"
+                                                    Margin="8 4"
+                                                    VerticalAlignment="Center">
+                                            <ui:TextBlock Margin="0"
+                                                          FontTypography="BodyStrong"
+                                                          Text="افزودن"
+                                                          TextWrapping="WrapWithOverflow" />
+                                            <ui:TextBlock Appearance="Tertiary"
+                                                          Text="اضافه کردن خدمت و سرویس ..."
+                                                          TextWrapping="WrapWithOverflow" />
+                                        </StackPanel>
+                                    </Grid>
+                                </ui:CardAction>
+                                <StackPanel Grid.Row="1"
+                                            Margin="0 4 15 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
@@ -136,8 +187,9 @@
                                                 Text="{Binding ViewModel.PunName}"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="1"
-                                            Margin="10 4 10 0 ">
+                                <StackPanel Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="15 4 15 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
@@ -149,16 +201,18 @@
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
 
-                                <Button Grid.Column="2"
+                                <Button Grid.Row="1"
+                                        Grid.Column="2"
                                         IsDefault="True"
-                                        Margin="10 25 0 0"
-                                        HorizontalAlignment="Right"
+                                        Margin="15 25 0 0"
+                                        HorizontalAlignment="Left"
                                         Padding="17 4 18 9"
+                                        
                                         Command="{Binding ViewModel.SearchMaterialCommand }">جستجو</Button>
                             </Grid>
                             <DataGrid Margin="0 0 0 30"
                                       BorderThickness="10"
-                                      Grid.Row="2"
+                                      Grid.Row="1"
                                       CanUserResizeColumns="False"
                                       CanUserReorderColumns="False"
                                       CanUserResizeRows="False"

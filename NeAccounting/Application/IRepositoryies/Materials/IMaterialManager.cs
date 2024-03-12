@@ -11,6 +11,7 @@ namespace NeApplication.IRepositoryies
         Task<(string error, PunListDto pun)> GetMaterailById(int Id);
         Task<(string error, bool isSuccess)> CreateMaterial(string name,
             int unitId,
+            bool isService,
             long lastPrice,
             string serial,
             string address,

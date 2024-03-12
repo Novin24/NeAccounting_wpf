@@ -100,14 +100,6 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnUpdateMaterial(int parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateMaterail");
-
-            if (pageType == null)
-            {
-                return;
-            }
-            var servise = _navigationService.GetNavigationControl();
-
             var pun = List.First(t => t.Id == parameter);
 
             IEnumerable<SuggestBoxViewModel<int>> asuBox;
@@ -117,19 +109,52 @@ namespace NeAccounting.ViewModels
                 asuBox = await db.UnitManager.GetUnits();
             }
 
-            var context = new UpdateMaterailPage(new UpdateMaterailViewModel(_snackbarService, _navigationService)
+            if (pun.IsServise)
             {
-                MaterialId = pun.Id,
-                Serial = pun.Serial,
-                LastSellPrice = pun.LastSellPrice,
-                Address = pun.Address,
-                IsManufacturedGoods = pun.IsManufacturedGoods,
-                MaterialName = pun.MaterialName,
-                UnitId = pun.UnitId,
-                AsuBox = asuBox
-            });
+                Type? pageType = NameToPageTypeConverter.Convert("UpdateService");
 
-            servise.Navigate(pageType, context);
+                if (pageType == null)
+                {
+                    return;
+                }
+                var servise = _navigationService.GetNavigationControl();
+
+                var context = new UpdateServicePage(new UpdateServiceViewModel(_snackbarService, _navigationService)
+                {
+                    MaterialId = pun.Id,
+                    Price = pun.LastSellPrice,
+                    Address = pun.Address,
+                    SrvicName = pun.MaterialName,
+                    UnitId = pun.UnitId,
+                    AsuBox = asuBox
+                });
+
+                servise.Navigate(pageType, context);
+            }
+            else
+            {
+                Type? pageType = NameToPageTypeConverter.Convert("UpdateMaterail");
+
+                if (pageType == null)
+                {
+                    return;
+                }
+                var servise = _navigationService.GetNavigationControl();
+
+                var context = new UpdateMaterailPage(new UpdateMaterailViewModel(_snackbarService, _navigationService)
+                {
+                    MaterialId = pun.Id,
+                    Serial = pun.Serial,
+                    LastSellPrice = pun.LastSellPrice,
+                    Address = pun.Address,
+                    IsManufacturedGoods = pun.IsManufacturedGoods,
+                    MaterialName = pun.MaterialName,
+                    UnitId = pun.UnitId,
+                    AsuBox = asuBox
+                });
+
+                servise.Navigate(pageType, context);
+            }
         }
     }
 }

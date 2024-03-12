@@ -21,6 +21,7 @@ namespace Domain.NovinEntity.Materials
         public bool IsManufacturedGoods { get; set; }
         public string PhysicalAddress { get; set; }
         public bool IsActive { get; set; }
+        public bool IsService { get; set; }
         #endregion
 
         #region Constructor
@@ -31,6 +32,7 @@ namespace Domain.NovinEntity.Materials
 
         public Material(string name,
             int unitId,
+            bool isService,
             long lastSellPrice,
             string serial,
             string physicalAddress,
@@ -40,6 +42,7 @@ namespace Domain.NovinEntity.Materials
             IsManufacturedGoods = isManufacturedGoods;
             UnitId = unitId;
             Serial = serial;
+            IsService = isService;
             Entity = 0;
             LastBuyPrice = 0;
             LastSellPrice = lastSellPrice;

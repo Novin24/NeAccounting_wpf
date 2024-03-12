@@ -44,6 +44,7 @@ namespace Infrastructure.UnitOfWork
                 return _materialManager;
             }
         }
+     
 
         public IUnitManager UnitManager
         {

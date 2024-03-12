@@ -50,6 +50,11 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem(){Content = "افزودن اجناس",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateMaterailPage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem(){Content = "به روز رسانی اجناس",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateMaterailPage),Visibility = Visibility.Collapsed,},
                 #endregion
+                    
+                #region Services
+                    new NavigationViewItem(){Content = "افزودن خدمات",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateServicePage),Visibility = Visibility.Collapsed,},
+                    new NavigationViewItem(){Content = "به روز رسانی خدمات",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateServicePage),Visibility = Visibility.Collapsed,},
+                #endregion
                 
                 #region Units 
                     new NavigationViewItem {Content = "واحدها",TargetPageType = typeof(UnitsListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.AppsAddIn16} },
