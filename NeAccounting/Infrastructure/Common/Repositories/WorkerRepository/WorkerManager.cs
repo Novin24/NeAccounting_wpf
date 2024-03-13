@@ -333,7 +333,7 @@ namespace Infrastructure.Repositories
                     rows.Add(row);
                 }
             }
-            return new PagedResulViewModel<SalaryViewModel>(totalCount, pageCount, rows);
+            return new PagedResulViewModel<SalaryViewModel>(totalCount, pageCount, pageNum, rows);
         }
 
         public async Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId)

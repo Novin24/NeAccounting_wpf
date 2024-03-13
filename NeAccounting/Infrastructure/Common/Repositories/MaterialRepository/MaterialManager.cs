@@ -141,6 +141,11 @@ namespace Infrastructure.Repositories
                 if (mt == null)
                     return new("کالای مورد نظر یافت نشد !!!", false);
 
+                if (mt.IsService)
+                {
+                    return new(string.Empty, true);
+                }
+
                 if (!sellOrBuy && mt.Entity < entity)
                     return new("موجودی منفی میشود!!!", false);
 

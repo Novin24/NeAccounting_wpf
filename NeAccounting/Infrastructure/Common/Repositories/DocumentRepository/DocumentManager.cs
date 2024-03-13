@@ -143,6 +143,33 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
+        public async Task<(bool isSuccess, string errore)> DeleteDocument(Guid parameter)
+        {
+            var doc = await Entities
+                .Include(t => t.RelatedDocuments)
+                .Include(t => t.SellRemittances)
+                .Include(t => t.BuyRemittances)
+                .FirstOrDefaultAsync(t => t.Id == parameter);
+
+            if (doc == null) return new(false, "مورد مدنظر یافت نشد!!!");
+
+            foreach (var s in doc.SellRemittances.ToList()) doc.RemoveSellRem(s);
+
+            foreach (var b in doc.BuyRemittances.ToList()) doc.RemoveBuyRem(b);
+
+            try
+            {
+                foreach (var d in doc.RelatedDocuments.ToList()) Entities.Remove(d);
+
+                Entities.Remove(doc);
+            }
+            catch (Exception ex)
+            {
+                return new(false, ex.Message);
+            }
+
+            return new(true, string.Empty);
+        }
         #endregion
 
         #region Invoice(CRUD)
@@ -459,6 +486,7 @@ namespace Infrastructure.Repositories
 
             return new(true, inv);
         }
+
         #endregion
 
         #region Status
@@ -522,6 +550,7 @@ namespace Infrastructure.Repositories
             Guid cusId,
             bool leftOver,
             bool ignorePagination,
+            bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
@@ -618,17 +647,31 @@ namespace Infrastructure.Repositories
 
             if (!ignorePagination)
             {
-                Remittances = Remittances.SkipLast(--pageNum * pageCount).TakeLast(pageCount).ToList();
+                if (isInit)
+                {
+                    pageNum = totalCount / 2;
+                    if (totalCount % 2 != 0)
+                    {
+                        pageNum++;
+                    }
+                }
+                Remittances = Remittances.Skip(pageNum - 1 * 2).Take(2).ToList();
             }
 
-            return new PagedResulViewModel<InvoiceListDtos>(totalCount, pageCount, Remittances);
+            return new PagedResulViewModel<InvoiceListDtos>(totalCount, 2, pageNum, Remittances);
         }
 
-        public Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime, DateTime EndTime, Guid CusId, bool LeftOver, string Description)
+        public Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime,
+            DateTime EndTime,
+            Guid CusId,
+            bool LeftOver,
+            string Description,
+            bool ignorePagination,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
         {
             throw new NotImplementedException();
         }
-
 
         public async Task<List<SummaryDoc>> GetSummaryDocs(Guid? CusId, DocumntType type)
         {
@@ -691,7 +734,7 @@ namespace Infrastructure.Repositories
             }
             var totalCount = list.Count;
             list = list.Skip(--pageNum * pageCount).Take(pageCount).ToList();
-            return new PagedResulViewModel<DalyBookDto>(totalCount, pageCount, list);
+            return new PagedResulViewModel<DalyBookDto>(totalCount, pageCount, pageNum, list);
         }
         #endregion
     }
