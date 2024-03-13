@@ -276,6 +276,7 @@ namespace NeAccounting.ViewModels
         /// حذف ردیف
         /// </summary>
         /// <param name="rowId"></param>s
+        [RelayCommand]
         private void OnRemove(int rowId)
         {
             var itm = List.FirstOrDefault(t => t.RowId == rowId);

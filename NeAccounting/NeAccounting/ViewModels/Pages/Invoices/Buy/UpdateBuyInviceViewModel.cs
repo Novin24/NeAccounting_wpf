@@ -208,19 +208,19 @@ public partial class UpdateBuyInviceViewModel : ObservableObject, INavigationAwa
         if (MaterialId < 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return;
+            return false;
         }
 
         if (AmountOf == null || AmountOf <= 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مقدار"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return;
+            return false;
         }
 
         if (MatPrice == null || MatPrice == 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return;
+            return false;
         }
         #endregion
 
@@ -240,7 +240,7 @@ public partial class UpdateBuyInviceViewModel : ObservableObject, INavigationAwa
         });
         SetCommisionValue();
         RefreshRow(ref RowId);
-        return;
+        return true;
     }
 
     /// <summary>
@@ -271,6 +271,7 @@ public partial class UpdateBuyInviceViewModel : ObservableObject, INavigationAwa
     /// حذف ردیف
     /// </summary>
     /// <param name="rowId"></param>s
+    [RelayCommand]
     private void OnRemove(int rowId)
     {
         var itm = List.FirstOrDefault(t => t.RowId == rowId);

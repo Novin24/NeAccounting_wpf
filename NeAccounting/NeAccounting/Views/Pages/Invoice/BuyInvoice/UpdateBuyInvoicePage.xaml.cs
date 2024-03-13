@@ -119,19 +119,6 @@ namespace NeAccounting.Views.Pages
             dgv_Inv.Items.Refresh();
         }
 
-        private void BtnRemove_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is not Button btn)
-                return;
-
-            if (btn.Tag == null)
-                return;
-
-            int id = int.Parse(btn.Tag.ToString());
-            ViewModel.OnRemove(id);
-            dgv_Inv.Items.Refresh();
-        }
-
         private bool Validation()
         {
             if (txt_MaterialName.Text != string.Empty)
