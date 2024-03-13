@@ -129,12 +129,13 @@ namespace NeApplication.IRepositoryies
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 
-        Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime,
+        Task<PagedResulViewModel<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime,
              DateTime EndTime,
              Guid CusId,
              bool LeftOver,
              string Description,
              bool ignorePagination,
+             bool isInit,
              int pageNum = 0,
              int pageCount = NeAccountingConstants.PageCount);
 

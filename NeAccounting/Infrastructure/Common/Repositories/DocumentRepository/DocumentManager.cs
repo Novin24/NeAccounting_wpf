@@ -9,6 +9,7 @@ using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
+using System;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
@@ -558,7 +559,7 @@ namespace Infrastructure.Repositories
             PersianCalendar pc = new();
             List<InvoiceListDtos> Remittances = [];
             var MyDoc = await TableNoTracking
-                .Where(st => st.SubmitDate > startTime)
+                .Where(st => leftOver || st.SubmitDate > startTime)
                 .Where(et => et.SubmitDate < endTime)
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
@@ -649,28 +650,164 @@ namespace Infrastructure.Repositories
             {
                 if (isInit)
                 {
-                    pageNum = totalCount / 2;
-                    if (totalCount % 2 != 0)
+                    pageNum = totalCount / pageCount;
+                    if (totalCount % pageCount != 0)
                     {
                         pageNum++;
                     }
                 }
-                Remittances = Remittances.Skip(pageNum - 1 * 2).Take(2).ToList();
+                Remittances = Remittances.Skip(pageNum - 1 * pageCount).Take(pageCount).ToList();
             }
 
-            return new PagedResulViewModel<InvoiceListDtos>(totalCount, 2, pageNum, Remittances);
+            return new PagedResulViewModel<InvoiceListDtos>(totalCount, pageCount, pageNum, Remittances);
         }
 
-        public Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime,
-            DateTime EndTime,
-            Guid CusId,
-            bool LeftOver,
-            string Description,
+        public async Task<PagedResulViewModel<DetailRemittanceDto>> GetRemittancesByDate(DateTime startTime,
+            DateTime endTime,
+            Guid cusId,
+            bool leftOver,
+            string desc,
             bool ignorePagination,
+            bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
-            throw new NotImplementedException();
+
+            int i = 1;
+            PersianCalendar pc = new();
+            //List<DetailRemittanceDto> Remittances = [];
+            //var MyRem = await TableNoTracking
+            //    .Where(st => leftOver || st.SubmitDate > startTime)
+            //    .Where(et => et.SubmitDate < endTime)
+            //    .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
+            //    .Where(p => p.CustomerId == cusId)
+            //    .SelectMany(t => t.SellRemittances)
+            //    .ToListAsync();
+
+            var Remittances = await (from doc in DbContext.Set<Document>()
+                       .AsNoTracking()
+                       .Where(st => leftOver || st.SubmitDate > startTime)
+                       .Where(et => et.SubmitDate < endTime)
+                       .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
+                       .Where(p => p.CustomerId == cusId)
+
+                                     join sellRemitance in DbContext.Set<SellRemittance>()
+                                                             on doc.Id equals sellRemitance.DocumentId into sellRemi
+                                     from sellRem in sellRemi.DefaultIfEmpty()
+
+                                     join buyRemitance in DbContext.Set<BuyRemittance>()
+                                                             on doc.Id equals buyRemitance.DocumentId into buyRemi
+                                     from buyRem in sellRemi.DefaultIfEmpty()
+
+                                     orderby doc.CreationTime descending
+                                     select new DetailRemittanceDto()
+                                     {
+                                         Date = doc.SubmitDate,
+                                         AmuontOf = 
+                                     }).ToListAsync();
+
+
+
+            if (leftOver)
+            {
+                var remittance = new DetailRemittanceDto()
+                {
+                    ShamsiDate = startTime.ToShortDateString(),
+                    Row = i,
+                    Description = "باقی مانده از قبل",
+                    Bed = MyRem.Where(p => p.Date < startTime && p.ReceivedOrPaid == false).Select(p => (long)p.Price).Sum(),
+                    Bes = MyRem.Where(p => p.Date < startTime && p.ReceivedOrPaid == true).Select(p => (long)p.Price).Sum(),
+                };
+                Remittances.Add(remittance);
+            }
+
+            Remittances.AddRange(await Novin.Buy_Remittances.OrderBy(t => t.date).Where(p => p.date < EndTime && p.date >= StartTime &&
+            p.Customer_id == Cusid && p.Archive == false && p.description.Contains(Description) && p.IsDeleted == false)
+                .Select(t => new DetailRemittanceDto()
+                {
+                    Price = t.Price,
+                    Unit = t.Materials.Units.Unit_Name,
+                    Story = t.description,
+                    AmuontOf = t.AmunteOf,
+                    Description = t.Materials.Material_Name,
+                    Date = t.date,
+                    ShamsiDate = t.ShamsiDate,
+                    Bed = 0,
+                    Bes = t.total_price,
+                }).ToListAsync());
+
+            Remittances.AddRange(await Novin.sell_Remittances.Where(p => p.date < EndTime && p.date >= StartTime &&
+            p.Customer_id == Cusid && p.Archive == false && p.description.Contains(Description) && p.IsDeleted == false)
+                .Select(t => new DetailRemittanceDto()
+                {
+                    Price = t.Price,
+                    Unit = t.Materials.Units.Unit_Name,
+                    Story = t.description,
+                    AmuontOf = t.AmunteOf,
+                    Description = t.Materials.Material_Name,
+                    Date = t.date,
+                    ShamsiDate = t.ShamsiDate,
+                    Bed = t.total_price,
+                    Bes = 0,
+                }).ToListAsync());
+
+            Remittances.AddRange(MyRem.Where(p => p.Date >= StartTime && !p.Serial.Contains("S_667") && !p.Serial.Contains("B_255") && !p.ReceivedOrPaid).Select(t => new DetailRemittanceDto()
+            {
+                Description = t.Description,
+                Date = t.Date,
+                ShamsiDate = t.ShamsiDate,
+                Bed = t.Price,
+                Bes = 0,
+            }).ToList());
+
+            Remittances.AddRange(MyRem.Where(p => p.Date >= StartTime && !p.Serial.Contains("S_667") && !p.Serial.Contains("B_255") && p.ReceivedOrPaid).Select(t => new DetailRemittanceDto()
+            {
+                Description = t.Description,
+                Date = t.Date,
+                ShamsiDate = t.ShamsiDate,
+                Bed = 0,
+                Bes = t.Price,
+            }).ToList());
+
+            Remittances = Remittances.OrderBy(t => t.Date).ToList();
+
+            foreach (var item in Remittances)
+            {
+                item.Row = i;
+                long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bed).Sum();
+                long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bes).Sum();
+                item.LeftOver = Math.Abs(bed - bes);
+                if (bes > bed)
+                {
+                    item.Status = "طلبکار";
+                }
+                else if (bed > bes)
+                {
+                    item.Status = "بدهکار";
+                }
+                else
+                {
+                    item.Status = "تسویه";
+                }
+                i++;
+            }
+
+            var totalCount = Remittances.Count;
+
+            if (!ignorePagination)
+            {
+                if (isInit)
+                {
+                    pageNum = totalCount / pageCount;
+                    if (totalCount % pageCount != 0)
+                    {
+                        pageNum++;
+                    }
+                }
+                Remittances = Remittances.Skip(pageNum - 1 * pageCount).Take(pageCount).ToList();
+            }
+
+            return new PagedResulViewModel<DetailRemittanceDto>(totalCount, pageCount, pageNum, Remittances);
         }
 
         public async Task<List<SummaryDoc>> GetSummaryDocs(Guid? CusId, DocumntType type)
