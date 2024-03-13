@@ -130,7 +130,7 @@ public partial class CreateBuyInviceViewModel(ISnackbarService snackbarService, 
         using UnitOfWork db = new();
         Cuslist = await db.CustomerManager.GetDisplayUser(false, true);
         LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.BuyInv);
-        MatList = await db.MaterialManager.GetMaterails();
+        MatList = (await db.MaterialManager.GetMaterails()).Where(t => !t.IsService).ToList();
     }
 
     public void OnNavigatedFrom()

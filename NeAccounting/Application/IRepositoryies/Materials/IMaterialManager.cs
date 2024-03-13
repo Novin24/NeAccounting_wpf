@@ -6,7 +6,17 @@ namespace NeApplication.IRepositoryies
 {
     public interface IMaterialManager : IRepository<Material>
     {
+        /// <summary>
+        /// فیلتر شده برای فاکتور ها
+        /// </summary>
+        /// <returns></returns>
         Task<List<MatListDto>> GetMaterails();
+        /// <summary>
+        /// فیلتر نشده برای لیست اجناس
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="serial"></param>
+        /// <returns></returns>
         Task<List<PunListDto>> GetMaterails(string name, string serial);
         Task<(string error, PunListDto pun)> GetMaterailById(int Id);
         Task<(string error, bool isSuccess)> CreateMaterial(string name,

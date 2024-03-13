@@ -7,6 +7,7 @@
         public string MatName { get; set; }
         public string UnitName { get; set; }
         public long Price { get; set; }
+        public bool IsService { get; set; }
         public int MaterialId { get; set; }
         public double AmountOf { get; set; }
         public long TotalPrice { get; set; }

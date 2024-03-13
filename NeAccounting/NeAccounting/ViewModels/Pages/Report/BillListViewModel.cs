@@ -27,6 +27,7 @@ namespace NeAccounting.ViewModels
             _snackbarService = snackbarService;
         }
 
+        #region Properties
 
         [ObservableProperty]
         private long? _personelId;
@@ -66,15 +67,16 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private IEnumerable<InvoiceListDtos> _invList;
+        #endregion
 
-        public void OnNavigatedFrom()
-        {
-
-        }
-
+        #region Methods
         public async void OnNavigatedTo()
         {
             await InitializeViewModel();
+        }
+        public void OnNavigatedFrom()
+        {
+
         }
 
         private async Task InitializeViewModel()
@@ -107,7 +109,6 @@ namespace NeAccounting.ViewModels
             InvList = t.Items;
             PageCount = t.PageCount;
         }
-
 
         public async Task<(IEnumerable<InvoiceListDtos> list, bool isSuccess)> PrintInvoices()
         {
@@ -211,6 +212,7 @@ namespace NeAccounting.ViewModels
                         Description = itme.DocDescription,
                         Discount = itme.Dicount,
                         PayTypeEnum = PaymentType.CardToCard.ToDictionary(),
+                        //PayTypeEnum = Enum.GetValues(typeof(PaymentType)).Cast<PaymentType>(),
                         PayTypeId = (byte)itme.Type,
                         DocId = parameter,
                         DocList = docs,
@@ -274,86 +276,26 @@ namespace NeAccounting.ViewModels
 
                      _navigationService.Navigate(pageType);
 
-                    //var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
-                    //if (!isSuccess)
-                    //{
-                    //    _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                    //    return;
-                    //}
-                    //var mat = await db.MaterialManager.GetMaterails();
-                    //var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
-                    //var oc = new System.Collections.ObjectModel.ObservableCollection<RemittanceListViewModel>();
-                    //int i = 1;
-                    //foreach (var it in itm.RemList)
-                    //{
-                    //    it.RowId = i++;
-                    //    it.MatName = mat.First(t => t.Id == it.MaterialId).MaterialName;
-                    //    it.UnitName = mat.First(t => t.Id == it.MaterialId).UnitName;
-                    //    oc.Add(it);
-                    //}
-                    //long stx = itm.TotalPrice;
-                    //if (itm.CommissionPrice.HasValue && itm.CommissionPrice.Value != 0)
-                    //{
-                    //    stx -= itm.CommissionPrice.Value;
-                    //}
-                    //var context = new UpdateSellInvoicePage(new UpdateSellInvoiceViewModel(_snackbarService, _navigationService)
-                    //{
-                    //    MatList = mat,
-                    //    CusName = Cuslist.First(t => t.Id == itm.CustomerId).DisplayName,
-                    //    CusNumber = Cuslist.First(t => t.Id == itm.CustomerId).UniqNumber,
-                    //    Status = stu.Status,
-                    //    Debt = stu.Debt,
-                    //    Credit = stu.Credit,
-                    //    SubmitDate = itm.Date,
-                    //    StaticList = itm.RemList,
-                    //    RemainPrice = stx.ToString("N0"),
-                    //    InvDescription = itm.InvoiceDescription,
-                    //    Commission = itm.Commission,
-                    //    LastInvoice = itm.Serial,
-                    //    List = oc,
-                    //    TotalPrice = itm.TotalPrice.ToString("N0"),
-                    //    Totalcommission = itm.Commission.HasValue ? (itm.TotalPrice * (itm.Commission.Value / 100)).ToString("N0") : "0",
-                    //    InvoiceId = parameter
-                    //}, _snackbarService);
+                    break;
 
-                    break;
                 case DocumntType.BuyInv:
+                    Type? pagType = NameToPageTypeConverter.Convert("UpdateBuyInvoice");
+
+                    if (pagType == null)
+                    {
+                        return;
+                    }
+
+                    EditInvoiceDetails.InvoiceId = parameter;
+                    _navigationService.Navigate(pagType);
                     break;
+
                 case DocumntType.Cheque:
                     break;
                 default:
                     break;
             }
-
-            //Type? pageType = NameToPageTypeConverter.Convert("UpdateCustomer");
-
-            //if (pageType == null)
-            //{
-            //    return;
-            //}
-            //var servise = _navigationService.GetNavigationControl();
-
-            //var cus = List.First(t => t.Id == parameter);
-
-            //var context = new UpdateCustomerPage(new UpdateCustomerViewModel(_snackbarService, _navigationService)
-            //{
-            //    Id = cus.Id,
-            //    FullName = cus.Name,
-            //    Seller = cus.Seller,
-            //    Buyer = cus.Buyer,
-            //    Address = cus.Address,
-            //    CashCredit = cus.CashCredit,
-            //    ChequeCredit = cus.ChequeCredit,
-            //    TotalCredit = cus.TotalCredit,
-            //    PromissoryNote = cus.PromissoryNote,
-            //    HavePromissoryNote = cus.HavePromissoryNote,
-            //    CusType = (byte)cus.CusType,
-            //    HaveCashCredit = cus.HaveCashCredit,
-            //    Mobile = cus.Mobile,
-            //    NationalCode = cus.NationalCode
-            //});
-
-            //servise.Navigate(pageType, context);
         }
+        #endregion
     }
 }

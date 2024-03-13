@@ -148,7 +148,6 @@ namespace NeAccounting.ViewModels
         #endregion
 
         #region Commands
-
         public async void OnNavigatedTo()
         {
             InvoiceId = EditInvoiceDetails.InvoiceId;
@@ -198,7 +197,7 @@ namespace NeAccounting.ViewModels
 
         public void OnNavigatedFrom()
         {
-
+            EditInvoiceDetails.InvoiceId = Guid.Empty;
         }
 
         /// <summary>
@@ -233,6 +232,7 @@ namespace NeAccounting.ViewModels
             {
                 AmountOf = AmountOf.Value,
                 UnitName = mat.UnitName,
+                IsService = mat.IsService,
                 MatName = mat.MaterialName,
                 Price = MatPrice.Value,
                 RremId = RemId ?? Guid.Empty,
@@ -243,11 +243,6 @@ namespace NeAccounting.ViewModels
                 MaterialId = MaterialId,
             });
             SetCommisionValue();
-            AmountOf = null;
-            MaterialId = -1;
-            Description = null;
-            MatPrice = null;
-            RemId = null;
             RefreshRow(ref RowId);
             return true;
         }
@@ -259,15 +254,21 @@ namespace NeAccounting.ViewModels
         /// <returns></returns>
         internal (bool, RemittanceListViewModel) OnUpdate(int rowId)
         {
+            if (RemId != null)
+            {
+                return (false, new RemittanceListViewModel());
+            }
             var itm = List.FirstOrDefault(t => t.RowId == rowId);
             if (itm == null)
                 return new(false, new RemittanceListViewModel());
             MaterialId = itm.MaterialId;
+            RemId = itm.RremId;
             AmountOf = itm.AmountOf;
             MatPrice = itm.Price;
             Description = itm.Description;
             List.Remove(itm);
             RefreshRow(ref rowId);
+            SetCommisionValue();
             return new(true, itm);
         }
 
@@ -330,6 +331,8 @@ namespace NeAccounting.ViewModels
             var li = new List<RemittanceListViewModel>(List.Where(t => !t.IsDeleted || t.RremId != Guid.Empty));
             foreach (var item in li)
             {
+                if (item.IsService) continue;
+
                 if (item.RremId == Guid.Empty)
                 {
                     var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, false, item.Price);
@@ -382,6 +385,8 @@ namespace NeAccounting.ViewModels
             #endregion
 
             #region reDirect
+            EditInvoiceDetails.InvoiceId = Guid.Empty;
+
             Type? pageType = NameToPageTypeConverter.Convert("Bill");
 
             if (pageType == null)
@@ -427,8 +432,6 @@ namespace NeAccounting.ViewModels
             }
             RemainPrice = total.ToString("N0");
         }
-
-
         #endregion
     }
 }

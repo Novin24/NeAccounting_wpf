@@ -11,14 +11,15 @@ namespace Infrastructure.Repositories
         public Task<List<MatListDto>> GetMaterails()
         {
 
-            return TableNoTracking.Select(x => new MatListDto
+            return TableNoTracking.Where(t => t.IsActive).Select(x => new MatListDto
             {
                 Id = x.Id,
                 MaterialName = x.Name,
                 Entity = x.Entity,
                 LastSellPrice = x.LastSellPrice,
                 LastBuyPrice = x.LastBuyPrice,
-                UnitName = x.Unit.Name
+                UnitName = x.Unit.Name,
+                IsService = x.IsService,
             }).ToListAsync();
         }
 
@@ -29,7 +30,8 @@ namespace Infrastructure.Repositories
                 .Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name))
                 .Where(x => string.IsNullOrEmpty(serial) || x.Serial.Contains(serial))
                 .Select(x => new PunListDto
-                {   IsActive = x.IsActive,
+                {
+                    IsActive = x.IsActive,
                     Id = x.Id,
                     MaterialName = x.Name,
                     Serial = x.Serial,
