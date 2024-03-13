@@ -125,15 +125,25 @@ namespace NeApplication.IRepositoryies
             Guid CusId,
             bool LeftOver,
             bool ignorePagination,
+            bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 
-        Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime, DateTime EndTime, Guid CusId, bool LeftOver, string Description);
+        Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime,
+             DateTime EndTime,
+             Guid CusId,
+             bool LeftOver,
+             string Description,
+             bool ignorePagination,
+             int pageNum = 0,
+             int pageCount = NeAccountingConstants.PageCount);
 
         Task<List<SummaryDoc>> GetSummaryDocs(Guid? CusId, DocumntType type);
         #endregion
 
         #region Doc
+        Task<(bool isSuccess, string errore)> DeleteDocument(Guid parameter);
+
         Task<(string error, bool isSuccess)> CreateRecDocument(Guid customerId,
             PaymentType paymentType,
             long price,

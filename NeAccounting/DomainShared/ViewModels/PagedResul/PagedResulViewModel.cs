@@ -17,16 +17,18 @@
             }
         }
         public int RowInPage { get; set; }
+        public int CurrentPage { get; set; }
         public IEnumerable<T> Items
         {
             get { return _items ??= new List<T>(); }
             set { _items = value; }
         }
-        public PagedResulViewModel(int totalCount, int rowInPage, IEnumerable<T> items)
+        public PagedResulViewModel(int totalCount, int rowInPage,int currentPage, IEnumerable<T> items)
         {
             TotalCount = totalCount;
             RowInPage = rowInPage;
             Items = items;
+            CurrentPage = currentPage;
         }
 
 

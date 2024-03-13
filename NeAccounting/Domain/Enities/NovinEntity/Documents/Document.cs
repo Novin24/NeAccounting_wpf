@@ -94,6 +94,18 @@ namespace Domain.NovinEntity.Documents
             return this;
         }
 
+        public Document RemoveSellRem(SellRemittance inv)
+        {
+             SellRemittances.Remove(inv);
+            return this;
+        }
+
+        public Document RemoveBuyRem(BuyRemittance inv)
+        {
+            BuyRemittances.Remove(inv);
+            return this;
+        }
+
         public Document AddDocument(List<Document> list)
         {
             RelatedDocuments.AddRange(list);

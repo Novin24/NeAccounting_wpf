@@ -16,6 +16,7 @@ namespace NeAccounting.ViewModels
 {
     public partial class BillListViewModel : ObservableObject, INavigationAware
     {
+        private bool _isInit;
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
@@ -88,6 +89,39 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnSearchInvoice()
         {
+
+            if (!CusId.HasValue)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            if (StartDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ شروع"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
+            if (EndDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پایان"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            _isInit = true;
+            using UnitOfWork db = new();
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, true, CurrentPage);
+            CurrentPage = t.CurrentPage;
+            InvList = t.Items;
+            PageCount = t.PageCount;
+            _isInit = false;
+        }
+
+        [RelayCommand]
+        private async Task OnChangePage()
+        {
+            if (_isInit)
+            {
+                return;
+            }
             if (!CusId.HasValue)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
@@ -105,7 +139,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, CurrentPage);
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, false, CurrentPage);
             InvList = t.Items;
             PageCount = t.PageCount;
         }
@@ -129,7 +163,7 @@ namespace NeAccounting.ViewModels
                 return (new List<InvoiceListDtos>(), false);
             }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, CurrentPage);
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, true, CurrentPage);
             return new(t.Items, true);
         }
 
@@ -151,25 +185,129 @@ namespace NeAccounting.ViewModels
                 var doc = InvList.FirstOrDefault(x => x.Id == parameter);
                 if (doc == null)
                 {
-                    _snackbarService.Show("کاربر گرامی", "ردیف مورد نظر برای ویرایش یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    _snackbarService.Show("کاربر گرامی", "ردیف مورد نظر برای حذف یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
 
+                switch (doc.Type)
+                {
+                    case DocumntType.PayDoc:
+                        using (UnitOfWork db = new())
+                        {
+                            var (isSuccess, e) = await db.DocumentManager.DeleteDocument(parameter);
+                            if (!isSuccess)
+                            {
+                                _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                db.Dispose();
+                                return;
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
-                // اول باید موجودی انبار نسبت به فاکتور خرید یا فروش بازگردانی شود سپس فاکتور حذف شود
+                        await OnSearchInvoice();
+                        break;
 
+                    case DocumntType.RecDoc:
+                        using (UnitOfWork db = new())
+                        {
+                            var (isSuccess, e) = await db.DocumentManager.DeleteDocument(parameter);
+                            if (!isSuccess)
+                            {
+                                _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                db.Dispose();
+                                return;
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
+                        await OnSearchInvoice();
+                        break;
 
-                //using UnitOfWork db = new();
-                //var isSuccess = await db.DocumentManager.DeleteAsync<Guid>(parameter);
-                //if (!isSuccess)
-                //{
-                //    _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                //    return;
-                //}
-                //_snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+                    case DocumntType.SellInv:
+                        using (UnitOfWork db = new())
+                        {
+                            #region GetDoc
+                            var (isSucces, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
+                            if (!isSucces)
+                            {
+                                _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                return;
+                            }
+                            #endregion
 
-                //await OnSearchInvoice();
+                            #region UpdateMaterial
+                            foreach (var item in itm.RemList)
+                            {
+                                var (errore, isSucess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, true, item.Price);
+                                if (!isSucess)
+                                {
+                                    _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                    db.Dispose();
+                                    return;
+                                }
+                            }
+                            #endregion
+
+                            var (isSuccess, e) = await db.DocumentManager.DeleteDocument(parameter);
+                            if (!isSuccess)
+                            {
+                                _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                db.Dispose();
+                                return;
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+                        await OnSearchInvoice();
+                        break;
+
+                    case DocumntType.BuyInv:
+                        using (UnitOfWork db = new())
+                        {
+                            #region GetDoc
+                            var (isSucces, itm) = await db.DocumentManager.GetBuyInvoiceDetail(parameter);
+                            if (!isSucces)
+                            {
+                                _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                return;
+                            }
+                            #endregion
+
+                            #region UpdateMaterial
+                            foreach (var item in itm.RemList)
+                            {
+                                var (errore, isSucess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, false, item.Price);
+                                if (!isSucess)
+                                {
+                                    _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                    db.Dispose();
+                                    return;
+                                }
+                            }
+                            #endregion
+
+                            var (isSuccess, e) = await db.DocumentManager.DeleteDocument(parameter);
+                            if (!isSuccess)
+                            {
+                                _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                db.Dispose();
+                                return;
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+                        await OnSearchInvoice();
+                        break;
+
+                    case DocumntType.Cheque:
+                    default:
+                        _snackbarService.Show("کاربر گرامی", "حذف امکان پذیر نمی‌باشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        break;
+                }
             }
         }
 
@@ -274,7 +412,7 @@ namespace NeAccounting.ViewModels
 
                     EditInvoiceDetails.InvoiceId = parameter;
 
-                     _navigationService.Navigate(pageType);
+                    _navigationService.Navigate(pageType);
 
                     break;
 
