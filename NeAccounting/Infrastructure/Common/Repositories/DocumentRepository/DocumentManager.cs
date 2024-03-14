@@ -52,7 +52,7 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, discount.Value, DocumntType.PayDiscount, PaymentType.Other,$" تخفیف سند( {t.Entity.Serial} )",submitDate,false)
+                        new (customerId, discount.Value, DocumntType.PayDiscount, PaymentType.Other,$" تخفیف سند {t.Entity.Serial} ",submitDate,false)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -82,7 +82,7 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, discount.Value, DocumntType.RecDiscount, PaymentType.Other,$" تخفیف سند( {t.Entity.Serial} )",submitDate,true)
+                        new (customerId, discount.Value, DocumntType.RecDiscount, PaymentType.Other,$" تخفیف سند {t.Entity.Serial} ",submitDate,true)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -132,7 +132,7 @@ namespace Infrastructure.Repositories
                     if (discount != null && discount != 0)
                     {
                         doc.RelatedDocuments.Add(new(doc.CustomerId, discount.Value, DocumntType.PayDiscount,
-                            PaymentType.Other, $" تخفیف سند( {doc.Serial} )", submitDate, false));
+                            PaymentType.Other, $" تخفیف سند {doc.Serial} ", submitDate, false));
                     }
                 }
 
@@ -193,7 +193,7 @@ namespace Infrastructure.Repositories
                     var comDoc = new List<Document>()
                     {
                         new (customerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
-                        PaymentType.Other,$" پورسانت فاکتور ( {t.Entity.Serial} )",submitDate,true,(byte)commission.Value)
+                        PaymentType.Other,$" پورسانت فاکتور  {t.Entity.Serial} ",submitDate,true,(byte)commission.Value)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -268,7 +268,7 @@ namespace Infrastructure.Repositories
                 if (commission != null && commission != 0)
                 {
                     doc.RelatedDocuments.Add(new(doc.CustomerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
-                     PaymentType.Other, $" پورسانت فاکتور ( {doc.Serial} )", submitDate, true, (byte)commission.Value));
+                     PaymentType.Other, $" پورسانت فاکتور  {doc.Serial} ", submitDate, true, (byte)commission.Value));
                 }
             }
 
@@ -301,7 +301,8 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, (long)(price * (commission.Value / 100)), DocumntType.RecCom, PaymentType.Other,$" پورسانت فاکتور( {t.Entity.Serial} )",submitDate,false,(byte)commission.Value)
+                        new (customerId, (long)(price * (commission.Value / 100)), DocumntType.RecCom,
+                        PaymentType.Other,$" پورسانت فاکتور {t.Entity.Serial} ",submitDate,false,(byte)commission.Value)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -376,7 +377,7 @@ namespace Infrastructure.Repositories
                 if (commission != null && commission != 0)
                 {
                     doc.RelatedDocuments.Add(new(doc.CustomerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
-                     PaymentType.Other, $" پورسانت فاکتور ( {doc.Serial} )", submitDate, true, (byte)commission.Value));
+                     PaymentType.Other, $" پورسانت فاکتور  {doc.Serial} ", submitDate, true, (byte)commission.Value));
                 }
             }
 
@@ -656,7 +657,7 @@ namespace Infrastructure.Repositories
                         pageNum++;
                     }
                 }
-                Remittances = Remittances.Skip(pageNum - 1 * pageCount).Take(pageCount).ToList();
+                Remittances = Remittances.Skip((pageNum - 1) * pageCount).Take(pageCount).ToList();
             }
 
             return new PagedResulViewModel<InvoiceListDtos>(totalCount, pageCount, pageNum, Remittances);
@@ -674,109 +675,115 @@ namespace Infrastructure.Repositories
         {
 
             int i = 1;
+            List<DetailRemittanceDto> Remittances = [];
+
+            // گرفتن تمام سند های مربوط از دیتابیس
+            Remittances.AddRange(await TableNoTracking
+                .Where(st => st.SubmitDate > startTime)
+                .Where(et => et.SubmitDate < endTime)
+                .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
+                .Where(p => p.CustomerId == cusId)
+                .Where(s => s.Type != DocumntType.SellInv && s.Type != DocumntType.BuyInv)
+                .Select(t => new DetailRemittanceDto()
+                {
+                    Serial = t.Serial.ToString(),
+                    Date = t.SubmitDate,
+                    Bes = t.Price,
+                    Bed = t.Price,
+                    IsRecived = t.IsReceived,
+                    MaterialName = t.Description
+                }).ToListAsync());
+
+
+            // اضافه کردن فاکتور های فروش
+            Remittances.AddRange(await (from doc in DbContext.Set<Document>()
+                      .AsNoTracking()
+                      .Where(st => st.SubmitDate > startTime)
+                      .Where(et => et.SubmitDate < endTime)
+                      .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
+                      .Where(p => p.CustomerId == cusId)
+
+                                        join sellRem in DbContext.Set<SellRemittance>()
+                                                                on doc.Id equals sellRem.DocumentId
+
+                                        orderby doc.CreationTime descending
+                                        select new DetailRemittanceDto()
+                                        {
+                                            Date = doc.SubmitDate,
+                                            IsRecived = doc.IsReceived,
+                                            AmuontOf = sellRem.AmountOf.ToString(),
+                                            Serial = doc.Serial.ToString(),
+                                            Description = sellRem.Description,
+                                            Price = sellRem.Price.ToString("N0"),
+                                            Bed = sellRem.TotalPrice,
+                                            Bes = 0,
+                                            MaterialName = sellRem.Material.Name,
+                                            Unit = sellRem.Material.Unit.Name,
+                                        }).ToListAsync());
+
+            // اضافه کردن فاکتورهای خرید
+            Remittances.AddRange(await (from doc in DbContext.Set<Document>()
+               .AsNoTracking()
+               .Where(st => st.SubmitDate > startTime)
+               .Where(et => et.SubmitDate < endTime)
+               .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
+               .Where(p => p.CustomerId == cusId)
+
+                                        join buyRem in DbContext.Set<BuyRemittance>()
+                                                                on doc.Id equals buyRem.DocumentId
+
+                                        orderby doc.CreationTime descending
+                                        select new DetailRemittanceDto()
+                                        {
+                                            Date = doc.SubmitDate,
+                                            IsRecived = doc.IsReceived,
+                                            AmuontOf = buyRem.AmountOf.ToString(),
+                                            Serial = doc.Serial.ToString(),
+                                            Description = buyRem.Description,
+                                            Bed = buyRem.TotalPrice,
+                                            Price = buyRem.Price.ToString("N0"),
+                                            Bes = 0,
+                                            MaterialName = buyRem.Material.Name,
+                                            Unit = buyRem.Material.Unit.Name,
+                                        }).ToListAsync());
+
             PersianCalendar pc = new();
-            //List<DetailRemittanceDto> Remittances = [];
-            //var MyRem = await TableNoTracking
-            //    .Where(st => leftOver || st.SubmitDate > startTime)
-            //    .Where(et => et.SubmitDate < endTime)
-            //    .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
-            //    .Where(p => p.CustomerId == cusId)
-            //    .SelectMany(t => t.SellRemittances)
-            //    .ToListAsync();
 
-            var Remittances = await (from doc in DbContext.Set<Document>()
-                       .AsNoTracking()
-                       .Where(st => leftOver || st.SubmitDate > startTime)
-                       .Where(et => et.SubmitDate < endTime)
-                       .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
-                       .Where(p => p.CustomerId == cusId)
-
-                                     join sellRemitance in DbContext.Set<SellRemittance>()
-                                                             on doc.Id equals sellRemitance.DocumentId into sellRemi
-                                     from sellRem in sellRemi.DefaultIfEmpty()
-
-                                     join buyRemitance in DbContext.Set<BuyRemittance>()
-                                                             on doc.Id equals buyRemitance.DocumentId into buyRemi
-                                     from buyRem in sellRemi.DefaultIfEmpty()
-
-                                     orderby doc.CreationTime descending
-                                     select new DetailRemittanceDto()
-                                     {
-                                         Date = doc.SubmitDate,
-                                         AmuontOf = 
-                                     }).ToListAsync();
-
-
-
+            // اگر تیک باقیمانده زده باشد
             if (leftOver)
             {
-                var remittance = new DetailRemittanceDto()
+                DetailRemittanceDto rem = new()
                 {
-                    ShamsiDate = startTime.ToShortDateString(),
-                    Row = i,
-                    Description = "باقی مانده از قبل",
-                    Bed = MyRem.Where(p => p.Date < startTime && p.ReceivedOrPaid == false).Select(p => (long)p.Price).Sum(),
-                    Bes = MyRem.Where(p => p.Date < startTime && p.ReceivedOrPaid == true).Select(p => (long)p.Price).Sum(),
+                    Row = 0,
+                    Date = startTime,
+                    ShamsiDate = startTime.ToShamsiDate(pc),
+                    MaterialName = "باقی مانده از قبل",
+                    Bed = await TableNoTracking.Where(p => p.SubmitDate < startTime && !p.IsReceived).SumAsync(p => p.Price),
+                    Bes = await TableNoTracking.Where(p => p.SubmitDate < startTime && p.IsReceived).SumAsync(p => p.Price),
                 };
-                Remittances.Add(remittance);
+                Remittances.Add(rem);
             }
 
-            Remittances.AddRange(await Novin.Buy_Remittances.OrderBy(t => t.date).Where(p => p.date < EndTime && p.date >= StartTime &&
-            p.Customer_id == Cusid && p.Archive == false && p.description.Contains(Description) && p.IsDeleted == false)
-                .Select(t => new DetailRemittanceDto()
-                {
-                    Price = t.Price,
-                    Unit = t.Materials.Units.Unit_Name,
-                    Story = t.description,
-                    AmuontOf = t.AmunteOf,
-                    Description = t.Materials.Material_Name,
-                    Date = t.date,
-                    ShamsiDate = t.ShamsiDate,
-                    Bed = 0,
-                    Bes = t.total_price,
-                }).ToListAsync());
+            // به ترتیب کردن اقلام صورتحساب
+            Remittances = [.. Remittances.OrderBy(t => t.Date)];
 
-            Remittances.AddRange(await Novin.sell_Remittances.Where(p => p.date < EndTime && p.date >= StartTime &&
-            p.Customer_id == Cusid && p.Archive == false && p.description.Contains(Description) && p.IsDeleted == false)
-                .Select(t => new DetailRemittanceDto()
-                {
-                    Price = t.Price,
-                    Unit = t.Materials.Units.Unit_Name,
-                    Story = t.description,
-                    AmuontOf = t.AmunteOf,
-                    Description = t.Materials.Material_Name,
-                    Date = t.date,
-                    ShamsiDate = t.ShamsiDate,
-                    Bed = t.total_price,
-                    Bes = 0,
-                }).ToListAsync());
-
-            Remittances.AddRange(MyRem.Where(p => p.Date >= StartTime && !p.Serial.Contains("S_667") && !p.Serial.Contains("B_255") && !p.ReceivedOrPaid).Select(t => new DetailRemittanceDto()
-            {
-                Description = t.Description,
-                Date = t.Date,
-                ShamsiDate = t.ShamsiDate,
-                Bed = t.Price,
-                Bes = 0,
-            }).ToList());
-
-            Remittances.AddRange(MyRem.Where(p => p.Date >= StartTime && !p.Serial.Contains("S_667") && !p.Serial.Contains("B_255") && p.ReceivedOrPaid).Select(t => new DetailRemittanceDto()
-            {
-                Description = t.Description,
-                Date = t.Date,
-                ShamsiDate = t.ShamsiDate,
-                Bed = 0,
-                Bes = t.Price,
-            }).ToList());
-
-            Remittances = Remittances.OrderBy(t => t.Date).ToList();
-
+            // شماره گذاری و تعیین وضعیت
             foreach (var item in Remittances)
             {
                 item.Row = i;
+                item.ShamsiDate = item.Date.ToShamsiDate(pc);
                 long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bed).Sum();
                 long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bes).Sum();
                 item.LeftOver = Math.Abs(bed - bes);
+                if (item.IsRecived)
+                {
+                    item.Bed = 0;
+                }
+                else
+                {
+                    item.Bes = 0;
+                }
+
                 if (bes > bed)
                 {
                     item.Status = "طلبکار";
@@ -804,7 +811,7 @@ namespace Infrastructure.Repositories
                         pageNum++;
                     }
                 }
-                Remittances = Remittances.Skip(pageNum - 1 * pageCount).Take(pageCount).ToList();
+                Remittances = Remittances.Skip((pageNum - 1) * pageCount).Take(pageCount).ToList();
             }
 
             return new PagedResulViewModel<DetailRemittanceDto>(totalCount, pageCount, pageNum, Remittances);

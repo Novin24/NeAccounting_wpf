@@ -7,7 +7,6 @@ using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
-using System.Diagnostics;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -163,7 +162,7 @@ namespace NeAccounting.ViewModels
                 return (new List<InvoiceListDtos>(), false);
             }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, true, CurrentPage);
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, true, true, CurrentPage);
             return new(t.Items, true);
         }
 
