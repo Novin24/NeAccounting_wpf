@@ -18,6 +18,4 @@ namespace DomainShared.ViewModels.Document
         public bool IsEditable { get; set; } = false;
         public DocumntType Type { get; set; }
     }
-
-
 }

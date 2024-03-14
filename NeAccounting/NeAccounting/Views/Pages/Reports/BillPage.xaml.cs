@@ -26,6 +26,11 @@ namespace NeAccounting.Views.Pages
             _printServices = printServices;
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_name.Focus();
+        }
+
         private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
         {
             if (!IsInitialized)
@@ -44,11 +49,6 @@ namespace NeAccounting.Views.Pages
             var us = ((SuggestBoxViewModel<Guid, long>)args.SelectedItem);
             ViewModel.CusId = us.Id;
             ViewModel.PersonelId = us.UniqNumber;
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            txt_name.Focus();
         }
 
         private async void btn_Print_Click(object sender, RoutedEventArgs e)

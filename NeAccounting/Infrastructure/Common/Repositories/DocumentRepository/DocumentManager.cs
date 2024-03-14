@@ -9,6 +9,7 @@ using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
+using System;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
@@ -51,7 +52,7 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, discount.Value, DocumntType.PayDiscount, PaymentType.Other,$" تخفیف سند( {t.Entity.Serial} )",submitDate,false)
+                        new (customerId, discount.Value, DocumntType.PayDiscount, PaymentType.Other,$" تخفیف سند {t.Entity.Serial} ",submitDate,false)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -81,7 +82,7 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, discount.Value, DocumntType.RecDiscount, PaymentType.Other,$" تخفیف سند( {t.Entity.Serial} )",submitDate,true)
+                        new (customerId, discount.Value, DocumntType.RecDiscount, PaymentType.Other,$" تخفیف سند {t.Entity.Serial} ",submitDate,true)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -131,7 +132,7 @@ namespace Infrastructure.Repositories
                     if (discount != null && discount != 0)
                     {
                         doc.RelatedDocuments.Add(new(doc.CustomerId, discount.Value, DocumntType.PayDiscount,
-                            PaymentType.Other, $" تخفیف سند( {doc.Serial} )", submitDate, false));
+                            PaymentType.Other, $" تخفیف سند {doc.Serial} ", submitDate, false));
                     }
                 }
 
@@ -192,7 +193,7 @@ namespace Infrastructure.Repositories
                     var comDoc = new List<Document>()
                     {
                         new (customerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
-                        PaymentType.Other,$" پورسانت فاکتور ( {t.Entity.Serial} )",submitDate,true,(byte)commission.Value)
+                        PaymentType.Other,$" پورسانت فاکتور  {t.Entity.Serial} ",submitDate,true,(byte)commission.Value)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -267,7 +268,7 @@ namespace Infrastructure.Repositories
                 if (commission != null && commission != 0)
                 {
                     doc.RelatedDocuments.Add(new(doc.CustomerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
-                     PaymentType.Other, $" پورسانت فاکتور ( {doc.Serial} )", submitDate, true, (byte)commission.Value));
+                     PaymentType.Other, $" پورسانت فاکتور  {doc.Serial} ", submitDate, true, (byte)commission.Value));
                 }
             }
 
@@ -300,7 +301,8 @@ namespace Infrastructure.Repositories
                     await DbContext.SaveChangesAsync();
                     var comDoc = new List<Document>()
                     {
-                        new (customerId, (long)(price * (commission.Value / 100)), DocumntType.RecCom, PaymentType.Other,$" پورسانت فاکتور( {t.Entity.Serial} )",submitDate,false,(byte)commission.Value)
+                        new (customerId, (long)(price * (commission.Value / 100)), DocumntType.RecCom,
+                        PaymentType.Other,$" پورسانت فاکتور {t.Entity.Serial} ",submitDate,false,(byte)commission.Value)
                     };
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
@@ -375,7 +377,7 @@ namespace Infrastructure.Repositories
                 if (commission != null && commission != 0)
                 {
                     doc.RelatedDocuments.Add(new(doc.CustomerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
-                     PaymentType.Other, $" پورسانت فاکتور ( {doc.Serial} )", submitDate, true, (byte)commission.Value));
+                     PaymentType.Other, $" پورسانت فاکتور  {doc.Serial} ", submitDate, true, (byte)commission.Value));
                 }
             }
 
@@ -558,7 +560,7 @@ namespace Infrastructure.Repositories
             PersianCalendar pc = new();
             List<InvoiceListDtos> Remittances = [];
             var MyDoc = await TableNoTracking
-                .Where(st => st.SubmitDate > startTime)
+                .Where(st => leftOver || st.SubmitDate > startTime)
                 .Where(et => et.SubmitDate < endTime)
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
@@ -649,28 +651,170 @@ namespace Infrastructure.Repositories
             {
                 if (isInit)
                 {
-                    pageNum = totalCount / 2;
-                    if (totalCount % 2 != 0)
+                    pageNum = totalCount / pageCount;
+                    if (totalCount % pageCount != 0)
                     {
                         pageNum++;
                     }
                 }
-                Remittances = Remittances.Skip(pageNum - 1 * 2).Take(2).ToList();
+                Remittances = Remittances.Skip((pageNum - 1) * pageCount).Take(pageCount).ToList();
             }
 
-            return new PagedResulViewModel<InvoiceListDtos>(totalCount, 2, pageNum, Remittances);
+            return new PagedResulViewModel<InvoiceListDtos>(totalCount, pageCount, pageNum, Remittances);
         }
 
-        public Task<IEnumerable<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime,
-            DateTime EndTime,
-            Guid CusId,
-            bool LeftOver,
-            string Description,
+        public async Task<PagedResulViewModel<DetailRemittanceDto>> GetRemittancesByDate(DateTime startTime,
+            DateTime endTime,
+            Guid cusId,
+            bool leftOver,
+            string desc,
             bool ignorePagination,
+            bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
-            throw new NotImplementedException();
+
+            int i = 1;
+            List<DetailRemittanceDto> Remittances = [];
+
+            // گرفتن تمام سند های مربوط از دیتابیس
+            Remittances.AddRange(await TableNoTracking
+                .Where(st => st.SubmitDate > startTime)
+                .Where(et => et.SubmitDate < endTime)
+                .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
+                .Where(p => p.CustomerId == cusId)
+                .Where(s => s.Type != DocumntType.SellInv && s.Type != DocumntType.BuyInv)
+                .Select(t => new DetailRemittanceDto()
+                {
+                    Serial = t.Serial.ToString(),
+                    Date = t.SubmitDate,
+                    Bes = t.Price,
+                    Bed = t.Price,
+                    IsRecived = t.IsReceived,
+                    MaterialName = t.Description
+                }).ToListAsync());
+
+
+            // اضافه کردن فاکتور های فروش
+            Remittances.AddRange(await (from doc in DbContext.Set<Document>()
+                      .AsNoTracking()
+                      .Where(st => st.SubmitDate > startTime)
+                      .Where(et => et.SubmitDate < endTime)
+                      .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
+                      .Where(p => p.CustomerId == cusId)
+
+                                        join sellRem in DbContext.Set<SellRemittance>()
+                                                                on doc.Id equals sellRem.DocumentId
+
+                                        orderby doc.CreationTime descending
+                                        select new DetailRemittanceDto()
+                                        {
+                                            Date = doc.SubmitDate,
+                                            IsRecived = doc.IsReceived,
+                                            AmuontOf = sellRem.AmountOf.ToString(),
+                                            Serial = doc.Serial.ToString(),
+                                            Description = sellRem.Description,
+                                            Price = sellRem.Price.ToString("N0"),
+                                            Bed = sellRem.TotalPrice,
+                                            Bes = 0,
+                                            MaterialName = sellRem.Material.Name,
+                                            Unit = sellRem.Material.Unit.Name,
+                                        }).ToListAsync());
+
+            // اضافه کردن فاکتورهای خرید
+            Remittances.AddRange(await (from doc in DbContext.Set<Document>()
+               .AsNoTracking()
+               .Where(st => st.SubmitDate > startTime)
+               .Where(et => et.SubmitDate < endTime)
+               .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
+               .Where(p => p.CustomerId == cusId)
+
+                                        join buyRem in DbContext.Set<BuyRemittance>()
+                                                                on doc.Id equals buyRem.DocumentId
+
+                                        orderby doc.CreationTime descending
+                                        select new DetailRemittanceDto()
+                                        {
+                                            Date = doc.SubmitDate,
+                                            IsRecived = doc.IsReceived,
+                                            AmuontOf = buyRem.AmountOf.ToString(),
+                                            Serial = doc.Serial.ToString(),
+                                            Description = buyRem.Description,
+                                            Bed = buyRem.TotalPrice,
+                                            Price = buyRem.Price.ToString("N0"),
+                                            Bes = 0,
+                                            MaterialName = buyRem.Material.Name,
+                                            Unit = buyRem.Material.Unit.Name,
+                                        }).ToListAsync());
+
+            PersianCalendar pc = new();
+
+            // اگر تیک باقیمانده زده باشد
+            if (leftOver)
+            {
+                DetailRemittanceDto rem = new()
+                {
+                    Row = 0,
+                    Date = startTime,
+                    ShamsiDate = startTime.ToShamsiDate(pc),
+                    MaterialName = "باقی مانده از قبل",
+                    Bed = await TableNoTracking.Where(p => p.SubmitDate < startTime && !p.IsReceived).SumAsync(p => p.Price),
+                    Bes = await TableNoTracking.Where(p => p.SubmitDate < startTime && p.IsReceived).SumAsync(p => p.Price),
+                };
+                Remittances.Add(rem);
+            }
+
+            // به ترتیب کردن اقلام صورتحساب
+            Remittances = [.. Remittances.OrderBy(t => t.Date)];
+
+            // شماره گذاری و تعیین وضعیت
+            foreach (var item in Remittances)
+            {
+                item.Row = i;
+                item.ShamsiDate = item.Date.ToShamsiDate(pc);
+                long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bed).Sum();
+                long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bes).Sum();
+                item.LeftOver = Math.Abs(bed - bes);
+                if (item.IsRecived)
+                {
+                    item.Bed = 0;
+                }
+                else
+                {
+                    item.Bes = 0;
+                }
+
+                if (bes > bed)
+                {
+                    item.Status = "طلبکار";
+                }
+                else if (bed > bes)
+                {
+                    item.Status = "بدهکار";
+                }
+                else
+                {
+                    item.Status = "تسویه";
+                }
+                i++;
+            }
+
+            var totalCount = Remittances.Count;
+
+            if (!ignorePagination)
+            {
+                if (isInit)
+                {
+                    pageNum = totalCount / pageCount;
+                    if (totalCount % pageCount != 0)
+                    {
+                        pageNum++;
+                    }
+                }
+                Remittances = Remittances.Skip((pageNum - 1) * pageCount).Take(pageCount).ToList();
+            }
+
+            return new PagedResulViewModel<DetailRemittanceDto>(totalCount, pageCount, pageNum, Remittances);
         }
 
         public async Task<List<SummaryDoc>> GetSummaryDocs(Guid? CusId, DocumntType type)
