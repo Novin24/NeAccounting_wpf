@@ -1,33 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using DomainShared.ViewModels;
+using NeAccounting.ViewModels;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for MaterialReport.xaml
     /// </summary>
-    public partial class MaterialReport : Page
+    public partial class MaterialReportPage : INavigableView<MaterialReportViewModel>
     {
-        public MaterialReport()
+        public MaterialReportViewModel ViewModel { get; }
+        public MaterialReportPage()
         {
             InitializeComponent();
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_name.Focus();
         }
 
         private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
         {
+            if (!IsInitialized)
+            {
+                return;
+            }
+            ViewModel.ChangePageCommand.ExecuteAsync(null);
+        }
 
+        private void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            if (!IsInitialized)
+            {
+                return;
+            }
+            var us = ((SuggestBoxViewModel<Guid, long>)args.SelectedItem);
+            ViewModel.CusId = us.Id;
+            ViewModel.PersonelId = us.UniqNumber;
         }
     }
 }

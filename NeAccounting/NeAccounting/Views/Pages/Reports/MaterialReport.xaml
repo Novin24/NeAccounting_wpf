@@ -1,4 +1,4 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.MaterialReport"
+﻿<Page x:Class="NeAccounting.Views.Pages.MaterialReportPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,9 +7,12 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       xmlns:cnt="clr-namespace:NeAccounting.Helpers"
+      d:DataContext="{d:DesignInstance local:MaterialReportPage,
+                                        IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d" 
+      Loaded="root_Loaded"
       d:DesignHeight="800" d:DesignWidth="1200"
       Title="MaterialReport"
       x:Name="root">
@@ -116,7 +119,8 @@
                                         Margin="23 0 7 4">
                                 <DockPanel>
                                     <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
+                                               FontSize="16"
+                                               FontWeight="Medium"
                                                Text="نام جنس"
                                            Margin="7 0 0 4" />
                                     <TextBlock FontFamily="Calibri"
@@ -129,6 +133,7 @@
                                 <ui:AutoSuggestBox FontSize="16"
                                                    x:Name="txt_name"
                                                    Icon="{ui:SymbolIcon Search24}"
+                                                   SuggestionChosen="txt_name_SuggestionChosen"
                                                    FontFamily="Calibri" />
                             </StackPanel>
 
@@ -192,12 +197,8 @@
                                 <DataGridTextColumn Header="#"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="*"  />
+                                                    Width="40"  />
                                 <DataGridTextColumn Header="نام جنس"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="*" />
-                                <DataGridTextColumn Header="تعداد"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     Width="*" />
@@ -205,11 +206,19 @@
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     Width="*"  />
-                                <DataGridTextColumn Header="شخص"
+                                <DataGridTextColumn Header="تاریخ"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     Width="*" />
-                                <DataGridTextColumn Header="تاریخ"
+                                <DataGridTextColumn Header="تعداد"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="*" />
+                                <DataGridTextColumn Header="قیمت"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="*" />
+                                <DataGridTextColumn Header="شخص"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     Width="*" />

@@ -11,7 +11,7 @@
         public long LeftOver { get; set; }
         public string? Status { get; set; }
         public string? Serial { get; set; }
-        public string? Price{ get; set; }
+        public string? Price { get; set; }
         public string? Unit { get; set; }
         public string? AmuontOf { get; set; }
         public string? MaterialName { get; set; }
