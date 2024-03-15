@@ -127,9 +127,9 @@ namespace NeAccounting
 
                 #region BuyInvoice
                 services.AddTransient<CreateBuyInvoicePage>();
-                services.AddTransient<CreateBuyInviceViewModel>();
+                services.AddTransient<CreateBuyInvoiceViewModel>();
                 services.AddTransient<UpdateBuyInvoicePage>();
-                //services.AddTransient<UpdateBuyInvoiceViewModel>();
+                services.AddTransient<UpdateBuyInvoiceViewModel>();
                 #endregion
 
                 #region IntermediaryInvoice
@@ -203,7 +203,8 @@ namespace NeAccounting
                 services.AddTransient<Invoicedetails>();
                 services.AddTransient<InvoicedetailsViewModel>();
 
-                services.AddTransient<MaterialReport>();
+                services.AddTransient<MaterialReportPage>();
+                services.AddTransient<MaterialReportViewModel>();
 
                 services.AddTransient<DebtorsListPage>();
 

@@ -137,9 +137,9 @@
                                                    Margin="6 22 6 0" />
                                     </DockPanel>
                                     <ui:TextBox FontFamily="Calibri"
-                                                       x:Name="txt_CustomerName"
+                                                x:Name="txt_CustomerName"
                                                 Text="{Binding ViewModel.CusName}"
-                                                       Margin="0 4 0 0" />
+                                                Margin="0 4 0 0" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1"
@@ -147,7 +147,7 @@
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
-                                               Text="آخرین فاکتور خرید"
+                                               Text="سریال فاکتور"
                                                Margin="2 0 0 0 "
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox TextAlignment="Center"

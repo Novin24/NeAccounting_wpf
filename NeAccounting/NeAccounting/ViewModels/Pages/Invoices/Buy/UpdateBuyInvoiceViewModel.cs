@@ -10,12 +10,12 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class UpdateBuyInviceViewModel : ObservableObject, INavigationAware
+public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService;
     private readonly INavigationService _navigationService;
 
-    public UpdateBuyInviceViewModel(ISnackbarService snackbarService, INavigationService navigationService)
+    public UpdateBuyInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService)
     {
         _snackbarService = snackbarService;
         _navigationService = navigationService;
@@ -149,7 +149,7 @@ public partial class UpdateBuyInviceViewModel : ObservableObject, INavigationAwa
     {
         InvoiceId = EditInvoiceDetails.InvoiceId;
         using UnitOfWork db = new();
-        var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(InvoiceId);
+        var (isSuccess, itm) = await db.DocumentManager.GetBuyInvoiceDetail(InvoiceId);
         if (!isSuccess)
         {
             _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

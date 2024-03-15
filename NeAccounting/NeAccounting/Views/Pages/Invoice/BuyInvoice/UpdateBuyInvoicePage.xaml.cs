@@ -1,26 +1,27 @@
 ﻿using DomainShared.ViewModels.Pun;
-using DomainShared.ViewModels;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
-using DomainShared.ViewModels.Document;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for UpdateBuyInvoicePage.xaml
     /// </summary>
-    public partial class UpdateBuyInvoicePage : INavigableView<UpdateBuyInviceViewModel>
+    public partial class UpdateBuyInvoicePage : INavigableView<UpdateBuyInvoiceViewModel>
     {
         private readonly ISnackbarService _snackbarService;
-        public UpdateBuyInviceViewModel ViewModel { get; }
+        public UpdateBuyInvoiceViewModel ViewModel { get; }
         private double _totalEntity;
         private long _price;
-        public UpdateBuyInvoicePage()
+        public UpdateBuyInvoicePage(UpdateBuyInvoiceViewModel viewModel, ISnackbarService snackbarService)
         {
+            DataContext = this;
+            ViewModel = viewModel;
             InitializeComponent();
+            _snackbarService = snackbarService;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

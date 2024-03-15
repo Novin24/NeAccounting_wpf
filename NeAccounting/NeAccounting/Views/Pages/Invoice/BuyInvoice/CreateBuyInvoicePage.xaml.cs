@@ -11,13 +11,13 @@ namespace NeAccounting.Views.Pages
     /// <summary>
     /// Interaction logic for CreateBuyInvoicePage.xaml
     /// </summary>
-    public partial class CreateBuyInvoicePage : INavigableView<CreateBuyInviceViewModel>
+    public partial class CreateBuyInvoicePage : INavigableView<CreateBuyInvoiceViewModel>
     {
         private readonly ISnackbarService _snackbarService;
-        public CreateBuyInviceViewModel ViewModel { get; }
+        public CreateBuyInvoiceViewModel ViewModel { get; }
         private double _totalEntity;
         private long _price;
-        public CreateBuyInvoicePage(CreateBuyInviceViewModel viewModel, ISnackbarService snackbarService)
+        public CreateBuyInvoicePage(CreateBuyInvoiceViewModel viewModel, ISnackbarService snackbarService)
         {
             ViewModel = viewModel;
             DataContext = this;

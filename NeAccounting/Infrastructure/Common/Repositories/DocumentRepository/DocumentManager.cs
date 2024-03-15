@@ -9,7 +9,7 @@ using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
-using System;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
@@ -560,7 +560,7 @@ namespace Infrastructure.Repositories
             PersianCalendar pc = new();
             List<InvoiceListDtos> Remittances = [];
             var MyDoc = await TableNoTracking
-                .Where(st => leftOver || st.SubmitDate > startTime)
+                .Where(st => leftOver || st.SubmitDate >= startTime)
                 .Where(et => et.SubmitDate < endTime)
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
@@ -679,7 +679,7 @@ namespace Infrastructure.Repositories
 
             // گرفتن تمام سند های مربوط از دیتابیس
             Remittances.AddRange(await TableNoTracking
-                .Where(st => st.SubmitDate > startTime)
+                .Where(st => st.SubmitDate >= startTime)
                 .Where(et => et.SubmitDate < endTime)
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
@@ -698,7 +698,7 @@ namespace Infrastructure.Repositories
             // اضافه کردن فاکتور های فروش
             Remittances.AddRange(await (from doc in DbContext.Set<Document>()
                       .AsNoTracking()
-                      .Where(st => st.SubmitDate > startTime)
+                      .Where(st => st.SubmitDate >= startTime)
                       .Where(et => et.SubmitDate < endTime)
                       .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                       .Where(p => p.CustomerId == cusId)
@@ -724,7 +724,7 @@ namespace Infrastructure.Repositories
             // اضافه کردن فاکتورهای خرید
             Remittances.AddRange(await (from doc in DbContext.Set<Document>()
                .AsNoTracking()
-               .Where(st => st.SubmitDate > startTime)
+               .Where(st => st.SubmitDate >= startTime)
                .Where(et => et.SubmitDate < endTime)
                .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                .Where(p => p.CustomerId == cusId)
@@ -817,6 +817,100 @@ namespace Infrastructure.Repositories
             return new PagedResulViewModel<DetailRemittanceDto>(totalCount, pageCount, pageNum, Remittances);
         }
 
+        public async Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(int id,
+            bool isBuy,
+            bool isSell,
+            DateTime startDate,
+            DateTime endDate,
+            bool ignorePagination,
+            bool isInit,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
+        {
+            int i = 1;
+            List<MaterialReportDto> matList = [];
+
+            if (isSell)
+            {
+                matList.AddRange(await (from doc in DbContext.Set<Document>()
+                          .AsNoTracking()
+                          .Where(st => st.SubmitDate >= startDate)
+                          .Where(et => et.SubmitDate < endDate)
+
+                                        join cus in DbContext.Set<Customer>()
+                                                                on doc.CustomerId equals cus.Id
+
+                                        join sellRem in DbContext.Set<SellRemittance>()
+                                                                on doc.Id equals sellRem.DocumentId
+
+                                        where sellRem.MaterialId == id
+                                        orderby doc.CreationTime descending
+                                        select new MaterialReportDto()
+                                        {
+                                            Date = doc.SubmitDate,
+                                            Status = "فروش",
+                                            AmuontOf = sellRem.AmountOf.ToString(),
+                                            CusName = cus.Name,
+                                            MatName = sellRem.Material.Name,
+                                            Price = sellRem.Price.ToString("N0"),
+                                        }).ToListAsync());
+            }
+
+            if (isBuy)
+            {
+                matList.AddRange(await (from doc in DbContext.Set<Document>()
+                          .AsNoTracking()
+                          .Where(st => st.SubmitDate >= startDate)
+                          .Where(et => et.SubmitDate < endDate)
+
+                                        join cus in DbContext.Set<Customer>()
+                                                                on doc.CustomerId equals cus.Id
+
+                                        join buyRem in DbContext.Set<BuyRemittance>()
+                                                                on doc.Id equals buyRem.DocumentId
+
+                                        where buyRem.MaterialId == id
+                                        orderby doc.CreationTime descending
+                                        select new MaterialReportDto()
+                                        {
+                                            Date = doc.SubmitDate,
+                                            Status = "خرید",
+                                            AmuontOf = buyRem.AmountOf.ToString(),
+                                            CusName = cus.Name,
+                                            MatName = buyRem.Material.Name,
+                                            Price = buyRem.Price.ToString("N0"),
+                                        }).ToListAsync());
+            }
+
+            matList = [.. matList.OrderBy(t => t.Date)];
+
+            PersianCalendar pc = new();
+            foreach (var item in matList)
+            {
+                item.Row = i++;
+                item.ShamsiDate = item.Date.ToShamsiDate(pc);
+            }
+            var totalCount = matList.Count;
+
+            if (!ignorePagination)
+            {
+                if (isInit)
+                {
+                    pageNum = totalCount / pageCount;
+                    if (totalCount % pageCount != 0)
+                    {
+                        pageNum++;
+                    }
+                }
+                matList = matList.Skip((pageNum - 1) * pageCount)
+                    .Take(pageCount)
+                    .ToList();
+            }
+
+            return new PagedResulViewModel<MaterialReportDto>(totalCount, pageCount, pageNum, matList);
+
+        }
+
         public async Task<List<SummaryDoc>> GetSummaryDocs(Guid? CusId, DocumntType type)
         {
             PersianCalendar pc = new();
@@ -844,6 +938,42 @@ namespace Infrastructure.Repositories
             });
             return list;
         }
+
+        /// <summary>
+        /// دریافت لیست بدهکاران
+        /// </summary>
+        public async Task<CreditorsOrDebtorsReport> GetDebtorsReport(DateTime startDate, DateTime endDate)
+        {
+
+          //  var t = await (from doc in DbContext.Set<Document>()
+          //.AsNoTracking()
+          //.Where(st => st.SubmitDate >= startDate)
+          //.Where(et => et.SubmitDate < endDate)
+
+          //                 group doc by doc.CustomerId into cusId
+
+          //                 let join cus in DbContext.Set<Customer>()
+          //                               on cusId equals cus.Id
+          
+          //                 select new CreditorsOrDebtorsReport()
+          //                 {
+          //                     CusName = cus.Name
+
+          //                 }).ToListAsync();
+
+            return null;
+        }
+
+        /// <summary>
+        /// دریافت لیست طلبکاران
+        /// </summary>
+        /// <returns></returns>
+        public async Task<CreditorsOrDebtorsReport> GetcreditorsReport(DateTime startDate, DateTime endDate)
+        {
+            return null;
+        }
+
+
 
         public async Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
