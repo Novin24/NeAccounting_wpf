@@ -171,9 +171,6 @@ namespace NeAccounting.ViewModels
             (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
             foreach (var it in itm.RemList)
             {
-                it.RowId = RowId++;
-                it.MatName = MatList.First(t => t.Id == it.MaterialId).MaterialName;
-                it.UnitName = MatList.First(t => t.Id == it.MaterialId).UnitName;
                 List.Add(it);
             }
             CusName = cus.Name;

@@ -4,8 +4,8 @@
     {
         public int RowId { get; set; }
         public Guid RremId { get; set; }
-        public string MatName { get; set; }
-        public string UnitName { get; set; }
+        public string? MatName { get; set; }
+        public string? UnitName { get; set; }
         public long Price { get; set; }
         public bool IsService { get; set; }
         public int MaterialId { get; set; }

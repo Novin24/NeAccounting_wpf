@@ -285,12 +285,20 @@
                                                     Width="70" />
 
                                 <DataGridTemplateColumn Header="عملیات"
-                                                        Width="90"
+                                                        Width="130"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal"
                                                         HorizontalAlignment="Center">
+                                                <ui:Button  Margin="2"
+                                                         x:Name="Btn_PrintOneInvoice"
+                                                         Visibility="{Binding IsPrintable ,  Converter={StaticResource BoolToVis}}"
+                                                         Tag="{Binding Id , Mode=OneWay}"
+                                                         Click="Btn_PrintOneInvoice_Click"
+                                                         Padding="7,5">
+                                                    <ui:SymbolIcon Symbol="Print20" />
+                                                </ui:Button>
                                                 <Button  Margin="2"
                                                          Visibility="{Binding IsEditable ,  Converter={StaticResource BoolToVis}}"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
