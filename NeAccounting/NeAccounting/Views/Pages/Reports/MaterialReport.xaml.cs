@@ -1,6 +1,6 @@
 ﻿using DomainShared.ViewModels;
+using DomainShared.ViewModels.Pun;
 using NeAccounting.ViewModels;
-using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -11,13 +11,11 @@ namespace NeAccounting.Views.Pages
     public partial class MaterialReportPage : INavigableView<MaterialReportViewModel>
     {
         public MaterialReportViewModel ViewModel { get; }
-        public MaterialReportPage()
+        public MaterialReportPage(MaterialReportViewModel viewModel)
         {
+            ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
-        }
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            txt_name.Focus();
         }
 
         private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
@@ -35,9 +33,14 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            var us = ((SuggestBoxViewModel<Guid, long>)args.SelectedItem);
-            ViewModel.CusId = us.Id;
-            ViewModel.PersonelId = us.UniqNumber;
+            var us = ((PunListDto)args.SelectedItem);
+            ViewModel.MaterialId = us.Id;
         }
+
+        private void root_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_name.Focus();
+        }
+
     }
 }

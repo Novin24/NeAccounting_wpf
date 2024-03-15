@@ -139,7 +139,29 @@ namespace NeApplication.IRepositoryies
              int pageNum = 0,
              int pageCount = NeAccountingConstants.PageCount);
 
+        Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(int id,
+            bool isBuy,
+            bool isSell,
+            DateTime startDate,
+            DateTime endDate,
+            bool ignorePagination,
+            bool isInit,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
+
         Task<List<SummaryDoc>> GetSummaryDocs(Guid? CusId, DocumntType type);
+
+
+        /// <summary>
+        /// دریافت لیست بدهکاران
+        /// </summary>
+        Task<CreditorsOrDebtorsReport> GetDebtorsReport(DateTime startDate , DateTime endDate);
+
+        /// <summary>
+        /// دریافت لیست طلبکاران
+        /// </summary>
+        /// <returns></returns>
+        Task<CreditorsOrDebtorsReport> GetcreditorsReport(DateTime startDate, DateTime endDate);
         #endregion
 
         #region Doc
