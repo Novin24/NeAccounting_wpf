@@ -2,7 +2,6 @@
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
-using NeAccounting.Helpers;
 using NeAccounting.Models;
 using NeAccounting.ViewModels;
 using NeApplication.Services;
@@ -10,7 +9,6 @@ using Newtonsoft.Json;
 using System.Globalization;
 using System.IO;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -69,6 +67,12 @@ namespace NeAccounting.Views.Pages
                 return;
             }
             var cus = ViewModel.Cuslist.First(t => t.Id == ViewModel.CusId);
+            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Reports\PrintInfo.json"));
+            if (printInfo == null)
+            {
+                _snackbarService.Show("خطا", "فایل پرینت یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             Dictionary<string, string> dic = new()
             {
                 {"Customer_Name",$"({cus.UniqNumber}) _ {cus.DisplayName}"},
@@ -79,6 +83,9 @@ namespace NeAccounting.Views.Pages
                 {"Total_Credit",list.Select(p => p.Bes).Sum().ToString("N0")},
                 {"Total_LeftOVver",list.Last().LeftOver.ToString("N0")},
                 {"TotalSLeftOver",list.Last().LeftOver.ToString().NumberToPersianString()},
+                {"Management",$"{printInfo.Management}"},
+                {"Company_Name",$"{printInfo.Company_Name}"},
+                {"Tabligh",$"{printInfo.Tabligh}"},
                 {"Status",$"{list.Last().Status}"}};
 
             _printServices.PrintInvoice(@"Reports\ReportInvoices.mrt", "InvoiceListDtos", list, dic);
