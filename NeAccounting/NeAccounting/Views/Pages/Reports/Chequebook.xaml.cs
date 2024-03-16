@@ -5,9 +5,9 @@ namespace NeAccounting.Views.Pages
     /// <summary>
     /// Interaction logic for Chequebook.xaml
     /// </summary>
-    public partial class Chequebook : Page
+    public partial class ChequebookPage : Page
     {
-        public Chequebook()
+        public ChequebookPage()
         {
             InitializeComponent();
         }

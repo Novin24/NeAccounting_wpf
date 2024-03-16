@@ -18,9 +18,9 @@ namespace NeAccounting.Views.Pages
     /// <summary>
     /// Interaction logic for CreateRecCheque.xaml
     /// </summary>
-    public partial class CreateRecCheque : Page
+    public partial class CreateRecChequePage : Page
     {
-        public CreateRecCheque()
+        public CreateRecChequePage()
         {
             InitializeComponent();
         }
