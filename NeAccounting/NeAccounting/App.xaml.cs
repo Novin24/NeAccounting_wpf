@@ -122,7 +122,8 @@ namespace NeAccounting
                 #region Invoice
 
                 #region Previewinvoice
-                services.AddTransient<Previewinvoice>();
+                services.AddTransient<PreviewinvoicePage>();
+                services.AddTransient<PreviewinvoiceViewModel>();
                 #endregion
 
                 #region BuyInvoice
@@ -253,8 +254,19 @@ namespace NeAccounting
         /// <summary>
         /// Occurs when the application is loading.
         /// </summary>
-        private void OnStartup(object sender, StartupEventArgs e)
+        private async void OnStartup(object sender, StartupEventArgs e)
         {
+            _ = new Mutex(true, "ApplicationName", out bool runed);
+            if (!runed)
+            {
+                Wpf.Ui.Controls.MessageBox ms = new Wpf.Ui.Controls.MessageBox()
+                {
+                    Title = "کاربر گرامی",
+                    FontFamily =new System.Windows.Media.FontFamily("Calibri"),
+                    Content = "برنامه حسابداری در حال اجراست !!!"
+                };
+                 await ms.ShowDialogAsync();
+            }
             _host.Start();
         }
 

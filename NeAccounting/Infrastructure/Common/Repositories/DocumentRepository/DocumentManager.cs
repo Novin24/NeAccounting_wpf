@@ -9,7 +9,6 @@ using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
-using System.Diagnostics;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
@@ -416,6 +415,8 @@ namespace Infrastructure.Repositories
                     {
                         AmountOf = t.AmountOf,
                         Description = t.Description,
+                        MatName = t.Material.Name,
+                        UnitName = t.Material.Unit.Name,
                         MaterialId = t.MaterialId,
                         Price = t.Price,
                         RremId = t.Id,
@@ -427,6 +428,8 @@ namespace Infrastructure.Repositories
             {
                 return new(false, new InvoiceDetailUpdateDto());
             }
+            int row = 1;
+            inv.RemList.ForEach(t => { t.RowId = row++; });
 
             return new(true, inv);
         }
@@ -451,6 +454,8 @@ namespace Infrastructure.Repositories
                         AmountOf = t.AmountOf,
                         Description = t.Description,
                         MaterialId = t.MaterialId,
+                        MatName = t.Material.Name,
+                        UnitName = t.Material.Unit.Name,
                         Price = t.Price,
                         RremId = t.Id,
                         TotalPrice = t.TotalPrice
@@ -461,6 +466,8 @@ namespace Infrastructure.Repositories
             {
                 return new(false, new InvoiceDetailUpdateDto());
             }
+            int row = 1;
+            inv.RemList.ForEach(t => { t.RowId = row++; });
 
             return new(true, inv);
         }
@@ -623,8 +630,13 @@ namespace Infrastructure.Repositories
                 item.Row = i;
                 long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Sum(p => p.Bed);
                 long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Sum(p => p.Bes);
+
                 if (item.Type == DocumntType.PayDoc || item.Type == DocumntType.RecDoc || item.Type == DocumntType.SellInv || item.Type == DocumntType.BuyInv)
                 {
+                    if (item.Type == DocumntType.SellInv || item.Type == DocumntType.BuyInv)
+                    {
+                        item.IsPrintable = true;
+                    }
                     item.IsDeletable = true;
                     item.IsEditable = true;
                 }
@@ -945,21 +957,21 @@ namespace Infrastructure.Repositories
         public async Task<CreditorsOrDebtorsReport> GetDebtorsReport(DateTime startDate, DateTime endDate)
         {
 
-          //  var t = await (from doc in DbContext.Set<Document>()
-          //.AsNoTracking()
-          //.Where(st => st.SubmitDate >= startDate)
-          //.Where(et => et.SubmitDate < endDate)
+            //  var t = await (from doc in DbContext.Set<Document>()
+            //.AsNoTracking()
+            //.Where(st => st.SubmitDate >= startDate)
+            //.Where(et => et.SubmitDate < endDate)
 
-          //                 group doc by doc.CustomerId into cusId
+            //                 group doc by doc.CustomerId into cusId
 
-          //                 let join cus in DbContext.Set<Customer>()
-          //                               on cusId equals cus.Id
-          
-          //                 select new CreditorsOrDebtorsReport()
-          //                 {
-          //                     CusName = cus.Name
+            //                 let join cus in DbContext.Set<Customer>()
+            //                               on cusId equals cus.Id
 
-          //                 }).ToListAsync();
+            //                 select new CreditorsOrDebtorsReport()
+            //                 {
+            //                     CusName = cus.Name
+
+            //                 }).ToListAsync();
 
             return null;
         }

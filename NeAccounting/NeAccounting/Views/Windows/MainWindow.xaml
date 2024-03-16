@@ -128,7 +128,7 @@
                                 <Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="Background"
-                                                Value="#28AEED" />
+                                                Value="Transparent" />
                                         <Style.Triggers>
                                             <Trigger Property="IsMouseOver"
                                                      Value="True">
@@ -166,7 +166,7 @@
                                 <Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="Background"
-                                                Value="#DA34AE" />
+                                                Value="Transparent" />
                                         <Style.Triggers>
                                             <Trigger Property="IsMouseOver"
                                                      Value="True">

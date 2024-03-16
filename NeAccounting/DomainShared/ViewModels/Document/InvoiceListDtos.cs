@@ -16,6 +16,7 @@ namespace DomainShared.ViewModels.Document
         public string? Status { get; set; }
         public bool IsDeletable { get; set; } = false;
         public bool IsEditable { get; set; } = false;
+        public bool IsPrintable { get; set; } = false;
         public DocumntType Type { get; set; }
     }
 }

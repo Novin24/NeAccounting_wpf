@@ -72,7 +72,7 @@ namespace NeAccounting.ViewModels
                 {
                 #region Remittance
 
-                    new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(Previewinvoice),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+                    new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(PreviewinvoicePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 
                     new NavigationViewItem {Content = "فاکتور فروش",TargetPageType = typeof(CreateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                     
