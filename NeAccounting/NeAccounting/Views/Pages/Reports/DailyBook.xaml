@@ -54,7 +54,6 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="80"></RowDefinition>
 
                 </Grid.RowDefinitions>
 
@@ -66,17 +65,20 @@
                         CornerRadius="9"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4"
-                        Margin="55 10 55 0"
+                        Margin="10 5 10 10"
                         FlowDirection="RightToLeft">
                     <Border.Background>
                         <SolidColorBrush Color="White"
                                          Opacity="0.08" />
 
                     </Border.Background>
-
-                    <DataGrid Margin="0 0 0 0"
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition ></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DataGrid Margin="40 10 40 0"
                               BorderThickness="10"
-                              Grid.Row="2"
                               CanUserResizeColumns="False"
                               CanUserDeleteRows="False"
                               CanUserResizeRows="False"
@@ -126,16 +128,17 @@
                                                 Binding="{Binding Bes}"
                                                 Width=".8*" />
                         </DataGrid.Columns>
-                    </DataGrid>
-                </Border>
+                        </DataGrid>
 
-                <nu:Pagination  Grid.Row="2"
+                        <nu:Pagination  Grid.Row="2"
                                 Margin="0,10"
                                 PageCount="{Binding ViewModel.PageCount}"
                                 CurrntPage="{Binding ViewModel.CurrentPage, Mode=TwoWay}"
                                 PageChosen="Pagination_PageChosen"
                                 HorizontalAlignment="Center"
                                 FlowDirection="LeftToRight" />
+                    </Grid>
+                </Border>
             </Grid>
 
         </Border>

@@ -231,7 +231,7 @@
                                                     Binding="{Binding TotalCredit}"
                                                     Width="*" />
                                 <DataGridTemplateColumn Header="عملیات"
-                                                        Width="120"
+                                                        Width="92"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -249,18 +249,14 @@
                                                          Padding="3,3" ToolTip="افزودن چک ضمانتی">
                                                     <ui:SymbolIcon Symbol=" TableCellEdit16" />
                                                 </Button>
-                                                <Button Margin="3"
-                                                        CommandParameter="{Binding Id , Mode=OneWay}"
-                                                        Command="{Binding Path=DataContext.ViewModel.RemoveCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                        Padding="3,3" ToolTip="حذف">
-                                                    <ui:SymbolIcon Symbol="Delete16" />
-                                                </Button>
                                                 <CheckBox IsChecked="{Binding IsActive}"
-                                                              Tag="{Binding Id}"
-                                                              Margin="2 0 -6 0"
-                                                              Padding="0">
+                                                          Tag="{Binding Id}"
+                                                          Margin="2 0 -4 0"
+                                                          Padding="0"
+                                                          Checked="CheckBox_Status_Chkecked"
+                                                          Unchecked="CheckBox_Status_Unckecked">
                                                     <CheckBox.ToolTip>
-                                                        <TextBlock>حذف</TextBlock>
+                                                        <TextBlock>بایگانی</TextBlock>
                                                     </CheckBox.ToolTip>
                                                 </CheckBox>
                                             </StackPanel>
