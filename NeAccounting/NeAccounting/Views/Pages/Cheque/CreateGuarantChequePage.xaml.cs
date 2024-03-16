@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for CreatePayCheque.xaml
+    /// Interaction logic for CreateGuarantChequePage.xaml
     /// </summary>
-    public partial class CreatePayCheque : Page
+    public partial class CreateGuarantChequePage : Page
     {
-        public CreatePayCheque()
+        public CreateGuarantChequePage()
         {
             InitializeComponent();
         }

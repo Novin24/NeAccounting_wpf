@@ -110,6 +110,14 @@ namespace NeAccounting
                 services.AddTransient<TestPage>();
                 services.AddTransient<TestViewModel>();
 
+                #region Cheque
+                services.AddTransient<CreatePayChequePage>();
+
+                services.AddTransient<CreateRecChequePage>();
+
+                services.AddTransient<CreateGuarantChequePage>();
+
+                #endregion
 
                 #region Recived
                 services.AddTransient<CreateRecPage>();
@@ -212,7 +220,7 @@ namespace NeAccounting
                 services.AddTransient<DailyBookPage>();
                 services.AddTransient<DalyBookViewModel>();
 
-                services.AddTransient<Chequebook>();
+                services.AddTransient<ChequebookPage>();
 
 
                 #endregion
