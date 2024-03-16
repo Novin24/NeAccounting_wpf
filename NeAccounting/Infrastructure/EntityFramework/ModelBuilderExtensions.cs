@@ -1,4 +1,5 @@
 ﻿using Domain.Enities.NovinEntity.Remittances;
+using Domain.NovinEntity.Cheques;
 using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
 using Domain.NovinEntity.Materials;
@@ -55,6 +56,21 @@ namespace Infrastructure.Utilities
                 .HasForeignKey(t => t.UnitId)
                 .OnDelete(DeleteBehavior.Cascade);
                 b.Property(r => r.IsActive).HasDefaultValue(true);
+            });
+
+
+            builder.Entity<Cheque>(b =>
+            {
+
+                b.HasIndex(t => t.Id);
+                b.HasOne(t => t.Payer)
+                .WithMany(s => s.PayCheque)
+                .HasForeignKey(t => t.PayerId);
+                
+                b.HasOne(t => t.Reciver)
+                .WithMany(s => s.RecCheque)
+                .HasForeignKey(t => t.ReciverId)
+                .OnDelete(DeleteBehavior.Cascade);
             });
 
             builder.Entity<Unit>(b =>

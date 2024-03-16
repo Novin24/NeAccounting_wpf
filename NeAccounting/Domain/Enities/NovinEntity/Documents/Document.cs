@@ -1,5 +1,6 @@
 ﻿using Domain.Common;
 using Domain.Enities.NovinEntity.Remittances;
+using Domain.NovinEntity.Cheques;
 using DomainShared.Enums;
 
 namespace Domain.NovinEntity.Documents
@@ -10,6 +11,7 @@ namespace Domain.NovinEntity.Documents
         public Guid CustomerId { get; private set; }
         public Guid? DocumentId { get; private set; }
         public Document P_Document { get; set; }
+        public List<Cheque> Cheques{ get; set; }
         public List<Document> RelatedDocuments { get; private set; }
         public List<SellRemittance> SellRemittances { get; private set; }
         public List<BuyRemittance> BuyRemittances { get; private set; }
