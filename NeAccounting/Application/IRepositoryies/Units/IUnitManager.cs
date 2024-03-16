@@ -7,7 +7,7 @@ namespace NeApplication.IRepositoryies
 {
     public interface IUnitManager : IRepository<Unit>
     {
-        Task<List<SuggestBoxViewModel<int>>> GetUnits();
+        Task<List<SuggestBoxViewModel<int>>> GetUnits(bool IgnorArchive = false);
 
         Task<List<UnitListDto>> GetUnitList();
 

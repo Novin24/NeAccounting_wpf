@@ -44,10 +44,10 @@
         <Setter Property="VerticalAlignment"
                 Value="Center" />
     </Style>
-    
-    <StackPanel x:Key="DeleteDialogContent" FlowDirection="RightToLeft">
-        <TextBlock Text="پس از حذف داده ها قابل بازگشت نخواهد بود"
+
+    <StackPanel x:Key="DeleteDialogContent"
+                FlowDirection="RightToLeft">
+        <TextBlock Text="پس از بایگانی فیلد مورد نظر در عملیات ثبت و ویرایش نمایش داده نمیشود ."
                    TextWrapping="Wrap" />
-        <CheckBox Content="این انتخاب را به یاد داشته باش"/>
     </StackPanel>
 </ResourceDictionary>
