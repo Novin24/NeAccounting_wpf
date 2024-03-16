@@ -10,10 +10,12 @@ namespace NeAccounting.Views.Pages
     /// </summary>
     public partial class UnitsListPage : INavigableView<UnitViewModel>
     {
+        private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
         public UnitViewModel ViewModel { get; }
-        public UnitsListPage(UnitViewModel viewModel, ISnackbarService snackbarService)
+        public UnitsListPage(IContentDialogService contentDialogService, UnitViewModel viewModel, ISnackbarService snackbarService)
         {
+            _contentDialogService = contentDialogService;
             _snackbarService = snackbarService;
             ViewModel = viewModel;
             DataContext = this;
@@ -60,10 +62,11 @@ namespace NeAccounting.Views.Pages
             }
             ViewModel.ActiveCommand.ExecuteAsync(id);
         }
-        private void CheckBox_Status_Unckecked(object sender, RoutedEventArgs e)
+        private async void CheckBox_Status_Unckecked(object sender, RoutedEventArgs e)
         {
             if (sender is not System.Windows.Controls.CheckBox btn)
                 return;
+            btn.IsChecked = true;
 
             if (btn.Tag == null)
                 return;
@@ -74,7 +77,18 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            ViewModel.DeActiveCommand.ExecuteAsync(id);
+            var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+            {
+                Title = "آیا از بایگانی اطمینان دارید!!!",
+                Content = Application.Current.Resources["DeleteDialogContent"],
+                PrimaryButtonText = "بله",
+                SecondaryButtonText = "خیر",
+                CloseButtonText = "انصراف",
+            });
+            if (result == ContentDialogResult.Primary)
+            {
+                ViewModel.DeActiveCommand.ExecuteAsync(id);
+            }
         }
     }
 }

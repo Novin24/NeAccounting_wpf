@@ -38,6 +38,7 @@ namespace Infrastructure.Repositories
                     Id = x.Id,
                     Name = x.Name,
                     NationalCode = x.NationalCode,
+                    IsActive = x.IsActive,
                     Mobile = x.Mobile,
                     Seller = x.Seller,
                     Buyer = x.Buyer,

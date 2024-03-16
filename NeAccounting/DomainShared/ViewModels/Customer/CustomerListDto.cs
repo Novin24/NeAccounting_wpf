@@ -21,5 +21,6 @@ namespace DomainShared.ViewModels.Customer
         public bool HaveChequeGuarantee { get; set; }
         public bool HaveCashCredit { get; set; }
         public bool HavePromissoryNote { get; set; }
+        public bool IsActive { get; set; }
     }
 }

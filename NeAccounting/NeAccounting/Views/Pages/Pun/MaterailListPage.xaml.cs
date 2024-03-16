@@ -1,4 +1,5 @@
 ﻿using NeAccounting.ViewModels;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -8,10 +9,12 @@ namespace NeAccounting.Views.Pages
     /// </summary>
     public partial class MaterailListPage :  INavigableView<MaterailListViewModel>
     {
+        private readonly IContentDialogService _contentDialogService;
         public MaterailListViewModel ViewModel { get; }
 
-        public MaterailListPage(MaterailListViewModel viewModel)
+        public MaterailListPage(IContentDialogService contentDialogService, MaterailListViewModel viewModel)
         {
+            _contentDialogService = contentDialogService;
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
@@ -34,10 +37,11 @@ namespace NeAccounting.Views.Pages
             }
             ViewModel.ActiveCommand.ExecuteAsync(id);
         }
-        private void CheckBox_Status_Unckecked(object sender, RoutedEventArgs e)
+        private async void CheckBox_Status_Unckecked(object sender, RoutedEventArgs e)
         {
             if (sender is not System.Windows.Controls.CheckBox btn)
                 return;
+            btn.IsChecked = true;
 
             if (btn.Tag == null)
                 return;
@@ -48,7 +52,19 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
+            var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+            {
+                Title = "آیا از بایگانی اطمینان دارید!!!",
+                Content = Application.Current.Resources["DeleteDialogContent"],
+                PrimaryButtonText = "بله",
+                SecondaryButtonText = "خیر",
+                CloseButtonText = "انصراف",
+            });
+
+            if (result == ContentDialogResult.Primary)
+            {
             ViewModel.DeActiveCommand.ExecuteAsync(id);
+            }
         }
 
     }
