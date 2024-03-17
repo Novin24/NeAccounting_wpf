@@ -10,7 +10,7 @@ namespace Domain.NovinEntity.Materials
 
         #region Property
         public string Name { get;  set; }
-        public string Descrip { get;  set; }
+        public string? Descrip { get;  set; }
         public bool IsActive { get;  set; }
         #endregion
 

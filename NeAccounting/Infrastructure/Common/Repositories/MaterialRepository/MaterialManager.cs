@@ -23,9 +23,9 @@ namespace Infrastructure.Repositories
             }).ToListAsync();
         }
 
-        public Task<List<PunListDto>> GetMaterails(string name, string serial)
+        public async Task<List<PunListDto>> GetMaterails(string name, string serial)
         {
-            return TableNoTracking
+            var list = await TableNoTracking
                 .Include(x => x.Unit)
                 .Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name))
                 .Where(x => string.IsNullOrEmpty(serial) || x.Serial.Contains(serial))
@@ -39,10 +39,14 @@ namespace Infrastructure.Repositories
                     Address = x.PhysicalAddress,
                     IsManufacturedGoods = x.IsManufacturedGoods,
                     Entity = x.Entity,
+                    SEntity = x.Entity.ToString("N0"),
                     UnitId = x.UnitId,
                     LastSellPrice = x.LastSellPrice,
                     UnitName = x.Unit.Name
                 }).ToListAsync();
+
+            list.ForEach(t => { if (t.Entity == 0) t.SEntity = string.Empty; });
+            return list;
         }
 
 
