@@ -43,6 +43,7 @@ namespace NeAccounting.ViewModels
             using UnitOfWork db = new();
             var result = await db.DocumentManager.GetDalyBook(CurrentPage);
             PageCount = result.PageCount;
+            CurrentPage = result.CurrentPage;
             InvList = result.Items;
         }
 

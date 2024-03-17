@@ -7,8 +7,6 @@ namespace Domain.NovinEntity.Customers
     public class Customer : LocalEntity<Guid>
     {
         #region navigation
-        public List<Cheque> RecCheque { get; set; }
-        public List<Cheque> PayCheque { get; set; }
         #endregion
 
         #region ctor

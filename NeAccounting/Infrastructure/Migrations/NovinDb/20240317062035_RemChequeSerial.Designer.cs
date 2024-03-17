@@ -4,6 +4,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.NovinDb
 {
     [DbContext(typeof(NovinDbContext))]
-    partial class NovinDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240317062035_RemChequeSerial")]
+    partial class RemChequeSerial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,7 +236,7 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid>("DocumetnId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("Due_Date")
+                    b.Property<DateTime>("Due_Date")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
@@ -245,11 +248,17 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("Serial")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("PayerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("Price")
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Serial"));
+                    b.Property<DateTime>("RecivedOrPayDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ReciverId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
@@ -257,7 +266,7 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<byte>("SubmitStatus")
                         .HasColumnType("tinyint");
 
-                    b.Property<DateTime?>("TransferdDate")
+                    b.Property<DateTime>("TransferdDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -265,6 +274,10 @@ namespace Infrastructure.Migrations.NovinDb
                     b.HasIndex("DocumetnId");
 
                     b.HasIndex("Id");
+
+                    b.HasIndex("PayerId");
+
+                    b.HasIndex("ReciverId");
 
                     b.ToTable("Cheque");
                 });
@@ -962,7 +975,23 @@ namespace Infrastructure.Migrations.NovinDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.NovinEntity.Customers.Customer", "Payer")
+                        .WithMany("PayCheque")
+                        .HasForeignKey("PayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.NovinEntity.Customers.Customer", "Reciver")
+                        .WithMany("RecCheque")
+                        .HasForeignKey("ReciverId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Document");
+
+                    b.Navigation("Payer");
+
+                    b.Navigation("Reciver");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Documents.Document", b =>
@@ -1016,6 +1045,13 @@ namespace Infrastructure.Migrations.NovinDb
                         .IsRequired();
 
                     b.Navigation("Worker");
+                });
+
+            modelBuilder.Entity("Domain.NovinEntity.Customers.Customer", b =>
+                {
+                    b.Navigation("PayCheque");
+
+                    b.Navigation("RecCheque");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Documents.Document", b =>

@@ -1,9 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DomainShared.Enums.Cheque
+namespace DomainShared.Enums
 {
     public enum ChequeStatus : byte
     {
+        /// <summary>
+        /// همه چک ها
+        /// </summary>
+        [Display(Name = "همه چک ها")]
+        AllCheques = 1,
         /// <summary>
         /// نقد شده
         /// </summary>

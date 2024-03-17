@@ -34,7 +34,6 @@ namespace Infrastructure.Utilities
                 b.Property(r => r.IsActive).HasDefaultValue(true);
             });
 
-
             builder.Entity<Worker>(b =>
             {
                 b.HasIndex(t => t.PersonnelId);
@@ -58,18 +57,15 @@ namespace Infrastructure.Utilities
                 b.Property(r => r.IsActive).HasDefaultValue(true);
             });
 
-
             builder.Entity<Cheque>(b =>
             {
-
                 b.HasIndex(t => t.Id);
-                b.HasOne(t => t.Payer)
-                .WithMany(s => s.PayCheque)
-                .HasForeignKey(t => t.PayerId);
-                
-                b.HasOne(t => t.Reciver)
-                .WithMany(s => s.RecCheque)
-                .HasForeignKey(t => t.ReciverId)
+
+                b.Property(r => r.Serial).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+
+                b.HasOne(t => t.Document)
+                .WithMany(s => s.Cheques)
+                .HasForeignKey(t => t.DocumetnId)
                 .OnDelete(DeleteBehavior.Cascade);
             });
 

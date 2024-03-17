@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DomainShared.Enums.Cheque
+namespace DomainShared.Enums
 {
     public enum SubmitChequeStatus : byte
     {

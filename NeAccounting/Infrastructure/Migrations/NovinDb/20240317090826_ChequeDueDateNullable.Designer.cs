@@ -4,6 +4,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.NovinDb
 {
     [DbContext(typeof(NovinDbContext))]
-    partial class NovinDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240317090826_ChequeDueDateNullable")]
+    partial class ChequeDueDateNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,6 +223,12 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid>("CreatorId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CustomerId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uniqueidentifier");
 
@@ -245,6 +254,9 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("Serial")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
@@ -261,6 +273,10 @@ namespace Infrastructure.Migrations.NovinDb
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("CustomerId1");
 
                     b.HasIndex("DocumetnId");
 
@@ -956,6 +972,14 @@ namespace Infrastructure.Migrations.NovinDb
 
             modelBuilder.Entity("Domain.NovinEntity.Cheques.Cheque", b =>
                 {
+                    b.HasOne("Domain.NovinEntity.Customers.Customer", null)
+                        .WithMany("PayCheque")
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("Domain.NovinEntity.Customers.Customer", null)
+                        .WithMany("RecCheque")
+                        .HasForeignKey("CustomerId1");
+
                     b.HasOne("Domain.NovinEntity.Documents.Document", "Document")
                         .WithMany("Cheques")
                         .HasForeignKey("DocumetnId")
@@ -1016,6 +1040,13 @@ namespace Infrastructure.Migrations.NovinDb
                         .IsRequired();
 
                     b.Navigation("Worker");
+                });
+
+            modelBuilder.Entity("Domain.NovinEntity.Customers.Customer", b =>
+                {
+                    b.Navigation("PayCheque");
+
+                    b.Navigation("RecCheque");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Documents.Document", b =>

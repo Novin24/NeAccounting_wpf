@@ -1,17 +1,12 @@
 ﻿using Domain.Common;
-using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
-using DomainShared.Enums.Cheque;
+using DomainShared.Enums;
 
 namespace Domain.NovinEntity.Cheques
 {
     public class Cheque : LocalEntity<Guid>
     {
         #region Navigation
-        public Guid PayerId { get; set; }
-        public Customer Payer { get; set; }
-        public Guid ReciverId { get; set; }
-        public Customer Reciver { get; set; }
         public Guid DocumetnId { get; set; }
         public Document Document { get; set; }
         #endregion
@@ -28,24 +23,14 @@ namespace Domain.NovinEntity.Cheques
         public ChequeStatus Status { get; set; }
 
         /// <summary>
-        /// مبلغ چک
-        /// </summary>
-        public long Price { get; set; }
-
-        /// <summary>
         /// تاریخ واگذاری
         /// </summary>
-        public DateTime TransferdDate { get; set; }
-
-        /// <summary>
-        /// تاریخ دریافت یا پرداخت
-        /// </summary>
-        public DateTime RecivedOrPayDate { get; set; }
+        public DateTime? TransferdDate { get; set; }
 
         /// <summary>
         /// تاریخ سر رسید
         /// </summary>
-        public DateTime Due_Date { get; set; }
+        public DateTime? Due_Date { get; set; }
 
         /// <summary>
         /// شماره چک
@@ -84,20 +69,25 @@ namespace Domain.NovinEntity.Cheques
         #endregion
 
         #region Constructor
-        public Cheque(string bank_Name,
-            string bank_Branch,
-            string cheque_Number,
-            int price,
-            string accunt_Number,
-            string cheque_Owner,
-            SubmitChequeStatus submitStatus,
+        internal Cheque()
+        {
+
+        }
+
+        public Cheque(SubmitChequeStatus submitStatus,
             ChequeStatus chequeStatus,
+            DateTime? dueDate,
+            string cheque_Number,
+            string accunt_Number,
+            string bank_Name,
+            string bank_Branch,
+            string cheque_Owner,
             string description)
         {
             Bank_Name = bank_Name;
             Bank_Branch = bank_Branch;
+            Due_Date = dueDate;
             Cheque_Number = cheque_Number;
-            Price = price;
             Accunt_Number = accunt_Number;
             Cheque_Owner = cheque_Owner;
             SubmitStatus = submitStatus;
@@ -105,6 +95,5 @@ namespace Domain.NovinEntity.Cheques
             Description = description;
         }
         #endregion
-
     }
 }

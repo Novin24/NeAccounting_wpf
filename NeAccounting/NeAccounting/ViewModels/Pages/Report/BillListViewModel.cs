@@ -108,9 +108,9 @@ namespace NeAccounting.ViewModels
             _isInit = true;
             using UnitOfWork db = new();
             var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, true, CurrentPage);
-            CurrentPage = t.CurrentPage;
-            InvList = t.Items;
-            PageCount = t.PageCount;
+                CurrentPage = t.CurrentPage;
+                InvList = t.Items;
+                PageCount = t.PageCount;
             _isInit = false;
         }
 
@@ -348,9 +348,9 @@ namespace NeAccounting.ViewModels
                         SubmitDate = itme.Date,
                         Description = itme.DocDescription,
                         Discount = itme.Dicount,
-                        PayTypeEnum = PaymentType.CardToCard.ToDictionary(),
+                        PayTypeEnum = PaymentType.CardToCard.ToEnumDictionary(),
                         //PayTypeEnum = Enum.GetValues(typeof(PaymentType)).Cast<PaymentType>(),
-                        PayTypeId = (byte)itme.Type,
+                        PayTypeId = itme.Type,
                         DocId = parameter,
                         DocList = docs,
                         Price = itme.Price,
@@ -387,9 +387,9 @@ namespace NeAccounting.ViewModels
                         SubmitDate = item.Date,
                         Description = item.DocDescription,
                         Discount = item.Dicount,
-                        PayTypeEnum = PaymentType.CardToCard.ToDictionary(),
+                        PayTypeEnum = PaymentType.CardToCard.ToEnumDictionary(),
                         //PayTypeEnum = Enum.GetValues(typeof(PaymentType)).Cast<PaymentType>(),
-                        PayTypeId = (byte)item.Type,
+                        PayTypeId = item.Type,
                         DocId = parameter,
                         DocList = dc,
                         Price = item.Price,
@@ -436,3 +436,6 @@ namespace NeAccounting.ViewModels
         #endregion
     }
 }
+
+
+
