@@ -32,7 +32,7 @@ namespace NeAccounting.ViewModels
         /// تایپ پرداخت 
         /// </summary>
         [ObservableProperty]
-        private Dictionary<byte, string> _payTypeEnum;
+        private Dictionary<Enum, string> _payTypeEnum;
 
         /// <summary>
         /// شناسه سند
@@ -95,7 +95,7 @@ namespace NeAccounting.ViewModels
         /// Enum Id 
         /// </summary>
         [ObservableProperty]
-        private byte _payTypeId;
+        private PaymentType _payTypeId;
 
         public void OnNavigatedTo()
         {

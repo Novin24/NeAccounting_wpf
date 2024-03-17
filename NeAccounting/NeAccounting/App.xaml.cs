@@ -111,6 +111,9 @@ namespace NeAccounting
                 services.AddTransient<TestViewModel>();
 
                 #region Cheque
+                services.AddTransient<ChequebookPage>();
+                services.AddTransient<ChequebookViewModel>();
+
                 services.AddTransient<CreatePayChequePage>();
 
                 services.AddTransient<CreateRecChequePage>();
@@ -221,10 +224,6 @@ namespace NeAccounting
 
                 services.AddTransient<DailyBookPage>();
                 services.AddTransient<DalyBookViewModel>();
-
-                services.AddTransient<ChequebookPage>();
-
-
                 #endregion
 
                 #region UserControl
@@ -270,10 +269,10 @@ namespace NeAccounting
                 Wpf.Ui.Controls.MessageBox ms = new Wpf.Ui.Controls.MessageBox()
                 {
                     Title = "کاربر گرامی",
-                    FontFamily =new System.Windows.Media.FontFamily("Calibri"),
+                    FontFamily = new System.Windows.Media.FontFamily("Calibri"),
                     Content = "برنامه حسابداری در حال اجراست !!!"
                 };
-                 await ms.ShowDialogAsync();
+                await ms.ShowDialogAsync();
             }
             _host.Start();
         }

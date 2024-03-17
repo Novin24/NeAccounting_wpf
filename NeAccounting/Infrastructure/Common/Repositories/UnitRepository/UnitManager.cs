@@ -26,13 +26,14 @@ namespace Infrastructure.Repositories
             }).ToListAsync();
         }
 
-        public Task<List<SuggestBoxViewModel<int>>> GetUnits()
+        public Task<List<SuggestBoxViewModel<int>>> GetUnits(bool IgnorArchive = false)
         {
-            return TableNoTracking.Where(t => t.IsActive).Select(x => new SuggestBoxViewModel<int>
-            {
-                Id = x.Id,
-                DisplayName = x.Name
-            }).ToListAsync();
+            return TableNoTracking.Where(t => IgnorArchive || t.IsActive)
+                .Select(x => new SuggestBoxViewModel<int>
+                {
+                    Id = x.Id,
+                    DisplayName = x.Name
+                }).ToListAsync();
         }
 
         public async Task<(string error, bool isSuccess)> CreateUnit(string name,

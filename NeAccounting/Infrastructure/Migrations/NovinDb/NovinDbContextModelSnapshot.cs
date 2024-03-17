@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations.NovinDb
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -77,7 +77,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("MaterialId");
 
-                    b.ToTable("BuyRemittance", (string)null);
+                    b.ToTable("BuyRemittance");
                 });
 
             modelBuilder.Entity("Domain.Enities.NovinEntity.Remittances.SellRemittance", b =>
@@ -135,7 +135,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("MaterialId");
 
-                    b.ToTable("SellRemittance", (string)null);
+                    b.ToTable("SellRemittance");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Bank.Bank", b =>
@@ -184,7 +184,89 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bank", (string)null);
+                    b.ToTable("Bank");
+                });
+
+            modelBuilder.Entity("Domain.NovinEntity.Cheques.Cheque", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<string>("Accunt_Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Bank_Branch")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Bank_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cheque_Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cheque_Owner")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DocumetnId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("Due_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastModifireId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("Serial")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Serial"));
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("SubmitStatus")
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime?>("TransferdDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumetnId");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Cheque");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Customers.Customer", b =>
@@ -278,7 +360,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Customer", (string)null);
+                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Documents.Document", b =>
@@ -352,7 +434,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Serial");
 
-                    b.ToTable("Document", (string)null);
+                    b.ToTable("Document");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Expense.Expense", b =>
@@ -479,7 +561,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Material", (string)null);
+                    b.ToTable("Material");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Materials.Unit", b =>
@@ -527,7 +609,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Unit", (string)null);
+                    b.ToTable("Unit");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.FinancialAid", b =>
@@ -582,7 +664,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("FinancialAid", (string)null);
+                    b.ToTable("FinancialAid");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Function", b =>
@@ -640,7 +722,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("Function", (string)null);
+                    b.ToTable("Function");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Salary", b =>
@@ -725,7 +807,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("Salary", (string)null);
+                    b.ToTable("Salary");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Worker", b =>
@@ -831,7 +913,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("PersonnelId");
 
-                    b.ToTable("Worker", (string)null);
+                    b.ToTable("Worker");
                 });
 
             modelBuilder.Entity("Domain.Enities.NovinEntity.Remittances.BuyRemittance", b =>
@@ -870,6 +952,17 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Navigation("Document");
 
                     b.Navigation("Material");
+                });
+
+            modelBuilder.Entity("Domain.NovinEntity.Cheques.Cheque", b =>
+                {
+                    b.HasOne("Domain.NovinEntity.Documents.Document", "Document")
+                        .WithMany("Cheques")
+                        .HasForeignKey("DocumetnId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Documents.Document", b =>
@@ -928,6 +1021,8 @@ namespace Infrastructure.Migrations.NovinDb
             modelBuilder.Entity("Domain.NovinEntity.Documents.Document", b =>
                 {
                     b.Navigation("BuyRemittances");
+
+                    b.Navigation("Cheques");
 
                     b.Navigation("RelatedDocuments");
 

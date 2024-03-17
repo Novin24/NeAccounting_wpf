@@ -22,7 +22,14 @@ namespace NeAccounting.Views.Pages
     {
         public CreatePayChequePage()
         {
+            //ViewModel = viewModel;
+            //DataContext = this;
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_Name.Focus();
         }
     }
 }

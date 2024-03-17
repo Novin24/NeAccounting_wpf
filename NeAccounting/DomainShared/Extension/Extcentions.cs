@@ -6,6 +6,12 @@ namespace DomainShared.Extension
 {
     public static class Extcentions
     {
+        public static string ToShamsiDate(this DateTime? date, PersianCalendar pc)
+        {
+            if (date == null)
+                return string.Empty;
+            return string.Concat(pc.GetYear(date.Value), "/", pc.GetMonth(date.Value), "/", pc.GetDayOfMonth(date.Value));
+        }
         public static string ToShamsiDate(this DateTime date, PersianCalendar pc)
         {
             return string.Concat(pc.GetYear(date), "/", pc.GetMonth(date), "/", pc.GetDayOfMonth(date));

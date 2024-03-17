@@ -236,7 +236,6 @@
                                   ItemsSource="{Binding ViewModel.InvList}"
                                   FontFamily="Calibri"
                                   AutoGenerateColumns="False">
-
                             <DataGrid.Resources>
                                 <s:String x:Key="format">{0:N0}</s:String>
                                 <BooleanToVisibilityConverter x:Key="BoolToVis" />
