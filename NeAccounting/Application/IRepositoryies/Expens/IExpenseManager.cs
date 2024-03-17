@@ -16,5 +16,6 @@ namespace NeApplication.IRepositoryies.Expens
             PaymentType PayType,
             string Receiver,
             string Description);
+        Task<(string error, bool isSuccess)> UpdateExpense(Guid ExpenseID, DateTime submitDate, string Expensetype, long Amount, PaymentType PayType, string Receiver, string Description);
     }
 }
