@@ -90,11 +90,12 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="1"
-                                    Grid.ColumnSpan="3">
+                                    Grid.ColumnSpan="3"
+                                    Margin="20 0 20 0">
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="نام کالا"
-                                       Margin="2 0 0 0 " />
+                                       Margin="7 0 0 0 " />
                             <TextBox TextAlignment="Center"
                                      FontSize="14"
                                      TabIndex="0"
@@ -107,12 +108,13 @@
                                      FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="1"
-                                    Grid.ColumnSpan="3">
+                                    Grid.ColumnSpan="3"
+                                    Margin="20 0 20 0">
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="واحد شمارش"
-                                       Margin="1 0 0 0 " />
+                                       Margin="7 0 0 0 " />
                             <ComboBox FontSize="14"
                                       TabIndex="1"
                                       FontFamily="Calibri"
@@ -122,29 +124,21 @@
                                       ItemsSource="{Binding ViewModel.AsuBox}"
                                       Margin="0 4 0 0" />
                         </StackPanel>
-                        <StackPanel Grid.Row="2" Grid.Column="1"
-                                    Grid.ColumnSpan="3">
-
-                            <TextBlock FontFamily="Calibri"
-                                       FontSize="14"
-                                       Text="اخرین قیمت فروش"
-                                       Margin="2 0 0 0 " />
-                            <ui:NumberBox Margin="0 4 3 0"
-                                          TabIndex="2"
-                                          TextAlignment="Center"
-                                          FlowDirection="LeftToRight"
-                                          SpinButtonPlacementMode="Hidden"
-                                          Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay}"
-                                          FontSize="14" />
-                        </StackPanel>
+                        <nu:MoneyPack Grid.Row="2"
+                                      Grid.Column="1"
+                                      Grid.ColumnSpan="3"
+                                      LabelName="آخرین قیمت فروش"
+                                      TabIndex="2"
+                                      Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay}"/>
                         <StackPanel Grid.Row="3" 
                                     Grid.Column="1"
-                                    Grid.ColumnSpan="3">
+                                    Grid.ColumnSpan="3"
+                                    Margin="20 4 20 0">
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="محل نگهداری"
-                                       Margin="1 0 0 0 " />
+                                       Margin="7 0 0 0 " />
                             <ui:TextBox FontSize="14"
                                         TextAlignment="Center"
                                         TabIndex="3"
@@ -154,11 +148,12 @@
                         </StackPanel>
                         <StackPanel Grid.Row="4"
                                     Grid.Column="1"
-                                    Grid.ColumnSpan="3">
+                                    Grid.ColumnSpan="3"
+                                    Margin="20 0 20 0">
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="شماره سریال"
-                                       Margin="2 0 0 0 " />
+                                       Margin="7 0 0 0 " />
                             <ui:TextBox Grid.Column="0"
                                         Grid.Row="2"
                                         Text="{Binding ViewModel.Serial , Mode=OneWayToSource}"
