@@ -29,7 +29,7 @@ namespace NeAccounting.Views.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            txt_Name.Focus();
+            //txt_Name.Focus();
         }
     }
 }
