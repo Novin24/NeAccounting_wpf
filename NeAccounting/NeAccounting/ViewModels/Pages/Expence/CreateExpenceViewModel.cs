@@ -25,22 +25,39 @@ namespace NeAccounting.ViewModels
     {
         private readonly INavigationService _navigationService = navigationService;
         private readonly ISnackbarService _snackbarService = snackbarService;
-
+        /// <summary>
+        /// تاریخ ثبت
+        /// </summary>
         [ObservableProperty]
         private DateTime? _submitDate;
 
+        /// <summary>
+        /// عنوان هزینه
+        /// </summary>
         [ObservableProperty]
         private string _expensetype;
 
+        /// <summary>
+        /// مبلغ
+        /// </summary>
         [ObservableProperty]
         private long? _amount=0;
 
+        /// <summary>
+        /// نوع پرداخت
+        /// </summary>
         [ObservableProperty]
         private PaymentType _payType;
 
+        /// <summary>
+        /// دریافت کننده
+        /// </summary>
         [ObservableProperty]
         private string _receiver;
-
+        
+        /// <summary>
+        /// توضیحات
+        /// </summary>
         [ObservableProperty]
         private string _description;
 
@@ -61,11 +78,6 @@ namespace NeAccounting.ViewModels
             if (Amount == null || Amount == 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
-            if (string.IsNullOrEmpty(Receiver))
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام دریافت کننده"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
             using (UnitOfWork db = new())

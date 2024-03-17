@@ -62,6 +62,7 @@
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
 
@@ -70,22 +71,30 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <StackPanel>
+                    <StackPanel Grid.Row="0"
+                                Margin="30 0 20 0">
                         <TextBlock FontFamily="Calibri"
                     FontSize="15"
                     Text="نام مشتری"
-                    Margin="35 6 20 0 "
+                    Margin="5 6 0 0 "
                     FontWeight="Bold" />
                         <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
                             PlaceholderText="Search..."
                             DisplayMemberPath="DisplayName"
                             FontSize="14"
-                            Grid.Column="0"
-                            Margin="30 3 20 0 "
+                            Margin="0 3 0 0 "
                             FontFamily="Calibri" />
                     </StackPanel>
-                    <StackPanel Margin="21 5 30 5 "
-                 Grid.Column="1">
+                    <nu:PersianDatePicker Grid.Row="0" VerticalAlignment="Center"
+                         FlowDirection="LeftToRight"
+                         x:Name="DateFocus"
+                         Grid.Column="1"
+                         SelectedDate="{Binding ViewModel.SubmitDate , Mode=OneWayToSource}"
+                         Grid.ColumnSpan="3"
+                         Margin="0 0 23 0"
+                         LabelName="تاریخ پرداخت"/>
+                    <StackPanel Grid.Row="1"
+                                Margin="30 5 20 5 ">
 
                         <TextBlock FontFamily="Calibri"
                     FontSize="15"
@@ -96,7 +105,8 @@
                      FontSize="14" />
                     </StackPanel>
                     <StackPanel Grid.Row="1"
-                 Margin="30 5 20 5 ">
+                                Grid.Column="1"
+                 Margin="20 5 30 5 ">
 
                         <TextBlock FontFamily="Calibri"
                     FontSize="15"
@@ -106,9 +116,8 @@
                      TextAlignment="Center"
                      FontFamily="Calibri" />
                     </StackPanel>
-                    <StackPanel Margin="21 5 30 5 "
-                 Grid.Column="1"
-                 Grid.Row="1">
+                    <StackPanel  Grid.Row="2"
+                                 Margin="30 5 20 5 ">
 
                         <TextBlock FontFamily="Calibri"
                     FontSize="15"
@@ -118,8 +127,9 @@
                      FontSize="14"
                      FontFamily="Calibri" />
                     </StackPanel>
-                    <StackPanel Margin="30 6 20 0 "
-                 Grid.Row="2">
+                    <StackPanel Grid.Row="2"
+                                Margin="20 6 30 0 "
+                                Grid.Column="1">
 
                         <TextBlock FontFamily="Calibri"
                     FontSize="14"
@@ -130,13 +140,17 @@
                      Height="36"
                      FontFamily="Calibri" />
                     </StackPanel>
-
-                    <nu:MoneyPack Grid.Column="1"
+                    <nu:PersianDatePicker Grid.Row="3"
+                         VerticalAlignment="Center"
+                         FlowDirection="LeftToRight"
+                         Margin="9 0 13 0"
+                         LabelName="تاریخ سررسید"/>
+                    <nu:MoneyPack Grid.Row="3"
+                                  Grid.Column="1"
                                   Margin="0 0 10 0"
-                   Grid.Row="2"
                    LabelName="مبلغ چک" />
-                    <StackPanel Margin="30 5 20 5 "
-                 Grid.Row="3">
+                    <StackPanel Grid.Row="4"
+                                Margin="30 5 20 0 ">
 
                         <TextBlock FontFamily="Calibri"
                     FontSize="14"
@@ -146,10 +160,10 @@
                      TextAlignment="Center"
                      FontFamily="Calibri" />
                     </StackPanel>
-                    <StackPanel Margin="0 5 0 5 "
+                    <StackPanel Grid.Row="4"
+                 Margin="0 5 0 5 "
                  HorizontalAlignment="Center"
                  Width="200"
-                 Grid.Row="3"
                  Grid.Column="1">
                         <TextBlock FontFamily="Calibri"
                     FontSize="14"
@@ -166,23 +180,23 @@
                         </ComboBox>
                     </StackPanel>
                     <Grid Grid.ColumnSpan="2"
-           Grid.Row="4"
+           Grid.Row="5"
            Margin="30 3 30 4">
 
                         <TextBlock FontFamily="Calibri"
                     FontSize="14"
                     Text="توضیحات"
                     Grid.Column="1" />
-                        <RichTextBox Margin="0,20,0,0"
-                      FontSize="14"
+                        <RichTextBox Margin="0,21,0,0"
+                      FontSize="16"
                       FlowDirection="RightToLeft"
                       FontFamily="Calibri"></RichTextBox>
                     </Grid>
 
-                    <Button Content="ثبت چک"
+                    <Button Grid.Row="6"
+             Content="ثبت چک"
              Margin="10"
              HorizontalAlignment="Center"
-             Grid.Row="7"
              FontFamily="Calibri"
              FontSize="15"
              Grid.ColumnSpan="2" />

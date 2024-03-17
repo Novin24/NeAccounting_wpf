@@ -89,7 +89,8 @@
                                 </Grid.ColumnDefinitions>
                                 <nu:PersianDatePicker VerticalAlignment="Center"
                                                       FlowDirection="LeftToRight"
-                                                      LabelName="از تاریخ"/>
+                                                      LabelName="از تاریخ"
+                                                      x:Name="date"/>
                                 <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight" 
                                                   Grid.Column="1"

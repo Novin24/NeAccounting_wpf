@@ -51,7 +51,7 @@ namespace NeAccounting.ViewModels
             List = await db.ExpenseManager.GetExpenselist(null, null);
         }
         [RelayCommand]
-        public async Task OnSearchCus()
+        public async Task OnSearchExpense()
         {
             using UnitOfWork db = new();
             List = await db.ExpenseManager.GetExpenselist(null, null);
@@ -74,39 +74,11 @@ namespace NeAccounting.ViewModels
 
             _ = _navigationService.Navigate(pageType);
         }
+        
         [RelayCommand]
-        private async Task OnRemoveCus(int parameter)
+        private void OnUpdateEx(Guid parameter)
         {
-            var result = await _contentDialogService.ShowSimpleDialogAsync(
-            new SimpleContentDialogCreateOptions()
-            {
-                Title = "آیا از حذف اطمینان دارید!!!",
-                Content = Application.Current.Resources["DeleteDialogContent"],
-                PrimaryButtonText = "بله",
-                SecondaryButtonText = "خیر",
-                CloseButtonText = "انصراف",
-            });
-
-            if (result == ContentDialogResult.Primary)
-            {
-                using UnitOfWork db = new();
-                var isSuccess = await db.ExpenseManager.DeleteAsync<int>(parameter);
-                if (!isSuccess)
-                {
-                    _snackbarService.Show("کاربر گرامی", "خطا دراتصال به پایگاه داده!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                    return;
-                }
-                _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
-
-                await OnSearchCus();
-            }
-
-           
-        }
-        [RelayCommand]
-        private void OnUpdateEx(int parameter)
-        {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateCustomer");
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateExpence");
 
             if (pageType == null)
             {
