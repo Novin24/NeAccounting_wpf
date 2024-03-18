@@ -61,11 +61,6 @@ namespace Domain.NovinEntity.Cheques
         /// صاحب چک
         /// </summary>
         public string Cheque_Owner { get; set; }
-
-        /// <summary>
-        /// توضیحات
-        /// </summary>
-        public string Description { get; set; }
         #endregion
 
         #region Constructor
@@ -81,8 +76,7 @@ namespace Domain.NovinEntity.Cheques
             string accunt_Number,
             string bank_Name,
             string bank_Branch,
-            string cheque_Owner,
-            string description)
+            string cheque_Owner)
         {
             Bank_Name = bank_Name;
             Bank_Branch = bank_Branch;
@@ -92,7 +86,6 @@ namespace Domain.NovinEntity.Cheques
             Cheque_Owner = cheque_Owner;
             SubmitStatus = submitStatus;
             Status = chequeStatus;
-            Description = description;
         }
         #endregion
     }

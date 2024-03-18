@@ -11,7 +11,7 @@ namespace Domain.NovinEntity.Documents
         public Guid CustomerId { get; private set; }
         public Guid? DocumentId { get; private set; }
         public Document P_Document { get; set; }
-        public List<Cheque> Cheques{ get; set; }
+        public List<Cheque> Cheques { get; set; }
         public List<Document> RelatedDocuments { get; private set; }
         public List<SellRemittance> SellRemittances { get; private set; }
         public List<BuyRemittance> BuyRemittances { get; private set; }
@@ -42,6 +42,7 @@ namespace Domain.NovinEntity.Documents
             RelatedDocuments = [];
             SellRemittances = [];
             BuyRemittances = [];
+            Cheques = [];
         }
 
 
@@ -98,7 +99,7 @@ namespace Domain.NovinEntity.Documents
 
         public Document RemoveSellRem(SellRemittance inv)
         {
-             SellRemittances.Remove(inv);
+            SellRemittances.Remove(inv);
             return this;
         }
 
@@ -111,6 +112,12 @@ namespace Domain.NovinEntity.Documents
         public Document AddDocument(List<Document> list)
         {
             RelatedDocuments.AddRange(list);
+            return this;
+        }
+
+        public Document AddCheque(Cheque cheque)
+        {
+            Cheques.Add(cheque);
             return this;
         }
         #endregion

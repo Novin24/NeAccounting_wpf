@@ -1083,6 +1083,124 @@ namespace Infrastructure.Repositories
             });
             return new PagedResulViewModel<ChequeListDtos>(totalCount, pageCount, pageNum, li);
         }
+
+        public async Task<(string error, bool isSuccess)> CreateCheque(Guid customerId,
+            SubmitChequeStatus submitStatus,
+            ChequeStatus status,
+            string? descripion,
+            DateTime submitDate,
+            DateTime dueDate,
+            long price,
+            string cheque_Number,
+            string accunt_Number,
+            string bank_Name,
+            string bank_Branch,
+            string cheque_Owner)
+        {
+            try
+            {
+                if (dueDate.Date < submitDate.Date)
+                {
+                    return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false);
+                }
+
+                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, false)
+                .AddCheque(new Cheque(submitStatus,
+                status,
+                dueDate,
+                cheque_Number,
+                accunt_Number,
+                bank_Name,
+                bank_Branch,
+                cheque_Owner)));
+
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> CreateGarantyCheque(Guid customerId,
+            SubmitChequeStatus submitStatus,
+            ChequeStatus status,
+            string? descripion,
+            DateTime submitDate,
+            DateTime? dueDate,
+            long price,
+            string cheque_Number,
+            string accunt_Number,
+            string bank_Name,
+            string bank_Branch,
+            string cheque_Owner)
+        {
+            try
+            {
+                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, false)
+                .AddCheque(new Cheque(submitStatus,
+                status,
+                dueDate,
+                cheque_Number,
+                accunt_Number,
+                bank_Name,
+                bank_Branch,
+                cheque_Owner)));
+
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> UpdateCheque(
+            Guid docId,
+            SubmitChequeStatus submitStatus,
+            ChequeStatus status,
+            string? descripion,
+            DateTime submitDate,
+            DateTime? dueDate,
+            long price,
+            string cheque_Number,
+            string accunt_Number,
+            string bank_Name,
+            string bank_Branch,
+            string cheque_Owner)
+        {
+
+            var doc = await Entities.Include(t => t.Cheques)
+                .Include(s => s.SellRemittances)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null || doc.Cheques.Count == 0)
+                return new("چک مورد نظر یافت نشد!!!", false);
+
+            doc.Price = price;
+            doc.Description = descripion;
+            doc.SubmitDate = submitDate;
+
+            var checque = doc.Cheques.First();
+            checque.Accunt_Number = accunt_Number;
+            checque.Bank_Branch = bank_Branch;
+            checque.Status = status;
+            checque.Cheque_Owner = cheque_Owner;
+            checque.Due_Date = dueDate;
+            checque.Cheque_Number = cheque_Number;
+            checque.Bank_Name = bank_Name;
+            checque.SubmitStatus = submitStatus;
+
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
         #endregion
     }
 }

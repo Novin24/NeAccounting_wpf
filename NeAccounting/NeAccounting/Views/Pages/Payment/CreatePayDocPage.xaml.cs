@@ -10,7 +10,6 @@ namespace NeAccounting.Views.Pages
     public partial class CreatePayDocPage : INavigableView<CreatePayDocViewModel>
     {
         public CreatePayDocViewModel ViewModel { get; }
-        public Guid CusId { get; set; }
 
         public CreatePayDocPage(CreatePayDocViewModel viewModel)
         {

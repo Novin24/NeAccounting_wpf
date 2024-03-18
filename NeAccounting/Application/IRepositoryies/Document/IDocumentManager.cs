@@ -203,6 +203,47 @@ namespace NeApplication.IRepositoryies
             bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
+
+
+        Task<(string error, bool isSuccess)> CreateCheque(Guid customerId,
+            SubmitChequeStatus submitStatus,
+            ChequeStatus status,
+            string? descripion,
+            DateTime submitDate,
+            DateTime dueDate,
+            long price,
+            string cheque_Number,
+            string accunt_Number,
+            string bank_Name,
+            string bank_Branch,
+            string cheque_Owner);
+
+        Task<(string error, bool isSuccess)> CreateGarantyCheque(Guid customerId,
+            SubmitChequeStatus submitStatus,
+            ChequeStatus status,
+            string? descripion,
+            DateTime submitDate,
+            DateTime? dueDate,
+            long price,
+            string cheque_Number,
+            string accunt_Number,
+            string bank_Name,
+            string bank_Branch,
+            string cheque_Owner);
+
+        Task<(string error, bool isSuccess)> UpdateCheque(
+            Guid docId,
+            SubmitChequeStatus submitStatus,
+            ChequeStatus status,
+            string? descripion,
+            DateTime submitDate,
+            DateTime? dueDate,
+            long price,
+            string cheque_Number,
+            string accunt_Number,
+            string bank_Name,
+            string bank_Branch,
+            string cheque_Owner);
         #endregion
     }
 }
