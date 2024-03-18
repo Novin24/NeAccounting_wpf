@@ -14,6 +14,8 @@ namespace DomainShared.Enums
         Pos = 4,
         [Display(Name ="نقدی")]
         Cash,
+        [Display(Name ="Cheque")]
+        Cheque,
         [Display(Name = "سایر")]
         Other
     }
