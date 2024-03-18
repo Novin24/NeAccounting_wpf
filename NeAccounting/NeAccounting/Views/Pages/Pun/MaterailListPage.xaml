@@ -233,7 +233,7 @@
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*"
                                                         x:Name="Entity"
-                                                        Binding="{Binding Entity}" />
+                                                        Binding="{Binding SEntity}" />
                                     <DataGridTextColumn Header="واحد"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"

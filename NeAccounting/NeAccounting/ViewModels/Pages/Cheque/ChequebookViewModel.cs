@@ -3,6 +3,7 @@ using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -76,7 +77,7 @@ namespace NeAccounting.ViewModels
         {
             _isInit = true;
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetChequeByDate(null, null, CusId, Status, _isInit);
+            var t = await db.DocumentManager.GetChequeByDate(null, null, CusId, Status, _isInit, CurrentPage);
 
             CurrentPage = t.CurrentPage;
             InvList = t.Items;
@@ -137,6 +138,24 @@ namespace NeAccounting.ViewModels
         {
 
 
+        }
+
+        [RelayCommand]
+        private void OnAddClick(string parameter)
+        {
+            if (string.IsNullOrWhiteSpace(parameter))
+            {
+                return;
+            }
+
+            Type? pageType = NameToPageTypeConverter.Convert(parameter);
+
+            if (pageType == null)
+            {
+                return;
+            }
+
+            _ = _navigationService.Navigate(pageType);
         }
         #endregion
     }

@@ -135,6 +135,8 @@
                                            Margin="20 9 4 0"
                                            Grid.Column="1"
                                            FontSize="15"
+                                           Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
+                                           CommandParameter="CreateGuarantCheque"
                                            MaxWidth="170"
                                            Padding="9 0"
                                            IsChevronVisible="False">
@@ -166,6 +168,8 @@
                                            MaxWidth="170"
                                            Grid.Column="2"
                                            Margin="20 9 4 0"
+                                           Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
+                                           CommandParameter="CreatePayCheque"
                                            Padding="9 0"
                                            IsChevronVisible="False">
                                 <Grid>
@@ -196,6 +200,8 @@
                                            Grid.Column="3"
                                            FontSize="15"
                                            MaxWidth="170"
+                                           Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
+                                           CommandParameter="CreateRecCheque"
                                            Padding="9 0"
                                            IsChevronVisible="False">
                                 <Grid>
