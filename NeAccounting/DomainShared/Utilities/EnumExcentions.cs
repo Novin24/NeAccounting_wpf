@@ -41,6 +41,10 @@ namespace DomainShared.Utilities
         {
             return Enum.GetValues(value.GetType()).Cast<Enum>().ToDictionary(p => Convert.ToByte(p), q => ToDisplay(q));
         }
+        public static Dictionary<Enum, string> ToEnumDictionary(this Enum value)
+        {
+            return Enum.GetValues(value.GetType()).Cast<Enum>().ToDictionary(p => p, q => ToDisplay(q));
+        }
 
         public static IEnumerable<string> ToListry(this Enum value)
         {

@@ -1,4 +1,5 @@
 ﻿using Domain.Enities.NovinEntity.Remittances;
+using Domain.NovinEntity.Cheques;
 using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
 using Domain.NovinEntity.Materials;
@@ -33,7 +34,6 @@ namespace Infrastructure.Utilities
                 b.Property(r => r.IsActive).HasDefaultValue(true);
             });
 
-
             builder.Entity<Worker>(b =>
             {
                 b.HasIndex(t => t.PersonnelId);
@@ -55,6 +55,18 @@ namespace Infrastructure.Utilities
                 .HasForeignKey(t => t.UnitId)
                 .OnDelete(DeleteBehavior.Cascade);
                 b.Property(r => r.IsActive).HasDefaultValue(true);
+            });
+
+            builder.Entity<Cheque>(b =>
+            {
+                b.HasIndex(t => t.Id);
+
+                b.Property(r => r.Serial).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+
+                b.HasOne(t => t.Document)
+                .WithMany(s => s.Cheques)
+                .HasForeignKey(t => t.DocumetnId)
+                .OnDelete(DeleteBehavior.Cascade);
             });
 
             builder.Entity<Unit>(b =>

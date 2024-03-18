@@ -1,14 +1,17 @@
 ﻿using Domain.Enities.NovinEntity.Remittances;
+using Domain.NovinEntity.Cheques;
 using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
 using DomainShared.Constants;
 using DomainShared.Enums;
 using DomainShared.Extension;
+using DomainShared.Utilities;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
+using System;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
@@ -985,8 +988,6 @@ namespace Infrastructure.Repositories
             return null;
         }
 
-
-
         public async Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
@@ -1021,6 +1022,66 @@ namespace Infrastructure.Repositories
             var totalCount = list.Count;
             list = list.Skip(--pageNum * pageCount).Take(pageCount).ToList();
             return new PagedResulViewModel<DalyBookDto>(totalCount, pageCount, pageNum, list);
+        }
+
+        #endregion
+
+        #region Cheque
+        public async Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime, DateTime? endTime, Guid? cusId, ChequeStatus status, bool isInit, int pageNum = 0, int pageCount = NeAccountingConstants.PageCount)
+        {
+            PersianCalendar pc = new();
+            var query = (from che in DbContext.Set<Cheque>()
+                                   .AsNoTracking()
+                                   .Where(t => status == ChequeStatus.AllCheques || t.Status == status)
+
+                         join doc in DbContext.Set<Document>()
+                               .Where(st => !startTime.HasValue || st.SubmitDate >= startTime)
+                               .Where(et => !endTime.HasValue || et.SubmitDate < endTime)
+                               .Where(p => !cusId.HasValue || p.CustomerId == cusId)
+                                                 on che.DocumetnId equals doc.Id
+
+                         join cus in DbContext.Set<Customer>()
+                                                 on doc.CustomerId equals cus.Id
+
+                         orderby doc.SubmitDate
+                         select new ChequeListDtos
+                         {
+                             Status = che.Status,
+                             StatusName = che.Status.ToDisplay(DisplayProperty.Name),
+                             Id = doc.Id,
+                             CheckNumber = che.Cheque_Number,
+                             DueShamsiDate = che.Due_Date.ToShamsiDate(pc),
+                             Payer = cus.Name,
+                             IsRecived = doc.IsReceived,
+                             Reciver = cus.Name,
+                             Price = doc.Price.ToString("N0")
+                         }).AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+            if (isInit && totalCount != 0)
+            {
+                pageNum = totalCount / pageCount;
+                if (totalCount % pageCount != 0)
+                {
+                    pageNum++;
+                }
+            }
+            var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
+            int i = 1;
+            li.ForEach(t =>
+            {
+                t.Row = i++;
+                if (t.IsRecived)
+                {
+                    t.Reciver = "صندوق";
+                }
+                else
+                {
+                    t.Payer = "صندوق";
+                }
+            });
+            return new PagedResulViewModel<ChequeListDtos>(totalCount, pageCount, pageNum, li);
         }
         #endregion
     }

@@ -217,7 +217,7 @@
                                                               Checked="CheckBox_Status_Chkecked"
                                                               Unchecked="CheckBox_Status_Unckecked">
                                                         <CheckBox.ToolTip>
-                                                            <TextBlock>حذف</TextBlock>
+                                                            <TextBlock>بایگانی</TextBlock>
                                                         </CheckBox.ToolTip>
                                                     </CheckBox>
                                                 </StackPanel>

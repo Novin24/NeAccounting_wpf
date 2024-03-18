@@ -199,7 +199,7 @@ namespace NeAccounting.Views.Pages
             Dictionary<string, string> dic = new()
             {
                 {"Customer_Name",$"{ViewModel.CusName}"},
-                {"PrintTime",ViewModel.SubmitDate.Value.ToShamsiDate(pc)},
+                {"PrintTime",ViewModel.SubmitDate.ToShamsiDate(pc)},
                 {"Total_InvoicePrice",ViewModel.TotalPrice},
                 {"TotalSLeftOver",total.ToString().NumberToPersianString()},
                 { "Management",$"{printInfo.Management}"},

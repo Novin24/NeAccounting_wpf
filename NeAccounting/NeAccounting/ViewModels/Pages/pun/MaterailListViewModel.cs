@@ -115,7 +115,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                asuBox = await db.UnitManager.GetUnits();
+                asuBox = await db.UnitManager.GetUnits(true);
             }
 
             var context = new UpdateMaterailPage(new UpdateMaterailViewModel(_snackbarService, _navigationService)

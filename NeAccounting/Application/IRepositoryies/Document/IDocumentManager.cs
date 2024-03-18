@@ -155,7 +155,7 @@ namespace NeApplication.IRepositoryies
         /// <summary>
         /// دریافت لیست بدهکاران
         /// </summary>
-        Task<CreditorsOrDebtorsReport> GetDebtorsReport(DateTime startDate , DateTime endDate);
+        Task<CreditorsOrDebtorsReport> GetDebtorsReport(DateTime startDate, DateTime endDate);
 
         /// <summary>
         /// دریافت لیست طلبکاران
@@ -192,6 +192,16 @@ namespace NeApplication.IRepositoryies
         Task<(bool isSuccess, DocUpdateDto itm)> GetDocumentById(Guid docId);
 
         Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
+        #endregion
+
+        #region Cheque
+        Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime,
+            DateTime? endTime,
+            Guid? cusId,
+            ChequeStatus status,
+            bool isInit,
+            int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
         #endregion
     }
