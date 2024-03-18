@@ -253,7 +253,7 @@
                                                         x:Name="Address"
                                                         Binding="{Binding Address}" />
                                     <DataGridTemplateColumn Header="عملیات"
-                                                            Width="60"
+                                                            Width="75"
                                                             HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -262,13 +262,13 @@
                                                     <Button  Margin="2"
                                                              CommandParameter="{Binding Id , Mode=OneWay}"
                                                              Command="{Binding Path=DataContext.ViewModel.UpdateMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                             Padding="3,3"
+                                                             Padding="7,5"
                                                              ToolTip="ویرایش">
                                                         <ui:SymbolIcon Symbol="Pen16" />
                                                     </Button>
                                                     <CheckBox IsChecked="{Binding IsActive}"
                                                               Tag="{Binding Id}"
-                                                              Margin="3 0 -5 0"
+                                                              Margin="5 0 -5 0"
                                                               Padding="0"
                                                               Checked="CheckBox_Status_Chkecked"
                                                               Unchecked="CheckBox_Status_Unckecked">

@@ -18,19 +18,19 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="45" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="45" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="45"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="45"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
@@ -59,8 +59,21 @@
                 </Grid.RowDefinitions>
 
                 <nu:HeaderPack NamePpage="ثبت چک پرداختی به مشتری" />
-                <Grid  FlowDirection="RightToLeft"
-                       Grid.Row="1">
+
+
+
+                <Border Grid.Column="0"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        CornerRadius="9"
+                        Margin="4"
+                        BorderBrush="#D6D5D5"
+                        BorderThickness="0.4"
+                        Background="{DynamicResource ControlSolidFillColorDefaultBrush}">
+
+                    <Grid  FlowDirection="RightToLeft" Grid.Row="1" >
+
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
@@ -214,6 +227,7 @@
              FontSize="15"
              Grid.ColumnSpan="2" />
                 </Grid>
+                </Border>
             </Grid>
         </Border>
     </Grid>

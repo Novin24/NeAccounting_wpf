@@ -16,11 +16,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height=".7*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height=".7*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -136,27 +136,25 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <StackPanel>
+                        <StackPanel Margin="20 8 20 0 ">
                             <DockPanel>
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="16"
                                            Text="نام مشتری"
-                                           Margin="2 0 0 7" />
+                                           Margin="7 0 0 3" />
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="14"
                                            x:Name="lbl_cusId"
                                            Text="{Binding ViewModel.CusNumber}"
                                            Foreground="#BB8F60"
                                            HorizontalAlignment="Right"
-                                           Margin="2 0 0 7" />
+                                           Margin="0 3 3 0" />
                             </DockPanel>
                             <ui:TextBox Icon="{ui:SymbolIcon Search24}"
                                         FontSize="14"
                                         Grid.Row="0"
                                         IsEnabled="False"
                                         Text="{Binding ViewModel.CusName , Mode=TwoWay}"
-                                        Grid.Column="0"
-                                        Margin="21 4 20 0"
                                         FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
@@ -201,7 +199,8 @@
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="نوع سند"
-                                       FontWeight="Bold" />
+                                       FontWeight="Bold"
+                                       Margin="7 0 0 3"/>
                             <ComboBox FontSize="14"
                                       x:Name="Cmb_PayType"
                                       SelectedValuePath="Key"
@@ -241,7 +240,8 @@
                                        FontSize="14"
                                        Text="توضیحات"
                                        Grid.Column="1"
-                                       FontWeight="Bold" />
+                                       FontWeight="Bold"
+                                       Margin="7 0 0 3"/>
                             <TextBox Margin="0,24,5,0"
                                      FontSize="14"
                                      Text="{Binding ViewModel.Description, Mode=TwoWay}"
