@@ -115,8 +115,10 @@ namespace NeAccounting
                 services.AddTransient<ChequebookViewModel>();
 
                 services.AddTransient<CreatePayChequePage>();
+                services.AddTransient<CreatePayChequeViewModel>();
 
                 services.AddTransient<CreateRecChequePage>();
+                services.AddTransient<CreateRecChequeViewModel>();
 
                 services.AddTransient<CreateGuarantChequePage>();
 

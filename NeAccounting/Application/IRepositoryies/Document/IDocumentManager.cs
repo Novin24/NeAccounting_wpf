@@ -212,6 +212,7 @@ namespace NeApplication.IRepositoryies
             DateTime submitDate,
             DateTime dueDate,
             long price,
+            bool IsRecived,
             string cheque_Number,
             string accunt_Number,
             string bank_Name,

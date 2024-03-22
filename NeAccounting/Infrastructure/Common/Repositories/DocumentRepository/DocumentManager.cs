@@ -1091,6 +1091,7 @@ namespace Infrastructure.Repositories
             DateTime submitDate,
             DateTime dueDate,
             long price,
+            bool IsRecived,
             string cheque_Number,
             string accunt_Number,
             string bank_Name,
@@ -1104,7 +1105,7 @@ namespace Infrastructure.Repositories
                     return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false);
                 }
 
-                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, false)
+                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, IsRecived)
                 .AddCheque(new Cheque(submitStatus,
                 status,
                 dueDate,
@@ -1146,7 +1147,6 @@ namespace Infrastructure.Repositories
                 bank_Name,
                 bank_Branch,
                 cheque_Owner)));
-
             }
             catch (Exception ex)
             {
@@ -1191,6 +1191,61 @@ namespace Infrastructure.Repositories
             checque.Bank_Name = bank_Name;
             checque.SubmitStatus = submitStatus;
 
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+
+        public async Task<(string error, bool isSuccess)> ConvertChequeToCash(Guid docId)
+        {
+            var doc = await Entities.Include(t => t.Cheques)
+               .Include(s => s.SellRemittances)
+               .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null || doc.Cheques.Count == 0)
+                return new("چک مورد نظر یافت نشد!!!", false);
+
+            var checque = doc.Cheques.First();
+            if (checque.Status != ChequeStatus.InBox || checque.Status != ChequeStatus.Rejected)
+            {
+                return new("امکان پذیر نیست!!", false);
+            }
+
+            checque.Status = ChequeStatus.Cashed;
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> ConvertChequeToReturn(Guid docId)
+        {
+            var doc = await Entities.Include(t => t.Cheques)
+               .Include(s => s.SellRemittances)
+               .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null || doc.Cheques.Count == 0)
+                return new("چک مورد نظر یافت نشد!!!", false);
+
+            var checque = doc.Cheques.First();
+            if (checque.Status != ChequeStatus.InBox)
+            {
+                return new("امکان پذیر نیست!!", false);
+            }
+
+            checque.Status = ChequeStatus.Rejected;
             try
             {
                 Entities.Update(doc);

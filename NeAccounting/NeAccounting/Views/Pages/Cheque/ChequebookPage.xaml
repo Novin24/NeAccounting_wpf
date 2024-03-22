@@ -306,7 +306,7 @@
                                                     Width=".6*" />
 
                                 <DataGridTemplateColumn Header="عملیات"
-                                                        Width="120"
+                                                        Width="190"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -321,6 +321,16 @@
                                                         Padding="7,5"
                                                         ToolTip="حذف">
                                                     <ui:SymbolIcon Symbol="Delete16" />
+                                                </Button>
+                                                <Button Margin="2"
+                                                        Padding="7,5"
+                                                        ToolTip="نقد کردن">
+                                                    <ui:SymbolIcon Symbol="Money20" />
+                                                </Button>
+                                                <Button Margin="2"
+                                                        Padding="7,5"
+                                                        ToolTip="برگشت چک">
+                                                    <ui:SymbolIcon Symbol="ArrowRedo20" />
                                                 </Button>
                                                 <Button Margin="2"
                                                         Padding="7,5"
