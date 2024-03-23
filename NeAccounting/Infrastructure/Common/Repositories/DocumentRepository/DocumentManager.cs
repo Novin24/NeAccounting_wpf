@@ -8,6 +8,7 @@ using DomainShared.Extension;
 using DomainShared.Utilities;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.PagedResul;
+using DurableTask.Core.Serializing;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
@@ -1040,8 +1041,11 @@ namespace Infrastructure.Repositories
                                .Where(p => !cusId.HasValue || p.CustomerId == cusId)
                                                  on che.DocumetnId equals doc.Id
 
-                         join cus in DbContext.Set<Customer>()
-                                                 on doc.CustomerId equals cus.Id
+                         join pay in DbContext.Set<Customer>()
+                                                 on che.Payer equals pay.Id
+
+                         join rec in DbContext.Set<Customer>()
+                                                 on che.Reciver equals rec.Id
 
                          orderby doc.SubmitDate
                          select new ChequeListDtos
@@ -1051,9 +1055,9 @@ namespace Infrastructure.Repositories
                              Id = doc.Id,
                              CheckNumber = che.Cheque_Number,
                              DueShamsiDate = che.Due_Date.ToShamsiDate(pc),
-                             Payer = cus.Name,
+                             Payer = pay.Name,
                              IsRecived = doc.IsReceived,
-                             Reciver = cus.Name,
+                             Reciver = rec.Name,
                              Price = doc.Price.ToString("N0")
                          }).AsQueryable();
 
@@ -1068,30 +1072,59 @@ namespace Infrastructure.Repositories
                 }
             }
             var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
-            int i = 1;
-            li.ForEach(t =>
+
+            for (int i = 1; i < li.Count; i++)
             {
-                t.Row = i++;
-                if (t.IsRecived)
-                {
-                    t.Reciver = "صندوق";
-                }
-                else
-                {
-                    t.Payer = "صندوق";
-                }
-            });
+                li[i - 1].Row = i;
+            }
+
             return new PagedResulViewModel<ChequeListDtos>(totalCount, pageCount, pageNum, li);
         }
 
-        public async Task<(string error, bool isSuccess)> CreateCheque(Guid customerId,
+        public async Task<(bool isSuccess, UpdateChequeDto itm)> GetChequeById(Guid docId)
+        {
+            var itm = await (from che in DbContext.Set<Cheque>()
+                                   .AsNoTracking()
+
+                             join doc in DbContext.Set<Document>()
+                                   .Where(d => d.Id == docId)
+                                                     on che.DocumetnId equals doc.Id
+
+                             join cus in DbContext.Set<Customer>()
+                                                     on doc.CustomerId equals cus.Id
+
+                             orderby doc.SubmitDate
+                             select new UpdateChequeDto
+                             {
+                                 SubmitStatus = che.SubmitStatus,
+                                 Id = doc.Id,
+                                 Price = doc.Price,
+                                 SubmitDate = doc.SubmitDate,
+                                 Accunt_Number = che.Accunt_Number,
+                                 Bank_Branch = che.Bank_Branch,
+                                 Bank_Name = che.Bank_Name,
+                                 Cheque_Number = che.Cheque_Number,
+                                 Cheque_Owner = che.Cheque_Owner,
+                                 CusName = cus.Name,
+                                 CusNum = cus.CusId.ToString(),
+                                 Status = che.Status,
+                                 Descripion = doc.Description,
+                                 DueDate = che.Due_Date,
+                                 CustomerId = doc.CustomerId
+                             }).FirstOrDefaultAsync();
+            if (itm == null)
+            {
+                return (false, new UpdateChequeDto());
+            }
+            return (true, itm);
+        }
+
+        public async Task<(string error, bool isSuccess)> CreateRecCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
-            ChequeStatus status,
             string? descripion,
             DateTime submitDate,
             DateTime dueDate,
             long price,
-            bool IsRecived,
             string cheque_Number,
             string accunt_Number,
             string bank_Name,
@@ -1105,9 +1138,50 @@ namespace Infrastructure.Repositories
                     return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false);
                 }
 
-                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, IsRecived)
+                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, true)
                 .AddCheque(new Cheque(submitStatus,
-                status,
+                ChequeStatus.InBox,
+                Guid.Empty,
+                customerId,
+                dueDate,
+                cheque_Number,
+                accunt_Number,
+                bank_Name,
+                bank_Branch,
+                cheque_Owner)));
+
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> CreatePayCheque(Guid customerId,
+            SubmitChequeStatus submitStatus,
+            string? descripion,
+            DateTime submitDate,
+            DateTime dueDate,
+            long price,
+            string cheque_Number,
+            string accunt_Number,
+            string bank_Name,
+            string bank_Branch,
+            string cheque_Owner)
+        {
+            try
+            {
+                if (dueDate.Date < submitDate.Date)
+                {
+                    return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false);
+                }
+
+                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, false)
+                .AddCheque(new Cheque(submitStatus,
+                ChequeStatus.Payed,
+                customerId,
+                Guid.Empty,
                 dueDate,
                 cheque_Number,
                 accunt_Number,
@@ -1138,9 +1212,11 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, false)
+                await Entities.AddAsync(new Document(customerId, price, DocumntType.GarantyCheque, PaymentType.Cheque, descripion, submitDate, false)
                 .AddCheque(new Cheque(submitStatus,
                 status,
+                Guid.Empty,
+                customerId,
                 dueDate,
                 cheque_Number,
                 accunt_Number,
@@ -1157,8 +1233,8 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> UpdateCheque(
             Guid docId,
+            Guid cusId,
             SubmitChequeStatus submitStatus,
-            ChequeStatus status,
             string? descripion,
             DateTime submitDate,
             DateTime? dueDate,
@@ -1180,11 +1256,19 @@ namespace Infrastructure.Repositories
             doc.Price = price;
             doc.Description = descripion;
             doc.SubmitDate = submitDate;
+            doc.CustomerId = cusId;
 
             var checque = doc.Cheques.First();
+            if (checque.Status == ChequeStatus.Payed)
+            {
+                checque.Reciver = cusId;
+            }
+            else
+            {
+                checque.Payer = cusId;
+            }
             checque.Accunt_Number = accunt_Number;
             checque.Bank_Branch = bank_Branch;
-            checque.Status = status;
             checque.Cheque_Owner = cheque_Owner;
             checque.Due_Date = dueDate;
             checque.Cheque_Number = cheque_Number;
@@ -1213,7 +1297,7 @@ namespace Infrastructure.Repositories
                 return new("چک مورد نظر یافت نشد!!!", false);
 
             var checque = doc.Cheques.First();
-            if (checque.Status != ChequeStatus.InBox || checque.Status != ChequeStatus.Rejected)
+            if (!(checque.Status == ChequeStatus.InBox || checque.Status == ChequeStatus.Rejected))
             {
                 return new("امکان پذیر نیست!!", false);
             }
@@ -1230,7 +1314,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, bool isSuccess)> ConvertChequeToReturn(Guid docId)
+        public async Task<(string error, bool isSuccess)> ConvertChequeToReject(Guid docId)
         {
             var doc = await Entities.Include(t => t.Cheques)
                .Include(s => s.SellRemittances)
@@ -1249,6 +1333,72 @@ namespace Infrastructure.Repositories
             try
             {
                 Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> AssignCheque(Guid docId,
+            Guid cusId,
+            DateTime transferDate,
+            string desc)
+        {
+            var doc = await Entities.Include(t => t.Cheques)
+                .Include(s => s.SellRemittances)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null || doc.Cheques.Count == 0)
+                return new("چک مورد نظر یافت نشد!!!", false);
+
+            var che = doc.Cheques.First();
+            if (che.Status != ChequeStatus.InBox)
+            {
+                return new("امکان پذیر نیست!!", false);
+            }
+
+            che.Status = ChequeStatus.Transferred;
+            che.TransferdDate = transferDate;
+            doc.RelatedDocuments.Add(new Document(cusId, doc.Price, DocumntType.Cheque, PaymentType.Cheque, desc, transferDate, false));
+
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> RemoveCheque(Guid docId)
+        {
+            var doc = await Entities.Include(t => t.Cheques)
+               .Include(s => s.RelatedDocuments)
+               .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null || doc.Cheques.Count == 0)
+                return new("چک مورد نظر یافت نشد!!!", false);
+
+            var checque = doc.Cheques.First();
+            //if (checque.Status != ChequeStatus.InBox || checque.Status != ChequeStatus.Rejected)
+            //{
+            //    return new("امکان پذیر نیست!!", false);
+            //}
+
+            doc.Cheques.Remove(checque);
+
+
+            try
+            {
+                foreach (var item in doc.RelatedDocuments)
+                {
+                    Entities.Remove(item);
+                }
+                Entities.Remove(doc);
             }
             catch (Exception ex)
             {

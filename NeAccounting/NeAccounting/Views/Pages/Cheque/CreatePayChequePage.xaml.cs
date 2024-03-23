@@ -1,6 +1,7 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
+using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages

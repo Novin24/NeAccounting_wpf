@@ -12,6 +12,7 @@ using NeAccounting.Services;
 using NeAccounting.ViewModels;
 using NeAccounting.ViewModels.Pages;
 using NeAccounting.Views.Pages;
+using NeAccounting.Views.Pages.Cheque;
 using NeAccounting.Views.Pages.Test;
 using NeAccounting.Windows;
 using NeApplication.Services;
@@ -122,6 +123,8 @@ namespace NeAccounting
 
                 services.AddTransient<CreateGuarantChequePage>();
 
+                services.AddTransient<UpdateChequePage>();
+                services.AddTransient<UpdateChequeViewModel>();
                 #endregion
 
                 #region Recived

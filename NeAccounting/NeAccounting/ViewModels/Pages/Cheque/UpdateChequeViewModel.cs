@@ -8,7 +8,7 @@ using Wpf.Ui;
 using Wpf.Ui.Controls;
 namespace NeAccounting.ViewModels
 {
-    public partial class CreatePayChequeViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+    public partial class UpdateChequeViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
     {
         private readonly ISnackbarService _snackbarService = snackbarService;
         private readonly INavigationService _navigationService = navigationService;
@@ -26,6 +26,30 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private Guid? _CusId;
 
+        /// <summary>
+        /// شناسه سند
+        /// </summary>
+        [ObservableProperty]
+        private Guid _docId;
+        
+        /// <summary>
+        /// وضعیت ثبت
+        /// </summary>
+        [ObservableProperty]
+        private Dictionary<Enum,string> _enumSource;
+
+        /// <summary>
+        /// نام مشتری
+        /// </summary>
+        [ObservableProperty]
+        private string _cusName;
+
+        /// <summary>
+        /// شماره مشتری
+        /// </summary>
+        [ObservableProperty]
+        private string _cusNum;
+
         [ObservableProperty]
         private DateTime? _submitDate = DateTime.Now;
 
@@ -36,6 +60,11 @@ namespace NeAccounting.ViewModels
         private DateTime? _dueDate = DateTime.Now;
 
         /// <summary>
+        /// نام صفحه
+        /// </summary>
+        [ObservableProperty]
+        private string _pageName= "ویرایش";
+
         /// <summary>
         /// مبلغ چک 
         /// </summary>
@@ -76,21 +105,21 @@ namespace NeAccounting.ViewModels
         public string Cheque_Owner { get; set; }
 
         /// <summary>
+        /// نوع ثبت سند 
+        /// </summary>
+        [ObservableProperty]
+        private SubmitChequeStatus _substatus = SubmitChequeStatus.NotRegister;
+
+        /// <summary>
         /// نوع سند 
         /// </summary>
         [ObservableProperty]
-        private SubmitChequeStatus _status = SubmitChequeStatus.Register;
+        private ChequeStatus _status ;
 
         public async void OnNavigatedTo()
         {
-            await InitializeViewModel();
         }
 
-        private async Task InitializeViewModel()
-        {
-            using UnitOfWork db = new();
-            Cuslist = await db.CustomerManager.GetDisplayUser();
-        }
 
         public void OnNavigatedFrom()
         {
@@ -155,11 +184,11 @@ namespace NeAccounting.ViewModels
 
             #region CreatePayDocumetn
             using UnitOfWork db = new();
-            var (e, s) = await db.DocumentManager.CreatePayCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
+            var (e, s) = await db.DocumentManager.UpdateCheque(DocId,CusId.Value, Substatus, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
             if (s)
             {
                 await db.SaveChangesAsync();
-                _snackbarService.Show("کاربر گرامی", $"ثبت چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+                _snackbarService.Show("کاربر گرامی", $"ویرایش چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
                 Type? pageType = NameToPageTypeConverter.Convert("Chequebook");
 
@@ -176,4 +205,5 @@ namespace NeAccounting.ViewModels
             #endregion
         }
     }
+
 }

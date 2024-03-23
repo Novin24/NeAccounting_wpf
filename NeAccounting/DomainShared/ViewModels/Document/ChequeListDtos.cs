@@ -21,4 +21,5 @@ namespace DomainShared.ViewModels.Document
         public bool IsEditable { get; set; } = false;
         public bool IsPrintable { get; set; } = false;
     }
+
 }

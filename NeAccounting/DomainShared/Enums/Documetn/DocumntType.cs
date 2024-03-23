@@ -38,6 +38,10 @@
         /// چک
         /// </summary>
         Cheque,
+        /// <summary>
+        /// چک ضمانتی
+        /// </summary>
+        GarantyCheque,
         Other
 
     }

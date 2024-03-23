@@ -154,11 +154,11 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
 
         #region CreatePayDocumetn
         using UnitOfWork db = new();
-        var (e, s) = await db.DocumentManager.CreateCheque(CusId.Value, Status, ChequeStatus.InBox, Description, SubmitDate.Value, DueDate.Value, Price.Value, true, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
+        var (e, s) = await db.DocumentManager.CreateRecCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
         if (s)
         {
             await db.SaveChangesAsync();
-            _snackbarService.Show("کاربر گرامی", $"ثبت سند با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+            _snackbarService.Show("کاربر گرامی", $"ثبت چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
             Type? pageType = NameToPageTypeConverter.Convert("Chequebook");
 

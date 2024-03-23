@@ -8,7 +8,7 @@ namespace Domain.NovinEntity.Documents
     public class Document : LocalEntity<Guid>
     {
         #region Navigation
-        public Guid CustomerId { get; private set; }
+        public Guid CustomerId { get;  set; }
         public Guid? DocumentId { get; private set; }
         public Document P_Document { get; set; }
         public List<Cheque> Cheques { get; set; }
