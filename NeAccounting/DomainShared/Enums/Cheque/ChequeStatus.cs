@@ -15,6 +15,11 @@ namespace DomainShared.Enums
         [Display(Name = "نقد شده")]
         Cashed,
         /// <summary>
+        /// برگشت شده
+        /// </summary>
+        [Display(Name = "برگشت شده")]
+        Rejected,
+        /// <summary>
         /// پرداختی
         /// </summary>
         [Display(Name = "پرداختی")]

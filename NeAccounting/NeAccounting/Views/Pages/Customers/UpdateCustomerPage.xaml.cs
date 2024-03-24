@@ -17,6 +17,7 @@ namespace NeAccounting.Views.Pages
             DataContext = this;
             InitializeComponent();
             txt_fullName.Focus();
+            CalculateTotal();
         }
 
         private void CashCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -25,36 +26,43 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            if (sender is CheckBox cmb)
+
+
+            if (DataContext is not UpdateCustomerPage cusPage)
             {
-                if (!cmb.IsChecked.Value)
-                {
-                    txt_CashGrantee.Value = 0;
-                    ViewModel.CashCredit = 0;
-                    txt_CashGrantee.IsEnabled = false;
-                    CalculateTotal();
-                    return;
-                }
-                txt_CashGrantee.IsEnabled = true;
+                return;
             }
+
+            if (!cusPage.ViewModel.HaveCashCredit)
+            {
+                txt_CashGrantee.Value = 0;
+                txt_CashGrantee.IsEnabled = false;
+                CalculateTotal();
+                return;
+            }
+            txt_CashGrantee.IsEnabled = true;
+
             CalculateTotal();
         }
 
         private void PromissoryCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsInitialized) { return; }
-            if (sender is CheckBox cmb)
+
+            if (DataContext is not UpdateCustomerPage cusPage)
             {
-                if (!cmb.IsChecked.Value)
-                {
-                    txt_Grantee.Value = 0;
-                    ViewModel.PromissoryNote = 0;
-                    txt_Grantee.IsEnabled = false;
-                    CalculateTotal();
-                    return;
-                }
-                txt_Grantee.IsEnabled = true;
+                return;
             }
+
+            if (!cusPage.ViewModel.HavePromissoryNote)
+            {
+                txt_Grantee.Value = 0;
+                txt_Grantee.IsEnabled = false;
+                CalculateTotal();
+                return;
+            }
+            txt_Grantee.IsEnabled = true;
+
             CalculateTotal();
         }
 
@@ -65,10 +73,15 @@ namespace NeAccounting.Views.Pages
 
         private void CalculateTotal()
         {
-            var cash = txt_CashGrantee.Value == null ? 0 : txt_CashGrantee.Value;
-            var promissory = txt_Grantee.Value == null ? 0 : txt_Grantee.Value;
+            if (DataContext is not UpdateCustomerPage cusPage)
+            {
+                return;
+            }
+            var cash = cusPage.ViewModel.CashCredit == null ? 0 : cusPage.ViewModel.CashCredit;
+            var promissory = cusPage.ViewModel.PromissoryNote == null ? 0 : cusPage.ViewModel.PromissoryNote;
+            var cheque = cusPage.ViewModel.ChequeCredit == null ? 0 : cusPage.ViewModel.ChequeCredit;
 
-            txt_total.Text = String.Format("{0:N0}", cash + promissory);
+            txt_total.Text = String.Format("{0:N0}", cash + promissory + cheque);
         }
     }
 }

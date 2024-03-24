@@ -38,7 +38,10 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private bool _haveCashCredit = false;
-        
+
+        [ObservableProperty]
+        private bool _haveChequeCredit = false;
+
         [ObservableProperty]
         private bool _havePromissoryNote = false;
 
@@ -47,12 +50,9 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private long? _cashCredit = 0;
-        
+
         [ObservableProperty]
         private long? _chequeCredit = 0;
-        
-        [ObservableProperty]
-        private long? _totalCredit = 0;
 
 
 
@@ -91,10 +91,14 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
+            PromissoryNote ??= 0;
+            CashCredit ??= 0;
+
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.CustomerManager.UpdateCustomer(Id,FullName, Mobile, CashCredit.Value, PromissoryNote.Value, NationalCode, Address, (CustomerType)CusType, HavePromissoryNote, HaveCashCredit, Buyer, Seller);
+                var (error, isSuccess) = await db.CustomerManager.UpdateCustomer(Id, FullName, Mobile, CashCredit.Value,
+                    PromissoryNote.Value, NationalCode, Address, (CustomerType)CusType, HavePromissoryNote, HaveCashCredit, Buyer, Seller);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

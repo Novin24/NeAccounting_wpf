@@ -204,10 +204,22 @@ namespace NeApplication.IRepositoryies
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 
+        Task<(bool isSuccess, UpdateChequeDto itm)> GetChequeById(Guid docId);
 
-        Task<(string error, bool isSuccess)> CreateCheque(Guid customerId,
+        Task<(string error, bool isSuccess)> CreateRecCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
-            ChequeStatus status,
+            string? descripion,
+            DateTime submitDate,
+            DateTime dueDate,
+            long price,
+            string cheque_Number,
+            string accunt_Number,
+            string bank_Name,
+            string bank_Branch,
+            string cheque_Owner);
+
+        Task<(string error, bool isSuccess)> CreatePayCheque(Guid customerId,
+            SubmitChequeStatus submitStatus,
             string? descripion,
             DateTime submitDate,
             DateTime dueDate,
@@ -220,7 +232,6 @@ namespace NeApplication.IRepositoryies
 
         Task<(string error, bool isSuccess)> CreateGarantyCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
-            ChequeStatus status,
             string? descripion,
             DateTime submitDate,
             DateTime? dueDate,
@@ -233,8 +244,8 @@ namespace NeApplication.IRepositoryies
 
         Task<(string error, bool isSuccess)> UpdateCheque(
             Guid docId,
+            Guid cusId,
             SubmitChequeStatus submitStatus,
-            ChequeStatus status,
             string? descripion,
             DateTime submitDate,
             DateTime? dueDate,
@@ -244,6 +255,17 @@ namespace NeApplication.IRepositoryies
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
+
+        Task<(string error, bool isSuccess)> ConvertChequeToCash(Guid docId);
+
+        Task<(string error, bool isSuccess)> ConvertChequeToReject(Guid docId);
+
+        Task<(string error, bool isSuccess)> AssignCheque(Guid docId,
+            Guid cusId,
+            DateTime transferDate,
+            string desc);
+
+        Task<(string error, bool isSuccess)> RemoveCheque(Guid docId);
         #endregion
     }
 }

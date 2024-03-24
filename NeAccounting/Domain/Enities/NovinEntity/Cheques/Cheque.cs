@@ -9,6 +9,9 @@ namespace Domain.NovinEntity.Cheques
         #region Navigation
         public Guid DocumetnId { get; set; }
         public Document Document { get; set; }
+
+        public Guid Payer { get; set; }
+        public Guid Reciver { get; set; }
         #endregion
 
         #region Property
@@ -71,6 +74,8 @@ namespace Domain.NovinEntity.Cheques
 
         public Cheque(SubmitChequeStatus submitStatus,
             ChequeStatus chequeStatus,
+            Guid reciver,
+            Guid payer,
             DateTime? dueDate,
             string cheque_Number,
             string accunt_Number,
@@ -78,6 +83,8 @@ namespace Domain.NovinEntity.Cheques
             string bank_Branch,
             string cheque_Owner)
         {
+            Payer = payer;
+            Reciver = reciver;
             Bank_Name = bank_Name;
             Bank_Branch = bank_Branch;
             Due_Date = dueDate;

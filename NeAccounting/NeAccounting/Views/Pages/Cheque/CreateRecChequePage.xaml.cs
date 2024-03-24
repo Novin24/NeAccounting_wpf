@@ -1,28 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using DomainShared.Enums;
+using DomainShared.Utilities;
+using DomainShared.ViewModels;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for CreateRecCheque.xaml
     /// </summary>
-    public partial class CreateRecChequePage : Page
+    public partial class CreateRecChequePage : INavigableView<CreateRecChequeViewModel>
     {
-        public CreateRecChequePage()
+        public CreateRecChequeViewModel ViewModel { get; }
+        public CreateRecChequePage(CreateRecChequeViewModel viewModel)
         {
+            ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_Name.Focus();
+            Cmb_Status.ItemsSource = SubmitChequeStatus.Register.ToEnumDictionary();
+        }
+
+        private void Txt_Name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            if (!IsInitialized)
+                return;
+            var user = (SuggestBoxViewModel<Guid, long>)args.SelectedItem;
+            ViewModel.CusId = user.Id;
+            lbl_cusId.Text = user.UniqNumber.ToString();
         }
     }
 }

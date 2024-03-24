@@ -9,16 +9,14 @@ using NeApplication.IRepositoryies;
 
 namespace Infrastructure.Repositories
 {
-    public class CustomerManager : Repository<Customer>, ICustomerManager
+    public class CustomerManager(NovinDbContext context) : Repository<Customer>(context), ICustomerManager
     {
-        public CustomerManager(NovinDbContext context) : base(context) { }
-
-
         public Task<List<SuggestBoxViewModel<Guid, long>>> GetDisplayUser(bool includeDeArchive = false, bool? seller = null, bool? buyer = null)
         {
             return TableNoTracking.Where(t => seller == null || t.Seller)
                 .Where(b => buyer == null || b.Buyer)
                 .Where(b => includeDeArchive || b.IsActive)
+                .Where(c => c.Id != Guid.Empty)
                 .Select(x => new SuggestBoxViewModel<Guid, long>
                 {
                     Id = x.Id,
@@ -33,6 +31,7 @@ namespace Infrastructure.Repositories
                 .Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name))
                 .Where(x => string.IsNullOrEmpty(nationalCode) || x.NationalCode.Contains(nationalCode))
                 .Where(x => string.IsNullOrEmpty(mobile) || x.Mobile.Contains(mobile))
+                .Where(c => c.Id != Guid.Empty)
                 .Select(x => new CustomerListDto
                 {
                     Id = x.Id,
@@ -48,8 +47,9 @@ namespace Infrastructure.Repositories
                     HaveCashCredit = x.HaveCashCredit,
                     HaveChequeGuarantee = x.HaveChequeGuarantee,
                     HavePromissoryNote = x.HavePromissoryNote,
+                    UniqNumber = x.CusId,
                     PromissoryNote = x.PromissoryNote,
-                    TotalCredit = x.TotalCredit,
+                    TotalCredit = x.TotalCredit.ToString("N0"),
                     CusTypeName = x.Type.ToDisplay(DisplayProperty.Name),
                     CusType = x.Type,
                 }).ToListAsync();
@@ -183,7 +183,7 @@ namespace Infrastructure.Repositories
                 HaveChequeGuarantee = mt.HaveChequeGuarantee,
                 HavePromissoryNote = mt.HavePromissoryNote,
                 PromissoryNote = mt.PromissoryNote,
-                TotalCredit = mt.TotalCredit,
+                TotalCredit = mt.TotalCredit.ToString("N0"),
                 CusType = mt.Type,
             });
         }
