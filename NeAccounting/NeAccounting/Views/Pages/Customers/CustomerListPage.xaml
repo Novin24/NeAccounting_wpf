@@ -4,9 +4,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages" 
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       xmlns:cnt="clr-namespace:NeAccounting.Helpers"
+      xmlns:s="clr-namespace:System;assembly=netstandard"
       mc:Ignorable="d"
       d:DesignHeight="800"
       d:DesignWidth="1200"
@@ -16,10 +17,10 @@
       Title="Customer"
       x:Name="root">
     <Page.Resources>
-        <cnt:Converters x:Key="ConvertHeight"/>
+        <cnt:Converters x:Key="ConvertHeight" />
     </Page.Resources>
 
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -58,14 +59,20 @@
             <Border.Style>
                 <Style TargetType="Border">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}" Value="false">
-                            <Setter Property="MaxHeight" Value="770"/>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}"
+                                     Value="false">
+                            <Setter Property="MaxHeight"
+                                    Value="770" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}" Value="false">
-                            <Setter Property="MaxHeight" Value="720"/>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}"
+                                     Value="false">
+                            <Setter Property="MaxHeight"
+                                    Value="720" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}" Value="false">
-                            <Setter Property="MaxHeight" Value="670"/>
+                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}"
+                                     Value="false">
+                            <Setter Property="MaxHeight"
+                                    Value="670" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -77,7 +84,7 @@
 
                 </Grid.RowDefinitions>
                 <nu:HeaderPack NamePpage="مشتری"
-                               Margin="25 0"/>
+                               Margin="25 0" />
 
                 <Border Grid.Row="1"
                         Grid.ColumnSpan="2"
@@ -104,10 +111,10 @@
                               Margin="0 ,5,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
-                                <ColumnDefinition Width=".8*"/>
-                                <ColumnDefinition Width=".9*"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width=".8*" />
+                                <ColumnDefinition Width=".9*" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Margin="0 4 4 0 ">
 
@@ -204,6 +211,10 @@
                                   CanUserResizeRows="False"
                                   FontFamily="Calibri"
                                   AutoGenerateColumns="False">
+
+                            <DataGrid.Resources>
+                                <s:String x:Key="format">{0:N0}</s:String>
+                            </DataGrid.Resources>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="نام مشتری"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
@@ -228,7 +239,7 @@
                                 <DataGridTextColumn Header="اعتبار"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding TotalCredit}"
+                                                    Binding="{Binding TotalCredit, StringFormat={StaticResource format}}"
                                                     Width="*" />
                                 <DataGridTemplateColumn Header="عملیات"
                                                         Width="110"
@@ -240,13 +251,19 @@
                                                 <Button  Margin="5"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                         Padding="7,5" ToolTip="ویرایش">
+                                                         Padding="7,5">
+                                                    <Button.ToolTip>
+                                                        <TextBlock FontSize="14">ویرایش</TextBlock>
+                                                    </Button.ToolTip>
                                                     <ui:SymbolIcon Symbol="Pen16" />
                                                 </Button>
                                                 <Button  Margin="2"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
-                                                         Command="{Binding Path=DataContext.ViewModel.UpdateCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                         Padding="7,5" ToolTip="افزودن چک ضمانتی">
+                                                         Command="{Binding Path=DataContext.ViewModel.AddGaranteeChequeCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                         Padding="7,5">
+                                                    <Button.ToolTip>
+                                                        <TextBlock FontSize="14">ثبت چک ضمانتی</TextBlock>
+                                                    </Button.ToolTip>
                                                     <ui:SymbolIcon Symbol=" TableCellEdit16" />
                                                 </Button>
                                                 <CheckBox IsChecked="{Binding IsActive}"

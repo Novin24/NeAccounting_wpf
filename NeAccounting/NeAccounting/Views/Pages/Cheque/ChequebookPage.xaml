@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:s="clr-namespace:System;assembly=netstandard"
       mc:Ignorable="d"
       d:DesignHeight="800"
       d:DesignWidth="1200"
@@ -266,6 +267,10 @@
                                   ItemsSource="{Binding ViewModel.InvList}"
                                   FontFamily="Calibri"
                                   AutoGenerateColumns="False">
+                            <DataGrid.Resources>
+                                <s:String x:Key="format">{0:N0}</s:String>
+                                <BooleanToVisibilityConverter x:Key="BoolToVis" />
+                            </DataGrid.Resources>
                             <DataGrid.Columns>
 
                                 <DataGridTextColumn Header="#"
@@ -314,6 +319,7 @@
                                                         HorizontalAlignment="Center">
                                                 <Button  Margin="4"
                                                          Padding="7,5"
+                                                         Visibility="{Binding IsEditable,  Converter={StaticResource BoolToVis}}"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                          ToolTip="ویرایش">
@@ -321,6 +327,7 @@
                                                 </Button>
                                                 <Button Margin="4"
                                                         Padding="7,5"
+                                                        Visibility="{Binding IsDeletable,  Converter={StaticResource BoolToVis}}"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
                                                         Command="{Binding Path=DataContext.ViewModel.RemoveDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                         ToolTip="حذف">
@@ -328,6 +335,7 @@
                                                 </Button>
                                                 <Button Margin="4"
                                                         Padding="7,5"
+                                                        Visibility="{Binding IsCashable,  Converter={StaticResource BoolToVis}}"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
                                                         Command="{Binding Path=DataContext.ViewModel.ConvertToCashCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                         ToolTip="نقد کردن">
@@ -335,6 +343,7 @@
                                                 </Button>
                                                 <Button Margin="4"
                                                         Padding="7,5"
+                                                        Visibility="{Binding IsRejectble,  Converter={StaticResource BoolToVis}}"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
                                                         Command="{Binding Path=DataContext.ViewModel.RejectsCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                         ToolTip="برگشت چک">
@@ -342,6 +351,7 @@
                                                 </Button>
                                                 <Button Margin="4"
                                                         Padding="7,5"
+                                                        Visibility="{Binding IsTransble,  Converter={StaticResource BoolToVis}}"
                                                         ToolTip="واگذاری چک دریافتی">
                                                     <ui:SymbolIcon Symbol="ArrowSync20" />
                                                 </Button>

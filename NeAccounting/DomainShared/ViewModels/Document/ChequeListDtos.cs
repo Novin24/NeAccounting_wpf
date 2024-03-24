@@ -17,9 +17,11 @@ namespace DomainShared.ViewModels.Document
         public string? StatusName { get; set; }
         public string? Price { get; set; }
         public ChequeStatus Status { get; set; }
-        public bool IsDeletable { get; set; } = false;
-        public bool IsEditable { get; set; } = false;
-        public bool IsPrintable { get; set; } = false;
+        public bool IsDeletable { get; set; }
+        public bool IsEditable { get; set; }
+        public bool IsCashable { get; set; } = false;
+        public bool IsRejectble { get; set; } = false;
+        public bool IsTransble{ get; set; } = false;
     }
 
 }

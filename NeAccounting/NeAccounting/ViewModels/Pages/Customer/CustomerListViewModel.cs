@@ -123,11 +123,11 @@ namespace NeAccounting.ViewModels
                 Address = cus.Address,
                 CashCredit = cus.CashCredit,
                 ChequeCredit = cus.ChequeCredit,
-                TotalCredit = cus.TotalCredit,
                 PromissoryNote = cus.PromissoryNote,
                 HavePromissoryNote = cus.HavePromissoryNote,
                 CusType = (byte)cus.CusType,
                 HaveCashCredit = cus.HaveCashCredit,
+                HaveChequeCredit = cus.HaveChequeGuarantee,
                 Mobile = cus.Mobile,
                 NationalCode = cus.NationalCode
             });
@@ -139,7 +139,7 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private void OnAddGaranteeCheque(Guid parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("AddCheque");
+            Type? pageType = NameToPageTypeConverter.Convert("CreateGuarantCheque");
 
             if (pageType == null)
             {
@@ -147,14 +147,16 @@ namespace NeAccounting.ViewModels
             }
             var servise = _navigationService.GetNavigationControl();
 
-            //var cus = List.First(t => t.Id == parameter);
+            var cus = List.First(t => t.Id == parameter);
 
-            //var context = new AddChequePage(new Pages.AddChequeViewModel(_snackbarService, _navigationService)
-            //{
+            var context = new CreateGuarantChequePage(new CreateGuarantChequeViewModel(_snackbarService, _navigationService)
+            {
+                CusId = cus.Id,
+                CusNum = cus.UniqNumber.ToString(),
+                CusName = cus.Name,
+            });
 
-            //});
-
-            //servise.Navigate(pageType, context);
+            servise.Navigate(pageType, context);
         }
         [RelayCommand]
         private async Task OnActive(Guid id)

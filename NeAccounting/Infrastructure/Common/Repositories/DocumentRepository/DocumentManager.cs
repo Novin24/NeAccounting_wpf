@@ -1,4 +1,5 @@
-﻿using Domain.Enities.NovinEntity.Remittances;
+﻿using Castle.Core.Resource;
+using Domain.Enities.NovinEntity.Remittances;
 using Domain.NovinEntity.Cheques;
 using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
@@ -13,6 +14,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
@@ -1056,6 +1058,8 @@ namespace Infrastructure.Repositories
                              CheckNumber = che.Cheque_Number,
                              DueShamsiDate = che.Due_Date.ToShamsiDate(pc),
                              Payer = pay.Name,
+                             IsEditable = true,
+                             IsDeletable = true,
                              IsRecived = doc.IsReceived,
                              Reciver = rec.Name,
                              Price = doc.Price.ToString("N0")
@@ -1073,9 +1077,24 @@ namespace Infrastructure.Repositories
             }
             var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
 
-            for (int i = 1; i < li.Count; i++)
+            for (int i = 1; i <= li.Count; i++)
             {
                 li[i - 1].Row = i;
+                if (li[i - 1].Status == ChequeStatus.Transferred)
+                {
+                    li[i - 1].IsEditable = false;
+                }
+
+                if (li[i - 1].Status == ChequeStatus.Rejected || li[i - 1].Status == ChequeStatus.InBox)
+                {
+                    li[i - 1].IsCashable = true;
+                }
+
+                if (li[i - 1].Status == ChequeStatus.InBox)
+                {
+                    li[i - 1].IsRejectble = true;
+                    li[i - 1].IsTransble = true;
+                }
             }
 
             return new PagedResulViewModel<ChequeListDtos>(totalCount, pageCount, pageNum, li);
@@ -1199,7 +1218,6 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> CreateGarantyCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
-            ChequeStatus status,
             string? descripion,
             DateTime submitDate,
             DateTime? dueDate,
@@ -1210,11 +1228,19 @@ namespace Infrastructure.Repositories
             string bank_Branch,
             string cheque_Owner)
         {
+            var customer = await DbContext.Set<Customer>().FirstOrDefaultAsync(t => t.Id == customerId);
+            if (customer == null)
+            {
+                return new("مشتری مورد نظر یافت نشد!!!", false);
+            }
+            customer.HaveChequeGuarantee = true;
+            customer.ChequeCredit += price;
+            customer.TotalCredit += price;
             try
             {
-                await Entities.AddAsync(new Document(customerId, price, DocumntType.GarantyCheque, PaymentType.Cheque, descripion, submitDate, false)
+                await Entities.AddAsync(new Document(customerId, price, DocumntType.GarantyCheque, PaymentType.Cheque, descripion, submitDate, true)
                 .AddCheque(new Cheque(submitStatus,
-                status,
+                ChequeStatus.Guarantee,
                 Guid.Empty,
                 customerId,
                 dueDate,
@@ -1223,6 +1249,8 @@ namespace Infrastructure.Repositories
                 bank_Name,
                 bank_Branch,
                 cheque_Owner)));
+
+                DbContext.Set<Customer>().Update(customer);
             }
             catch (Exception ex)
             {
@@ -1250,34 +1278,60 @@ namespace Infrastructure.Repositories
                 .Include(s => s.SellRemittances)
                 .FirstOrDefaultAsync(t => t.Id == docId);
 
+
             if (doc == null || doc.Cheques.Count == 0)
                 return new("چک مورد نظر یافت نشد!!!", false);
 
-            doc.Price = price;
-            doc.Description = descripion;
-            doc.SubmitDate = submitDate;
-            doc.CustomerId = cusId;
-
             var checque = doc.Cheques.First();
-            if (checque.Status == ChequeStatus.Payed)
-            {
-                checque.Reciver = cusId;
-            }
-            else
-            {
-                checque.Payer = cusId;
-            }
-            checque.Accunt_Number = accunt_Number;
-            checque.Bank_Branch = bank_Branch;
-            checque.Cheque_Owner = cheque_Owner;
-            checque.Due_Date = dueDate;
-            checque.Cheque_Number = cheque_Number;
-            checque.Bank_Name = bank_Name;
-            checque.SubmitStatus = submitStatus;
 
             try
             {
+                if (checque.Status == ChequeStatus.Guarantee && doc.Price != price)
+                {
+                    var customer = await DbContext.Set<Customer>().FirstOrDefaultAsync(t => t.Id == cusId);
+                    if (customer == null)
+                    {
+                        return new("مشتری مورد نظر یافت نشد!!!", false);
+                    }
+
+                    if (doc.Price > price)
+                    {
+                        customer.ChequeCredit -= (doc.Price - price);
+                        customer.TotalCredit -= (doc.Price - price);
+                    }
+
+                    if (doc.Price < price)
+                    {
+                        customer.ChequeCredit += (price - doc.Price);
+                        customer.TotalCredit += (price - doc.Price);
+                    }
+                    DbContext.Set<Customer>().Update(customer);
+                }
+
+                doc.Price = price;
+                doc.Description = descripion;
+                doc.SubmitDate = submitDate;
+                doc.CustomerId = cusId;
+
+                if (checque.Status == ChequeStatus.Payed)
+                {
+                    checque.Reciver = cusId;
+                }
+                else
+                {
+                    checque.Payer = cusId;
+                }
+
+                checque.Accunt_Number = accunt_Number;
+                checque.Bank_Branch = bank_Branch;
+                checque.Cheque_Owner = cheque_Owner;
+                checque.Due_Date = dueDate;
+                checque.Cheque_Number = cheque_Number;
+                checque.Bank_Name = bank_Name;
+                checque.SubmitStatus = submitStatus;
+
                 Entities.Update(doc);
+
             }
             catch (Exception ex)
             {
@@ -1388,12 +1442,28 @@ namespace Infrastructure.Repositories
             //{
             //    return new("امکان پذیر نیست!!", false);
             //}
-
-            doc.Cheques.Remove(checque);
-
-
             try
             {
+                if (checque.Status == ChequeStatus.Guarantee)
+                {
+                    var customer = await DbContext.Set<Customer>().FirstOrDefaultAsync(t => t.Id == doc.CustomerId);
+                    if (customer == null)
+                    {
+                        return new("مشتری مورد نظر یافت نشد!!!", false);
+                    }
+                    customer.ChequeCredit -= doc.Price;
+                    customer.TotalCredit -= doc.Price;
+
+                    if (customer.ChequeCredit == 0)
+                    {
+                        customer.HaveChequeGuarantee = false;
+                    }
+                    DbContext.Set<Customer>().Update(customer);
+                }
+
+                doc.Cheques.Remove(checque);
+
+
                 foreach (var item in doc.RelatedDocuments)
                 {
                     Entities.Remove(item);

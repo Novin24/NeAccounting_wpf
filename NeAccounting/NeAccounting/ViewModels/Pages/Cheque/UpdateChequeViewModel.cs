@@ -31,12 +31,12 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private Guid _docId;
-        
+
         /// <summary>
         /// وضعیت ثبت
         /// </summary>
         [ObservableProperty]
-        private Dictionary<Enum,string> _enumSource;
+        private Dictionary<Enum, string> _enumSource;
 
         /// <summary>
         /// نام مشتری
@@ -63,7 +63,7 @@ namespace NeAccounting.ViewModels
         /// نام صفحه
         /// </summary>
         [ObservableProperty]
-        private string _pageName= "ویرایش";
+        private string _pageName = "ویرایش";
 
         /// <summary>
         /// مبلغ چک 
@@ -114,7 +114,7 @@ namespace NeAccounting.ViewModels
         /// نوع سند 
         /// </summary>
         [ObservableProperty]
-        private ChequeStatus _status ;
+        private ChequeStatus _status;
 
         public async void OnNavigatedTo()
         {
@@ -145,7 +145,13 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
-            if (DueDate == null)
+            if (Status == ChequeStatus.Guarantee && Substatus != SubmitChequeStatus.NoNeedRegister && DueDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ سررسید"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
+            if (Status != ChequeStatus.Guarantee && DueDate == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ سررسید"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -184,7 +190,7 @@ namespace NeAccounting.ViewModels
 
             #region CreatePayDocumetn
             using UnitOfWork db = new();
-            var (e, s) = await db.DocumentManager.UpdateCheque(DocId,CusId.Value, Substatus, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
+            var (e, s) = await db.DocumentManager.UpdateCheque(DocId, CusId.Value, Substatus, Description, SubmitDate.Value, DueDate, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
             if (s)
             {
                 await db.SaveChangesAsync();

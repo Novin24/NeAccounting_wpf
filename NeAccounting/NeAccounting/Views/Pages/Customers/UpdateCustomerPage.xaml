@@ -9,8 +9,8 @@
       d:DataContext="{d:DesignInstance local:UpdateCustomerPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
-      d:DesignHeight="800"
       d:DesignWidth="1200"
+      d:DesignHeight="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="UpdateCustomerPage">
@@ -134,8 +134,8 @@
                                                       FontSize="14"
                                                       FontFamily="Calibri" />
                                     </StackPanel>
-                                    <StackPanel Margin="20 2 20 0 "
-                                                Grid.Row="1">
+                                    <StackPanel Grid.Row="1"
+                                                Margin="20 2 20 0 ">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    Text="نوع مشتری"
@@ -190,22 +190,19 @@
                                                    Text="آدرس"
                                                    Margin="1 0 0 0 " />
                                         <ui:TextBox FontSize="14"
-                                                    TextAlignment="Center"
                                                     TabIndex="4"
                                                     Height="90"
                                                     Text="{Binding ViewModel.Address, Mode=TwoWay}"
                                                     FontFamily="Calibri"
                                                     Margin="0 4 0 0" />
                                     </StackPanel>
-
-                                    <Separator Grid.Row="5"
+                                    <Separator Grid.Row="4"
                                                VerticalAlignment="Top"
                                                Background="Gray"
                                                Grid.ColumnSpan="2"
                                                Margin="10 0"
                                                Height="1.5" />
-
-                                    <CheckBox Grid.Row="5"
+                                    <CheckBox Grid.Row="4"
                                               Margin="0,15"
                                               HorizontalAlignment="Center"
                                               FontFamily="Calibri"
@@ -214,30 +211,23 @@
                                               Unchecked="CashCheckBox_Checked"
                                               IsChecked="{Binding ViewModel.HaveCashCredit, Mode=TwoWay}"
                                               FlowDirection="LeftToRight">اعتبار نقدی</CheckBox>
-
-                                    <ui:NumberBox Grid.Row="5"
+                                    <nu:MoneyPack Grid.Row="4"
                                                   Grid.Column="1"
                                                   FontSize="14"
-                                                  TextAlignment="Center"
-                                                  FlowDirection="LeftToRight"
                                                   LostFocus="Txt_Grantee_LostFocus"
                                                   IsEnabled="False"
                                                   x:Name="txt_CashGrantee"
-                                                  SpinButtonPlacementMode="Hidden"
                                                   Value="{Binding ViewModel.CashCredit, Mode=TwoWay}"
                                                   TabIndex="8"
                                                   FontFamily="Calibri"
                                                   Margin="20 0 20 0" />
-
-
-                                    <Separator Grid.Row="6"
+                                    <Separator Grid.Row="5"
                                                VerticalAlignment="Top"
                                                Background="Gray"
                                                Grid.ColumnSpan="2"
                                                Margin="10 0"
                                                Height="1.5" />
-
-                                    <CheckBox Grid.Row="6"
+                                    <CheckBox Grid.Row="5"
                                               Margin="0 15"
                                               TabIndex="9"
                                               HorizontalAlignment="Center"
@@ -246,18 +236,41 @@
                                               IsChecked="{Binding ViewModel.HavePromissoryNote, Mode=TwoWay}"
                                               FontFamily="Calibri"
                                               FlowDirection="LeftToRight">اعتبار سفته</CheckBox>
-
-                                    <ui:NumberBox Grid.Row="6"
+                                    <nu:MoneyPack Grid.Row="5"
                                                   Grid.Column="1"
                                                   FontSize="14"
                                                   TabIndex="10"
                                                   LostFocus="Txt_Grantee_LostFocus"
-                                                  FlowDirection="LeftToRight"
                                                   x:Name="txt_Grantee"
                                                   IsEnabled="False"
-                                                  TextAlignment="Center"
                                                   Value="{Binding ViewModel.PromissoryNote, Mode=TwoWay}"
-                                                  SpinButtonPlacementMode="Hidden"
+                                                  FontFamily="Calibri"
+                                                  Margin="20 0" />
+                                    
+                                    <Separator Grid.Row="6"
+                                               VerticalAlignment="Top"
+                                               Background="Gray"
+                                               Grid.ColumnSpan="2"
+                                               Margin="10 0"
+                                               Height="1.5" />
+                                    <CheckBox Grid.Row="6"
+                                              Margin="0 15"
+                                              TabIndex="9"
+                                              HorizontalAlignment="Center"
+                                              IsEnabled="False"
+                                              Checked="PromissoryCheckBox_Checked"
+                                              Unchecked="PromissoryCheckBox_Checked"
+                                              IsChecked="{Binding ViewModel.HaveChequeCredit}"
+                                              FontFamily="Calibri"
+                                              FlowDirection="LeftToRight">اعتبار چک</CheckBox>
+                                    <nu:MoneyPack Grid.Row="6"
+                                                  Grid.Column="1"
+                                                  FontSize="14"
+                                                  TabIndex="10"
+                                                  LostFocus="Txt_Grantee_LostFocus"
+                                                  x:Name="txt_Cheque_Grantee"
+                                                  IsEnabled="False"
+                                                  Value="{Binding ViewModel.ChequeCredit}"
                                                   FontFamily="Calibri"
                                                   Margin="20 0" />
 
@@ -271,7 +284,6 @@
                                                     TextAlignment="Center"
                                                     x:Name="txt_total"
                                                     IsEnabled="False"
-                                                    Text="{Binding ViewModel.FullName , Mode=TwoWay}"
                                                     FontSize="14"
                                                     FontFamily="Calibri" />
                                     </StackPanel>

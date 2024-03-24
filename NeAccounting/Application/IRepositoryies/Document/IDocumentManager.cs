@@ -232,7 +232,6 @@ namespace NeApplication.IRepositoryies
 
         Task<(string error, bool isSuccess)> CreateGarantyCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
-            ChequeStatus status,
             string? descripion,
             DateTime submitDate,
             DateTime? dueDate,

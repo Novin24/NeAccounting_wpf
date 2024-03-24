@@ -47,8 +47,9 @@ namespace Infrastructure.Repositories
                     HaveCashCredit = x.HaveCashCredit,
                     HaveChequeGuarantee = x.HaveChequeGuarantee,
                     HavePromissoryNote = x.HavePromissoryNote,
+                    UniqNumber = x.CusId,
                     PromissoryNote = x.PromissoryNote,
-                    TotalCredit = x.TotalCredit,
+                    TotalCredit = x.TotalCredit.ToString("N0"),
                     CusTypeName = x.Type.ToDisplay(DisplayProperty.Name),
                     CusType = x.Type,
                 }).ToListAsync();
@@ -182,7 +183,7 @@ namespace Infrastructure.Repositories
                 HaveChequeGuarantee = mt.HaveChequeGuarantee,
                 HavePromissoryNote = mt.HavePromissoryNote,
                 PromissoryNote = mt.PromissoryNote,
-                TotalCredit = mt.TotalCredit,
+                TotalCredit = mt.TotalCredit.ToString("N0"),
                 CusType = mt.Type,
             });
         }
