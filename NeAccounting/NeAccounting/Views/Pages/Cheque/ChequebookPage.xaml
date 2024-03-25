@@ -321,38 +321,54 @@
                                                          Padding="7,5"
                                                          Visibility="{Binding IsEditable,  Converter={StaticResource BoolToVis}}"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
-                                                         Command="{Binding Path=DataContext.ViewModel.UpdateDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                         ToolTip="ویرایش">
+                                                         Command="{Binding Path=DataContext.ViewModel.UpdateDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}">
                                                     <ui:SymbolIcon Symbol="Pen16" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="ویرایش"
+                                                                   FontSize="14" />
+                                                    </Button.ToolTip>
                                                 </Button>
                                                 <Button Margin="4"
                                                         Padding="7,5"
                                                         Visibility="{Binding IsDeletable,  Converter={StaticResource BoolToVis}}"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
-                                                        Command="{Binding Path=DataContext.ViewModel.RemoveDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                        ToolTip="حذف">
+                                                        Command="{Binding Path=DataContext.ViewModel.RemoveDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}">
                                                     <ui:SymbolIcon Symbol="Delete16" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="حذف"
+                                                                   FontSize="14" />
+                                                    </Button.ToolTip>
                                                 </Button>
                                                 <Button Margin="4"
                                                         Padding="7,5"
                                                         Visibility="{Binding IsCashable,  Converter={StaticResource BoolToVis}}"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
-                                                        Command="{Binding Path=DataContext.ViewModel.ConvertToCashCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                        ToolTip="نقد کردن">
+                                                        Command="{Binding Path=DataContext.ViewModel.ConvertToCashCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}">
                                                     <ui:SymbolIcon Symbol="Money20" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="نقد کردن"
+                                                                   FontSize="14" />
+                                                    </Button.ToolTip>
                                                 </Button>
                                                 <Button Margin="4"
                                                         Padding="7,5"
                                                         Visibility="{Binding IsRejectble,  Converter={StaticResource BoolToVis}}"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
-                                                        Command="{Binding Path=DataContext.ViewModel.RejectsCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                        ToolTip="برگشت چک">
+                                                        Command="{Binding Path=DataContext.ViewModel.RejectsCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}">
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="برگشت چک"
+                                                                   FontSize="14" />
+                                                    </Button.ToolTip>
                                                     <ui:SymbolIcon Symbol="ArrowRedo20" />
                                                 </Button>
                                                 <Button Margin="4"
                                                         Padding="7,5"
                                                         Visibility="{Binding IsTransble,  Converter={StaticResource BoolToVis}}"
-                                                        ToolTip="واگذاری چک دریافتی">
+                                                        CommandParameter="{Binding Id , Mode=OneWay}"
+                                                        Command="{Binding Path=DataContext.ViewModel.TransferCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}">
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="واگذاری چک دریافتی" FontSize="14"/>
+                                                    </Button.ToolTip>
                                                     <ui:SymbolIcon Symbol="ArrowSync20" />
                                                 </Button>
                                             </StackPanel>

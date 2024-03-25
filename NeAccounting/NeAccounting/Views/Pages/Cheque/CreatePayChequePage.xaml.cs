@@ -12,7 +12,7 @@ namespace NeAccounting.Views.Pages
     public partial class CreatePayChequePage : INavigableView<CreatePayChequeViewModel>
     {
         public CreatePayChequeViewModel ViewModel { get; }
-
+         
         public CreatePayChequePage(CreatePayChequeViewModel viewModel)
         {
             ViewModel = viewModel;

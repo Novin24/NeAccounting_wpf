@@ -108,9 +108,9 @@ namespace NeAccounting.ViewModels
             _isInit = true;
             using UnitOfWork db = new();
             var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, true, CurrentPage);
-                CurrentPage = t.CurrentPage;
-                InvList = t.Items;
-                PageCount = t.PageCount;
+            CurrentPage = t.CurrentPage;
+            InvList = t.Items;
+            PageCount = t.PageCount;
             _isInit = false;
         }
 
@@ -303,6 +303,22 @@ namespace NeAccounting.ViewModels
                         break;
 
                     case DocumntType.Cheque:
+                        using (UnitOfWork db = new())
+                        {
+                            var (e,isSuccess) = await db.DocumentManager.RemoveCheque(parameter);
+                            if (!isSuccess)
+                            {
+                                _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                db.Dispose();
+                                return;
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+                        await OnSearchInvoice();
+                        break;
+
                     default:
                         _snackbarService.Show("کاربر گرامی", "حذف امکان پذیر نمی‌باشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                         break;

@@ -87,22 +87,26 @@ namespace NeAccounting.ViewModels
         /// <summary>
         /// شماره حساب
         /// </summary>
-        public string Accunt_Number { get; set; }
+        [ObservableProperty]
+        private string _accunt_Number;
 
         /// <summary>
         /// نام بانک
         /// </summary>
-        public string Bank_Name { get; set; }
+        [ObservableProperty]
+        private string _bank_Name;
 
         /// <summary>
         /// نام شعبه
         /// </summary>
-        public string Bank_Branch { get; set; }
+        [ObservableProperty]
+        private string _bank_Branch;
 
         /// <summary>
         /// صاحب چک
         /// </summary>
-        public string Cheque_Owner { get; set; }
+        [ObservableProperty]
+        private string cheque_Owner;
 
         /// <summary>
         /// نوع ثبت سند 
@@ -211,5 +215,4 @@ namespace NeAccounting.ViewModels
             #endregion
         }
     }
-
 }
