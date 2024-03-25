@@ -21,6 +21,15 @@
     <Page.Resources>
         <cnt:Converters x:Key="ConvertHeight" />
     </Page.Resources>
+
+    <Page.InputBindings>
+        <KeyBinding Key="F6"
+                    Command="{Binding ViewModel.SearchInvoiceCommand}" />
+
+        <KeyBinding Key="p"
+                    Modifiers="Ctrl"
+                    Command="{Binding PrintListCommand}" />
+    </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35" />
@@ -201,7 +210,7 @@
                                         Grid.Row="1"
                                         FontSize="17"
                                         FontFamily="Calibri"
-                                        Click="btn_Print_Click"
+                                        Command="{Binding PrintListCommand}"
                                         HorizontalAlignment="Right">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="پرینت" />

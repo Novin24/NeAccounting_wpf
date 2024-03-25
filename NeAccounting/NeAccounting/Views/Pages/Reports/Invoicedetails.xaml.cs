@@ -55,7 +55,8 @@ namespace NeAccounting.Views.Pages
             ViewModel.ChangePageCommand.ExecuteAsync(null);
         }
 
-        private async void btn_Print_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private async Task OnPrintList()
         {
             var (list, isSuccess) = await ViewModel.PrintInvoices();
             if (!isSuccess)

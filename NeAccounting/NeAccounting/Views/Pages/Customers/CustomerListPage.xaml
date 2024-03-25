@@ -262,7 +262,9 @@
                                                          Command="{Binding Path=DataContext.ViewModel.AddGaranteeChequeCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                          Padding="7,5">
                                                     <Button.ToolTip>
-                                                        <TextBlock FontSize="14">ثبت چک ضمانتی</TextBlock>
+                                                        <ToolTip>
+                                                            <TextBlock FontSize="14">ثبت چک ضمانتی</TextBlock>
+                                                        </ToolTip>
                                                     </Button.ToolTip>
                                                     <ui:SymbolIcon Symbol=" TableCellEdit16" />
                                                 </Button>
@@ -273,7 +275,7 @@
                                                           Checked="CheckBox_Status_Chkecked"
                                                           Unchecked="CheckBox_Status_Unckecked">
                                                     <CheckBox.ToolTip>
-                                                        <TextBlock>بایگانی</TextBlock>
+                                                        <TextBlock FontSize="16">بایگانی</TextBlock>
                                                     </CheckBox.ToolTip>
                                                 </CheckBox>
                                             </StackPanel>
