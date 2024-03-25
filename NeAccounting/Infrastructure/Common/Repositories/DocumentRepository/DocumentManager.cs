@@ -1,5 +1,4 @@
-﻿using Castle.Core.Resource;
-using Domain.Enities.NovinEntity.Remittances;
+﻿using Domain.Enities.NovinEntity.Remittances;
 using Domain.NovinEntity.Cheques;
 using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
@@ -9,12 +8,9 @@ using DomainShared.Extension;
 using DomainShared.Utilities;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.PagedResul;
-using DurableTask.Core.Serializing;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
-using System;
-using System.Diagnostics;
 using System.Globalization;
 
 namespace Infrastructure.Repositories
@@ -575,6 +571,7 @@ namespace Infrastructure.Repositories
             var MyDoc = await TableNoTracking
                 .Where(st => leftOver || st.SubmitDate >= startTime)
                 .Where(et => et.SubmitDate < endTime)
+                .Where(s => s.PayType != PaymentType.GurantyCheque)
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
                 .Select(t => new InvoiceDto()
@@ -647,6 +644,11 @@ namespace Infrastructure.Repositories
                     item.IsEditable = true;
                 }
 
+                if (item.Type == DocumntType.Cheque)
+                {
+                    item.IsDeletable = true;
+                }
+
                 item.LeftOver = Math.Abs(bed - bes);
                 if (bes > bed)
                 {
@@ -702,6 +704,7 @@ namespace Infrastructure.Repositories
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
                 .Where(s => s.Type != DocumntType.SellInv && s.Type != DocumntType.BuyInv)
+                .Where(s => s.PayType != PaymentType.GurantyCheque)
                 .Select(t => new DetailRemittanceDto()
                 {
                     Serial = t.Serial.ToString(),
@@ -1238,7 +1241,7 @@ namespace Infrastructure.Repositories
             customer.TotalCredit += price;
             try
             {
-                await Entities.AddAsync(new Document(customerId, price, DocumntType.GarantyCheque, PaymentType.Cheque, descripion, submitDate, true)
+                await Entities.AddAsync(new Document(customerId, price, DocumntType.GarantyCheque, PaymentType.GurantyCheque, descripion, submitDate, true)
                 .AddCheque(new Cheque(submitStatus,
                 ChequeStatus.Guarantee,
                 Guid.Empty,
@@ -1340,7 +1343,6 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-
         public async Task<(string error, bool isSuccess)> ConvertChequeToCash(Guid docId)
         {
             var doc = await Entities.Include(t => t.Cheques)
@@ -1401,7 +1403,7 @@ namespace Infrastructure.Repositories
             string desc)
         {
             var doc = await Entities.Include(t => t.Cheques)
-                .Include(s => s.SellRemittances)
+                .Include(s => s.RelatedDocuments)
                 .FirstOrDefaultAsync(t => t.Id == docId);
 
             if (doc == null || doc.Cheques.Count == 0)
@@ -1415,6 +1417,7 @@ namespace Infrastructure.Repositories
 
             che.Status = ChequeStatus.Transferred;
             che.TransferdDate = transferDate;
+            che.Reciver = cusId;
             doc.RelatedDocuments.Add(new Document(cusId, doc.Price, DocumntType.Cheque, PaymentType.Cheque, desc, transferDate, false));
 
             try

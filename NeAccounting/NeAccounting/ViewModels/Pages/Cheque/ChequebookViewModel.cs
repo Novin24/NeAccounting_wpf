@@ -215,6 +215,44 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
+        private async Task OnTransfer(Guid parameter)
+        {
+            Type? pageType = NameToPageTypeConverter.Convert("TransferCheque");
+
+            if (pageType == null)
+            {
+                return;
+            }
+
+            using UnitOfWork db = new();
+            var (s, i) = await db.DocumentManager.GetChequeById(parameter);
+            if (!s)
+            {
+                _snackbarService.Show("کاربر گرامی", $"چک مورد نظر یافت نشد!!!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
+            var context = new TransferChequePage(new TransferChequeViewModel(_snackbarService, _navigationService)
+            {
+                Substatus = i.SubmitStatus,
+                Accunt_Number = i.Accunt_Number,
+                Bank_Branch = i.Bank_Branch,
+                Bank_Name = i.Bank_Name,
+                PayerName = i.CusName,
+                Cheque_Number = i.Cheque_Number,
+                Cuslist = await db.CustomerManager.GetDisplayUser(),
+                Cheque_Owner = i.Cheque_Owner,
+                DocId = i.Id,
+                DueDate = i.DueDate,
+                Price = i.Price,
+                EnumSource = SubmitChequeStatus.Register.ToEnumDictionary()
+            });
+
+            var servise = _navigationService.GetNavigationControl();
+            servise.Navigate(pageType, context);
+        }
+
+        [RelayCommand]
         private void OnAddClick(string parameter)
         {
             if (string.IsNullOrWhiteSpace(parameter))

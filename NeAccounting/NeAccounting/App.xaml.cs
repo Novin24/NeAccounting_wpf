@@ -126,6 +126,9 @@ namespace NeAccounting
 
                 services.AddTransient<UpdateChequePage>();
                 services.AddTransient<UpdateChequeViewModel>();
+
+                services.AddTransient<TransferChequePage>();
+                services.AddTransient<TransferChequeViewModel>();
                 #endregion
 
                 #region Recived
