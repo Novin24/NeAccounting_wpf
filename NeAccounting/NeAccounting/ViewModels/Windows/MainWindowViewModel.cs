@@ -159,17 +159,7 @@ namespace NeAccounting.ViewModels
 
                 }
             },
-            new NavigationViewItem()
-            {
-                Content = "پشتبان گیری",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.CopySelect20 },
-                //TargetPageType = typeof(MaterailListPage)
-                MenuItems = new ObservableCollection<object>
-                {
-                    new NavigationViewItem { Content = "تهیه نسخه پشتیبان جدید", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.DocumentCopy20} },
-                    new NavigationViewItem { Content = "بازگردانی اطلاعات", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.SquareHintArrowBack20} },
-                }
-            },
+            new NavigationViewItem(){Content = "پشتبان گیری",TargetPageType = typeof(BackupPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
         };
 
         [ObservableProperty]
