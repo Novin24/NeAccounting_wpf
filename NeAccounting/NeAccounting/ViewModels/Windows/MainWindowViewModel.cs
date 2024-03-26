@@ -71,15 +71,12 @@ namespace NeAccounting.ViewModels
                 MenuItems = new ObservableCollection<object>
                 {
                 #region Remittance
-
                     new NavigationViewItem {Content = "پیش فاکتور",TargetPageType = typeof(PreviewinvoicePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
-
                     new NavigationViewItem {Content = "فاکتور فروش",TargetPageType = typeof(CreateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
-
                     new NavigationViewItem { Content = "فاکتور خرید", TargetPageType = typeof(CreateBuyInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
-                    new NavigationViewItem { Content = "فاکتور واسطه‌ای", TargetPageType = typeof(CreateIntermediaryInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
+                    //new NavigationViewItem { Content = "فاکتور واسطه‌ای", TargetPageType = typeof(CreateIntermediaryInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                     new NavigationViewItem { Content = "اجناس برگشتی", TargetPageType = typeof(WorkersListPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
-                    new NavigationViewItem {Content = "سفارشات",TargetPageType = typeof(CreatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+                    //new NavigationViewItem {Content = "سفارشات",TargetPageType = typeof(CreatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 	            #endregion
 
                 #region Doc

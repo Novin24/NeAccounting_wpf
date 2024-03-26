@@ -2,16 +2,18 @@
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Helpers.Extention;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class CreateCustomerViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject
+    public partial class CreateCustomerViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService dialogService) : ObservableObject
     {
         private readonly INavigationService _navigationService = navigationService;
         private readonly ISnackbarService _snackbarService = snackbarService;
+        private readonly IContentDialogService _dialogService = dialogService;
         [ObservableProperty]
         private string _fullName;
 
@@ -81,6 +83,38 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اعتبار نقدی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
+            if (!NationalCode.ValidNationalCode(_snackbarService))
+            {
+                var result = await _dialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+                {
+                    Title = "کد ملی نامعتبر !!!",
+                    Content = new TextBlock() { Text = "آیا ادامه میدهید ؟؟؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
+                    PrimaryButtonText = "بله",
+                    SecondaryButtonText = "خیر",
+                    CloseButtonText = "انصراف",
+                });
+                if (result != ContentDialogResult.Primary)
+                {
+                    return;
+                }
+            }
+
+            Mobile = Mobile.Trim();
+            if (!Mobile.ValidMobileNumber())
+            {
+                var result = await _dialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+                {
+                    Title = "موبایل نامعتبر !!!",
+                    Content = new TextBlock() { Text = "آیا ادامه میدهید ؟؟؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
+                    PrimaryButtonText = "بله",
+                    SecondaryButtonText = "خیر",
+                    CloseButtonText = "انصراف",
+                });
+                if (result != ContentDialogResult.Primary)
+                {
+                    return;
+                }
+            }
 
             CashCredit ??= 0;
             PromissoryNote ??= 0;
@@ -108,6 +142,5 @@ namespace NeAccounting.ViewModels
             }
             _ = _navigationService.Navigate(pageType);
         }
-
     }
 }

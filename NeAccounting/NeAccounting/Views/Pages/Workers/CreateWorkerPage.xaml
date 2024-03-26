@@ -272,7 +272,6 @@
                                                 Grid.Row="2"
                                                 TabIndex="4"
                                                 x:Name="Txt_NationalCode"
-                                                LostFocus="Txt_NationalCode_LostFocus"
                                                 Text="{Binding ViewModel.NationalCode, Mode=OneWayToSource}"
                                                 Margin="20 4 3 0"
                                                 TextAlignment="Center"
@@ -304,7 +303,6 @@
                                                Margin="22 4 0 0 " />
                                     <ui:TextBox Grid.Column="0"
                                                 Grid.Row="2"
-                                                LostFocus="TextBox_LostFocus"
                                                 Margin="20 4 3 0"
                                                 FlowDirection="LeftToRight"
                                                 Text="{Binding ViewModel.Mobile, Mode=OneWayToSource}"

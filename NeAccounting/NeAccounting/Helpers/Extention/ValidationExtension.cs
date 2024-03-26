@@ -59,7 +59,20 @@ namespace NeAccounting.Helpers.Extention
             return false;
         }
 
+        public static bool ValidMobileNumber(this string mobile)
+        {
+            Regex regex = MobileNumberOnly();
+            if (regex.IsMatch(mobile))
+            { 
+                return true;
+            }
+            return false;
+        }
+
         [GeneratedRegex(@"^\d+$")]
         private static partial Regex NumOnly();
+
+        [GeneratedRegex(@"^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$")]
+        private static partial Regex MobileNumberOnly();
     }
 }

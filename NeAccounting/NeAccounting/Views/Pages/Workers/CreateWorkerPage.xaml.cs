@@ -62,33 +62,5 @@ namespace NeAccounting.Views.Pages
             txt_overTimeShift.IsEnabled = false;
             txt_overTimeShift.Value = 0;
         }
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox txt)
-            {
-                Regex regex = NumberOnly();
-                txt.Text = txt.Text.Trim();
-                if (!regex.IsMatch(txt.Text))
-                {
-                    txt.Text = string.Empty;
-                    _snackbarService.Show("خطا", "شماره موبایل وارد شده نامعتبر میباشد !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                }
-            }
-        }
-
-        private void Txt_NationalCode_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox txt)
-            {
-                if (!txt.Text.ValidNationalCode(_snackbarService))
-                {
-                    txt.Text = string.Empty;
-                }
-            }
-        }
-
-        [GeneratedRegex(@"^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$")]
-        private static partial Regex NumberOnly();
     }
 }

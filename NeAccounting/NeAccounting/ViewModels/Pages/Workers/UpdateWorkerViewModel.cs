@@ -13,10 +13,13 @@ namespace NeAccounting.ViewModels
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
-        public UpdateWorkerViewModel(INavigationService navigationService, ISnackbarService snackbarService)
+        private readonly IContentDialogService _dialogService;
+
+        public UpdateWorkerViewModel(INavigationService navigationService, ISnackbarService snackbarService, IContentDialogService dialogService)
         {
             _navigationService = navigationService;
             _snackbarService = snackbarService;
+            _dialogService = dialogService;
         }
         [ObservableProperty]
         private int _id;
@@ -105,6 +108,7 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnUpdate()
         {
+            #region validation
 
             if (string.IsNullOrEmpty(FullName))
             {
@@ -132,7 +136,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
-            if (WorkerShift == Shift.ByHour &&  ShiftSalary <= 0)
+            if (WorkerShift == Shift.ByHour && ShiftSalary <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("دستمزد ", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -175,8 +179,37 @@ namespace NeAccounting.ViewModels
             }
             if (!NationalCode.ValidNationalCode(_snackbarService))
             {
-                return;
+                var result = await _dialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+                {
+                    Title = "کد ملی نامعتبر !!!",
+                    Content = new TextBlock() { Text = "آیا ادامه میدهید ؟؟؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
+                    PrimaryButtonText = "بله",
+                    SecondaryButtonText = "خیر",
+                    CloseButtonText = "انصراف",
+                });
+                if (result != ContentDialogResult.Primary)
+                {
+                    return;
+                }
             }
+
+            Mobile = Mobile.Trim();
+            if (!Mobile.ValidMobileNumber())
+            {
+                var result = await _dialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+                {
+                    Title = "موبایل نامعتبر !!!",
+                    Content = new TextBlock() { Text = "آیا ادامه میدهید ؟؟؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
+                    PrimaryButtonText = "بله",
+                    SecondaryButtonText = "خیر",
+                    CloseButtonText = "انصراف",
+                });
+                if (result != ContentDialogResult.Primary)
+                {
+                    return;
+                }
+            }
+            #endregion
 
             using UnitOfWork db = new();
             var (error, isSuccess) = await db.WorkerManager.Update(
