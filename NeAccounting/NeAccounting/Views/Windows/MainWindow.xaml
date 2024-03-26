@@ -6,8 +6,6 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
-                 MinWidth="1100"
-                 MinHeight="520"
                  d:DataContext="{d:DesignInstance local:MainWindow,
                                      IsDesignTimeCreatable=True}"
                  ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"

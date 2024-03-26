@@ -2,7 +2,7 @@
 {
     public class NeAccountingConstants
     {
-        public const byte PageCount = 15;
+        public const byte PageCount = 20;
     }
 
     public static class SqlStoredProcedureConstants
