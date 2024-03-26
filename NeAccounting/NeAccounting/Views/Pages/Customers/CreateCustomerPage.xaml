@@ -292,13 +292,12 @@
                                 Grid.Row="8"
                                 Grid.Column="1"
                                 Padding="30 4 "
-                                Margin="0 0 0 13"
                                 Grid.ColumnSpan="2"
                                 IsDefault="True"
                                 Command="{Binding ViewModel.CreateCustomerCommand}"
                                 FontSize="17"
                                 FontFamily="Calibri"
-                                VerticalAlignment="Bottom"
+                                VerticalAlignment="Center"
                                 HorizontalAlignment="Center" />
                     </Grid>
                 </Border>

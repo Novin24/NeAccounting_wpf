@@ -79,7 +79,7 @@
                     </Grid.RowDefinitions>
 
 
-                    <nu:HeaderPack NamePpage="اجناس و کالاها"
+                    <nu:HeaderPack NamePpage="اجناس و خدمات"
                                    Margin="28 0" />
 
                     <Border Grid.Row="1"

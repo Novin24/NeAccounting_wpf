@@ -9,8 +9,6 @@
       xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       Title="DashboardPage"
       d:DataContext="{d:DesignInstance local:DashboardPage, IsDesignTimeCreatable=False}"
-      d:DesignHeight="800"
-      d:DesignWidth="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d"
@@ -18,13 +16,13 @@
     <Page.Resources>
         <cnt:Converters x:Key="ConvertHeight"/>
     </Page.Resources>
-    <Grid Margin="30,0"
+    <Grid Margin="-10,0"
           VerticalAlignment="Top">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"></RowDefinition>
-            <RowDefinition Height="5*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Border Margin="30 12 25 25"
+        <Border Margin="0 12 0 25"
                 CornerRadius="9"
                 BorderBrush="#D6D5D5"
                 BorderThickness="0.4">
@@ -75,8 +73,8 @@
             </Grid>
         </Border>
         <Border Grid.Row="1"
-                Margin="30 0 25 20"
-                Padding="8"
+                Margin="0 0 0 20"
+                Padding="0"
                 CornerRadius="9"
                 BorderBrush="#D6D5D5"
                 VerticalAlignment="Center"
@@ -95,13 +93,19 @@
                         <Style TargetType="Grid">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=1080}" Value="false">
-                                    <Setter Property="MaxHeight" Value="880"/>
+                                    <Setter Property="Height" Value="880"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=1020}" Value="false">
-                                    <Setter Property="MaxHeight" Value="755"/>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=1000}" Value="false">
+                                    <Setter Property="Height" Value="714"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=890}" Value="false">
-                                    <Setter Property="MaxHeight" Value="630"/>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=872}" Value="false">
+                                    <Setter Property="Height" Value="598"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=747}" Value="false">
+                                    <Setter Property="Height" Value="480"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=630}" Value="false">
+                                    <Setter Property="Height" Value="365"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -113,7 +117,7 @@
                             <DataTemplate DataType="{x:Type  models:NotifViewModel}">
                                 <ui:CardAction Grid.Row="0"
                                                Grid.Column="0"
-                                               Margin="0,20,20,0"
+                                               Margin="0,12,12,0"
                                                Padding="0"
                                                Width="180"
                                                VerticalAlignment="Stretch"
