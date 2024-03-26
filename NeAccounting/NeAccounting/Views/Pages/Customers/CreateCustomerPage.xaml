@@ -229,7 +229,7 @@
                                       IsEnabled="False"
                                       x:Name="txt_CashGrantee"
                                       SpinButtonPlacementMode="Hidden"
-                                      Value="{Binding ViewModel.CashCredit, Mode=OneWayToSource}"
+                                      Value="{Binding ViewModel.CashCredit, Mode=TwoWay}"
                                       TabIndex="8"
                                       FontFamily="Calibri"
                                       Margin="20 0 20 0" />
@@ -263,7 +263,7 @@
                                       x:Name="txt_Grantee"
                                       IsEnabled="False"
                                       TextAlignment="Center"
-                                      Value="{Binding ViewModel.PromissoryNote, Mode=OneWayToSource}"
+                                      Value="{Binding ViewModel.PromissoryNote, Mode=TwoWay}"
                                       SpinButtonPlacementMode="Hidden"
                                       FontFamily="Calibri"
                                       Margin="20 0" />

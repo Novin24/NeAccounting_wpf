@@ -82,6 +82,9 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
+            CashCredit ??= 0;
+            PromissoryNote ??= 0;
+
 
             using (UnitOfWork db = new())
             {
