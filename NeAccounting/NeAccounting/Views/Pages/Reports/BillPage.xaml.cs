@@ -56,41 +56,6 @@ namespace NeAccounting.Views.Pages
             ViewModel.PersonelId = us.UniqNumber;
         }
 
-        private async void btn_Print_Click(object sender, RoutedEventArgs e)
-        {
-            var (list, isSuccess) = await ViewModel.PrintInvoices();
-            if (!isSuccess)
-                return;
-            if (!list.Any())
-            {
-                _snackbarService.Show("خطا", "در بازه انتخابی موردی برای نمایش یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
-            var cus = ViewModel.Cuslist.First(t => t.Id == ViewModel.CusId);
-            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Reports\PrintInfo.json"));
-            if (printInfo == null)
-            {
-                _snackbarService.Show("خطا", "فایل پرینت یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
-            Dictionary<string, string> dic = new()
-            {
-                {"Customer_Name",$"({cus.UniqNumber}) _ {cus.DisplayName}"},
-                {"Start_Date",$"{Dtp_Start.DisplayDate}"},
-                {"End_Date",$"{Dtp_End.DisplayDate}"},
-                {"PrintTime",DateTime.Now.ToShamsiDate(new PersianCalendar()) },
-                {"Total_Debt",list.Select(p => p.Bed).Sum().ToString("N0")},
-                {"Total_Credit",list.Select(p => p.Bes).Sum().ToString("N0")},
-                {"Total_LeftOVver",list.Last().LeftOver.ToString("N0")},
-                {"TotalSLeftOver",list.Last().LeftOver.ToString().NumberToPersianString()},
-                {"Management",$"{printInfo.Management}"},
-                {"Company_Name",$"{printInfo.Company_Name}"},
-                {"Tabligh",$"{printInfo.Tabligh}"},
-                {"Status",$"{list.Last().Status}"}};
-
-            _printServices.PrintInvoice(@"Reports\ReportInvoices.mrt", "InvoiceListDtos", list, dic);
-        }
-
         private async void Btn_PrintOneInvoice_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not Button btn)

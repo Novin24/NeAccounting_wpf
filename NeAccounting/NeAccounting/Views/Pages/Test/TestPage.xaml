@@ -13,27 +13,12 @@
       Title="TestPage"
       x:Name="root">
 
-    <Page.Resources>
-        <cnt:Converters x:Key="ConvertHeight"/>
-    </Page.Resources>
-
-   
-
-    <Border BorderBrush="#D6D5D5">
-
-        <Border.Style>
-            <Style TargetType="Border">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=810}" Value="true">
-                        <Setter Property="Height" Value="100"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Border.Style>
-        <Border.Background>
-            <SolidColorBrush Color="White"
-                                         Opacity="0.08" />
-
-        </Border.Background>
-    </Border>
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                    Command="{Binding ViewModel.MyClickCommand}" />
+    </Page.InputBindings>
+    
+    <Grid Height="500" Width="800">
+        <Button>clickMe</Button>
+    </Grid>
 </Page>

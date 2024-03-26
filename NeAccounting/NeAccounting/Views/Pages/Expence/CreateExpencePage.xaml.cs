@@ -1,6 +1,7 @@
-﻿using NeAccounting.ViewModels;
-using System.Windows.Controls;
+﻿using DomainShared.Enums;
+using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
+using DomainShared.Utilities;
 
 namespace NeAccounting.Views.Pages
 {
@@ -17,6 +18,11 @@ namespace NeAccounting.Views.Pages
             DataContext = this;
             InitializeComponent();
             DateFocus.Focus();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Cmb_Status.ItemsSource = PaymentType.Cash.ToEnumDictionary();
         }
     }
 }

@@ -21,7 +21,13 @@
     <Page.Resources>
         <cnt:Converters x:Key="ConvertHeight" />
     </Page.Resources>
-
+    <Page.InputBindings>
+        <KeyBinding Key="F6"
+                    Command="{Binding ViewModel.SearchInvoiceCommand}" />
+        <KeyBinding Key="p"
+                    Modifiers="Ctrl"
+                    Command="{Binding ViewModel.PrintListCommand}" />
+    </Page.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -170,6 +176,7 @@
                             <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
                                                   x:Name="Dtp_Start"
+                                                  DisplayDate="{Binding ViewModel.DisplayStartDate , Mode=OneWayToSource}"
                                                   SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay}"
                                                   LabelName="از تاریخ"
                                                   Grid.Row="1" />
@@ -177,6 +184,7 @@
                             <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
                                                   x:Name="Dtp_End"
+                                                  DisplayDate="{Binding ViewModel.DisplayEndDate , Mode=OneWayToSource}"
                                                   SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay}"
                                                   LabelName="تا تاریخ"
                                                   Grid.Row="1"
@@ -210,7 +218,7 @@
                                         FontSize="17"
                                         x:Name="btn_Print"
                                         FontFamily="Calibri"
-                                        Click="btn_Print_Click"
+                                        Command="{Binding ViewModel.PrintListCommand}"
                                         HorizontalAlignment="Right">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="پرینت" />
@@ -291,11 +299,11 @@
                                             <StackPanel Orientation="Horizontal"
                                                         HorizontalAlignment="Center">
                                                 <ui:Button  Margin="2"
-                                                         x:Name="Btn_PrintOneInvoice"
-                                                         Visibility="{Binding IsPrintable ,  Converter={StaticResource BoolToVis}}"
-                                                         Tag="{Binding Id , Mode=OneWay}"
-                                                         Click="Btn_PrintOneInvoice_Click"
-                                                         Padding="7,5">
+                                                            x:Name="Btn_PrintOneInvoice"
+                                                            Visibility="{Binding IsPrintable ,  Converter={StaticResource BoolToVis}}"
+                                                            Tag="{Binding Id , Mode=OneWay}"
+                                                            Click="Btn_PrintOneInvoice_Click"
+                                                            Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Print20" />
                                                 </ui:Button>
                                                 <Button  Margin="2"

@@ -22,6 +22,8 @@ namespace NeAccounting.Views.Pages.Test
             click = 0;
         }
 
+
+
         //private void btn_font_Click(object sender, RoutedEventArgs e)
         //{
         //    click++;

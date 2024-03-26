@@ -6,7 +6,13 @@ using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Models;
 using NeAccounting.Views.Pages;
+using NeApplication.Services;
+using Newtonsoft.Json;
+using System.Globalization;
+using System.IO;
+using DomainShared.Extension;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -19,12 +25,14 @@ namespace NeAccounting.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
+        private readonly IPrintServices _printServices;
 
-        public BillListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
+        public BillListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService, IPrintServices printServices)
         {
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
             _snackbarService = snackbarService;
+            _printServices = printServices;
         }
 
         #region Properties
@@ -49,6 +57,12 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private DateTime? _endDate = DateTime.Now;
+
+        [ObservableProperty]
+        private string _displayStartDate;
+
+        [ObservableProperty]
+        private string _displayEndDate;
 
         /// <summary>
         /// به احتساب مانده قبلی
@@ -305,7 +319,7 @@ namespace NeAccounting.ViewModels
                     case DocumntType.Cheque:
                         using (UnitOfWork db = new())
                         {
-                            var (e,isSuccess) = await db.DocumentManager.RemoveCheque(parameter);
+                            var (e, isSuccess) = await db.DocumentManager.RemoveCheque(parameter);
                             if (!isSuccess)
                             {
                                 _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -448,6 +462,42 @@ namespace NeAccounting.ViewModels
                 default:
                     break;
             }
+        }
+
+        [RelayCommand]
+        private async Task OnPrintList()
+        {
+            var (list, isSuccess) = await PrintInvoices();
+            if (!isSuccess)
+                return;
+            if (!list.Any())
+            {
+                _snackbarService.Show("خطا", "در بازه انتخابی موردی برای نمایش یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            var cus = Cuslist.First(t => t.Id == CusId);
+            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Reports\PrintInfo.json"));
+            if (printInfo == null)
+            {
+                _snackbarService.Show("خطا", "فایل پرینت یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            Dictionary<string, string> dic = new()
+            {
+                {"Customer_Name",$"({cus.UniqNumber}) _ {cus.DisplayName}"},
+                {"Start_Date",$"{DisplayStartDate}"},
+                {"End_Date",$"{DisplayEndDate}"},
+                {"PrintTime",DateTime.Now.ToShamsiDate(new PersianCalendar()) },
+                {"Total_Debt",list.Select(p => p.Bed).Sum().ToString("N0")},
+                {"Total_Credit",list.Select(p => p.Bes).Sum().ToString("N0")},
+                {"Total_LeftOVver",list.Last().LeftOver.ToString("N0")},
+                {"TotalSLeftOver",list.Last().LeftOver.ToString().NumberToPersianString()},
+                {"Management",$"{printInfo.Management}"},
+                {"Company_Name",$"{printInfo.Company_Name}"},
+                {"Tabligh",$"{printInfo.Tabligh}"},
+                {"Status",$"{list.Last().Status}"}};
+
+            _printServices.PrintInvoice(@"Reports\ReportInvoices.mrt", "InvoiceListDtos", list, dic);
         }
         #endregion
     }

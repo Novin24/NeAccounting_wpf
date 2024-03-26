@@ -1,20 +1,6 @@
-﻿using Domain.NovinEntity.Materials;
-using DomainShared.Enums;
+﻿using DomainShared.Enums;
 using DomainShared.Errore;
-using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
-using Microsoft.Identity.Client.NativeInterop;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic.ApplicationServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Runtime.InteropServices.JavaScript;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -41,13 +27,13 @@ namespace NeAccounting.ViewModels
         /// مبلغ
         /// </summary>
         [ObservableProperty]
-        private long? _amount=0;
+        private long? _amount = 0;
 
         /// <summary>
         /// نوع پرداخت
         /// </summary>
         [ObservableProperty]
-        private PaymentType _payType;
+        private PaymentType _payType = PaymentType.CardToCard;
 
         /// <summary>
         /// دریافت کننده
