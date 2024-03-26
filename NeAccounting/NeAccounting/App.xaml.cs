@@ -254,6 +254,10 @@ namespace NeAccounting
                 services.AddTransient<IPrintServices, PrintServices>();
                 #endregion
 
+                #region Backup
+                services.AddTransient<BackupPage>();
+                #endregion
+
             }).Build();
 
         /// <summary>

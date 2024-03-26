@@ -129,7 +129,7 @@
                                        FontSize="14"
                                        Text="کدملی"
                                        Margin="2 0 0 4" />
-                            <ui:TextBox Grid.Row="2"
+                            <TextBox Grid.Row="2"
                                         TabIndex="1"
                                         TextAlignment="Center"
                                         Text="{Binding ViewModel.NationalCode, Mode=OneWayToSource}"
@@ -146,8 +146,8 @@
                             <ComboBox SelectedIndex="{Binding ViewModel.CusType, Mode=TwoWay}"
                                       FontSize="14"
                                       TabIndex="2">
+                                <ComboBoxItem Content="حقیقی" IsSelected="True"/>
                                 <ComboBoxItem Content="حقوقی" />
-                                <ComboBoxItem Content="حقیقی" />
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Grid.Row="2"
@@ -229,7 +229,7 @@
                                       IsEnabled="False"
                                       x:Name="txt_CashGrantee"
                                       SpinButtonPlacementMode="Hidden"
-                                      Value="{Binding ViewModel.CashCredit, Mode=OneWayToSource}"
+                                      Value="{Binding ViewModel.CashCredit, Mode=TwoWay}"
                                       TabIndex="8"
                                       FontFamily="Calibri"
                                       Margin="20 0 20 0" />
@@ -263,7 +263,7 @@
                                       x:Name="txt_Grantee"
                                       IsEnabled="False"
                                       TextAlignment="Center"
-                                      Value="{Binding ViewModel.PromissoryNote, Mode=OneWayToSource}"
+                                      Value="{Binding ViewModel.PromissoryNote, Mode=TwoWay}"
                                       SpinButtonPlacementMode="Hidden"
                                       FontFamily="Calibri"
                                       Margin="20 0" />

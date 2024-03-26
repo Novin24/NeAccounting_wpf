@@ -114,7 +114,7 @@ namespace NeAccounting.ViewModels
 
             var cus = List.First(t => t.Id == parameter);
 
-            var context = new UpdateCustomerPage(new UpdateCustomerViewModel(_snackbarService, _navigationService)
+            var context = new UpdateCustomerPage(new UpdateCustomerViewModel(_snackbarService, _navigationService,_contentDialogService)
             {
                 Id = cus.Id,
                 FullName = cus.Name,

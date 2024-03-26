@@ -143,7 +143,7 @@ namespace NeAccounting.ViewModels
                 asuBox = await db.UnitManager.GetUnits();
             }
 
-            var context = new UpdateWorkerPage(new UpdateWorkerViewModel(_navigationService, _snackbarService)
+            var context = new UpdateWorkerPage(new UpdateWorkerViewModel(_navigationService, _snackbarService, _contentDialogService)
             {
                 Id = worker.Id,
                 WorkerShift = worker.Shift,

@@ -86,6 +86,8 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("کاربر گرامی", "عملیات ثبت با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
             }
             List = await db.UnitManager.GetUnitList();
+            UnitName = string.Empty;
+            Description = string.Empty;
         }
 
         [RelayCommand]
