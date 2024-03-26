@@ -15,6 +15,13 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="Previewinvoice">
+    <Page.InputBindings>
+        <KeyBinding Key="F2"
+                    Command="{Binding AddRowCommand}" />
+        <KeyBinding Key="p"
+                    Modifiers="Ctrl"
+                    Command="{Binding SubmitCommand}" />
+    </Page.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -97,6 +104,7 @@
                                            Text="نام مشتری"
                                            Margin="5 0 0 4 " />
                                 <ui:TextBox FontFamily="Calibri"
+                                            x:Name="Txt_name"
                                             Text="{Binding ViewModel.CusName,Mode=TwoWay}" />
                             </StackPanel>
 
@@ -227,7 +235,7 @@
                                     FontSize="17"
                                     FontFamily="Calibri"
                                     VerticalAlignment="Bottom"
-                                    Click="Button_Click"
+                                    Command="{Binding AddRowCommand}"
                                     HorizontalAlignment="Center">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="افزودن" />
@@ -316,7 +324,7 @@
                                     Grid.Column="1"
                                     FontSize="17"
                                     x:Name="btn_Submit"
-                                    Click="Btn_Submit_Click"
+                                    Command="{Binding SubmitCommand}"
                                     FontFamily="Calibri"
                                     HorizontalAlignment="Center">
                                 <StackPanel Orientation="Horizontal">

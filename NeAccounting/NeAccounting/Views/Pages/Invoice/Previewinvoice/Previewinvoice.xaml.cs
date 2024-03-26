@@ -30,9 +30,11 @@ namespace NeAccounting.Views.Pages
             _snackbarService = snackbarService;
             _printServices = printServices;
             InitializeComponent();
+            Txt_name.Focus();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private void OnAddRow()
         {
             if (ViewModel.OnAdd())
             {
@@ -167,7 +169,8 @@ namespace NeAccounting.Views.Pages
             return true;
         }
 
-        private void Btn_Submit_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private void OnSubmit()
         {
             if (string.IsNullOrEmpty(ViewModel.CusName))
             {
