@@ -16,7 +16,7 @@
     <Page.Resources>
         <cnt:Converters x:Key="ConvertHeight"/>
     </Page.Resources>
-    <Grid Margin="0,0"
+    <Grid Margin="-10,0"
           VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -95,16 +95,16 @@
                                 <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=1080}" Value="false">
                                     <Setter Property="Height" Value="880"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=1020}" Value="false">
-                                    <Setter Property="Height" Value="755"/>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=1000}" Value="false">
+                                    <Setter Property="Height" Value="714"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=890}" Value="false">
-                                    <Setter Property="Height" Value="630"/>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=872}" Value="false">
+                                    <Setter Property="Height" Value="598"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=770}" Value="false">
-                                    <Setter Property="Height" Value="505"/>
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=747}" Value="false">
+                                    <Setter Property="Height" Value="480"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=763}" Value="false">
+                                <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=630}" Value="false">
                                     <Setter Property="Height" Value="365"/>
                                 </DataTrigger>
                             </Style.Triggers>

@@ -79,8 +79,8 @@ namespace NeAccounting.Views.Pages
             }
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
-                Title = "آیا از بایگانی اطمینان دارید!!!",
-                Content = Application.Current.Resources["DeleteDialogContent"],
+                Title = "آیا از بایگانی اطمینان دارید؟",
+                Content = new TextBlock() { Text = "پس از بایگانی واحد مد نظر در عملیات ثبت و ویرایش (اجناس و خدمات) نمایش داده نمیشود!!!", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
                 PrimaryButtonText = "بله",
                 SecondaryButtonText = "خیر",
                 CloseButtonText = "انصراف",
