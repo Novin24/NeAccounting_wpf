@@ -14,22 +14,22 @@
 
     <Grid>
 
-        <Grid>
+        <Grid Margin="-12">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height=".9*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
                     Grid.RowSpan="3"
@@ -70,7 +70,7 @@
                         </Border.Background>
 
                         <Grid FlowDirection="RightToLeft"
-                              Margin="50 15 50 0">
+                              Margin="50 15 50 15">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="4*"></RowDefinition>
@@ -82,6 +82,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
+                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"></RowDefinition>
@@ -100,14 +101,24 @@
                                                           LabelName="تا تاریخ"
                                                       MinWidth="200"
                                                       MaxWidth="300"/>
+
+                                <Button Grid.Column="2"
+                                        FontSize="17"
+                                        Margin="20 0 0 6"
+                                        Padding="30 5"
+                                        Content="نمایش"
+                                        IsDefault="True"
+                                        FontFamily="Calibri"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Center" />
                             </Grid>
-                            <DataGrid x:Name="Workersdata"
-                                      BorderThickness="10"
-                                      Grid.Row="1"
-                                      CanUserResizeColumns="False"
+                            <DataGrid Grid.Row="1"
+                                      Padding="7"
                                       FontSize="15"
-                                      CanUserResizeRows="False"
+                                      x:Name="Workersdata"
                                       FontFamily="Calibri"
+                                      CanUserResizeRows="False"
+                                      CanUserResizeColumns="False"
                                       AutoGenerateColumns="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="نام مشتری"
@@ -126,18 +137,6 @@
                                                         Width="*" />
                                 </DataGrid.Columns>
                             </DataGrid>
-
-
-                            <Button Content="ثبت"
-                                    Grid.Row="2"
-                                    Padding="30 4 "
-                                    Margin="0 20"
-                                    Grid.ColumnSpan="2"
-                                    IsDefault="True"
-                                    FontSize="17"
-                                    FontFamily="Calibri"
-                                    VerticalAlignment="Bottom"
-                                    HorizontalAlignment="Center" />
                         </Grid>
 
 

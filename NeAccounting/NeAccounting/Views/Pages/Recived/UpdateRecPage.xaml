@@ -15,22 +15,22 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="UpdateRecDocPage">
 
-    <Grid>
+    <Grid Margin="-15">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="25"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="25"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
@@ -73,15 +73,13 @@
                     </Border.Background>
                     <!--اخرین چک ها-->
                     <Grid>
-                        <StackPanel Grid.Row="1">
-
-                            <TextBlock FontFamily="Calibri"
+                        <TextBlock FontFamily="Calibri"
                                        FontSize="15"
                                        Margin="0,10"
                                        Text="آخرین اسناد پرداختی"
                                        HorizontalAlignment="Center" />
 
-                            <DataGrid Margin="10 10 10 10"
+                        <DataGrid Margin="5 40 5 5"
                                       CanUserAddRows="False"
                                       AutoGenerateColumns="False"
                                       CanUserDeleteRows="False"
@@ -90,26 +88,25 @@
                                       CanUserResizeColumns="False"
                                       ItemsSource="{Binding ViewModel.DocList, Mode=TwoWay}"
                                       CanUserSortColumns="False"
-                                      BorderThickness="10">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="تاریخ پرداخت"
+                                      Padding="9">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="تاریخ پرداخت"
                                                         Binding="{Binding ShamsiDate}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
-                                    <DataGridTextColumn Header="مبلغ"
+                                <DataGridTextColumn Header="مبلغ"
                                                         Binding="{Binding Price}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
-                                    <DataGridTextColumn Header="شخص"
+                                <DataGridTextColumn Header="شخص"
                                                         Binding="{Binding Cus_Name}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Grid>
                 </Border>
 
@@ -250,14 +247,15 @@
                                      Grid.ColumnSpan="2"
                                      FontFamily="Calibri"></TextBox>
                         </Grid>
-                        <Button Content="ثبت سند"
+                        <Button Grid.Row="6"
                                 Margin="10"
-                                x:Name="btn_submit"
-                                HorizontalAlignment="Center"
-                                Grid.Row="6"
-                                Command="{Binding ViewModel.SumbitCommand}"
-                                FontFamily="Calibri"
                                 FontSize="15"
+                                Padding="30 4 "
+                                Content="ثبت سند"
+                                x:Name="btn_submit"
+                                FontFamily="Calibri"
+                                HorizontalAlignment="Center"
+                                Command="{Binding ViewModel.SumbitCommand}"
                                 Grid.ColumnSpan="2" />
                     </Grid>
                 </Border>

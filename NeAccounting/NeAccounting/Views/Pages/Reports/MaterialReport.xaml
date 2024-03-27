@@ -16,23 +16,22 @@
       d:DesignWidth="1200"
       Title="MaterialReport">
 
-    <Grid>
+    <Grid Margin="-12">
         <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="10*"/>
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto"
-                           MinHeight="500" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
@@ -66,18 +65,18 @@
                                Margin="28 0" />
 
                 <Border Grid.Row="1"
+                        Margin="4"
                         CornerRadius="9"
-                        BorderBrush="#D6D5D5"
                         BorderThickness="0.4"
-                        Margin="4">
+                        BorderBrush="#D6D5D5">
                     <Border.Background>
                         <SolidColorBrush Color="White"
                                          Opacity="0.08" />
 
                     </Border.Background>
 
-                    <Grid FlowDirection="RightToLeft"
-                          Margin="50 10 50 0">
+                    <Grid Margin="50 10 50 0"
+                          FlowDirection="RightToLeft">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -99,98 +98,98 @@
                             <StackPanel Grid.Row="0"
                                         Margin="23 0 7 4">
                                 <DockPanel>
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="16"
-                                               FontWeight="Medium"
+                                    <TextBlock FontSize="16"
                                                Text="نام جنس"
-                                               Margin="7 0 0 4" />
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
+                                               Margin="7 0 0 4"
+                                               FontWeight="Medium"
+                                               FontFamily="Calibri" />
+                                    <TextBlock FontSize="14"
+                                               Margin="2 0 0 0"
+                                               FontFamily="Calibri"
                                                x:Name="txt_Personel"
                                                Foreground="#BB8F60"
-                                               HorizontalAlignment="Right"
-                                               Margin="2 0 0 0" />
+                                               HorizontalAlignment="Right" />
                                 </DockPanel>
                                 <ui:AutoSuggestBox FontSize="16"
                                                    x:Name="txt_name"
+                                                   FontFamily="Calibri" 
                                                    Icon="{ui:SymbolIcon Search24}"
-                                                   SuggestionChosen="txt_name_SuggestionChosen"
-                                                   OriginalItemsSource="{Binding ViewModel.MatList}"
                                                    DisplayMemberPath="MaterialName"
-                                                   FontFamily="Calibri" />
+                                                   SuggestionChosen="txt_name_SuggestionChosen"
+                                                   OriginalItemsSource="{Binding ViewModel.MatList}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1">
-                                <CheckBox Content="خرید"
-                                          Grid.Column="2"
-                                          FontFamily="Calibri"
-                                          IsChecked="{Binding ViewModel.Buy, Mode=TwoWay}"
-                                          FlowDirection="LeftToRight"
-                                          HorizontalAlignment="Center"
-                                          FontSize="14" />
-                                <CheckBox Content="فروش"
-                                          IsChecked="{Binding ViewModel.Sell , Mode= TwoWay}"
+                                <CheckBox FontSize="14"
+                                          Content="خرید"
                                           Grid.Column="2"
                                           FontFamily="Calibri"
                                           FlowDirection="LeftToRight"
+                                          HorizontalAlignment="Center" 
+                                          IsChecked="{Binding ViewModel.Buy, Mode=TwoWay}"/>
+                                <CheckBox FontSize="14" 
+                                          Content="فروش"
+                                          Grid.Column="2"
+                                          FontFamily="Calibri"
+                                          FlowDirection="LeftToRight"
                                           HorizontalAlignment="Center"
-                                          FontSize="14" />
+                                          IsChecked="{Binding ViewModel.Sell , Mode= TwoWay}"/>
                             </StackPanel>
-                            <nu:PersianDatePicker VerticalAlignment="Center"
-                                                  FlowDirection="LeftToRight"
-                                                  SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay}"
+                            <nu:PersianDatePicker Grid.Column="2"
                                                   LabelName="از تاریخ"
-                                                  Grid.Column="2" />
-
-                            <nu:PersianDatePicker VerticalAlignment="Center"
+                                                  VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
-                                                  SelectedDate="{Binding ViewModel.EndDate , Mode=TwoWay}"
+                                                  SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay}"/>
+
+                            <nu:PersianDatePicker Grid.Column="3"
                                                   LabelName="تا تاریخ"
-                                                  Grid.Column="3" />
+                                                  VerticalAlignment="Center"
+                                                  FlowDirection="LeftToRight"
+                                                  SelectedDate="{Binding ViewModel.EndDate , Mode=TwoWay}" />
                             <Button Grid.Column="4"
                                     IsDefault="True"
-                                    FontFamily="Calibri"
-                                    Command="{Binding ViewModel.SearchInvoiceCommand}"
-                                    HorizontalAlignment="Center"
                                     Padding="10 5.5"
-                                    Margin="10 19 0 0">
+                                    Margin="10 19 0 0"
+                                    FontFamily="Calibri"
+                                    HorizontalAlignment="Center"
+                                    Command="{Binding ViewModel.SearchInvoiceCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="نمایش"
                                                FontSize="16" />
                                     <TextBlock Text=" (F6)"
                                                FontSize="14"
-                                               VerticalAlignment="Center"
-                                               Foreground="#FFA3A3A3" />
+                                               Foreground="#FFA3A3A3"
+                                               VerticalAlignment="Center" />
                                 </StackPanel>
                             </Button>
 
                         </Grid>
                         <DataGrid Grid.Row="1"
+                                  Padding="7"
                                   MaxHeight="570"
                                   IsReadOnly="True"
                                   Margin="0 10 0 0"
-                                  BorderThickness="10"
-                                  CanUserResizeColumns="False"
+                                  FontFamily="Calibri"
+                                  CanUserAddRows="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"
-                                  CanUserAddRows="False"
                                   CanUserSortColumns="False"
+                                  AutoGenerateColumns="False"
+                                  CanUserResizeColumns="False"
                                   CanUserReorderColumns="False"
-                                  FontFamily="Calibri"
-                                  ItemsSource="{Binding ViewModel.MatReportList}"
-                                  AutoGenerateColumns="False">
+                                  ItemsSource="{Binding ViewModel.MatReportList}">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="#"
+                                                    Width="40"
                                                     Binding="{Binding Row}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="40" />
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}" />
                                 <DataGridTextColumn Header="تاریخ"
+                                                    Width="*" 
                                                     Binding="{Binding ShamsiDate}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="*" />
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"/>
                                 <DataGridTextColumn Header="نام جنس"
                                                     Binding="{Binding MatName}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
@@ -221,11 +220,11 @@
                         </DataGrid>
                         <nu:Pagination  Grid.Row="2"
                                         Margin="0,10"
-                                        PageCount="{Binding ViewModel.PageCount}"
-                                        CurrntPage="{Binding ViewModel.CurrentPage, Mode=TwoWay}"
-                                        PageChosen="Pagination_PageChosen"
+                                        FlowDirection="LeftToRight" 
                                         HorizontalAlignment="Center"
-                                        FlowDirection="LeftToRight" />
+                                        PageChosen="Pagination_PageChosen"
+                                        PageCount="{Binding ViewModel.PageCount}"
+                                        CurrntPage="{Binding ViewModel.CurrentPage, Mode=TwoWay}"/>
                     </Grid>
                 </Border>
             </Grid>
