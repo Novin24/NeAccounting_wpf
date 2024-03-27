@@ -12,25 +12,25 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ExpensesListPage">
 
-    <Grid>
+    <Grid Margin="-15">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
                 <RowDefinition Height="35" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="35" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="40"></ColumnDefinition>
                 <ColumnDefinition Width="35"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="35"></ColumnDefinition>
-                <ColumnDefinition Width="*">
+                <ColumnDefinition Width="40">
                 </ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"

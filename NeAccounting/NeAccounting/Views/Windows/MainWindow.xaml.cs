@@ -57,7 +57,6 @@ namespace NeAccounting.Windows
         {
             if (await ViewModel.LogIn(Txt_UserName.Text, txt_password.Password))
             {
-                mainWin.MinWidth = 1200;
                 LoginGrid.Visibility = Visibility.Collapsed;
                 LoginGrid.IsEnabled = false;
 
