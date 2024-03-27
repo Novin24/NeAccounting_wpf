@@ -6,7 +6,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
-      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       xmlns:s="clr-namespace:System;assembly=netstandard"
       mc:Ignorable="d"
       d:DesignHeight="800"
@@ -14,29 +13,25 @@
       d:DataContext="{d:DesignInstance local:CustomerListPage ,IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="Customer"
-      x:Name="root">
-    <Page.Resources>
-        <cnt:Converters x:Key="ConvertHeight" />
-    </Page.Resources>
+      Title="Customer">
 
 
-    <Grid>
+    <Grid Margin="-12">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height=".9*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
@@ -56,7 +51,7 @@
                 Grid.ColumnSpan="3"
                 Background="{DynamicResource ApplicationBackgroundBrush}"
                 CornerRadius="10">
-            <Border.Style>
+            <!--<Border.Style>
                 <Style TargetType="Border">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}"
@@ -76,7 +71,7 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Border.Style>
+            </Border.Style>-->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"></RowDefinition>
@@ -211,7 +206,7 @@
                         </Grid>
                         <DataGrid Margin="0 20 0 15"
                                   x:Name="Workersdata"
-                                  BorderThickness="10"
+                                  Padding="7"
                                   Grid.Row="2"
                                   CanUserResizeColumns="False"
                                   CanUserReorderColumns="False"

@@ -6,7 +6,6 @@
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
-      xmlns:cnt="clr-namespace:NeAccounting.Helpers"
       d:DataContext="{d:DesignInstance local:MaterialReportPage,
                                         IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
@@ -15,11 +14,7 @@
       Loaded="root_Loaded"
       d:DesignHeight="800"
       d:DesignWidth="1200"
-      Title="MaterialReport"
-      x:Name="root">
-    <Page.Resources>
-        <cnt:Converters x:Key="ConvertHeight" />
-    </Page.Resources>
+      Title="MaterialReport">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -58,27 +53,6 @@
                 Background="{DynamicResource ApplicationBackgroundBrush}"
                 CornerRadius="10">
 
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=960}"
-                                     Value="false">
-                            <Setter Property="MaxHeight"
-                                    Value="770" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=910}"
-                                     Value="false">
-                            <Setter Property="MaxHeight"
-                                    Value="720" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ActualHeight ,ElementName=root,Converter={StaticResource ConvertHeight},ConverterParameter=860}"
-                                     Value="false">
-                            <Setter Property="MaxHeight"
-                                    Value="670" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
             <Grid>
 
                 <Grid.RowDefinitions>

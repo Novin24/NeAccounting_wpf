@@ -25,23 +25,23 @@
                     Command="{Binding ViewModel.PrintListCommand}" />
     </Page.InputBindings>
 
-    <Grid>
+    <Grid Margin="-12">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
-            <RowDefinition Height="15" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto"
                            MinHeight="500" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="15" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="15"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
@@ -207,7 +207,7 @@
                         <DataGrid Grid.Row="1"
                                   IsReadOnly="True"
                                   Margin="0 10 0 0"
-                                  Padding="10"
+                                  Padding="7"
                                   CanUserResizeColumns="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"
