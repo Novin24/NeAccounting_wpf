@@ -10,25 +10,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Stimulsoft.Base">
-      <HintPath>..\NeAccounting\bin\Debug\Stimulsoft.Base.dll</HintPath>
-    </Reference>
-    <Reference Include="Stimulsoft.Client.Designer">
-      <HintPath>..\NeAccounting\bin\Debug\Stimulsoft.Client.Designer.dll</HintPath>
-    </Reference>
-    <Reference Include="Stimulsoft.Data">
-      <HintPath>..\NeAccounting\bin\Debug\Stimulsoft.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Stimulsoft.Report">
-      <HintPath>..\NeAccounting\bin\Debug\Stimulsoft.Report.dll</HintPath>
-    </Reference>
-    <Reference Include="Stimulsoft.Report.Wpf">
-      <HintPath>..\NeAccounting\bin\Debug\Stimulsoft.Report.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Stimulsoft.Report.WpfDesign">
-      <HintPath>..\NeAccounting\bin\Debug\Stimulsoft.Report.WpfDesign.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
