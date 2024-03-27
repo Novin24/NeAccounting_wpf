@@ -2,17 +2,20 @@
 using Infrastructure.EntityFramework;
 using Infrastructure.Repositories;
 using NeApplication.IBaseRepositories;
+using NeApplication.IRepositoryies;
 
 namespace Infrastructure.UnitOfWork
 {
     public class BaseUnitOfWork : IDisposable
     {
-        readonly BaseDomainDbContext BaseNovin = new ();
+        readonly BaseDomainDbContext BaseNovin = new();
 
         private IIdentityUserManager _userManager;
         private INotifManager _notifManager;
+        private IBackUpManager _backUpManager;
+        private IFinancialYearManager _financialYearManager;
 
-        public IIdentityUserManager userRepository
+        public IIdentityUserManager UserRepository
         {
             get
             {
@@ -20,7 +23,25 @@ namespace Infrastructure.UnitOfWork
                 return _userManager;
             }
         }
-        
+
+        public IBackUpManager BackUpRepository
+        {
+            get
+            {
+                _backUpManager ??= new BackUpManager(BaseNovin);
+                return _backUpManager;
+            }
+        }
+
+        public IFinancialYearManager FinancialYearRepository
+        {
+            get
+            {
+                _financialYearManager ??= new FinancialYearManager(BaseNovin);
+                return _financialYearManager;
+            }
+        }
+
         public INotifManager NotifRepository
         {
             get
@@ -30,5 +51,10 @@ namespace Infrastructure.UnitOfWork
             }
         }
         public void Dispose() => BaseNovin.Dispose();
+
+        public async Task SaveChangesAsync()
+        {
+            await BaseNovin.SaveChangesAsync();
+        }
     }
 }

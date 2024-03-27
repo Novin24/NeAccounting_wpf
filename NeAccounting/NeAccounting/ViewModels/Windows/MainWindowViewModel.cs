@@ -1,4 +1,5 @@
-﻿using Infrastructure.UnitOfWork;
+﻿using DomainShared.Constants;
+using Infrastructure.UnitOfWork;
 using NeAccounting.Views.Pages;
 using NeAccounting.Views.Pages.Test;
 using System.Collections.ObjectModel;
@@ -200,8 +201,15 @@ namespace NeAccounting.ViewModels
             }
             using (BaseUnitOfWork db = new())
             {
-                if (await db.userRepository.LogInUser(userName, password))
+                if (await db.UserRepository.LogInUser(userName, password))
                 {
+                    var (s, name) = await db.FinancialYearRepository.GetActiveYear();
+                    if (!s)
+                    {
+                        LogInError = " !!!";
+                        return true;
+                    }
+                    NeAccountingConstants.NvoinDbConnectionStrint = name;
                     LogInError = "ورود با موفقیت انجام شد !!!";
                     return true;
                 }

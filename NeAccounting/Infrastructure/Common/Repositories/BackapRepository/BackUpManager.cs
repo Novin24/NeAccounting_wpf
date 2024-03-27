@@ -1,24 +1,28 @@
-﻿using Domain.NovinEntity.Customers;
+﻿using Domain.BaseDomain.User;
+using DomainShared.Constants;
+using Infrastructure.Common.BaseRepositories;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
 
 namespace Infrastructure.Repositories
 {
-    public class BackUpManager(NovinDbContext context) : Repository<Customer>(context), IBackUpRepository
+    public class BackUpManager(BaseDomainDbContext context) : BaseRepository<IdentityUser>(context), IBackUpManager
     {
         public (bool isSuccess, string error) GetBackup(string localPath, string ex_path)
         {
             try
             {
-                string command = @"Backup DataBase [Novin_DB] To Disk='" + localPath + "' WITH INIT";
-                command = @"Backup DataBase [Novin_DB] To Disk='" + ex_path + "' WITH INIT";
+                string command = $@"Backup DataBase {NeAccountingConstants.NvoinDbConnectionStrint} To Disk='" + localPath + "' WITH INIT";
                 DbContext.Database.ExecuteSqlRaw(command);
-                return new (true,string.Empty);
+
+                command = $@"Backup DataBase {NeAccountingConstants.NvoinDbConnectionStrint} To Disk='" + ex_path + "' WITH INIT";
+                DbContext.Database.ExecuteSqlRaw(command);
+                return new(true, string.Empty);
             }
             catch (Exception ex)
             {
-                return new (false ,ex.Message );
+                return new(false, ex.Message);
             }
         }
     }

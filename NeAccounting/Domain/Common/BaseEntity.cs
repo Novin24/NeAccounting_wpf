@@ -2,7 +2,7 @@
 
 namespace Domain.Common
 {
-    public abstract class BaseEntity<TKey> : IBaseDomainEntities
+    public abstract class BaseEntity<TKey> : IBaseDomainEntities, ISoftDeleted
     {
         [Key]
         public TKey Id { get; set; }
@@ -12,6 +12,7 @@ namespace Domain.Common
         public Guid? LastModifireId { get; set; }
         public DateTime? DeletionTime { get; set; }
         public Guid? DeleterId { get; set; }
+        public bool IsDeleted { get; set; }
     }
 
     public abstract class BaseEntity : BaseEntity<int>
