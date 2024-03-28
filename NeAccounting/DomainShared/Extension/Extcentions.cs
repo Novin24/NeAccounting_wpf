@@ -17,6 +17,11 @@ namespace DomainShared.Extension
             return string.Concat(pc.GetYear(date), "/", pc.GetMonth(date), "/", pc.GetDayOfMonth(date));
         }
 
+        public static string ToShamsiDate(this DateTime date, PersianCalendar pc, char sep)
+        {
+            return string.Concat(pc.GetYear(date), sep, pc.GetMonth(date), sep, pc.GetDayOfMonth(date));
+        }
+
         public static DataTable ToDataTable<T>(this IEnumerable<T> items)
         {
             DataTable dataTable = new DataTable(typeof(T).Name);

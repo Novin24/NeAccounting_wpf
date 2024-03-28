@@ -15,9 +15,11 @@ namespace Infrastructure.Repositories
             {
                 string command = $@"Backup DataBase {NeAccountingConstants.NvoinDbConnectionStrint} To Disk='" + localPath + "' WITH INIT";
                 DbContext.Database.ExecuteSqlRaw(command);
-
-                command = $@"Backup DataBase {NeAccountingConstants.NvoinDbConnectionStrint} To Disk='" + ex_path + "' WITH INIT";
-                DbContext.Database.ExecuteSqlRaw(command);
+                if (!string.IsNullOrEmpty(ex_path))
+                {
+                    command = $@"Backup DataBase {NeAccountingConstants.NvoinDbConnectionStrint} To Disk='" + ex_path + "' WITH INIT";
+                    DbContext.Database.ExecuteSqlRaw(command);
+                }
                 return new(true, string.Empty);
             }
             catch (Exception ex)

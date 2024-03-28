@@ -2,7 +2,6 @@
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
-using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
