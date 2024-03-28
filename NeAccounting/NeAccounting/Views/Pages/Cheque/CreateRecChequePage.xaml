@@ -159,6 +159,7 @@
                             <ui:TextBox TextAlignment="Center"
                                         Text="{Binding ViewModel.Cheque_Number, Mode=OneWayToSource}"
                                         FontSize="14"
+                                        PreviewTextInput="TextBox_PreviewTextInput"
                                         FontFamily="Calibri" />
                         </StackPanel>
 
@@ -173,6 +174,7 @@
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
+                                        PreviewTextInput="TextBox_PreviewTextInput"
                                         Text="{Binding ViewModel.Accunt_Number ,Mode=OneWayToSource}"
                                         Height="36"
                                         FontFamily="Calibri" />

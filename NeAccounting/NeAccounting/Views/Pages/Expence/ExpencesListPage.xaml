@@ -121,7 +121,7 @@
                                                       Text="افزودن"
                                                       TextWrapping="WrapWithOverflow" />
                                             <ui:TextBlock Appearance="Tertiary"
-                                                      Text="اضافه کردن مشتری"
+                                                      Text="اضافه کردن هزینه"
                                                       TextWrapping="WrapWithOverflow" />
                                         </StackPanel>
                                     </Grid>

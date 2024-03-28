@@ -181,6 +181,7 @@
                                                 LabelName="تاریخ کارکرد"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth, Mode=TwoWay}"
                                                 SelectedYear="{Binding ViewModel.SubmitYear, Mode=TwoWay}"/>
+                                
                                 <nu:MoneyPack Grid.Column="0"
                                               Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
                                               Grid.Row="1"

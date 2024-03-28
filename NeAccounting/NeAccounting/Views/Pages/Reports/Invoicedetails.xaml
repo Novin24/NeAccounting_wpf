@@ -197,7 +197,6 @@
                             </StackPanel>
                         </Grid>
                         <DataGrid Grid.Row="1"
-                                  Margin="0 0 0 20"
                                   Padding="7"
                                   FontSize="15"
                                   CanUserAddRows="False"
