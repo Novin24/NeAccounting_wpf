@@ -185,7 +185,6 @@
                                                 LabelName="تاریخ کارکرد"
                                                 Grid.Column="1"
                                                 x:Name="dtp"
-                                                LabelVisibility="Collapsed"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
                                                 SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
 

@@ -190,21 +190,13 @@
                                                 LabelName="تاریخ پرداخت"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
                                                 SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
-                                <StackPanel Grid.Column="0"
-                                            Grid.Row="1">
-
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="مبلغ مساعده"
-                                               Margin="22 4 0 0 " />
-                                    <ui:NumberBox Margin="20 4 3 0"
-                                                  SpinButtonPlacementMode="Hidden"
-                                                  TextAlignment="Center"
-                                                  FontSize="14"
-                                                  Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
-                                                  FlowDirection="LeftToRight"
-                                                  FontFamily="Calibri" />
-                                </StackPanel>
+                                <nu:MoneyPack Grid.Column="0"
+                                              Grid.Row="1"
+                                              LabelName="مبلغ مساعده"
+                                              x:Name="txt_amountOf"
+                                              FontSize="14"
+                                              Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
+                                              FontFamily="Calibri" />
                                 <Grid Grid.Column="0"
                                       Grid.ColumnSpan="2"
                                       Grid.Row="2"
