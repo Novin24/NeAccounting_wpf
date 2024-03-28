@@ -1,23 +1,19 @@
 ﻿using Domain.BaseDomain.User;
 using DomainShared.Constants;
-using Infrastructure.Common.BaseRepositories;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using NeApplication.IRepositoryies;
+using NeApplication.IBaseRepositories;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Common.BaseRepositories.BackapRepository
 {
     public class BackUpManager(BaseDomainDbContext context) : BaseRepository<IdentityUser>(context), IBackUpManager
     {
-        public (bool isSuccess, string error) GetBackup(string localPath, string ex_path)
+        public async Task<(bool isSuccess, string error)> GetBackup(string backUpPathh)
         {
             try
             {
-                string command = $@"Backup DataBase [{NeAccountingConstants.NvoinDbConnectionStrint}] To Disk='" + ex_path + "' WITH INIT";
-                DbContext.Database.ExecuteSqlRaw(command);
-
-                command = $@"Backup DataBase [{NeAccountingConstants.NvoinDbConnectionStrint}] To Disk='" + localPath + "' WITH INIT";
-                DbContext.Database.ExecuteSqlRaw(command);
+                string command = $@"Backup DataBase [{NeAccountingConstants.NvoinDbConnectionStrint}] To Disk='" + backUpPathh + "' WITH INIT";
+                await DbContext.Database.ExecuteSqlRawAsync(command);
 
                 return new(true, string.Empty);
             }
@@ -27,14 +23,14 @@ namespace Infrastructure.Repositories
             }
         }
 
-        public (bool isSuccess, string error) Restore(string file)
+        public async Task<(bool isSuccess, string error)> Restore(string file)
         {
             try
             {
                 string command = $"ALTER DATABASE [{NeAccountingConstants.NvoinDbConnectionStrint}] SET OFFLINE WITH ROLLBACK IMMEDIATE " +
                                  $" RESTORE DATABASE [{NeAccountingConstants.NvoinDbConnectionStrint}] FROM DISK='" + file + "'WITH REPLACE " +
                                  $"ALTER DATABASE [{NeAccountingConstants.NvoinDbConnectionStrint}] SET ONLINE";
-                DbContext.Database.ExecuteSqlRaw(command);
+                await DbContext.Database.ExecuteSqlRawAsync(command);
 
                 return new(true, string.Empty);
             }

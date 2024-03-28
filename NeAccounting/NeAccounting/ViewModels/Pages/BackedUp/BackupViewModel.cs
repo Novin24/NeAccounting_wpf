@@ -1,4 +1,5 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Constants;
+using DomainShared.Errore;
 using DomainShared.Extension;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Models;
@@ -11,10 +12,9 @@ using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels;
-public partial class BackupViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+public partial class BackupViewModel(ISnackbarService snackbarService) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
-    private readonly INavigationService _navigationService = navigationService;
 
     /// <summary>
     /// ادرس فایل
@@ -34,6 +34,20 @@ public partial class BackupViewModel(ISnackbarService snackbarService, INavigati
     [ObservableProperty]
     private string _fileName;
 
+
+    /// <summary>
+    /// حالت انتظار
+    /// </summary>
+    [ObservableProperty]
+    private bool _wating = false;
+
+    /// <summary>
+    /// دیتاگرید 
+    /// </summary>
+    [ObservableProperty]
+    private bool _showData = true;
+
+
     public void OnNavigatedFrom()
     {
     }
@@ -48,20 +62,27 @@ public partial class BackupViewModel(ISnackbarService snackbarService, INavigati
     /// </summary>
     /// <returns></returns>
     [RelayCommand]
-    private void OnSubmit()
+    private async Task OnSubmit()
     {
         #region validation
+        string backUpPath = "";
         if (string.IsNullOrEmpty(ExPaht))
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("آدرس فایل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return;
+            backUpPath = Environment.CurrentDirectory + @"\BackUp\" + FileName;
+        }
+        else
+        {
+            backUpPath = ExPaht + "\\" + FileName;
         }
         #endregion
 
         #region CreatePayDocumetn
-        string local = Environment.CurrentDirectory + @"\BackUp\" + FileName;
         using BaseUnitOfWork db = new();
-        var (s, e) = db.BackUpRepository.GetBackup(local, ExPaht + "\\" + FileName);
+        Wating = true;
+        ShowData = false;
+        var (s, e) = await db.BackUpRepository.GetBackup(backUpPath);
+        Wating = false;
+        ShowData = true;
         if (s)
         {
             _snackbarService.Show("کاربر گرامی", $"پشتیبان گیری با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
@@ -75,11 +96,21 @@ public partial class BackupViewModel(ISnackbarService snackbarService, INavigati
     }
 
     [RelayCommand]
-    private void OnRestor(Guid parameter)
+    private async Task OnRestor(Guid parameter)
     {
-        var file = BakFiles.First(x => x.Id == parameter).FullName;
+        var file = BakFiles.First(x => x.Id == parameter);
+        string dbName = file.FileName.Substring(9, 15);
+        if (dbName != NeAccountingConstants.NvoinDbConnectionStrint)
+        {
+            _snackbarService.Show("کاربر گرامی", $"فایل پشتیبان مورد نظر مربوط به سال مالی کنونی نمی‌باشد !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+            return;
+        }
         using BaseUnitOfWork db = new();
-        var (s, e) = db.BackUpRepository.Restore(file);
+        Wating = true;
+        ShowData = false;
+        var (s, e) = await db.BackUpRepository.Restore(file.FullName);
+        Wating = false;
+        ShowData = true;
         if (s)
         {
             _snackbarService.Show("کاربر گرامی", $"بازیابی اطلاعات با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
@@ -93,7 +124,7 @@ public partial class BackupViewModel(ISnackbarService snackbarService, INavigati
 
     private static string SetName()
     {
-        return "BackUpDb_" + Guid.NewGuid().ToString().Replace("-", "")[..15] + "&" + ".bak";
+        return "BackupDb_" + NeAccountingConstants.NvoinDbConnectionStrint + "_" + Guid.NewGuid().ToString().Replace("-", "")[..15] + ".bak";
     }
 
     public void BindFiles()
