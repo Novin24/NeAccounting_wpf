@@ -176,18 +176,18 @@
                                                        Margin="0 4 3 0 "
                                                        FontFamily="Calibri" />
                                 </StackPanel>
-                                
+
                                 <nu:MonthPicker FontSize="14"
-                                                              FlowDirection="LeftToRight"
-                                                              FontFamily="Calibri"
-                                                              Focusable="True"
-                                                              IsTabStop="True"
-                                                              LabelName="تاریخ کارکرد"
-                                                              Grid.Column="1"
-                                                              x:Name="dtp"
+                                                FlowDirection="LeftToRight"
+                                                FontFamily="Calibri"
+                                                Focusable="True"
+                                                IsTabStop="True"
+                                                LabelName="تاریخ کارکرد"
+                                                Grid.Column="1"
+                                                x:Name="dtp"
                                                 LabelVisibility="Collapsed"
-                                                              SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
-                                                              SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
+                                                SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
+                                                SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
 
                                 <nu:MoneyPack Grid.Column="0"
                                               Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"

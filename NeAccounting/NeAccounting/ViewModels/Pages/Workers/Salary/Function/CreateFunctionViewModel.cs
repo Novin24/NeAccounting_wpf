@@ -37,7 +37,7 @@ namespace NeAccounting.ViewModels
         private byte? _submitMonth;
 
         [ObservableProperty]
-        private byte? _submitYear;
+        private int? _submitYear;
 
         [ObservableProperty]
         private string? _description;
