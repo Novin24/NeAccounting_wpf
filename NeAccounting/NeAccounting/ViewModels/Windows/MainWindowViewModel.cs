@@ -159,7 +159,7 @@ namespace NeAccounting.ViewModels
 
                 }
             },
-            new NavigationViewItem(){Content = "پشتبان گیری",TargetPageType = typeof(BackupPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+            new NavigationViewItem(){Content = "پشتبان گیری",TargetPageType = typeof(BackupPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
         };
 
         [ObservableProperty]

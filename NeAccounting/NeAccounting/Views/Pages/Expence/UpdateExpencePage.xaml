@@ -174,7 +174,7 @@
 
                         <Button Content="ثبت"
                                     Margin="20"
-                                    Padding="20 5 "
+                                    Padding="30 4 "
                                     Command="{Binding ViewModel.UpdateCommand , Mode=OneWay}"
                                     VerticalAlignment="Bottom"
                                     HorizontalAlignment="Center"

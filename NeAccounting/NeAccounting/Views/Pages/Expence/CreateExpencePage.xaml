@@ -16,13 +16,13 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height=".8*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height=".8*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"></ColumnDefinition>
@@ -79,7 +79,7 @@
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
@@ -179,9 +179,9 @@
                         </Grid>
 
                         <Button Content="ثبت"
-                                Margin="20"
-                                Padding="20 5 "
-                                VerticalAlignment="Bottom"
+                                Margin="10"
+                                Padding="30 4"
+                                VerticalAlignment="Center"
                                 Command="{Binding ViewModel.CreateExpenseCommand , Mode=OneWay}"
                                 HorizontalAlignment="Center"
                                 Grid.Row="6"

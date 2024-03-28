@@ -20,23 +20,23 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
+                <RowDefinition  />
                 <RowDefinition Height="30" />
-                <RowDefinition Height="*" />
+                <RowDefinition />
                 <RowDefinition Height="10*" />
-                <RowDefinition Height="*" />
+                <RowDefinition />
                 <RowDefinition Height="30" />
-                <RowDefinition Height="2*" />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3.5*"></ColumnDefinition>
-                <ColumnDefinition Width="30"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="10*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="30"></ColumnDefinition>
-                <ColumnDefinition Width="3.5*">
-                </ColumnDefinition>
+                <ColumnDefinition Width="3.5*"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="3.5*"/>
+
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
                     Grid.RowSpan="3"

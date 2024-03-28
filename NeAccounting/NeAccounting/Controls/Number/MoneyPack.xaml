@@ -19,7 +19,7 @@
                            FontSize="14" />
 
                 <ItemsControl FontFamily="Calibri"
-                              FontSize="16"
+                              FontSize="15"
                               Focusable="False"
                               x:Name="txb_num"
                               Foreground="#BB8F60"

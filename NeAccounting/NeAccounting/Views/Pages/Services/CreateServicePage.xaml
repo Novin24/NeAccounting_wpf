@@ -16,21 +16,21 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="3*" />
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
             <ColumnDefinition Width="6*">
             </ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -150,7 +150,7 @@
                                 Grid.Row="5"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="3"
-                                Padding="30 10 "
+                                Padding="30 4 "
                                 Command="{Binding ViewModel.CreateServiceCommand , Mode=OneWay}"
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"

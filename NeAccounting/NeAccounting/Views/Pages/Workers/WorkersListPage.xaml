@@ -17,21 +17,21 @@
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="1.2*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width=".5*"></ColumnDefinition>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
                     Grid.RowSpan="3"
@@ -194,17 +194,17 @@
                                         IsDefault="True"
                                         Command="{Binding ViewModel.SearchWorkerCommand}">جستجو</Button>
                             </Grid>
-                            <DataGrid Margin="0 0 0 30"
-                                      x:Name="Workersdata"
-                                      BorderThickness="10"
-                                      CanUserReorderColumns="False"
-                                      Grid.Row="2"
-                                      CanUserResizeColumns="False"
+                            <DataGrid Grid.Row="2"
+                                      Padding="7"
                                       FontSize="15"
-                                      CanUserResizeRows="False"
+                                      Margin="0 0 0 30"
                                       FontFamily="Calibri"
-                                      ItemsSource="{Binding ViewModel.List}"
-                                      AutoGenerateColumns="False">
+                                      x:Name="Workersdata"
+                                      CanUserResizeRows="False"
+                                      AutoGenerateColumns="False"
+                                      CanUserResizeColumns="False"
+                                      CanUserReorderColumns="False"
+                                      ItemsSource="{Binding ViewModel.List}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="شماره پرسنلی"
                                                         Binding="{Binding PersonnelId}"
