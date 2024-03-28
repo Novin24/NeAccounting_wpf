@@ -1,6 +1,4 @@
-﻿using DomainShared.Extension;
-using NeAccounting.Models;
-using System.Globalization;
+﻿using NeAccounting.ViewModels;
 using System.IO;
 using System.Windows.Media;
 using Wpf.Ui;
@@ -23,74 +21,9 @@ namespace NeAccounting.Views.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-            BindFiles();
-            SetName();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.FolderBrowserDialog dialog = new();
-
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                txt_Address.Text = dialog.SelectedPath;
-            }
-        }
-
-        private void BindFiles()
-        {
-            PersianCalendar pc = new();
-            try
-            {
-                List<BackFilesDetails> myFiles = [];
-                DirectoryInfo d = new(Environment.CurrentDirectory + @"\BackUp\");
-                FileInfo[] Files = d.GetFiles("*.bak");
-                foreach (FileInfo file in Files)
-                {
-                    BackFilesDetails Myfile = new()
-                    {
-                        Id = Guid.NewGuid(),
-                        FileName = file.Name,
-                        FulePath = file.DirectoryName,
-                        CreationTime = file.CreationTime.ToShamsiDate(pc)
-                    };
-                    myFiles.Add(Myfile);
-                }
-
-                if (txt_Address.Text != "")
-                {
-                    DirectoryInfo Md = new($@"{txt_Address.Text}");
-                    FileInfo[] MFiles = Md.GetFiles("*.bak");
-                    foreach (FileInfo file in MFiles)
-                    {
-                        BackFilesDetails nMyfile = new()
-                        {
-                            Id = Guid.NewGuid(),
-                            FileName = file.Name,
-                            CreationTime = file.CreationTime.ToShamsiDate(pc),
-                            FulePath = file.FullName
-                        };
-                        myFiles.Add(nMyfile);
-                    }
-
-                }
-
-                ViewModel.BakFiles = myFiles;
-            }
-            catch (Exception ex)
-            {
-                _snackbarService.Show("خطا", ex.Message, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(8000));
-            }
-        }
-
-        private void SetName()
-        {
-            PersianCalendar pc = new();
-            var time = DateTime.Now.ToShamsiDate(pc, '^');
-            txt_name.Text = "BackUpDb_" + Guid.NewGuid().ToString().Replace("-", "")[..15] + "&" + time + ".bak";
-        }
-
-        private void btn_Delete_Click(object sender, RoutedEventArgs e)
+        private async void Btn_Delete_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not Button btn)
                 return;
@@ -98,9 +31,54 @@ namespace NeAccounting.Views.Pages
             if (btn.Tag == null)
                 return;
 
+            var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+            {
+                Title = "هشدار !!!",
+                Content = new TextBlock() { Text = "آیا از حذف فایل اطمینان دارید ؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
+                PrimaryButtonText = "بله",
+                SecondaryButtonText = "خیر",
+                CloseButtonText = "انصراف",
+            });
 
+            if (result == ContentDialogResult.Primary)
+            {
+                Guid id = Guid.Parse(btn.Tag.ToString());
+                var file = ViewModel.BakFiles.First(x => x.Id == id).FullName;
 
-            Guid id = Guid.Parse(btn.Tag.ToString());
+                if (DeleteFile(file))
+                {
+                    _snackbarService.Show("کاربر گرامی", $"حذف فایل با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+                    ViewModel.BindFiles();
+                    return;
+                }
+
+                _snackbarService.Show("خطا", "حذف فایل امکان پذیر نیست !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            }
+        }
+
+        private static bool DeleteFile(string fullName)
+        {
+            try
+            {
+                File.Delete(fullName);
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private void Btn_Brows_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog dialog = new();
+
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                ViewModel.ExPaht = dialog.SelectedPath;
+                ViewModel.BindFiles();
+            }
         }
     }
 }

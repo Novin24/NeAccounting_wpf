@@ -13,13 +13,29 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                string command = $@"Backup DataBase {NeAccountingConstants.NvoinDbConnectionStrint} To Disk='" + localPath + "' WITH INIT";
+                string command = $@"Backup DataBase [{NeAccountingConstants.NvoinDbConnectionStrint}] To Disk='" + ex_path + "' WITH INIT";
                 DbContext.Database.ExecuteSqlRaw(command);
-                if (!string.IsNullOrEmpty(ex_path))
-                {
-                    command = $@"Backup DataBase {NeAccountingConstants.NvoinDbConnectionStrint} To Disk='" + ex_path + "' WITH INIT";
-                    DbContext.Database.ExecuteSqlRaw(command);
-                }
+
+                command = $@"Backup DataBase [{NeAccountingConstants.NvoinDbConnectionStrint}] To Disk='" + localPath + "' WITH INIT";
+                DbContext.Database.ExecuteSqlRaw(command);
+
+                return new(true, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                return new(false, ex.Message);
+            }
+        }
+
+        public (bool isSuccess, string error) Restore(string file)
+        {
+            try
+            {
+                string command = $"ALTER DATABASE [{NeAccountingConstants.NvoinDbConnectionStrint}] SET OFFLINE WITH ROLLBACK IMMEDIATE " +
+                                 $" RESTORE DATABASE [{NeAccountingConstants.NvoinDbConnectionStrint}] FROM DISK='" + file + "'WITH REPLACE " +
+                                 $"ALTER DATABASE [{NeAccountingConstants.NvoinDbConnectionStrint}] SET ONLINE";
+                DbContext.Database.ExecuteSqlRaw(command);
+
                 return new(true, string.Empty);
             }
             catch (Exception ex)

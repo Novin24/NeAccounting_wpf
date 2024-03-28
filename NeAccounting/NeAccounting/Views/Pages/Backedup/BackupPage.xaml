@@ -119,13 +119,14 @@
                                             IsEnabled="False"
                                             x:Name="txt_Address"
                                             FontFamily="Calibri"
-                                            Text="{Binding ViewModel.ExPaht , Mode=OneWayToSource}"
+                                            Text="{Binding ViewModel.ExPaht , Mode=TwoWay}"
                                             Margin="0 2 0 0" />
                             </StackPanel>
                             <Button Grid.Column="1"
                                     VerticalAlignment="Bottom"
                                     Height="30"
-                                    Click="Button_Click"
+                                    x:Name="Btn_Brows"
+                                    Click="Btn_Brows_Click"
                                     Margin="0 0 10 0"
                                     HorizontalAlignment="Right">
                                 . . .
@@ -193,6 +194,11 @@
                                 <DataGridTextColumn Header="تاریخ پشتیبان گیری"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Binding="{Binding CreationDate}"
+                                                    Width=".5*" />
+                                <DataGridTextColumn Header="ساعت پشتیبان گیری"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     Binding="{Binding CreationTime}"
                                                     Width=".5*" />
                                 <DataGridTemplateColumn Header="عملیات"
@@ -217,7 +223,7 @@
                                                             Tag="{Binding Id}"
                                                             Padding="7,5"
                                                             x:Name="btn_Delete"
-                                                            Click="btn_Delete_Click"
+                                                            Click="Btn_Delete_Click"
                                                             ToolTip="حذف">
                                                     <ui:SymbolIcon  Symbol="Delete16" />
                                                 </ui:Button>
