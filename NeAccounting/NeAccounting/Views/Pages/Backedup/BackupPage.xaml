@@ -15,6 +15,11 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="Backup"
       x:Name="root">
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.SubmitCommand}" />
+    </Page.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -157,7 +162,7 @@
                                                       Text="پشتیبان گیری"
                                                       TextWrapping="WrapWithOverflow" />
                                         <ui:TextBlock Appearance="Tertiary"
-                                                      Text="شروع مراحل (Enter)"
+                                                      Text="شروع مراحل (F1)"
                                                       TextWrapping="WrapWithOverflow" />
                                     </StackPanel>
                                 </Grid>
@@ -234,7 +239,7 @@
                             </DataGrid>
                         </Grid>
                         <Grid  Grid.Row="1">
-                            <ui:ProgressRing IsIndeterminate="True"/>
+                            <ui:ProgressRing IsIndeterminate="True" Height="100" Width="100" />
                         </Grid>
                     </Grid>
 
