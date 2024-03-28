@@ -11,7 +11,6 @@ namespace Infrastructure.EntityFramework
                         DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=BaseDomain;Trusted_Connection=True;");
-
         }
 
 

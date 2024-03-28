@@ -1,5 +1,4 @@
-﻿using NeAccounting.Helpers.Extention;
-using NeAccounting.ViewModels;
+﻿using NeAccounting.ViewModels;
 using System.Windows.Controls;
 using Wpf.Ui.Controls;
 

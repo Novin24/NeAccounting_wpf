@@ -14,8 +14,7 @@ namespace Infrastructure.EntityFramework
         protected override void OnConfiguring(
                         DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=NovinWpf;Trusted_Connection=True;");
-
+            optionsBuilder.UseSqlServer($"Server=(LocalDb)\\MSSQLLocalDB;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;");
         }
 
         private static readonly MethodInfo ConfigureBasePropertiesMethodInfo = typeof(NovinDbContext)
@@ -120,7 +119,7 @@ namespace Infrastructure.EntityFramework
                     book.LastModifireId = CurrentUser.CurrentUserId;
                     book.LastModificationTime = DateTime.Now;
                 }
-                
+
                 if (entity.State == EntityState.Added && entity.Entity is IEntities)
                 {
                     var book = entity.Entity as IEntities;

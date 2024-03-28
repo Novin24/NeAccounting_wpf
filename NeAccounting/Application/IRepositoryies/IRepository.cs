@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using DomainShared.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

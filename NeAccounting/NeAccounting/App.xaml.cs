@@ -256,6 +256,7 @@ namespace NeAccounting
 
                 #region Backup
                 services.AddTransient<BackupPage>();
+                services.AddTransient<BackupViewModel>();
                 #endregion
 
             }).Build();
