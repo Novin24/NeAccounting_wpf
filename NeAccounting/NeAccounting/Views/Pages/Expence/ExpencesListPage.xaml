@@ -16,38 +16,35 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
-                <RowDefinition Height="35" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="35" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"></ColumnDefinition>
-                <ColumnDefinition Width="35"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="10*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="35"></ColumnDefinition>
-                <ColumnDefinition Width="40">
-                </ColumnDefinition>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="30"/>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
                 Grid.RowSpan="3"
-                Grid.Column="1"
+                Grid.Column="0"
                 Grid.ColumnSpan="3"
                 Background="{StaticResource Rectangle Dark blue}"
                 CornerRadius="10"></Border>
             <Border Grid.Row="3"
                 Grid.RowSpan="3"
-                Grid.Column="3"
+                Grid.Column="2"
                 Grid.ColumnSpan="3"
                 Background="{StaticResource Rectangle Pale blue}"
                 CornerRadius="10"></Border>
             <Border Grid.Row="2"
                 Grid.RowSpan="3"
-                Grid.Column="2"
+                Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Background="{DynamicResource ApplicationBackgroundBrush}"
                 CornerRadius="10">
@@ -130,13 +127,13 @@
                                     </Grid>
                                 </ui:CardAction>
                             </Grid>
-                            <DataGrid BorderThickness="10"
-                                  Grid.Row="1"
-                                  CanUserResizeColumns="False"
-                                  FontSize="15"
-                                  CanUserResizeRows="False"
-                                  FontFamily="Calibri"
-                                  AutoGenerateColumns="False">
+                            <DataGrid Grid.Row="1"
+                                      Padding="7"
+                                      FontSize="15"
+                                      FontFamily="Calibri"
+                                      CanUserResizeRows="False"
+                                      AutoGenerateColumns="False"
+                                      CanUserResizeColumns="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="دریافت کننده"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
@@ -162,7 +159,7 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal"
-                                                        HorizontalAlignment="Center">
+                                                            HorizontalAlignment="Center">
                                                     <Button  Margin="2"
                                                          CommandParameter="{Binding Id , Mode=OneWay}"
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateCusCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"

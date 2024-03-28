@@ -15,22 +15,22 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}">
 
-    <Grid>
+    <Grid Margin="-12">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="45" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="45" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="45"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="45"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
@@ -122,7 +122,7 @@
                                               Margin="0 0 23 0"
                                               LabelName="تاریخ دریافت" />
                         <StackPanel Grid.Row="1"
-                                    Margin="30 5 20 5 ">
+                                    Margin="30 0 20 5 ">
 
 
                             <TextBlock FontFamily="Calibri"
@@ -136,7 +136,7 @@
                         </StackPanel>
                         <StackPanel Grid.Row="1"
                                     Grid.Column="1"
-                                    Margin="20 5 30 5 ">
+                                    Margin="20 0 30 5 ">
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="15"
@@ -149,7 +149,7 @@
                         </StackPanel>
 
                         <StackPanel  Grid.Row="2"
-                                     Margin="30 5 20 5 ">
+                                     Margin="30 0 20 5 ">
 
 
                             <TextBlock FontFamily="Calibri"
@@ -163,7 +163,7 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="2"
-                                    Margin="20 6 30 0 "
+                                    Margin="20 0 30 0 "
                                     Grid.Column="1">
 
 
@@ -189,7 +189,7 @@
                                       Margin="0 0 10 0"
                                       LabelName="مبلغ چک" />
                         <StackPanel Grid.Row="4"
-                                    Margin="30 5 20 0 ">
+                                    Margin="30 0 20 0 ">
 
 
                             <TextBlock FontFamily="Calibri"
@@ -203,17 +203,16 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="4"
-                                    Margin="20 5 0 5 "
-                                    HorizontalAlignment="Left"
+                                    Margin="20 0 0 5 "
+                                    HorizontalAlignment="Center"
                                     Width="200"
                                     Grid.Column="1">
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="وضعیت چک"
-                                       Margin="1 0 0 0 " />
+                                       Margin="5 0 0 3 " />
                             <ComboBox SelectedIndex="3"
-                                      Margin="0 0 0 0"
                                       SelectedValuePath="Key"
                                       DisplayMemberPath="Value"
                                       SelectedValue="{Binding ViewModel.Status,Mode= TwoWay}"
@@ -240,7 +239,7 @@
                         <Button Grid.Row="6"
                                 Content="ثبت چک"
                                 Margin="10"
-                                Width="100"
+                                Padding="30 4"
                                 Command="{Binding ViewModel.SubmitCommand}"
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"

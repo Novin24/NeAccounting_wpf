@@ -14,22 +14,22 @@
       Title="DailyBook">
 
 
-    <Grid>
+    <Grid Margin="-12">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="25"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="25"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
@@ -77,19 +77,19 @@
                             <RowDefinition ></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <DataGrid Margin="40 10 40 0"
-                              BorderThickness="10"
-                              CanUserResizeColumns="False"
+                        <DataGrid Padding="7"
+                              FontSize="15"
+                              IsReadOnly="True"
+                              Margin="40 10 40 0"
+                              FontFamily="Calibri"
+                              CanUserAddRows="False"
                               CanUserDeleteRows="False"
                               CanUserResizeRows="False"
-                              CanUserAddRows="False"
                               CanUserSortColumns="False"
+                              AutoGenerateColumns="False"
+                              CanUserResizeColumns="False"
                               CanUserReorderColumns="False"
-                              FontFamily="Calibri"
-                              IsReadOnly="True"
-                              FontSize="15"
-                              ItemsSource="{Binding ViewModel.InvList}"
-                              AutoGenerateColumns="False">
+                              ItemsSource="{Binding ViewModel.InvList}">
                         <DataGrid.Columns>
 
                             <DataGridTextColumn Header="#"
