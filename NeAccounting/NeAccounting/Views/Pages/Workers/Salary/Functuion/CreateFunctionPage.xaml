@@ -15,157 +15,143 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
 
-    <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="10*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height=".9*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="10*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Row="1"
+    <Grid Margin="-20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="35"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="35"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1"
                     Grid.RowSpan="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Background="{StaticResource Rectangle Dark blue}"
                     CornerRadius="10"></Border>
-            <Border Grid.Row="3"
+        <Border Grid.Row="3"
                     Grid.RowSpan="3"
                     Grid.Column="2"
                     Grid.ColumnSpan="3"
                     Background="{StaticResource Rectangle Pale blue}"
                     CornerRadius="10"></Border>
-            <Border Grid.Row="2"
+        <Border Grid.Row="2"
                     Grid.RowSpan="3"
                     Grid.Column="1"
                     Grid.ColumnSpan="3"
                     Background="{DynamicResource ApplicationBackgroundBrush}"
                     CornerRadius="10">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.2*"></ColumnDefinition>
-                        <ColumnDefinition Width="2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.2*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="60"></RowDefinition>
-                        <RowDefinition Height="6*"></RowDefinition>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="6*"></RowDefinition>
 
-                    </Grid.RowDefinitions>
-                    <ui:TextBlock Margin="15,0"
-                                  Padding="0,20,0,0"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center"
-                                  FontFamily="the King &amp; Queen font"
-                                  FontSize="30"
-                                  Text="Novin" />
-                    <TextBlock Margin="0 20 20 0"
-                               Grid.ColumnSpan="2"
-                               Height="40"
-                               HorizontalAlignment="Right"
-                               FontFamily="Calibri"
-                               FontWeight="Bold"
-                               FontSize="18"
-                               Text="ثبت کارکرد" />
-                    <Border Grid.Row="1"
+                </Grid.RowDefinitions>
+                <nu:HeaderPack NamePpage="کارکرد" Margin="25 0" Grid.ColumnSpan="2"/>
+
+                <Border Grid.Row="1"
                             CornerRadius="9"
                             Margin="4"
                             BorderBrush="#D6D5D5"
                             BorderThickness="0.4">
-                        <Border.Background>
-                            <SolidColorBrush Color="White"
+                    <Border.Background>
+                        <SolidColorBrush Color="White"
                                              Opacity="0.08" />
-                        </Border.Background>
+                    </Border.Background>
 
-                        <StackPanel Margin="10 10 10 14">
+                    <StackPanel Margin="10 10 10 14">
 
-                            <TextBlock FontFamily="Calibri"
+                        <TextBlock FontFamily="Calibri"
                                        FontSize="15"
                                        Text="آخرین کارکرد ها"
                                        HorizontalAlignment="Center" />
-                            <DataGrid Margin="0 6 0 6"
-                                      ItemsSource="{Binding ViewModel.List}"
+                        <DataGrid Margin="0 6 0 6"
+                                      Padding="7"
                                       AutoGenerateColumns="False"
-                                      BorderThickness="10">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="اضافه کاری"
+                                      ItemsSource="{Binding ViewModel.List}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="اضافه کاری"
                                                         Binding="{Binding OverTime}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
-                                    <DataGridTextColumn Header="عادی"
+                                <DataGridTextColumn Header="عادی"
                                                         Binding="{Binding Amountof}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="45" />
-                                    <DataGridTextColumn Header="کد پرسنلی"
+                                <DataGridTextColumn Header="کد پرسنلی"
                                                         Binding="{Binding PersonelId}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
-                                    <DataGridTextColumn Header="تاریخ"
+                                <DataGridTextColumn Header="تاریخ"
                                                         Binding="{Binding DisplayDate}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
 
-                    </Border>
+                </Border>
 
 
-                    <Grid Grid.Column="1"
+                <Grid Grid.Column="1"
                           Grid.Row="1">
 
-                        <Border Grid.Row="1"
+                    <Border Grid.Row="1"
                                 CornerRadius="9"
                                 BorderBrush="#D6D5D5"
                                 BorderThickness="0.4"
                                 Margin="4">
-                            <Border.Background>
-                                <SolidColorBrush Color="White"
+                        <Border.Background>
+                            <SolidColorBrush Color="White"
                                                  Opacity="0.08" />
-                            </Border.Background>
+                        </Border.Background>
 
-                            <Grid FlowDirection="RightToLeft">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
+                        <Grid FlowDirection="RightToLeft">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
 
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Margin="20 4 20 5">
-                                    <DockPanel>
-                                        <TextBlock FontFamily="Calibri"
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Margin="20 4 20 5">
+                                <DockPanel>
+                                    <TextBlock FontFamily="Calibri"
                                                    FontWeight="Bold"
                                                    FontSize="16"
                                                    Text="نام پرسنل"
                                                    Margin="9 0 9 0" />
-                                        <TextBlock FontFamily="Calibri"
+                                    <TextBlock FontFamily="Calibri"
                                                    FontSize="16"
                                                    x:Name="txt_Personel"
                                                    Foreground="#BB8F60"
                                                    Text="{Binding ViewModel.PersonelId , Mode=OneWay}"
                                                    HorizontalAlignment="Right"
                                                    Margin="9 0 9 5" />
-                                    </DockPanel>
-                                    <ui:AutoSuggestBox x:Name="txt_sugName"
+                                </DockPanel>
+                                <ui:AutoSuggestBox x:Name="txt_sugName"
                                                        Icon="{ui:SymbolIcon Search24}"
                                                        PlaceholderText="جستجو ..."
                                                        FontSize="16"
@@ -188,45 +174,45 @@
                                                 SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
                                                 SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
 
-                                <nu:MoneyPack Grid.Column="0"
+                            <nu:MoneyPack Grid.Column="0"
                                               Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
                                               Grid.Row="1"
                                               Minimum="0"
                                               Maximum="31"
                                               LabelName="کارکرد عادی" />
 
-                                <nu:MoneyPack Grid.Column="1"
+                            <nu:MoneyPack Grid.Column="1"
                                               LabelName="اضافه کاری"
                                               Minimum="0"
                                               Maximum="120"
                                               Value="{Binding ViewModel.OverTime , Mode=TwoWay}"
                                               Grid.Row="1" />
 
-                                <Grid Grid.Column="0"
+                            <Grid Grid.Column="0"
                                       Grid.ColumnSpan="2"
                                       Grid.Row="2"
                                       Margin="20 3 20 4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="44*" />
-                                        <ColumnDefinition Width="405*" />
-                                    </Grid.ColumnDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="44*" />
+                                    <ColumnDefinition Width="405*" />
+                                </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontFamily="Calibri"
+                                <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="توضیحات"
                                                Margin="0,7,0,0"
                                                Grid.ColumnSpan="2" />
 
-                                    <ui:TextBox FontSize="14"
+                                <ui:TextBox FontSize="14"
                                                 Margin="0,30,0,0"
                                                 FlowDirection="RightToLeft"
                                                 Text="{Binding ViewModel.Description, Mode=OneWayToSource}"
                                                 Grid.ColumnSpan="2"
                                                 TextWrapping="Wrap"
                                                 FontFamily="Calibri"></ui:TextBox>
-                                </Grid>
+                            </Grid>
 
-                                <Button Content="ثبت"
+                            <Button Content="ثبت"
                                         Padding="30 5 "
                                         Margin="0 20"
                                         HorizontalAlignment="Center"
@@ -236,11 +222,10 @@
                                         FontFamily="Calibri"
                                         FontSize="15"
                                         Grid.ColumnSpan="2" />
-                            </Grid>
-                        </Border>
-                    </Grid>
+                        </Grid>
+                    </Border>
                 </Grid>
-            </Border>
-        </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Page>
