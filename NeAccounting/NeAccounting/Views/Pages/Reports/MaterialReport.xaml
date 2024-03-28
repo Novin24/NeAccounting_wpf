@@ -166,7 +166,6 @@
                         </Grid>
                         <DataGrid Grid.Row="1"
                                   Padding="7"
-                                  MaxHeight="570"
                                   IsReadOnly="True"
                                   Margin="0 10 0 0"
                                   FontFamily="Calibri"

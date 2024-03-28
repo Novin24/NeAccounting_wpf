@@ -21,6 +21,7 @@ namespace NeAccounting.Views.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+            txt_name.Focus();
         }
 
         private async void Btn_Delete_Click(object sender, RoutedEventArgs e)

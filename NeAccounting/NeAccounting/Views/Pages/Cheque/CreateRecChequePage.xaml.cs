@@ -1,6 +1,7 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
+using System.Text.RegularExpressions;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -32,5 +33,14 @@ namespace NeAccounting.Views.Pages
             ViewModel.CusId = user.Id;
             lbl_cusId.Text = user.UniqNumber.ToString();
         }
+
+        private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = MyRegex().IsMatch(e.Text);
+        }
+
+
+        [GeneratedRegex("[^0-9]+")]
+        private static partial Regex MyRegex();
     }
 }

@@ -161,19 +161,18 @@
                                                        DisplayMemberPath="DisplayName"
                                                        Margin="0 4 3 0 "
                                                        FontFamily="Calibri" />
-                            </StackPanel>
+                                </StackPanel>
 
-                            <nu:MonthPicker FontSize="14"
-                                                              FlowDirection="LeftToRight"
-                                                              FontFamily="Calibri"
-                                                              Focusable="True"
-                                                              IsTabStop="True"
-                                                              LabelName="تاریخ کارکرد"
-                                                              Grid.Column="1"
-                                                              x:Name="dtp"
-                                                LabelVisibility="Collapsed"
-                                                              SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
-                                                              SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
+                                <nu:MonthPicker FontSize="14"
+                                                FlowDirection="LeftToRight"
+                                                FontFamily="Calibri"
+                                                Focusable="True"
+                                                IsTabStop="True"
+                                                LabelName="تاریخ کارکرد"
+                                                Grid.Column="1"
+                                                x:Name="dtp"
+                                                SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
+                                                SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
 
                             <nu:MoneyPack Grid.Column="0"
                                               Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"

@@ -17,8 +17,11 @@
       x:Name="root">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.SubmitCommand}" />
+                    Command="{Binding ViewModel.SubmitCommand}" />
     </Page.InputBindings>
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -105,7 +108,7 @@
                                            HorizontalAlignment="Left" />
                                 <ui:TextBox TextAlignment="Center"
                                             ClearButtonEnabled="False"
-                                            IsEnabled="False"
+                                            IsReadOnly="True"
                                             x:Name="txt_name"
                                             Text="{Binding ViewModel.FileName, Mode=TwoWay}"
                                             FontFamily="Calibri"
@@ -122,7 +125,9 @@
                                               HorizontalAlignment="Left" />
                                 <ui:TextBox TextAlignment="Center"
                                             IsEnabled="False"
+                                            PlaceholderText="مسیر پیشفرض برنامه ..."
                                             x:Name="txt_Address"
+                                            FontSize="15"
                                             FontFamily="Calibri"
                                             Text="{Binding ViewModel.ExPaht , Mode=TwoWay}"
                                             Margin="0 2 0 0" />
@@ -168,78 +173,90 @@
                                 </Grid>
                             </ui:CardAction>
                         </Grid>
-                        <Grid Grid.Row="1" >
-                        <DataGrid Padding="5"
-                                  IsReadOnly="True"
-                                  FontSize="15"
-                                  CanUserResizeColumns="False"
-                                  CanUserDeleteRows="False"
-                                  CanUserResizeRows="False"
-                                  x:Name="dgv_Files"
-                                  CanUserAddRows="False"
-                                  ItemsSource="{Binding ViewModel.BakFiles}"
-                                  CanUserSortColumns="False"
-                                  CanUserReorderColumns="False"
-                                  FontFamily="Calibri"
-                                  AutoGenerateColumns="False">
+                        <Grid Grid.Row="1"
+                              Margin="0 10"
+                              Visibility="{Binding ViewModel.ShowData,  Converter={StaticResource BoolToVis}}">
+                            <DataGrid Padding="5"
+                                      IsReadOnly="True"
+                                      FontSize="15"
+                                      CanUserResizeColumns="False"
+                                      CanUserDeleteRows="False"
+                                      CanUserResizeRows="False"
+                                      x:Name="dgv_Files"
+                                      CanUserAddRows="False"
+                                      ItemsSource="{Binding ViewModel.BakFiles}"
+                                      CanUserSortColumns="False"
+                                      CanUserReorderColumns="False"
+                                      FontFamily="Calibri"
+                                      AutoGenerateColumns="False">
 
-                            <DataGrid.Columns>
+                                <DataGrid.Columns>
 
-                                <DataGridTextColumn Header="نام فایل"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Binding="{Binding FileName}"
-                                                    Width="*" />
-                                <DataGridTextColumn Header="آدرس فایل"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Binding="{Binding FulePath}"
-                                                    Width="2*" />
-                                <DataGridTextColumn Header="تاریخ پشتیبان گیری"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Binding="{Binding CreationDate}"
-                                                    Width=".5*" />
-                                <DataGridTextColumn Header="ساعت پشتیبان گیری"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Binding="{Binding CreationTime}"
-                                                    Width=".5*" />
-                                <DataGridTemplateColumn Header="عملیات"
-                                                        Width="80"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal"
-                                                        HorizontalAlignment="Center">
-                                                <ui:Button Margin="3"
-                                                           x:Name="btn_restoer"
-                                                           CommandParameter="{Binding Id , Mode=OneWay}"
-                                                           Command="{Binding Path=DataContext.ViewModel.RestorCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                           Padding="7,5">
-                                                    <Button.ToolTip>
-                                                        <TextBlock FontSize="15"
-                                                                   Text="بازگردانی" />
-                                                    </Button.ToolTip>
-                                                    <ui:SymbolIcon Symbol="ArrowReset20" />
-                                                </ui:Button>
-                                                <ui:Button  Margin="3"
-                                                            Tag="{Binding Id}"
-                                                            Padding="7,5"
-                                                            x:Name="btn_Delete"
-                                                            Click="Btn_Delete_Click"
-                                                            ToolTip="حذف">
-                                                    <ui:SymbolIcon  Symbol="Delete16" />
-                                                </ui:Button>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
+                                    <DataGridTextColumn Header="نام فایل"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding FileName}"
+                                                        Width="1.5*" />
+                                    <DataGridTextColumn Header="آدرس فایل"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding FulePath}"
+                                                        Width="2*" />
+                                    <DataGridTextColumn Header="تاریخ "
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding CreationDate}"
+                                                        Width="75" />
+                                    <DataGridTextColumn Header="ساعت "
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding CreationTime}"
+                                                        Width="75" />
+                                    <DataGridTemplateColumn Header="عملیات"
+                                                            Width="88"
+                                                            HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center">
+                                                    <ui:Button Margin="6"
+                                                               x:Name="btn_restoer"
+                                                               CommandParameter="{Binding Id , Mode=OneWay}"
+                                                               Command="{Binding Path=DataContext.ViewModel.RestorCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                               Padding="7,5">
+                                                        <Button.ToolTip>
+                                                            <TextBlock FontSize="15"
+                                                                       Text="بازگردانی" />
+                                                        </Button.ToolTip>
+                                                        <ui:SymbolIcon Symbol="ArrowReset20" />
+                                                    </ui:Button>
+                                                    <ui:Button  Margin="6"
+                                                                Tag="{Binding Id}"
+                                                                Padding="7,5"
+                                                                x:Name="btn_Delete"
+                                                                Click="Btn_Delete_Click"
+                                                                ToolTip="حذف">
+                                                        <ui:SymbolIcon  Symbol="Delete16" />
+                                                    </ui:Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
-                        <Grid  Grid.Row="1">
-                            <ui:ProgressRing IsIndeterminate="True" Height="100" Width="100" />
+                        <Grid  Grid.Row="1"
+                               Visibility="{Binding ViewModel.Wating,  Converter={StaticResource BoolToVis}}">
+                            <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                <ui:ProgressRing IsIndeterminate="True"
+                                                 Height="100"
+                                                 Width="100" />
+                                <TextBlock FontFamily="Calibri"
+                                           FontSize="15"
+                                           Margin="12"
+                                           Text="لطفا منتظر بمانید ..."></TextBlock>
+                            </StackPanel>
                         </Grid>
                     </Grid>
 

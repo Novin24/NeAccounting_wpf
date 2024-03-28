@@ -153,6 +153,7 @@
                                        Text="شماره چک"
                                        Margin="5 0 0 3 " />
                             <ui:TextBox TextAlignment="Center"
+                                        PreviewTextInput="TextBox_PreviewTextInput"
                                         Text="{Binding ViewModel.Cheque_Number, Mode=OneWayToSource}"
                                         FontSize="14"
                                         FontFamily="Calibri" />
@@ -167,6 +168,7 @@
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         Text="{Binding ViewModel.Accunt_Number ,Mode=OneWayToSource}"
+                                        PreviewTextInput="TextBox_PreviewTextInput"
                                         FontSize="14"
                                         FontFamily="Calibri" />
                         </StackPanel>
