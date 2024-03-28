@@ -15,115 +15,114 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="UpdateFinancialAidPage">
 
-    <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="10*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height=".9*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="10*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Row="1"
+    <Grid Margin="-20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1"
                     Grid.RowSpan="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Background="{StaticResource Rectangle Dark blue}"
                     CornerRadius="10"></Border>
-            <Border Grid.Row="3"
+        <Border Grid.Row="3"
                     Grid.RowSpan="3"
                     Grid.Column="2"
                     Grid.ColumnSpan="3"
                     Background="{StaticResource Rectangle Pale blue}"
                     CornerRadius="10"></Border>
-            <Border Grid.Row="2"
+        <Border Grid.Row="2"
                     Grid.RowSpan="3"
                     Grid.Column="1"
                     Grid.ColumnSpan="3"
                     Background="{DynamicResource ApplicationBackgroundBrush}"
                     CornerRadius="10">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="60"></RowDefinition>
-                        <RowDefinition Height="6*"></RowDefinition>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="6*"></RowDefinition>
 
-                    </Grid.RowDefinitions>
-                    <ui:TextBlock Margin="15,0"
+                </Grid.RowDefinitions>
+                <ui:TextBlock Margin="15,0"
                                   Padding="0,20,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Center"
                                   FontFamily="the King &amp; Queen font"
                                   FontSize="30"
                                   Text="Novin" />
-                    <Border Grid.Row="1"
+                <Border Grid.Row="1"
                             CornerRadius="9"
                             Margin="4"
                             BorderBrush="#D6D5D5"
                             BorderThickness="0.4">
-                        <Border.Background>
-                            <SolidColorBrush Color="White"
+                    <Border.Background>
+                        <SolidColorBrush Color="White"
                                              Opacity="0.08" />
-                        </Border.Background>
+                    </Border.Background>
 
-                        <Grid>
-                            <Border Grid.Row="1"
+                    <Grid>
+                        <Border Grid.Row="1"
                                     CornerRadius="9"
                                     Margin="5"
                                     BorderBrush="#D6D5D5"
                                     BorderThickness="0.4">
-                                <Border.Background>
-                                    <SolidColorBrush Color="White"
+                            <Border.Background>
+                                <SolidColorBrush Color="White"
                                                      Opacity="0.08" />
-                                </Border.Background>
+                            </Border.Background>
 
-                                <StackPanel Margin="10 10 10 10">
+                            <StackPanel Margin="10 10 10 10">
 
-                                    <TextBlock FontFamily="Calibri"
+                                <TextBlock FontFamily="Calibri"
                                                FontSize="15"
                                                Text="آخرین چک ها"
                                                HorizontalAlignment="Center" />
-                                    <DataGrid Margin="0 6 0 6"
+                                <DataGrid Margin="0 6 0 6"
+                                              Padding="7"
                                               ItemsSource="{Binding ViewModel.List}"
-                                              AutoGenerateColumns="False"
-                                              BorderThickness="10">
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="مبلغ مساعده"
+                                              AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="مبلغ مساعده"
                                                                 Binding="{Binding Price}"
                                                                 HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                                 ElementStyle="{StaticResource CenterDtaGridCell}"
                                                                 Width="*" />
-                                            <DataGridTextColumn Header="شماره پرسنلی"
+                                        <DataGridTextColumn Header="شماره پرسنلی"
                                                                 Binding="{Binding PersonelId}"
                                                                 HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                                 ElementStyle="{StaticResource CenterDtaGridCell}"
                                                                 Width="*" />
-                                            <DataGridTextColumn Header="تاریخ"
+                                        <DataGridTextColumn Header="تاریخ"
                                                                 Binding="{Binding DisplayDate}"
                                                                 HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                                 ElementStyle="{StaticResource CenterDtaGridCell}"
                                                                 Width="*" />
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
-                    </Border>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Border>
 
-                    <TextBlock Margin="0 20 20 0"
+                <TextBlock Margin="0 20 20 0"
                                Grid.ColumnSpan="2"
                                Height="40"
                                HorizontalAlignment="Right"
@@ -132,54 +131,54 @@
                                FontSize="18"
                                Text="ویرایش مساعده" />
 
-                    <Grid Grid.Column="1"
+                <Grid Grid.Column="1"
                           Grid.Row="1">
 
-                        <Border Grid.Row="1"
+                    <Border Grid.Row="1"
                                 CornerRadius="9"
                                 BorderBrush="#D6D5D5"
                                 BorderThickness="0.4"
                                 Margin="4">
-                            <Border.Background>
-                                <SolidColorBrush Color="White"
+                        <Border.Background>
+                            <SolidColorBrush Color="White"
                                                  Opacity="0.08" />
-                            </Border.Background>
+                        </Border.Background>
 
-                            <Grid FlowDirection="RightToLeft">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
+                        <Grid FlowDirection="RightToLeft">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
 
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Margin="20 10 0 0 ">
-                                    <DockPanel>
-                                        <TextBlock FontFamily="Calibri"
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Margin="20 10 0 0 ">
+                                <DockPanel>
+                                    <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    Text="نام پرسنل"
                                                    Margin="2 0 0 0" />
-                                        <TextBlock FontFamily="Calibri"
+                                    <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    x:Name="txt_Personel"
                                                    Foreground="#BB8F60"
                                                    Text="{Binding ViewModel.PersonnelId , Mode=OneWay}"
                                                    HorizontalAlignment="Right"
                                                    Margin="0 0 7 0" />
-                                    </DockPanel>
-                                    <ui:TextBox x:Name="txt_sugName"
+                                </DockPanel>
+                                <ui:TextBox x:Name="txt_sugName"
                                                 FontSize="14"
                                                 Height="37"
                                                 Text="{Binding ViewModel.PersonnelName , Mode=OneWay}"
                                                 Margin="0 5 3 0 "
                                                 IsEnabled="False"
                                                 FontFamily="Calibri" />
-                                </StackPanel>
-                                <nu:MonthPicker FontSize="14"
+                            </StackPanel>
+                            <nu:MonthPicker FontSize="14"
                                                 FlowDirection="LeftToRight"
                                                 FontFamily="Calibri"
                                                 x:Name="dtp"
@@ -187,14 +186,14 @@
                                                 LabelName="تاریخ پرداخت"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth, Mode=OneWay}"
                                                 SelectedYear="{Binding ViewModel.SubmitYear, Mode=OneWay}"/>
-                                <StackPanel Grid.Column="0"
+                            <StackPanel Grid.Column="0"
                                             Grid.Row="1">
 
-                                    <TextBlock FontFamily="Calibri"
+                                <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="مبلغ مساعده"
                                                Margin="22 4 0 0 " />
-                                    <ui:NumberBox Margin="20 4 3 0"
+                                <ui:NumberBox Margin="20 4 3 0"
                                                   SpinButtonPlacementMode="Hidden"
                                                   TextAlignment="Center"
                                                   Name="txt_amountOf"
@@ -202,28 +201,28 @@
                                                   Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
                                                   FlowDirection="LeftToRight"
                                                   FontFamily="Calibri" />
-                                </StackPanel>
-                                <Grid Grid.Column="0"
+                            </StackPanel>
+                            <Grid Grid.Column="0"
                                       Grid.ColumnSpan="2"
                                       Grid.Row="2"
                                       Margin="20 3 20 4">
 
-                                    <TextBlock FontFamily="Calibri"
+                                <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="توضیحات"
                                                Grid.Column="1"
                                                Margin="0,7,0,0" />
 
-                                    <ui:TextBox FontSize="14"
+                                <ui:TextBox FontSize="14"
                                                 Margin="0,30,0,0"
                                                 FlowDirection="RightToLeft"
                                                 Grid.ColumnSpan="2"
                                                 Text="{Binding ViewModel.Description, Mode=TwoWay}"
                                                 TextWrapping="Wrap"
                                                 FontFamily="Calibri"></ui:TextBox>
-                                </Grid>
+                            </Grid>
 
-                                <Button Content="ثبت"
+                            <Button Content="ثبت"
                                         Padding="30 5 "
                                         Margin="0 20"
                                         HorizontalAlignment="Center"
@@ -233,11 +232,10 @@
                                         IsDefault="True"
                                         Command="{Binding ViewModel.UpdateCommand}"
                                         Grid.ColumnSpan="2" />
-                            </Grid>
-                        </Border>
-                    </Grid>
+                        </Grid>
+                    </Border>
                 </Grid>
-            </Border>
-        </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

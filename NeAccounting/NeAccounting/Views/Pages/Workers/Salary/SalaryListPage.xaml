@@ -162,11 +162,11 @@
                                         IsDefault="True">جستجو</Button>
 
                             </Grid>
-                            <DataGrid Margin="0 0 0 30"
+                            <DataGrid Grid.Row="3"
+                                      Padding="7"
+                                      Margin="0 0 0 30"
                                       x:Name="Workersdata"
-                                      BorderThickness="10"
                                       FlowDirection="RightToLeft"
-                                      Grid.Row="3"
                                       CanUserResizeColumns="False"
                                       FontSize="15"
                                       CanUserResizeRows="False"

@@ -14,95 +14,94 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="FinancialAidListPage">
 
-    <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="10*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height=".9*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="10*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Row="1"
+    <Grid Margin="-12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1"
                     Grid.RowSpan="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Background="{StaticResource Rectangle Dark blue}"
                     CornerRadius="10"></Border>
-            <Border Grid.Row="3"
+        <Border Grid.Row="3"
                     Grid.RowSpan="3"
                     Grid.Column="2"
                     Grid.ColumnSpan="3"
                     Background="{StaticResource Rectangle Pale blue}"
                     CornerRadius="10"></Border>
-            <Border Grid.Row="2"
+        <Border Grid.Row="2"
                     Grid.RowSpan="3"
                     Grid.Column="1"
                     Grid.ColumnSpan="3"
                     Background="{DynamicResource ApplicationBackgroundBrush}"
                     CornerRadius="10">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="60"></RowDefinition>
-                        <RowDefinition Height="6*"></RowDefinition>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="6*"></RowDefinition>
 
-                    </Grid.RowDefinitions>
-                    <ui:TextBlock Margin="55,0"
+                </Grid.RowDefinitions>
+                <ui:TextBlock Margin="55,0"
                                   Padding="0,20,0,0"
                                   HorizontalAlignment="Left"
                                   VerticalAlignment="Center"
                                   FontFamily="the King &amp; Queen font"
                                   FontSize="30"
                                   Text="Novin" />
-                    <Grid>
-                        <TextBlock Margin="0 20 55 0"
+                <Grid>
+                    <TextBlock Margin="0 20 55 0"
                                    Height="40"
                                    HorizontalAlignment="Right"
                                    FontFamily="Calibri"
                                    FontWeight="Bold"
                                    FontSize="18"
                                    Text="مساعده" />
-                        <TextBlock Margin="50 20 0 0"
+                    <TextBlock Margin="50 20 0 0"
                                    Height="40"
                                    HorizontalAlignment="Center"
                                    FontFamily="Calibri"
                                    FontWeight="Bold"
                                    FontSize="18"><Run Text="1402/09/13 " /></TextBlock>
 
-                    </Grid>
+                </Grid>
 
-                    <Border Grid.Row="1"
+                <Border Grid.Row="1"
                             Grid.ColumnSpan="2"
                             CornerRadius="9"
                             BorderBrush="#D6D5D5"
                             BorderThickness="0.4"
                             Margin="4">
-                        <Border.Background>
-                            <SolidColorBrush Color="White"
+                    <Border.Background>
+                        <SolidColorBrush Color="White"
                                              Opacity="0.08" />
 
-                        </Border.Background>
+                    </Border.Background>
 
-                        <Grid FlowDirection="RightToLeft"
+                    <Grid FlowDirection="RightToLeft"
                               Margin="50 15 50 0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"></RowDefinition>
-                                <RowDefinition Height="auto"></RowDefinition>
-                                <RowDefinition Height="4*"></RowDefinition>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
 
-                            </Grid.RowDefinitions>
+                        </Grid.RowDefinitions>
 
-                            <Grid>
-                                <ui:CardAction Grid.Row="4"
+                        <Grid>
+                            <ui:CardAction Grid.Row="4"
                                                FontFamily="Calibri"
                                                FontSize="15"
                                                Padding="9 0"
@@ -110,41 +109,41 @@
                                                CommandParameter="CreateFinancialAid"
                                                IsChevronVisible="False"
                                                HorizontalAlignment="Right">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
 
-                                        <ui:SymbolIcon FontSize="22"
+                                    <ui:SymbolIcon FontSize="22"
                                                        Symbol="ReadingListAdd28" />
 
-                                        <StackPanel Grid.Column="1"
+                                    <StackPanel Grid.Column="1"
                                                     Margin="8 4"
                                                     VerticalAlignment="Center">
-                                            <ui:TextBlock Margin="0"
+                                        <ui:TextBlock Margin="0"
                                                           FontTypography="BodyStrong"
                                                           Text="افزودن"
                                                           TextWrapping="WrapWithOverflow" />
-                                            <ui:TextBlock Appearance="Tertiary"
+                                        <ui:TextBlock Appearance="Tertiary"
                                                           Text="اضافه کردن مساعده ..."
                                                           TextWrapping="WrapWithOverflow" />
-                                        </StackPanel>
-                                    </Grid>
-                                </ui:CardAction>
-                            </Grid>
-                            <Grid Grid.Row="1"
+                                    </StackPanel>
+                                </Grid>
+                            </ui:CardAction>
+                        </Grid>
+                        <Grid Grid.Row="1"
                                   Margin="0 ,5,0,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Margin="0 10 0 0 ">
-                                    <TextBlock FontFamily="Calibri"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Margin="0 10 0 0 ">
+                                <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="نام پرسنل"
                                                Margin="2 0 0 0 " />
-                                    <ui:AutoSuggestBox x:Name="txt_sugName"
+                                <ui:AutoSuggestBox x:Name="txt_sugName"
                                                        Icon="{ui:SymbolIcon Search24}"
                                                        PlaceholderText="جستجو ..."
                                                        FontSize="14"
@@ -153,77 +152,76 @@
                                                        DisplayMemberPath="DisplayName"
                                                        Margin="0 4 3 0 "
                                                        FontFamily="Calibri" />
-                                </StackPanel>
+                            </StackPanel>
 
-                                <Button Margin="16 32 0 10"
+                            <Button Margin="16 32 0 10"
                                         Padding="17 4 17 9"
                                         Grid.Column="2"
                                         Command="{Binding ViewModel.SearchWorkerCommand}"
                                         HorizontalAlignment="Left"
                                         IsDefault="True">جستجو</Button>
 
-                            </Grid>
-                            <DataGrid Margin="0 0 0 30"
-                                      x:Name="Workersdata"
-                                      BorderThickness="10"
-                                      Grid.Row="2"
-                                      CanUserResizeColumns="False"
+                        </Grid>
+                        <DataGrid Grid.Row="2"
+                                      Padding="7"
                                       FontSize="15"
+                                      Margin="0 0 0 30"
+                                      FontFamily="Calibri"
+                                      x:Name="Workersdata"
+                                      CanUserResizeColumns="False"
                                       CanUserResizeRows="False"
                                       ItemsSource="{Binding ViewModel.List}"
-                                      FontFamily="Calibri"
                                       AutoGenerateColumns="False">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="نام پرسنلی"
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="نام پرسنلی"
                                                         Binding="{Binding Name}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*" />
-                                    <DataGridTextColumn Header="مبلغ"
+                                <DataGridTextColumn Header="مبلغ"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding Price}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width="*" />
-                                    <DataGridTextColumn Header="تاریخ"
+                                <DataGridTextColumn Header="تاریخ"
                                                         Binding="{Binding DisplayDate}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width="*" />
-                                    <DataGridTemplateColumn Header="عملیات"
+                                <DataGridTemplateColumn Header="عملیات"
                                                             Width="*"
                                                             HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal"
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal"
                                                             HorizontalAlignment="Center">
-                                                    <Button  BorderBrush="Transparent"
+                                                <Button  BorderBrush="Transparent"
                                                              Margin="2"
                                                              CommandParameter="{Binding Details}"
                                                              Command="{Binding Path=DataContext.ViewModel.UpdateAidCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                              Padding="7,5">
-                                                        <ui:SymbolIcon Symbol="Pen16" />
-                                                    </Button>
-                                                    <Button Margin="3"
+                                                    <ui:SymbolIcon Symbol="Pen16" />
+                                                </Button>
+                                                <Button Margin="3"
                                                             CommandParameter="{Binding Details}"
                                                             Command="{Binding Path=DataContext.ViewModel.RemoveAidCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                             Padding="7,5">
-                                                        <ui:SymbolIcon Symbol="Delete16" />
-                                                    </Button>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
+                                                    <ui:SymbolIcon Symbol="Delete16" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
 
-                                </DataGrid.Columns>
-                            </DataGrid>
-
-
-                        </Grid>
+                            </DataGrid.Columns>
+                        </DataGrid>
 
 
-                    </Border>
-                </Grid>
-            </Border>
-        </Grid>
+                    </Grid>
+
+
+                </Border>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

@@ -16,22 +16,22 @@
 
     <Grid>
 
-        <Grid Margin="-10">
+        <Grid Margin="-30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="15" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="15" />
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"></ColumnDefinition>
+                <ColumnDefinition Width="15"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="30"></ColumnDefinition>
+                <ColumnDefinition Width="15"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
                     Grid.RowSpan="3"
@@ -78,7 +78,7 @@
 
                             <Grid FlowDirection="RightToLeft">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="auto"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
@@ -98,13 +98,15 @@
                                 <ui:InfoBar Title="تذکر"
                                             Grid.ColumnSpan="3"
                                             IsOpen="True"
+                                            Height="46"
+                                            Padding="0"
                                             VerticalAlignment="Top"
                                             IsClosable="False"
                                             Message="کاربر گرامی پس از صدور فیش حقوقی امکان ویرایش کارکرد و یا  ثبت مساعده وجود ندارد !!!"
                                             Severity="Warning" />
 
                                 <StackPanel Grid.Row="1"
-                                            Margin="20 15 20 0">
+                                            Margin="20 4 20 0">
                                     <DockPanel>
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="16"
@@ -133,7 +135,7 @@
                                                 FlowDirection="LeftToRight"
                                                 FontFamily="Calibri"
                                                 x:Name="dtp"
-                                                Margin="0 8 0 0"
+                                                Margin="0 -3 0 0"
                                                 LabelName="تاریخ پرداخت"
                                                 DateChosen="dtp_DateChosen"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth, Mode=OneWayToSource}"
@@ -142,10 +144,10 @@
                                    VerticalAlignment="Bottom"
                                    Background="Gray"
                                    Grid.ColumnSpan="4"
-                                   Margin="10 0 "
-                                   Height="1.5"/>
-                                
+                                   Margin="10 2 10 0"
+                                   Height="3.5"/>
 
+                                <!--#region میزان حقوق -->
                                 <nu:MoneyPack Grid.Row="2"
                                               LabelName="مبلغ حقوق"
                                               x:Name="txt_amountOf"
@@ -203,10 +205,12 @@
                                    VerticalAlignment="Bottom"
                                    Background="Gray"
                                    Grid.ColumnSpan="4"
-                                   Margin="10 0 "
+                                   Margin="10 0  "
                                    Height="1.5" />
-                                
-                                
+
+                                <!--#endregion-->
+
+                                <!--#region کسورات حقوق -->
                                 <nu:MoneyPack Grid.Row="4"
                                               LabelName="مساعده"
                                               x:Name="txt_Aid"
@@ -264,9 +268,10 @@
                                    VerticalAlignment="Bottom"
                                    Background="Gray"
                                    Grid.ColumnSpan="4"
-                                   Margin="10 0 10 5"
-                                   Height="6.5" />
+                                   Margin="10 0 10 3"
+                                   Height="4.5" />
 
+                                <!--#endregion-->
                                 
                                 <Grid Grid.Row="6"
                                       Grid.ColumnSpan="3">
@@ -279,7 +284,7 @@
                                     <DockPanel Grid.Column="1"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
-                                               Grid.Row="6">
+                                               Grid.Row="6" Margin="0 0 0 -10">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="16"
                                                    FontWeight="Bold"
@@ -305,33 +310,27 @@
 
                                 </Grid>
 
-                                <Grid Grid.ColumnSpan="3"
+                                <StackPanel Grid.ColumnSpan="3"
                                       Grid.Row="7"
-                                      Margin="20 3 20 4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="142*" />
-                                        <ColumnDefinition Width="30*" />
-                                        <ColumnDefinition Width="177*" />
-                                    </Grid.ColumnDefinitions>
-
+                                      Margin="20 0 20 4">
                                     <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
+                                               FontSize="15"
                                                Text="توضیحات"
                                                Grid.ColumnSpan="3"
                                                Margin="5 0 0 0"/>
-                                    <TextBox Margin="0,20,0,0"
+                                    <TextBox Margin="0,3,0,0"
                                              FontSize="14"
                                              FlowDirection="RightToLeft"
                                              Grid.ColumnSpan="3"
                                              FontFamily="Calibri"></TextBox>
-                                </Grid>
+                                </StackPanel>
                                 <ui:Button Content="ثبت"
                                            HorizontalAlignment="Center"
                                            Grid.Row="8"
                                            FontFamily="Calibri"
                                            FontSize="15"
                                            Padding="30 4"
-                                           Margin="10"
+                                           Margin="5"
                                            Command="{Binding ViewModel.CreateCommand}"
                                            Grid.ColumnSpan="3" />
 
