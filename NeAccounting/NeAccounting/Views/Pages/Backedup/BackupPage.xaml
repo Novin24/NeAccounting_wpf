@@ -163,9 +163,8 @@
                                 </Grid>
                             </ui:CardAction>
                         </Grid>
-
+                        <Grid Grid.Row="1" >
                         <DataGrid Padding="5"
-                                  Grid.Row="1"
                                   IsReadOnly="True"
                                   FontSize="15"
                                   CanUserResizeColumns="False"
@@ -232,7 +231,11 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                             </DataGrid.Columns>
-                        </DataGrid>
+                            </DataGrid>
+                        </Grid>
+                        <Grid  Grid.Row="1">
+                            <ui:ProgressRing IsIndeterminate="True"/>
+                        </Grid>
                     </Grid>
 
 
