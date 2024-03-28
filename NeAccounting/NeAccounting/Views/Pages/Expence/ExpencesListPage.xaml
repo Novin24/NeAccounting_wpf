@@ -16,11 +16,11 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
-                <RowDefinition Height="35" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="35" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>

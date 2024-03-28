@@ -13,22 +13,22 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="CreateCustomerPage">
-    <Grid Margin="-20">
+    <Grid Margin="-30">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="15" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="15" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition Width="15"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="10*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition Width="15"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
@@ -266,7 +266,7 @@
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="اعتبار کل"
-                                       Margin="3 6 0 6" />
+                                       Margin="3 0 0 6" />
                             <ui:TextBox TabIndex="8"
                                         TextAlignment="Center"
                                         x:Name="txt_total"
@@ -281,7 +281,7 @@
                                 Grid.Column="1"
                                 Padding="30 4 "
                                 Grid.ColumnSpan="2"
-                                Margin="10"
+                                Margin="8"
                                 IsDefault="True"
                                 Command="{Binding ViewModel.CreateCustomerCommand}"
                                 FontSize="17"

@@ -16,22 +16,22 @@
 
     <Grid>
 
-        <Grid>
+        <Grid Margin="-10">
             <Grid.RowDefinitions>
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height=".5*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
                     Grid.RowSpan="3"
@@ -58,44 +58,10 @@
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <Grid>
 
-                        <ui:TextBlock Margin="15,0"
-                                      Padding="0,20,0,0"
-                                      HorizontalAlignment="Left"
-                                      VerticalAlignment="Center"
-                                      FontFamily="the King &amp; Queen font"
-                                      FontSize="30"
-                                      Text="Novin" />
-
-                        <ui:TextBlock Margin="20 20 0 0"
-                                      Height="40"
-                                      HorizontalAlignment="Center"
-                                      FontFamily="Calibri"
-                                      FontWeight="Bold"
-                                      FontSize="18"
-                                      Foreground="White"
-                                      Text="1402/09/18 " />
-                        <ui:TextBlock Margin="0 20 55 0"
-                                      Height="40"
-                                      HorizontalAlignment="Right"
-                                      FontFamily="Calibri"
-                                      FontWeight="Bold"
-                                      FontSize="18"
-                                      Foreground="White"
-                                      Text="صدور فیش حقوقی" />
-                    </Grid>
-                    <Border Grid.Row="1"
-                            CornerRadius="9"
-                            Margin="4"
-                            BorderBrush="#D6D5D5"
-                            BorderThickness="0.4">
-                        <Border.Background>
-                            <SolidColorBrush Color="White"
-                                             Opacity="0.08" />
-                        </Border.Background>
-
-                    </Border>
+                    <nu:HeaderPack Grid.ColumnSpan="2"
+                                   NamePpage="صدور فیش حقوقی"/>
+                    
 
                     <Grid Grid.Column="1"
                           Grid.Row="1">
@@ -112,27 +78,27 @@
 
                             <Grid FlowDirection="RightToLeft">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height=".5*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height=".3*"></RowDefinition>
-                                    <RowDefinition Height=".5*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height=".7*"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
 
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition></ColumnDefinition>
-                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
                                 <ui:InfoBar Title="تذکر"
-                                            Grid.ColumnSpan="2"
+                                            Grid.ColumnSpan="3"
                                             IsOpen="True"
+                                            VerticalAlignment="Top"
                                             IsClosable="False"
                                             Message="کاربر گرامی پس از صدور فیش حقوقی امکان ویرایش کارکرد و یا  ثبت مساعده وجود ندارد !!!"
                                             Severity="Warning" />
@@ -143,7 +109,7 @@
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="16"
                                                    Text="نام پرسنل"
-                                                   Margin="2 0 0 7" />
+                                                   Margin="5 0 0 7" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="14"
                                                    x:Name="txt_Personel"
@@ -172,7 +138,13 @@
                                                 DateChosen="dtp_DateChosen"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth, Mode=OneWayToSource}"
                                                 SelectedYear="{Binding ViewModel.SubmitYear, Mode=OneWayToSource}" />
-
+                                <Separator Grid.Row="1"
+                                   VerticalAlignment="Bottom"
+                                   Background="Gray"
+                                   Grid.ColumnSpan="4"
+                                   Margin="10 0 "
+                                   Height="1.5"/>
+                                
 
                                 <nu:MoneyPack Grid.Row="2"
                                               LabelName="مبلغ حقوق"
@@ -180,79 +152,36 @@
                                               ValueChanged="NumberBox_ValueChanged"
                                               IsEnabled="False"
                                               Value="{Binding ViewModel.AmountOf , Mode=TwoWay}" />
-
                                 <nu:MoneyPack Grid.Row="2"
                                               Grid.Column="1"
-                                              LabelName="مساعده"
-                                              x:Name="txt_Aid"
-                                              ValueChanged="NumberMinesBox_ValueChanged"
-                                              IsEnabled="False"
-                                              Value="{Binding ViewModel.FinancialAid , Mode=TwoWay}" />
-
-                                <nu:MoneyPack Grid.Row="3"
                                               LabelName="اضافه کاری"
                                               x:Name="txt_overtime"
                                               ValueChanged="NumberBox_ValueChanged"
                                               IsEnabled="False"
                                               Value="{Binding ViewModel.OverTime , Mode=TwoWay}" />
-
-                                <nu:MoneyPack Grid.Row="3"
-                                              Grid.Column="1"
-                                              LabelName="حق بیمه"
-                                              x:Name="txt_Insurance"
-                                              ValueChanged="NumberMinesBox_ValueChanged"
-                                              IsEnabled="False"
-                                              Value="{Binding ViewModel.Insurance , Mode=TwoWay}" />
-
-                                <nu:MoneyPack Grid.Row="4"
+                                <nu:MoneyPack Grid.Row="2"
+                                              Grid.Column="2"
                                               LabelName="حق خوار و بار و مسکن"
                                               x:Name="txt_RighOfFood"
                                               ValueChanged="NumberBox_ValueChanged"
                                               IsEnabled="False"
                                               Value="{Binding ViewModel.RightHousingAndFood , Mode=TwoWay}" />
-
-                                <nu:MoneyPack Grid.Row="4"
-                                              Grid.Column="1"
-                                              LabelName="مالیات"
-                                              x:Name="txt_Tax"
-                                              ValueChanged="NumberMinesBox_ValueChanged"
-                                              IsEnabled="False"
-                                              Value="{Binding ViewModel.Tax , Mode=TwoWay}" />
-
-                                <nu:MoneyPack Grid.Row="5"
+                                <nu:MoneyPack Grid.Row="3"
                                               LabelName="حق اولاد"
                                               x:Name="txt_ChildAllowance"
                                               ValueChanged="NumberBox_ValueChanged"
                                               IsEnabled="False"
                                               Value="{Binding ViewModel.ChildAllowance , Mode=TwoWay}" />
-
-                                <nu:MoneyPack Grid.Row="5"
+                                <nu:MoneyPack Grid.Row="3"
                                               Grid.Column="1"
-                                              LabelName="وام"
-                                              x:Name="txt_loanInstallment"
-                                              ValueChanged="NumberMinesBox_ValueChanged"
-                                              IsEnabled="False"
-                                              Value="{Binding ViewModel.LoanInstallment , Mode=TwoWay}" />
-
-                                <nu:MoneyPack Grid.Row="6"
                                               LabelName="سایر اضافات"
                                               x:Name="txt_OtherAdditions"
                                               ValueChanged="NumberBox_ValueChanged"
                                               IsEnabled="False"
                                               Value="{Binding ViewModel.OtherAdditions , Mode=TwoWay}" />
-
-                                <nu:MoneyPack Grid.Row="6"
-                                              Grid.Column="1"
-                                              LabelName="سایر کسورات"
-                                              x:Name="txt_Othere"
-                                              ValueChanged="NumberMinesBox_ValueChanged"
-                                              IsEnabled="False"
-                                              Value="{Binding ViewModel.OtherDeductions , Mode=TwoWay}" />
-
-                                <Grid Grid.Row="7"
-                                      Grid.Column="0">
-                                    <DockPanel Grid.Column="1"
-                                               HorizontalAlignment="Center"
+                                <Grid Grid.Row="3"
+                                      Grid.Column="2">
+                                    <DockPanel HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                Grid.Row="6">
                                         <TextBlock FontFamily="Calibri"
@@ -270,12 +199,50 @@
                                                    Margin="2 4 0 0 " />
                                     </DockPanel>
                                 </Grid>
-
-
-                                <Grid Grid.Row="7"
-                                      Grid.Column="1">
-                                    <DockPanel Grid.Column="1"
-                                               HorizontalAlignment="Center"
+                                <Separator Grid.Row="3"
+                                   VerticalAlignment="Bottom"
+                                   Background="Gray"
+                                   Grid.ColumnSpan="4"
+                                   Margin="10 0 "
+                                   Height="1.5" />
+                                
+                                
+                                <nu:MoneyPack Grid.Row="4"
+                                              LabelName="مساعده"
+                                              x:Name="txt_Aid"
+                                              ValueChanged="NumberMinesBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.FinancialAid , Mode=TwoWay}" />
+                                <nu:MoneyPack Grid.Row="4"
+                                              Grid.Column="1"
+                                              LabelName="حق بیمه"
+                                              x:Name="txt_Insurance"
+                                              ValueChanged="NumberMinesBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.Insurance , Mode=TwoWay}" />
+                                <nu:MoneyPack Grid.Row="4"
+                                              Grid.Column="2"
+                                              LabelName="مالیات"
+                                              x:Name="txt_Tax"
+                                              ValueChanged="NumberMinesBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.Tax , Mode=TwoWay}" />
+                                <nu:MoneyPack Grid.Row="5"
+                                              LabelName="وام"
+                                              x:Name="txt_loanInstallment"
+                                              ValueChanged="NumberMinesBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.LoanInstallment , Mode=TwoWay}" />
+                                <nu:MoneyPack Grid.Row="5"
+                                              Grid.Column="1"
+                                              LabelName="سایر کسورات"
+                                              x:Name="txt_Othere"
+                                              ValueChanged="NumberMinesBox_ValueChanged"
+                                              IsEnabled="False"
+                                              Value="{Binding ViewModel.OtherDeductions , Mode=TwoWay}" />
+                                <Grid Grid.Row="5"
+                                      Grid.Column="2">
+                                    <DockPanel HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
                                                Grid.Row="6">
                                         <TextBlock FontFamily="Calibri"
@@ -293,10 +260,16 @@
                                                    Margin="2 4 0 0 " />
                                     </DockPanel>
                                 </Grid>
+                                <Separator Grid.Row="5"
+                                   VerticalAlignment="Bottom"
+                                   Background="Gray"
+                                   Grid.ColumnSpan="4"
+                                   Margin="10 0 10 5"
+                                   Height="6.5" />
 
-                                <Grid Grid.Row="8"
-                                      Grid.ColumnSpan="2">
-
+                                
+                                <Grid Grid.Row="6"
+                                      Grid.ColumnSpan="3">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition></ColumnDefinition>
                                         <ColumnDefinition></ColumnDefinition>
@@ -332,8 +305,8 @@
 
                                 </Grid>
 
-                                <Grid Grid.ColumnSpan="2"
-                                      Grid.Row="9"
+                                <Grid Grid.ColumnSpan="3"
+                                      Grid.Row="7"
                                       Margin="20 3 20 4">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="142*" />
@@ -344,7 +317,8 @@
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
                                                Text="توضیحات"
-                                               Grid.ColumnSpan="3" />
+                                               Grid.ColumnSpan="3"
+                                               Margin="5 0 0 0"/>
                                     <TextBox Margin="0,20,0,0"
                                              FontSize="14"
                                              FlowDirection="RightToLeft"
@@ -353,12 +327,13 @@
                                 </Grid>
                                 <ui:Button Content="ثبت"
                                            HorizontalAlignment="Center"
-                                           Grid.Row="10"
+                                           Grid.Row="8"
                                            FontFamily="Calibri"
                                            FontSize="15"
-                                           MinWidth="100"
+                                           Padding="30 4"
+                                           Margin="10"
                                            Command="{Binding ViewModel.CreateCommand}"
-                                           Grid.ColumnSpan="2" />
+                                           Grid.ColumnSpan="3" />
 
                             </Grid>
 

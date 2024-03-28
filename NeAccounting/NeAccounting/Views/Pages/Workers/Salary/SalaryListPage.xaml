@@ -16,22 +16,22 @@
       mc:Ignorable="d">
 
     <Grid>
-        <Grid>
+        <Grid Margin="-12">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="1*" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="30" />
+                <RowDefinition />
                 <RowDefinition Height="10*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height=".9*" />
-                <RowDefinition Height="*" />
+                <RowDefinition />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
                     Grid.RowSpan="3"
@@ -57,29 +57,8 @@
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <ui:TextBlock Margin="55,0"
-                                  Padding="0,20,0,0"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center"
-                                  FontFamily="the King &amp; Queen font"
-                                  FontSize="30"
-                                  Text="Novin" />
-                    <Grid>
-                        <TextBlock Margin="0 20 55 0"
-                                   Height="40"
-                                   HorizontalAlignment="Right"
-                                   FontFamily="Calibri"
-                                   FontWeight="Bold"
-                                   FontSize="18"
-                                   Text="فیش حقوقی" />
-                        <TextBlock Margin="50 20 0 0"
-                                   Height="40"
-                                   HorizontalAlignment="Center"
-                                   FontFamily="Calibri"
-                                   FontWeight="Bold"
-                                   FontSize="18"><Run Text="1402/09/13 " /></TextBlock>
 
-                    </Grid>
+                    <nu:HeaderPack NamePpage="فیش حقوقی" Margin="25 0"/>
 
                     <Border Grid.Row="1"
                             Grid.ColumnSpan="2"
@@ -102,9 +81,27 @@
 
                             </Grid.RowDefinitions>
 
-                            <Grid>
-                                <ui:CardAction Grid.Row="4"
-                                               Margin="20 0"
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition MaxWidth="500"/>
+                                    <ColumnDefinition MaxWidth="500"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <nu:MonthPicker Grid.Column="2"
+                                                SelectedMon="{Binding ViewModel.StartMonth, Mode=TwoWay}"
+                                                SelectedYear="{Binding ViewModel.StartYear, Mode=TwoWay}"
+                                                LabelName="از تاریخ" 
+                                                Margin="0 0 4 0"/>
+
+
+                                <nu:MonthPicker Grid.Column="1"
+                                                SelectedMon="{Binding ViewModel.EndMonth, Mode=TwoWay}"
+                                                SelectedYear="{Binding ViewModel.EndYear, Mode=TwoWay}"
+                                                LabelName="تا تاریخ" />
+                                <ui:CardAction Grid.Column="0"
+                                                Grid.Row="4"
+                                               Margin="20 16 20 0"
                                                FontFamily="Calibri"
                                                FontSize="15"
                                                FlowDirection="RightToLeft"
@@ -130,7 +127,7 @@
                                                           Text="افزودن"
                                                           TextWrapping="WrapWithOverflow" />
                                             <ui:TextBlock Appearance="Tertiary"
-                                                          Text="اضافه کردن کارکرد ..."
+                                                          Text="اضافه کردن فیش حقوقی ..."
                                                           TextWrapping="WrapWithOverflow" />
                                         </StackPanel>
                                     </Grid>
@@ -142,23 +139,13 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <nu:MonthPicker Grid.Column="1"
-                                                SelectedMon="{Binding ViewModel.StartMonth, Mode=TwoWay}"
-                                                SelectedYear="{Binding ViewModel.StartYear, Mode=TwoWay}"
-                                                LabelName="از تاریخ" />
-
-
-                                <nu:MonthPicker Grid.Column="0"
-                                                SelectedMon="{Binding ViewModel.EndMonth, Mode=TwoWay}"
-                                                SelectedYear="{Binding ViewModel.EndYear, Mode=TwoWay}"
-                                                LabelName="تا تاریخ" />
 
                             </Grid>
                             <Grid Grid.Row="2"
                                   Margin="0 ,5,0,5">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition  MaxWidth="300"/>
                                 </Grid.ColumnDefinitions>
 
                                 <nu:SearchPack Grid.Column="1"

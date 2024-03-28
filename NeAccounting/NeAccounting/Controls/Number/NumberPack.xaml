@@ -13,10 +13,9 @@
     <Grid>
         <StackPanel Margin="20 5 20 5 ">
             <DockPanel Margin="9 0 9 5">
-                <TextBlock FontWeight="Bold"
-                           FontFamily="Calibri"
+                <TextBlock FontFamily="Calibri"
                            x:Name="lbl_name"
-                           FontSize="16" />
+                           FontSize="15" />
             </DockPanel>
 
             <ui:NumberBox TextAlignment="Center"

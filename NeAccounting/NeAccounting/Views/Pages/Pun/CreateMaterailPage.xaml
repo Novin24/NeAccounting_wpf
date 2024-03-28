@@ -180,7 +180,7 @@
                                 Grid.Row="6"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="3"
-                                Padding="30 10 "
+                                Padding="30 4 "
                                 Command="{Binding ViewModel.CreateMaterialCommand , Mode=OneWay}"
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"
