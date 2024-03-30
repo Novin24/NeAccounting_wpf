@@ -98,7 +98,6 @@
                                        Margin="2 0 0 0 " />
                             <TextBox TextAlignment="Center"
                                      FontSize="14"
-                                     TabIndex="0"
                                      Grid.Row="0"
                                      Grid.Column="0"
                                      x:Name="MaterialName"
@@ -117,7 +116,6 @@
                                        Text="واحد شمارش"
                                        Margin="7 0 0 0 " />
                             <ComboBox FontSize="14"
-                                      TabIndex="1"
                                       FontFamily="Calibri"
                                       SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay}"
                                       SelectionChanged="ComboBox_SelectionChanged"
@@ -131,7 +129,6 @@
                                       Grid.Column="1"
                                       Grid.ColumnSpan="3"
                                       LabelName="آخرین قیمت فروش"
-                                      TabIndex="2"
                                       Value="{Binding ViewModel.LastSellPrice, Mode=TwoWay}"/>
                         <StackPanel  Grid.Column="1"
                                     Grid.ColumnSpan="3"
@@ -145,7 +142,6 @@
                             <ui:TextBox FontSize="14"
                                         TextAlignment="Center"
                                         Text="{Binding ViewModel.Address, Mode=TwoWay}"
-                                        TabIndex="3"
                                         FontFamily="Calibri"
                                         Margin="0 4 0 0" />
                         </StackPanel>
@@ -160,7 +156,6 @@
                             <ui:TextBox Grid.Column="0"
                                         Grid.Row="2"
                                         Text="{Binding ViewModel.Serial , Mode= TwoWay}"
-                                        TabIndex="4"
                                         Margin="0 4 0 0"
                                         TextAlignment="Center"
                                         FontSize="14"
@@ -172,7 +167,6 @@
                                      HorizontalAlignment="Center">
                             <CheckBox FontFamily="Calibri"
                                       FontSize="14"
-                                      TabIndex="5"
                                       IsChecked="{Binding ViewModel.IsManufacturedGoods , Mode=TwoWay}"
                                       Margin="2 0 0 0 ">تعریف به عنوان کالای تولیدی</CheckBox>
 

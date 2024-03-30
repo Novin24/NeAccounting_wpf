@@ -83,5 +83,11 @@ namespace NeAccounting.Views.Pages
 
             txt_total.Text = String.Format("{0:N0}", cash + promissory + cheque);
         }
+
+
+        private void Txt_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            CalculateTotal();
+        }
     }
 }
