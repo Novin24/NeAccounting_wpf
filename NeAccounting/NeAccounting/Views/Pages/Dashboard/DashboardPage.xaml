@@ -14,8 +14,7 @@
     <!--<Page.Resources>
         <cnt:Converters x:Key="ConvertHeight"/>
     </Page.Resources>-->
-    <Grid Margin="-10,0"
-          VerticalAlignment="Top">
+    <Grid Margin="-10,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -71,12 +70,10 @@
             </Grid>
         </Border>
         <Border Grid.Row="1"
-                Margin="0 0 0 20"
+                Margin="0 0 0 15"
                 Padding="0"
                 CornerRadius="9"
                 BorderBrush="#D6D5D5"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center"
                 BorderThickness="0.4">
 
             <Border.Background>

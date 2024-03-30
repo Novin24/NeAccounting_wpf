@@ -204,17 +204,18 @@
                                     HorizontalAlignment="Left"
                                     IsDefault="True">جستجو</Button>
                         </Grid>
-                        <DataGrid Margin="0 20 0 15"
-                                  x:Name="Workersdata"
+                        <DataGrid Grid.Row="2"
                                   Padding="7"
-                                  Grid.Row="2"
+                                  FontSize="15"
+                                  IsReadOnly="True"
+                                  Margin="0 20 0 15"
+                                  x:Name="Workersdata"
+                                  FontFamily="Calibri"
+                                  CanUserResizeRows="False"
+                                  AutoGenerateColumns="False"
                                   CanUserResizeColumns="False"
                                   CanUserReorderColumns="False"
-                                  FontSize="15"
-                                  ItemsSource="{Binding ViewModel.List, Mode=TwoWay}"
-                                  CanUserResizeRows="False"
-                                  FontFamily="Calibri"
-                                  AutoGenerateColumns="False">
+                                  ItemsSource="{Binding ViewModel.List, Mode=TwoWay}">
 
                             <DataGrid.Resources>
                                 <s:String x:Key="format">{0:N0}</s:String>
@@ -224,27 +225,87 @@
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     Binding="{Binding Name}"
-                                                    Width="*" />
+                                                    Width="*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Name}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                                
                                 <DataGridTextColumn Header="کدملی"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     Binding="{Binding NationalCode}"
-                                                    Width=".65*" />
+                                                    Width=".65*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding NationalCode}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                                
                                 <DataGridTextColumn Header="موبایل"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     Binding="{Binding Mobile}"
-                                                    Width=".75*" />
+                                                    Width=".75*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Mobile}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                                
                                 <DataGridTextColumn Header="نوع مشتری"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     Binding="{Binding CusTypeName}"
-                                                    Width=".5*" />
+                                                    Width=".5*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding CusTypeName}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+
                                 <DataGridTextColumn Header="اعتبار"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     Binding="{Binding TotalCredit, StringFormat={StaticResource format}}"
-                                                    Width="*" />
+                                                    Width="*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding TotalCredit, StringFormat={StaticResource format}}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                                
                                 <DataGridTemplateColumn Header="عملیات"
                                                         Width="110"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
