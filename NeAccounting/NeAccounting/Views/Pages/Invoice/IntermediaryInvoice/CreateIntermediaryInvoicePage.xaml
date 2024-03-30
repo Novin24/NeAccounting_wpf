@@ -303,22 +303,88 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding Id}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".23*" />
+                                                        Width=".23*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Id}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
                                     <DataGridTextColumn Binding="{Binding MaterialName}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".7*" />
+                                                        Width=".7*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding MaterialName}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
                                     <DataGridTextColumn Binding="{Binding amount}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".46*" />
+                                                        Width=".46*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding amount}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
                                     <DataGridTextColumn Binding="{Binding UnitName}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".5*" />
+                                                        Width=".5*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding UnitName}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
                                     <DataGridTextColumn Binding="{Binding Total_price}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width=".73*" />
+                                                        Width=".73*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Total_price}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
                                     <DataGridTextColumn Binding="{Binding Description}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" />
+                                                        Width="*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Description}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
 
                                     <DataGridTemplateColumn Width="95">
                                         <DataGridTemplateColumn.CellTemplate>

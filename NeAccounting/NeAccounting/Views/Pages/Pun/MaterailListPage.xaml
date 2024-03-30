@@ -207,31 +207,86 @@
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*"
                                                         x:Name="MaterialName"
-                                                        Binding="{Binding MaterialName}" />
+                                                        Binding="{Binding MaterialName}" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding MaterialName}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="موجودی انبار"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*"
                                                         x:Name="Entity"
-                                                        Binding="{Binding SEntity}" />
+                                                        Binding="{Binding SEntity}" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding SEntity}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="واحد"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*"
                                                         x:Name="UnitName"
-                                                        Binding="{Binding UnitName}" />
+                                                        Binding="{Binding UnitName}" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding UnitName}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="شماره سریال"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*"
                                                         x:Name="Serial"
-                                                        Binding="{Binding Serial}" />
+                                                        Binding="{Binding Serial}" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Serial}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="محل نگهداری"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Width="*"
                                                         x:Name="Address"
-                                                        Binding="{Binding Address}" />
+                                                        Binding="{Binding Address}" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Address}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn Header="عملیات"
                                                             Width="75"
                                                             HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
