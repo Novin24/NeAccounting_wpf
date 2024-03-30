@@ -299,10 +299,6 @@ namespace NeAccounting.ViewModels
         private async Task OnSumbit()
         {
             #region validation
-            if (string.IsNullOrEmpty(Description))
-            {
-                Description = "فاکتور فروش";
-            }
 
             if (RemId != null)
             {
@@ -320,6 +316,10 @@ namespace NeAccounting.ViewModels
             {
                 _snackbarService.Show("خطا", "وارد کردن حداقل یک ردیف الزامیست !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
+            }
+            if (string.IsNullOrEmpty(InvDescription))
+            {
+                InvDescription = "فاکتور فروش";
             }
             #endregion
 

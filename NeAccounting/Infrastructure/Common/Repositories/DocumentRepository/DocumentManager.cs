@@ -291,7 +291,7 @@ namespace Infrastructure.Repositories
             DateTime submitDate,
             List<RemittanceListViewModel> remittances)
         {
-            List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, descripion)).ToList();
+            List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
 
             try
             {

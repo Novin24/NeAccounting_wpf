@@ -31,6 +31,7 @@ namespace NeAccounting.Views.Pages
                 ViewModel.MaterialId = -1;
                 ViewModel.Description = null;
                 ViewModel.MatPrice = null;
+                ViewModel.RemId = null;
                 txt_MaterialName.Text = string.Empty;
                 txt_UnitName.Text = string.Empty;
                 txt_Unit_price.Text = string.Empty;
