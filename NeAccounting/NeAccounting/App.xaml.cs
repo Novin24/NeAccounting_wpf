@@ -228,8 +228,10 @@ namespace NeAccounting
                 services.AddTransient<MaterialReportViewModel>();
 
                 services.AddTransient<DebtorsListPage>();
+                services.AddTransient<DebtorsViewModel>();
 
                 services.AddTransient<CreditorsListPage>();
+                services.AddTransient<CreditorsViewModel>();
 
                 services.AddTransient<DailyBookPage>();
                 services.AddTransient<DalyBookViewModel>();

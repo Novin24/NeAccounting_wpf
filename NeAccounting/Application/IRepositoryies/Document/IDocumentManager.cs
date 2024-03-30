@@ -155,13 +155,13 @@ namespace NeApplication.IRepositoryies
         /// <summary>
         /// دریافت لیست بدهکاران
         /// </summary>
-        Task<CreditorsOrDebtorsReport> GetDebtorsReport(DateTime startDate, DateTime endDate);
+        Task<List<CreditorsOrDebtorsReport>> GetDebtorsReport(long min, long max);
 
         /// <summary>
         /// دریافت لیست طلبکاران
         /// </summary>
         /// <returns></returns>
-        Task<CreditorsOrDebtorsReport> GetcreditorsReport(DateTime startDate, DateTime endDate);
+        Task<List<CreditorsOrDebtorsReport>> GetcreditorsReport(long min, long max);
         #endregion
 
         #region Doc

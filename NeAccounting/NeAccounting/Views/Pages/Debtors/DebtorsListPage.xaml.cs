@@ -1,14 +1,19 @@
-﻿using System.Windows.Controls;
+﻿using NeAccounting.ViewModels;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for DebtorsListPage.xaml
     /// </summary>
-    public partial class DebtorsListPage : Page
+    public partial class DebtorsListPage : INavigableView<DebtorsViewModel>
     {
-        public DebtorsListPage()
+        public DebtorsViewModel ViewModel { get; }
+
+        public DebtorsListPage(DebtorsViewModel viewModel)
         {
+            ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
         }
     }
