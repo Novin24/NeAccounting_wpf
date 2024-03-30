@@ -1,11 +1,13 @@
 ﻿<Page x:Class="NeAccounting.Views.Pages.DebtorsListPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance local:DebtorsListPage,
+                                        IsDesignTimeCreatable=False}"
       d:DesignHeight="800"
       d:DesignWidth="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
@@ -55,7 +57,7 @@
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
-                    <nu:HeaderPack NamePpage="لیست بدهکاران"/>
+                    <nu:HeaderPack NamePpage="لیست بدهکاران" />
 
                     <Border Grid.Row="1"
                             Grid.ColumnSpan="2"
@@ -74,7 +76,6 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="4*"></RowDefinition>
-                                <RowDefinition Height="auto"></RowDefinition>
 
                             </Grid.RowDefinitions>
 
@@ -82,25 +83,23 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
 
                                 </Grid.RowDefinitions>
-                                <nu:PersianDatePicker VerticalAlignment="Center"
-                                                      FlowDirection="LeftToRight" 
-                                                      LabelName="از تاریخ"
-                                                      MinWidth="200"
-                                                      MaxWidth="300"/>
+                                <nu:MoneyPack LabelName="از مبلغ"
+                                              MinWidth="200"
+                                              Value="{Binding ViewModel.Min , Mode=TwoWay}"
+                                              MaxWidth="300" />
 
-                                <nu:PersianDatePicker VerticalAlignment="Center"
-                                                          Grid.Column="1"
-                                                          FlowDirection="LeftToRight"
-                                                          LabelName="تا تاریخ"
-                                                      MinWidth="200"
-                                                      MaxWidth="300"/>
+                                <nu:MoneyPack Grid.Column="1"
+                                              LabelName="تا مبلغ"
+                                              Value="{Binding ViewModel.Max ,Mode=TwoWay}"
+                                              MinWidth="200"
+                                              MaxWidth="300" />
 
                                 <Button Grid.Column="2"
                                         FontSize="17"
@@ -108,6 +107,7 @@
                                         Padding="30 5"
                                         Content="نمایش"
                                         IsDefault="True"
+                                        Command="{Binding ViewModel.SearchCommand}"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
                                         HorizontalAlignment="Center" />
@@ -118,22 +118,26 @@
                                       x:Name="Workersdata"
                                       FontFamily="Calibri"
                                       CanUserResizeRows="False"
+                                      ItemsSource="{Binding ViewModel.DebList}"
                                       CanUserResizeColumns="False"
                                       AutoGenerateColumns="False">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="نام مشتری"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding Name}"
                                                         Width="*" />
 
                                     <DataGridTextColumn Header="مبلغ بدهکاری"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        Binding="{Binding Total}"
                                                         Width="*" />
 
                                     <DataGridTextColumn Header="تاریخ آخرین دریافتی"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        Binding="{Binding ShamsiDate}"
                                                         Width="*" />
                                 </DataGrid.Columns>
                             </DataGrid>

@@ -2,9 +2,10 @@
 {
     public class CreditorsOrDebtorsReport
     {
-        public string? CusName { get; set; }
-        public string? Price { get; set; }
-        public DateTime Date { get; set; }
+        public string? Name { get; set; }
+        public long Debt { get; set; }
+        public string Total { get; set; }
+        public long Credit { get; set; }
         public string? ShamsiDate { get; set; }
     }
 }

@@ -963,35 +963,70 @@ namespace Infrastructure.Repositories
         /// <summary>
         /// دریافت لیست بدهکاران
         /// </summary>
-        public async Task<CreditorsOrDebtorsReport> GetDebtorsReport(DateTime startDate, DateTime endDate)
+        public async Task<List<CreditorsOrDebtorsReport>> GetDebtorsReport(long min, long max)
         {
+            PersianCalendar pc = new();
+            var result = await (from d in DbContext.Set<Document>()
+                                    .AsNoTracking()
+                                join c in DbContext.Set<Customer>() on d.CustomerId equals c.Id
+                                group new { d, c } by c.Name into grouped
+                                select new CreditorsOrDebtorsReport
+                                {
+                                    Name = grouped.Key,
+                                    Debt = grouped.Sum(x => !x.d.IsReceived ? x.d.Price : 0),
+                                    Credit = grouped.Sum(x => x.d.IsReceived ? x.d.Price : 0),
+                                    ShamsiDate = grouped.Max(cd => cd.d.SubmitDate).ToShamsiDate(pc),
+                                }).ToListAsync();
 
-            //  var t = await (from doc in DbContext.Set<Document>()
-            //.AsNoTracking()
-            //.Where(st => st.SubmitDate >= startDate)
-            //.Where(et => et.SubmitDate < endDate)
-
-            //                 group doc by doc.CustomerId into cusId
-
-            //                 let join cus in DbContext.Set<Customer>()
-            //                               on cusId equals cus.Id
-
-            //                 select new CreditorsOrDebtorsReport()
-            //                 {
-            //                     CusName = cus.Name
-
-            //                 }).ToListAsync();
-
-            return null;
+            List<CreditorsOrDebtorsReport> list = [];
+            foreach (var item in result)
+            {
+                if (item.Debt > item.Credit)
+                {
+                    var total = item.Debt - item.Credit;
+                    if ((min == 0 || total >= min) && (max == 0 || max > total))
+                    {
+                        item.Total = total.ToString("N0");
+                        list.Add(item);
+                    }
+                }
+            }
+            return list;
         }
 
         /// <summary>
         /// دریافت لیست طلبکاران
         /// </summary>
         /// <returns></returns>
-        public async Task<CreditorsOrDebtorsReport> GetcreditorsReport(DateTime startDate, DateTime endDate)
+        public async Task<List<CreditorsOrDebtorsReport>> GetcreditorsReport(long min, long max)
         {
-            return null;
+            PersianCalendar pc = new();
+            var result = await (from d in DbContext.Set<Document>()
+                                    .AsNoTracking()
+                                join c in DbContext.Set<Customer>() on d.CustomerId equals c.Id
+                                group new { d, c } by c.Name into grouped
+                                select new CreditorsOrDebtorsReport
+                                {
+                                    Name = grouped.Key,
+                                    Debt = grouped.Sum(x => !x.d.IsReceived ? x.d.Price : 0),
+                                    Credit = grouped.Sum(x => x.d.IsReceived ? x.d.Price : 0),
+                                    ShamsiDate = grouped.Max(cd => cd.d.SubmitDate).ToShamsiDate(pc),
+                                }).ToListAsync();
+
+            List<CreditorsOrDebtorsReport> list = [];
+            foreach (var item in result)
+            {
+                if (item.Credit > item.Debt)
+                {
+                    var total = item.Credit - item.Debt;
+                    if ((min == 0 || total >= min) && (max == 0 || max > total))
+                    {
+                        item.Total = total.ToString("N0");
+                        list.Add(item);
+                    }
+                }
+            }
+            return list;
         }
 
         public async Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,

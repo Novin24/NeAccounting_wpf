@@ -87,6 +87,7 @@ namespace NeAccounting.Views.Pages
 
         private void Txt_ValueChanged(object sender, RoutedEventArgs e)
         {
+            if (!IsInitialized) { return; }
             CalculateTotal();
         }
     }
