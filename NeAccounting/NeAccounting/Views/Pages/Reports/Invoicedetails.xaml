@@ -199,6 +199,7 @@
                         <DataGrid Grid.Row="1"
                                   Padding="7"
                                   FontSize="15"
+                                  IsReadOnly="True"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"
@@ -220,57 +221,178 @@
                                                     Binding="{Binding Row}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".4*" />
+                                                    Width=".4*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Row}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="تاریخ"
                                                     Binding="{Binding ShamsiDate}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".9*" />
+                                                    Width=".9*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding ShamsiDate}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="شرح"
                                                     Binding="{Binding MaterialName}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="1.5*" />
+                                                    Width="1.5*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding MaterialName}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="مقدار"
                                                     Binding="{Binding AmuontOf}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".4*" />
+                                                    Width=".4*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding AmuontOf}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="واحد"
                                                     Binding="{Binding Unit}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".6*" />
+                                                    Width=".6*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Unit}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="فی"
                                                     Binding="{Binding Price}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".8*" />
+                                                    Width=".8*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Price}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="بدهکاری"
                                                     Binding="{Binding Bed, StringFormat={StaticResource format}}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="*" />
+                                                    Width="*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Bed, StringFormat={StaticResource format}}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="طلبکاری"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     Binding="{Binding Bes, StringFormat={StaticResource format}}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="*" />
+                                                    Width="*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Bes, StringFormat={StaticResource format}}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="مانده"
                                                     Binding="{Binding LeftOver, StringFormat={StaticResource format}}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".8*" />
+                                                    Width=".8*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding LeftOver, StringFormat={StaticResource format}}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="توضییحات"
                                                     Binding="{Binding Description}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".8*" />
+                                                    Width=".8*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Description}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="وضعیت مشتری"
                                                     Binding="{Binding Status}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="1.1*" />
+                                                    Width="1.1*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Status}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                         <nu:Pagination  Grid.Row="2"

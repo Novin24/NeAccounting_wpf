@@ -310,7 +310,7 @@
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
                                                     <TextBlock FontSize='17'
-                                                               Text='{Binding Bes}' />
+                                                               Text='{Binding Bes, StringFormat={StaticResource format}}' />
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>

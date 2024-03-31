@@ -112,7 +112,7 @@
                                                Grid.Column="0"
                                                Margin="0,12,12,0"
                                                Padding="0"
-                                               Width="180"
+                                               Width="270"
                                                VerticalAlignment="Stretch"
                                                CommandParameter="BasicInput"
                                                IsChevronVisible="False">

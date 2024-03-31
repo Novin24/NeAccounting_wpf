@@ -283,7 +283,18 @@
                                                     Binding="{Binding CheckNumber}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".44*" />
+                                                    Width=".44*" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding CheckNumber}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="پرداخت کننده"
                                                     Binding="{Binding Payer}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"

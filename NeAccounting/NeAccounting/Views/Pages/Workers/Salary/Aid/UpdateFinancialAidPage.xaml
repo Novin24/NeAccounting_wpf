@@ -104,7 +104,18 @@
                                                                 Binding="{Binding Price}"
                                                                 HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                                 ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                                Width="*" />
+                                                                Width="*" >
+                                            <DataGridTextColumn.CellStyle>
+                                                <Style TargetType="DataGridCell">
+                                                    <Setter Property="ToolTip">
+                                                        <Setter.Value>
+                                                            <TextBlock FontSize='17'
+                                                               Text='{Binding Price}' />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </DataGridTextColumn.CellStyle>
+                                        </DataGridTextColumn>
                                         <DataGridTextColumn Header="شماره پرسنلی"
                                                                 Binding="{Binding PersonelId}"
                                                                 HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
