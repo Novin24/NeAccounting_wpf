@@ -205,14 +205,14 @@
 
                         <StackPanel Grid.Row="4"
                                     Margin="20 5 0 5 "
-                                    HorizontalAlignment="Left"
+                                    HorizontalAlignment="Center"
                                     Width="200"
                                     Grid.Column="1">
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="وضعیت چک"
-                                       Margin="1 0 0 0 " />
+                                       Margin="5 0 0 0 " />
                             <ComboBox SelectedIndex="3"
                                       Margin="0 0 0 0"
                                       SelectedValuePath="Key"
@@ -231,7 +231,8 @@
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="توضیحات"
-                                       Grid.Column="1" />
+                                       Grid.Column="1" 
+                                       Margin="5 0 0 0 "/>
                             <ui:TextBox Margin="0,21,0,0"
                                         FontSize="16"
                                         Text="{Binding ViewModel.Description,Mode=TwoWay}"

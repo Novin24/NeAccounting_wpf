@@ -219,7 +219,7 @@
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                               Text='{Binding FulePath}' TextWrapping="Wrap" Width="400" />
+                                                               Text='{Binding FulePath}' TextWrapping="Wrap" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>

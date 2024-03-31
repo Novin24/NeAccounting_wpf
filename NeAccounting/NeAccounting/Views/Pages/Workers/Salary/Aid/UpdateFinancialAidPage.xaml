@@ -61,13 +61,9 @@
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <ui:TextBlock Margin="15,0"
-                                  Padding="0,20,0,0"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center"
-                                  FontFamily="the King &amp; Queen font"
-                                  FontSize="30"
-                                  Text="Novin" />
+                <nu:HeaderPack NamePpage="ویرایش مساعده"
+                               Margin="0 0" 
+                               Grid.ColumnSpan="2"/>
                 <Border Grid.Row="1"
                             CornerRadius="9"
                             Margin="4"
@@ -132,15 +128,6 @@
                         </Border>
                     </Grid>
                 </Border>
-
-                <TextBlock Margin="0 20 20 0"
-                               Grid.ColumnSpan="2"
-                               Height="40"
-                               HorizontalAlignment="Right"
-                               FontFamily="Calibri"
-                               FontWeight="Bold"
-                               FontSize="18"
-                               Text="ویرایش مساعده" />
 
                 <Grid Grid.Column="1"
                           Grid.Row="1">

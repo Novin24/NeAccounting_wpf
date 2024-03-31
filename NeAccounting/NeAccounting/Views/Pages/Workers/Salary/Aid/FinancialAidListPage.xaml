@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages" xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:FinancialAidListPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
@@ -55,29 +55,9 @@
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <ui:TextBlock Margin="55,0"
-                                  Padding="0,20,0,0"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center"
-                                  FontFamily="the King &amp; Queen font"
-                                  FontSize="30"
-                                  Text="Novin" />
-                <Grid>
-                    <TextBlock Margin="0 20 55 0"
-                                   Height="40"
-                                   HorizontalAlignment="Right"
-                                   FontFamily="Calibri"
-                                   FontWeight="Bold"
-                                   FontSize="18"
-                                   Text="مساعده" />
-                    <TextBlock Margin="50 20 0 0"
-                                   Height="40"
-                                   HorizontalAlignment="Center"
-                                   FontFamily="Calibri"
-                                   FontWeight="Bold"
-                                   FontSize="18"><Run Text="1402/09/13 " /></TextBlock>
 
-                </Grid>
+                <nu:HeaderPack NamePpage="مساعده"
+                               Margin="30 0" />
 
                 <Border Grid.Row="1"
                             Grid.ColumnSpan="2"

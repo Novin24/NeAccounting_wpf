@@ -1,19 +1,16 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.TransferChequePage"
+﻿<Page x:Class="NeAccounting.Views.Pages.CheckDetailsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
-      mc:Ignorable="d"
-      Loaded="Page_Loaded"
-      d:DataContext="{d:DesignInstance local:TransferChequePage,
-                                        IsDesignTimeCreatable=False}"
-      d:DesignHeight="800"
-      d:DesignWidth="1200"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      mc:Ignorable="d" 
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
-      Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="CheckDetailsPage">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -58,20 +55,25 @@
 
                 </Grid.RowDefinitions>
 
-                <nu:HeaderPack NamePpage="واگذاری چک ضمانتی" />
+                <nu:HeaderPack NamePpage="جزئیات چک"
+                               Margin="30 0" />
+
+
 
                 <Border Grid.Column="0"
+                        Margin="4"
                         Grid.Row="1"
                         Grid.ColumnSpan="2"
                         CornerRadius="9"
-                        Margin="4"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4"
                         Background="{DynamicResource ControlSolidFillColorDefaultBrush}">
 
                     <Grid  FlowDirection="RightToLeft"
                            Grid.Row="1">
+
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
@@ -94,42 +96,34 @@
                                            Margin="7 0 0 3" />
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="14"
-                                           x:Name="lbl_cusId"
                                            Foreground="#BB8F60"
                                            HorizontalAlignment="Right"
                                            Margin="0 3 3 1" />
                             </DockPanel>
                             <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
-                                               OriginalItemsSource="{Binding ViewModel.Cuslist,Mode=OneTime}"
                                                PlaceholderText="Search..."
-                                               DisplayMemberPath="DisplayName"
                                                FontSize="14"
-                                               Grid.Row="0"
-                                               x:Name="txt_Name"
-                                               SuggestionChosen="Txt_Name_SuggestionChosen"
+                                               IsEnabled="False"
                                                FontFamily="Calibri" />
                         </StackPanel>
-
-                        <nu:PersianDatePicker Grid.Row="0"
+                        <nu:PersianDatePicker
+                                              Grid.Column="1"
+                                              IsEnabled="False"
+                                              Margin="2,0,21,0"
                                               VerticalAlignment="Center"
                                               FlowDirection="LeftToRight"
-                                              x:Name="DateFocus"
-                                              Grid.Column="1"
-                                              SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}"
-                                              Grid.ColumnSpan="3"
-                                              Margin="0 0 23 0"
-                                              LabelName="تاریخ واگذاری" />
+                                              LabelName="تاریخ پرداخت" />
                         <StackPanel Grid.Row="1"
                                     Margin="30 5 20 5 ">
 
-                            <TextBlock FontFamily="Calibri"
+
+                            <TextBlock Text="بانک"
                                        FontSize="15"
-                                       Text="بانک"
-                                       Margin="5 0 0 3 " />
+                                       Margin="5 0 0 3 "
+                                       FontFamily="Calibri" />
                             <ui:TextBox TextAlignment="Center"
-                                        Text="{Binding ViewModel.Bank_Name,Mode=OneTime}"
-                                        FontFamily="Calibri"
                                         IsEnabled="False"
+                                        FontFamily="Calibri"
                                         FontSize="14" />
                         </StackPanel>
                         <StackPanel Grid.Row="1"
@@ -142,12 +136,13 @@
                                        Margin="5 0 0 3 " />
                             <ui:TextBox FontSize="14"
                                         TextAlignment="Center"
-                                        Text="{Binding ViewModel.Bank_Branch,Mode=OneTime}"
                                         IsEnabled="False"
                                         FontFamily="Calibri" />
                         </StackPanel>
-                        <StackPanel Grid.Row="2"
-                                    Margin="30 6 20 0 ">
+
+                        <StackPanel  Grid.Row="2"
+                                     Margin="30 5 20 5 ">
+
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="15"
@@ -155,13 +150,14 @@
                                        Margin="5 0 0 3 " />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
-                                        Text="{Binding ViewModel.Cheque_Number,Mode=OneTime}"
                                         IsEnabled="False"
                                         FontFamily="Calibri" />
                         </StackPanel>
+
                         <StackPanel Grid.Row="2"
                                     Margin="20 6 30 0 "
                                     Grid.Column="1">
+
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
@@ -169,84 +165,116 @@
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
-                                        Text="{Binding ViewModel.Accunt_Number,Mode=OneTime}"
+                                        Height="36"
                                         IsEnabled="False"
                                         FontFamily="Calibri" />
                         </StackPanel>
-
                         <nu:PersianDatePicker Grid.Row="3"
                                               VerticalAlignment="Center"
                                               FlowDirection="LeftToRight"
-                                              SelectedDate="{Binding ViewModel.DueDate,Mode=OneTime}"
                                               Margin="9 0 13 0"
-                                              IsEnabled="False"
+                                        IsEnabled="False"
                                               LabelName="تاریخ سررسید" />
                         <nu:MoneyPack Grid.Row="3"
                                       Grid.Column="1"
                                       Margin="0 0 10 0"
-                                      Value="{Binding ViewModel.Price,Mode=OneTime}"
-                                      IsEnabled="False"
-                                      LabelName="مبلغ چک" />
-                        <StackPanel Margin="30 5 20 5 "
-                                    Grid.Row="4">
+                                      LabelName="مبلغ چک" 
+                                      IsEnabled="False"/>
+                        <StackPanel Grid.Row="4"
+                                    Margin="30 5 20 0 ">
+
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
-                                       Text="صاحب حساب"
+                                       Text="صاحب چک"
                                        Margin="5 0 3 3" />
                             <ui:TextBox FontSize="14"
-                                        Text="{Binding ViewModel.Cheque_Owner,Mode=OneTime}"
                                         IsEnabled="False"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>
+
                         <StackPanel Grid.Row="4"
-                                    Margin="0 5 0 5 "
-                                    HorizontalAlignment="Center"
+                                    Margin="20 5 0 5 "
+                                    HorizontalAlignment="Left"
                                     Width="200"
                                     Grid.Column="1">
+
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="وضعیت چک"
-                                       Margin="5 0 0 3 " />
+                                       Margin="5 0 0 0 " />
                             <ComboBox SelectedIndex="3"
-                                      Margin="0 0 0 0 "
-                                      IsEnabled="False"
-                                      SelectedValuePath="Key"
+                                      Margin="0 0 0 0"
                                       DisplayMemberPath="Value"
-                                      SelectedValue="{Binding ViewModel.Substatus,Mode=OneTime}"
-                                      ItemsSource="{Binding ViewModel.EnumSource,Mode=OneTime}"
-                                      x:Name="Cmb_Status"
                                       FontFamily="Calibri"
+                                        IsEnabled="False"
                                       FontSize="14">
                             </ComboBox>
                         </StackPanel>
-                        <Grid Grid.Row="5"
-                              Grid.ColumnSpan="2"
-                              Margin="30 3 30 4">
+                        <StackPanel Grid.Row="5"
+                                    Margin="30 5 20 0 ">
+
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="دریافت کننده"
+                                       Margin="5 0 3 3" />
+                            <ui:TextBox FontSize="14"
+                                        IsEnabled="False"
+                                        TextAlignment="Center"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="5"
+                                    Grid.Column="1"
+                                    Margin="20 5 30 0 ">
+
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="پرداخت کننده"
+                                       Margin="5 0 3 3" />
+                            <ui:TextBox FontSize="14"
+                                        IsEnabled="False"
+                                        TextAlignment="Center"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
+                        <Grid Grid.Row="6"
+                              Margin="30 3 20 4">
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="توضیحات"
-                                       Grid.Column="1"
-                                       Margin="5 0 0 0 " />
-                            <TextBox Margin="0,20,0,0"
-                                     Text="{Binding ViewModel.Description,Mode=OneWayToSource}"
-                                     FontSize="14"
-                                     FlowDirection="RightToLeft"
-                                     FontFamily="Calibri"></TextBox>
+                                       Margin="5 0 0 0 "/>
+                            <ui:TextBox Margin="0,21,0,0"
+                                        FontSize="16"
+                                        FlowDirection="RightToLeft"
+                                        IsEnabled="False"
+                                        FontFamily="Calibri"></ui:TextBox>
+                        </Grid>
+                        <Grid Grid.Row="6"
+                              Grid.Column="1"
+                              Margin="20 3 30 4">
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="توضیحات"
+                                       Margin="5 0 0 0 "/>
+                            <ui:TextBox Margin="0,21,0,0"
+                                        FontSize="16"
+                                        FlowDirection="RightToLeft"
+                                        IsEnabled="False"
+                                        FontFamily="Calibri"></ui:TextBox>
                         </Grid>
 
-                        <Button Grid.Row="6"
+                        <Button Grid.Row="7"
                                 Content="ثبت چک"
-                                Margin="15"
-                                Command="{Binding ViewModel.SubmitCommand}"
-                                Padding="22 8 "
+                                Margin="10"
+                                Width="100"
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"
                                 FontSize="15"
                                 Grid.ColumnSpan="2" />
-
                     </Grid>
                 </Border>
             </Grid>
