@@ -116,6 +116,7 @@ namespace NeApplication.IRepositoryies
 
         #region func
         Task<(string error, bool isSuccess)> AddAid(
+            DateTime subDate,
             int workerId,
             int persianYear,
             byte persianMonth,

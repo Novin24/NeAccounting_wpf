@@ -703,8 +703,7 @@ namespace Infrastructure.Repositories
                 .Where(et => et.SubmitDate < endTime)
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
-                .Where(s => s.Type != DocumntType.SellInv && s.Type != DocumntType.BuyInv)
-                .Where(s => s.PayType != PaymentType.GurantyCheque)
+                .Where(s => s.Type != DocumntType.SellInv && s.Type != DocumntType.BuyInv && s.Type != DocumntType.GarantyCheque)
                 .Select(t => new DetailRemittanceDto()
                 {
                     Serial = t.Serial.ToString(),
@@ -761,9 +760,9 @@ namespace Infrastructure.Repositories
                                             AmuontOf = buyRem.AmountOf.ToString(),
                                             Serial = doc.Serial.ToString(),
                                             Description = buyRem.Description,
-                                            Bed = buyRem.TotalPrice,
+                                            Bes = buyRem.TotalPrice,
                                             Price = buyRem.Price.ToString("N0"),
-                                            Bes = 0,
+                                            Bed = 0,
                                             MaterialName = buyRem.Material.Name,
                                             Unit = buyRem.Material.Unit.Name,
                                         }).ToListAsync());
@@ -792,10 +791,6 @@ namespace Infrastructure.Repositories
             foreach (var item in Remittances)
             {
                 item.Row = i;
-                item.ShamsiDate = item.Date.ToShamsiDate(pc);
-                long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bed).Sum();
-                long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bes).Sum();
-                item.LeftOver = Math.Abs(bed - bes);
                 if (item.IsRecived)
                 {
                     item.Bed = 0;
@@ -804,6 +799,10 @@ namespace Infrastructure.Repositories
                 {
                     item.Bes = 0;
                 }
+                item.ShamsiDate = item.Date.ToShamsiDate(pc);
+                long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bed).Sum();
+                long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bes).Sum();
+                item.LeftOver = Math.Abs(bed - bes);
 
                 if (bes > bed)
                 {

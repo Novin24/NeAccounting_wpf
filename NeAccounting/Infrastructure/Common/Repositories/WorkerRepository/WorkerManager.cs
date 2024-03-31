@@ -701,6 +701,7 @@ namespace Infrastructure.Repositories
 
         #region Aid
         public async Task<(string error, bool isSuccess)> AddAid(
+            DateTime submitDate,
             int workerId,
             int persianYear,
             byte persianMonth,
@@ -715,7 +716,7 @@ namespace Infrastructure.Repositories
                 return new("کارگر مورد نظر یافت نشد!!!", false);
             }
 
-            worker.AddAid(new FinancialAid(persianMonth, persianYear, amountOf, description));
+            worker.AddAid(new FinancialAid(submitDate, persianMonth, persianYear, amountOf, description));
             try
             {
                 Entities.Update(worker);
@@ -786,15 +787,13 @@ namespace Infrastructure.Repositories
                               Description = aid.Description,
                               PersonelId = worker.PersonnelId,
                               Price = aid.AmountOf.ToString("N0"),
-                              PersianMonth = aid.PersianMonth,
-                              PersianYear = aid.PersianYear,
+                              SubmitDate = aid.SubmitDate,
                               Details = new AidDetails() { Id = aid.Id, WorkerId = worker.Id }
                           })
-                      .OrderByDescending(c => c.PersianYear)
-                      .ThenByDescending(c => c.PersianMonth)
-                      .Skip(pageNum * pageCount)
-                      .Take(pageCount)
-                      .ToListAsync();
+                          .OrderBy(t => t.SubmitDate)
+                          .Skip(pageNum * pageCount)
+                          .Take(pageCount)
+                          .ToListAsync();
 
         }
 

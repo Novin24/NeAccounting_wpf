@@ -378,6 +378,8 @@
                             </DataGrid.Columns>
                         </DataGrid>
                         <!--#endregion-->
+
+                        <!--#region Paginatoin -->
                         <nu:Pagination  Grid.Row="2"
                                         Margin="0,10"
                                         PageCount="{Binding ViewModel.PageCount}"
@@ -385,6 +387,7 @@
                                         PageChosen="Pagination_PageChosen"
                                         HorizontalAlignment="Center"
                                         FlowDirection="LeftToRight" />
+                        <!--#endregion-->
                     </Grid>
                 </Border>
             </Grid>

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using DomainShared.Extension;
+using System.Globalization;
 
 namespace DomainShared.ViewModels.Workers
 {
@@ -9,21 +10,18 @@ namespace DomainShared.ViewModels.Workers
         public int PersonelId { get; set; }
         public string Price { get; set; }
         public string? Description { get; set; }
-        /// <summary>
-        /// ماه مربوط به کارکرد
-        /// </summary>
-        public byte PersianMonth { get; set; }
 
         /// <summary>
         /// سال مربوط به کارکرد
         /// </summary>
-        public int PersianYear { get; set; }
+        public DateTime SubmitDate{ get; set; }
 
         public readonly string DisplayDate
         {
             get
             {
-                return string.Format("{0}/{1}", PersianYear, PersianMonth);
+                PersianCalendar pc = new();
+                return SubmitDate.ToShamsiDate(pc);
             }
         }
         public AidDetails Details { get; set; }

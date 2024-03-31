@@ -81,7 +81,6 @@ namespace NeAccounting.ViewModels
             _isInit = true;
             using UnitOfWork db = new();
             var t = await db.DocumentManager.GetChequeByDate(null, null, CusId, Status, _isInit, CurrentPage);
-
             CurrentPage = t.CurrentPage;
             InvList = t.Items;
             PageCount = t.PageCount;

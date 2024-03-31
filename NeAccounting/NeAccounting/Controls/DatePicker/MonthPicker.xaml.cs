@@ -77,8 +77,8 @@ namespace NeAccounting.Controls
             if (obj is not MonthPicker mp)
                 return;
 
-            if (args.NewValue == args.OldValue)
-                return;
+            //if (args.NewValue == args.OldValue)
+            //    return;
             IsCalculated = false;
             selectedYea = (int?)args.NewValue;
             mp.InitialYear(selectedYea);
@@ -107,8 +107,8 @@ namespace NeAccounting.Controls
             if (sender is not MonthPicker c)
                 return;
 
-            if (args.NewValue == args.OldValue)
-                return;
+            //if (args.NewValue == args.OldValue)
+            //    return;
 
             IsCalculated = false;
             selectedMonth = (byte?)args.NewValue;
