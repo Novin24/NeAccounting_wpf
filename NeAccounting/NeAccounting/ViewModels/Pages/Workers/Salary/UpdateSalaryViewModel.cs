@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using Domain.NovinEntity.Workers;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
@@ -6,10 +7,10 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
 {
-    private readonly ISnackbarService _snackbarService = snackbarService;
-    private readonly INavigationService _navigationService = navigationService;
+    private readonly ISnackbarService _snackbarService;
+    private readonly INavigationService _navigationService;
 
     [ObservableProperty]
     private int _workerId = -1;
@@ -30,37 +31,37 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
     private int? _submitYear;
 
     [ObservableProperty]
-    private long _amountOf = 0;
+    private long _amountOf;
 
     [ObservableProperty]
-    private long _financialAid = 0;
+    private long _financialAid;
 
     [ObservableProperty]
-    private long _overTime = 0;
+    private long _overTime;
 
     [ObservableProperty]
-    private long _tax = 0;
+    private long _tax;
 
     [ObservableProperty]
-    private long _childAllowance = 0;
+    private long _childAllowance;
 
     [ObservableProperty]
-    private long _insurance = 0;
+    private long _insurance;
 
     [ObservableProperty]
-    private long _rightHousingAndFood = 0;
+    private long _rightHousingAndFood;
 
     [ObservableProperty]
-    private long _loanInstallment = 0;
+    private long _loanInstallment;
 
     [ObservableProperty]
-    private long _otherAdditions = 0;
+    private long _otherAdditions;
 
     [ObservableProperty]
-    private long _otherDeductions = 0;
+    private long _otherDeductions;
 
     [ObservableProperty]
-    private long _leftOver = 0;
+    private long _leftOver;
 
     [ObservableProperty]
     private string? _description;
@@ -68,9 +69,17 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
     [ObservableProperty]
     private Shift _shiftStatus;
 
+    public UpdateSalaryViewModel(ISnackbarService snackbarService, INavigationService navigationService)
+    {
+        _snackbarService = snackbarService;
+        _navigationService = navigationService;
+    }
+
     [RelayCommand]
     private async Task OnCreate()
     {
+        #region validation
+
         if (WorkerId == -1)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنلی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -130,6 +139,7 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سایر کسورات"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
         }
+        #endregion
 
         using (UnitOfWork db = new())
         {
@@ -179,27 +189,36 @@ public partial class UpdateSalaryViewModel(ISnackbarService snackbarService, INa
     {
     }
 
+    [RelayCommand]
     public async Task<bool> OnSelect()
     {
-        if (WorkerId == -1)
+        if (WorkerId == -1 || SubmitMonth == null || SubmitYear == null)
         {
             return false;
         }
         using UnitOfWork db = new();
         var Worker = await db.WorkerManager.GetWorker(WorkerId);
-        //var details = await db.workerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitDate);
+        var details = await db.WorkerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitMonth.Value, SubmitYear.Value, SalaryId);
 
-        //if (!details.Success)
-        //{
-        //    _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-        //    return false;
-        //}
-        //ShiftStatus = Worker.Shift;
-        //Insurance = details.Insurance;
-        //AmountOf = details.AmountOf;
-        //OverTime = details.OverTime;
-        //PersonnelId = details.PersonelId;
-        //FinancialAid = details.FinancialAid;
+        if (!details.Success)
+        {
+            _snackbarService.Show("کاربر گرامی", details.Error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
+        ShiftStatus = Worker.Shift;
+        Insurance = details.Insurance;
+        AmountOf = details.AmountOf;
+        OverTime = details.OverTime;
+        PersonnelId = details.PersonelId;
+        FinancialAid = details.FinancialAid;
+        RightHousingAndFood = details.RightHousingAndFood;
+        ChildAllowance = details.ChildAllowance;
+        OtherAdditions = details.OtherAdditions;
+        Insurance = details.Insurance;
+        Tax = details.Tax;
+        LoanInstallment = details.LoanInstallment;
+        OtherDeductions = details.OtherDeductions;
+        Description = details.Description;
 
         return true;
     }

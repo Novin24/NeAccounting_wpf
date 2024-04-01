@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using System.Globalization;
 
 namespace Domain.NovinEntity.Workers
 {
@@ -7,7 +6,7 @@ namespace Domain.NovinEntity.Workers
     {
         #region Navigation
         public int WorkerId { get; set; }
-        public Worker Worker { get; set; } = new Worker();
+        public Worker Worker { get; set; }
         #endregion
 
         #region Property

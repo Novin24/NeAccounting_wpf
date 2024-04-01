@@ -208,7 +208,6 @@
                                               LabelName="سایر اضافات"
                                               x:Name="txt_OtherAdditions"
                                               ValueChanged="NumberBox_ValueChanged"
-                                              IsEnabled="False"
                                               Value="{Binding ViewModel.OtherAdditions , Mode=TwoWay}" />
                                 <Grid Grid.Row="3"
                                       Grid.Column="2">
@@ -272,7 +271,6 @@
                                               LabelName="سایر کسورات"
                                               x:Name="txt_Othere"
                                               ValueChanged="NumberMinesBox_ValueChanged"
-                                              IsEnabled="False"
                                               Value="{Binding ViewModel.OtherDeductions , Mode=TwoWay}" />
                                 <Grid Grid.Row="5"
                                       Grid.Column="2">
@@ -355,7 +353,7 @@
                                              FontFamily="Calibri"></TextBox>
                                 </Grid>
                                 <ui:Button Grid.Row="8"
-                                           Margin="5"
+                                           Margin="10"
                                            Content="ثبت"
                                            FontSize="15"
                                            Padding="30 4"

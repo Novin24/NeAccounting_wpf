@@ -99,7 +99,7 @@ namespace NeApplication.IRepositoryies
             string? description);
 
 
-        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, byte submitMonth, int submintYear);
+        Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, byte submitMonth, int submintYear, int? salaryId = null);
 
         Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId, byte persianMonth, int persianYear);
 
@@ -114,7 +114,7 @@ namespace NeApplication.IRepositoryies
         Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId);
         #endregion
 
-        #region func
+        #region aid
         Task<(string error, bool isSuccess)> AddAid(
             DateTime subDate,
             int workerId,
@@ -124,6 +124,7 @@ namespace NeApplication.IRepositoryies
             string? description);
 
         Task<(string error, bool isSuccess)> UpdateAid(
+            DateTime subDate,
             int workerId,
             int persianYear,
             byte persianMonth,
@@ -141,7 +142,7 @@ namespace NeApplication.IRepositoryies
             int aidId);
         #endregion
 
-        #region aid
+        #region func
         Task<(string error, bool isSuccess)> AddFunctuion(
            int workerId,
            int persianYear,
