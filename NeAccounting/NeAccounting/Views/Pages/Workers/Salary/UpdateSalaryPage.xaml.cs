@@ -81,10 +81,8 @@ namespace NeAccounting.Views.Pages
             }
         }
 
-        private async Task ReloadSalary(int id)
+        private async Task ReloadSalary()
         {
-
-            ViewModel.WorkerId = id;
             if (!await ViewModel.OnSelect())
             {
                 return;
@@ -112,7 +110,7 @@ namespace NeAccounting.Views.Pages
             }
         }
 
-        private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
+        private async void Dtp_MonthChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
         {
             if (!IsInitialized)
             {
@@ -120,8 +118,20 @@ namespace NeAccounting.Views.Pages
             }
             if (ViewModel.WorkerId == -1)
                 return;
-            await ReloadSalary(ViewModel.WorkerId);
+
+            await ReloadSalary();
         }
 
+        private async void Dtp_YearChosen(object sender, RoutedPropertyChangedEventArgs<int?> e)
+        {
+            if (!IsInitialized)
+            {
+                return;
+            }
+            if (ViewModel.WorkerId == -1)
+                return;
+
+            await ReloadSalary();
+        }
     }
 }

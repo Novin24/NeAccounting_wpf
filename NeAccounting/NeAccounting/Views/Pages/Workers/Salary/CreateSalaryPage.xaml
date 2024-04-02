@@ -137,7 +137,8 @@
                                                 x:Name="dtp"
                                                 Margin="0 -3 0 0"
                                                 LabelName="تاریخ پرداخت"
-                                                DateChosen="dtp_DateChosen"
+                                                MonthChosen="dtp_MonthChosen"
+                                                YearChosen="dtp_YearChosen"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth, Mode=OneWayToSource}"
                                                 SelectedYear="{Binding ViewModel.SubmitYear, Mode=OneWayToSource}" />
                                 <Separator Grid.Row="1"
