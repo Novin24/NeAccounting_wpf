@@ -22,6 +22,7 @@ namespace NeAccounting.Views.Pages
             ViewModel = viewModel;
             InitializeComponent();
             _snackbarService = snackbarService;
+            txt_CustomerName.Focus();
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

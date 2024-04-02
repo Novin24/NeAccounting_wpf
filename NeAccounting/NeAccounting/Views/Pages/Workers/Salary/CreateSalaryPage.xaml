@@ -8,11 +8,16 @@
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:CreateSalaryPage,
                                      IsDesignTimeCreatable=False}"
+      Loaded="Page_Loaded"
       Title="Salary"
       d:DesignWidth="800"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+             Command="{Binding ViewModel.CreateCommand}" />
+    </Page.InputBindings>
 
     <Grid>
 
@@ -310,29 +315,38 @@
 
                                 </Grid>
 
-                                <StackPanel Grid.ColumnSpan="3"
-                                            Grid.Row="7"
-                                            Margin="20 0 20 4">
+
+                                <Grid Grid.ColumnSpan="3"
+                                      Grid.Row="7"
+                                      Margin="20 0 20 0">
+
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
                                                Text="توضیحات"
                                                Grid.ColumnSpan="3"
-                                               Margin="5 0 0 0" />
-                                    <TextBox Margin="0,3,0,0"
+                                               Margin="5 0 0 0"/>
+                                    <TextBox Margin="0,21,0,0"
                                              FontSize="14"
                                              FlowDirection="RightToLeft"
                                              Grid.ColumnSpan="3"
                                              FontFamily="Calibri"></TextBox>
-                                </StackPanel>
-                                <ui:Button Content="ثبت"
+                                </Grid>
+                                <ui:Button Grid.Row="8"
                                            HorizontalAlignment="Center"
-                                           Grid.Row="8"
                                            FontFamily="Calibri"
                                            FontSize="15"
                                            Padding="30 4"
-                                           Margin="5"
+                                           Margin="12"
                                            Command="{Binding ViewModel.CreateCommand}"
-                                           Grid.ColumnSpan="3" />
+                                           Grid.ColumnSpan="3" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="ثبت" />
+                                        <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                                    </StackPanel>
+                                </ui:Button>
 
                             </Grid>
 

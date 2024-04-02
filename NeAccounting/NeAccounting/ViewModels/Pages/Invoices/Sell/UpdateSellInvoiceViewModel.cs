@@ -429,6 +429,23 @@ namespace NeAccounting.ViewModels
             }
             RemainPrice = total.ToString("N0");
         }
+        [RelayCommand]
+        private void OnAddClick(string parameter)
+        {
+            if (string.IsNullOrWhiteSpace(parameter))
+            {
+                return;
+            }
+
+            Type? pageType = NameToPageTypeConverter.Convert(parameter);
+
+            if (pageType == null)
+            {
+                return;
+            }
+
+            _ = _navigationService.Navigate(pageType);
+        }
         #endregion
     }
 }

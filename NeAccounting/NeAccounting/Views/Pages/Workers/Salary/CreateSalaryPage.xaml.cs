@@ -158,6 +158,9 @@ namespace NeAccounting.Views.Pages
             txt_Othere.IsEnabled = true;
         }
 
-
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_name.Focus();
+        }
     }
 }

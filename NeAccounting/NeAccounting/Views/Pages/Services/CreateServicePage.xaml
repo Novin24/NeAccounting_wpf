@@ -14,6 +14,10 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="CreateServicePage">
 
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.CreateServiceCommand  }" />
+    </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -146,15 +150,22 @@
                         </Grid>
 
 
-                        <Button Content="ثبت"
-                                Grid.Row="5"
+                        <Button Grid.Row="5"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="3"
                                 Padding="30 4 "
                                 Command="{Binding ViewModel.CreateServiceCommand , Mode=OneWay}"
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"
-                                FontSize="17"/>
+                                FontSize="17">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ثبت" />
+                                <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                            </StackPanel>
+                        </Button>
 
                     </Grid>
 

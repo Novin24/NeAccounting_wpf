@@ -14,6 +14,10 @@
       Loaded="Page_Loaded"
       Title="CreateExpencePage">
 
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.CreateExpenseCommand}" />
+    </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -173,7 +177,6 @@
                         </Grid>
 
                         <Button Grid.Row="6"
-                                Content="ثبت"
                                 Margin="10"
                                 Padding="30 4"
                                 VerticalAlignment="Center"
@@ -182,7 +185,15 @@
                                 FontFamily="Calibri"
                                 FontSize="15"
                                 Grid.Column="1"
-                                Grid.ColumnSpan="3" />
+                                Grid.ColumnSpan="3" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ثبت" />
+                                <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                            </StackPanel>
+                        </Button>
 
                     </Grid>
 

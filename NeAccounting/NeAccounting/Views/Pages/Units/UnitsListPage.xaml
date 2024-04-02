@@ -15,6 +15,10 @@
       d:DesignWidth="1200"
       Title="UnitsListPage">
 
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.CreateUnitCommand}" />
+    </Page.InputBindings>
 
     <Grid>
 

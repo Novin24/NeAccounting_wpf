@@ -15,6 +15,10 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
 
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.CreateCommand}" />
+    </Page.InputBindings>
     <Grid>
 
         <Grid Margin="-15">
@@ -198,7 +202,7 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="1.4*"></RowDefinition>
                                     <RowDefinition Height="1.4*"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
 
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
@@ -213,9 +217,7 @@
                                     <ui:TextBox TextAlignment="Center"
                                                 FontSize="15"
                                                 TabIndex="0"
-                                                Grid.Row="0"
                                                 x:Name="txt_name"
-                                                Grid.Column="0"
                                                 Margin="0 4 3 0 "
                                                 Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
                                                 FontFamily="Calibri" />
@@ -368,16 +370,23 @@
                                                     FontFamily="Calibri"></ui:TextBox>
                                 </Grid>
 
-                                <Button Content="ثبت"
-                                        Padding="20 5 "
-                                        Margin="0 0 0 6"
+                                <Button Grid.Row="6"
+                                        Padding="30 5 "
+                                        Margin="12"
                                         HorizontalAlignment="Center"
-                                        Grid.Row="6"
                                         FontFamily="Calibri"
                                         Command="{Binding ViewModel.CreateCommand}"
                                         FontSize="15"
                                         IsDefault="True"
-                                        Grid.ColumnSpan="2" />
+                                        Grid.ColumnSpan="2" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="ثبت" />
+                                        <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                                    </StackPanel>
+                                </Button>
                             </Grid>
                         </Border>
                     </Grid>
