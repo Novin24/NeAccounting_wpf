@@ -210,7 +210,7 @@ namespace NeAccounting.Views.Pages
                 {"Tabligh",$"{printInfo.Tabligh}"}
             };
 
-            _printServices.PrintInvoice(@"Reports\Pishfactor.mrt", "DetailListDtos", ViewModel.List, dic);
+            _printServices.PrintInvoice(@"Reports\Required\Pishfactor.mrt", "DetailListDtos", ViewModel.List, dic);
         }
 
         [GeneratedRegex("[^0-9]+")]

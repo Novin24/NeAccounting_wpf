@@ -212,6 +212,61 @@ namespace NeAccounting.ViewModels
             var servise = _navigationService.GetNavigationControl();
             servise.Navigate(pageType, context);
         }
+        
+        [RelayCommand]
+        private async Task OnDetailsDoc(Guid parameter)
+        {
+            Type? pageType = NameToPageTypeConverter.Convert("UpdateCheque");
+
+            if (pageType == null)
+            {
+                return;
+            }
+            using UnitOfWork db = new();
+            var (s, i) = await db.DocumentManager.GetChequeById(parameter);
+            if (!s)
+            {
+                _snackbarService.Show("کاربر گرامی", $"چک مورد نظر یافت نشد!!!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            string pageName;
+            if (i.Status == ChequeStatus.Payed)
+            {
+                pageName = "ویرایش چک پرداختی";
+            }
+            else if (i.Status == ChequeStatus.Guarantee)
+            {
+                pageName = "ویرایش چک ضمانتی";
+            }
+            else
+            {
+                pageName = "ویرایش چک دریافتی";
+            }
+            var context = new UpdateChequePage(new UpdateChequeViewModel(_snackbarService, _navigationService)
+            {
+                CusId = i.CustomerId,
+                Substatus = i.SubmitStatus,
+                SubmitDate = i.SubmitDate,
+                Accunt_Number = i.Accunt_Number,
+                Bank_Branch = i.Bank_Branch,
+                Bank_Name = i.Bank_Name,
+                Cheque_Number = i.Cheque_Number,
+                CusName = i.CusName,
+                Cuslist = await db.CustomerManager.GetDisplayUser(),
+                Cheque_Owner = i.Cheque_Owner,
+                CusNum = i.CusNum,
+                Description = i.Descripion,
+                DocId = i.Id,
+                DueDate = i.DueDate,
+                Status = i.Status,
+                PageName = pageName,
+                Price = i.Price,
+                EnumSource = SubmitChequeStatus.Register.ToEnumDictionary()
+            });
+
+            var servise = _navigationService.GetNavigationControl();
+            servise.Navigate(pageType, context);
+        }
 
         [RelayCommand]
         private async Task OnTransfer(Guid parameter)

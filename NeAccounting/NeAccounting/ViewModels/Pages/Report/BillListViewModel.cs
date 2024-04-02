@@ -496,7 +496,7 @@ namespace NeAccounting.ViewModels
                 {"Tabligh",$"{printInfo.Tabligh}"},
                 {"Status",$"{list.Last().Status}"}};
 
-            _printServices.PrintInvoice(@"Reports\ReportInvoices.mrt", "InvoiceListDtos", list, dic);
+            _printServices.PrintInvoice(@"Reports\Required\ReportInvoices.mrt", "InvoiceListDtos", list, dic);
         }
         #endregion
     }

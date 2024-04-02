@@ -68,7 +68,7 @@ public partial class BackupViewModel(ISnackbarService snackbarService) : Observa
         string backUpPath = "";
         if (string.IsNullOrEmpty(ExPaht))
         {
-            backUpPath = Environment.CurrentDirectory + @"\BackUp\" + FileName;
+            backUpPath = Environment.CurrentDirectory + @"\Required\BackedUp\" + FileName;
         }
         else
         {
@@ -133,7 +133,7 @@ public partial class BackupViewModel(ISnackbarService snackbarService) : Observa
         try
         {
             List<BackFilesDetails> myFiles = [];
-            DirectoryInfo d = new(Environment.CurrentDirectory + @"\BackUp\");
+            DirectoryInfo d = new(Environment.CurrentDirectory + @"\Required\BackedUp");
             FileInfo[] Files = d.GetFiles("*.bak");
             foreach (FileInfo file in Files)
             {
