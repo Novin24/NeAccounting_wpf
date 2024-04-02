@@ -1,12 +1,11 @@
-﻿using System.ComponentModel;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace NeAccounting.Controls
 {
-    [DefaultEvent("SelectedDateChanged")]
-    [DefaultProperty("SelectedDate")]
+
     public partial class PersianDatePicker : UserControl
     {
+        public event RoutedEventHandler PopupClosed;
         public PersianDatePicker()
         {
             InitializeComponent();
@@ -97,6 +96,7 @@ namespace NeAccounting.Controls
         private void PersianCalendar_Click(object sender, RoutedEventArgs e)
         {
             persianCalnedarPopup.IsOpen = false;
+            PopupClosed?.Invoke(sender, e);
             txt_date.Focus();
         }
 
@@ -104,6 +104,10 @@ namespace NeAccounting.Controls
         {
             txt_date.Clear();
             SelectedDate = null;
+        }
+        private void Btn_SelectToday_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedDate = DateTime.Now;
         }
         #endregion
 
@@ -143,5 +147,6 @@ namespace NeAccounting.Controls
         }
 
         #endregion
+
     }
 }

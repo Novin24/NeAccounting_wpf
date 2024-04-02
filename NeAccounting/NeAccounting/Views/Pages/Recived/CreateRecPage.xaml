@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
+      Loaded="Page_Loaded"
       Title="DataPage"
       d:DataContext="{d:DesignInstance local:CreateRecPage,
                                      IsDesignTimeCreatable=False}"
@@ -14,6 +15,12 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
+
+
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding SubmitCommand}" />
+    </Page.InputBindings>
     <Grid Margin="-15">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -292,12 +299,19 @@
                                 Margin="10"
                                 FontSize="15"
                                 Padding="30 4 "
-                                Content="ثبت سند"
                                 x:Name="btn_submit"
                                 HorizontalAlignment="Center"
-                                Click="btn_submit_Click"
+                                Command="{Binding SubmitCommand}"
                                 FontFamily="Calibri"
-                                Grid.ColumnSpan="2" />
+                                Grid.ColumnSpan="2" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ثبت سند" />
+                                <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </Border>
             </Grid>

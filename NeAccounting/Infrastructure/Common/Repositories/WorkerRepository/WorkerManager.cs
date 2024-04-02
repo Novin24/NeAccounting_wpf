@@ -491,7 +491,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, byte persianMonth,
-            int persianYear)
+            int persianYear, int? salaryId = null)
         {
             long aid = 0;
             long ssalary = 0;
@@ -503,8 +503,8 @@ namespace Infrastructure.Repositories
                 .Include(t => t.Aids.Where(a => a.PersianYear == persianYear && a.PersianMonth == persianMonth))
                 .FirstAsync(t => t.Id == workerId);
 
-
-            if (worker.Salaries.Count != 0)
+            var salary = worker.Salaries.FirstOrDefault();
+            if (worker.Salaries.Count != 0 && salary != null && salary.Id != salaryId)
             {
                 return new SalaryWorkerViewModel() { Error = "برای پرسنل مورد نظر در این ماه فیش حقوقی صادر شده!!!", Success = false };
             }
@@ -540,7 +540,8 @@ namespace Infrastructure.Repositories
                 overtime = func.AmountOfOverTime * worker.ShiftOverTimeSalary;
 
             }
-            return new SalaryWorkerViewModel()
+
+            var details = new SalaryWorkerViewModel()
             {
                 PersonelId = worker.PersonnelId,
                 ShiftStatus = worker.ShiftStatus,
@@ -551,6 +552,19 @@ namespace Infrastructure.Repositories
                 Error = string.Empty,
                 Success = true,
             };
+
+            if (salary != null)
+            {
+                details.RightHousingAndFood = salary.RightHousingAndFood;
+                details.ChildAllowance = salary.ChildAllowance;
+                details.OtherAdditions = salary.OtherAdditions;
+                details.Insurance = salary.Insurance;
+                details.Tax = salary.Tax;
+                details.LoanInstallment = salary.LoanInstallment;
+                details.OtherDeductions = salary.OtherDeductions;
+                details.Description = salary.Description;
+            }
+            return details;
         }
         #endregion
 
@@ -701,6 +715,7 @@ namespace Infrastructure.Repositories
 
         #region Aid
         public async Task<(string error, bool isSuccess)> AddAid(
+            DateTime submitDate,
             int workerId,
             int persianYear,
             byte persianMonth,
@@ -715,7 +730,7 @@ namespace Infrastructure.Repositories
                 return new("کارگر مورد نظر یافت نشد!!!", false);
             }
 
-            worker.AddAid(new FinancialAid(persianMonth, persianYear, amountOf, description));
+            worker.AddAid(new FinancialAid(submitDate, persianMonth, persianYear, amountOf, description));
             try
             {
                 Entities.Update(worker);
@@ -729,6 +744,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> UpdateAid(
+            DateTime subDate,
             int workerId,
             int persianYear,
             byte persianMonth,
@@ -752,6 +768,7 @@ namespace Infrastructure.Repositories
             if (worker.Salaries.Count != 0)
                 return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
 
+            aid.SubmitDate = subDate;
             aid.PersianMonth = persianMonth;
             aid.PersianYear = persianYear;
             aid.AmountOf = amount;
@@ -786,15 +803,13 @@ namespace Infrastructure.Repositories
                               Description = aid.Description,
                               PersonelId = worker.PersonnelId,
                               Price = aid.AmountOf.ToString("N0"),
-                              PersianMonth = aid.PersianMonth,
-                              PersianYear = aid.PersianYear,
+                              SubmitDate = aid.SubmitDate,
                               Details = new AidDetails() { Id = aid.Id, WorkerId = worker.Id }
                           })
-                      .OrderByDescending(c => c.PersianYear)
-                      .ThenByDescending(c => c.PersianMonth)
-                      .Skip(pageNum * pageCount)
-                      .Take(pageCount)
-                      .ToListAsync();
+                          .OrderBy(t => t.SubmitDate)
+                          .Skip(pageNum * pageCount)
+                          .Take(pageCount)
+                          .ToListAsync();
 
         }
 

@@ -41,8 +41,8 @@ namespace NeAccounting.Views.Pages
                 lbl_status.Foreground = (Brush)FindResource("TextFillColorPrimaryBrush");
             }
         }
-
-        private async void btn_submit_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private async Task OnSubmit()
         {
             if (await ViewModel.OnSumbit())
             {
@@ -53,5 +53,9 @@ namespace NeAccounting.Views.Pages
             }
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            aus_CusName.Focus();
+        }
     }
 }

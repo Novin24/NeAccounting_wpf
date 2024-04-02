@@ -14,7 +14,10 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="CreditorsListPage">
-
+    <Page.InputBindings>
+        <KeyBinding Key="F6"
+                 Command="{Binding ViewModel.SearchCommand}"/>
+    </Page.InputBindings>
     <Grid>
         <Grid >
             <Grid.RowDefinitions>
@@ -107,14 +110,20 @@
 
                                 <Button Grid.Column="2"
                                         FontSize="17"
-                                        Margin="20 0 0 6"
-                                        Padding="30 5"
-                                        Content="نمایش"
+                                        Margin="20 0 0 8"
+                                        Padding="30 6"
                                         IsDefault="True"
                                         Command="{Binding ViewModel.SearchCommand}"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        HorizontalAlignment="Center" />
+                                        HorizontalAlignment="Center" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="نمایش" />
+                                        <TextBlock Text=" (F6)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                                    </StackPanel></Button>
                             </Grid>
                             <DataGrid Grid.Row="1"
                                       Padding="7"

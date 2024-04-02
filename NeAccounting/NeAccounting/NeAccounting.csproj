@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net8.0-windows7.0</TargetFramework>
@@ -62,6 +61,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Content Include="Required\**\*.*" />
 		<Resource Include="Assets\Materials\Add.png" />
 		<Resource Include="Assets\wpfui-icon-1024.png" />
 		<Resource Include="Assets\wpfui-icon-256.png" />
@@ -70,6 +70,12 @@
 		<Resource Include="Assets\persone.png" />
 		<Resource Include="Assets\pexels-johannes-plenio-1103970.jpg" />
 		<Resource Include="Assets\user9.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Required\Fonts\" />
+	  <Folder Include="Required\BackedUp\" />
+	  <Folder Include="Required\Report\" />
 	</ItemGroup>
 
 </Project>

@@ -22,5 +22,10 @@ namespace NeAccounting.Views.Pages
             ViewModel.WorkerId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
             ViewModel.PersonelId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).PersonnelId;
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_sugName.Focus();
+        }
     }
 }

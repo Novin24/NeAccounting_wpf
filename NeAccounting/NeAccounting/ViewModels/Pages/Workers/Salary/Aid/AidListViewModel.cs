@@ -126,9 +126,8 @@ namespace NeAccounting.ViewModels
                 AmountOf = aid.AmountPrice,
                 Description = aid.Description,
                 PersonnelName = aid.Name,
-                SubmitMonth = aid.PersianMonth,
+                SubmitDate = aid.SubmitDate,
                 AidId = parameter.Id,
-                SubmitYear = aid.PersianYear,
                 List = list,
                 PersonnelId = aid.PersonelId
             });

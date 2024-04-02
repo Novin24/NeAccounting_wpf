@@ -70,6 +70,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     [RelayCommand]
     private async Task OnCreate()
     {
+        #region validation
         if (WorkerId == -1)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنلی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -129,6 +130,7 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سایر کسورات"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
         }
+        #endregion
 
         using (UnitOfWork db = new())
         {

@@ -14,6 +14,10 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
 
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding  ViewModel.UpdateCommand}" />
+    </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.3*" />
@@ -165,16 +169,15 @@
                                     Grid.ColumnSpan="3"
                                     Grid.Row="5"
                                      HorizontalAlignment="Center">
-                            <CheckBox FontFamily="Calibri"
+                            <!--<CheckBox FontFamily="Calibri"
                                       FontSize="14"
                                       IsChecked="{Binding ViewModel.IsManufacturedGoods , Mode=TwoWay}"
-                                      Margin="2 0 0 0 ">تعریف به عنوان کالای تولیدی</CheckBox>
+                                      Margin="2 0 0 0 ">تعریف به عنوان کالای تولیدی</CheckBox>-->
 
                         </StackPanel>
 
 
                         <Button Grid.Row="6"
-                                Content="ثبت"
                                 Margin="10"
                                 Padding="30 4 "
                                 Grid.Column="1"
@@ -183,7 +186,14 @@
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"
-                                FontSize="17" />
+                                FontSize="17" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ثبت " />
+                                <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                            </StackPanel></Button>
 
                     </Grid>
 

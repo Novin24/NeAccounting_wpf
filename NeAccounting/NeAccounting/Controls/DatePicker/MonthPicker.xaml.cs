@@ -77,11 +77,13 @@ namespace NeAccounting.Controls
             if (obj is not MonthPicker mp)
                 return;
 
-            if (args.NewValue == args.OldValue)
-                return;
+            //if (args.NewValue == args.OldValue)
+            //    return;
             IsCalculated = false;
             selectedYea = (int?)args.NewValue;
             mp.InitialYear(selectedYea);
+            RoutedPropertyChangedEventArgs<int?> e = new((int?)args.OldValue, (int?)args.NewValue, YearChosenEvent);
+            mp.OnYearChanged(e);
             IsCalculated = true;
         }
 
@@ -107,20 +109,19 @@ namespace NeAccounting.Controls
             if (sender is not MonthPicker c)
                 return;
 
-            if (args.NewValue == args.OldValue)
-                return;
+            //if (args.NewValue == args.OldValue)
+            //    return;
 
             IsCalculated = false;
             selectedMonth = (byte?)args.NewValue;
             c.InitialMonth(selectedMonth);
-            RoutedPropertyChangedEventArgs<byte?> e = new((byte?)args.OldValue, (byte?)args.NewValue, DateChosenEvent);
-            c.OnDateChanged(e);
+            RoutedPropertyChangedEventArgs<byte?> e = new((byte?)args.OldValue, (byte?)args.NewValue, MonthChosenEvent);
+            c.OnMonthChanged(e);
             IsCalculated = true;
         }
         #endregion
 
-
-
+        #region VisibilityDp
         public Visibility LabelVisibility
         {
             get { return (Visibility)GetValue(LabelVisibilityProperty); }
@@ -130,7 +131,7 @@ namespace NeAccounting.Controls
         // Using a DependencyProperty as the backing store for Visibility.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LabelVisibilityProperty =
             DependencyProperty.Register("LabelVisibility", typeof(Visibility), typeof(MonthPicker), new PropertyMetadata(Visibility.Visible));
-
+        #endregion
 
         #region ctor
         public MonthPicker()
@@ -167,24 +168,44 @@ namespace NeAccounting.Controls
         /// <summary>
         /// Event occurs when the user selects an item from the recommended ones.
         /// </summary>
-        public event RoutedPropertyChangedEventHandler<byte?> DateChosen
+        public event RoutedPropertyChangedEventHandler<byte?> MonthChosen
         {
-            add => AddHandler(DateChosenEvent, value);
-            remove => RemoveHandler(DateChosenEvent, value);
+            add => AddHandler(MonthChosenEvent, value);
+            remove => RemoveHandler(MonthChosenEvent, value);
+        }
+
+        public event RoutedPropertyChangedEventHandler<int?> YearChosen
+        {
+            add => AddHandler(YearChosenEvent, value);
+            remove => RemoveHandler(YearChosenEvent, value);
         }
 
         /// <summary>
-        /// Routed event for <see cref="DateChosen"/>.
+        /// Routed event for <see cref="MonthChosen"/>.
         /// </summary>
-        public static readonly RoutedEvent DateChosenEvent = EventManager.RegisterRoutedEvent(
-            nameof(DateChosen),
+        public static readonly RoutedEvent MonthChosenEvent = EventManager.RegisterRoutedEvent(
+            nameof(MonthChosen),
             RoutingStrategy.Bubble,
             typeof(RoutedPropertyChangedEventHandler<byte?>),
             typeof(MonthPicker)
         );
 
+        /// <summary>
+        /// Routed event for <see cref="YearChosen"/>.
+        /// </summary>
+        public static readonly RoutedEvent YearChosenEvent = EventManager.RegisterRoutedEvent(
+            nameof(YearChosen),
+            RoutingStrategy.Bubble,
+            typeof(RoutedPropertyChangedEventHandler<int?>),
+            typeof(MonthPicker)
+        );
 
-        protected virtual void OnDateChanged(RoutedPropertyChangedEventArgs<byte?> args)
+
+        protected virtual void OnMonthChanged(RoutedPropertyChangedEventArgs<byte?> args)
+        {
+            RaiseEvent(args);
+        }
+        protected virtual void OnYearChanged(RoutedPropertyChangedEventArgs<int?> args)
         {
             RaiseEvent(args);
         }
@@ -222,11 +243,6 @@ namespace NeAccounting.Controls
                 IsCalculated = false;
                 SelectedMon = currentMonth;
                 selectedMonth = currentMonth;
-            }
-            else
-            {
-                RoutedPropertyChangedEventArgs<byte?> re = new(selectedMonth, selectedMonth, DateChosenEvent);
-                RaiseEvent(re);
             }
         }
 

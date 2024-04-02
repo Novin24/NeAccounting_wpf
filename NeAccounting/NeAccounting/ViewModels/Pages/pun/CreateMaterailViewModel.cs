@@ -39,7 +39,7 @@ namespace NeAccounting.ViewModels
         private int _unitId = 0;
 
         [ObservableProperty]
-        private bool _isManufacturedGoods;
+        private bool _isManufacturedGoods = false;
 
         public void OnNavigatedFrom()
         {

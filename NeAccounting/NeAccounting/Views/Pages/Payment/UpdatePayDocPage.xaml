@@ -13,6 +13,10 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d">
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding btn_submitCommand}" />
+    </Page.InputBindings>
     <Grid Margin="-15">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -283,12 +287,18 @@
                         <Button Grid.Row="6"
                                 Margin="10"
                                 FontSize="15"
-                                Content="ثبت سند"
                                 x:Name="btn_submit"
                                 FontFamily="Calibri"
                                 HorizontalAlignment="Center"
                                 Command="{Binding ViewModel.SumbitCommand}"
-                                Grid.ColumnSpan="2" />
+                                Grid.ColumnSpan="2" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ثبت سند" />
+                                <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                            </StackPanel></Button>
                     </Grid>
                 </Border>
             </Grid>

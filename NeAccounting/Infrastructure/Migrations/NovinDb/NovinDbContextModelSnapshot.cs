@@ -654,6 +654,9 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<int>("PersianYear")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("SubmitDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("WorkerId")
                         .HasColumnType("int");
 
