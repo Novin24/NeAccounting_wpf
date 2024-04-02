@@ -1,18 +1,14 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NeAccounting.Helpers;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.ViewModels.Pages.Expence
+namespace NeAccounting.ViewModels
 {
-    partial class UpdateExpenceViewModel : ObservableObject, INavigationAware
+    public partial class UpdateExpenceViewModel : ObservableObject, INavigationAware
     {
         private bool _isInitialized = false;
         private readonly ISnackbarService _snackbarService;
@@ -27,7 +23,7 @@ namespace NeAccounting.ViewModels.Pages.Expence
         /// تایپ پرداخت 
         /// </summary>
         [ObservableProperty]
-        private Dictionary<byte, string> _payTypeEnum;
+        private Dictionary<Enum, string> _payTypeEnum;
 
         /// <summary>
         /// تاریخ ثبت 
@@ -51,7 +47,7 @@ namespace NeAccounting.ViewModels.Pages.Expence
         /// Enum Id 
         /// </summary>
         [ObservableProperty]
-        private byte _payTypeId;
+        private PaymentType _payTypeId ;
 
         /// <summary>
         /// دریافت کننده 
@@ -69,7 +65,7 @@ namespace NeAccounting.ViewModels.Pages.Expence
         /// Id 
         /// </summary>
         [ObservableProperty]
-        private Guid _expenseID ;
+        private Guid _expenseID;
 
 
         public void OnNavigatedFrom()
@@ -106,17 +102,27 @@ namespace NeAccounting.ViewModels.Pages.Expence
             }
             #endregion
 
-
             #region UpdateExpense
             using UnitOfWork db = new();
-            var (error, isSuccess) = await db.ExpenseManager.UpdateExpense(ExpenseID,SubmitDate.Value, Expensetype, Amount.Value, (PaymentType)PayTypeId, Receiver, Description);
+            var (error, isSuccess) = await db.ExpenseManager.UpdateExpense(ExpenseID, SubmitDate.Value, Expensetype, Amount.Value, PayTypeId, Receiver, Description);
             if (!isSuccess)
             {
+                await db.SaveChangesAsync();
                 _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
             await db.SaveChangesAsync();
             _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+
+            Type? pageType = NameToPageTypeConverter.Convert("ExpencesList");
+
+            if (pageType == null)
+            {
+                return;
+            }
+
+            _navigationService.Navigate(pageType);
             #endregion
         }
     }

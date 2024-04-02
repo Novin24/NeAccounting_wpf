@@ -175,7 +175,7 @@ namespace NeAccounting
                 services.AddTransient<CreateExpenceViewModel>();
 
                 services.AddTransient<UpdateExpencePage>();
-                //services.AddTransient<UpdateExpenceViewModel>();
+                services.AddTransient<UpdateExpenceViewModel>();
 
                 services.AddTransient<ExpencesListPage>();
                 services.AddTransient<ExpencelistViewModel>();

@@ -99,12 +99,27 @@ namespace NeAccounting.Views.Pages
             }
         }
 
-        private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
+        private async void dtp_MonthChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
         {
             if (!IsInitialized)
             {
                 return;
             }
+            if (ViewModel.WorkerId == -1)
+                return;
+
+            await ReloadSalary();
+        }
+
+        private async void dtp_YearChosen(object sender, RoutedPropertyChangedEventArgs<int?> e)
+        {
+            if (!IsInitialized)
+            {
+                return;
+            }
+            if (ViewModel.WorkerId == -1)
+                return;
+
             await ReloadSalary();
         }
 

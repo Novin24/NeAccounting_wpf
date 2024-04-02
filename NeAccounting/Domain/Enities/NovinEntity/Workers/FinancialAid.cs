@@ -10,6 +10,10 @@ namespace Domain.NovinEntity.Workers
         #endregion
 
         #region Property
+        /// <summary>
+        /// تاریخ پرداخت مساعده
+        /// </summary>
+        public DateTime SubmitDate { get; set; }
 
         /// <summary>
         /// سال شمسی
@@ -41,13 +45,15 @@ namespace Domain.NovinEntity.Workers
         }
 
         public FinancialAid(
+            DateTime submitDate,
             byte persianMonth,
             int persianYear,
             long amountOf,
             string? description)
         {
+            SubmitDate = submitDate;
             PersianMonth = persianMonth;
-            PersianYear = persianYear; 
+            PersianYear = persianYear;
             AmountOf = amountOf;
             Description = description;
         }

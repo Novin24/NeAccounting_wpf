@@ -65,8 +65,8 @@
                     </Grid.RowDefinitions>
 
                     <nu:HeaderPack Grid.ColumnSpan="2"
-                                   NamePpage="صدور فیش حقوقی"/>
-                    
+                                   NamePpage="صدور فیش حقوقی" />
+
 
                     <Grid Grid.Column="1"
                           Grid.Row="1">
@@ -83,21 +83,21 @@
 
                             <Grid FlowDirection="RightToLeft">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="auto" />
 
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
                                 <ui:InfoBar Title="تذکر"
@@ -142,15 +142,16 @@
                                                 x:Name="dtp"
                                                 Margin="0 -3 0 0"
                                                 LabelName="تاریخ پرداخت"
-                                                DateChosen="dtp_DateChosen"
+                                                MonthChosen="dtp_MonthChosen"
+                                                YearChosen="dtp_YearChosen"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth, Mode=OneWayToSource}"
                                                 SelectedYear="{Binding ViewModel.SubmitYear, Mode=OneWayToSource}" />
                                 <Separator Grid.Row="1"
-                                   VerticalAlignment="Bottom"
-                                   Background="Gray"
-                                   Grid.ColumnSpan="4"
-                                   Margin="10 2 10 0"
-                                   Height="3.5"/>
+                                           VerticalAlignment="Bottom"
+                                           Background="Gray"
+                                           Grid.ColumnSpan="4"
+                                           Margin="10 2 10 0"
+                                           Height="3.5" />
 
                                 <!--#region میزان حقوق -->
                                 <nu:MoneyPack Grid.Row="2"
@@ -192,13 +193,12 @@
                                                VerticalAlignment="Center"
                                                Grid.Row="6">
                                         <TextBlock FontFamily="Calibri"
-                                                   FontSize="16"
+                                                   FontSize="18"
                                                    FontWeight="Bold"
                                                    Text="جمع کل"
                                                    Margin="4 6" />
-                                        <TextBlock FontFamily="Calibri"
-                                                   TextAlignment="Right"
-                                                   FontSize="16"
+                                        <TextBlock TextAlignment="Right"
+                                                   FontSize="17"
                                                    FontWeight="Bold"
                                                    MinWidth="60"
                                                    Name="txt_totalPlus"
@@ -207,11 +207,11 @@
                                     </DockPanel>
                                 </Grid>
                                 <Separator Grid.Row="3"
-                                   VerticalAlignment="Bottom"
-                                   Background="Gray"
-                                   Grid.ColumnSpan="4"
-                                   Margin="10 0  "
-                                   Height="1.5" />
+                                           VerticalAlignment="Bottom"
+                                           Background="Gray"
+                                           Grid.ColumnSpan="4"
+                                           Margin="10 0  "
+                                           Height="1.5" />
 
                                 <!--#endregion-->
 
@@ -255,13 +255,12 @@
                                                VerticalAlignment="Center"
                                                Grid.Row="6">
                                         <TextBlock FontFamily="Calibri"
-                                                   FontSize="16"
+                                                   FontSize="18"
                                                    FontWeight="Bold"
                                                    Text="جمع کل"
                                                    Margin="4 6" />
-                                        <TextBlock FontFamily="Calibri"
-                                                   TextAlignment="Right"
-                                                   FontSize="16"
+                                        <TextBlock TextAlignment="Right"
+                                                   FontSize="17"
                                                    FontWeight="Bold"
                                                    MinWidth="60"
                                                    Name="txt_totalMines"
@@ -270,14 +269,14 @@
                                     </DockPanel>
                                 </Grid>
                                 <Separator Grid.Row="5"
-                                   VerticalAlignment="Bottom"
-                                   Background="Gray"
-                                   Grid.ColumnSpan="4"
-                                   Margin="10 0 10 3"
-                                   Height="4.5" />
+                                           VerticalAlignment="Bottom"
+                                           Background="Gray"
+                                           Grid.ColumnSpan="4"
+                                           Margin="10 0 10 3"
+                                           Height="4.5" />
 
                                 <!--#endregion-->
-                                
+
                                 <Grid Grid.Row="6"
                                       Grid.ColumnSpan="3">
                                     <Grid.ColumnDefinitions>
@@ -289,7 +288,8 @@
                                     <DockPanel Grid.Column="1"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
-                                               Grid.Row="6" Margin="0 0 0 -10">
+                                               Grid.Row="6"
+                                               Margin="0 0 0 -10">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="16"
                                                    FontWeight="Bold"
@@ -315,9 +315,11 @@
 
                                 </Grid>
 
+
                                 <Grid Grid.ColumnSpan="3"
                                       Grid.Row="7"
                                       Margin="20 0 20 0">
+
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
                                                Text="توضیحات"

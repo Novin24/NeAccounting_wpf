@@ -8,7 +8,7 @@
              Name="pfp"
              mc:Ignorable="d"
              BorderThickness="1"
-             KeyboardNavigation.TabNavigation="Once">
+             KeyboardNavigation.TabNavigation="Local">
     <UserControl.Resources>
         <Brush x:Key="NormalBrush">Transparent</Brush>
         <Brush x:Key="DefaultedBorderBrush">DarkBlue</Brush>
@@ -171,13 +171,14 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <Button Style="{StaticResource openCalendarButtonStyle}"
                         Name="openCalendarButton"
                         VerticalAlignment="Center"
-                        TabIndex="0"
+                        TabIndex="2"
                         IsTabStop="True"
                         ToolTip="تقویم"
                         HorizontalAlignment="Left"
@@ -186,7 +187,7 @@
                                    FontSize="25" />
                 </Button>
                 <Button Grid.Column="1"
-                        Margin="7 0"
+                        Margin="2 0"
                         Style="{StaticResource DismissButtonStyle}"
                         Name="Dismiss"
                         ToolTip="حذف"
@@ -198,7 +199,20 @@
                     <ui:SymbolIcon Symbol="Dismiss20"
                                    FontSize="20" />
                 </Button>
-                <ui:TextBox Grid.Column="2"
+                <Button Grid.Column="2"
+                        Margin="0 0 5 0"
+                        Style="{StaticResource DismissButtonStyle}"
+                        Name="Btn_SelectToday"
+                        ToolTip="امروز"
+                        TabIndex="0"
+                        VerticalAlignment="Center"
+                        IsTabStop="True"
+                        HorizontalAlignment="Left"
+                        Click="Btn_SelectToday_Click">
+                    <ui:SymbolIcon Symbol="ArrowCounterclockwise20" 
+                                   FontSize="20" />
+                </Button>
+                <ui:TextBox Grid.Column="3"
                             Name="txt_date"
                             IsReadOnly="True"
                             IsTabStop="False"

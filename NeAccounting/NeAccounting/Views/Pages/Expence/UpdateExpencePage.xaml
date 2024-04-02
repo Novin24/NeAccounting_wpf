@@ -6,6 +6,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
+      d:DataContext="{d:DesignInstance local:UpdateExpencePage,
+                                        IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -89,52 +91,56 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Margin="0 0 0 0 "
-                                    Grid.Row="1"
+                        <StackPanel Grid.Row="0"
                                     Grid.Column="1"
+                                    Margin="0 10 0 0 "
                                     Grid.ColumnSpan="3">
                             <TextBlock FontFamily="Calibri"
-                                       FontSize="14"
+                                       FontSize="16"
                                        Text="عنوان هزینه"
-                                       Margin="2 0 0 0 " />
+                                       Margin="5 0 0 2" />
                             <TextBox TextAlignment="Center"
                                      FontSize="14"
-                                     TabIndex="0"
-                                     x:Name="MaterialName"
-                                     Grid.Row="0"
-                                     Grid.Column="0"
                                      Margin="0 4 3 0 "
                                      CaretBrush="White"
-                                     FontFamily="Calibri" />
+                                     FontFamily="Calibri"
+                                     x:Name="txt_Titele"
+                                     Text="{Binding ViewModel.Expensetype , Mode=TwoWay}" />
                         </StackPanel>
-                        <nu:PersianDatePicker VerticalAlignment="Center"
+
+                        <nu:PersianDatePicker Grid.Row="1"
                                               FlowDirection="LeftToRight"
+                                              SelectedDate="{Binding ViewModel.SubmitDate,Mode=TwoWay}"
                                               x:Name="pdp"
                                               Grid.Column="1"
                                               Grid.ColumnSpan="3"
                                               Margin="0 0 0 0"
                                               LabelName="تاریخ" />
+
                         <nu:MoneyPack Grid.Row="2"
                                       Grid.Column="1"
+                                      Value="{Binding ViewModel.Amount,Mode=TwoWay}"
                                       Margin="-20,0"
                                       Grid.ColumnSpan="3"
                                       LabelName="مبلغ"
                                       FontSize="14" />
+
                         <StackPanel Grid.Column="1"
                                     Grid.Row="3"
                                     Grid.ColumnSpan="3">
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
-                                       Text="نوع پرداخت" />
-                            <ComboBox SelectedIndex="0"
-                                      FontSize="14"
+                                       Text="نحوه پرداخت" />
+                            <ComboBox x:Name="Cmb_PayType"
+                                      SelectedValue="{Binding ViewModel.PayTypeId , Mode=TwoWay}"
+                                      SelectedValuePath="Key"
+                                      ItemsSource="{Binding ViewModel.PayTypeEnum}"
+                                      DisplayMemberPath="Value"
+                                      FontFamily="Calibri"
                                       Margin="0 4 0 0 ">
-                                <ComboBoxItem Content="حواله بانکی" />
-                                <ComboBoxItem Content="شبا ، ساتنا" />
-                                <ComboBoxItem Content="کارت به کارت" />
-                                <ComboBoxItem Content="نقدی" />
                             </ComboBox>
                         </StackPanel>
+
                         <StackPanel Grid.Row="4"
                                     Grid.Column="1"
                                     Grid.ColumnSpan="3">
@@ -145,11 +151,13 @@
                             <ui:TextBox Grid.Column="0"
                                         Grid.Row="2"
                                         TabIndex="4"
+                                        Text="{Binding ViewModel.Receiver, Mode=TwoWay}"
                                         Margin="0 4 3 0"
                                         TextAlignment="Center"
                                         FontSize="14"
                                         FontFamily="Calibri" />
                         </StackPanel>
+
                         <Grid Grid.Column="1"
                               Grid.ColumnSpan="3"
                               Grid.Row="5">
@@ -162,6 +170,7 @@
                                         TabIndex="9"
                                         Height="auto"
                                         FlowDirection="RightToLeft"
+                                        Text="{Binding ViewModel.Description, Mode=TwoWay}"
                                         Grid.ColumnSpan="2"
                                         TextWrapping="Wrap"
                                         FontFamily="Calibri"></ui:TextBox>

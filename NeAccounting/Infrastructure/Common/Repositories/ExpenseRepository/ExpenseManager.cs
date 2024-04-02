@@ -1,19 +1,16 @@
 ﻿using Domain.NovinEntity.Expense;
+using DomainShared.Constants;
 using DomainShared.Enums;
-using DomainShared.Extension;
-using DomainShared.Utilities;
 using DomainShared.ViewModels.Expense;
+using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies.Expens;
-using System.Globalization;
 
 namespace Infrastructure.Repositories
 {
-    public class ExpenseManager : Repository<Expense>, IExpenseManager
+    public class ExpenseManager(NovinDbContext context) : Repository<Expense>(context), IExpenseManager
     {
-        public ExpenseManager(NovinDbContext context) : base(context) { }
-
         public async Task<(string error, bool isSuccess)> CreateExpense(DateTime submitDate, string expensetype, long amount, PaymentType payType, string receiver, string description)
         {
             if (await TableNoTracking.AnyAsync(t => t.Expensetype == expensetype))
@@ -60,21 +57,40 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
-        public async Task<List<ExpenselistDto>> GetExpenselist(DateTime? startDate, DateTime? endDate)
+        public async Task<PagedResulViewModel<ExpenselistDto>> GetExpenselist(DateTime? startDate,
+            DateTime? endDate,
+            bool isInit,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
         {
-            PersianCalendar xe = new();
-            return await TableNoTracking
+            var query = TableNoTracking
                 .Where(x => !startDate.HasValue || x.SubmitDate >= startDate)
                 .Where(x => !endDate.HasValue || x.SubmitDate < endDate)
                 .Select(e => new ExpenselistDto()
                 {
                     Id = e.Id,
                     Receiver = e.Receiver,
-                    Date = e.SubmitDate.ToShamsiDate(xe),
-                    type = e.PayType.ToDisplay(DisplayProperty.Name),
-                    Description = e.Description
+                    Date = e.SubmitDate,
+                    Type = e.PayType,
+                    Expensetype = e.Expensetype,
+                    Price = e.Amount,
+                    Description = e.Description,
                 }).OrderBy(p => p.Date)
-                .ToListAsync();
+                .AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+            if (isInit && totalCount != 0)
+            {
+                pageNum = totalCount / pageCount;
+                if (totalCount % pageCount != 0)
+                {
+                    pageNum++;
+                }
+            }
+            var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();          
+
+            return new PagedResulViewModel<ExpenselistDto>(totalCount, pageCount, pageNum, li);
         }
     }
 }
