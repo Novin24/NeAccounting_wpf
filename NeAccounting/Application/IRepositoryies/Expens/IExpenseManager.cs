@@ -1,14 +1,20 @@
 ﻿using Domain.NovinEntity.Expense;
+using DomainShared.Constants;
 using DomainShared.Enums;
-using DomainShared.ViewModels;
 using DomainShared.ViewModels.Expense;
+using DomainShared.ViewModels.PagedResul;
 using NeApplication.Common;
 
 namespace NeApplication.IRepositoryies.Expens
 {
     public interface IExpenseManager : IRepository<Expense>
     {
-        Task<List<ExpenselistDto>> GetExpenselist(DateTime? startDate, DateTime? endDate);
+        Task<PagedResulViewModel<ExpenselistDto>> GetExpenselist(DateTime? startDate,
+            DateTime? endDate,
+            bool isInit,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount);
+
         Task<(string error, bool isSuccess)> CreateExpense(
             DateTime submitDate,
             string Expensetype,

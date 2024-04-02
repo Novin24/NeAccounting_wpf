@@ -17,7 +17,7 @@ namespace NeAccounting.Views.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-            DateFocus.Focus();
+            txt_Titele.Focus();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

@@ -164,15 +164,16 @@
                             </Grid>
                             <DataGrid Grid.Row="3"
                                       Padding="7"
+                                      FontSize="15"
+                                      IsReadOnly="True"
                                       Margin="0 0 0 30"
+                                      FontFamily="Calibri"
                                       x:Name="Workersdata"
+                                      CanUserResizeRows="False"
+                                      AutoGenerateColumns="False"
                                       FlowDirection="RightToLeft"
                                       CanUserResizeColumns="False"
-                                      FontSize="15"
-                                      CanUserResizeRows="False"
-                                      ItemsSource="{Binding ViewModel.List}"
-                                      FontFamily="Calibri"
-                                      AutoGenerateColumns="False">
+                                      ItemsSource="{Binding ViewModel.List}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="نام پرسنل"
                                                         Binding="{Binding FullName}"

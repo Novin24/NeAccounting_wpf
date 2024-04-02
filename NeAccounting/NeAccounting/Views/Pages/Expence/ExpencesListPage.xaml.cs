@@ -1,23 +1,29 @@
 ﻿using NeAccounting.ViewModels;
-using System.Windows.Controls;
-using Wpf.Ui;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for ExpensesListPage.xaml
     /// </summary>
-    public partial class ExpencesListPage : Page
+    public partial class ExpencesListPage : INavigableView<ExpencelistViewModel>
     {
-        private readonly IContentDialogService _contentDialogService;
-        public MaterailListViewModel ViewModel { get; }
-        public ExpencesListPage(IContentDialogService contentDialogService, MaterailListViewModel viewModel)
+        public ExpencelistViewModel ViewModel { get; }
+        public ExpencesListPage(ExpencelistViewModel viewModel)
         {
-            _contentDialogService = contentDialogService;
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
             date.Focus();
+        }
+
+        private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
+        {
+            if (!IsInitialized)
+            {
+                return;
+            }
+            ViewModel.ChangePageCommand.ExecuteAsync(null);
         }
     }
 }

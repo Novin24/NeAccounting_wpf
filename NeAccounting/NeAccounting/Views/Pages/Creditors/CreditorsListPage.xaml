@@ -14,40 +14,45 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="CreditorsListPage">
-
+    <Page.InputBindings>
+        <KeyBinding Key="F6"
+                 Command="{Binding ViewModel.SearchCommand}"/>
+    </Page.InputBindings>
     <Grid>
-        <Grid Margin="-12">
+        <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="10*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="30" />
+                <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="10*"></ColumnDefinition>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="30"></ColumnDefinition>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Border Grid.Row="1"
                     Grid.RowSpan="3"
-                    Grid.Column="0"
+                    Grid.Column="1"
                     Grid.ColumnSpan="3"
                     Background="{StaticResource Rectangle Dark blue}"
                     CornerRadius="10"></Border>
             <Border Grid.Row="3"
                     Grid.RowSpan="3"
-                    Grid.Column="2"
+                    Grid.Column="3"
                     Grid.ColumnSpan="3"
                     Background="{StaticResource Rectangle Pale blue}"
                     CornerRadius="10"></Border>
             <Border Grid.Row="2"
                     Grid.RowSpan="3"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Grid.ColumnSpan="3"
                     Background="{DynamicResource ApplicationBackgroundBrush}"
                     CornerRadius="10">
@@ -105,17 +110,24 @@
 
                                 <Button Grid.Column="2"
                                         FontSize="17"
-                                        Margin="20 0 0 6"
-                                        Padding="30 5"
-                                        Content="نمایش"
+                                        Margin="20 0 0 8"
+                                        Padding="30 6"
                                         IsDefault="True"
                                         Command="{Binding ViewModel.SearchCommand}"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        HorizontalAlignment="Center" />
+                                        HorizontalAlignment="Center" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="نمایش" />
+                                        <TextBlock Text=" (F6)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                                    </StackPanel></Button>
                             </Grid>
                             <DataGrid Grid.Row="1"
                                       Padding="7"
+                                      IsReadOnly="True"
                                       FontSize="15"
                                       x:Name="Workersdata"
                                       FontFamily="Calibri"
@@ -125,24 +137,58 @@
                                       CanUserAddRows="False"
                                       AutoGenerateColumns="False"
                                       CanUserReorderColumns="False">
+
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="نام مشتری"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding Name}"
-                                                        Width="*" />
+                                                        Width="*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Name}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
 
                                     <DataGridTextColumn Header="مبلغ بستانکاری"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Binding="{Binding Total}"
-                                                        Width="*" />
+                                                        Width="*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Total}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
 
                                     <DataGridTextColumn Header="تاریخ آخرین پرداختی"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Binding="{Binding ShamsiDate}"
-                                                        Width="*" />
+                                                        Width=".5*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding ShamsiDate}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
 

@@ -14,6 +14,10 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="DebtorsListPage">
 
+    <Page.InputBindings>
+        <KeyBinding Key="F6"
+                 Command="{Binding ViewModel.SearchCommand}" />
+    </Page.InputBindings>
     <Grid>
 
         <Grid Margin="-12">
@@ -88,12 +92,11 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
-
                                 </Grid.RowDefinitions>
                                 <nu:MoneyPack LabelName="از مبلغ"
                                               MinWidth="200"
-                                              Value="{Binding ViewModel.Min , Mode=TwoWay}"
-                                              MaxWidth="300" />
+                                              MaxWidth="300"
+                                              Value="{Binding ViewModel.Min , Mode=TwoWay}"/>
 
                                 <nu:MoneyPack Grid.Column="1"
                                               LabelName="تا مبلغ"
@@ -105,14 +108,22 @@
                                         FontSize="17"
                                         Margin="20 0 0 6"
                                         Padding="30 5"
-                                        Content="نمایش"
                                         IsDefault="True"
                                         Command="{Binding ViewModel.SearchCommand}"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        HorizontalAlignment="Center" />
+                                        HorizontalAlignment="Center" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="نمایش" />
+                                        <TextBlock Text=" (F6)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                                    </StackPanel>
+                                </Button>
                             </Grid>
                             <DataGrid Grid.Row="1"
+                                      IsReadOnly="True"
                                       Padding="7"
                                       FontSize="15"
                                       x:Name="Workersdata"
@@ -126,19 +137,52 @@
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding Name}"
-                                                        Width="*" />
+                                                        Width="*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Name}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
 
                                     <DataGridTextColumn Header="مبلغ بدهکاری"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Binding="{Binding Total}"
-                                                        Width="*" />
+                                                        Width="*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Total}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
 
                                     <DataGridTextColumn Header="تاریخ آخرین دریافتی"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Binding="{Binding ShamsiDate}"
-                                                        Width="*" />
+                                                        Width="*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding ShamsiDate}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

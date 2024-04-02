@@ -15,6 +15,10 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}">
 
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.SubmitCommand}" />
+    </Page.InputBindings>
     <Grid Margin="-12">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -239,14 +243,21 @@
                         </Grid>
 
                         <Button Grid.Row="6"
-                                Content="ثبت چک"
                                 Margin="10"
                                 Padding="30 4"
                                 Command="{Binding ViewModel.SubmitCommand}"
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"
                                 FontSize="15"
-                                Grid.ColumnSpan="2" />
+                                Grid.ColumnSpan="2" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ثبت چک" />
+                                <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </Border>
             </Grid>

@@ -14,6 +14,11 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="CreateCustomerPage">
+
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.CreateCustomerCommand}" />
+    </Page.InputBindings>
     <Grid Margin="-30">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -275,8 +280,7 @@
                                         FontFamily="Calibri" />
                         </StackPanel>
 
-                        <Button Content="ثبت"
-                                Grid.Row="7"
+                        <Button Grid.Row="7"
                                 Grid.Column="1"
                                 Padding="30 4 "
                                 Grid.ColumnSpan="2"
@@ -286,7 +290,15 @@
                                 FontSize="17"
                                 FontFamily="Calibri"
                                 VerticalAlignment="Center"
-                                HorizontalAlignment="Center" />
+                                HorizontalAlignment="Center" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ثبت" />
+                                <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </Border>
             </Grid>

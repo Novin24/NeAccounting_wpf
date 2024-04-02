@@ -25,11 +25,11 @@
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="10*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width=".5*"></ColumnDefinition>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
                     Grid.RowSpan="3"
@@ -149,14 +149,15 @@
                         </Grid>
                         <DataGrid Grid.Row="2"
                                       Padding="7"
+                                      FontSize="15"
+                                      IsReadOnly="True"
                                       Margin="0 0 0 30"
                                       x:Name="Workersdata"
-                                      CanUserResizeColumns="False"
-                                      FontSize="15"
-                                      CanUserResizeRows="False"
-                                      ItemsSource="{Binding ViewModel.List}"
                                       FontFamily="Calibri"
-                                      AutoGenerateColumns="False">
+                                      CanUserResizeRows="False"
+                                      AutoGenerateColumns="False"
+                                      CanUserResizeColumns="False"
+                                      ItemsSource="{Binding ViewModel.List}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="نام پرسنلی"
                                                         Binding="{Binding Name}"

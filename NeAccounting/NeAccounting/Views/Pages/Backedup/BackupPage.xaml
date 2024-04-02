@@ -202,7 +202,7 @@
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                               Text='{Binding FileName}' />
+                                                               Text='{Binding FileName}' TextWrapping="Wrap"/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -219,7 +219,7 @@
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                               Text='{Binding FulePath}' />
+                                                               Text='{Binding FulePath}' TextWrapping="Wrap" Width="400" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>

@@ -1,4 +1,4 @@
-﻿using DomainShared.ViewModels;
+﻿using DomainShared.ViewModels;  
 using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 

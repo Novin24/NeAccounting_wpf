@@ -3,7 +3,7 @@
     public static class NeAccountingConstants
     {
         public const byte PageCount = 20;
-        public static string NvoinDbConnectionStrint = "";
+        public static string NvoinDbConnectionStrint = "23dh46ehje67oj9";
     }
 
     public static class SqlStoredProcedureConstants
