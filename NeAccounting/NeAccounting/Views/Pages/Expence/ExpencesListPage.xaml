@@ -137,6 +137,7 @@
 
                             <!--#region DataGrid -->
                             <DataGrid Grid.Row="1"
+                                      IsReadOnly="True"
                                       Padding="7"
                                       FontSize="15"
                                       IsReadOnly="True"

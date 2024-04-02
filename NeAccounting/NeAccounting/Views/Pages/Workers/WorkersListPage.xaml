@@ -197,6 +197,7 @@
                             <DataGrid Grid.Row="2"
                                       Padding="7"
                                       FontSize="15"
+                                      IsReadOnly="True"
                                       Margin="0 0 0 30"
                                       FontFamily="Calibri"
                                       x:Name="Workersdata"
