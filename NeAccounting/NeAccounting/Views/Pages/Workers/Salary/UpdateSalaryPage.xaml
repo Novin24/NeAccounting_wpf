@@ -112,15 +112,15 @@
 
                             <Grid FlowDirection="RightToLeft">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="auto" />
 
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
@@ -154,28 +154,29 @@
                                                    Margin="2 0 0 7" />
                                     </DockPanel>
                                     <ui:TextBox FontSize="16"
-                                                       x:Name="txt_name"
-                                                       IsEnabled="False"
-                                                       Text ="{Binding ViewModel.PersonnelName , Mode=OneWay}"
-                                                       FontFamily="Calibri" />
+                                                x:Name="txt_name"
+                                                IsEnabled="False"
+                                                Text="{Binding ViewModel.PersonnelName , Mode=OneWay}"
+                                                FontFamily="Calibri" />
                                 </StackPanel>
                                 <nu:MonthPicker FontSize="14"
-                                                      Grid.Column="1"
-                                                      Grid.Row="1"
-                                                      FlowDirection="LeftToRight"
-                                                      FontFamily="Calibri"
-                                                      x:Name="dtp"
-                                                      Margin="0 -3 0 0"
-                                                      LabelName="تاریخ پرداخت"
-                                                      DateChosen="dtp_DateChosen"
-                                                      SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}" 
-                                                      SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
+                                                Grid.Column="1"
+                                                Grid.Row="1"
+                                                FlowDirection="LeftToRight"
+                                                FontFamily="Calibri"
+                                                x:Name="dtp"
+                                                Margin="0 -3 0 0"
+                                                LabelName="تاریخ پرداخت"
+                                                MonthChosen="Dtp_MonthChosen"
+                                                YearChosen="Dtp_YearChosen"
+                                                SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
+                                                SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
                                 <Separator Grid.Row="1"
-                                   VerticalAlignment="Bottom"
-                                   Background="Gray"
-                                   Grid.ColumnSpan="4"
-                                   Margin="10 0 "
-                                   Height="1.5"/>
+                                           VerticalAlignment="Bottom"
+                                           Background="Gray"
+                                           Grid.ColumnSpan="4"
+                                           Margin="10 0 "
+                                           Height="1.5" />
                                 <!--#region میزان حقوق -->
                                 <nu:MoneyPack Grid.Row="2"
                                               LabelName="مبلغ حقوق"
@@ -208,7 +209,6 @@
                                               LabelName="سایر اضافات"
                                               x:Name="txt_OtherAdditions"
                                               ValueChanged="NumberBox_ValueChanged"
-                                              IsEnabled="False"
                                               Value="{Binding ViewModel.OtherAdditions , Mode=TwoWay}" />
                                 <Grid Grid.Row="3"
                                       Grid.Column="2">
@@ -232,11 +232,11 @@
                                     </DockPanel>
                                 </Grid>
                                 <Separator Grid.Row="1"
-                                   VerticalAlignment="Bottom"
-                                   Background="Gray"
-                                   Grid.ColumnSpan="4"
-                                   Margin="10 0 "
-                                   Height="1.5"/>
+                                           VerticalAlignment="Bottom"
+                                           Background="Gray"
+                                           Grid.ColumnSpan="4"
+                                           Margin="10 0 "
+                                           Height="1.5" />
 
                                 <!--#endregion-->
 
@@ -272,7 +272,6 @@
                                               LabelName="سایر کسورات"
                                               x:Name="txt_Othere"
                                               ValueChanged="NumberMinesBox_ValueChanged"
-                                              IsEnabled="False"
                                               Value="{Binding ViewModel.OtherDeductions , Mode=TwoWay}" />
                                 <Grid Grid.Row="5"
                                       Grid.Column="2">
@@ -355,14 +354,14 @@
                                              FontFamily="Calibri"></TextBox>
                                 </Grid>
                                 <ui:Button Grid.Row="8"
-                                           Margin="5"
+                                           Margin="10"
                                            Content="ثبت"
                                            FontSize="15"
                                            Padding="30 4"
-                                           Grid.ColumnSpan="3" 
+                                           Grid.ColumnSpan="3"
                                            FontFamily="Calibri"
                                            HorizontalAlignment="Center"
-                                           Command="{Binding ViewModel.CreateCommand}"/>
+                                           Command="{Binding ViewModel.CreateCommand}" />
 
                             </Grid>
 

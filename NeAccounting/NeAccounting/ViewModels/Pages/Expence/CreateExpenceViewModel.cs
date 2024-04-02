@@ -1,6 +1,7 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -15,7 +16,7 @@ namespace NeAccounting.ViewModels
         /// تاریخ ثبت
         /// </summary>
         [ObservableProperty]
-        private DateTime? _submitDate;
+        private DateTime? _submitDate = DateTime.Now;
 
         /// <summary>
         /// عنوان هزینه
@@ -40,7 +41,7 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private string _receiver;
-        
+
         /// <summary>
         /// توضیحات
         /// </summary>
@@ -56,7 +57,7 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            if(string.IsNullOrEmpty(Expensetype))
+            if (string.IsNullOrEmpty(Expensetype))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نوع هزینه"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -78,12 +79,15 @@ namespace NeAccounting.ViewModels
             }
             _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
-            SubmitDate = null;
-            Expensetype = string.Empty;
-            Receiver = string.Empty;
-            Description = string.Empty;
-            Amount = 0;
-            PayType = PaymentType.CardToCard;
+
+            Type? pageType = NameToPageTypeConverter.Convert("ExpencesList");
+
+            if (pageType == null)
+            {
+                return;
+            }
+
+            _navigationService.Navigate(pageType);
         }
 
     }

@@ -2,6 +2,7 @@
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using System.Globalization;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -29,10 +30,7 @@ namespace NeAccounting.ViewModels
         private int _workerId = -1;
 
         [ObservableProperty]
-        private byte? _submitMonth;
-
-        [ObservableProperty]
-        private int? _submitYear;
+        private DateTime? _submitDate = DateTime.Now;
 
         [ObservableProperty]
         private int _aidId = -1;
@@ -66,15 +64,16 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
-            if (SubmitMonth == null || SubmitYear == null)
+            if (SubmitDate == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پرداخت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
 
+            PersianCalendar pc = new();
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.WorkerManager.UpdateAid(WorkerId, SubmitYear.Value, SubmitMonth.Value, AidId, AmountOf, Description);
+                var (error, isSuccess) = await db.WorkerManager.UpdateAid(SubmitDate.Value, WorkerId, pc.GetYear(SubmitDate.Value), (byte)pc.GetMonth(SubmitDate.Value), AidId, AmountOf, Description);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

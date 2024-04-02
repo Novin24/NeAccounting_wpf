@@ -24,6 +24,10 @@ namespace NeAccounting.Views.Pages
 
         private void SetTotalPlusPrice()
         {
+            if (!IsInitialized)
+            {
+                return;
+            }
             var total = txt_amountOf.Value + txt_overtime.Value + txt_ChildAllowance.Value + txt_OtherAdditions.Value + txt_RighOfFood.Value;
             Additions = total;
             LeftOver = Additions - Deductions;
@@ -42,6 +46,10 @@ namespace NeAccounting.Views.Pages
 
         private void SetTotalPrice()
         {
+            if (!IsInitialized)
+            {
+                return;
+            }
             var total = txt_Aid.Value + txt_Insurance.Value + txt_Tax.Value + txt_loanInstallment.Value + txt_Othere.Value;
             Deductions = total;
             LeftOver = Additions - Deductions;
@@ -73,10 +81,8 @@ namespace NeAccounting.Views.Pages
             }
         }
 
-        private async Task ReloadSalary(int id)
+        private async Task ReloadSalary()
         {
-
-            ViewModel.WorkerId = id;
             if (!await ViewModel.OnSelect())
             {
                 return;
@@ -102,15 +108,30 @@ namespace NeAccounting.Views.Pages
                 txt_ChildAllowance.Value = 0;
                 txt_ChildAllowance.IsEnabled = false;
             }
-            txt_OtherAdditions.IsEnabled = true;
-            txt_Othere.IsEnabled = true;
         }
 
-        private async void dtp_DateChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
+        private async void Dtp_MonthChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
         {
+            if (!IsInitialized)
+            {
+                return;
+            }
             if (ViewModel.WorkerId == -1)
                 return;
-            await ReloadSalary(ViewModel.WorkerId);
+
+            await ReloadSalary();
+        }
+
+        private async void Dtp_YearChosen(object sender, RoutedPropertyChangedEventArgs<int?> e)
+        {
+            if (!IsInitialized)
+            {
+                return;
+            }
+            if (ViewModel.WorkerId == -1)
+                return;
+
+            await ReloadSalary();
         }
     }
 }
