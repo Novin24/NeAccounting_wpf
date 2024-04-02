@@ -14,6 +14,10 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="DebtorsListPage">
 
+    <Page.InputBindings>
+        <KeyBinding Key="F6"
+                 Command="{Binding ViewModel.SearchCommand}" />
+    </Page.InputBindings>
     <Grid>
 
         <Grid Margin="-12">
@@ -88,12 +92,11 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
-
                                 </Grid.RowDefinitions>
                                 <nu:MoneyPack LabelName="از مبلغ"
                                               MinWidth="200"
-                                              Value="{Binding ViewModel.Min , Mode=TwoWay}"
-                                              MaxWidth="300" />
+                                              MaxWidth="300"
+                                              Value="{Binding ViewModel.Min , Mode=TwoWay}"/>
 
                                 <nu:MoneyPack Grid.Column="1"
                                               LabelName="تا مبلغ"
@@ -105,12 +108,19 @@
                                         FontSize="17"
                                         Margin="20 0 0 6"
                                         Padding="30 5"
-                                        Content="نمایش"
                                         IsDefault="True"
                                         Command="{Binding ViewModel.SearchCommand}"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        HorizontalAlignment="Center" />
+                                        HorizontalAlignment="Center" >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="نمایش" />
+                                        <TextBlock Text=" (F6)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                                    </StackPanel>
+                                </Button>
                             </Grid>
                             <DataGrid Grid.Row="1"
                                       IsReadOnly="True"

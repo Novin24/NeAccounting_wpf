@@ -4,6 +4,7 @@ using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -352,5 +353,22 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
             Totalcommission = "0";
         }
         RemainPrice = total.ToString("N0");
+    }
+    [RelayCommand]
+    private void OnAddClick(string parameter)
+    {
+        if (string.IsNullOrWhiteSpace(parameter))
+        {
+            return;
+        }
+
+        Type? pageType = NameToPageTypeConverter.Convert(parameter);
+
+        if (pageType == null)
+        {
+            return;
+        }
+
+        _ = _navigationService.Navigate(pageType);
     }
 }

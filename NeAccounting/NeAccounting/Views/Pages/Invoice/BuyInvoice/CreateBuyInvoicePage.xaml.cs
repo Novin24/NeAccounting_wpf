@@ -111,8 +111,8 @@ namespace NeAccounting.Views.Pages
 
             txt_total_price.Text = (ViewModel.AmountOf.Value * _price).ToString("N0");
         }
-
-        private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private async Task OnSubmit()
         {
             if (!Validation())
             {
@@ -186,5 +186,10 @@ namespace NeAccounting.Views.Pages
 
         [GeneratedRegex("[^0-9]+")]
         private static partial Regex MyRegex();
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_CustomerName.Focus();
+        }
     }
 }

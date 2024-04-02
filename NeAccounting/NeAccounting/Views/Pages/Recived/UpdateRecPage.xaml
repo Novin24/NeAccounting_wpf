@@ -15,6 +15,11 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="UpdateRecDocPage">
 
+
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.SumbitCommand}" />
+    </Page.InputBindings>
     <Grid Margin="-15">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -185,6 +190,7 @@
                             <ui:TextBox Icon="{ui:SymbolIcon Search24}"
                                         FontSize="14"
                                         IsEnabled="False"
+                                        x:Name="CusName"
                                         Text="{Binding ViewModel.CusName , Mode=TwoWay}"
                                         FontFamily="Calibri" />
                         </StackPanel>
@@ -284,12 +290,19 @@
                                 Margin="10"
                                 FontSize="15"
                                 Padding="30 4 "
-                                Content="ثبت سند"
                                 x:Name="btn_submit"
                                 FontFamily="Calibri"
                                 HorizontalAlignment="Center"
                                 Command="{Binding ViewModel.SumbitCommand}"
-                                Grid.ColumnSpan="2" />
+                                Grid.ColumnSpan="2" >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ثبت سند" />
+                                <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </Border>
             </Grid>

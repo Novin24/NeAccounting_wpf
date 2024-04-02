@@ -15,6 +15,10 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="UpdateFinancialAidPage">
 
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.UpdateCommand}" />
+    </Page.InputBindings>
     <Grid Margin="-20">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -186,7 +190,7 @@
                                                 Height="37"
                                                 Text="{Binding ViewModel.PersonnelName , Mode=OneWay}"
                                                 Margin="0 5 3 0 "
-                                                IsEnabled="False"
+                                                IsReadOnly="True"
                                                 FontFamily="Calibri" />
                             </StackPanel>
                             <nu:MonthPicker FontSize="14"
@@ -226,16 +230,23 @@
                                                 FontFamily="Calibri"></ui:TextBox>
                             </Grid>
 
-                            <Button Content="ثبت"
+                            <Button Grid.Row="6"
                                         Padding="30 5 "
                                         Margin="0 20"
                                         HorizontalAlignment="Center"
-                                        Grid.Row="6"
                                         FontFamily="Calibri"
                                         FontSize="15"
                                         IsDefault="True"
                                         Command="{Binding ViewModel.UpdateCommand}"
-                                        Grid.ColumnSpan="2" />
+                                        Grid.ColumnSpan="2" >
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="ثبت" />
+                                    <TextBlock Text=" (F1)"
+                                                   FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="#FFA3A3A3" />
+                                </StackPanel>
+                            </Button>
                         </Grid>
                     </Border>
                 </Grid>
