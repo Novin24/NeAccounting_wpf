@@ -170,7 +170,7 @@ namespace NeAccounting.ViewModels
             {
                 Content = "تنظیمات کاربری",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.PersonSettings20 },
-                TargetPageType = typeof(SettingsPage)
+                TargetPageType = typeof(ChangePassword)
             },
             new NavigationViewItem()
             {

@@ -261,6 +261,10 @@ namespace NeAccounting
                 services.AddTransient<BackupViewModel>();
                 #endregion
 
+                #region ChangePassword
+                services.AddTransient<ChangePassword>();
+                #endregion
+
             }).Build();
 
         /// <summary>
