@@ -140,7 +140,6 @@
                                       IsReadOnly="True"
                                       Padding="7"
                                       FontSize="15"
-                                      IsReadOnly="True"
                                       FontFamily="Calibri"
                                       ItemsSource="{Binding ViewModel.List}"
                                       CanUserResizeColumns="False"

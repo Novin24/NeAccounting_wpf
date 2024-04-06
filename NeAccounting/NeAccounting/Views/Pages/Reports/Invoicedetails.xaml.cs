@@ -88,7 +88,7 @@ namespace NeAccounting.Views.Pages
                 {"Tabligh",$"{printInfo.Tabligh}"},
                 {"Status",$"{list.Last().Status}"}};
 
-            _printServices.PrintInvoice(@"Reports\ReportRem.mrt", "DetailListDtos", list, dic);
+            _printServices.PrintInvoice(@"Reports\Required\ReportRem.mrt", "DetailListDtos", list, dic);
         }
     }
 }

@@ -113,7 +113,7 @@ namespace NeAccounting.Views.Pages
                 {"Tabligh",$"{printInfo.Tabligh}"}
             };
 
-            _printServices.PrintInvoice(@"Reports\ReportOneInvoice.mrt", "DetailListDtos", invoice.RemList, dic);
+            _printServices.PrintInvoice(@"Reports\Required\ReportOneInvoice.mrt", "DetailListDtos", invoice.RemList, dic);
         }
     }
 }

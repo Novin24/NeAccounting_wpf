@@ -61,7 +61,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="Required\**\*.*" />
+		<Content Include="Required\**\*.*" >
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Resource Include="Assets\Materials\Add.png" />
 		<Resource Include="Assets\wpfui-icon-1024.png" />
 		<Resource Include="Assets\wpfui-icon-256.png" />
@@ -73,9 +75,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Required\Fonts\" />
-	  <Folder Include="Required\BackedUp\" />
-	  <Folder Include="Required\Report\" />
+		<Folder Include="Required\Fonts\" />
+		<Folder Include="Required\BackedUp\" />
+		<Folder Include="Required\Report\" />
 	</ItemGroup>
 
 </Project>

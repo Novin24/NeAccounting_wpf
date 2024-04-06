@@ -283,7 +283,7 @@
                                                     Binding="{Binding CheckNumber}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".44*" >
+                                                    Width=".44*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -378,9 +378,21 @@
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
                                                         Command="{Binding Path=DataContext.ViewModel.TransferCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}">
                                                     <Button.ToolTip>
-                                                        <TextBlock Text="واگذاری چک دریافتی" FontSize="14"/>
+                                                        <TextBlock Text="واگذاری چک دریافتی"
+                                                                   FontSize="14" />
                                                     </Button.ToolTip>
                                                     <ui:SymbolIcon Symbol="ArrowSync20" />
+                                                </Button>
+                                                <Button Margin="4"
+                                                        Padding="7,5"
+                                                        Visibility="{Binding IsDeletable,  Converter={StaticResource BoolToVis}}"
+                                                        CommandParameter="{Binding Id , Mode=OneWay}"
+                                                        Command="{Binding Path=DataContext.ViewModel.DetailsDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}">
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="جزییات چک"
+                                                                   FontSize="14" />
+                                                    </Button.ToolTip>
+                                                    <ui:SymbolIcon Symbol="SlideText20" />
                                                 </Button>
                                             </StackPanel>
                                         </DataTemplate>
