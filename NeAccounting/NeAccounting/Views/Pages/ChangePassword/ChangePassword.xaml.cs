@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PasswordStrengthFinder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,24 @@ namespace NeAccounting.Views.Pages
     /// </summary>
     public partial class ChangePassword : Page
     {
+            PasswordValidator passwordValidator;
         public ChangePassword()
         {
+             passwordValidator = new PasswordValidator();
             InitializeComponent();
+            
+        }
+
+        private void btnSetPassword(object sender, RoutedEventArgs e)
+        {
+            if (txtPassword.Text == string.Empty) return;
+            
+            int Value = 0;
+            if (passwordValidator.IsStrong(txtPassword.Text, out Value))
+            {
+                Power.Value = Value;
+            }
+
         }
     }
 }
