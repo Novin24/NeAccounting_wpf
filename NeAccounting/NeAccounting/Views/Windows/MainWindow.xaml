@@ -17,6 +17,11 @@
                  WindowCornerPreference="Round"
                  WindowStartupLocation="CenterScreen"
                  mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding Key="Esc"
+                 Command="{Binding ViewModel.AddClickCommand}"
+                    CommandParameter="Dashboard" />
+    </Window.InputBindings>
     <Grid>
         <Grid x:Name="mainGrid"
               IsEnabled="False"
