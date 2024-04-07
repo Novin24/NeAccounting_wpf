@@ -170,7 +170,14 @@ namespace NeAccounting.ViewModels
             {
                 Content = "تنظیمات کاربری",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.PersonSettings20 },
-                TargetPageType = typeof(ChangePassword)
+                MenuItems = new ObservableCollection<object>
+                {
+                #region ChangePassword
+                    new NavigationViewItem {Content = "تغییر رمز عبور",TargetPageType = typeof(ChangePassword) , Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
+                #endregion
+
+
+                }
             },
             new NavigationViewItem()
             {
