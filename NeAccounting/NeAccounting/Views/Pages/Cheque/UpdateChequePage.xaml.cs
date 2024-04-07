@@ -2,7 +2,7 @@
 using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.Views.Pages.Cheque
+namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for UpdateCheque.xaml

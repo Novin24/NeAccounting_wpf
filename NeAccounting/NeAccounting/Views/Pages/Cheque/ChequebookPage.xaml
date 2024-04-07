@@ -257,7 +257,7 @@
                         <DataGrid Grid.Row="1"
                                   Padding="7"
                                   IsReadOnly="True"
-                                  Margin="0 10 0 0"
+                                  Margin="0 10 0 10"
                                   CanUserResizeColumns="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"
@@ -322,7 +322,7 @@
                                                     Width=".6*" />
 
                                 <DataGridTemplateColumn Header="عملیات"
-                                                        Width="195"
+                                                        Width="230"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -404,7 +404,6 @@
 
                         <!--#region Paginatoin -->
                         <nu:Pagination  Grid.Row="2"
-                                        Margin="0,10"
                                         PageCount="{Binding ViewModel.PageCount}"
                                         CurrntPage="{Binding ViewModel.CurrentPage, Mode=TwoWay}"
                                         PageChosen="Pagination_PageChosen"
