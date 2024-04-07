@@ -1,14 +1,22 @@
 ﻿using DomainShared.Constants;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
 using NeAccounting.Views.Pages.Test;
 using System.Collections.ObjectModel;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
     public partial class MainWindowViewModel : ObservableObject
     {
+        private readonly INavigationService _navigationService;
+        public MainWindowViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
+        }
+
         [ObservableProperty]
         private string _applicationTitle = "Novin Acconting";
 
@@ -170,7 +178,14 @@ namespace NeAccounting.ViewModels
             {
                 Content = "تنظیمات کاربری",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.PersonSettings20 },
-                TargetPageType = typeof(SettingsPage)
+                MenuItems = new ObservableCollection<object>
+                {
+                #region ChangePassword
+                    new NavigationViewItem {Content = "تغییر رمز عبور",TargetPageType = typeof(ChangePassword) , Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
+                #endregion
+
+
+                }
             },
             new NavigationViewItem()
             {
@@ -216,6 +231,24 @@ namespace NeAccounting.ViewModels
             }
             LogInError = "عدم تطابق نام کاربری و گذرواژه !!!";
             return false;
+        }
+
+        [RelayCommand]
+        private void OnAddClick(string parameter)
+        {
+            if (string.IsNullOrWhiteSpace(parameter))
+            {
+                return;
+            }
+
+            Type? pageType = NameToPageTypeConverter.Convert(parameter);
+
+            if (pageType == null)
+            {
+                return;
+            }
+
+            _ = _navigationService.Navigate(pageType);
         }
     }
 }
