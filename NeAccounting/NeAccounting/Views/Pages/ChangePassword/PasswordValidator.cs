@@ -19,19 +19,19 @@ namespace PasswordStrengthFinder
         {
             Conditions = new Dictionary<PasswordStrength,bool>();
             Suggestions = new Dictionary<PasswordStrength,string>();
-            Suggestions.Add(PasswordStrength.UpperCase, "Add Uppercase Character");
-            Suggestions.Add(PasswordStrength.LowerCase, "Add Lowercase Character");
-            Suggestions.Add(PasswordStrength.Symbol, "Add Special Character");
-            Suggestions.Add(PasswordStrength.Digit, "Add Number");
-            Suggestions.Add(PasswordStrength.Length, "Password must have a minimum length of 8");
-            Suggestions.Add(PasswordStrength.NotCommon, "Password is in common list. Try a complicated password");
+            Suggestions.Add(PasswordStrength.UpperCase, "حروف بزرگ اضافه کنید");
+            Suggestions.Add(PasswordStrength.LowerCase, "حروف کوچک اضافه کنید");
+            Suggestions.Add(PasswordStrength.Symbol, "اضافه کردن کاراکترهای خاص مثل !@#$%^&*()");
+            Suggestions.Add(PasswordStrength.Digit, "اضافه کردن عدد");
+            Suggestions.Add(PasswordStrength.Length, "رمز عبور باید حداقل 8 کاراکتر داشته باشد");
+            Suggestions.Add(PasswordStrength.NotCommon, "رمز عبور در لیست رایج است. رمز عبور پیچیده را امتحان کنید");
         }
 
-        public bool IsStrong(string password,out int Value)
+        public (bool isStrong , int perc) IsStrong(string password,out string message )
         {
-            Value = 0;
+            message = string.Empty;
             setPasswordStrengths(password);
-            return checkPasswordScore(ref Value);
+            return checkPasswordScore(ref message);
         }
 
         private void setPasswordStrengths(string password)
@@ -60,7 +60,7 @@ namespace PasswordStrengthFinder
             return false;
         }
 
-        private bool checkPasswordScore(ref int Value)
+        private (bool isStrong, int perc) checkPasswordScore(ref string message )
         {
             int passwordScore = 0;
             foreach(var strength in Conditions)
@@ -73,37 +73,50 @@ namespace PasswordStrengthFinder
 
             if(passwordScore < 50)
             {
-                Value = 10;
-                return false;
+                message = "رمز عبور خیلی رایج است. احتمالاً به راحتی شکسته می شود";
+                return new(false,10);
             }
             
             if(passwordScore >= 50 && passwordScore < 60)
             {
-                Value = 25;
-                return false;
+                message = "پسورد خیلی ضعیفه. \n" + additionalSuggestions();
+                return new(false, 20);
             }
 
             if (passwordScore >= 60 && passwordScore < 70)
             {
-                Value = 50;
-                return false;
+                message = "رمز عبور ضعیف است. \n" + additionalSuggestions();
+                return new(false, 40);
             }
 
             if (passwordScore >= 70 && passwordScore < 80)
             {
-                Value = 75;
-                return false;
+                message = "رمز عبور متوسط است. \n" + additionalSuggestions();
+                return new(false, 60);
             }
 
             if (passwordScore >= 80 && passwordScore <= 92)
             {
-                Value = 100;
-                return true;
+                message = "رمز عبور قوی است. \n" + additionalSuggestions();
+                return new(true, 80);
             }
 
+            message = "رمز عبور به اندازه کافی قوی است.";
 
-            return true;
+            return new(true, 100);
         }
 
+        private string additionalSuggestions()
+        {
+            string additionalSuggestions = string.Empty;
+            foreach (var strength in Conditions)
+            {
+                if (!strength.Value)
+                {
+                    additionalSuggestions += "\n"+Suggestions[strength.Key]; 
+                }
+            }
+            return additionalSuggestions;
+        }
     }
 }
