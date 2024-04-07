@@ -1,12 +1,13 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
+using DomainShared.Extension;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
-using NeAccounting.Views.Pages.Cheque;
+using System.Globalization;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -212,56 +213,43 @@ namespace NeAccounting.ViewModels
             var servise = _navigationService.GetNavigationControl();
             servise.Navigate(pageType, context);
         }
-        
+
         [RelayCommand]
         private async Task OnDetailsDoc(Guid parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateCheque");
+            Type? pageType = NameToPageTypeConverter.Convert("CheckDetails");
 
             if (pageType == null)
             {
                 return;
             }
             using UnitOfWork db = new();
-            var (s, i) = await db.DocumentManager.GetChequeById(parameter);
+            var (s, i) = await db.DocumentManager.GetChequeDetailById(parameter);
             if (!s)
             {
                 _snackbarService.Show("کاربر گرامی", $"چک مورد نظر یافت نشد!!!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            string pageName;
-            if (i.Status == ChequeStatus.Payed)
+            PersianCalendar pc = new();
+            var context = new CheckDetailsPage(new DetailsChequeViewModel(_navigationService)
             {
-                pageName = "ویرایش چک پرداختی";
-            }
-            else if (i.Status == ChequeStatus.Guarantee)
-            {
-                pageName = "ویرایش چک ضمانتی";
-            }
-            else
-            {
-                pageName = "ویرایش چک دریافتی";
-            }
-            var context = new UpdateChequePage(new UpdateChequeViewModel(_snackbarService, _navigationService)
-            {
-                CusId = i.CustomerId,
-                Substatus = i.SubmitStatus,
-                SubmitDate = i.SubmitDate,
+                SubStatus = i.SubmitStatus.ToDisplay(),
+                SubmitDate = i.SubmitDate.ToShamsiDate(pc),
+                TransferDate = i.TransferDate.ToShamsiDate(pc),
+                DueDate = i.DueDate.ToShamsiDate(pc),
                 Accunt_Number = i.Accunt_Number,
                 Bank_Branch = i.Bank_Branch,
                 Bank_Name = i.Bank_Name,
                 Cheque_Number = i.Cheque_Number,
-                CusName = i.CusName,
-                Cuslist = await db.CustomerManager.GetDisplayUser(),
+                PayCusName = i.PayCusName,
+                PayCusNum = i.PayCusNum,
+                CusName = i.RecCusName,
+                CusNum = i.RecCusNum,
                 Cheque_Owner = i.Cheque_Owner,
-                CusNum = i.CusNum,
-                Description = i.Descripion,
-                DocId = i.Id,
-                DueDate = i.DueDate,
+                PayDescription = i.PayDescripion,
+                RecDescription = i.RecDescripion,
+                Price = i.Price.ToString("N0"),
                 Status = i.Status,
-                PageName = pageName,
-                Price = i.Price,
-                EnumSource = SubmitChequeStatus.Register.ToEnumDictionary()
             });
 
             var servise = _navigationService.GetNavigationControl();

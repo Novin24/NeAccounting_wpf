@@ -2,20 +2,19 @@
 
 namespace DomainShared.ViewModels.Document
 {
-    public class UpdateChequeDto
+    public class DetailsChequeDto
     {
-        /// <summary>
-        /// docId
-        /// </summary>
-        public Guid Id { get; set; }
-        public Guid CustomerId { get; set; }
-        public string CusName { get; set; }
-        public string CusNum { get; set; }
+        public string PayCusName { get; set; }
+        public string PayCusNum { get; set; }
+        public string RecCusName { get; set; }
+        public string RecCusNum { get; set; }
         public SubmitChequeStatus SubmitStatus { get; set; }
         public ChequeStatus Status { get; set; }
-        public string? Descripion { get; set; }
+        public string? RecDescripion { get; set; }
+        public string? PayDescripion { get; set; }
         public DateTime SubmitDate { get; set; }
         public DateTime? DueDate { get; set; }
+        public DateTime? TransferDate{ get; set; }
         public long Price { get; set; }
         public string Cheque_Number { get; set; }
         public string Accunt_Number { get; set; }

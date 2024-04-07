@@ -1,28 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using NeAccounting.ViewModels;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for CheckDetailsPage.xaml
     /// </summary>
-    public partial class CheckDetailsPage : Page
+    public partial class CheckDetailsPage : INavigableView<DetailsChequeViewModel>
     {
-        public CheckDetailsPage()
+
+        public DetailsChequeViewModel ViewModel { get; }
+
+        public CheckDetailsPage(DetailsChequeViewModel viewModel)
         {
+            ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is CheckDetailsPage c && c.ViewModel.Status != DomainShared.Enums.ChequeStatus.Transferred)
+            {
+                Txt_RecDescription.Visibility = Visibility.Collapsed;
+                Grid.SetColumnSpan(Txt_PayDescription, 2);
+                txt_TransferDate.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

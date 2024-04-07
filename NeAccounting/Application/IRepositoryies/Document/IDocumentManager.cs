@@ -196,6 +196,8 @@ namespace NeApplication.IRepositoryies
         #endregion
 
         #region Cheque
+        Task<(bool isSuccess, DetailsChequeDto itm)> GetChequeDetailById(Guid docId);
+
         Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime,
             DateTime? endTime,
             Guid? cusId,
