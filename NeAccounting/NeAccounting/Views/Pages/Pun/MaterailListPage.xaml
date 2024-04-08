@@ -34,23 +34,23 @@
             <ColumnDefinition Width="30"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Border Grid.Row="1"
-                    Grid.RowSpan="3"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Background="{StaticResource Rectangle Dark blue}"
-                    CornerRadius="10"></Border>
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Background="{StaticResource Rectangle Dark blue}"
+                CornerRadius="10"></Border>
         <Border Grid.Row="3"
-                    Grid.RowSpan="3"
-                    Grid.Column="2"
-                    Grid.ColumnSpan="3"
-                    Background="{StaticResource Rectangle Pale blue}"
-                    CornerRadius="10"></Border>
+                Grid.RowSpan="3"
+                Grid.Column="2"
+                Grid.ColumnSpan="3"
+                Background="{StaticResource Rectangle Pale blue}"
+                CornerRadius="10"></Border>
         <Border Grid.Row="2"
-                    Grid.RowSpan="3"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="3"
-                    Background="{DynamicResource ApplicationBackgroundBrush}"
-                    CornerRadius="10">
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Background="{DynamicResource ApplicationBackgroundBrush}"
+                CornerRadius="10">
             <Grid>
 
                 <Grid.RowDefinitions>
@@ -60,21 +60,21 @@
 
 
                 <nu:HeaderPack NamePpage="اجناس و خدمات"
-                                   Margin="28 0" />
+                               Margin="28 0" />
 
                 <Border Grid.Row="1"
-                            CornerRadius="9"
-                            BorderBrush="#D6D5D5"
-                            BorderThickness="0.4"
-                            Margin="4">
+                        CornerRadius="9"
+                        BorderBrush="#D6D5D5"
+                        BorderThickness="0.4"
+                        Margin="4">
                     <Border.Background>
                         <SolidColorBrush Color="White"
-                                             Opacity="0.08" />
+                                         Opacity="0.08" />
 
                     </Border.Background>
 
                     <Grid FlowDirection="RightToLeft"
-                              Margin="50 15 50 0">
+                          Margin="50 15 50 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="5*"></RowDefinition>
@@ -87,19 +87,19 @@
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                                <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
 
                             <ui:CardAction Grid.Column="2"
-                                               FontFamily="Calibri"
-                                               FontSize="15"
-                                               Margin="15 10 0 0"
-                                               Padding="9 0"
-                                               Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
-                                               CommandParameter="CreateMaterail"
-                                               IsChevronVisible="False"
-                                               HorizontalAlignment="Right">
+                                           FontFamily="Calibri"
+                                           FontSize="15"
+                                           Margin="15 10 0 0"
+                                           Padding="9 0"
+                                           Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
+                                           CommandParameter="CreateMaterail"
+                                           IsChevronVisible="False"
+                                           HorizontalAlignment="Right">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -107,31 +107,31 @@
                                     </Grid.ColumnDefinitions>
 
                                     <ui:SymbolIcon FontSize="22"
-                                                       Symbol="ReadingListAdd28" />
+                                                   Symbol="ReadingListAdd28" />
 
                                     <StackPanel Grid.Column="1"
-                                                    Margin="8 4"
-                                                    VerticalAlignment="Center">
+                                                Margin="8 4"
+                                                VerticalAlignment="Center">
                                         <ui:TextBlock Margin="0"
-                                                          FontTypography="BodyStrong"
-                                                          Text="افزودن"
-                                                          TextWrapping="WrapWithOverflow" />
+                                                      FontTypography="BodyStrong"
+                                                      Text="افزودن"
+                                                      TextWrapping="WrapWithOverflow" />
                                         <ui:TextBlock Appearance="Tertiary"
-                                                          Text="اضافه کردن کالا و اجناس ..."
-                                                          TextWrapping="WrapWithOverflow" />
+                                                      Text="اضافه کردن کالا و اجناس ..."
+                                                      TextWrapping="WrapWithOverflow" />
                                     </StackPanel>
                                 </Grid>
                             </ui:CardAction>
 
                             <ui:CardAction Grid.Column="1"
-                                               FontFamily="Calibri"
-                                               FontSize="15"
-                                               Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
-                                               CommandParameter="CreateService"
-                                               Margin="0 10 15 0"
-                                               Padding="9 0"
-                                               IsChevronVisible="False"
-                                               HorizontalAlignment="Right">
+                                           FontFamily="Calibri"
+                                           FontSize="15"
+                                           Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
+                                           CommandParameter="CreateService"
+                                           Margin="0 10 15 0"
+                                           Padding="9 0"
+                                           IsChevronVisible="False"
+                                           HorizontalAlignment="Right">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -139,75 +139,75 @@
                                     </Grid.ColumnDefinitions>
 
                                     <ui:SymbolIcon FontSize="22"
-                                                       Symbol="ReadingListAdd28" />
+                                                   Symbol="ReadingListAdd28" />
 
                                     <StackPanel Grid.Column="1"
-                                                    Margin="8 4"
-                                                    VerticalAlignment="Center">
+                                                Margin="8 4"
+                                                VerticalAlignment="Center">
                                         <ui:TextBlock Margin="0"
-                                                          FontTypography="BodyStrong"
-                                                          Text="افزودن"
-                                                          TextWrapping="WrapWithOverflow" />
+                                                      FontTypography="BodyStrong"
+                                                      Text="افزودن"
+                                                      TextWrapping="WrapWithOverflow" />
                                         <ui:TextBlock Appearance="Tertiary"
-                                                          Text="اضافه کردن خدمت و سرویس ..."
-                                                          TextWrapping="WrapWithOverflow" />
+                                                      Text="اضافه کردن خدمت و سرویس ..."
+                                                      TextWrapping="WrapWithOverflow" />
                                     </StackPanel>
                                 </Grid>
                             </ui:CardAction>
                             <StackPanel Grid.Row="1"
-                                            Margin="0 4 15 0 ">
+                                        Margin="0 4 15 0 ">
 
                                 <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="نام کالا"
-                                               Margin="2 0 0 0 " />
+                                           FontSize="14"
+                                           Text="نام کالا"
+                                           Margin="2 0 0 0 " />
                                 <ui:TextBox TextAlignment="Center"
-                                                FontFamily="Calibri"
-                                                x:Name="materialName_txb"
-                                                Text="{Binding ViewModel.PunName}"
-                                                Margin="0 4 0 0" />
+                                            FontFamily="Calibri"
+                                            x:Name="materialName_txb"
+                                            Text="{Binding ViewModel.PunName}"
+                                            Margin="0 4 0 0" />
                             </StackPanel>
                             <StackPanel Grid.Row="1"
-                                            Grid.Column="1"
-                                            Margin="15 4 15 0 ">
+                                        Grid.Column="1"
+                                        Margin="15 4 15 0 ">
 
                                 <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
-                                               Text="شماره سریال"
-                                               Margin="2 0 0 0 " />
+                                           FontSize="14"
+                                           Text="شماره سریال"
+                                           Margin="2 0 0 0 " />
                                 <ui:TextBox TextAlignment="Center"
-                                                FontFamily="Calibri"
-                                                Text="{Binding ViewModel.Serial}"
-                                                Margin="0 4 0 0" />
+                                            FontFamily="Calibri"
+                                            Text="{Binding ViewModel.Serial}"
+                                            Margin="0 4 0 0" />
                             </StackPanel>
 
                             <Button Grid.Row="1"
-                                        Grid.Column="2"
-                                        IsDefault="True"
-                                        Margin="15 25 0 0"
-                                        HorizontalAlignment="Left"
-                                        Padding="17 4 18 9"
-                                        
-                                        Command="{Binding ViewModel.SearchMaterialCommand }">جستجو</Button>
+                                    Grid.Column="2"
+                                    IsDefault="True"
+                                    Margin="15 25 0 0"
+                                    HorizontalAlignment="Left"
+                                    Padding="17 4 18 9"
+                                    Command="{Binding ViewModel.SearchMaterialCommand }">جستجو</Button>
                         </Grid>
                         <DataGrid Margin="0 0 0 30"
-                                      Padding="7"
-                                      Grid.Row="1"
-                                      IsReadOnly="True"
-                                      CanUserResizeColumns="False"
-                                      CanUserReorderColumns="False"
-                                      CanUserResizeRows="False"
-                                      ItemsSource="{Binding ViewModel.List, Mode=TwoWay}"
-                                      FontFamily="Calibri"
-                                      AutoGenerateColumns="False">
+                                  Padding="7"
+                                  Grid.Row="1"
+                                  x:Name="Dgv_sdfsd"
+                                  IsReadOnly="True"
+                                  CanUserResizeColumns="False"
+                                  CanUserReorderColumns="False"
+                                  CanUserResizeRows="False"
+                                  ItemsSource="{Binding ViewModel.List, Mode=TwoWay}"
+                                  FontFamily="Calibri"
+                                  AutoGenerateColumns="False">
                             <DataGrid.Columns>
 
                                 <DataGridTextColumn Header="نام کالا"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*"
-                                                        x:Name="MaterialName"
-                                                        Binding="{Binding MaterialName}" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="*"
+                                                    x:Name="MaterialName"
+                                                    Binding="{Binding MaterialName}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -220,11 +220,11 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="موجودی انبار"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*"
-                                                        x:Name="Entity"
-                                                        Binding="{Binding SEntity}" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="*"
+                                                    x:Name="Entity"
+                                                    Binding="{Binding SEntity}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -237,11 +237,11 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="واحد"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*"
-                                                        x:Name="UnitName"
-                                                        Binding="{Binding UnitName}" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="*"
+                                                    x:Name="UnitName"
+                                                    Binding="{Binding UnitName}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -254,11 +254,11 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="شماره سریال"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*"
-                                                        x:Name="Serial"
-                                                        Binding="{Binding Serial}" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="*"
+                                                    x:Name="Serial"
+                                                    Binding="{Binding Serial}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -271,11 +271,11 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="محل نگهداری"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*"
-                                                        x:Name="Address"
-                                                        Binding="{Binding Address}" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="*"
+                                                    x:Name="Address"
+                                                    Binding="{Binding Address}">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -288,25 +288,25 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTemplateColumn Header="عملیات"
-                                                            Width="75"
-                                                            HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+                                                        Width="75"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal"
-                                                            HorizontalAlignment="Center">
+                                                        HorizontalAlignment="Center">
                                                 <Button  Margin="2"
-                                                             CommandParameter="{Binding Id , Mode=OneWay}"
-                                                             Command="{Binding Path=DataContext.ViewModel.UpdateMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                             Padding="7,5"
-                                                             ToolTip="ویرایش">
+                                                         CommandParameter="{Binding Id , Mode=OneWay}"
+                                                         Command="{Binding Path=DataContext.ViewModel.UpdateMaterialCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                         Padding="7,5"
+                                                         ToolTip="ویرایش">
                                                     <ui:SymbolIcon Symbol="Pen16" />
                                                 </Button>
                                                 <CheckBox IsChecked="{Binding IsActive}"
-                                                              Tag="{Binding Id}"
-                                                              Margin="5 0 -5 0"
-                                                              Padding="0"
-                                                              Checked="CheckBox_Status_Chkecked"
-                                                              Unchecked="CheckBox_Status_Unckecked">
+                                                          Tag="{Binding Id}"
+                                                          Margin="5 0 -5 0"
+                                                          Padding="0"
+                                                          Checked="CheckBox_Status_Chkecked"
+                                                          Unchecked="CheckBox_Status_Unckecked">
                                                     <CheckBox.ToolTip>
                                                         <TextBlock  FontSize="14">بایگانی</TextBlock>
                                                     </CheckBox.ToolTip>

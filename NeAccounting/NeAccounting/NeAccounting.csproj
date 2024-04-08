@@ -61,7 +61,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="Required\**\*.*" >
+		<Content Include="Required\**\*.*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Resource Include="Assets\Materials\Add.png" />
@@ -73,11 +73,4 @@
 		<Resource Include="Assets\pexels-johannes-plenio-1103970.jpg" />
 		<Resource Include="Assets\user9.png" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Required\Fonts\" />
-		<Folder Include="Required\BackedUp\" />
-		<Folder Include="Required\Report\" />
-	</ItemGroup>
-
 </Project>
