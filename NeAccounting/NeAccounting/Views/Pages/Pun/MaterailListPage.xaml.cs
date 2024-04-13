@@ -28,7 +28,6 @@ namespace NeAccounting.Views.Pages
 
             if (btn.Tag == null)
                 return;
-
             int id = int.Parse(btn.Tag.ToString());
             var unit = ViewModel.List.First(x => x.Id == id);
             if (unit.IsActive)

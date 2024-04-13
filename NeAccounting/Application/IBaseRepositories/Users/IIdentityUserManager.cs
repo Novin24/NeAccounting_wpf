@@ -7,5 +7,6 @@ namespace NeApplication.IBaseRepositories
     {
         Task<bool> LogInUser(string userName, string password);
         Task<IdentityUser> GetUser(string userName);
+        Task<(bool isSuccess, string error)> ChangePass(string currentPass, string NewPass);
     }
 }

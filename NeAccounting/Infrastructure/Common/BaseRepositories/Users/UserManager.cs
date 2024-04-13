@@ -11,9 +11,14 @@ namespace Infrastructure.Common.BaseRepositories.Users
     {
         public UserManager(BaseDomainDbContext context) : base(context) { }
 
-        public Task<IdentityUser> GetUser(string userName)
+        public async Task<IdentityUser> GetUser(string userName)
         {
-            return TableNoTracking.FirstOrDefaultAsync(x => x.UserName == userName);
+            return await TableNoTracking.FirstOrDefaultAsync(x => x.UserName == userName);
+        }
+
+        public async Task<IdentityUser> GetUser(Guid id)
+        {
+            return await TableNoTracking.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<bool> LogInUser(string userName, string password)
@@ -36,6 +41,33 @@ namespace Infrastructure.Common.BaseRepositories.Users
             CurrentUser.CurrentUserId = user.Id;
             return true;
         }
+
+
+        public async Task<(bool isSuccess, string error)> ChangePass(string currentPass, string newPass)
+        {
+            var passHash = SecurityHelper.GetSha512Hash(currentPass);
+
+            var user = await Entities.FirstOrDefaultAsync(t => t.Id == CurrentUser.CurrentUserId);
+
+            if (user == null) { return new(false, "کاربر یافت نشد!!"); }
+
+            if (user.PasswordHash != passHash) { return new(false, "رمز عبور فعلی نامعتبر!!!"); }
+
+            try
+            {
+                var newPassHash = SecurityHelper.GetSha512Hash(newPass);
+                user.PasswordHash = newPassHash;
+                user.Temp = StringCipher.Encrypt(newPass);
+                Entities.Update(user);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
+            return (true, string.Empty);
+        }
+
+
     }
 
 
