@@ -40,6 +40,7 @@ namespace NeAccounting
                 #region Main
                 services.AddHostedService<ApplicationHostService>();
                 services.AddSingleton<MainWindow>();
+                services.AddSingleton<LoadingWindow>();
                 services.AddSingleton<MainWindowViewModel>();
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<ISnackbarService, SnackbarService>();
@@ -113,7 +114,7 @@ namespace NeAccounting
                 #region Cheque
                 services.AddTransient<ChequebookPage>();
                 services.AddTransient<ChequebookViewModel>();
-                
+
                 services.AddTransient<CheckDetailsPage>();
                 services.AddTransient<DetailsChequeViewModel>();
 

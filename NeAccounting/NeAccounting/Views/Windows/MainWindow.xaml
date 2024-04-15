@@ -19,7 +19,7 @@
                  mc:Ignorable="d">
     <Window.InputBindings>
         <KeyBinding Key="Esc"
-                 Command="{Binding ViewModel.AddClickCommand}"
+                    Command="{Binding CloseAppCommand}"
                     CommandParameter="Dashboard" />
     </Window.InputBindings>
     <Grid>
@@ -164,7 +164,7 @@
                                     FontSize="11"
                                     FontFamily="Montserrat"
                                     Cursor="Hand"
-                                    Click="BtnClose_Click"
+                                    Command="{Binding CloseAppCommand}"
                                     Grid.Column="2">
                                 <Button.Style>
                                     <Style TargetType="Button">

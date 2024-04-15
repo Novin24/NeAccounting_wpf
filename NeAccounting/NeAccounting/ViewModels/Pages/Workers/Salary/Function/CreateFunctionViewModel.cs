@@ -6,6 +6,7 @@ using NeAccounting.Helpers;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using System.Windows.Media;
+using System.Globalization;
 
 namespace NeAccounting.ViewModels
 {
@@ -18,6 +19,9 @@ namespace NeAccounting.ViewModels
         {
             _navigationService = navigationService;
             _snackbarService = snackbarService;
+            PersianCalendar pc = new();
+            SubmitMonth = (byte)pc.GetMonth(DateTime.Now);
+            SubmitYear = pc.GetYear(DateTime.Now);
         }
 
         [ObservableProperty]

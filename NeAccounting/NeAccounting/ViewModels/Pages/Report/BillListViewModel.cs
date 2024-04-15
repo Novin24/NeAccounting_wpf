@@ -475,7 +475,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
             var cus = Cuslist.First(t => t.Id == CusId);
-            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Reports\PrintInfo.json"));
+            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Required\Reports\PrintInfo.json"));
             if (printInfo == null)
             {
                 _snackbarService.Show("خطا", "فایل پرینت یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -496,7 +496,7 @@ namespace NeAccounting.ViewModels
                 {"Tabligh",$"{printInfo.Tabligh}"},
                 {"Status",$"{list.Last().Status}"}};
 
-            _printServices.PrintInvoice(@"Reports\Required\ReportInvoices.mrt", "InvoiceListDtos", list, dic);
+            _printServices.PrintInvoice(@"Required\Reports\ReportInvoices.mrt", "InvoiceListDtos", list, dic);
         }
         #endregion
     }

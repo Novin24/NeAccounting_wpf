@@ -87,7 +87,18 @@ namespace NeAccounting.Controls
             IsCalculated = true;
         }
 
+        /// <summary>
+        /// تاریخ قابل نمایش فارسی
+        /// </summary>
+        public string DisplayDate
+        {
+            get { return (string)GetValue(DisplayDateProperty); }
+            set { SetValue(DisplayDateProperty, value); }
+        }
 
+        // Using a DependencyProperty as the backing store for DisplayDate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DisplayDateProperty =
+            DependencyProperty.Register("DisplayDate", typeof(string), typeof(PersianDatePicker), new PropertyMetadata(string.Empty));
 
 
         /// <summary>
@@ -226,6 +237,7 @@ namespace NeAccounting.Controls
             }
             IsCalculated = false;
             selectedMonth = Convert.ToByte(cmbox.SelectedIndex + 1);
+            DisplayDate = comboBoxYear.SelectedValue.ToString() + "  " +((ComboBoxItem) cmbox.SelectedValue).Content;
             SelectedMon = selectedMonth;
         }
 
@@ -244,6 +256,7 @@ namespace NeAccounting.Controls
                 SelectedMon = currentMonth;
                 selectedMonth = currentMonth;
             }
+            DisplayDate = comboBoxYear.SelectedValue.ToString() + "  " + ((ComboBoxItem)cmbox.SelectedValue).Content;
         }
 
         private void Dismiss_Click(object sender, RoutedEventArgs e)

@@ -16,7 +16,7 @@
       mc:Ignorable="d">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-             Command="{Binding ViewModel.CreateCommand}" />
+                    Command="{Binding ViewModel.CreateCommand}" />
     </Page.InputBindings>
 
     <Grid>
@@ -144,8 +144,8 @@
                                                 LabelName="تاریخ پرداخت"
                                                 MonthChosen="dtp_MonthChosen"
                                                 YearChosen="dtp_YearChosen"
-                                                SelectedMon="{Binding ViewModel.SubmitMonth, Mode=OneWayToSource}"
-                                                SelectedYear="{Binding ViewModel.SubmitYear, Mode=OneWayToSource}" />
+                                                SelectedMon="{Binding ViewModel.SubmitMonth, Mode=TwoWay}"
+                                                SelectedYear="{Binding ViewModel.SubmitYear, Mode=TwoWay}" />
                                 <Separator Grid.Row="1"
                                            VerticalAlignment="Bottom"
                                            Background="Gray"
@@ -324,7 +324,7 @@
                                                FontSize="15"
                                                Text="توضیحات"
                                                Grid.ColumnSpan="3"
-                                               Margin="5 0 0 0"/>
+                                               Margin="5 0 0 0" />
                                     <TextBox Margin="0,21,0,0"
                                              FontSize="14"
                                              FlowDirection="RightToLeft"
@@ -338,7 +338,7 @@
                                            Padding="30 4"
                                            Margin="12"
                                            Command="{Binding ViewModel.CreateCommand}"
-                                           Grid.ColumnSpan="3" >
+                                           Grid.ColumnSpan="3">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="ثبت" />
                                         <TextBlock Text=" (F1)"

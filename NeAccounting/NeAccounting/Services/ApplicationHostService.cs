@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeAccounting.Views.Pages;
 using NeAccounting.Windows;
+using System.Windows.Navigation;
 
 namespace NeAccounting.Services
 {
@@ -47,11 +48,15 @@ namespace NeAccounting.Services
         {
             await Task.CompletedTask;
 
+            var loadWindow = _serviceProvider.GetRequiredService<LoadingWindow>();
+            loadWindow.Show();
+
             if (!Application.Current.Windows.OfType<MainWindow>().Any())
             {
                 var navigationWindow = _serviceProvider.GetRequiredService<MainWindow>();
                 navigationWindow.Loaded += OnNavigationWindowLoaded;
                 navigationWindow.Show();
+                loadWindow.Close();
             }
         }
 

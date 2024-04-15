@@ -48,7 +48,8 @@ namespace NeAccounting.Windows
             WindowState = WindowState.Minimized;
         }
 
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private void OnCloseApp()
         {
             Application.Current.Shutdown();
         }
