@@ -186,6 +186,7 @@
                                               LabelName="تاریخ سررسید" />
                         <nu:MoneyPack Grid.Row="3"
                                       Grid.Column="1"
+                                      VerticalAlignment="Center"
                                       Value="{Binding ViewModel.Price,Mode=TwoWay}"
                                       Margin="0 0 10 0"
                                       LabelName="مبلغ چک" />
