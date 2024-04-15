@@ -68,7 +68,18 @@ namespace NeAccounting.Controls
 
         // Using a DependencyProperty as the backing store for DisplayDate.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DisplayDateProperty =
-            DependencyProperty.Register("DisplayDate", typeof(string), typeof(PersianDatePicker), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("DisplayDate", typeof(string), typeof(PersianDatePicker), new PropertyMetadata(string.Empty, SetDate));
+
+        private static void SetDate(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            if (obj is not PersianDatePicker pdp)
+                return;
+
+            if (args.NewValue == args.OldValue)
+                return;
+
+            pdp.txt_date.Text = args.NewValue.ToString();
+        }
 
         #endregion
 

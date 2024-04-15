@@ -109,20 +109,20 @@
                                                Margin="7 0 0 4"
                                                FontFamily="Calibri" />
                                     <TextBlock  FontSize="14"
-                                               Margin="2 0 0 0"
-                                               FontFamily="Calibri"
-                                               x:Name="txt_Personel"
-                                               Foreground="#BB8F60"
-                                               HorizontalAlignment="Right"
-                                               Text="{Binding ViewModel.PersonelId , Mode=OneWay}" />
+                                                Margin="2 0 0 0"
+                                                FontFamily="Calibri"
+                                                x:Name="txt_Personel"
+                                                Foreground="#BB8F60"
+                                                HorizontalAlignment="Right"
+                                                Text="{Binding ViewModel.PersonelId , Mode=OneWay}" />
                                 </DockPanel>
                                 <ui:AutoSuggestBox FontSize="16"
                                                    x:Name="txt_name"
-                                                   FontFamily="Calibri" 
+                                                   FontFamily="Calibri"
                                                    Icon="{ui:SymbolIcon Search24}"
                                                    DisplayMemberPath="DisplayName"
                                                    SuggestionChosen="txt_name_SuggestionChosen"
-                                                   OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"/>
+                                                   OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}" />
                             </StackPanel>
 
                             <StackPanel Grid.Column="1"
@@ -132,36 +132,34 @@
                                            Text="جزییات"
                                            Margin="2 0 0 0 "
                                            FontFamily="Calibri" />
-                                <ui:TextBox Margin="0 4 0 0" 
+                                <ui:TextBox Margin="0 4 0 0"
                                             FontFamily="Calibri"
                                             TextAlignment="Center"
-                                            Text="{Binding ViewModel.Desc, Mode=TwoWay}"/>
+                                            Text="{Binding ViewModel.Desc, Mode=TwoWay}" />
                             </StackPanel>
 
                             <CheckBox Grid.Column="2"
-                                      FontSize="14" 
+                                      FontSize="14"
                                       FontFamily="Calibri"
                                       Margin="10 22 10 0 "
                                       Content="به احتساب مانده قبلی"
                                       HorizontalAlignment="Center"
-                                      IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay}"/>
+                                      IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay}" />
 
                             <nu:PersianDatePicker Grid.Row="1"
                                                   x:Name="Dtp_Start"
                                                   LabelName="از تاریخ"
                                                   VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
-                                                  SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay}"
-                                                  DisplayDate="{Binding ViewModel.DisplayStartDate , Mode=OneWayToSource}" />
+                                                  SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay}" />
 
                             <nu:PersianDatePicker Grid.Row="1"
-                                                  Grid.Column="1" 
+                                                  Grid.Column="1"
                                                   x:Name="Dtp_End"
                                                   LabelName="تا تاریخ"
                                                   VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
-                                                  SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay}"
-                                                  DisplayDate="{Binding ViewModel.DisplayEndDate , Mode=OneWayToSource}"/>
+                                                  SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay}" />
                             <StackPanel Grid.Row="1"
                                         Grid.Column="2"
                                         Margin="20 20 20 0"
@@ -170,8 +168,8 @@
                                 <Button Padding="10 4"
                                         IsDefault="True"
                                         Margin="0 0 10 0"
-                                         FontFamily="Calibri"
-                                       HorizontalAlignment="Center"
+                                        FontFamily="Calibri"
+                                        HorizontalAlignment="Center"
                                         Command="{Binding ViewModel.SearchInvoiceCommand}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="نمایش"
@@ -195,8 +193,8 @@
                                         <TextBlock Text="پرینت" />
                                         <TextBlock Text=" (Ctrl+P)"
                                                    FontSize="11.5"
-                                                   Foreground="#FFA3A3A3" 
-                                                   VerticalAlignment="Center"/>
+                                                   Foreground="#FFA3A3A3"
+                                                   VerticalAlignment="Center" />
                                     </StackPanel>
                                 </Button>
                             </StackPanel>
@@ -224,7 +222,7 @@
                                                     Binding="{Binding Row}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="30" >
+                                                    Width="30">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -240,7 +238,7 @@
                                                     Binding="{Binding ShamsiDate}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="85" >
+                                                    Width="85">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -256,7 +254,7 @@
                                                     Binding="{Binding Description}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="1.8*" >
+                                                    Width="1.8*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -272,7 +270,7 @@
                                                     Binding="{Binding Serial}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="50" >
+                                                    Width="50">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -288,7 +286,7 @@
                                                     Binding="{Binding Bed, StringFormat={StaticResource format}}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".8*" >
+                                                    Width=".8*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -304,7 +302,7 @@
                                                     Binding="{Binding Bes, StringFormat={StaticResource format}}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".8*" >
+                                                    Width=".8*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -320,7 +318,7 @@
                                                     Binding="{Binding LeftOver, StringFormat={StaticResource format}}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".8*" >
+                                                    Width=".8*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -336,7 +334,7 @@
                                                     Binding="{Binding Status}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="70" >
+                                                    Width="70">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -386,11 +384,11 @@
                         </DataGrid>
                         <nu:Pagination  Grid.Row="2"
                                         Margin="0,10"
-                                        FlowDirection="LeftToRight" 
+                                        FlowDirection="LeftToRight"
                                         HorizontalAlignment="Center"
                                         PageChosen="Pagination_PageChosen"
                                         PageCount="{Binding ViewModel.PageCount}"
-                                        CurrntPage="{Binding ViewModel.CurrentPage, Mode=TwoWay}"/>
+                                        CurrntPage="{Binding ViewModel.CurrentPage, Mode=TwoWay}" />
                     </Grid>
                 </Border>
             </Grid>

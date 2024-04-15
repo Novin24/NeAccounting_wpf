@@ -3,7 +3,6 @@ using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
-using System.Reflection.Metadata;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;

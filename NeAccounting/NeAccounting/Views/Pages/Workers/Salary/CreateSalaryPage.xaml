@@ -328,6 +328,7 @@
                                     <TextBox Margin="0,21,0,0"
                                              FontSize="14"
                                              FlowDirection="RightToLeft"
+                                             Text="{Binding ViewModel.Descriptio}"
                                              Grid.ColumnSpan="3"
                                              FontFamily="Calibri"></TextBox>
                                 </Grid>

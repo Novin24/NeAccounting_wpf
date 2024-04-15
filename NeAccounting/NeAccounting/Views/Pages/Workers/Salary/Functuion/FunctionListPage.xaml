@@ -180,7 +180,7 @@
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width="*" />
                                 <DataGridTemplateColumn Header="عملیات"
-                                                            Width="*"
+                                                            Width="110"
                                                             HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

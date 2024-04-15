@@ -58,12 +58,6 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private DateTime? _endDate = DateTime.Now;
 
-        [ObservableProperty]
-        private string _displayStartDate;
-
-        [ObservableProperty]
-        private string _displayEndDate;
-
         /// <summary>
         /// به احتساب مانده قبلی
         /// </summary>
@@ -481,11 +475,12 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", "فایل پرینت یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
+            PersianCalendar pc = new();
             Dictionary<string, string> dic = new()
             {
                 {"Customer_Name",$"({cus.UniqNumber}) _ {cus.DisplayName}"},
-                {"Start_Date",$"{DisplayStartDate}"},
-                {"End_Date",$"{DisplayEndDate}"},
+                {"Start_Date",StartDate.ToShamsiDate(pc)},
+                {"End_Date",EndDate.ToShamsiDate(pc)},
                 {"PrintTime",DateTime.Now.ToShamsiDate(new PersianCalendar()) },
                 {"Total_Debt",list.Select(p => p.Bed).Sum().ToString("N0")},
                 {"Total_Credit",list.Select(p => p.Bes).Sum().ToString("N0")},

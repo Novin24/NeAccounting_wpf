@@ -9,13 +9,14 @@
       d:DataContext="{d:DesignInstance local:UpdateSalaryPage,
                                IsDesignTimeCreatable=False}"
       Title="Salary"
+      Loaded="Page_Loaded"
       mc:Ignorable="d"
       d:DesignWidth="800"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-             Command="{Binding ViewModel.CreateCommand}" />
+                    Command="{Binding ViewModel.CreateCommand}" />
     </Page.InputBindings>
 
     <Grid>
@@ -349,6 +350,7 @@
                                     <TextBox Margin="0,20,0,0"
                                              FontSize="14"
                                              FlowDirection="RightToLeft"
+                                             Text="{Binding ViewModel.Description , Mode=TwoWay}"
                                              Grid.ColumnSpan="3"
                                              FontFamily="Calibri"></TextBox>
                                 </Grid>

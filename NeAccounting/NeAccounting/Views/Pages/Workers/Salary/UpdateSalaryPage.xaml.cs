@@ -19,8 +19,10 @@ namespace NeAccounting.Views.Pages
             DataContext = this;
             InitializeComponent();
         }
-
-
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadPageByShift();
+        }
 
         private void SetTotalPlusPrice()
         {
@@ -89,27 +91,7 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            if (ViewModel.ShiftStatus == DomainShared.Enums.Shift.ByMounth)
-            {
-                txt_Tax.IsEnabled = true;
-                txt_loanInstallment.IsEnabled = true;
-                txt_RighOfFood.IsEnabled = true;
-                txt_ChildAllowance.IsEnabled = true;
-            }
-            else
-            {
-                txt_Tax.Value = 0;
-                txt_Tax.IsEnabled = false;
-
-                txt_loanInstallment.Value = 0;
-                txt_loanInstallment.IsEnabled = false;
-
-                txt_RighOfFood.Value = 0;
-                txt_RighOfFood.IsEnabled = false;
-
-                txt_ChildAllowance.Value = 0;
-                txt_ChildAllowance.IsEnabled = false;
-            }
+            LoadPageByShift();
         }
 
         private async void Dtp_MonthChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)
@@ -134,6 +116,34 @@ namespace NeAccounting.Views.Pages
                 return;
 
             await ReloadSalary();
+        }
+
+        private void LoadPageByShift()
+        {
+            if (DataContext is UpdateSalaryPage usp)
+            {
+                if (usp.ViewModel.ShiftStatus == DomainShared.Enums.Shift.ByMounth)
+                {
+                    txt_Tax.IsEnabled = true;
+                    txt_loanInstallment.IsEnabled = true;
+                    txt_RighOfFood.IsEnabled = true;
+                    txt_ChildAllowance.IsEnabled = true;
+                }
+                else
+                {
+                    txt_Tax.Value = 0;
+                    txt_Tax.IsEnabled = false;
+
+                    txt_loanInstallment.Value = 0;
+                    txt_loanInstallment.IsEnabled = false;
+
+                    txt_RighOfFood.Value = 0;
+                    txt_RighOfFood.IsEnabled = false;
+
+                    txt_ChildAllowance.Value = 0;
+                    txt_ChildAllowance.IsEnabled = false;
+                }
+            }
         }
     }
 }
