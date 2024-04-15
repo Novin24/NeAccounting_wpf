@@ -58,6 +58,8 @@ namespace NeAccounting.Windows
 
         private async void Btnlogin_Click(object sender, RoutedEventArgs e)
         {
+            Btn_LogIn.Visibility = Visibility.Collapsed;
+            Prg_loading.Visibility = Visibility.Visible;
             if (await ViewModel.LogIn(Txt_UserName.Text, txt_password.Password))
             {
                 LoginGrid.Visibility = Visibility.Collapsed;
@@ -67,17 +69,19 @@ namespace NeAccounting.Windows
                 mainGrid.Visibility = Visibility.Visible;
                 mainGrid.IsEnabled = true;
                 mainWin.WindowState = WindowState.Maximized;
+
+                Type? pageType = NameToPageTypeConverter.Convert("Dashboard");
+
+                if (pageType == null)
+                {
+                    return;
+                }
+                NavigationView.Navigate(pageType);
+                await Task.CompletedTask;
             }
 
-
-            Type? pageType = NameToPageTypeConverter.Convert("Dashboard");
-
-            if (pageType == null)
-            {
-                return;
-            }
-            NavigationView.Navigate(pageType);
-            await Task.CompletedTask;
+            Btn_LogIn.Visibility = Visibility.Visible;
+            Prg_loading.Visibility = Visibility.Hidden;
         }
     }
 }
