@@ -13,6 +13,9 @@ namespace NeAccounting.ViewModels
         private string _userName = "";
 
         [ObservableProperty]
+        private string _logInTime = "";
+
+        [ObservableProperty]
         private IEnumerable<NotifViewModel> _notifs;
 
         public async void OnNavigatedTo()
@@ -28,8 +31,8 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             UserName = " کاربر  :  " + CurrentUser.CurrentFullName;
-
-            using (BaseUnitOfWork db = new BaseUnitOfWork())
+            LogInTime = " ورود به برنامه : " + CurrentUser.LogInTime;
+            using (BaseUnitOfWork db = new())
             {
                 Notifs = await db.NotifRepository.GetNotifs();
             }

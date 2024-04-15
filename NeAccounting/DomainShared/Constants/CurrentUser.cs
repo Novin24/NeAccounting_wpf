@@ -21,6 +21,11 @@
         /// شناسه کاربر
         /// </summary>
         public static Guid CurrentUserId;
+        
+        /// <summary>
+        /// شناسه کاربر
+        /// </summary>
+        public static string LogInTime;
     }
 
 

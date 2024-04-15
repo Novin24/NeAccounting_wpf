@@ -1,25 +1,19 @@
 ﻿using NeAccounting.ViewModels;
-using System.Windows.Media;
-using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages.Test
 {
     /// <summary>
     /// Interaction logic for TestPage.xaml
     /// </summary>
-    public partial class TestPage : INavigableView<TestViewModel>
+    public partial class TestPage// : INavigableView<TestViewModel>
     {
-        private int click;
-        public string text { get; set; } = "hasdflksdf";
-
-        public TestViewModel ViewModel { get; }
+        //public TestViewModel ViewModel { get; }
 
         public TestPage(TestViewModel viewModel)
         {
-            ViewModel = viewModel;
+            //ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-            click = 0;
         }
 
 

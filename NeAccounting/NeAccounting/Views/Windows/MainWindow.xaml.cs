@@ -3,9 +3,11 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using NeAccounting.Helpers;
 using NeAccounting.ViewModels;
 using System.Windows.Input;
 using Wpf.Ui;
+using Wpf.Ui.Controls;
 //using Wpf.Ui.Controls;
 
 namespace NeAccounting.Windows
@@ -66,6 +68,15 @@ namespace NeAccounting.Windows
                 mainGrid.IsEnabled = true;
                 mainWin.WindowState = WindowState.Maximized;
             }
+
+
+            Type? pageType = NameToPageTypeConverter.Convert("Dashboard");
+
+            if (pageType == null)
+            {
+                return;
+            }
+            NavigationView.Navigate(pageType);
             await Task.CompletedTask;
         }
     }

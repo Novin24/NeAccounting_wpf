@@ -6,6 +6,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeAccounting.Views.Pages;
+using NeAccounting.Views.Pages.Test;
 using NeAccounting.Windows;
 using System.Windows.Navigation;
 
@@ -67,7 +68,7 @@ namespace NeAccounting.Services
                 return;
             }
 
-            navigationWindow.NavigationView.Navigate(typeof(DashboardPage));
+            navigationWindow.NavigationView.Navigate(typeof(TestPage));
         }
     }
 }

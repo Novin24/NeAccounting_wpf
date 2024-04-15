@@ -39,6 +39,7 @@ namespace Infrastructure.Common.BaseRepositories.Users
             CurrentUser.CurrentName = user.Name;
             CurrentUser.CurrentUserName = user.UserName;
             CurrentUser.CurrentUserId = user.Id;
+            CurrentUser.LogInTime = DateTime.Now.ToString("HH:mm:ss");
             return true;
         }
 
