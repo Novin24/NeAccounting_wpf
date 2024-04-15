@@ -46,7 +46,7 @@ namespace NeAccounting.ViewModels
         private int? _unitId;
 
         [ObservableProperty]
-        private int? _materialId;
+        private int _materialId;
 
         [ObservableProperty] 
         private string _address = string.Empty;
@@ -85,7 +85,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
             using UnitOfWork db = new();
-            (string error, bool isSuccess)=await db.MaterialManager.UpdateMaterial(MaterialId.Value, SrvicName,UnitId.Value, string.Empty, Address , Price.Value,false);
+            (string error, bool isSuccess)=await db.MaterialManager.UpdateMaterial(MaterialId, SrvicName,UnitId.Value, string.Empty, Address , Price.Value,false);
 
             if (!isSuccess)
             {
