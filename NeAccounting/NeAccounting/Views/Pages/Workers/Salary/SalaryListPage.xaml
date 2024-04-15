@@ -58,7 +58,8 @@
 
                     </Grid.RowDefinitions>
 
-                    <nu:HeaderPack NamePpage="فیش حقوقی" Margin="25 0"/>
+                    <nu:HeaderPack NamePpage="فیش حقوقی"
+                                   Margin="25 0" />
 
                     <Border Grid.Row="1"
                             Grid.ColumnSpan="2"
@@ -81,18 +82,18 @@
 
                             </Grid.RowDefinitions>
 
-                            <Grid >
+                            <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition MaxWidth="500"/>
-                                    <ColumnDefinition MaxWidth="500"/>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition MaxWidth="500" />
+                                    <ColumnDefinition MaxWidth="500" />
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <nu:MonthPicker Grid.Column="2"
                                                 SelectedMon="{Binding ViewModel.StartMonth, Mode=TwoWay}"
                                                 SelectedYear="{Binding ViewModel.StartYear, Mode=TwoWay}"
-                                                LabelName="از تاریخ" 
-                                                Margin="0 0 4 0"/>
+                                                LabelName="از تاریخ"
+                                                Margin="0 0 4 0" />
 
 
                                 <nu:MonthPicker Grid.Column="1"
@@ -100,7 +101,7 @@
                                                 SelectedYear="{Binding ViewModel.EndYear, Mode=TwoWay}"
                                                 LabelName="تا تاریخ" />
                                 <ui:CardAction Grid.Column="0"
-                                                Grid.Row="4"
+                                               Grid.Row="4"
                                                Margin="20 16 20 0"
                                                FontFamily="Calibri"
                                                FontSize="15"
@@ -144,8 +145,8 @@
                             <Grid Grid.Row="2"
                                   Margin="0 ,5,0,5">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition  MaxWidth="300"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition  MaxWidth="300" />
                                 </Grid.ColumnDefinitions>
 
                                 <nu:SearchPack Grid.Column="1"
@@ -201,7 +202,7 @@
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         Width="*" />
                                     <DataGridTemplateColumn Header="عملیات"
-                                                            Width="*"
+                                                            Width="120"
                                                             HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -220,6 +221,13 @@
                                                             Padding="7,5">
                                                         <ui:SymbolIcon Symbol="Delete16" />
                                                     </Button>
+                                                    <ui:Button Margin="3"
+                                                               Tag="{Binding Details.Id}"
+                                                               Click="BtnPrint_Click"
+                                                               x:Name="BtnPrint"
+                                                               Padding="7,5">
+                                                        <ui:SymbolIcon Symbol="Print20" />
+                                                    </ui:Button>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>

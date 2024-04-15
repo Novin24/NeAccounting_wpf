@@ -136,15 +136,6 @@
                 </Border>
 
 
-                <TextBlock Margin="0 20 20 0"
-                           Grid.ColumnSpan="2"
-                           Height="40"
-                           HorizontalAlignment="Right"
-                           FontFamily="Calibri"
-                           FontWeight="Bold"
-                           FontSize="18"
-                           Text="ویرایش مساعده" />
-
 
                 <Grid Grid.Column="1"
                       Grid.Row="1">

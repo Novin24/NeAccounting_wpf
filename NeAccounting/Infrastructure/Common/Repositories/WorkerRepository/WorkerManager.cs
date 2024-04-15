@@ -244,7 +244,7 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region Salary
-        public async Task<SalaryWorkerViewModel> GetSalaryDetailBySalaryId(int workerId, int salaryId, byte persianMonth, int persianYear)
+        public async Task<(bool isSuccess, SalaryWorkerViewModel item)> GetSalaryDetailBySalaryId(int workerId, int salaryId, byte persianMonth, int persianYear)
         {
             var salarise = await (from w in DbContext.Set<Worker>()
                                                  .AsNoTracking()
@@ -264,7 +264,7 @@ namespace Infrastructure.Repositories
                                       WorkerName = w.FullName,
                                       PersonelId = w.PersonnelId,
                                       ShiftStatus = w.ShiftStatus,
-                                      Insurance = w.InsurancePremium,
+                                      Insurance = s.Insurance,
                                       FinancialAid = aid.AmountOf == null ? 0 : aid.AmountOf,
                                       AmountOf = s.AmountOf,
                                       OverTime = s.OverTime,
@@ -282,9 +282,65 @@ namespace Infrastructure.Repositories
                                       Success = true,
                                   }).ToListAsync();
 
+            if (salarise.FirstOrDefault() == null)
+            {
+                return (false, new SalaryWorkerViewModel());
+            }
             long amountOf = (long)salarise.Sum(x => x.FinancialAid);
             salarise.First().FinancialAid = amountOf;
-            return salarise.First();
+            return (true, salarise.First());
+        }
+
+        public async Task<(bool isSuccess, SalaryWorkerViewModel item)> GetSalaryDetailBySalaryId(int salaryId, byte persianMonth, int persianYear)
+        {
+            var salarise = await (from s in DbContext.Set<Salary>()
+                                                 .AsNoTracking()
+                                                 .Include(t => t.Worker)
+                                                 .Where(t => t.Id == salaryId)
+
+                                  join f in DbContext.Set<Function>()
+                                  .Where(t => t.PersianYear == persianYear)
+                                  .Where(t => t.PersianMonth == persianMonth)
+                                                          on s.WorkerId equals f.WorkerId
+
+
+                                  join a in DbContext.Set<FinancialAid>()
+                                  .Where(c => c.PersianMonth == persianMonth && c.PersianYear == persianYear)
+                                                          on s.WorkerId equals a.WorkerId into ai
+                                  from aid in ai.DefaultIfEmpty()
+
+                                  select new SalaryWorkerViewModel()
+                                  {
+                                      WorkerName = s.Worker.FullName,
+                                      PersonelId = s.Worker.PersonnelId,
+                                      ShiftStatus = s.Worker.ShiftStatus,
+                                      Insurance = s.Insurance,
+                                      FinancialAid = aid.AmountOf == null ? 0 : aid.AmountOf,
+                                      AmountOf = s.AmountOf,
+                                      OverTime = s.OverTime,
+                                      SubmitMonth = s.PersianMonth,
+                                      SubmitYear = s.PersianYear,
+                                      ChildAllowance = s.ChildAllowance,
+                                      Description = s.Description,
+                                      FunctionNum = f.AmountOf,
+                                      OverTimeNum = f.AmountOfOverTime,
+                                      LeftOver = s.LeftOver,
+                                      LoanInstallment = s.LoanInstallment,
+                                      OtherAdditions = s.OtherAdditions,
+                                      OtherDeductions = s.OtherDeductions,
+                                      RightHousingAndFood = s.RightHousingAndFood,
+                                      Tax = s.Tax,
+                                      Error = string.Empty,
+                                      Success = true,
+                                  }).ToListAsync();
+
+            if (salarise.FirstOrDefault() == null)
+            {
+                return (false, new SalaryWorkerViewModel());
+            }
+            long amountOf = salarise.Sum(x => x.FinancialAid);
+            salarise.First().FinancialAid = amountOf;
+            return (true, salarise.First());
         }
 
         public async Task<PagedResulViewModel<SalaryViewModel>> GetSalaryList(int? workerId,
@@ -470,8 +526,8 @@ namespace Infrastructure.Repositories
                     overTime,
                     tax,
                     childAllowance,
-                    insurance,
                     rightHousingAndFood,
+                    insurance,
                     loanInstallment,
                     otherAdditions,
                     otherDeductions,

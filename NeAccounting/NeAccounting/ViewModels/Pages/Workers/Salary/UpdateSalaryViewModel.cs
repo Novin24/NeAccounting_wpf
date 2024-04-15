@@ -1,5 +1,4 @@
-﻿using Domain.NovinEntity.Workers;
-using DomainShared.Enums;
+﻿using DomainShared.Enums;
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;

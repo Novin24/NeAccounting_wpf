@@ -27,6 +27,16 @@ namespace DomainShared.ViewModels.Workers
         /// شماره پرسنلی
         /// </summary>
         public int PersonelId { get; set; }
+        
+        /// <summary>
+        /// تعداد روز یا ساعت کاری
+        /// </summary>
+        public int FunctionNum { get; set; }
+        
+        /// <summary>
+        /// تعداد اضافه کاری
+        /// </summary>
+        public int OverTimeNum { get; set; }
         /// <summary>
         /// حقوق پرداختی
         /// </summary>

@@ -135,7 +135,12 @@ namespace NeAccounting.ViewModels
             var service = _navigationService.GetNavigationControl();
 
             using UnitOfWork db = new();
-            var s = await db.WorkerManager.GetSalaryDetailBySalaryId(parameter.WorkerId, parameter.Id, parameter.PersianMonth, parameter.PersianYear);
+            var (i, s) = await db.WorkerManager.GetSalaryDetailBySalaryId(parameter.WorkerId, parameter.Id, parameter.PersianMonth, parameter.PersianYear);
+            if (!i)
+            {
+                _snackbarService.Show("کاربر گرامی", "فیش مورد نظر یافت نشد !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
 
             var context = new UpdateSalaryPage(new UpdateSalaryViewModel(_snackbarService, _navigationService)
             {
@@ -161,6 +166,19 @@ namespace NeAccounting.ViewModels
             });
 
             service.Navigate(pageType, context);
+        }
+
+        public async Task<(bool isSuccess, SalaryWorkerViewModel item)> PrintSalary(int salaryId)
+        {
+            using UnitOfWork db = new();
+            var details = List.First(t => t.Details.Id == salaryId).Details;
+            var (i, s) = await db.WorkerManager.GetSalaryDetailBySalaryId(salaryId, details.PersianMonth, details.PersianYear);
+            if (!i)
+            {
+                _snackbarService.Show("کاربر گرامی", "فیش مورد نظر یافت نشد !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return new(i, new SalaryWorkerViewModel());
+            }
+            return (i, s);
         }
     }
 }

@@ -39,6 +39,7 @@ namespace NeAccounting.Views.Pages
             var total = txt_amountOf.Value + txt_overtime.Value + txt_ChildAllowance.Value + txt_OtherAdditions.Value + txt_RighOfFood.Value;
             Additions = total;
             LeftOver = Additions - Deductions;
+            ViewModel.LeftOver = LeftOver;
             txt_totalPlus.Text = total.ToString("N0");
             lbl_leftOver.Text = Math.Abs(LeftOver).ToString("N0");
             if (LeftOver != 0)
@@ -71,6 +72,7 @@ namespace NeAccounting.Views.Pages
             var total = txt_Aid.Value + txt_Insurance.Value + txt_Tax.Value + txt_loanInstallment.Value + txt_Othere.Value;
             Deductions = total;
             LeftOver = Additions - Deductions;
+            ViewModel.LeftOver = LeftOver;
             txt_totalMines.Text = total.ToString("N0");
             lbl_leftOver.Text = Math.Abs(LeftOver).ToString("N0");
             if (LeftOver != 0)

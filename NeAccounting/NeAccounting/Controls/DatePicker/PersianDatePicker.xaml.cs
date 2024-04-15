@@ -80,6 +80,7 @@ namespace NeAccounting.Controls
 
             pdp.txt_date.Text = args.NewValue.ToString();
         }
+
         #endregion
 
         #region Event

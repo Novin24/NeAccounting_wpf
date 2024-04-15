@@ -15,7 +15,7 @@
       mc:Ignorable="d">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding btn_submitCommand}" />
+                    Command="{Binding ViewModel.SumbitCommand}" />
     </Page.InputBindings>
     <Grid Margin="-15">
         <Grid.RowDefinitions>
@@ -76,28 +76,28 @@
                     <!--اخرین چک ها-->
                     <Grid>
                         <TextBlock FontFamily="Calibri"
-                                       FontSize="15"
-                                       Margin="0,10"
-                                       Text="آخرین اسناد پرداختی"
-                                       HorizontalAlignment="Center" />
+                                   FontSize="15"
+                                   Margin="0,10"
+                                   Text="آخرین اسناد پرداختی"
+                                   HorizontalAlignment="Center" />
 
                         <DataGrid Margin="5 40 5 5"
-                                      CanUserAddRows="False"
-                                      AutoGenerateColumns="False"
-                                      CanUserDeleteRows="False"
-                                      CanUserReorderColumns="False"
-                                      IsReadOnly="True"
-                                      CanUserResizeRows="False"
-                                      CanUserResizeColumns="False"
-                                      ItemsSource="{Binding ViewModel.DocList, Mode=TwoWay}"
-                                      CanUserSortColumns="False"
-                                      Padding="9">
+                                  CanUserAddRows="False"
+                                  AutoGenerateColumns="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserReorderColumns="False"
+                                  IsReadOnly="True"
+                                  CanUserResizeRows="False"
+                                  CanUserResizeColumns="False"
+                                  ItemsSource="{Binding ViewModel.DocList, Mode=TwoWay}"
+                                  CanUserSortColumns="False"
+                                  Padding="9">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="تاریخ پرداخت"
-                                                        Binding="{Binding ShamsiDate}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" >
+                                                    Binding="{Binding ShamsiDate}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -110,10 +110,10 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="مبلغ"
-                                                        Binding="{Binding Price}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" >
+                                                    Binding="{Binding Price}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -126,10 +126,10 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="شخص"
-                                                        Binding="{Binding Cus_Name}"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Width="*" >
+                                                    Binding="{Binding Cus_Name}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -235,7 +235,7 @@
                                        FontSize="14"
                                        Text="نوع سند"
                                        FontWeight="Bold"
-                                       Margin="7 0 0 3"/>
+                                       Margin="7 0 0 3" />
                             <ComboBox FontSize="14"
                                       x:Name="Cmb_PayType"
                                       SelectedValuePath="Key"
@@ -276,7 +276,7 @@
                                        Text="توضیحات"
                                        Grid.Column="1"
                                        FontWeight="Bold"
-                                       Margin="7 0 0 3"/>
+                                       Margin="7 0 0 3" />
                             <TextBox Margin="0,24,5,0"
                                      FontSize="14"
                                      Text="{Binding ViewModel.Description, Mode=TwoWay}"
@@ -291,14 +291,15 @@
                                 FontFamily="Calibri"
                                 HorizontalAlignment="Center"
                                 Command="{Binding ViewModel.SumbitCommand}"
-                                Grid.ColumnSpan="2" >
+                                Grid.ColumnSpan="2">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت سند" />
                                 <TextBlock Text=" (F1)"
-                                                   FontSize="12"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="#FFA3A3A3" />
-                            </StackPanel></Button>
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           Foreground="#FFA3A3A3" />
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </Border>
             </Grid>

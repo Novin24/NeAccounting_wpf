@@ -1,8 +1,6 @@
 ﻿using DomainShared.Constants;
 using Infrastructure.UnitOfWork;
-using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
-using NeAccounting.Views.Pages.Test;
 using System.Collections.ObjectModel;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -35,12 +33,12 @@ namespace NeAccounting.ViewModels
 
             new NavigationViewItemSeparator(),
 
-            new NavigationViewItem()
-            {
-                Content = "test",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.TextEditStyle20 },
-                TargetPageType = typeof(TestPage)
-            },
+            //new NavigationViewItem()
+            //{
+            //    Content = "test",
+            //    Icon = new SymbolIcon { Symbol = SymbolRegular.TextEditStyle20 },
+            //    TargetPageType = typeof(TestPage)
+            //},
             new NavigationViewItem()
             {
                 Content = "تعاریف اولیه",
@@ -231,24 +229,6 @@ namespace NeAccounting.ViewModels
             }
             LogInError = "عدم تطابق نام کاربری و گذرواژه !!!";
             return false;
-        }
-
-        [RelayCommand]
-        private void OnAddClick(string parameter)
-        {
-            if (string.IsNullOrWhiteSpace(parameter))
-            {
-                return;
-            }
-
-            Type? pageType = NameToPageTypeConverter.Convert(parameter);
-
-            if (pageType == null)
-            {
-                return;
-            }
-
-            _ = _navigationService.Navigate(pageType);
         }
     }
 }

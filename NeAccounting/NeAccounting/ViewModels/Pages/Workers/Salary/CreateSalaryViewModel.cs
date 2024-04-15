@@ -3,14 +3,15 @@ using DomainShared.Errore;
 using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using System.Globalization;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
 {
-    private readonly ISnackbarService _snackbarService = snackbarService;
-    private readonly INavigationService _navigationService = navigationService;
+    private readonly ISnackbarService _snackbarService;
+    private readonly INavigationService _navigationService;
 
     [ObservableProperty]
     private int _workerId = -1;
@@ -66,6 +67,14 @@ public partial class CreateSalaryViewModel(ISnackbarService snackbarService, INa
     [ObservableProperty]
     private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
+    public CreateSalaryViewModel(ISnackbarService snackbarService, INavigationService navigationService)
+    {
+        _snackbarService = snackbarService;
+        _navigationService = navigationService;
+        PersianCalendar pc = new();
+        SubmitMonth = (byte)pc.GetMonth(DateTime.Now);
+        SubmitYear = pc.GetYear(DateTime.Now);
+    }
 
     [RelayCommand]
     private async Task OnCreate()

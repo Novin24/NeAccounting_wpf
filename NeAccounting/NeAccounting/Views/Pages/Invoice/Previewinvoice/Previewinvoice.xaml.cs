@@ -190,7 +190,7 @@ namespace NeAccounting.Views.Pages
                 return;
             }
 
-            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Reports\PrintInfo.json"));
+            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Required\Reports\PrintInfo.json"));
             if (printInfo == null)
             {
                 _snackbarService.Show("خطا", "فایل پرینت یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -210,7 +210,7 @@ namespace NeAccounting.Views.Pages
                 {"Tabligh",$"{printInfo.Tabligh}"}
             };
 
-            _printServices.PrintInvoice(@"Reports\Required\Pishfactor.mrt", "DetailListDtos", ViewModel.List, dic);
+            _printServices.PrintInvoice(@"Required\Reports\Pishfactor.mrt", "DetailListDtos", ViewModel.List, dic);
         }
 
         [GeneratedRegex("[^0-9]+")]

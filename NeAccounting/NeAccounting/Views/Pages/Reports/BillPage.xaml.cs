@@ -89,7 +89,7 @@ namespace NeAccounting.Views.Pages
                 invoice = itm;
             }
 
-            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Reports\PrintInfo.json"));
+            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Required\Reports\PrintInfo.json"));
             if (printInfo == null)
             {
                 _snackbarService.Show("خطا", "فایل پرینت یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -113,7 +113,7 @@ namespace NeAccounting.Views.Pages
                 {"Tabligh",$"{printInfo.Tabligh}"}
             };
 
-            _printServices.PrintInvoice(@"Reports\Required\ReportOneInvoice.mrt", "DetailListDtos", invoice.RemList, dic);
+            _printServices.PrintInvoice(@"Required\Reports\ReportOneInvoice.mrt", "DetailListDtos", invoice.RemList, dic);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace NeAccounting.Views.Pages
                 return;
             }
             var cus = ViewModel.Cuslist.First(t => t.Id == ViewModel.CusId);
-            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Reports\PrintInfo.json"));
+            var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Required\Reports\PrintInfo.json"));
             if (printInfo == null)
             {
                 _snackbarService.Show("خطا", "فایل پرینت یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -88,7 +88,7 @@ namespace NeAccounting.Views.Pages
                 {"Tabligh",$"{printInfo.Tabligh}"},
                 {"Status",$"{list.Last().Status}"}};
 
-            _printServices.PrintInvoice(@"Reports\Required\ReportRem.mrt", "DetailListDtos", list, dic);
+            _printServices.PrintInvoice(@"Required\Reports\ReportRem.mrt", "DetailListDtos", list, dic);
         }
     }
 }
