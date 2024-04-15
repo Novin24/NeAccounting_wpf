@@ -13,12 +13,7 @@
       Title="TestPage"
       x:Name="root">
 
-    <Page.InputBindings>
-        <KeyBinding Key="F1"
-                    Command="{Binding ViewModel.MyClickCommand}" />
-    </Page.InputBindings>
-    
-    <Grid Height="500" Width="800">
-        <Button>clickMe</Button>
+    <Grid >
+        
     </Grid>
 </Page>

@@ -21,9 +21,9 @@
             </TransformGroup>
         </LinearGradientBrush.RelativeTransform>
         <GradientStop Color="#FF313131"
-                      Offset="0.50" />
+                      Offset="0.3" />
         <GradientStop Color="#FF202020"
-                      Offset="0.6" />
+                      Offset="0.8" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="Right rectangle"
                          EndPoint="0.5,1"

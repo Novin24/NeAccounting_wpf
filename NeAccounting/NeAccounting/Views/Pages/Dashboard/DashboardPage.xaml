@@ -24,7 +24,7 @@
                 BorderBrush="#D6D5D5"
                 BorderThickness="0.4">
             <Border.Background>
-                <SolidColorBrush Color="White" 
+                <SolidColorBrush Color="White"
                                  Opacity="0.08" />
             </Border.Background>
             <Grid>
@@ -37,14 +37,15 @@
                                Margin="10"
                                Padding="7"
                                VerticalAlignment="Center"
+                               FontFamily="Calibri"
+                               FontWeight="DemiBold"
                                HorizontalAlignment="Center"
                                CommandParameter="BasicInput"
                                IsChevronVisible="False">
 
                     <TextBlock Margin="0"
-                               FontSize="16"
-                               FontWeight="Medium"
-                               Text="number : 0903328773" />
+                               FontSize="17"
+                               Text="{Binding ViewModel.LogInTime}" />
 
                 </ui:CardAction>
 
@@ -52,7 +53,8 @@
                                Grid.Column="2"
                                Margin="10"
                                Padding="7"
-                               FontFamily="B Nazanin"
+                               FontFamily="Calibri"
+                               FontWeight="DemiBold"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                CommandParameter="BasicInput"
@@ -60,10 +62,9 @@
 
                     <TextBlock Margin="0"
                                FontSize="18"
-                               FontWeight="Bold"
                                Text="{Binding ViewModel.UserName}" />
-                    
-                    
+
+
 
                 </ui:CardAction>
 
@@ -104,38 +105,38 @@
                         </Style>
                     </Grid.Style>-->
                 <ui:VirtualizingItemsControl Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                                 ItemsSource="{Binding ViewModel.Notifs, Mode=OneWay}"
-                                                 VirtualizingPanel.CacheLengthUnit="Item">
+                                             ItemsSource="{Binding ViewModel.Notifs, Mode=OneWay}"
+                                             VirtualizingPanel.CacheLengthUnit="Item">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type  models:NotifViewModel}">
                             <ui:CardAction Grid.Row="0"
-                                               Grid.Column="0"
-                                               Margin="0,12,12,0"
-                                               Padding="0"
-                                               Width="270"
-                                               VerticalAlignment="Stretch"
-                                               CommandParameter="BasicInput"
-                                               IsChevronVisible="False">
+                                           Grid.Column="0"
+                                           Margin="0,12,12,0"
+                                           Padding="0"
+                                           Width="270"
+                                           VerticalAlignment="Stretch"
+                                           CommandParameter="BasicInput"
+                                           IsChevronVisible="False">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="1"
-                                                    Margin="24"
-                                                    VerticalAlignment="Center">
+                                                Margin="24"
+                                                VerticalAlignment="Center">
                                         <TextBlock FontSize="12"
-                                                       Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                                                       Text="{Binding Titele, Mode=OneWay}"
-                                                       HorizontalAlignment="Center" />
+                                                   Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                                   Text="{Binding Titele, Mode=OneWay}"
+                                                   HorizontalAlignment="Center" />
                                         <TextBlock Margin="0 18 0 0"
-                                                       FontSize="16"
-                                                       FontWeight="Medium"
-                                                       Text="{Binding Message, Mode=OneWay}"
-                                                       TextWrapping="WrapWithOverflow"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       FlowDirection="RightToLeft" />
+                                                   FontSize="16"
+                                                   FontWeight="Medium"
+                                                   Text="{Binding Message, Mode=OneWay}"
+                                                   TextWrapping="WrapWithOverflow"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FlowDirection="RightToLeft" />
 
                                     </StackPanel>
                                 </Grid>

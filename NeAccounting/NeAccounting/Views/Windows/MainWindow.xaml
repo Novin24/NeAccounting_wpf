@@ -262,53 +262,68 @@
 
                             </PasswordBox>
 
-                            <Button x:Name="btnlogin"
-                                    BorderThickness="0"
-                                    Content="LOG IN"
-                                    IsDefault="True"
-                                    Foreground="White"
-                                    FontSize="11"
-                                    IsTabStop="False"
-                                    FontFamily="Montserrat"
-                                    Cursor="Hand"
-                                    Click="Btnlogin_Click"
-                                    Grid.Column="2"
-                                    Margin="0 50 0 0">
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Background"
-                                                Value="#462AD8" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver"
-                                                     Value="True">
+                            <Grid Grid.Column="2"
+                                  x:Name="Btn_LogIn">
+                                <StackPanel>
+                                    <Button x:Name="btnlogin"
+                                            BorderThickness="0"
+                                            Content="LOG IN"
+                                            IsDefault="True"
+                                            Foreground="White"
+                                            FontSize="11"
+                                            IsTabStop="False"
+                                            FontFamily="Montserrat"
+                                            Cursor="Hand"
+                                            Click="Btnlogin_Click"
+                                            Margin="0 50 0 0">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
                                                 <Setter Property="Background"
-                                                        Value="#28AEED" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
+                                                        Value="#462AD8" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver"
+                                                             Value="True">
+                                                        <Setter Property="Background"
+                                                                Value="#28AEED" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
 
-                                <Button.Template>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Width="150"
-                                                Height="40"
-                                                CornerRadius="20"
-                                                Background="{TemplateBinding Background}">
-                                            <ContentPresenter VerticalAlignment="Center"
-                                                              HorizontalAlignment="Center" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Width="150"
+                                                        Height="40"
+                                                        CornerRadius="20"
+                                                        Background="{TemplateBinding Background}">
+                                                    <ContentPresenter VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Center" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
 
-                            <TextBlock Margin="0 20 0 0"
-                                       Foreground="DarkGray"
-                                       FontSize="20"
-                                       FlowDirection="RightToLeft"
-                                       FontWeight="Heavy"
-                                       FontFamily="B Nazanin"
-                                       HorizontalAlignment="Center"
-                                       Text="{Binding ViewModel.LogInError, Mode=OneWay}" />
+                                    <TextBlock Margin="0 20 0 0"
+                                               Foreground="DarkGray"
+                                               FontSize="20"
+                                               FlowDirection="RightToLeft"
+                                               FontWeight="Heavy"
+                                               FontFamily="B Nazanin"
+                                               HorizontalAlignment="Center"
+                                               Text="{Binding ViewModel.LogInError, Mode=OneWay}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Column="2"
+                                  Visibility="Hidden"
+                                  x:Name="Prg_loading">
+                                <StackPanel>
+                                    <ui:ProgressRing Width="70"
+                                                     Height="70"
+                                                     Margin="0 50 0 0"
+                                                     VerticalAlignment="Center"
+                                                     IsIndeterminate="True" />
+                                </StackPanel>
+                            </Grid>
                         </StackPanel>
                     </Grid>
 
