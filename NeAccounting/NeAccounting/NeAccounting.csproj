@@ -17,6 +17,7 @@
 		<None Remove="Assets\user9.png" />
 		<None Remove="Assets\wpfui-icon-1024.png" />
 		<None Remove="Assets\wpfui-icon-256.png" />
+		<None Remove="Required\Fonts\BNazanin.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
