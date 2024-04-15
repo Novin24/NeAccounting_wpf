@@ -2,21 +2,22 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DataContext="{d:DesignInstance local:UpdateServicePage,
                                      IsDesignTimeCreatable=False}"
-      d:DesignHeight="800" d:DesignWidth="800"
+      d:DesignHeight="800"
+      d:DesignWidth="800"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="UpdateServicePage">
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.CreateServiceCommand  }" />
+                    Command="{Binding ViewModel.UpdateCommand  }" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -63,7 +64,7 @@
                     <RowDefinition Height="*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <nu:HeaderPack NamePpage="ویرایش خدمت "/>
+                <nu:HeaderPack NamePpage="ویرایش خدمت " />
                 <Border Grid.Row="1"
                         CornerRadius="9"
                         BorderBrush="#D6D5D5"
@@ -85,11 +86,11 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="1"
                                     Grid.ColumnSpan="3"
@@ -103,11 +104,12 @@
                                      TabIndex="0"
                                      Margin="0 4 0 0 "
                                      x:Name="SrvicName"
-                                     Text="{Binding ViewModel.SrvicName}"
+                                     Text="{Binding ViewModel.SrvicName, Mode=TwoWay}"
                                      CaretBrush="White"
                                      FontFamily="Calibri" />
                         </StackPanel>
-                        <StackPanel Grid.Row="1" Grid.Column="1"
+                        <StackPanel Grid.Row="1"
+                                    Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     Margin="20 0 20 0">
 
@@ -127,8 +129,9 @@
                         <nu:MoneyPack Grid.Row="2"
                                       Grid.Column="1"
                                       Grid.ColumnSpan="3"
+                                      Value="{Binding ViewModel.Price, Mode=TwoWay}"
                                       LabelName="اجرت"
-                                      TabIndex="2"/>
+                                      TabIndex="2" />
 
                         <Grid Grid.Row="3"
                               Grid.Column="1"
@@ -139,10 +142,10 @@
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="توضیحات"
-                                       Grid.Column="1"/>
+                                       Grid.Column="1" />
                             <TextBox Margin="0,22,0,0"
                                      FontSize="14"
-                                     Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                     Text="{Binding ViewModel.Address, Mode=TwoWay}"
                                      FlowDirection="RightToLeft"
                                      Grid.ColumnSpan="2"
                                      FontFamily="Calibri"></TextBox>
@@ -160,9 +163,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت" />
                                 <TextBlock Text=" (F1)"
-                                                   FontSize="12"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="#FFA3A3A3" />
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           Foreground="#FFA3A3A3" />
                             </StackPanel>
                         </Button>
 

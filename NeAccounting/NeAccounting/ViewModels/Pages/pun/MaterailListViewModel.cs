@@ -1,6 +1,7 @@
 ﻿using DomainShared.ViewModels;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
+using Microsoft.Identity.Client;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
 using System.Windows.Documents;
@@ -101,36 +102,69 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnUpdateMaterial(int parameter)
         {
-            Type? pageType = NameToPageTypeConverter.Convert("UpdateMaterail");
-
-            if (pageType == null)
-            {
-                return;
-            }
-            var servise = _navigationService.GetNavigationControl();
-
             var pun = List.First(t => t.Id == parameter);
-
-            IEnumerable<SuggestBoxViewModel<int>> asuBox;
-
-            using (UnitOfWork db = new())
+            if (pun.IsServise)
             {
-                asuBox = await db.UnitManager.GetUnits(true);
+                Type? pageType = NameToPageTypeConverter.Convert("UpdateService");
+
+                if (pageType == null)
+                {
+                    return;
+                }
+                var servise = _navigationService.GetNavigationControl();
+
+
+                IEnumerable<SuggestBoxViewModel<int>> asuBox;
+
+                using (UnitOfWork db = new())
+                {
+                    asuBox = await db.UnitManager.GetUnits(true);
+                }
+
+                var context = new UpdateServicePage(new UpdateServiceViewModel(_snackbarService, _navigationService)
+                {
+                    MaterialId = pun.Id,
+                    Address = pun.Address,
+                    Price = pun.LastSellPrice,
+                    SrvicName = pun.MaterialName,
+                    UnitId = pun.UnitId,
+                    AsuBox = asuBox
+                });
+
+                servise.Navigate(pageType, context);
             }
-
-            var context = new UpdateMaterailPage(new UpdateMaterailViewModel(_snackbarService, _navigationService)
+            else
             {
-                MaterialId = pun.Id,
-                Serial = pun.Serial,
-                LastSellPrice = pun.LastSellPrice,
-                Address = pun.Address,
-                IsManufacturedGoods = pun.IsManufacturedGoods,
-                MaterialName = pun.MaterialName,
-                UnitId = pun.UnitId,
-                AsuBox = asuBox
-            });
+                Type? pageType = NameToPageTypeConverter.Convert("UpdateMaterail");
 
-            servise.Navigate(pageType, context);
+                if (pageType == null)
+                {
+                    return;
+                }
+                var servise = _navigationService.GetNavigationControl();
+
+
+                IEnumerable<SuggestBoxViewModel<int>> asuBox;
+
+                using (UnitOfWork db = new())
+                {
+                    asuBox = await db.UnitManager.GetUnits(true);
+                }
+
+                var context = new UpdateMaterailPage(new UpdateMaterailViewModel(_snackbarService, _navigationService)
+                {
+                    MaterialId = pun.Id,
+                    Serial = pun.Serial,
+                    LastSellPrice = pun.LastSellPrice,
+                    Address = pun.Address,
+                    IsManufacturedGoods = pun.IsManufacturedGoods,
+                    MaterialName = pun.MaterialName,
+                    UnitId = pun.UnitId,
+                    AsuBox = asuBox
+                });
+
+                servise.Navigate(pageType, context);
+            }
         }
         [RelayCommand]
         private async Task OnActive(int id)
