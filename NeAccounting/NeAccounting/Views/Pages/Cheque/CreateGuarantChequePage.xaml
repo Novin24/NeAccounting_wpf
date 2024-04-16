@@ -181,6 +181,7 @@
                                               Margin="9 0 13 0"
                                               LabelName="تاریخ سررسید" />
                         <nu:MoneyPack Grid.Row="3"
+                                      VerticalAlignment="Center"
                                       Grid.Column="1"
                                       Value="{Binding ViewModel.Price,Mode=OneWayToSource}"
                                       Margin="0 0 10 0"
