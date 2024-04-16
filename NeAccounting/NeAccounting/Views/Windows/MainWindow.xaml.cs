@@ -56,6 +56,18 @@ namespace NeAccounting.Windows
             Application.Current.Shutdown();
         }
 
+        [RelayCommand]
+        private void OnNavigateDashboard()
+        {
+            Type? pageType = NameToPageTypeConverter.Convert("Dashboard");
+
+            if (pageType == null)
+            {
+                return;
+            }
+            NavigationView.Navigate(pageType);
+        }
+
         private async void Btnlogin_Click(object sender, RoutedEventArgs e)
         {
             Btn_LogIn.Visibility = Visibility.Collapsed;
@@ -77,6 +89,7 @@ namespace NeAccounting.Windows
                     return;
                 }
                 NavigationView.Navigate(pageType);
+                key_esc.Command = NavigateDashboardCommand;
                 await Task.CompletedTask;
             }
 

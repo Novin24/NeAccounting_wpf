@@ -48,7 +48,7 @@ namespace Domain.NovinEntity.Cheques
         /// <summary>
         /// شماره حساب
         /// </summary>
-        public string Accunt_Number { get; set; }
+        public string? Accunt_Number { get; set; }
 
         /// <summary>
         /// نام بانک
@@ -58,7 +58,7 @@ namespace Domain.NovinEntity.Cheques
         /// <summary>
         /// نام شعبه
         /// </summary>
-        public string Bank_Branch { get; set; }
+        public string? Bank_Branch { get; set; }
 
         /// <summary>
         /// صاحب چک

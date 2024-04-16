@@ -2,6 +2,7 @@
 using Domain.NovinEntity.Cheques;
 using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
+using Domain.NovinEntity.Expense;
 using Domain.NovinEntity.Materials;
 using Domain.NovinEntity.Workers;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace Infrastructure.Utilities
             builder.Entity<Document>(b =>
             {
                 b.Property(r => r.Serial).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+                b.Property(r => r.Description).HasMaxLength(150);
                 b.HasIndex(b => b.Id);
                 b.HasIndex(b => b.CustomerId);
                 b.HasIndex(b => b.Serial);
@@ -30,7 +32,8 @@ namespace Infrastructure.Utilities
                 b.Property(b => b.CusId).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
                 b.Property(r => r.Name).HasMaxLength(50).IsRequired();
                 b.Property(r => r.NationalCode).HasMaxLength(10).IsRequired();
-                b.Property(r => r.Mobile).IsRequired();
+                b.Property(r => r.Mobile).HasMaxLength(20).IsRequired();
+                b.Property(r => r.Address).HasMaxLength(150);
                 b.Property(r => r.IsActive).HasDefaultValue(true);
             });
 
@@ -38,31 +41,46 @@ namespace Infrastructure.Utilities
             {
                 b.HasIndex(t => t.PersonnelId);
                 b.Property(t => t.FullName).HasMaxLength(50).IsRequired();
+                b.Property(t => t.NationalCode).HasMaxLength(10);
                 b.Property(t => t.Mobile).IsRequired();
-                b.Property(t => t.NationalCode).HasMaxLength(10).IsRequired();
-                b.Property(t => t.Address).HasMaxLength(100).IsRequired();
+                b.Property(t => t.Address).HasMaxLength(150);
+                b.Property(t => t.Description).HasMaxLength(200);
                 b.Property(t => t.AccountNumber).HasMaxLength(26).IsRequired();
                 b.Property(r => r.IsActive).HasDefaultValue(true);
-                b.Property(t => t.JobTitle).HasMaxLength(30).IsRequired();
+                b.Property(t => t.JobTitle).HasMaxLength(50).IsRequired();
+            });
+
+            builder.Entity<Expense>(b =>
+            {
+                b.HasIndex(t => t.Id);
+                b.Property(t => t.Expensetype).HasMaxLength(150).IsRequired();
+                b.Property(t => t.Description).HasMaxLength(250);
+                b.Property(t => t.Receiver).HasMaxLength(100);
             });
 
             builder.Entity<Material>(b =>
             {
 
                 b.HasIndex(t => t.Id);
+                b.Property(r => r.IsActive).HasDefaultValue(true);
+                b.Property(t => t.Name).HasMaxLength(100).IsRequired();
+                b.Property(t => t.Serial).HasMaxLength(50);
+                b.Property(t => t.PhysicalAddress).HasMaxLength(100);
                 b.HasOne(t => t.Unit)
                 .WithMany(s => s.Materials)
                 .HasForeignKey(t => t.UnitId)
                 .OnDelete(DeleteBehavior.Cascade);
-                b.Property(r => r.IsActive).HasDefaultValue(true);
             });
 
             builder.Entity<Cheque>(b =>
             {
                 b.HasIndex(t => t.Id);
-
                 b.Property(r => r.Serial).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-
+                b.Property(t => t.Cheque_Number).HasMaxLength(100).IsRequired();
+                b.Property(t => t.Cheque_Owner).HasMaxLength(50).IsRequired();
+                b.Property(t => t.Bank_Name).HasMaxLength(50).IsRequired();
+                b.Property(t => t.Accunt_Number).HasMaxLength(100);
+                b.Property(t => t.Bank_Branch).HasMaxLength(50);
                 b.HasOne(t => t.Document)
                 .WithMany(s => s.Cheques)
                 .HasForeignKey(t => t.DocumetnId)
@@ -77,6 +95,7 @@ namespace Infrastructure.Utilities
 
             builder.Entity<Salary>(b =>
             {
+                b.Property(t => t.Description).HasMaxLength(200);
                 b.HasIndex(t => t.WorkerId);
                 b.HasIndex(t => t.PersianYear);
                 b.HasIndex(t => t.PersianMonth);
@@ -93,6 +112,7 @@ namespace Infrastructure.Utilities
                 .HasForeignKey(t => t.WorkerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+                b.Property(t => t.Description).HasMaxLength(200);
                 b.HasIndex(t => t.PersianYear);
                 b.HasIndex(t => t.PersianMonth);
                 b.HasIndex(t => t.WorkerId);
@@ -105,6 +125,7 @@ namespace Infrastructure.Utilities
                 .HasForeignKey(t => t.WorkerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+                b.Property(t => t.Description).HasMaxLength(200);
                 b.HasIndex(t => t.PersianMonth);
                 b.HasIndex(t => t.PersianYear);
                 b.HasIndex(t => t.WorkerId);
@@ -112,6 +133,8 @@ namespace Infrastructure.Utilities
 
             builder.Entity<BuyRemittance>(b =>
             {
+                b.Property(t => t.Description).HasMaxLength(100);
+
                 b.HasOne(t => t.Material)
                 .WithMany(s => s.BuyRemittances)
                 .HasForeignKey(t => t.MaterialId)
@@ -127,6 +150,8 @@ namespace Infrastructure.Utilities
 
             builder.Entity<SellRemittance>(b =>
             {
+                b.Property(t => t.Description).HasMaxLength(100);
+
                 b.HasOne(t => t.Material)
                 .WithMany(s => s.SellRemittances)
                 .HasForeignKey(t => t.MaterialId)

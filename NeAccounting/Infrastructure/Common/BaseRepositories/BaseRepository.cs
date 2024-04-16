@@ -5,7 +5,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Common.BaseRepositories
+namespace Infrastructure.BaseRepositories
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     where TEntity : class, IBaseDomainEntities

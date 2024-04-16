@@ -1,10 +1,9 @@
 ﻿using Domain.BaseDomain.FinancialYears;
-using Infrastructure.Common.BaseRepositories;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IBaseRepositories;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.BaseRepositories
 {
     public class FinancialYearManager : BaseRepository<FinancialYear>, IFinancialYearManager
     {

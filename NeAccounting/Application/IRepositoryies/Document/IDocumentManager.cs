@@ -208,7 +208,7 @@ namespace NeApplication.IRepositoryies
 
         Task<(bool isSuccess, UpdateChequeDto itm)> GetChequeById(Guid docId);
 
-        Task<(string error, bool isSuccess)> CreateRecCheque(Guid customerId,
+        Task<(string error, bool isSuccess,Guid docId)> CreateRecCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
             string? descripion,
             DateTime submitDate,
@@ -220,7 +220,7 @@ namespace NeApplication.IRepositoryies
             string bank_Branch,
             string cheque_Owner);
 
-        Task<(string error, bool isSuccess)> CreatePayCheque(Guid customerId,
+        Task<(string error, bool isSuccess, Guid docId)> CreatePayCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
             string? descripion,
             DateTime submitDate,

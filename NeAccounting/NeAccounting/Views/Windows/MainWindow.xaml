@@ -19,8 +19,8 @@
                  mc:Ignorable="d">
     <Window.InputBindings>
         <KeyBinding Key="Esc"
-                    Command="{Binding CloseAppCommand}"
-                    CommandParameter="Dashboard" />
+                    x:Name="key_esc"
+                    Command="{Binding CloseAppCommand}"/>
     </Window.InputBindings>
     <Grid>
         <Grid x:Name="mainGrid"

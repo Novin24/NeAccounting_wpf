@@ -20,7 +20,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// کد ملی
         /// </summary>
-        public string NationalCode { get; set; }
+        public string? NationalCode { get; set; }
 
         /// <summary>
         /// موبایل
@@ -30,7 +30,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// ادرس
         /// </summary>
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         /// <summary>
         /// تاریخ شروع به کار
