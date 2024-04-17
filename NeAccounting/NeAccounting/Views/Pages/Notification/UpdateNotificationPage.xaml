@@ -1,20 +1,19 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.CreateNotificationPage"
+﻿<Page x:Class="NeAccounting.Views.Pages.UpdateNotificationPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
-      mc:Ignorable="d"
-      Loaded="Page_Loaded"
-      d:DesignHeight="800"
-      d:DesignWidth="1200"
-      d:DataContext="{d:DesignInstance local:CreateNotificationPage,
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      d:DataContext="{d:DesignInstance local:UpdateNotificationPage,
                                         IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="CreateNotificationPage">
+      mc:Ignorable="d"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      Title="UpdateNotificationPage">
     <Page.InputBindings>
         <KeyBinding Key="F1"
                     Command="{Binding ViewModel.SubmitCommand}" />
@@ -82,7 +81,7 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition Height="2*" />
-                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -104,7 +103,7 @@
                                      Grid.Column="0"
                                      Margin="0 4 3 0 "
                                      x:Name="Txt_Titele"
-                                     Text="{Binding ViewModel.Titele , Mode=OneWayToSource}"
+                                     Text="{Binding ViewModel.Titele , Mode=TwoWay}"
                                      CaretBrush="White"
                                      FontFamily="Calibri" />
                         </StackPanel>
@@ -120,6 +119,7 @@
                             <ComboBox FontSize="14"
                                       FontFamily="Calibri"
                                       x:Name="cmb_Priority"
+                                      ItemsSource="{Binding ViewModel.EnumSource}"
                                       SelectedValuePath="Key"
                                       DisplayMemberPath="Value"
                                       SelectedValue="{Binding ViewModel.Priority,Mode=TwoWay}"
@@ -141,7 +141,7 @@
                                        FontSize="14"
                                        Text="توضیحات"
                                        Margin="7 0 0 0 " />
-                            <ui:TextBox Text="{Binding ViewModel.Message , Mode=OneWayToSource}"
+                            <ui:TextBox Text="{Binding ViewModel.Message , Mode=TwoWay}"
                                         Margin="0 25 3 0"
                                         FontSize="14"
                                         FontFamily="Calibri" />

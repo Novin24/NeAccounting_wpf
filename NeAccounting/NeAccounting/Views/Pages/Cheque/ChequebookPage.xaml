@@ -256,8 +256,8 @@
                         <!--#region DataGrid-->
                         <DataGrid Grid.Row="1"
                                   Padding="7"
-                                  IsReadOnly="True"
                                   Margin="0 10 0 10"
+                                  IsReadOnly="True"
                                   CanUserResizeColumns="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"

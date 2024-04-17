@@ -13,8 +13,8 @@ namespace Infrastructure.Repositories
     {
         public async Task<(string error, bool isSuccess)> CreateExpense(DateTime submitDate, string expensetype, long amount, PaymentType payType, string receiver, string description)
         {
-            if (await TableNoTracking.AnyAsync(t => t.Expensetype == expensetype))
-                return new("کاربر گرامی این هزینه از قبل تعریف شده می‌باشد!!!", false);
+            //if (await TableNoTracking.AnyAsync(t => t.Expensetype == expensetype))
+            //    return new("کاربر گرامی این هزینه از قبل تعریف شده می‌باشد!!!", false);
 
             try
             {

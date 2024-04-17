@@ -1,9 +1,14 @@
 ﻿using Domain.Enities.Notifications;
+using DomainShared.Constants;
 using DomainShared.Enums;
+using DomainShared.Extension;
 using DomainShared.Notifications;
+using DomainShared.Utilities;
+using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IBaseRepositories;
+using System.Globalization;
 
 namespace Infrastructure.BaseRepositories
 {
@@ -20,6 +25,43 @@ namespace Infrastructure.BaseRepositories
                     Titele = t.Titel,
                     Message = t.Message
                 }).ToListAsync();
+        }
+
+        public async Task<PagedResulViewModel<NotifViewModel>> GetNotifs(string titele, Priority priority, DateTime? startDate, DateTime? endDate, bool isInit, int pageNum = 0, int pageCount = NeAccountingConstants.PageCount)
+        {
+            var query = TableNoTracking
+                .Where(t => string.IsNullOrEmpty(titele) || t.Titel.Contains(titele))
+                .Where(t => priority == Priority.All || t.Priority == priority)
+                .Where(t => !startDate.HasValue || t.DueDate.Date >= startDate.Value.Date)
+                .Where(t => !endDate.HasValue || t.DueDate.Date < endDate.Value.Date)
+                .Select(t => new NotifViewModel()
+                {
+                    Titele = t.Titel,
+                    Id = t.Id,
+                    DueDate = t.DueDate,
+                    Priority = t.Priority,
+                    Message = t.Message
+                }).AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+            if (isInit && totalCount != 0)
+            {
+                pageNum = totalCount / pageCount;
+                if (totalCount % pageCount != 0)
+                {
+                    pageNum++;
+                }
+            }
+            var li = await query.OrderBy(t => t.DueDate).Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
+
+            PersianCalendar pc = new();
+            foreach (var item in li)
+            {
+                item.ShamsiDueDate = item.DueDate.ToShamsiDate(pc);
+                item.DisplayPriority = item.Priority.ToDisplay();
+            }
+            return new PagedResulViewModel<NotifViewModel>(totalCount, pageCount, pageNum, li);
         }
 
         public async Task<(string error, bool isSuccess)> CreateNotif(
@@ -90,11 +132,56 @@ namespace Infrastructure.BaseRepositories
             return new(string.Empty, true);
         }
 
+        public async Task<(string error, bool isSuccess)> UpdateNotif(
+            int id,
+            string titele,
+            string message,
+            Priority priority,
+            DateTime dueDate)
+        {
+            try
+            {
+                var mt = await Entities.FindAsync(id);
+
+                if (mt == null)
+                    return new("یاد آور مورد نظر یافت نشد !!!", false);
+                mt.Titel = titele;
+                mt.Message = message;
+                mt.DueDate = dueDate;
+                mt.Priority = priority;
+
+                Entities.Update(mt);
+            }
+            catch (Exception ex)
+            {
+                return new($"خطا دراتصال به پایگاه داده!!!\n {ex}", false);
+            }
+            return new(string.Empty, true);
+        }
+
         public async Task<(string error, bool isSuccess)> DeleteNotif(Guid docId)
         {
             try
             {
                 var mt = await Entities.FirstOrDefaultAsync(t => t.DocumentId == docId);
+
+                if (mt == null)
+                    return new("یاد آور مورد نظر یافت نشد !!!", false);
+
+                Entities.Remove(mt);
+            }
+            catch (Exception ex)
+            {
+                return new($"خطا دراتصال به پایگاه داده!!!\n {ex}", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> DeleteNotif(int docId)
+        {
+            try
+            {
+                var mt = await Entities.FindAsync(docId);
 
                 if (mt == null)
                     return new("یاد آور مورد نظر یافت نشد !!!", false);
