@@ -1,0 +1,106 @@
+﻿using DomainShared.Enums;
+using DomainShared.Errore;
+using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
+using System.Globalization;
+using System.Windows.Media;
+using Wpf.Ui;
+using Wpf.Ui.Controls;
+namespace NeAccounting.ViewModels
+{
+    public partial class UpdateNotifViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject
+    {
+        private readonly ISnackbarService _snackbarService = snackbarService;
+        private readonly INavigationService _navigationService = navigationService;
+
+        /// <summary>
+        /// توضیحات
+        /// </summary>
+        [ObservableProperty]
+        private string _message;
+
+        /// <summary>
+        /// عنوان
+        /// </summary>
+        [ObservableProperty]
+        private string _titele;
+
+        /// <summary>
+        /// شناسه یاداور
+        /// </summary>
+        [ObservableProperty]
+        private int _notifId;
+
+        /// <summary>
+        /// تاریخ سررسید
+        /// </summary>
+        [ObservableProperty]
+        private DateTime? _dueDate = DateTime.Now;
+
+
+        /// <summary>
+        /// درجه اهمیت
+        /// </summary>
+        [ObservableProperty]
+        private Priority _priority = Priority.Low;
+
+        /// <summary>
+        /// درجه اهمیت
+        /// </summary>
+        [ObservableProperty]
+        private Dictionary<Enum, string> _enumSource;
+
+        /// <summary>
+        /// ثبت یاداور
+        /// </summary>
+        /// <returns></returns>
+        [RelayCommand]
+        private async Task OnSubmit()
+        {
+            #region validation
+            if (string.IsNullOrEmpty(Titele))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("عنوان یادآور"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
+            if (string.IsNullOrEmpty(Message))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("توضیحات"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
+            if (DueDate == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ سررسید"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            #endregion
+
+            #region CreateNotif
+            PersianCalendar pc = new();
+            using BaseUnitOfWork baseDb = new();
+            var (er, i) = await baseDb.NotifRepository.UpdateNotif(NotifId, Titele, Message, Priority, DueDate.Value);
+            if (!i)
+            {
+                _snackbarService.Show("خطا", er, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            await baseDb.SaveChangesAsync();
+            _snackbarService.Show("کاربر گرامی", $"ویرایش یادآور با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+            #endregion
+
+            #region redirect
+            Type? pageType = NameToPageTypeConverter.Convert("NotificationList");
+            if (pageType == null)
+            {
+                return;
+            }
+            _navigationService.Navigate(pageType);
+            return;
+            #endregion
+
+        }
+    }
+}

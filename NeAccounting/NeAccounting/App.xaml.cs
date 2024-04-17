@@ -268,9 +268,16 @@ namespace NeAccounting
                 services.AddTransient<ChangePassword>();
                 services.AddTransient<ChangePassViewModel>();
                 #endregion
+
                 #region Notification
                 services.AddTransient<NotificationListPage>();
+                services.AddTransient<NotifListViewModel>();
+
                 services.AddTransient<CreateNotificationPage>();
+                services.AddTransient<CreateNotifViewModel>();
+                
+                services.AddTransient<UpdateNotificationPage>();
+                services.AddTransient<UpdateNotifViewModel>();
                 #endregion
 
             }).Build();

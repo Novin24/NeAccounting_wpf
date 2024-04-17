@@ -6,13 +6,13 @@ using Wpf.Ui.Controls;
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for CreateNotificationPage.xaml
+    /// Interaction logic for UpdateNotificationPage.xaml
     /// </summary>
-    public partial class CreateNotificationPage : INavigableView<CreateNotifViewModel>
+    public partial class UpdateNotificationPage : INavigableView<UpdateNotifViewModel>
     {
-        public CreateNotifViewModel ViewModel { get; }
+        public UpdateNotifViewModel ViewModel { get; }
 
-        public CreateNotificationPage(CreateNotifViewModel viewModel)
+        public UpdateNotificationPage(UpdateNotifViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
@@ -22,9 +22,9 @@ namespace NeAccounting.Views.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Txt_Titele.Focus();
-            var t = Priority.All.ToEnumDictionary();
-            t.Remove(Priority.All);
-            cmb_Priority.ItemsSource = t;
+            //var t = Priority.All.ToEnumDictionary();
+            //t.Remove(Priority.All);
+            //cmb_Priority.ItemsSource = t;
         }
     }
 }
