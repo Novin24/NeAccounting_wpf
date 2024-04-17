@@ -14,6 +14,11 @@
       d:DesignHeight="800"
       d:DesignWidth="1200"
       Loaded="Page_Loaded">
+
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                    Command="{Binding ViewModel.SubmitCommand}" />
+    </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -232,8 +237,8 @@
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="توضیحات"
-                                       Grid.Column="1" 
-                                       Margin="5 0 0 0 "/>
+                                       Grid.Column="1"
+                                       Margin="5 0 0 0 " />
                             <ui:TextBox Margin="0,21,0,0"
                                         FontSize="16"
                                         Text="{Binding ViewModel.Description,Mode=TwoWay}"
@@ -248,13 +253,13 @@
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"
                                 FontSize="15"
-                                Grid.ColumnSpan="2" >
+                                Grid.ColumnSpan="2">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت چک" />
                                 <TextBlock Text=" (F1)"
-                                                   FontSize="12"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="#FFA3A3A3" />
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           Foreground="#FFA3A3A3" />
                             </StackPanel>
                         </Button>
                     </Grid>

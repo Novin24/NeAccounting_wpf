@@ -11,6 +11,7 @@ namespace DomainShared.ViewModels.Document
         public Guid Id { get; set; }
         public string? CheckNumber { get; set; }
         public bool IsRecived { get; set; }
+        public DateTime? DueDate { get; set; }
         public string? DueShamsiDate { get; set; }
         public string? Payer { get; set; }
         public string? Reciver { get; set; }
@@ -21,7 +22,7 @@ namespace DomainShared.ViewModels.Document
         public bool IsEditable { get; set; }
         public bool IsCashable { get; set; } = false;
         public bool IsRejectble { get; set; } = false;
-        public bool IsTransble{ get; set; } = false;
+        public bool IsTransble { get; set; } = false;
     }
 
 }

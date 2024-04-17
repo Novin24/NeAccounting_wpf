@@ -1,4 +1,5 @@
-﻿using Domain.Enities.NovinEntity.Remittances;
+﻿using Domain.Enities.Notifications;
+using Domain.Enities.NovinEntity.Remittances;
 using Domain.NovinEntity.Cheques;
 using Domain.NovinEntity.Customers;
 using Domain.NovinEntity.Documents;
@@ -14,7 +15,7 @@ namespace Infrastructure.Utilities
     public static class ModelBuilderExtensions
     {
 
-        public static void ConfigureDbContext(this ModelBuilder builder)
+        public static void ConfigureNovinDbContext(this ModelBuilder builder)
         {
 
             builder.Entity<Document>(b =>
@@ -163,6 +164,18 @@ namespace Infrastructure.Utilities
                 .OnDelete(DeleteBehavior.Cascade);
 
                 b.HasIndex(t => t.DocumentId);
+            });
+        }
+
+
+        public static void ConfigureBaseDbContext(this ModelBuilder builder)
+        {
+            builder.Entity<Notification>(b =>
+            {
+                b.HasIndex(b => b.Id);
+                b.HasIndex(b => b.DocumentId);
+                b.Property(r => r.Titel).HasMaxLength(50).IsRequired();
+                b.Property(r => r.Message).HasMaxLength(150).IsRequired();
             });
         }
 

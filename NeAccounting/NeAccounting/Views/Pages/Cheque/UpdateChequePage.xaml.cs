@@ -1,4 +1,4 @@
-﻿using DomainShared.ViewModels;  
+﻿using DomainShared.ViewModels;
 using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
@@ -26,6 +26,7 @@ namespace NeAccounting.Views.Pages
                 var ts = c.ViewModel;
                 txt_Name.SetCurrentValue(AutoSuggestBox.TextProperty, ts.CusName);
             }
+            txt_Name.Focus();
             //Cmb_Status.ItemsSource = SubmitChequeStatus.Register.ToEnumDictionary();
         }
 

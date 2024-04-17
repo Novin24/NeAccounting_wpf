@@ -1093,6 +1093,7 @@ namespace Infrastructure.Repositories
                              StatusName = che.Status.ToDisplay(DisplayProperty.Name),
                              Id = doc.Id,
                              CheckNumber = che.Cheque_Number,
+                             DueDate = che.Due_Date,
                              DueShamsiDate = che.Due_Date.ToShamsiDate(pc),
                              Payer = pay.Name,
                              IsEditable = true,
@@ -1112,7 +1113,7 @@ namespace Infrastructure.Repositories
                     pageNum++;
                 }
             }
-            var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
+            var li = await query.OrderBy(t => t.DueDate).Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
 
             for (int i = 1; i <= li.Count; i++)
             {

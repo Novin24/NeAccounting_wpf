@@ -26,6 +26,6 @@ namespace NeApplication.IBaseRepositories
             string message,
             DateTime dueDate);
 
-        Task<(string error, bool isSuccess)> DeleteNotif(int id);
+        Task<(string error, bool isSuccess)> DeleteNotif(Guid docId);
     }
 }

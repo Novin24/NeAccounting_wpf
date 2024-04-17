@@ -102,7 +102,7 @@ namespace Infrastructure.Repositories
                 mt.PhysicalAddress = address;
                 mt.IsManufacturedGoods = isManufacturedGoods;
 
-                Update(mt, false);
+                Entities.Update(mt);
             }
             catch (Exception ex)
             {
@@ -167,7 +167,7 @@ namespace Infrastructure.Repositories
                     mt.LastBuyPrice = lastPrice.Value;
                 }
 
-                Update(mt, false);
+                Entities.Update(mt);
             }
             catch (Exception ex)
             {

@@ -2,26 +2,24 @@
 using DomainShared.Enums;
 using DomainShared.Notifications;
 using Infrastructure.EntityFramework;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IBaseRepositories;
-using System.Net;
-using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace Infrastructure.BaseRepositories
 {
-    public class NotifManager : BaseRepository<Notification>, INotifManager
+    public class NotifManager(BaseDomainDbContext context) : BaseRepository<Notification>(context), INotifManager
     {
-        public NotifManager(BaseDomainDbContext context) : base(context) { }
-
         public async Task<List<NotifViewModel>> GetNotifs()
         {
-            return await TableNoTracking.Where(x => x.DueDate < DateTime.Now.AddDays(3)).Select(t => new NotifViewModel()
-            {
-                Titele = t.Titel,
-                Message = t.Message
-            }).ToListAsync();
+            return await TableNoTracking
+                .Where(t => t.Priority == Priority.Low && t.DueDate.Date == DateTime.Now.Date ||
+                t.Priority == Priority.Medium && t.DueDate.Date >= DateTime.Now.Date && t.DueDate.Date < DateTime.Now.Date.AddDays(3) ||
+                t.Priority == Priority.High && t.DueDate.Date >= DateTime.Now.Date.AddDays(-1) && t.DueDate.Date < DateTime.Now.Date.AddDays(4))
+                .Select(t => new NotifViewModel()
+                {
+                    Titele = t.Titel,
+                    Message = t.Message
+                }).ToListAsync();
         }
 
         public async Task<(string error, bool isSuccess)> CreateNotif(
@@ -83,7 +81,7 @@ namespace Infrastructure.BaseRepositories
                 mt.Message = message;
                 mt.DueDate = dueDate;
 
-                Update(mt, false);
+                Entities.Update(mt);
             }
             catch (Exception ex)
             {
@@ -92,11 +90,11 @@ namespace Infrastructure.BaseRepositories
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, bool isSuccess)> DeleteNotif(int id)
+        public async Task<(string error, bool isSuccess)> DeleteNotif(Guid docId)
         {
             try
             {
-                var mt = await Entities.FirstOrDefaultAsync(t => t.Id == id);
+                var mt = await Entities.FirstOrDefaultAsync(t => t.DocumentId == docId);
 
                 if (mt == null)
                     return new("یاد آور مورد نظر یافت نشد !!!", false);
