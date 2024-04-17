@@ -1073,10 +1073,10 @@ namespace Infrastructure.Repositories
             var query = (from che in DbContext.Set<Cheque>()
                                    .AsNoTracking()
                                    .Where(t => status == ChequeStatus.AllCheques || t.Status == status)
+                                   .Where(t => !startTime.HasValue || t.Due_Date >= startTime)
+                                   .Where(t => !endTime.HasValue || t.Due_Date < endTime)
 
                          join doc in DbContext.Set<Document>()
-                               .Where(st => !startTime.HasValue || st.SubmitDate >= startTime)
-                               .Where(et => !endTime.HasValue || et.SubmitDate < endTime)
                                .Where(p => !cusId.HasValue || p.CustomerId == cusId)
                                                  on che.DocumetnId equals doc.Id
 
@@ -1093,6 +1093,7 @@ namespace Infrastructure.Repositories
                              StatusName = che.Status.ToDisplay(DisplayProperty.Name),
                              Id = doc.Id,
                              CheckNumber = che.Cheque_Number,
+                             DueDate = che.Due_Date,
                              DueShamsiDate = che.Due_Date.ToShamsiDate(pc),
                              Payer = pay.Name,
                              IsEditable = true,
@@ -1112,7 +1113,7 @@ namespace Infrastructure.Repositories
                     pageNum++;
                 }
             }
-            var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
+            var li = await query.OrderBy(t => t.DueDate).Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
 
             for (int i = 1; i <= li.Count; i++)
             {
@@ -1220,7 +1221,7 @@ namespace Infrastructure.Repositories
             return (true, itm);
         }
 
-        public async Task<(string error, bool isSuccess)> CreateRecCheque(Guid customerId,
+        public async Task<(string error, bool isSuccess, Guid docId)> CreateRecCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
             string? descripion,
             DateTime submitDate,
@@ -1232,34 +1233,38 @@ namespace Infrastructure.Repositories
             string bank_Branch,
             string cheque_Owner)
         {
+            Guid id;
             try
             {
                 if (dueDate.Date < submitDate.Date)
                 {
-                    return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false);
+                    return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false, Guid.Empty);
                 }
 
-                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, true)
-                .AddCheque(new Cheque(submitStatus,
-                ChequeStatus.InBox,
-                Guid.Empty,
-                customerId,
-                dueDate,
-                cheque_Number,
-                accunt_Number,
-                bank_Name,
-                bank_Branch,
-                cheque_Owner)));
+                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, true)
+                 .AddCheque(new Cheque(submitStatus,
+                 ChequeStatus.InBox,
+                 Guid.Empty,
+                 customerId,
+                 dueDate,
+                 cheque_Number,
+                 accunt_Number,
+                 bank_Name,
+                 bank_Branch,
+                 cheque_Owner)));
 
+                await DbContext.SaveChangesAsync();
+                id = t.Entity.Id;
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new("خطا دراتصال به پایگاه داده!!!", false, Guid.Empty);
             }
-            return new(string.Empty, true);
+
+            return new(string.Empty, true, id);
         }
 
-        public async Task<(string error, bool isSuccess)> CreatePayCheque(Guid customerId,
+        public async Task<(string error, bool isSuccess, Guid docId)> CreatePayCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
             string? descripion,
             DateTime submitDate,
@@ -1271,31 +1276,33 @@ namespace Infrastructure.Repositories
             string bank_Branch,
             string cheque_Owner)
         {
+            Guid id;
             try
             {
                 if (dueDate.Date < submitDate.Date)
                 {
-                    return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false);
+                    return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false, Guid.Empty);
                 }
 
-                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, false)
-                .AddCheque(new Cheque(submitStatus,
-                ChequeStatus.Payed,
-                customerId,
-                Guid.Empty,
-                dueDate,
-                cheque_Number,
-                accunt_Number,
-                bank_Name,
-                bank_Branch,
-                cheque_Owner)));
-
+                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, false)
+                  .AddCheque(new Cheque(submitStatus,
+                  ChequeStatus.Payed,
+                  customerId,
+                  Guid.Empty,
+                  dueDate,
+                  cheque_Number,
+                  accunt_Number,
+                  bank_Name,
+                  bank_Branch,
+                  cheque_Owner)));
+                await DbContext.SaveChangesAsync();
+                id = t.Entity.Id;
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new("خطا دراتصال به پایگاه داده!!!", false, Guid.Empty);
             }
-            return new(string.Empty, true);
+            return new(string.Empty, true, id);
         }
 
         public async Task<(string error, bool isSuccess)> CreateGarantyCheque(Guid customerId,

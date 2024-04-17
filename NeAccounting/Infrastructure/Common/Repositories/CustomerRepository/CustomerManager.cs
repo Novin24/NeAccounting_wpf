@@ -129,7 +129,7 @@ namespace Infrastructure.Repositories
                 mt.TotalCredit = promissoryNote + mt.ChequeCredit + cashCredit;
                 mt.Type = type;
 
-                Update(mt, false);
+                Entities.Update(mt);
             }
             catch (Exception ex)
             {
@@ -150,7 +150,7 @@ namespace Infrastructure.Repositories
                     return new("مشتری مورد نظر یافت نشد !!!", false);
 
                 cus.IsActive = isActive;
-                Update(cus, false);
+                Entities.Update(cus);
             }
             catch (Exception ex)
             {

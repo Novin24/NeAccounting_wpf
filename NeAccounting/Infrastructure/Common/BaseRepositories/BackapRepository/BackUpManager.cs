@@ -4,7 +4,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IBaseRepositories;
 
-namespace Infrastructure.Common.BaseRepositories.BackapRepository
+namespace Infrastructure.BaseRepositories
 {
     public class BackUpManager(BaseDomainDbContext context) : BaseRepository<IdentityUser>(context), IBackUpManager
     {

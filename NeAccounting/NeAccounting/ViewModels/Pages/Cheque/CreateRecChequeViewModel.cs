@@ -1,8 +1,10 @@
 ﻿using DomainShared.Enums;
 using DomainShared.Errore;
+using DomainShared.Extension;
 using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using System.Globalization;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -157,24 +159,35 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
 
         #region CreatePayDocumetn
         using UnitOfWork db = new();
-        var (e, s) = await db.DocumentManager.CreateRecCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
-        if (s)
+        var (e, s, docId) = await db.DocumentManager.CreateRecCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
+        if (!s)
         {
-            await db.SaveChangesAsync();
-            _snackbarService.Show("کاربر گرامی", $"ثبت چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
-
-            Type? pageType = NameToPageTypeConverter.Convert("Chequebook");
-
-            if (pageType == null)
-            {
-                return;
-            }
-
-            _navigationService.Navigate(pageType);
+            _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
-        _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+        _snackbarService.Show("کاربر گرامی", $"ثبت چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+        #endregion
+
+        #region CreateNotif
+        PersianCalendar pc = new();
+        using BaseUnitOfWork baseDb = new();
+        var (er, i) = await baseDb.NotifRepository.CreateNotif(docId,"سررسید چک دریافتی ", DueDate.Value.ToShamsiDate(pc) + " به مبلغ " + Price.Value.ToString("N0"), Priority.Medium, DueDate.Value);
+
+        if (!i)
+            _snackbarService.Show("خطا", er, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+
+        await baseDb.SaveChangesAsync();
+        #endregion
+
+        #region redirect
+        Type? pageType = NameToPageTypeConverter.Convert("Chequebook");
+        if (pageType == null)
+        {
+            return;
+        }
+        _navigationService.Navigate(pageType);
+        return;
         #endregion
     }
 }

@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
                 x.Receiver = receiver;
                 x.Description = description;
 
-                Update(x, false);
+                Entities.Update(x);
             }
             catch (Exception ex)
             {
@@ -88,7 +88,7 @@ namespace Infrastructure.Repositories
                     pageNum++;
                 }
             }
-            var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();          
+            var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
 
             return new PagedResulViewModel<ExpenselistDto>(totalCount, pageCount, pageNum, li);
         }

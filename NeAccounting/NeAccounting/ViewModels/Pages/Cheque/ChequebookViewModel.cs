@@ -145,17 +145,20 @@ namespace NeAccounting.ViewModels
             {
                 using UnitOfWork db = new();
                 var (e, s) = await db.DocumentManager.RemoveCheque(parameter);
-                if (s)
+                if (!s)
                 {
-                    await db.SaveChangesAsync();
-                    _snackbarService.Show("کاربر گرامی", $"حذف چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
-                    var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, Status, _isInit, CurrentPage);
-                    InvList = t.Items;
-                    PageCount = t.PageCount;
+                    _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
+                await db.SaveChangesAsync();
+                _snackbarService.Show("کاربر گرامی", $"حذف چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+                var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, Status, _isInit, CurrentPage);
+                InvList = t.Items;
+                PageCount = t.PageCount;
 
-                _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                using BaseUnitOfWork baseDb = new();
+                await baseDb.NotifRepository.DeleteNotif(parameter);
+                await baseDb.SaveChangesAsync();
             }
         }
 

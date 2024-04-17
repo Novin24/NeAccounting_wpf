@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Domain.NovinEntity.Cheques;
 using DomainShared.Enums;
 
 namespace Domain.NovinEntity.Customers

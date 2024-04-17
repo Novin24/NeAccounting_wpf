@@ -28,11 +28,11 @@ namespace Domain.NovinEntity.Expense
         /// <summary>
         /// دریافت کننده
         /// </summary>
-        public string Receiver { get; set; }
+        public string? Receiver { get; set; }
         /// <summary>
         /// توضیحات
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
         #endregion
 
         #region Constructor
