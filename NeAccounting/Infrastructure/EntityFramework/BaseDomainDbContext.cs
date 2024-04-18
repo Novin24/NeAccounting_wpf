@@ -49,7 +49,7 @@ namespace Infrastructure.EntityFramework
                 return;
             }
 
-            if (!typeof(IEntities).IsAssignableFrom(typeof(TEntity)))
+            if (!typeof(IBaseDomainEntities).IsAssignableFrom(typeof(TEntity)))
             {
                 return;
             }
@@ -58,7 +58,7 @@ namespace Infrastructure.EntityFramework
         }
 
         protected virtual void ConfigureGlobalFilters<TEntity>(ModelBuilder modelBuilder, IMutableEntityType mutableEntityType)
-     where TEntity : class
+            where TEntity : class
         {
             if (mutableEntityType.BaseType == null && ShouldFilterEntity<TEntity>(mutableEntityType))
             {
