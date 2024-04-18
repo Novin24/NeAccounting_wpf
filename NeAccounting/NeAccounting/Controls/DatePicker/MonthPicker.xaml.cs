@@ -238,7 +238,7 @@ namespace NeAccounting.Controls
             }
             IsCalculated = false;
             selectedMonth = Convert.ToByte(cmbox.SelectedIndex + 1);
-            DisplayDate = comboBoxYear.SelectedValue.ToString() + "  " + ((ComboBoxItem)cmbox.SelectedValue).Content;
+            DisplayDate = comboBoxYear.SelectedValue.ToString() + "  " + comboBoxMonths.SelectedValue.ToString();
             SelectedMon = selectedMonth;
         }
 
@@ -257,7 +257,7 @@ namespace NeAccounting.Controls
                 SelectedMon = currentMonth;
                 selectedMonth = currentMonth;
             }
-            DisplayDate = comboBoxYear.SelectedValue.ToString() + "  " + ((ComboBoxItem)cmbox.SelectedValue).Content;
+            DisplayDate = comboBoxYear.SelectedValue.ToString() + "  " + comboBoxMonths.SelectedValue.ToString();
         }
 
         private void Dismiss_Click(object sender, RoutedEventArgs e)

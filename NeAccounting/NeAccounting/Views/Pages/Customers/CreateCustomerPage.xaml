@@ -285,7 +285,6 @@
                                 Padding="30 4 "
                                 Grid.ColumnSpan="2"
                                 Margin="8"
-                                IsDefault="True"
                                 Command="{Binding ViewModel.CreateCustomerCommand}"
                                 FontSize="17"
                                 FontFamily="Calibri"
