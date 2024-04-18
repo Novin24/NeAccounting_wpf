@@ -167,10 +167,10 @@
                             <Button Grid.Row="1"
                                     Grid.Column="2"
                                     IsDefault="True"
-                                    Margin="15 25 0 0"
+                                    Margin="15 19.5 0 0"
                                     Command="{Binding ViewModel.SearchCommand}"
                                     HorizontalAlignment="Left"
-                                    Padding="17 4 18 9">جستجو</Button>
+                                    Padding="17 4 18 8.5">جستجو</Button>
                         </Grid>
                         <!--#endregion-->
                         <!--#region Datagrid -->
@@ -192,14 +192,15 @@
 
                                 <DataGridTextColumn Header="عنوان"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding Titele}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Binding="{Binding Titele}"
                                                     Width="*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
-                                                    <TextBlock FontSize='17' />
+                                                    <TextBlock FontSize='17' 
+                                                    Text="{Binding Titele}"/>
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>
@@ -207,14 +208,15 @@
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="توضیحات"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding Message}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Binding="{Binding Message}"
                                                     Width="*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
-                                                    <TextBlock FontSize='17' />
+                                                    <TextBlock FontSize='17' 
+                                                    Text="{Binding Message}"/>
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>
@@ -222,14 +224,15 @@
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="درجه اهمیت"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding DisplayPriority}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Binding="{Binding DisplayPriority}"
                                                     Width="160">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
-                                                    <TextBlock FontSize='17' />
+                                                    <TextBlock FontSize='17'
+                                                    Text="{Binding DisplayPriority}" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>
@@ -244,7 +247,8 @@
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
-                                                    <TextBlock FontSize='17' />
+                                                    <TextBlock FontSize='17'
+                                                    Text="{Binding ShamsiDueDate}" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>
