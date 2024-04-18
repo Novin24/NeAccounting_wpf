@@ -17,8 +17,8 @@ namespace Infrastructure.EntityFramework
             optionsBuilder.UseSqlServer($"Server=(LocalDb)\\MSSQLLocalDB;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;");
         }
 
-        private static readonly MethodInfo ConfigureBasePropertiesMethodInfo = typeof(NovinDbContext)
-                .GetMethod(nameof(ConfigureBaseProperties),
+        private static readonly MethodInfo ConfigurePropertiesMethodInfo = typeof(NovinDbContext)
+                .GetMethod(nameof(ConfigureProperties),
                 BindingFlags.Instance | BindingFlags.NonPublic)!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,14 +33,14 @@ namespace Infrastructure.EntityFramework
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                ConfigureBasePropertiesMethodInfo
+                ConfigurePropertiesMethodInfo
                     .MakeGenericMethod(entityType.ClrType)
                     .Invoke(this, new object[] { modelBuilder, entityType });
             }
             modelBuilder.ConfigureNovinDbContext();
         }
 
-        protected virtual void ConfigureBaseProperties<TEntity>(ModelBuilder modelBuilder, IMutableEntityType mutableEntityType)
+        protected virtual void ConfigureProperties<TEntity>(ModelBuilder modelBuilder, IMutableEntityType mutableEntityType)
                     where TEntity : class
         {
             if (mutableEntityType.IsOwned())
