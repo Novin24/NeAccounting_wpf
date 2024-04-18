@@ -36,9 +36,11 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private byte _overTime = 0;
 
-
         [ObservableProperty]
         private byte? _submitMonth;
+
+        [ObservableProperty]
+        private string _displayDate;
 
         [ObservableProperty]
         private int? _submitYear;
