@@ -10,16 +10,16 @@ using Wpf.Ui.Controls;
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for CreateSellInvoicePage.xaml
+    /// Interaction logic for FromTheSellPage.xaml
     /// </summary>
-    public partial class CreateSellInvoicePage : INavigableView<CreateSellInvoiceViewModel>
+    public partial class FromTheSellPage : INavigableView<FromTheSellViewModel>
     {
         private readonly ISnackbarService _snackbarService;
-        public CreateSellInvoiceViewModel ViewModel { get; }
+        public FromTheSellViewModel ViewModel { get; }
         private double _totalEntity;
         private long _price;
 
-        public CreateSellInvoicePage(CreateSellInvoiceViewModel viewModel, ISnackbarService snackbarService)
+        public FromTheSellPage(FromTheSellViewModel viewModel, ISnackbarService snackbarService)
         {
             ViewModel = viewModel;
             DataContext = this;
@@ -27,9 +27,9 @@ namespace NeAccounting.Views.Pages
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.OnAdd())
+            if (await ViewModel.OnAdd())
             {
                 ViewModel.AmountOf = null;
                 ViewModel.MaterialId = -1;
@@ -43,16 +43,6 @@ namespace NeAccounting.Views.Pages
                 txt_MaterialName.Focus();
             }
             dgv_Inv.Items.Refresh();
-        }
-
-        private async void Txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-            if (!IsInitialized)
-                return;
-            var user = (SuggestBoxViewModel<Guid, long>)args.SelectedItem;
-            ViewModel.CusId = user.Id;
-            lbl_cusId.Text = user.UniqNumber.ToString();
-            await ViewModel.OnSelectCus(user.Id);
         }
 
         private void Txt_mat_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
@@ -115,27 +105,6 @@ namespace NeAccounting.Views.Pages
             txt_total_price.Text = (ViewModel.AmountOf.Value * _price).ToString("N0");
         }
 
-        [RelayCommand]
-        private async Task OnSubmit()
-        {
-            if (!Validation())
-            {
-                _snackbarService.Show("اخطار", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ثبت فاکتور نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
-            if (await ViewModel.OnSumbit())
-            {
-                txt_CustomerName.Text = string.Empty;
-                txt_MaterialName.Text = string.Empty;
-                txt_UnitName.Text = string.Empty;
-                txt_Unit_price.Text = string.Empty;
-                txt_total_price.Text = string.Empty;
-                txt_UnitDescription.Text = string.Empty;
-                lbl_cusId.Text = string.Empty;
-            }
-
-        }
-
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not Button btn)
@@ -174,6 +143,14 @@ namespace NeAccounting.Views.Pages
             dgv_Inv.Items.Refresh();
         }
 
+        [GeneratedRegex("[^0-9]+")]
+        private static partial Regex MyRegex();
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            txt_CustomerName.Focus();
+        }
+
         private bool Validation()
         {
             if (txt_MaterialName.Text != string.Empty)
@@ -186,15 +163,6 @@ namespace NeAccounting.Views.Pages
                 return false;
 
             return true;
-        }
-
-
-        [GeneratedRegex("[^0-9]+")]
-        private static partial Regex MyRegex();
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            txt_CustomerName.Focus();
         }
     }
 }

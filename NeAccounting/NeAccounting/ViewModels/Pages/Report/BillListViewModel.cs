@@ -16,6 +16,7 @@ using DomainShared.Extension;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using System.Reflection.Metadata;
 
 namespace NeAccounting.ViewModels
 {
@@ -492,6 +493,44 @@ namespace NeAccounting.ViewModels
                 {"Status",$"{list.Last().Status}"}};
 
             _printServices.PrintInvoice(@"Required\Reports\ReportInvoices.mrt", "InvoiceListDtos", list, dic);
+        }
+
+        [RelayCommand]
+        private async Task OnReturnGoods(Guid parameter)
+        {
+            var doc = InvList.FirstOrDefault(x => x.Id == parameter);
+            if (doc == null)
+            {
+                _snackbarService.Show("کاربر گرامی", "ردیف مورد نظر برای ویرایش یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
+            using UnitOfWork db = new();
+            if (doc.Type == DocumntType.SellInv)
+            {
+                Type? pagetyp = NameToPageTypeConverter.Convert("FromTheSell");
+
+                if (pagetyp == null)
+                {
+                    return;
+                }
+                var servis = _navigationService.GetNavigationControl();
+
+                var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    Type? pageType = NameToPageTypeConverter.Convert("Dashboard");
+
+                    if (pageType == null)
+                    {
+                        return;
+                    }
+
+                    _navigationService.Navigate(pageType);
+                    return;
+                }
+            }
         }
         #endregion
     }

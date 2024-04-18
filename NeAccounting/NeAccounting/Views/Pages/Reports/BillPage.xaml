@@ -348,7 +348,7 @@
                                 </DataGridTextColumn>
 
                                 <DataGridTemplateColumn Header="عملیات"
-                                                        Width="130"
+                                                        Width="150"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -361,6 +361,10 @@
                                                             Click="Btn_PrintOneInvoice_Click"
                                                             Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Print20" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="پرینت"
+                                                                   FontSize="16" />
+                                                    </Button.ToolTip>
                                                 </ui:Button>
                                                 <Button  Margin="2"
                                                          Visibility="{Binding IsEditable ,  Converter={StaticResource BoolToVis}}"
@@ -368,6 +372,21 @@
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                          Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Pen16" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="ویرایش"
+                                                                   FontSize="16" />
+                                                    </Button.ToolTip>
+                                                </Button>
+                                                <Button Margin="2"
+                                                        Visibility="{Binding IsDeletable,  Converter={StaticResource BoolToVis}}"
+                                                        CommandParameter="{Binding Id , Mode=OneWay}"
+                                                        Command="{Binding Path=DataContext.ViewModel.RemoveDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                        Padding="7,5">
+                                                    <ui:SymbolIcon Symbol="ArrowHookDownLeft20" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="اجناس بازگشتی"
+                                                                   FontSize="16" />
+                                                    </Button.ToolTip>
                                                 </Button>
                                                 <Button Margin="3"
                                                         Visibility="{Binding IsDeletable,  Converter={StaticResource BoolToVis}}"
@@ -375,6 +394,10 @@
                                                         Command="{Binding Path=DataContext.ViewModel.RemoveDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                         Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Delete16" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="حذف"
+                                                                   FontSize="16" />
+                                                    </Button.ToolTip>
                                                 </Button>
                                             </StackPanel>
                                         </DataTemplate>
