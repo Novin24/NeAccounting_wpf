@@ -17,13 +17,7 @@
       Title="FromTheSellPage">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                    Command="{Binding SubmitCommand}" />
-        <KeyBinding Key="F4"
-                    Command="{Binding ViewModel.AddClickCommand}"
-                    CommandParameter="CreateCustomer" />
-        <KeyBinding Key="F3"
-                    Command="{Binding ViewModel.AddClickCommand}"
-                    CommandParameter="CreateMaterail" />
+                    Command="{Binding ViewModel.SubmitCommand}" />
     </Page.InputBindings>
     <Grid>
 
@@ -89,12 +83,13 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="auto"></RowDefinition>
-                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="2.5*"></RowDefinition>
+                                <RowDefinition Height="130"></RowDefinition>
                                 <RowDefinition Height="auto"></RowDefinition>
 
                             </Grid.RowDefinitions>
 
-                            <Grid Margin="0 ,5,0,5">
+                            <Grid Margin="0 ,0,0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition  Width=".56*" />
@@ -119,9 +114,9 @@
                                                    Margin="6 22 6 0" />
                                     </DockPanel>
                                     <ui:TextBox FontFamily="Calibri"
-                                                       x:Name="txt_CustomerName"
-                                                       Text ="{Binding ViewModel.CusName}"
-                                                       Margin="0 4 0 0" />
+                                                x:Name="txt_CustomerName"
+                                                Text="{Binding ViewModel.CusName}"
+                                                Margin="0 4 0 0" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1"
@@ -208,7 +203,6 @@
                                                   ClearButtonEnabled="False"
                                                   FontFamily="Calibri"
                                                   Value="{Binding ViewModel.AmountOf, Mode=TwoWay}"
-                                                  LostFocus="Txt_amount_LostFocus"
                                                   SpinButtonPlacementMode="Hidden"
                                                   Margin="0 2 0 0" />
                                 </StackPanel>
@@ -286,9 +280,9 @@
                                     </StackPanel>
                                 </Button>
                             </Grid>
-                            <DataGrid x:Name="dgv_Inv"
+                            <DataGrid Grid.Row="2"
+                                      x:Name="dgv_Inv"
                                       Padding="7"
-                                      Grid.Row="2"
                                       CanUserResizeColumns="False"
                                       FontSize="15"
                                       CanUserDeleteRows="False"
@@ -358,14 +352,64 @@
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <Grid Grid.Row="3"
+                            <DataGrid Grid.Row="3"
+                                      x:Name="dgv_SellInv"
+                                      Padding="7"
+                                      CanUserResizeColumns="False"
+                                      FontSize="15"
+                                      CanUserDeleteRows="False"
+                                      IsReadOnly="True"
+                                      CanUserResizeRows="False"
+                                      Margin="0 10"
+                                      HeadersVisibility="None"
+                                      ItemsSource="{Binding ViewModel.SellGoods}"
+                                      FontFamily="Calibri"
+                                      AutoGenerateColumns="False">
+
+                                <DataGrid.Resources>
+                                    <s:String x:Key="format">{0:N0}</s:String>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding RowId}"
+                                                        Width=".23*" />
+
+                                    <DataGridTextColumn Binding="{Binding MatName}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Width=".7*" />
+
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding AmountOf}"
+                                                        Width=".39*" />
+
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding UnitName}"
+                                                        Width=".39*" />
+
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding Price, StringFormat={StaticResource format}}"
+                                                        Width=".6*" />
+
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding TotalPrice, StringFormat={StaticResource format}}"
+                                                        Width=".7*" />
+
+                                    <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding Description}"
+                                                        Width="*" />
+
+
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Grid Grid.Row="4"
                                   Margin="0 10 0 10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition MaxWidth="300" />
                                     <ColumnDefinition />
                                     <ColumnDefinition MaxWidth="300" />
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Row="3"
+                                <Border Grid.Column="0"
                                         CornerRadius="9"
                                         BorderBrush="#D6D5D5"
                                         BorderThickness="0.4"
@@ -376,66 +420,27 @@
                                             <ColumnDefinition Width="auto" />
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Margin="10,0,0,0"
-                                                   Text="وضعیت شخصی :"
-                                                   HorizontalAlignment="Right" />
+                                                   Margin="10,0"
+                                                   Text="مبلغ کل :"
+                                                   VerticalAlignment="Center" />
 
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="{Binding ViewModel.Status}"
-                                                   Margin="15 0 0 0"
-                                                   Grid.Column="1"
-                                                   HorizontalAlignment="Center" />
-
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Grid.Row="1"
-                                                   Text="طلبکاری :"
-                                                   HorizontalAlignment="Right" />
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Text="{Binding ViewModel.Credit}"
-                                                   Grid.Column="1"
-                                                   Grid.Row="1"
+                                                   Text="{Binding ViewModel.TotalPrice}"
                                                    Margin="15 0 4 0"
-                                                   HorizontalAlignment="Center" />
-
-                                        <TextBlock FontFamily="Calibri"
-                                                   Grid.Row="2"
-                                                   FontSize="15"
-                                                   Text="بدهکاری :"
-                                                   HorizontalAlignment="Right" />
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Text="{Binding ViewModel.Debt}"
-                                                   Grid.Row="2"
                                                    Grid.Column="1"
-                                                   Margin="15 0 4 0"
-                                                   HorizontalAlignment="Center" />
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
                                     </Grid>
                                 </Border>
-                                <ui:TextBox Grid.Column="1"
-                                            MinWidth="190"
-                                            Margin="25,0"
-                                            FontFamily="Calibri"
-                                            Height="33"
-                                            Text="{Binding ViewModel.InvDescription, Mode=TwoWay}"
-                                            PlaceholderText="خلاصه فاکتور"
-                                            VerticalAlignment="Top"
-                                            HorizontalAlignment="Center" />
                                 <Button Padding="30 4 "
                                         Grid.Column="1"
                                         FontSize="17"
-                                        Command="{Binding ViewModel.}"
+                                        Command="{Binding ViewModel.SubmitCommand}"
                                         FontFamily="Calibri"
-                                        VerticalAlignment="Bottom"
+                                        VerticalAlignment="Top"
                                         HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="ثبت" />
@@ -445,50 +450,15 @@
                                                    Foreground="#FFA3A3A3" />
                                     </StackPanel>
                                 </Button>
-                                <Border Grid.Row="3"
-                                        Grid.Column="4"
-                                        CornerRadius="9"
-                                        BorderBrush="#D6D5D5"
-                                        BorderThickness="0.4"
-                                        Background="{DynamicResource ControlSolidFillColorDefaultBrush}"
-                                        Padding="7">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Text="مبلغ کل :"
-                                                   HorizontalAlignment="Right" />
-
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Text="{Binding ViewModel.TotalPrice}"
-                                                   Margin="15 0 4 0"
-                                                   Grid.Column="1"
-                                                   HorizontalAlignment="Center" />
-
-
-                                        <TextBlock FontFamily="Calibri"
-                                                   Grid.Row="1"
-                                                   Margin="10,0,0,0"
-                                                   FontSize="15"
-                                                   Text="مبلغ قابل پرداخت :"
-                                                   HorizontalAlignment="Right" />
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Text="{Binding ViewModel.RemainPrice}"
-                                                   Grid.Row="1"
-                                                   Grid.Column="1"
-                                                   Margin="15 0 4 0"
-                                                   HorizontalAlignment="Center" />
-                                    </Grid>
-                                </Border>
+                                <ui:TextBox Grid.Column="2"
+                                            MinWidth="200"
+                                            Margin="25,0"
+                                            FontFamily="Calibri"
+                                            Height="33"
+                                            Text="{Binding ViewModel.InvDescription, Mode=TwoWay}"
+                                            PlaceholderText="خلاصه فاکتور"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Center" />
                             </Grid>
                         </Grid>
                     </Border>

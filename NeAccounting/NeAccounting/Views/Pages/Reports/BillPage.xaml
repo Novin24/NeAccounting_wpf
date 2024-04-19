@@ -378,9 +378,9 @@
                                                     </Button.ToolTip>
                                                 </Button>
                                                 <Button Margin="2"
-                                                        Visibility="{Binding IsDeletable,  Converter={StaticResource BoolToVis}}"
+                                                        Visibility="{Binding IsPrintable,  Converter={StaticResource BoolToVis}}"
                                                         CommandParameter="{Binding Id , Mode=OneWay}"
-                                                        Command="{Binding Path=DataContext.ViewModel.RemoveDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                        Command="{Binding Path=DataContext.ViewModel.ReturnGoodsCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                         Padding="7,5">
                                                     <ui:SymbolIcon Symbol="ArrowHookDownLeft20" />
                                                     <Button.ToolTip>

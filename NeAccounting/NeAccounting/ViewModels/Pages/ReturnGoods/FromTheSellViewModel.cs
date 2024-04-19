@@ -1,5 +1,4 @@
-﻿using DomainShared.Enums;
-using DomainShared.Errore;
+﻿using DomainShared.Errore;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
@@ -22,7 +21,7 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
     /// لیست اجناس  فاکتور  فروش
     /// </summary>
     [ObservableProperty]
-    private List<RemittanceListViewModel> _sellGoods = [];
+    private List<RemittanceListViewModel> _sellGoods;
 
     /// <summary>
     /// لیست اجناس  برگشتی
@@ -46,16 +45,14 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
     /// نام مشتری
     /// </summary>
     [ObservableProperty]
-    private long _CusName;
+    private string _CusName;
 
+    /// <summary>
+    /// تاریخ بازگشت اجناس
+    /// </summary>
     [ObservableProperty]
     private DateTime? _submitDate = DateTime.Now;
 
-    /// <summary>
-    /// مقدار پورسانت
-    /// </summary>
-    [ObservableProperty]
-    private double? _commission;
 
     /// <summary>
     /// وضعیت مشتری
@@ -81,17 +78,6 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
     [ObservableProperty]
     private string _totalPrice = "0";
 
-    /// <summary>
-    /// مبلغ کل پورسانت
-    /// </summary>
-    [ObservableProperty]
-    private string _totalcommission = "0";
-
-    /// <summary>
-    /// مبلغ باقی مانده
-    /// </summary>
-    [ObservableProperty]
-    private string _remainPrice = "0";
 
     /// <summary>
     /// شماره فاکتور
@@ -170,10 +156,11 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
         }
 
         double totalAmountOf = SellGoods.Where(c => c.MaterialId == MaterialId).Sum(t => t.AmountOf);
-        if (AmountOf > totalAmountOf)
+        double listAmountOf = List.Where(c => c.MaterialId == MaterialId).Sum(t => t.AmountOf);
+        if ((listAmountOf + AmountOf) > totalAmountOf)
         {
-            var matName = SellGoods.First(c => c.MaterialId == MaterialId);
-            _snackbarService.Show("خطا", $"مقدار وارد شده بیشتر از مقدار فروش ({totalAmountOf} _ {matName})", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            var unitName = MatList.First(c => c.Id == MaterialId).UnitName;
+            _snackbarService.Show("خطا", $"مقدار وارد شده بیشتر از مقدار فروش ({totalAmountOf} _ {unitName})", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
 
@@ -185,7 +172,7 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
         var mat = MatList.First(t => t.Id == MaterialId);
         if (mat.IsService)
         {
-            _snackbarService.Show("خطا", "اجناس برگشتی شامل سرویس نمیتواند باشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            _snackbarService.Show("خطا", "اجناس برگشتی شامل خدمات نمیتواند باشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
         #endregion
@@ -202,23 +189,10 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
             Description = Description,
             MaterialId = MaterialId,
         });
-        SetCommisionValue();
+        long total = List.Sum(t => t.TotalPrice);
+        TotalPrice = total.ToString("N0");
         RefreshRow(ref rowId);
         return true;
-    }
-
-    /// <summary>
-    /// انتخاب مشتری
-    /// </summary>
-    /// <param name="custId"></param>
-    /// <returns></returns>
-    internal async Task OnSelectCus(Guid custId)
-    {
-        using UnitOfWork db = new();
-        var s = await db.DocumentManager.GetStatus(custId);
-        Status = s.Status;
-        Credit = s.Credit;
-        Debt = s.Debt;
     }
 
     /// <summary>
@@ -250,9 +224,10 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
         if (itm != null)
         {
             List.Remove(itm);
+            long total = List.Sum(t => t.TotalPrice);
+            TotalPrice = total.ToString("N0");
             RefreshRow(ref rowId);
         }
-        SetCommisionValue();
     }
 
     /// <summary>
@@ -260,7 +235,7 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
     /// </summary>
     /// <returns></returns>
     [RelayCommand]
-    private async Task OnSumbit()
+    private async Task OnSubmit()
     {
         #region validation
 
@@ -288,7 +263,7 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
         {
             if (item.IsService) continue;
 
-            var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, false, item.Price);
+            var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, true);
             if (!isSuccess)
             {
                 _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -297,7 +272,7 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
         }
         #endregion
 
-        #region CreateSellDoc
+        #region CreateBuylDoc
         var totalInvoicePrice = List.Sum(t => t.TotalPrice);
 
         //var (e, s) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, Commission, InvDescription, SubmitDate.Value, List);
@@ -309,7 +284,7 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
         await db.SaveChangesAsync();
         #endregion
 
-        #region reload
+        #region RedirectToList
         _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور با موفقیت انجام شد", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
         Type? pageType = NameToPageTypeConverter.Convert("Bill");
@@ -336,40 +311,4 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
         rowId = row;
     }
 
-    /// <summary>
-    /// به روز رسانی مبلغ پورسانت
-    /// </summary>
-    private void SetCommisionValue()
-    {
-        long total = List.Sum(t => t.TotalPrice);
-        TotalPrice = total.ToString("N0");
-        if (Commission != null && Commission != 0)
-        {
-            var com = (long)(total * (Commission / 100));
-            Totalcommission = com.ToString("N0");
-            total -= com;
-        }
-        else
-        {
-            Totalcommission = "0";
-        }
-        RemainPrice = total.ToString("N0");
-    }
-    [RelayCommand]
-    private void OnAddClick(string parameter)
-    {
-        if (string.IsNullOrWhiteSpace(parameter))
-        {
-            return;
-        }
-
-        Type? pageType = NameToPageTypeConverter.Convert(parameter);
-
-        if (pageType == null)
-        {
-            return;
-        }
-
-        _ = _navigationService.Navigate(pageType);
-    }
 }

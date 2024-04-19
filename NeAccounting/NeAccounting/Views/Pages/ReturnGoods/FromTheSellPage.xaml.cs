@@ -16,10 +16,9 @@ namespace NeAccounting.Views.Pages
     {
         private readonly ISnackbarService _snackbarService;
         public FromTheSellViewModel ViewModel { get; }
-        private double _totalEntity;
         private long _price;
 
-        public FromTheSellPage(FromTheSellViewModel viewModel, ISnackbarService snackbarService)
+        public FromTheSellPage(ISnackbarService snackbarService, FromTheSellViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
@@ -29,12 +28,17 @@ namespace NeAccounting.Views.Pages
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (await ViewModel.OnAdd())
+            if (DataContext is not FromTheSellPage fts)
             {
-                ViewModel.AmountOf = null;
-                ViewModel.MaterialId = -1;
-                ViewModel.Description = null;
-                ViewModel.MatPrice = null;
+                return;
+            }
+
+            if (await fts.ViewModel.OnAdd())
+            {
+                fts.ViewModel.AmountOf = null;
+                fts.ViewModel.MaterialId = -1;
+                fts.ViewModel.Description = null;
+                fts.ViewModel.MatPrice = null;
                 txt_MaterialName.Text = string.Empty;
                 txt_UnitName.Text = string.Empty;
                 txt_Unit_price.Text = string.Empty;
@@ -49,28 +53,16 @@ namespace NeAccounting.Views.Pages
         {
             if (!IsInitialized)
                 return;
+
+            if (DataContext is not FromTheSellPage fts)
+                return;
+
             var mat = (MatListDto)args.SelectedItem;
-            ViewModel.MaterialId = mat.Id;
-            ViewModel.MatPrice = mat.LastSellPrice;
-            _totalEntity = mat.Entity;
+            fts.ViewModel.MaterialId = mat.Id;
+            fts.ViewModel.MatPrice = mat.LastSellPrice;
             txt_UnitName.Text = mat.UnitName;
             txt_Unit_price.Text = mat.LastSellPrice.ToString("N0");
             _price = mat.LastSellPrice;
-        }
-
-        private void Txt_amount_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is not NumberBox nb)
-                return;
-
-            if (nb.Value == null)
-                return;
-
-            if (nb.Value > _totalEntity)
-            {
-                _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
-            }
-            txt_total_price.Text = (nb.Value.Value * _price).ToString("N0");
         }
 
         private void Txt_Unit_price_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
@@ -96,13 +88,16 @@ namespace NeAccounting.Views.Pages
             if (sender is not TextBox txt_price)
                 return;
 
-            if (ViewModel.AmountOf == null)
+            if (DataContext is not FromTheSellPage fts)
+                return;
+
+            if (fts.ViewModel.AmountOf == null)
                 return;
 
 
-            ViewModel.MatPrice = _price = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
+            fts.ViewModel.MatPrice = _price = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
 
-            txt_total_price.Text = (ViewModel.AmountOf.Value * _price).ToString("N0");
+            txt_total_price.Text = (fts.ViewModel.AmountOf.Value * _price).ToString("N0");
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
@@ -119,8 +114,11 @@ namespace NeAccounting.Views.Pages
                 return;
             }
 
+            if (DataContext is not FromTheSellPage fts)
+                return;
+
             int id = int.Parse(btn.Tag.ToString());
-            var (s, itm) = ViewModel.OnUpdate(id);
+            var (s, itm) = fts.ViewModel.OnUpdate(id);
             if (!s) return;
             txt_MaterialName.Text = itm.MatName;
             txt_total_price.Text = itm.TotalPrice.ToString("N0");
@@ -138,8 +136,11 @@ namespace NeAccounting.Views.Pages
             if (btn.Tag == null)
                 return;
 
+            if (DataContext is not FromTheSellPage fts)
+                return;
+
             int id = int.Parse(btn.Tag.ToString());
-            ViewModel.OnRemove(id);
+            fts.ViewModel.OnRemove(id);
             dgv_Inv.Items.Refresh();
         }
 
@@ -164,5 +165,6 @@ namespace NeAccounting.Views.Pages
 
             return true;
         }
+
     }
 }

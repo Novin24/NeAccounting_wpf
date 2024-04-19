@@ -16,7 +16,7 @@ using DomainShared.Extension;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
-using System.Reflection.Metadata;
+using DomainShared.ViewModels.Customer;
 
 namespace NeAccounting.ViewModels
 {
@@ -180,8 +180,8 @@ namespace NeAccounting.ViewModels
             var result = await _contentDialogService.ShowSimpleDialogAsync(
             new SimpleContentDialogCreateOptions()
             {
-                Title = "آیا از حذف اطمینان دارید!!!",
-                Content = Application.Current.Resources["DeleteDialogContent"],
+                Title = "هشدار !!!",
+                Content = new TextBlock() { Text = "آیا از حذف سند اطمینان دارید ؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
                 PrimaryButtonText = "بله",
                 SecondaryButtonText = "خیر",
                 CloseButtonText = "انصراف",
@@ -520,16 +520,39 @@ namespace NeAccounting.ViewModels
                 if (!isSuccess)
                 {
                     _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                    Type? pageType = NameToPageTypeConverter.Convert("Dashboard");
-
-                    if (pageType == null)
-                    {
-                        return;
-                    }
-
-                    _navigationService.Navigate(pageType);
                     return;
                 }
+
+                var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    _snackbarService.Show("خطا", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+
+                var contex = new FromTheSellPage(_snackbarService, new FromTheSellViewModel(_snackbarService, _navigationService, _contentDialogService)
+                {
+                    CusName = cus.Name,
+                    CusId = cus.UniqNumber,
+                    Status = stu.Status,
+                    Debt = stu.Debt,
+                    MatList = itm.RemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
+                    {
+                        Id = t.MaterialId,
+                        IsService = t.IsService,
+                        UnitName = t.UnitName,
+                        MaterialName = t.MatName,
+                        LastBuyPrice = t.Price,
+                        LastSellPrice = t.Price
+                    }).ToList(),
+                    Credit = stu.Credit,
+                    SubmitDate = itm.Date,
+                    SellGoods = itm.RemList,
+                    LastInvoice = itm.Serial,
+                });
+                servis.Navigate(pagetyp, contex);
             }
         }
         #endregion
