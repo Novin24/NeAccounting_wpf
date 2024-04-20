@@ -271,7 +271,85 @@ namespace NeAccounting.ViewModels
                         await OnSearchInvoice();
                         break;
 
+                    case DocumntType.ReturnFromBuy:
+                        using (UnitOfWork db = new())
+                        {
+                            #region GetDoc
+                            var (isSucces, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
+                            if (!isSucces)
+                            {
+                                _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                return;
+                            }
+                            #endregion
+
+                            #region UpdateMaterial
+                            foreach (var item in itm.RemList)
+                            {
+                                var (errore, isSucess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, true, item.Price);
+                                if (!isSucess)
+                                {
+                                    _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                    db.Dispose();
+                                    return;
+                                }
+                            }
+                            #endregion
+
+                            var (isSuccess, e) = await db.DocumentManager.DeleteDocument(parameter);
+                            if (!isSuccess)
+                            {
+                                _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                db.Dispose();
+                                return;
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+                        await OnSearchInvoice();
+                        break;
+
                     case DocumntType.BuyInv:
+                        using (UnitOfWork db = new())
+                        {
+                            #region GetDoc
+                            var (isSucces, itm) = await db.DocumentManager.GetBuyInvoiceDetail(parameter);
+                            if (!isSucces)
+                            {
+                                _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                return;
+                            }
+                            #endregion
+
+                            #region UpdateMaterial
+                            foreach (var item in itm.RemList)
+                            {
+                                var (errore, isSucess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, false, item.Price);
+                                if (!isSucess)
+                                {
+                                    _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                    db.Dispose();
+                                    return;
+                                }
+                            }
+                            #endregion
+
+                            var (isSuccess, e) = await db.DocumentManager.DeleteDocument(parameter);
+                            if (!isSuccess)
+                            {
+                                _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                db.Dispose();
+                                return;
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+                        await OnSearchInvoice();
+                        break;
+
+                    case DocumntType.ReturnFromSell:
                         using (UnitOfWork db = new())
                         {
                             #region GetDoc
@@ -585,6 +663,7 @@ namespace NeAccounting.ViewModels
                 {
                     CusName = cus.Name,
                     CusId = cus.Id,
+                    DocId = parameter,
                     CusNum = cus.UniqNumber,
                     Status = stu.Status,
                     Debt = stu.Debt,

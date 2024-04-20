@@ -415,10 +415,15 @@ namespace Infrastructure.Repositories
             if (doc == null)
                 return new("سند مورد نظر یافت نشد!!!", false);
 
+
+            if (string.IsNullOrEmpty(descripion))
+                descripion = $"فاکتور اجناس برگشت از فروش {doc.Serial}";
+
             try
             {
                 doc.RelatedDocuments.Add(new Document(customerId, price, DocumntType.ReturnFromSell, PaymentType.Other, descripion, submitDate, true)
                 .AddBuyRemittance(list));
+                Entities.Update(doc);
             }
             catch (Exception ex)
             {
@@ -434,12 +439,24 @@ namespace Infrastructure.Repositories
             DateTime submitDate,
             List<RemittanceListViewModel> remittances)
         {
-            List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
+            List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
+
+            var doc = await Entities
+                .Include(t => t.RelatedDocuments)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+
+            if (doc == null)
+                return new("سند مورد نظر یافت نشد!!!", false);
+
+            if (string.IsNullOrEmpty(descripion))
+                descripion = $"فاکتور اجناس برگشت از خرید {doc.Serial}";
 
             try
             {
-                await Entities.AddAsync(new Document(customerId, price, DocumntType.ReturnFromBuy, PaymentType.Other, descripion, submitDate, false)
-                .AddBuyRemittance(list));
+                doc.RelatedDocuments.Add(new Document(customerId, price, DocumntType.ReturnFromBuy, PaymentType.Other, descripion, submitDate, false)
+                .AddSellRemittance(list));
+                Entities.Update(doc);
             }
             catch (Exception ex)
             {
@@ -637,6 +654,7 @@ namespace Infrastructure.Repositories
                     Type = t.Type,
                     Date = t.SubmitDate,
                     Serial = t.Serial,
+                    HaveReturned = t.RelatedDocuments.Any(t => t.Type == DocumntType.ReturnFromSell || t.Type == DocumntType.ReturnFromBuy),
                     Description = t.Description,
                     Price = t.Price,
                     ReceivedOrPaid = t.IsReceived
@@ -664,6 +682,7 @@ namespace Infrastructure.Repositories
                 Description = t.Description,
                 Date = t.Date,
                 Type = t.Type,
+                HaveReturned = t.HaveReturned,
                 Serial = t.Serial.ToString(),
                 Id = t.Id,
                 ShamsiDate = t.Date.ToShamsiDate(pc),
@@ -676,6 +695,7 @@ namespace Infrastructure.Repositories
                 Description = t.Description,
                 Date = t.Date,
                 Type = t.Type,
+                HaveReturned = t.HaveReturned,
                 Id = t.Id,
                 Serial = t.Serial.ToString(),
                 ShamsiDate = t.Date.ToShamsiDate(pc),
@@ -696,6 +716,7 @@ namespace Infrastructure.Repositories
                     if (item.Type == DocumntType.SellInv || item.Type == DocumntType.BuyInv)
                     {
                         item.IsPrintable = true;
+                        item.HaveReturned = !item.HaveReturned;
                     }
                     item.IsDeletable = true;
                     item.IsEditable = true;

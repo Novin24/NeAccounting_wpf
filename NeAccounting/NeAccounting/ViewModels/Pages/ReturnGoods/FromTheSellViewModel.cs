@@ -264,10 +264,6 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
             return;
         }
 
-        if (string.IsNullOrEmpty(InvDescription))
-        {
-            InvDescription = "فاکتور اجناس برگشت از فروش";
-        }
         #endregion
 
         #region UpdateMaterial

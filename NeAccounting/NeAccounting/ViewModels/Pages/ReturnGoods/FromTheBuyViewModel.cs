@@ -264,11 +264,6 @@ public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavi
             _snackbarService.Show("خطا", "وارد کردن حداقل یک ردیف الزامیست !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
         }
-
-        if (string.IsNullOrEmpty(InvDescription))
-        {
-            InvDescription = "فاکتور اجناس برگشت از خرید";
-        }
         #endregion
 
         #region UpdateMaterial
