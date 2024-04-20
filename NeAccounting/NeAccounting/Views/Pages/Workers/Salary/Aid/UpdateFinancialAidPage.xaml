@@ -227,7 +227,6 @@
                                         HorizontalAlignment="Center"
                                         FontFamily="Calibri"
                                         FontSize="15"
-                                        IsDefault="True"
                                         Command="{Binding ViewModel.UpdateCommand}"
                                         Grid.ColumnSpan="2" >
                                 <StackPanel Orientation="Horizontal">

@@ -171,6 +171,14 @@ namespace NeAccounting
                 services.AddTransient<UpdateSellInvoiceViewModel>();
                 #endregion
 
+                #region ReturnGoods
+                services.AddTransient<FromTheSellPage>();
+                services.AddTransient<FromTheSellViewModel>();
+                
+                services.AddTransient<FromTheBuyPage>();
+                services.AddTransient<FromTheBuyViewModel>();
+                #endregion
+
                 #endregion
 
                 #region Expense
@@ -275,7 +283,7 @@ namespace NeAccounting
 
                 services.AddTransient<CreateNotificationPage>();
                 services.AddTransient<CreateNotifViewModel>();
-                
+
                 services.AddTransient<UpdateNotificationPage>();
                 services.AddTransient<UpdateNotifViewModel>();
                 #endregion

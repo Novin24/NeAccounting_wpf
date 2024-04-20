@@ -382,7 +382,6 @@
                                         Padding="30 5 "
                                         Margin="12"
                                         HorizontalAlignment="Center"
-                                        IsDefault="True"
                                         FontFamily="Calibri"
                                         Command="{Binding ViewModel.UpdateCommand}"
                                         FontSize="15"

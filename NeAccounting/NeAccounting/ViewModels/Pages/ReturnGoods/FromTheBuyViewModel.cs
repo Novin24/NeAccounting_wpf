@@ -1,6 +1,4 @@
-﻿using DomainShared.Enums;
-using DomainShared.Errore;
-using DomainShared.ViewModels;
+﻿using DomainShared.Errore;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
@@ -10,24 +8,27 @@ using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels;
-public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+
+public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService) : ObservableObject
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
+    private readonly IContentDialogService _contentDialogService = contentDialogService;
+
 
     private int rowId = 1;
 
     /// <summary>
-    /// لیست اجناس  فاکتور
+    /// لیست اجناس  فاکتور خرید
+    /// </summary>
+    [ObservableProperty]
+    private List<RemittanceListViewModel> _buyGoods;
+
+    /// <summary>
+    /// لیست اجناس  برگشتی
     /// </summary>
     [ObservableProperty]
     private List<RemittanceListViewModel> _list = [];
-
-    /// <summary>
-    /// لیست مشتری ها
-    /// </summary>
-    [ObservableProperty]
-    private List<SuggestBoxViewModel<Guid, long>> _cuslist;
 
     /// <summary>
     /// لیست کلیه اجناس
@@ -36,19 +37,36 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     private List<MatListDto> _matList;
 
     /// <summary>
+    /// شماره مشتری
+    /// </summary>
+    [ObservableProperty]
+    private long _CusNum;
+
+    /// <summary>
+    /// شناسه فاکتور
+    /// </summary>
+    [ObservableProperty]
+    private Guid _docId;
+
+
+    /// <summary>
     /// شناسه مشتری
     /// </summary>
     [ObservableProperty]
-    private Guid? _CusId;
+    private Guid _cusId;
 
+    /// <summary>
+    /// نام مشتری
+    /// </summary>
+    [ObservableProperty]
+    private string _CusName;
+
+    /// <summary>
+    /// تاریخ بازگشت اجناس
+    /// </summary>
     [ObservableProperty]
     private DateTime? _submitDate = DateTime.Now;
 
-    /// <summary>
-    /// مقدار پورسانت
-    /// </summary>
-    [ObservableProperty]
-    private double? _commission;
 
     /// <summary>
     /// وضعیت مشتری
@@ -74,20 +92,9 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     [ObservableProperty]
     private string _totalPrice = "0";
 
-    /// <summary>
-    /// مبلغ کل پورسانت
-    /// </summary>
-    [ObservableProperty]
-    private string _totalcommission = "0";
 
     /// <summary>
-    /// مبلغ باقی مانده
-    /// </summary>
-    [ObservableProperty]
-    private string _remainPrice = "0";
-
-    /// <summary>
-    /// شماره اخرین فاکتور
+    /// شماره فاکتور
     /// </summary>
     [ObservableProperty]
     private string _lastInvoice;
@@ -122,42 +129,38 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     [ObservableProperty]
     private string? _invDescription;
 
-    public async void OnNavigatedTo()
-    {
-        await InitializeViewModel();
-    }
-
-    private async Task InitializeViewModel()
-    {
-        using UnitOfWork db = new();
-        Cuslist = await db.CustomerManager.GetDisplayUser(false, null, true);
-        LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
-        MatList = await db.MaterialManager.GetMaterails();
-    }
-
-    public void OnNavigatedFrom()
-    {
-    }
-
     /// <summary>
     /// افزودن ردیف
     /// </summary>
     /// <returns></returns>
-    internal bool OnAdd()
+    internal async Task<bool> OnAdd()
     {
         #region validation
-
-        if (CusId == null)
-        {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
-        }
-
-
         if (MaterialId < 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
+        }
+
+        if (MatPrice == null || MatPrice == 0)
+        {
+            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
+
+        long maxPrice = BuyGoods.Where(c => c.MaterialId == MaterialId).Max(t => t.Price);
+        if (MatPrice > maxPrice)
+        {
+            var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+            {
+                Title = "هشدار !!!",
+                Content = new TextBlock() { Text = $"مبلغ وارد شده بیشتر از قیمت خرید ({maxPrice:N0}) می‌باشد \n آیا ادامه میدهید!!!", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
+                PrimaryButtonText = "بله",
+                SecondaryButtonText = "خیر",
+                CloseButtonText = "انصراف",
+            });
+
+            if (result != ContentDialogResult.Primary) return false;
         }
 
         if (AmountOf == null || AmountOf <= 0)
@@ -166,19 +169,28 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
             return false;
         }
 
-        if (AmountOf > MatList.First(t => t.Id == MaterialId).Entity)
+        double totalAmountOf = BuyGoods.Where(c => c.MaterialId == MaterialId).Sum(t => t.AmountOf);
+        double listAmountOf = List.Where(c => c.MaterialId == MaterialId).Sum(t => t.AmountOf);
+        if ((listAmountOf + AmountOf) > totalAmountOf)
         {
-            _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+            var unitName = MatList.First(c => c.Id == MaterialId).UnitName;
+            _snackbarService.Show("خطا", $"مقدار وارد شده بیشتر از مقدار خرید ({totalAmountOf} _ {unitName})", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return false;
         }
 
-        if (MatPrice == null || MatPrice == 0)
+        //if (AmountOf > MatList.First(t => t.Id == MaterialId).Entity)
+        //{
+        //    _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+        //}
+
+        var mat = MatList.First(t => t.Id == MaterialId);
+        if (mat.IsService)
         {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            _snackbarService.Show("خطا", "اجناس برگشتی شامل خدمات نمیتواند باشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
         #endregion
 
-        var mat = MatList.First(t => t.Id == MaterialId);
         List.Add(new RemittanceListViewModel()
         {
             AmountOf = AmountOf.Value,
@@ -191,23 +203,10 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
             Description = Description,
             MaterialId = MaterialId,
         });
-        SetCommisionValue();
+        long total = List.Sum(t => t.TotalPrice);
+        TotalPrice = total.ToString("N0");
         RefreshRow(ref rowId);
         return true;
-    }
-
-    /// <summary>
-    /// انتخاب مشتری
-    /// </summary>
-    /// <param name="custId"></param>
-    /// <returns></returns>
-    internal async Task OnSelectCus(Guid custId)
-    {
-        using UnitOfWork db = new();
-        var s = await db.DocumentManager.GetStatus(custId);
-        Status = s.Status;
-        Credit = s.Credit;
-        Debt = s.Debt;
     }
 
     /// <summary>
@@ -239,39 +238,31 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         if (itm != null)
         {
             List.Remove(itm);
+            long total = List.Sum(t => t.TotalPrice);
+            TotalPrice = total.ToString("N0");
             RefreshRow(ref rowId);
         }
-        SetCommisionValue();
     }
 
     /// <summary>
     /// ثبت فاکتور
     /// </summary>
     /// <returns></returns>
-    internal async Task<bool> OnSumbit()
+    [RelayCommand]
+    private async Task OnSubmit()
     {
         #region validation
-        if (CusId == null)
-        {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
-        }
 
         if (SubmitDate == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
+            return;
         }
 
         if (List == null || List.Count == 0)
         {
             _snackbarService.Show("خطا", "وارد کردن حداقل یک ردیف الزامیست !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
-        }
-
-        if (string.IsNullOrEmpty(InvDescription))
-        {
-            InvDescription = "فاکتور فروش";
+            return;
         }
         #endregion
 
@@ -281,32 +272,36 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         {
             if (item.IsService) continue;
 
-            var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, false, item.Price);
+            var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, false);
             if (!isSuccess)
             {
                 _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return false;
+                return;
             }
         }
         #endregion
 
-        #region CreateSellDoc
+        #region CreateBuylDoc
         var totalInvoicePrice = List.Sum(t => t.TotalPrice);
 
-        var (e, s) = await db.DocumentManager.CreateSellDocument(CusId.Value, totalInvoicePrice, Commission, InvDescription, SubmitDate.Value, List);
+        var (e, s) = await db.DocumentManager.ReturnFromBuy(DocId, CusId, totalInvoicePrice, InvDescription, SubmitDate.Value, List);
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return false;
+            return;
         }
         await db.SaveChangesAsync();
         #endregion
 
-        #region reload
+        #region RedirectToList
         _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور با موفقیت انجام شد", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
-        await Reload();
-        return true;
+        Type? pageType = NameToPageTypeConverter.Convert("Bill");
+        if (pageType == null)
+        {
+            return;
+        }
+        _navigationService.Navigate(pageType);
         #endregion
     }
 
@@ -325,64 +320,4 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         rowId = row;
     }
 
-    /// <summary>
-    /// بارگیری مجدد صفحه و خالی کردن تمام اینپوت ها
-    /// </summary>
-    /// <returns></returns>
-    private async Task Reload()
-    {
-        using UnitOfWork db = new();
-        LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
-        List = [];
-        CusId = null;
-        Commission = null;
-        MaterialId = -1;
-        InvDescription = null;
-        Description = null;
-        SubmitDate = DateTime.Now;
-        MatPrice = null;
-        Totalcommission = "0";
-        TotalPrice = "0";
-        RemainPrice = "0";
-        Status = "تسویه";
-        Debt = "0";
-        Credit = "0";
-    }
-
-    /// <summary>
-    /// به روز رسانی مبلغ پورسانت
-    /// </summary>
-    private void SetCommisionValue()
-    {
-        long total = List.Sum(t => t.TotalPrice);
-        TotalPrice = total.ToString("N0");
-        if (Commission != null && Commission != 0)
-        {
-            var com = (long)(total * (Commission / 100));
-            Totalcommission = com.ToString("N0");
-            total -= com;
-        }
-        else
-        {
-            Totalcommission = "0";
-        }
-        RemainPrice = total.ToString("N0");
-    }
-    [RelayCommand]
-    private void OnAddClick(string parameter)
-    {
-        if (string.IsNullOrWhiteSpace(parameter))
-        {
-            return;
-        }
-
-        Type? pageType = NameToPageTypeConverter.Convert(parameter);
-
-        if (pageType == null)
-        {
-            return;
-        }
-
-        _ = _navigationService.Navigate(pageType);
-    }
 }

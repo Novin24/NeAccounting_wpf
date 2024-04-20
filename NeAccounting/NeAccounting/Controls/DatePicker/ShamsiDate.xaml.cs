@@ -976,6 +976,11 @@ namespace NeAccounting.Controls
                 Click?.Invoke(this, e);
                 return;
             }
+            if (e.Key == Key.Space)
+            {
+                Click?.Invoke(this, e);
+                return;
+            }
 
             MKeyDown?.Invoke(this, e);
         }
