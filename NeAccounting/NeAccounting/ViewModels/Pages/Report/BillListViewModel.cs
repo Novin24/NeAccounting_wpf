@@ -535,7 +535,9 @@ namespace NeAccounting.ViewModels
                 var contex = new FromTheSellPage(_snackbarService, new FromTheSellViewModel(_snackbarService, _navigationService, _contentDialogService)
                 {
                     CusName = cus.Name,
-                    CusId = cus.UniqNumber,
+                    CusId = cus.Id,
+                    DocId = parameter,
+                    CusNum = cus.UniqNumber,
                     Status = stu.Status,
                     Debt = stu.Debt,
                     MatList = itm.RemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
@@ -548,8 +550,55 @@ namespace NeAccounting.ViewModels
                         LastSellPrice = t.Price
                     }).ToList(),
                     Credit = stu.Credit,
-                    SubmitDate = itm.Date,
                     SellGoods = itm.RemList,
+                    LastInvoice = itm.Serial,
+                });
+                servis.Navigate(pagetyp, contex);
+            }
+            else
+            {
+                Type? pagetyp = NameToPageTypeConverter.Convert("FromTheBuy");
+
+                if (pagetyp == null)
+                {
+                    return;
+                }
+                var servis = _navigationService.GetNavigationControl();
+
+                var (isSuccess, itm) = await db.DocumentManager.GetBuyInvoiceDetail(parameter);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+
+                var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    _snackbarService.Show("خطا", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+
+                var contex = new FromTheBuyPage(_snackbarService, new FromTheBuyViewModel(_snackbarService, _navigationService, _contentDialogService)
+                {
+                    CusName = cus.Name,
+                    CusId = cus.Id,
+                    CusNum = cus.UniqNumber,
+                    Status = stu.Status,
+                    Debt = stu.Debt,
+                    MatList = itm.RemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
+                    {
+                        Id = t.MaterialId,
+                        IsService = t.IsService,
+                        UnitName = t.UnitName,
+                        MaterialName = t.MatName,
+                        LastBuyPrice = t.Price,
+                        LastSellPrice = t.Price
+                    }).ToList(),
+                    Credit = stu.Credit,
+                    BuyGoods = itm.RemList,
                     LastInvoice = itm.Serial,
                 });
                 servis.Navigate(pagetyp, contex);

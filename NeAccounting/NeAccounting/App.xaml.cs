@@ -174,6 +174,9 @@ namespace NeAccounting
                 #region ReturnGoods
                 services.AddTransient<FromTheSellPage>();
                 services.AddTransient<FromTheSellViewModel>();
+                
+                services.AddTransient<FromTheBuyPage>();
+                services.AddTransient<FromTheBuyViewModel>();
                 #endregion
 
                 #endregion

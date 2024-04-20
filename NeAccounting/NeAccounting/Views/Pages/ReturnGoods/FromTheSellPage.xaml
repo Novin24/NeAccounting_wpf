@@ -108,7 +108,7 @@
                                                    DockPanel.Dock="Right"
                                                    FontSize="14"
                                                    x:Name="lbl_cusId"
-                                                   Text="{Binding ViewModel.CusId}"
+                                                   Text="{Binding ViewModel.CusNum}"
                                                    Foreground="#BB8F60"
                                                    VerticalAlignment="Center"
                                                    Margin="6 22 6 0" />

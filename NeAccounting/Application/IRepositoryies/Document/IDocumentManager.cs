@@ -97,6 +97,38 @@ namespace NeApplication.IRepositoryies
             string? descripion,
             DateTime submitDate,
             List<RemittanceListViewModel> remittances);
+
+        /// <summary>
+        /// همون فاکتور فروشه
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="price"></param>
+        /// <param name="descripion"></param>
+        /// <param name="submitDate"></param>
+        /// <param name="remittances"></param>
+        /// <returns></returns>
+        Task<(string error, bool isSuccess)> ReturnFromBuy(Guid docId,
+            Guid customerId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances);
+
+        /// <summary>
+        /// همون فاکتور خریده
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="price"></param>
+        /// <param name="descripion"></param>
+        /// <param name="submitDate"></param>
+        /// <param name="remittances"></param>
+        /// <returns></returns>
+        Task<(string error, bool isSuccess)> ReturnFromSell(Guid docId,
+            Guid customerId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances);
         #endregion
 
         #region status
@@ -208,7 +240,7 @@ namespace NeApplication.IRepositoryies
 
         Task<(bool isSuccess, UpdateChequeDto itm)> GetChequeById(Guid docId);
 
-        Task<(string error, bool isSuccess,Guid docId)> CreateRecCheque(Guid customerId,
+        Task<(string error, bool isSuccess, Guid docId)> CreateRecCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
             string? descripion,
             DateTime submitDate,

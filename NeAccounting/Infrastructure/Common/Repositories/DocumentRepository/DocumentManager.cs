@@ -116,16 +116,17 @@ namespace Infrastructure.Repositories
                 doc.Description = descripion;
                 doc.SubmitDate = submitDate;
 
+                var discountDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.PayDiscount || t.Type == DocumntType.RecDiscount);
                 // به روز رسانی تخفیف
-                if (doc.RelatedDocuments.Count > 0)
+                if (discountDoc != null)
                 {
                     if (discount == null || discount == 0)
                     {
-                        Entities.Remove(doc.RelatedDocuments.First());
+                        Entities.Remove(discountDoc);
                     }
                     else
                     {
-                        doc.RelatedDocuments.First().Price = discount.Value;
+                        discountDoc.Price = discount.Value;
                     }
                 }
                 else
@@ -145,6 +146,7 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
+
         public async Task<(bool isSuccess, string errore)> DeleteDocument(Guid parameter)
         {
             var doc = await Entities
@@ -162,7 +164,6 @@ namespace Infrastructure.Repositories
             try
             {
                 foreach (var d in doc.RelatedDocuments.ToList()) Entities.Remove(d);
-
                 Entities.Remove(doc);
             }
             catch (Exception ex)
@@ -252,16 +253,18 @@ namespace Infrastructure.Repositories
                 }
             }
 
+            var comDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.PayCom);
             // به روز رسانی پورسانت فاکتور
-            if (doc.RelatedDocuments.Count > 0)
+            if (comDoc != null)
             {
                 if (commission != null && commission != 0)
                 {
-                    doc.RelatedDocuments.First().Price = (long)(price * (commission.Value / 100));
+                    comDoc.Price = (long)(price * (commission.Value / 100));
+                    comDoc.Commission = (byte)commission.Value;
                 }
                 else
                 {
-                    Entities.Remove(doc.RelatedDocuments.First());
+                    Entities.Remove(comDoc);
                 }
             }
             else
@@ -361,16 +364,18 @@ namespace Infrastructure.Repositories
                 }
             }
 
+            var comDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.RecCom);
             // به روز رسانی پورسانت فاکتور
-            if (doc.RelatedDocuments.Count > 0)
+            if (comDoc != null)
             {
                 if (commission != null && commission != 0)
                 {
-                    doc.RelatedDocuments.First().Price = (long)(price * (commission.Value / 100));
+                    comDoc.Price = (long)(price * (commission.Value / 100));
+                    comDoc.Commission = (byte)commission.Value;
                 }
                 else
                 {
-                    Entities.Remove(doc.RelatedDocuments.First());
+                    Entities.Remove(comDoc);
                 }
             }
             else
@@ -385,6 +390,56 @@ namespace Infrastructure.Repositories
             try
             {
                 Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+
+        public async Task<(string error, bool isSuccess)> ReturnFromSell(Guid docId,
+            Guid customerId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances)
+        {
+            List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
+
+            var doc = await Entities
+                .Include(t => t.RelatedDocuments)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null)
+                return new("سند مورد نظر یافت نشد!!!", false);
+
+            try
+            {
+                doc.RelatedDocuments.Add(new Document(customerId, price, DocumntType.ReturnFromSell, PaymentType.Other, descripion, submitDate, true)
+                .AddBuyRemittance(list));
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> ReturnFromBuy(Guid docId,
+            Guid customerId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances)
+        {
+            List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
+
+            try
+            {
+                await Entities.AddAsync(new Document(customerId, price, DocumntType.ReturnFromBuy, PaymentType.Other, descripion, submitDate, false)
+                .AddBuyRemittance(list));
             }
             catch (Exception ex)
             {
@@ -417,6 +472,7 @@ namespace Infrastructure.Repositories
                     {
                         AmountOf = t.AmountOf,
                         Description = t.Description,
+                        IsService = t.Material.IsService,
                         MatName = t.Material.Name,
                         UnitName = t.Material.Unit.Name,
                         MaterialId = t.MaterialId,
@@ -455,6 +511,7 @@ namespace Infrastructure.Repositories
                     {
                         AmountOf = t.AmountOf,
                         Description = t.Description,
+                        IsService = t.Material.IsService,
                         MaterialId = t.MaterialId,
                         MatName = t.Material.Name,
                         UnitName = t.Material.Unit.Name,
@@ -634,7 +691,7 @@ namespace Infrastructure.Repositories
                 long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Sum(p => p.Bed);
                 long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Sum(p => p.Bes);
 
-                if (item.Type == DocumntType.PayDoc || item.Type == DocumntType.RecDoc || item.Type == DocumntType.SellInv || item.Type == DocumntType.BuyInv)
+                if (item.Type == DocumntType.PayDoc || item.Type == DocumntType.RecDoc || item.Type == DocumntType.SellInv || item.Type == DocumntType.BuyInv || item.Type == DocumntType.ReturnFromBuy || item.Type == DocumntType.ReturnFromSell)
                 {
                     if (item.Type == DocumntType.SellInv || item.Type == DocumntType.BuyInv)
                     {

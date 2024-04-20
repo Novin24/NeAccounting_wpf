@@ -42,7 +42,15 @@
         /// چک ضمانتی
         /// </summary>
         GarantyCheque,
-        Other
+        /// <summary>
+        /// برگشت از فروش
+        /// </summary>
+        ReturnFromSell,
+        /// <summary>
+        /// برگشت از خرید
+        /// </summary>
+        ReturnFromBuy,
+        Other = 59
 
     }
 }
