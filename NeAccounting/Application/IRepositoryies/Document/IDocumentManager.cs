@@ -26,6 +26,22 @@ namespace NeApplication.IRepositoryies
         Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetBuyInvoiceDetail(Guid invoiceId);
 
         /// <summary>
+        /// دریافت جزییات فاکتور بازگشت از فروش
+        /// </summary>
+        /// <param name="parentInvoiceId"></param>
+        /// <param name="returnId"></param>
+        /// <returns></returns>
+        Task<(bool isSuccess, ReturnInvoiceDetailUpdateDto itm)> GetFromTheSellInvoiceDetail(Guid parentInvoiceId, Guid returnId);
+        
+        /// <summary>
+        /// دریافت جزییات فاکتور بازگشت از خرید
+        /// </summary>
+        /// <param name="parentInvoiceId"></param>
+        /// <param name="returnId"></param>
+        /// <returns></returns>
+        Task<(bool isSuccess, ReturnInvoiceDetailUpdateDto itm)> GetFromTheBuyInvoiceDetail(Guid parentInvoiceId, Guid returnId);
+
+        /// <summary>
         /// دریافت اخرین شماره فاکتور
         /// </summary>
         /// <param name="type"></param>

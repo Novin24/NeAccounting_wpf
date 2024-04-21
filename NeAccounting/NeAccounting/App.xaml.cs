@@ -40,7 +40,7 @@ namespace NeAccounting
                 #region Main
                 services.AddHostedService<ApplicationHostService>();
                 services.AddSingleton<MainWindow>();
-                services.AddSingleton<LoadingWindow>();
+                //services.AddSingleton<LoadingWindow>(); 
                 services.AddSingleton<MainWindowViewModel>();
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<ISnackbarService, SnackbarService>();
@@ -174,9 +174,15 @@ namespace NeAccounting
                 #region ReturnGoods
                 services.AddTransient<FromTheSellPage>();
                 services.AddTransient<FromTheSellViewModel>();
-                
+
                 services.AddTransient<FromTheBuyPage>();
                 services.AddTransient<FromTheBuyViewModel>();
+
+                services.AddTransient<UpdateFromSellPage>();
+                services.AddTransient<UpdateFromTheSellViewModel>();
+
+                services.AddTransient<UpdateFromBuyPage>();
+                services.AddTransient<UpdateFromTheBuyViewModel>();
                 #endregion
 
                 #endregion

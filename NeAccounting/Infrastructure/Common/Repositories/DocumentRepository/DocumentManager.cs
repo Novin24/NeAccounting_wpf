@@ -548,6 +548,124 @@ namespace Infrastructure.Repositories
             return new(true, inv);
         }
 
+        public async Task<(bool isSuccess, ReturnInvoiceDetailUpdateDto itm)> GetFromTheSellInvoiceDetail(Guid parentInvoiceId, Guid returnId)
+        {
+            try
+            {
+                var inv = await TableNoTracking
+                    .Include(r => r.SellRemittances)
+                    .Include(r => r.BuyRemittances)
+                    .Include(r => r.RelatedDocuments)
+                    .Where(t => t.Id == parentInvoiceId)
+                    .Select(c => new ReturnInvoiceDetailUpdateDto()
+                    {
+                        CustomerId = c.CustomerId,
+                        ParentSerial = c.Serial.ToString(),
+                        ReturnSerial = c.RelatedDocuments.First(t => t.Id == returnId).Serial.ToString(),
+                        TotalInvPrice = c.RelatedDocuments.First(t => t.Id == returnId).Price,
+                        Description = c.RelatedDocuments.First(t => t.Id == returnId).Description,
+                        Date = c.RelatedDocuments.First(t => t.Id == returnId).SubmitDate,
+                        ParentRemList = c.SellRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList(),
+                        ReturnRemList = c.RelatedDocuments.First(t => t.Id == returnId).BuyRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList()
+                    }).FirstOrDefaultAsync();
+
+                if (inv == null)
+                {
+                    return new(false, new ReturnInvoiceDetailUpdateDto());
+                }
+                int row = 1;
+                inv.ParentRemList.ForEach(t => { t.RowId = row++; });
+                inv.ReturnRemList.ForEach(t => { t.RowId = row++; });
+
+                return new(true, inv);
+            }
+            catch
+            {
+                return new(false, new ReturnInvoiceDetailUpdateDto());
+            }
+        }
+
+        public async Task<(bool isSuccess, ReturnInvoiceDetailUpdateDto itm)> GetFromTheBuyInvoiceDetail(Guid parentInvoiceId, Guid returnId)
+        {
+            try
+            {
+                var inv = await TableNoTracking
+                    .Include(r => r.SellRemittances)
+                    .Include(r => r.BuyRemittances)
+                    .Include(r => r.RelatedDocuments)
+                    .Where(t => t.Id == parentInvoiceId)
+                    .Select(c => new ReturnInvoiceDetailUpdateDto()
+                    {
+                        CustomerId = c.CustomerId,
+                        ParentSerial = c.Serial.ToString(),
+                        ReturnSerial = c.RelatedDocuments.First(t => t.Id == returnId).Serial.ToString(),
+                        TotalInvPrice = c.RelatedDocuments.First(t => t.Id == returnId).Price,
+                        Description = c.RelatedDocuments.First(t => t.Id == returnId).Description,
+                        Date = c.RelatedDocuments.First(t => t.Id == returnId).SubmitDate,
+                        ParentRemList = c.BuyRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList(),
+                        ReturnRemList = c.RelatedDocuments.First(t => t.Id == returnId).SellRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList()
+                    }).FirstOrDefaultAsync();
+
+                if (inv == null)
+                {
+                    return new(false, new ReturnInvoiceDetailUpdateDto());
+                }
+                int row = 1;
+                inv.ParentRemList.ForEach(t => { t.RowId = row++; });
+                inv.ReturnRemList.ForEach(t => { t.RowId = row++; });
+
+                return new(true, inv);
+            }
+            catch
+            {
+                return new(false, new ReturnInvoiceDetailUpdateDto());
+            }
+        }
+
         public async Task<(bool isSuccess, DocUpdateDto itm)> GetDocumentById(Guid docId)
         {
             var inv = await TableNoTracking
@@ -651,6 +769,7 @@ namespace Infrastructure.Repositories
                 .Select(t => new InvoiceDto()
                 {
                     Id = t.Id,
+                    ParentId = t.DocumentId,
                     Type = t.Type,
                     Date = t.SubmitDate,
                     Serial = t.Serial,
@@ -681,6 +800,7 @@ namespace Infrastructure.Repositories
             {
                 Description = t.Description,
                 Date = t.Date,
+                ParentId = t.ParentId,
                 Type = t.Type,
                 HaveReturned = t.HaveReturned,
                 Serial = t.Serial.ToString(),
@@ -693,6 +813,7 @@ namespace Infrastructure.Repositories
             Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDtos
             {
                 Description = t.Description,
+                ParentId = t.ParentId,
                 Date = t.Date,
                 Type = t.Type,
                 HaveReturned = t.HaveReturned,

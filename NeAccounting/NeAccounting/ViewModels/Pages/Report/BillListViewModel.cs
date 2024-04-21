@@ -529,6 +529,114 @@ namespace NeAccounting.ViewModels
                     _navigationService.Navigate(pagType);
                     break;
 
+                case DocumntType.ReturnFromSell:
+                    Type? pagTyp = NameToPageTypeConverter.Convert("UpdateFromSell");
+
+                    if (pagTyp == null || doc.ParentId == null)
+                    {
+                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var srvis = _navigationService.GetNavigationControl();
+
+                    var (isSuccess, itm) = await db.DocumentManager.GetFromTheSellInvoiceDetail(doc.ParentId.Value, parameter);
+                    if (!isSuccess)
+                    {
+                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                    (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
+
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        _snackbarService.Show("خطا", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var cntx = new UpdateFromSellPage(_snackbarService, new UpdateFromTheSellViewModel(_snackbarService, _navigationService, _contentDialogService)
+                    {
+                        CusName = cus.Name,
+                        CusId = cus.Id,
+                        DocId = parameter,
+                        CusNum = cus.UniqNumber,
+                        InvDescription = itm.Description,
+                        SubmitDate = itm.Date,
+                        TotalPrice = itm.TotalInvPrice.ToString("N0"),
+                        MatList = itm.ParentRemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
+                        {
+                            Id = t.MaterialId,
+                            IsService = t.IsService,
+                            UnitName = t.UnitName,
+                            MaterialName = t.MatName,
+                            LastBuyPrice = t.Price,
+                            LastSellPrice = t.Price
+                        }).ToList(),
+                        SellGoods = itm.ParentRemList,
+                        List = itm.ReturnRemList,
+                        ParentInvoiceSerial = itm.ParentSerial,
+                        ReturnInvoicSerial = itm.ReturnSerial,
+                    });
+                    srvis.Navigate(pagTyp, cntx);
+
+                    break;
+
+                case DocumntType.ReturnFromBuy:
+                    Type? pgTyp = NameToPageTypeConverter.Convert("UpdateFromBuy");
+
+                    if (pgTyp == null || doc.ParentId == null)
+                    {
+                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var srvs = _navigationService.GetNavigationControl();
+
+                    var (sc, itmm) = await db.DocumentManager.GetFromTheBuyInvoiceDetail(doc.ParentId.Value, parameter);
+                    if (!sc)
+                    {
+                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var stuv = await db.DocumentManager.GetStatus(itmm.CustomerId);
+                    (string err, CustomerListDto cuss) = await db.CustomerManager.GetCustomerById(itmm.CustomerId);
+
+                    if (!string.IsNullOrEmpty(err))
+                    {
+                        _snackbarService.Show("خطا", err, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var cnx = new UpdateFromBuyPage(_snackbarService, new UpdateFromTheBuyViewModel(_snackbarService, _navigationService, _contentDialogService)
+                    {
+                        CusName = cuss.Name,
+                        CusId = cuss.Id,
+                        DocId = parameter,
+                        CusNum = cuss.UniqNumber,
+                        InvDescription = itmm.Description,
+                        SubmitDate = itmm.Date,
+                        TotalPrice = itmm.TotalInvPrice.ToString("N0"),
+                        MatList = itmm.ParentRemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
+                        {
+                            Id = t.MaterialId,
+                            IsService = t.IsService,
+                            UnitName = t.UnitName,
+                            MaterialName = t.MatName,
+                            LastBuyPrice = t.Price,
+                            LastSellPrice = t.Price
+                        }).ToList(),
+                        BuyGoods = itmm.ParentRemList,
+                        List = itmm.ReturnRemList,
+                        ParentInvoiceSerial = itmm.ParentSerial,
+                        ReturnInvoicSerial = itmm.ReturnSerial,
+                    });
+                    srvs.Navigate(pgTyp, cnx);
+
+                    break;
+
                 case DocumntType.Cheque:
                     break;
                 default:

@@ -9,7 +9,7 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels;
 
-public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService) : ObservableObject
+public partial class UpdateFromTheBuyViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService) : ObservableObject
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
@@ -19,7 +19,7 @@ public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavi
     private int rowId = 1;
 
     /// <summary>
-    /// لیست اجناس  فاکتور خرید
+    /// لیست اجناس  فاکتور  فروش
     /// </summary>
     [ObservableProperty]
     private List<RemittanceListViewModel> _buyGoods;
@@ -67,37 +67,24 @@ public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavi
     [ObservableProperty]
     private DateTime? _submitDate = DateTime.Now;
 
-
-    /// <summary>
-    /// وضعیت مشتری
-    /// </summary>
-    [ObservableProperty]
-    private string _status = "تسویه";
-
-    /// <summary>
-    /// بدهکاری مشتری
-    /// </summary>
-    [ObservableProperty]
-    private string _debt = "0";
-
-    /// <summary>
-    /// طلبکاری مشتری
-    /// </summary>
-    [ObservableProperty]
-    private string _credit = "0";
-
     /// <summary>
     /// مبلغ کل فاکتور
     /// </summary>
     [ObservableProperty]
     private string _totalPrice = "0";
 
-    
+
     /// <summary>
-    /// شماره فاکتور
+    /// شماره فاکتور فروش
     /// </summary>
     [ObservableProperty]
-    private string _lastInvoice;
+    private string _parentInvoiceSerial;
+
+    /// <summary>
+    /// شماره فاکتور برگشتی
+    /// </summary>
+    [ObservableProperty]
+    private string _returnInvoicSerial;
 
     /// <summary>
     /// شناسه جنس انتخاب شده در سلکت باکس
@@ -154,7 +141,7 @@ public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavi
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
                 Title = "هشدار !!!",
-                Content = new TextBlock() { Text = $"مبلغ وارد شده بیشتر از قیمت خرید ({maxPrice:N0}) می‌باشد \n آیا ادامه میدهید!!!", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
+                Content = new TextBlock() { Text = $"مبلغ وارد شده بیشتر از قیمت فروش ({maxPrice:N0}) می‌باشد \n آیا ادامه میدهید!!!", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
                 PrimaryButtonText = "بله",
                 SecondaryButtonText = "خیر",
                 CloseButtonText = "انصراف",
@@ -174,7 +161,7 @@ public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavi
         if ((listAmountOf + AmountOf) > totalAmountOf)
         {
             var unitName = MatList.First(c => c.Id == MaterialId).UnitName;
-            _snackbarService.Show("خطا", $"مقدار وارد شده بیشتر از مقدار خرید ({totalAmountOf} _ {unitName})", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            _snackbarService.Show("خطا", $"مقدار وارد شده بیشتر از مقدار فروش ({totalAmountOf} _ {unitName})", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
 
@@ -264,6 +251,7 @@ public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavi
             _snackbarService.Show("خطا", "وارد کردن حداقل یک ردیف الزامیست !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
         }
+
         #endregion
 
         #region UpdateMaterial
@@ -272,7 +260,7 @@ public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavi
         {
             if (item.IsService) continue;
 
-            var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, false);
+            var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, true);
             if (!isSuccess)
             {
                 _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -284,7 +272,7 @@ public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavi
         #region CreateBuylDoc
         var totalInvoicePrice = List.Sum(t => t.TotalPrice);
 
-        var (e, s) = await db.DocumentManager.ReturnFromBuy(DocId, CusId, totalInvoicePrice, InvDescription, SubmitDate.Value, List);
+        var (e, s) = await db.DocumentManager.ReturnFromSell(DocId, CusId, totalInvoicePrice, InvDescription, SubmitDate.Value, List);
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
