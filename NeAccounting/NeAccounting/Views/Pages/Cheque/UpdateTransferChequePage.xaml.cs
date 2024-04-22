@@ -1,18 +1,19 @@
-﻿using DomainShared.ViewModels;
+﻿using DomainShared.Enums;
+using DomainShared.ViewModels;
 using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for UpdateCheque.xaml
+    /// Interaction logic for UpdateTransferChequePage.xaml
     /// </summary>
-    public partial class UpdateChequePage : INavigableView<UpdateChequeViewModel>
+    public partial class UpdateTransferChequePage : INavigableView<UpdateTransferChequeViewModel>
     {
 
-        public UpdateChequeViewModel ViewModel { get; }
+        public UpdateTransferChequeViewModel ViewModel { get; }
 
-        public UpdateChequePage(UpdateChequeViewModel viewModel)
+        public UpdateTransferChequePage(UpdateTransferChequeViewModel viewModel)
         {
             ViewModel = viewModel;
             DataContext = this;
@@ -21,7 +22,7 @@ namespace NeAccounting.Views.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (DataContext is UpdateChequePage c)
+            if (DataContext is UpdateTransferChequePage c)
             {
                 txt_Name.SetCurrentValue(AutoSuggestBox.TextProperty, c.ViewModel.CusName);
             }
@@ -34,7 +35,7 @@ namespace NeAccounting.Views.Pages
             if (!IsInitialized)
                 return;
             var user = (SuggestBoxViewModel<Guid, long>)args.SelectedItem;
-            if (DataContext is UpdateChequePage c)
+            if (DataContext is UpdateTransferChequePage c)
             {
                 var ts = c.ViewModel;
                 ts.CusId = user.Id;

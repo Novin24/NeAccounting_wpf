@@ -229,6 +229,15 @@ namespace Infrastructure.Repositories
             // به روز رسانی تک تک قلم های فاکتور
             foreach (var item in remittances)
             {
+                if (item.IsDeleted)
+                {
+                    var rem = doc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem != null)
+                    {
+                        doc.SellRemittances.Remove(rem);
+                        continue;
+                    }
+                }
                 if (item.RremId == Guid.Empty)
                 {
                     doc.SellRemittances.Add(new SellRemittance(
@@ -340,6 +349,15 @@ namespace Infrastructure.Repositories
             // به روز رسانی تک تک قلم های فاکتور
             foreach (var item in remittances)
             {
+                if (item.IsDeleted)
+                {
+                    var rem = doc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem != null)
+                    {
+                        doc.BuyRemittances.Remove(rem);
+                        continue;
+                    }
+                }
                 if (item.RremId == Guid.Empty)
                 {
                     doc.BuyRemittances.Add(new BuyRemittance(
@@ -482,8 +500,8 @@ namespace Infrastructure.Repositories
                     Serial = c.Serial.ToString(),
                     Date = c.SubmitDate,
                     TotalPrice = c.Price,
-                    Commission = c.RelatedDocuments.Sum(t => t.Commission),
-                    CommissionPrice = c.RelatedDocuments.Sum(t => t.Price),
+                    Commission = c.RelatedDocuments.Where(t => t.Type == DocumntType.PayCom).Sum(t => t.Commission),
+                    CommissionPrice = c.RelatedDocuments.Where(t => t.Type == DocumntType.PayCom).Sum(t => t.Price),
                     InvoiceDescription = c.Description,
                     RemList = c.SellRemittances.Select(t => new RemittanceListViewModel()
                     {
@@ -509,6 +527,62 @@ namespace Infrastructure.Repositories
             return new(true, inv);
         }
 
+        public async Task<(bool isSuccess, List<RemittanceListViewModel> itm)> GetRetrunSellInvoiceGoods(Guid parentInvoiceId)
+        {
+            var inv = await TableNoTracking
+                .Include(r => r.BuyRemittances)
+                .Where(t => t.DocumentId == parentInvoiceId)
+                .Select(c => new InvoiceDetailUpdateDto()
+                {
+                    RemList = c.BuyRemittances.Select(t => new RemittanceListViewModel()
+                    {
+                        AmountOf = t.AmountOf,
+                        Description = t.Description,
+                        IsService = t.Material.IsService,
+                        MatName = t.Material.Name,
+                        UnitName = t.Material.Unit.Name,
+                        MaterialId = t.MaterialId,
+                        Price = t.Price,
+                        RremId = t.Id,
+                        TotalPrice = t.TotalPrice
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+
+            if (inv == null)
+            {
+                return new(false, []);
+            }
+            return new(true, inv.RemList);
+        }
+
+        public async Task<(bool isSuccess, List<RemittanceListViewModel> itm)> GetRetrunBuyInvoiceGoods(Guid parentInvoiceId)
+        {
+            var inv = await TableNoTracking
+                .Include(r => r.SellRemittances)
+                .Where(t => t.DocumentId == parentInvoiceId)
+                .Select(c => new InvoiceDetailUpdateDto()
+                {
+                    RemList = c.SellRemittances.Select(t => new RemittanceListViewModel()
+                    {
+                        AmountOf = t.AmountOf,
+                        Description = t.Description,
+                        IsService = t.Material.IsService,
+                        MatName = t.Material.Name,
+                        UnitName = t.Material.Unit.Name,
+                        MaterialId = t.MaterialId,
+                        Price = t.Price,
+                        RremId = t.Id,
+                        TotalPrice = t.TotalPrice
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+
+            if (inv == null)
+            {
+                return new(false, []);
+            }
+            return new(true, inv.RemList);
+        }
+
         public async Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetBuyInvoiceDetail(Guid invoiceId)
         {
             var inv = await TableNoTracking
@@ -521,8 +595,8 @@ namespace Infrastructure.Repositories
                     Serial = c.Serial.ToString(),
                     Date = c.SubmitDate,
                     TotalPrice = c.Price,
-                    Commission = c.RelatedDocuments.Sum(t => t.Commission),
-                    CommissionPrice = c.RelatedDocuments.Sum(t => t.Price),
+                    Commission = c.RelatedDocuments.Where(t => t.Type == DocumntType.RecCom).Sum(t => t.Commission),
+                    CommissionPrice = c.RelatedDocuments.Where(t => t.Type == DocumntType.RecCom).Sum(t => t.Price),
                     InvoiceDescription = c.Description,
                     RemList = c.BuyRemittances.Select(t => new RemittanceListViewModel()
                     {
@@ -546,6 +620,126 @@ namespace Infrastructure.Repositories
             inv.RemList.ForEach(t => { t.RowId = row++; });
 
             return new(true, inv);
+        }
+
+        public async Task<(bool isSuccess, ReturnInvoiceDetailUpdateDto itm)> GetFromTheSellInvoiceDetail(Guid parentInvoiceId, Guid returnId)
+        {
+            try
+            {
+                var inv = await TableNoTracking
+                    .Include(r => r.SellRemittances)
+                    .Include(r => r.BuyRemittances)
+                    .Include(r => r.RelatedDocuments)
+                    .Where(t => t.Id == parentInvoiceId)
+                    .Select(c => new ReturnInvoiceDetailUpdateDto()
+                    {
+                        CustomerId = c.CustomerId,
+                        ParentSerial = c.Serial.ToString(),
+                        ReturnSerial = c.RelatedDocuments.First(t => t.Id == returnId).Serial.ToString(),
+                        TotalInvPrice = c.RelatedDocuments.First(t => t.Id == returnId).Price,
+                        Description = c.RelatedDocuments.First(t => t.Id == returnId).Description,
+                        Date = c.RelatedDocuments.First(t => t.Id == returnId).SubmitDate,
+                        ParentRemList = c.SellRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList(),
+                        ReturnRemList = c.RelatedDocuments.First(t => t.Id == returnId).BuyRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList()
+                    }).FirstOrDefaultAsync();
+
+                if (inv == null)
+                {
+                    return new(false, new ReturnInvoiceDetailUpdateDto());
+                }
+                int row = 1;
+                inv.ParentRemList.ForEach(t => { t.RowId = row++; });
+                row = 1;
+                inv.ReturnRemList.ForEach(t => { t.RowId = row++; });
+
+                return new(true, inv);
+            }
+            catch
+            {
+                return new(false, new ReturnInvoiceDetailUpdateDto());
+            }
+        }
+
+        public async Task<(bool isSuccess, ReturnInvoiceDetailUpdateDto itm)> GetFromTheBuyInvoiceDetail(Guid parentInvoiceId, Guid returnId)
+        {
+            try
+            {
+                var inv = await TableNoTracking
+                    .Include(r => r.SellRemittances)
+                    .Include(r => r.BuyRemittances)
+                    .Include(r => r.RelatedDocuments)
+                    .Where(t => t.Id == parentInvoiceId)
+                    .Select(c => new ReturnInvoiceDetailUpdateDto()
+                    {
+                        CustomerId = c.CustomerId,
+                        ParentSerial = c.Serial.ToString(),
+                        ReturnSerial = c.RelatedDocuments.First(t => t.Id == returnId).Serial.ToString(),
+                        TotalInvPrice = c.RelatedDocuments.First(t => t.Id == returnId).Price,
+                        Description = c.RelatedDocuments.First(t => t.Id == returnId).Description,
+                        Date = c.RelatedDocuments.First(t => t.Id == returnId).SubmitDate,
+                        ParentRemList = c.BuyRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList(),
+                        ReturnRemList = c.RelatedDocuments.First(t => t.Id == returnId).SellRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList()
+                    }).FirstOrDefaultAsync();
+
+                if (inv == null)
+                {
+                    return new(false, new ReturnInvoiceDetailUpdateDto());
+                }
+                int row = 1;
+                inv.ParentRemList.ForEach(t => { t.RowId = row++; });
+                row = 1;
+                inv.ReturnRemList.ForEach(t => { t.RowId = row++; });
+
+                return new(true, inv);
+            }
+            catch
+            {
+                return new(false, new ReturnInvoiceDetailUpdateDto());
+            }
         }
 
         public async Task<(bool isSuccess, DocUpdateDto itm)> GetDocumentById(Guid docId)
@@ -572,6 +766,145 @@ namespace Infrastructure.Repositories
             return new(true, inv);
         }
 
+        public async Task<(string error, bool isSuccess)> UpdateReturnFromTheBuyInvoice(Guid parentDocId,
+            Guid docId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances)
+        {
+            var doc = await Entities
+                .Include(t => t.RelatedDocuments)
+                .ThenInclude(c => c.SellRemittances)
+                .FirstOrDefaultAsync(t => t.Id == parentDocId);
+
+
+            if (doc == null || doc.RelatedDocuments.FirstOrDefault(t => t.Id == docId) == null)
+                return new("سند مورد نظر یافت نشد!!!", false);
+
+            var returntDoc = doc.RelatedDocuments.First(t => t.Id == docId);
+
+            returntDoc.Price = price;
+            returntDoc.Description = descripion;
+            returntDoc.SubmitDate = submitDate;
+
+            // به روز رسانی تک تک قلم های فاکتور
+            foreach (var item in remittances)
+            {
+                if (item.IsDeleted)
+                {
+                    var rem = returntDoc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem != null)
+                    {
+                        returntDoc.SellRemittances.Remove(rem);
+                        continue;
+                    }
+                }
+                if (item.RremId == Guid.Empty)
+                {
+                    returntDoc.SellRemittances.Add(new SellRemittance(
+                        item.MaterialId,
+                        item.AmountOf,
+                        item.Price,
+                        item.TotalPrice,
+                        submitDate,
+                        item.Description));
+                }
+                else
+                {
+                    var rem = returntDoc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem == null)
+                        continue;
+                    rem.MaterialId = item.MaterialId;
+                    rem.AmountOf = item.AmountOf;
+                    rem.Price = item.Price;
+                    rem.TotalPrice = item.TotalPrice;
+                    rem.SubmitDate = submitDate;
+                    rem.Description = item.Description;
+                }
+            }
+
+
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> UpdateReturnFromTheSellInvoice(Guid parentDocId,
+            Guid docId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances)
+        {
+            var doc = await Entities
+                .Include(t => t.RelatedDocuments)
+                .ThenInclude(c => c.BuyRemittances)
+                .FirstOrDefaultAsync(t => t.Id == parentDocId);
+
+
+            if (doc == null || doc.RelatedDocuments.FirstOrDefault(t => t.Id == docId) == null)
+                return new("سند مورد نظر یافت نشد!!!", false);
+
+            var returntDoc = doc.RelatedDocuments.First(t => t.Id == docId);
+
+            returntDoc.Price = price;
+            returntDoc.Description = descripion;
+            returntDoc.SubmitDate = submitDate;
+
+            // به روز رسانی تک تک قلم های فاکتور
+            foreach (var item in remittances)
+            {
+                if (item.IsDeleted)
+                {
+                    var rem = returntDoc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem != null)
+                    {
+                        returntDoc.BuyRemittances.Remove(rem);
+                        continue;
+                    }
+                }
+                if (item.RremId == Guid.Empty)
+                {
+                    returntDoc.BuyRemittances.Add(new BuyRemittance(
+                        item.MaterialId,
+                        item.AmountOf,
+                        item.Price,
+                        item.TotalPrice,
+                        submitDate,
+                        item.Description));
+                }
+                else
+                {
+                    var rem = returntDoc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem == null)
+                        continue;
+                    rem.MaterialId = item.MaterialId;
+                    rem.AmountOf = item.AmountOf;
+                    rem.Price = item.Price;
+                    rem.TotalPrice = item.TotalPrice;
+                    rem.SubmitDate = submitDate;
+                    rem.Description = item.Description;
+                }
+            }
+
+
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
         #endregion
 
         #region Status
@@ -651,6 +984,7 @@ namespace Infrastructure.Repositories
                 .Select(t => new InvoiceDto()
                 {
                     Id = t.Id,
+                    ParentId = t.DocumentId,
                     Type = t.Type,
                     Date = t.SubmitDate,
                     Serial = t.Serial,
@@ -681,6 +1015,7 @@ namespace Infrastructure.Repositories
             {
                 Description = t.Description,
                 Date = t.Date,
+                ParentId = t.ParentId,
                 Type = t.Type,
                 HaveReturned = t.HaveReturned,
                 Serial = t.Serial.ToString(),
@@ -693,6 +1028,7 @@ namespace Infrastructure.Repositories
             Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDtos
             {
                 Description = t.Description,
+                ParentId = t.ParentId,
                 Date = t.Date,
                 Type = t.Type,
                 HaveReturned = t.HaveReturned,
@@ -1145,12 +1481,13 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region Cheque
-        public async Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime, DateTime? endTime, Guid? cusId, ChequeStatus status, bool isInit, int pageNum = 0, int pageCount = NeAccountingConstants.PageCount)
+        public async Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime, DateTime? endTime, Guid? cusId, string chequeNumber, ChequeStatus status, bool isInit, int pageNum = 0, int pageCount = NeAccountingConstants.PageCount)
         {
             PersianCalendar pc = new();
             var query = (from che in DbContext.Set<Cheque>()
                                    .AsNoTracking()
                                    .Where(t => status == ChequeStatus.AllCheques || t.Status == status)
+                                   .Where(t => string.IsNullOrEmpty(chequeNumber) || t.Cheque_Number.Contains(chequeNumber))
                                    .Where(t => !startTime.HasValue || t.Due_Date >= startTime)
                                    .Where(t => !endTime.HasValue || t.Due_Date < endTime)
 
@@ -1196,10 +1533,10 @@ namespace Infrastructure.Repositories
             for (int i = 1; i <= li.Count; i++)
             {
                 li[i - 1].Row = i;
-                if (li[i - 1].Status == ChequeStatus.Transferred)
-                {
-                    li[i - 1].IsEditable = false;
-                }
+                //if (li[i - 1].Status == ChequeStatus.Transferred)
+                //{
+                //    li[i - 1].IsEditable = false;
+                //}
 
                 if (li[i - 1].Status == ChequeStatus.Rejected || li[i - 1].Status == ChequeStatus.InBox)
                 {
@@ -1285,6 +1622,8 @@ namespace Infrastructure.Repositories
                                  Cheque_Number = che.Cheque_Number,
                                  Cheque_Owner = che.Cheque_Owner,
                                  PayCusName = payCus.Name,
+                                 PayerId = payCus.Id,
+                                 ReceverId = recCus.Id,
                                  PayCusNum = payCus.CusId.ToString(),
                                  RecCusNum = recCus.CusId.ToString(),
                                  RecCusName = recCus.Name,
@@ -1584,6 +1923,38 @@ namespace Infrastructure.Repositories
             che.Reciver = cusId;
             doc.RelatedDocuments.Add(new Document(cusId, doc.Price, DocumntType.Cheque, PaymentType.Cheque, desc, transferDate, false));
 
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> UpdateAssignCheque(
+            Guid docId,
+            Guid cusId,
+            DateTime transferDate,
+            string desc)
+        {
+            var doc = await Entities
+                .Include(t => t.Cheques)
+                .Include(s => s.RelatedDocuments)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null || doc.Cheques.Count == 0 || doc.RelatedDocuments.Count == 0)
+                return new("چک مورد نظر یافت نشد!!!", false);
+
+            var che = doc.Cheques.First();
+            che.TransferdDate = transferDate;
+            che.Reciver = cusId;
+            var assDoc = doc.RelatedDocuments.First();
+            assDoc.Description = desc;
+            assDoc.CustomerId = cusId;
+            assDoc.SubmitDate = transferDate;
             try
             {
                 Entities.Update(doc);

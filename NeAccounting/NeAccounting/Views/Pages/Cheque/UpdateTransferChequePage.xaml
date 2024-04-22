@@ -1,23 +1,24 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.TransferChequePage"
+﻿<Page x:Class="NeAccounting.Views.Pages.UpdateTransferChequePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
-      mc:Ignorable="d"
       Loaded="Page_Loaded"
-      d:DataContext="{d:DesignInstance local:TransferChequePage,
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      d:DataContext="{d:DesignInstance local:UpdateTransferChequePage,
                                         IsDesignTimeCreatable=False}"
+      mc:Ignorable="d"
       d:DesignHeight="800"
-      d:DesignWidth="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
-      Foreground="{DynamicResource TextFillColorPrimaryBrush}">
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      d:DesignWidth="1200"
+      Title="UpdateTransferChequePage">
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.SubmitCommand}" />
+                    Command="{Binding ViewModel.SubmitCommand}" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -62,7 +63,7 @@
 
                 </Grid.RowDefinitions>
 
-                <nu:HeaderPack NamePpage="واگذاری چک دریافتی" />
+                <nu:HeaderPack NamePpage="ویرایش چک واگذار شده" />
 
                 <Border Grid.Column="0"
                         Grid.Row="1"
@@ -100,6 +101,7 @@
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="14"
                                            x:Name="lbl_cusId"
+                                           Text="{Binding ViewModel.CusNum}"
                                            Foreground="#BB8F60"
                                            HorizontalAlignment="Right"
                                            Margin="0 3 3 1" />
@@ -237,7 +239,7 @@
                                        Grid.Column="1"
                                        Margin="5 0 0 0 " />
                             <TextBox Margin="0,20,0,0"
-                                     Text="{Binding ViewModel.Description,Mode=OneWayToSource}"
+                                     Text="{Binding ViewModel.Description,Mode=TwoWay}"
                                      FontSize="14"
                                      FlowDirection="RightToLeft"
                                      FontFamily="Calibri"></TextBox>
@@ -250,13 +252,13 @@
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"
                                 FontSize="15"
-                                Grid.ColumnSpan="2" >
+                                Grid.ColumnSpan="2">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت چک" />
                                 <TextBlock Text=" (F1)"
-                                                   FontSize="12"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="#FFA3A3A3" />
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           Foreground="#FFA3A3A3" />
                             </StackPanel>
                         </Button>
 

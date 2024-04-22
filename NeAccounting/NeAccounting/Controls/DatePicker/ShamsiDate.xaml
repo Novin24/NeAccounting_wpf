@@ -230,7 +230,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width=".8*" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock FlowDirection="RightToLeft"
@@ -271,9 +271,9 @@
                           FontFamily="arial"
                           FontSize="15"
                           SelectionChanged="ComboBoxMonths_SelectionChanged">
-                    <ComboBoxItem Content="فروردین"
+                    <ComboBoxItem Content="فروردین"/>
+                    <ComboBoxItem Content="اردیبهشت"
                                   IsSelected="True" />
-                    <ComboBoxItem Content="اردیبهشت" />
                     <ComboBoxItem Content="خرداد" />
 
                     <ComboBoxItem Content="تیر" />
@@ -289,26 +289,26 @@
                     <ComboBoxItem Content="اسفند" />
                 </ComboBox>
                 <Button x:Name="previousMonth"
-                        Content=" &gt; "
                         Grid.Column="3"
                         IsTabStop="False"
                         Click="PreviousMonth_Click"
-                        HorizontalAlignment="Right"
-                        Height="26"
+                        Height="25"
                         Focusable="True"
-                        Width="25"
-                        Padding="0 0 0 4" />
+                        Padding="0 0 0 0">
+                    <ui:SymbolIcon Symbol="CaretDown20"
+                                   FontSize="25" />
+
+                </Button>
                 <Button x:Name="nextMonth"
                         IsTabStop="False"
-                        Content=" &lt;  "
                         Focusable="True"
                         Grid.Column="0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
                         Click="NextMonth_Click"
-                        Padding="2 0 0 4"
-                        Width="25"
-                        Height="25" />
+                        Padding="0 0 0 0"
+                        Height="25">
+                    <ui:SymbolIcon Symbol="CaretUp20"
+                                   FontSize="25" />
+                </Button>
 
             </Grid>
             <StackPanel Grid.Row="1"

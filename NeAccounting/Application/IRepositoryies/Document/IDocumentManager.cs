@@ -19,11 +19,41 @@ namespace NeApplication.IRepositoryies
         Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetSellInvoiceDetail(Guid invoiceId);
 
         /// <summary>
+        /// دریافت اقلام فاکتور برگشت از خرید درصورت وجود
+        /// </summary>
+        /// <param name="parentInvoiceId"></param>
+        /// <returns></returns>
+        Task<(bool isSuccess, List<RemittanceListViewModel> itm)> GetRetrunBuyInvoiceGoods(Guid parentInvoiceId);
+
+        /// <summary>
+        /// دریافت اقلام بازگشت از فروش درصورت وجود
+        /// </summary>
+        /// <param name="parentInvoiceId"></param>
+        /// <returns></returns>
+        Task<(bool isSuccess, List<RemittanceListViewModel> itm)> GetRetrunSellInvoiceGoods(Guid parentInvoiceId);
+
+        /// <summary>
         /// دریافت جزییات فاکتور خرید
         /// </summary>
         /// <param name="invoiceId"></param>
         /// <returns></returns>
         Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetBuyInvoiceDetail(Guid invoiceId);
+
+        /// <summary>
+        /// دریافت جزییات فاکتور بازگشت از فروش
+        /// </summary>
+        /// <param name="parentInvoiceId"></param>
+        /// <param name="returnId"></param>
+        /// <returns></returns>
+        Task<(bool isSuccess, ReturnInvoiceDetailUpdateDto itm)> GetFromTheSellInvoiceDetail(Guid parentInvoiceId, Guid returnId);
+
+        /// <summary>
+        /// دریافت جزییات فاکتور بازگشت از خرید
+        /// </summary>
+        /// <param name="parentInvoiceId"></param>
+        /// <param name="returnId"></param>
+        /// <returns></returns>
+        Task<(bool isSuccess, ReturnInvoiceDetailUpdateDto itm)> GetFromTheBuyInvoiceDetail(Guid parentInvoiceId, Guid returnId);
 
         /// <summary>
         /// دریافت اخرین شماره فاکتور
@@ -99,6 +129,7 @@ namespace NeApplication.IRepositoryies
             List<RemittanceListViewModel> remittances);
 
         /// <summary>
+        /// ثبت اقلام برگشت از خرید
         /// همون فاکتور فروشه
         /// </summary>
         /// <param name="customerId"></param>
@@ -115,6 +146,7 @@ namespace NeApplication.IRepositoryies
             List<RemittanceListViewModel> remittances);
 
         /// <summary>
+        /// ثبت اقلام برگشت از فروش
         /// همون فاکتور خریده
         /// </summary>
         /// <param name="customerId"></param>
@@ -225,6 +257,19 @@ namespace NeApplication.IRepositoryies
 
         Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
+
+        Task<(string error, bool isSuccess)> UpdateReturnFromTheBuyInvoice(Guid parentDocId,
+            Guid docId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances);
+        Task<(string error, bool isSuccess)> UpdateReturnFromTheSellInvoice(Guid parentDocId,
+            Guid docId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances);
         #endregion
 
         #region Cheque
@@ -233,7 +278,8 @@ namespace NeApplication.IRepositoryies
         Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime,
             DateTime? endTime,
             Guid? cusId,
-            ChequeStatus status,
+            string chequeNumber,
+            ChequeStatus status, 
             bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
@@ -295,6 +341,12 @@ namespace NeApplication.IRepositoryies
         Task<(string error, bool isSuccess)> ConvertChequeToReject(Guid docId);
 
         Task<(string error, bool isSuccess)> AssignCheque(Guid docId,
+            Guid cusId,
+            DateTime transferDate,
+            string desc);
+
+        Task<(string error, bool isSuccess)> UpdateAssignCheque(
+            Guid docId,
             Guid cusId,
             DateTime transferDate,
             string desc);

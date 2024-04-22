@@ -92,7 +92,7 @@ public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavi
     [ObservableProperty]
     private string _totalPrice = "0";
 
-
+    
     /// <summary>
     /// شماره فاکتور
     /// </summary>

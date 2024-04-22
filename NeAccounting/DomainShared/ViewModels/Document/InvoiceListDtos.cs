@@ -21,6 +21,10 @@ namespace DomainShared.ViewModels.Document
         /// ایا  دکمه اجناس بازگشتی داشته باشد یا خیر
         /// </summary>
         public bool HaveReturned { get; set; } = false;
+        /// <summary>
+        /// شناسه فاکتور والد درصورت لزوم
+        /// </summary>
+        public Guid? ParentId { get; set; }
         public DocumntType Type { get; set; }
     }
 }
