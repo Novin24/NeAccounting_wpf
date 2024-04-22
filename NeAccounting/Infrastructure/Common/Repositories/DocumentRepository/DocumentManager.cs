@@ -554,7 +554,7 @@ namespace Infrastructure.Repositories
             }
             return new(true, inv.RemList);
         }
-        
+
         public async Task<(bool isSuccess, List<RemittanceListViewModel> itm)> GetRetrunBuyInvoiceGoods(Guid parentInvoiceId)
         {
             var inv = await TableNoTracking
@@ -1481,12 +1481,13 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region Cheque
-        public async Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime, DateTime? endTime, Guid? cusId, ChequeStatus status, bool isInit, int pageNum = 0, int pageCount = NeAccountingConstants.PageCount)
+        public async Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime, DateTime? endTime, Guid? cusId, string chequeNumber, ChequeStatus status, bool isInit, int pageNum = 0, int pageCount = NeAccountingConstants.PageCount)
         {
             PersianCalendar pc = new();
             var query = (from che in DbContext.Set<Cheque>()
                                    .AsNoTracking()
                                    .Where(t => status == ChequeStatus.AllCheques || t.Status == status)
+                                   .Where(t => string.IsNullOrEmpty(chequeNumber) || t.Cheque_Number.Contains(chequeNumber))
                                    .Where(t => !startTime.HasValue || t.Due_Date >= startTime)
                                    .Where(t => !endTime.HasValue || t.Due_Date < endTime)
 
@@ -1532,10 +1533,10 @@ namespace Infrastructure.Repositories
             for (int i = 1; i <= li.Count; i++)
             {
                 li[i - 1].Row = i;
-                if (li[i - 1].Status == ChequeStatus.Transferred)
-                {
-                    li[i - 1].IsEditable = false;
-                }
+                //if (li[i - 1].Status == ChequeStatus.Transferred)
+                //{
+                //    li[i - 1].IsEditable = false;
+                //}
 
                 if (li[i - 1].Status == ChequeStatus.Rejected || li[i - 1].Status == ChequeStatus.InBox)
                 {
@@ -1621,6 +1622,8 @@ namespace Infrastructure.Repositories
                                  Cheque_Number = che.Cheque_Number,
                                  Cheque_Owner = che.Cheque_Owner,
                                  PayCusName = payCus.Name,
+                                 PayerId = payCus.Id,
+                                 ReceverId = recCus.Id,
                                  PayCusNum = payCus.CusId.ToString(),
                                  RecCusNum = recCus.CusId.ToString(),
                                  RecCusName = recCus.Name,
@@ -1920,6 +1923,38 @@ namespace Infrastructure.Repositories
             che.Reciver = cusId;
             doc.RelatedDocuments.Add(new Document(cusId, doc.Price, DocumntType.Cheque, PaymentType.Cheque, desc, transferDate, false));
 
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> UpdateAssignCheque(
+            Guid docId,
+            Guid cusId,
+            DateTime transferDate,
+            string desc)
+        {
+            var doc = await Entities
+                .Include(t => t.Cheques)
+                .Include(s => s.RelatedDocuments)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null || doc.Cheques.Count == 0 || doc.RelatedDocuments.Count == 0)
+                return new("چک مورد نظر یافت نشد!!!", false);
+
+            var che = doc.Cheques.First();
+            che.TransferdDate = transferDate;
+            che.Reciver = cusId;
+            var assDoc = doc.RelatedDocuments.First();
+            assDoc.Description = desc;
+            assDoc.CustomerId = cusId;
+            assDoc.SubmitDate = transferDate;
             try
             {
                 Entities.Update(doc);

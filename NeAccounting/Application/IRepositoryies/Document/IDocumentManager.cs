@@ -278,7 +278,8 @@ namespace NeApplication.IRepositoryies
         Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime,
             DateTime? endTime,
             Guid? cusId,
-            ChequeStatus status,
+            string chequeNumber,
+            ChequeStatus status, 
             bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
@@ -340,6 +341,12 @@ namespace NeApplication.IRepositoryies
         Task<(string error, bool isSuccess)> ConvertChequeToReject(Guid docId);
 
         Task<(string error, bool isSuccess)> AssignCheque(Guid docId,
+            Guid cusId,
+            DateTime transferDate,
+            string desc);
+
+        Task<(string error, bool isSuccess)> UpdateAssignCheque(
+            Guid docId,
             Guid cusId,
             DateTime transferDate,
             string desc);

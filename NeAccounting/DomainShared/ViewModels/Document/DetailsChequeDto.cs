@@ -4,6 +4,8 @@ namespace DomainShared.ViewModels.Document
 {
     public class DetailsChequeDto
     {
+        public Guid PayerId { get; set; }
+        public Guid ReceverId { get; set; }
         public string PayCusName { get; set; }
         public string PayCusNum { get; set; }
         public string RecCusName { get; set; }
