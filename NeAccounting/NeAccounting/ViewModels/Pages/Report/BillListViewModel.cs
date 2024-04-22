@@ -17,6 +17,8 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using DomainShared.ViewModels.Customer;
+using static Stimulsoft.Client.Designer.Images.StiDesignerWpfImages;
+using System.Collections.ObjectModel;
 
 namespace NeAccounting.ViewModels
 {
@@ -242,12 +244,17 @@ namespace NeAccounting.ViewModels
                                 _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                                 return;
                             }
+
+                            var (isEx, li) = await db.DocumentManager.GetRetrunSellInvoiceGoods(parameter);
                             #endregion
 
                             #region UpdateMaterial
                             foreach (var item in itm.RemList)
                             {
-                                var (errore, isSucess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, true, item.Price);
+                                var amountOf = isEx ? item.AmountOf - li.Where(t => t.MaterialId == item.MaterialId).Sum(t => t.AmountOf) : item.AmountOf;
+                                if (amountOf == 0)
+                                    continue;
+                                var (errore, isSucess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, amountOf, true, item.Price);
                                 if (!isSucess)
                                 {
                                     _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -320,12 +327,18 @@ namespace NeAccounting.ViewModels
                                 _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                                 return;
                             }
+
+                            var (isEx, li) = await db.DocumentManager.GetRetrunBuyInvoiceGoods(parameter);
+
                             #endregion
 
                             #region UpdateMaterial
                             foreach (var item in itm.RemList)
                             {
-                                var (errore, isSucess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, false, item.Price);
+                                var amountOf = isEx ? item.AmountOf - li.Where(t => t.MaterialId == item.MaterialId).Sum(t => t.AmountOf) : item.AmountOf;
+                                if (amountOf == 0)
+                                    continue;
+                                var (errore, isSucess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, amountOf, false, item.Price);
                                 if (!isSucess)
                                 {
                                     _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -560,7 +573,8 @@ namespace NeAccounting.ViewModels
                     {
                         CusName = cus.Name,
                         CusId = cus.Id,
-                        DocId = parameter,
+                        ReturndocId = parameter,
+                        ParentDocId = doc.ParentId.Value,
                         CusNum = cus.UniqNumber,
                         InvDescription = itm.Description,
                         SubmitDate = itm.Date,
@@ -574,8 +588,9 @@ namespace NeAccounting.ViewModels
                             LastBuyPrice = t.Price,
                             LastSellPrice = t.Price
                         }).ToList(),
+                        StaticList = itm.ReturnRemList,
                         SellGoods = itm.ParentRemList,
-                        List = itm.ReturnRemList,
+                        List = new ObservableCollection<RemittanceListViewModel>(itm.ReturnRemList),
                         ParentInvoiceSerial = itm.ParentSerial,
                         ReturnInvoicSerial = itm.ReturnSerial,
                     });
@@ -614,7 +629,8 @@ namespace NeAccounting.ViewModels
                     {
                         CusName = cuss.Name,
                         CusId = cuss.Id,
-                        DocId = parameter,
+                        ReturndocId = parameter,
+                        ParentDocId = doc.ParentId.Value,
                         CusNum = cuss.UniqNumber,
                         InvDescription = itmm.Description,
                         SubmitDate = itmm.Date,
@@ -629,7 +645,8 @@ namespace NeAccounting.ViewModels
                             LastSellPrice = t.Price
                         }).ToList(),
                         BuyGoods = itmm.ParentRemList,
-                        List = itmm.ReturnRemList,
+                        List = new ObservableCollection<RemittanceListViewModel>(itmm.ReturnRemList),
+                        StaticList = itmm.ReturnRemList,
                         ParentInvoiceSerial = itmm.ParentSerial,
                         ReturnInvoicSerial = itmm.ReturnSerial,
                     });

@@ -421,6 +421,7 @@ public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAw
         }
         RemainPrice = total.ToString("N0");
     }
+
     [RelayCommand]
     private void OnAddClick(string parameter)
     {

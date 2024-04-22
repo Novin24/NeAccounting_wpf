@@ -17,7 +17,7 @@ namespace NeAccounting.Views.Pages
         public UpdateFromTheSellViewModel ViewModel { get; }
         //private double _totalEntity;
         private long _price;
-        public UpdateFromSellPage( ISnackbarService snackbarService,UpdateFromTheSellViewModel viewModel)
+        public UpdateFromSellPage(ISnackbarService snackbarService, UpdateFromTheSellViewModel viewModel)
         {
             DataContext = this;
             ViewModel = viewModel;
@@ -40,6 +40,7 @@ namespace NeAccounting.Views.Pages
                 fts.ViewModel.MaterialId = -1;
                 fts.ViewModel.Description = null;
                 fts.ViewModel.MatPrice = null;
+                fts.ViewModel.RemId = null;
                 txt_MaterialName.Text = string.Empty;
                 txt_UnitName.Text = string.Empty;
                 txt_Unit_price.Text = string.Empty;
@@ -126,22 +127,6 @@ namespace NeAccounting.Views.Pages
             txt_UnitName.Text = itm.UnitName;
             _price = itm.Price;
             txt_Unit_price.Text = itm.Price.ToString();
-            dgv_Inv.Items.Refresh();
-        }
-
-        private void BtnRemove_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is not Button btn)
-                return;
-
-            if (btn.Tag == null)
-                return;
-
-            if (DataContext is not UpdateFromSellPage fts)
-                return;
-
-            int id = int.Parse(btn.Tag.ToString());
-            fts.ViewModel.OnRemove(id);
             dgv_Inv.Items.Refresh();
         }
 

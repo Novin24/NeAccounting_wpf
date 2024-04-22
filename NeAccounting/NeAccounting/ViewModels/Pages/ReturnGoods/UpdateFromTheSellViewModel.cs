@@ -3,6 +3,7 @@ using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -25,10 +26,15 @@ public partial class UpdateFromTheSellViewModel(ISnackbarService snackbarService
     private List<RemittanceListViewModel> _sellGoods;
 
     /// <summary>
+    /// لیست ثابت اجناس برگشتی فاکتور
+    /// </summary>
+    public List<RemittanceListViewModel> StaticList = [];
+
+    /// <summary>
     /// لیست اجناس  برگشتی
     /// </summary>
     [ObservableProperty]
-    private List<RemittanceListViewModel> _list = [];
+    private ObservableCollection<RemittanceListViewModel> _list = [];
 
     /// <summary>
     /// لیست کلیه اجناس
@@ -42,12 +48,24 @@ public partial class UpdateFromTheSellViewModel(ISnackbarService snackbarService
     [ObservableProperty]
     private long _CusNum;
 
+
     /// <summary>
-    /// شناسه فاکتور
+    /// شناسه فاکتور خرید
     /// </summary>
     [ObservableProperty]
-    private Guid _docId;
+    private Guid _parentDocId;
 
+    /// <summary>
+    /// شناسه فاکتور برگشتی
+    /// </summary>
+    [ObservableProperty]
+    private Guid _returndocId;
+
+    /// <summary>
+    /// ردیف انتخاب شده
+    /// </summary>
+    [ObservableProperty]
+    private Guid? _remId;
 
     /// <summary>
     /// شناسه مشتری
@@ -184,6 +202,7 @@ public partial class UpdateFromTheSellViewModel(ISnackbarService snackbarService
             UnitName = mat.UnitName,
             IsService = mat.IsService,
             MatName = mat.MaterialName,
+            RremId = RemId ?? Guid.Empty,
             Price = MatPrice.Value,
             RowId = rowId,
             TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
@@ -191,7 +210,7 @@ public partial class UpdateFromTheSellViewModel(ISnackbarService snackbarService
             MaterialId = MaterialId,
         });
         long total = List.Sum(t => t.TotalPrice);
-        TotalPrice = total.ToString("N0");
+        SetTotal();
         RefreshRow(ref rowId);
         return true;
     }
@@ -203,15 +222,20 @@ public partial class UpdateFromTheSellViewModel(ISnackbarService snackbarService
     /// <returns></returns>
     internal (bool, RemittanceListViewModel) OnUpdate(int rowId)
     {
+        if (RemId != null) return (false, new RemittanceListViewModel());
+
         var itm = List.FirstOrDefault(t => t.RowId == rowId);
-        if (itm == null)
-            return new(false, new RemittanceListViewModel());
+
+        if (itm == null) return (false, new RemittanceListViewModel());
+
         MaterialId = itm.MaterialId;
+        RemId = itm.RremId;
         AmountOf = itm.AmountOf;
         MatPrice = itm.Price;
         Description = itm.Description;
         List.Remove(itm);
         RefreshRow(ref rowId);
+        SetTotal();
         return new(true, itm);
     }
 
@@ -219,16 +243,22 @@ public partial class UpdateFromTheSellViewModel(ISnackbarService snackbarService
     /// حذف ردیف
     /// </summary>
     /// <param name="rowId"></param>
+    [RelayCommand]
     internal void OnRemove(int rowId)
     {
         var itm = List.FirstOrDefault(t => t.RowId == rowId);
-        if (itm != null)
+        if (itm == null)
+            return;
+        if (itm.RremId != Guid.Empty)
+        {
+            itm.IsDeleted = !itm.IsDeleted;
+        }
+        else
         {
             List.Remove(itm);
-            long total = List.Sum(t => t.TotalPrice);
-            TotalPrice = total.ToString("N0");
             RefreshRow(ref rowId);
         }
+        SetTotal();
     }
 
     /// <summary>
@@ -240,13 +270,20 @@ public partial class UpdateFromTheSellViewModel(ISnackbarService snackbarService
     {
         #region validation
 
+
+        if (RemId != null)
+        {
+            _snackbarService.Show("خطا", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ثبت فاکتور نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return;
+        }
+
         if (SubmitDate == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ ثبت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
         }
 
-        if (List == null || List.Count == 0)
+        if (List == null || !List.Any(t => !t.IsDeleted))
         {
             _snackbarService.Show("خطا", "وارد کردن حداقل یک ردیف الزامیست !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
@@ -256,23 +293,51 @@ public partial class UpdateFromTheSellViewModel(ISnackbarService snackbarService
 
         #region UpdateMaterial
         using UnitOfWork db = new();
-        foreach (var item in List)
+        var li = new List<RemittanceListViewModel>(List.Where(t => !t.IsDeleted || t.RremId != Guid.Empty));
+        foreach (var item in li)
         {
-            if (item.IsService) continue;
-
-            var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, true);
-            if (!isSuccess)
+            if (item.RremId == Guid.Empty)
             {
-                _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
+                var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf, true, item.Price);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+                continue;
             }
+            var oldItm = StaticList.First(t => t.RremId.Equals(item.RremId));
+
+            if (oldItm.AmountOf == item.AmountOf)
+                continue;
+
+            if (item.AmountOf < oldItm.AmountOf)
+            {
+                var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, oldItm.AmountOf - item.AmountOf, false, item.Price);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+                continue;
+            }
+            else
+            {
+                var (errore, isSuccess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, item.AmountOf - oldItm.AmountOf, true, item.Price);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+                continue;
+            }
+
         }
         #endregion
 
-        #region CreateBuylDoc
-        var totalInvoicePrice = List.Sum(t => t.TotalPrice);
-
-        var (e, s) = await db.DocumentManager.ReturnFromSell(DocId, CusId, totalInvoicePrice, InvDescription, SubmitDate.Value, List);
+        #region UpdateDoc
+        var totalInvoicePrice = List.Where(t => !t.IsDeleted).Sum(t => t.TotalPrice);
+        var (e, s) = await db.DocumentManager.UpdateReturnFromTheSellInvoice(ParentDocId, ReturndocId, totalInvoicePrice, InvDescription, SubmitDate.Value, [.. List]);
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -308,4 +373,12 @@ public partial class UpdateFromTheSellViewModel(ISnackbarService snackbarService
         rowId = row;
     }
 
+    /// <summary>
+    /// به روز رسانی مبلغ کل
+    /// </summary>
+    private void SetTotal()
+    {
+        long total = List.Where(t => !t.IsDeleted).Sum(t => t.TotalPrice);
+        TotalPrice = total.ToString("N0");
+    }
 }
