@@ -17,5 +17,12 @@ namespace NeAccounting.Views.Pages
             InitializeComponent();
             MaterialName.Focus();
         }
+
+        [RelayCommand]
+        private async Task OnCreateMaterial()
+        {
+            Btn_submit.Focus();
+            await ViewModel.CreateMaterialCommand.ExecuteAsync(null);
+        }
     }
 }
