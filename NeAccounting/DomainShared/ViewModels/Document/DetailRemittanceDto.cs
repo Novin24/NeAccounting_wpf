@@ -3,6 +3,7 @@
     public class DetailRemittanceDto
     {
         public int Row { get; set; }
+        public bool IsLeftOver { get; set; } = false;
         public DateTime Date { get; set; }
         public string? ShamsiDate { get; set; }
         public string? Description { get; set; }
