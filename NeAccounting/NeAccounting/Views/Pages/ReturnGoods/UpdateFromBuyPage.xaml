@@ -121,7 +121,7 @@
                                     </DockPanel>
                                     <ui:TextBox FontFamily="Calibri"
                                                 x:Name="txt_CustomerName"
-                                                IsEnabled="False"
+                                                IsReadOnly="True"
                                                 Text="{Binding ViewModel.CusName}"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>

@@ -1117,7 +1117,7 @@ namespace Infrastructure.Repositories
                 .Where(et => et.SubmitDate < endTime)
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
-                .Where(s => s.Type != DocumntType.SellInv && s.Type != DocumntType.BuyInv && s.Type != DocumntType.GarantyCheque)
+                .Where(s => s.Type != DocumntType.SellInv && s.Type != DocumntType.ReturnFromBuy && s.Type != DocumntType.ReturnFromSell && s.Type != DocumntType.BuyInv && s.Type != DocumntType.GarantyCheque)
                 .Select(t => new DetailRemittanceDto()
                 {
                     Serial = t.Serial.ToString(),
@@ -1189,6 +1189,7 @@ namespace Infrastructure.Repositories
                 DetailRemittanceDto rem = new()
                 {
                     Row = 0,
+                    IsLeftOver = true,
                     Date = startTime,
                     ShamsiDate = startTime.ToShamsiDate(pc),
                     MaterialName = "باقی مانده از قبل",
@@ -1205,13 +1206,16 @@ namespace Infrastructure.Repositories
             foreach (var item in Remittances)
             {
                 item.Row = i;
-                if (item.IsRecived)
+                if (!item.IsLeftOver)
                 {
-                    item.Bed = 0;
-                }
-                else
-                {
-                    item.Bes = 0;
+                    if (item.IsRecived)
+                    {
+                        item.Bed = 0;
+                    }
+                    else
+                    {
+                        item.Bes = 0;
+                    }
                 }
                 item.ShamsiDate = item.Date.ToShamsiDate(pc);
                 long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bed).Sum();
