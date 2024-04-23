@@ -54,5 +54,12 @@ namespace NeAccounting.Views.Pages
 
         [GeneratedRegex("[^0-9]+")]
         private static partial Regex MyRegex();
+
+        private void Dismiss_Click(object sender, RoutedEventArgs e)
+        {
+            txt_Name.Text = string.Empty;
+            lbl_num.Text = string.Empty;
+            ViewModel.CusId = null;
+        }
     }
 }
