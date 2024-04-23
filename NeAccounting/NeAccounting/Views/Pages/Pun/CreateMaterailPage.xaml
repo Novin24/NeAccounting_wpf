@@ -17,7 +17,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.CreateMaterialCommand }" />
+                 Command="{Binding CreateMaterialCommand }" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -178,6 +178,7 @@
                                 Grid.Column="1"
                                 Grid.ColumnSpan="3"
                                 Padding="30 4 "
+                                x:Name="Btn_submit"
                                 Command="{Binding ViewModel.CreateMaterialCommand , Mode=OneWay}"
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"
