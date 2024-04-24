@@ -16,15 +16,19 @@
       d:DesignWidth="1200"
       Title="CheckDetailsPage">
 
-    <Grid>
+    <Page.InputBindings>
+        <KeyBinding Key="Backspace"
+                 Command="{Binding CreateMaterialCommand }" />
+    </Page.InputBindings>
+    <Grid Margin="-20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="45" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="45" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="45"></ColumnDefinition>
@@ -300,6 +304,7 @@
                                 Content="باز گشت به لیست"
                                 Margin="10"
                                 Width="150"
+                                x:Name="Btn_submit"
                                 Command="{Binding ViewModel.BackClickCommand}"
                                 CommandParameter="ChequeBook"
                                 HorizontalAlignment="Center"

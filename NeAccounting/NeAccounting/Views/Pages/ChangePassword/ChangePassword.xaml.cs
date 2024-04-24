@@ -44,5 +44,12 @@ namespace NeAccounting.Views.Pages
                 _ => new SolidColorBrush(Color.FromArgb(0xFF, 198, 29, 29)),
             };
         }
+
+        [RelayCommand]
+        private async Task OnChangePass()
+        {
+            Btn_submit.Focus();
+            await ViewModel.ChangePassCommand.ExecuteAsync(null);
+        }
     }
 }

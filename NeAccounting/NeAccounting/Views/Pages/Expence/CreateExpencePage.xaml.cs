@@ -24,5 +24,11 @@ namespace NeAccounting.Views.Pages
         {
             Cmb_Status.ItemsSource = PaymentType.Cash.ToEnumDictionary();
         }
+        [RelayCommand]
+        private async Task OnCreateExpense()
+        {
+            Btn_submit.Focus();
+            await ViewModel.CreateExpenseCommand.ExecuteAsync(null);
+        }
     }
 }

@@ -17,7 +17,7 @@
       Title="CreateNotificationPage">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                    Command="{Binding ViewModel.SubmitCommand}" />
+                    Command="{Binding SubmitCommand}" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -149,13 +149,14 @@
 
 
                         <Button Grid.Row="6"
+                                FontSize="17"
+                                Padding="30 4"
                                 Grid.Column="1"
+                                x:Name="Btn_submit"
                                 Grid.ColumnSpan="3"
-                                Padding="30 4 "
-                                Command="{Binding ViewModel.SubmitCommand}"
-                                HorizontalAlignment="Center"
                                 FontFamily="Calibri"
-                                FontSize="17">
+                                HorizontalAlignment="Center"
+                                Command="{Binding ViewModel.SubmitCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت" />
                                 <TextBlock Text=" (F1)"

@@ -16,7 +16,7 @@
       Title="CreditorsListPage">
     <Page.InputBindings>
         <KeyBinding Key="F6"
-                 Command="{Binding ViewModel.SearchCommand}"/>
+                 Command="{Binding SearchCommand}"/>
     </Page.InputBindings>
     <Grid>
         <Grid >
@@ -110,13 +110,14 @@
 
                                 <Button Grid.Column="2"
                                         FontSize="17"
-                                        Margin="20 0 0 8"
                                         Padding="30 6"
                                         IsDefault="True"
-                                        Command="{Binding ViewModel.SearchCommand}"
+                                        Margin="20 0 0 8"
+                                        x:Name="Btn_submit"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        HorizontalAlignment="Center" >
+                                        HorizontalAlignment="Center"
+                                        Command="{Binding ViewModel.SearchCommand}" >
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="نمایش" />
                                         <TextBlock Text=" (F6)"

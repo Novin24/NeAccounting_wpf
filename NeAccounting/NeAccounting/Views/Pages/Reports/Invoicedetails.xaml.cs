@@ -90,5 +90,6 @@ namespace NeAccounting.Views.Pages
 
             _printServices.PrintInvoice(@"Required\Reports\ReportRem.mrt", "DetailListDtos", list, dic);
         }
+
     }
 }

@@ -17,7 +17,7 @@
       Foreground="{DynamicResource TextFillColorPrimaryBrush}">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.SubmitCommand}" />
+                 Command="{Binding SubmitCommand}" />
     </Page.InputBindings>
     <Grid Margin="-12">
         <Grid.RowDefinitions>
@@ -235,11 +235,12 @@
 
                         <Button Grid.Row="6"
                                 Margin="10"
-                                Command="{Binding ViewModel.SubmitCommand}"
-                                Padding="30 4 "
-                                HorizontalAlignment="Center"
-                                FontFamily="Calibri"
+                                x:Name="Btn_submit"
                                 FontSize="15"
+                                Padding="30 4 "
+                                FontFamily="Calibri"
+                                HorizontalAlignment="Center"
+                                Command="{Binding ViewModel.SubmitCommand}"
                                 Grid.ColumnSpan="2" >
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت" />

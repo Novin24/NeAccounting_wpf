@@ -115,5 +115,18 @@ namespace NeAccounting.Views.Pages
 
             _printServices.PrintInvoice(@"Required\Reports\ReportOneInvoice.mrt", "DetailListDtos", invoice.RemList, dic);
         }
+
+        [RelayCommand]
+        private async Task OnSearchInvoice()
+        {
+            Btn_show.Focus();
+            await ViewModel.SearchInvoiceCommand.ExecuteAsync(null);
+        }
+        [RelayCommand]
+        private async Task OnSPrintList()
+        {
+            btn_Print.Focus();
+            await ViewModel.PrintListCommand.ExecuteAsync(null);
+        }
     }
 }

@@ -17,7 +17,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.SubmitCommand}" />
+                 Command="{Binding SubmitCommand}" />
     </Page.InputBindings>
     <Grid Margin="-12">
         <Grid.RowDefinitions>
@@ -245,11 +245,12 @@
 
                         <Button Grid.Row="6"
                                 Margin="10"
-                                Padding="30 4"
-                                Command="{Binding ViewModel.SubmitCommand}"
-                                HorizontalAlignment="Center"
-                                FontFamily="Calibri"
                                 FontSize="15"
+                                Padding="30 4"
+                                x:Name="Btn_submit"
+                                FontFamily="Calibri"
+                                HorizontalAlignment="Center"
+                                Command="{Binding ViewModel.SubmitCommand}"
                                 Grid.ColumnSpan="2" >
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت چک" />
