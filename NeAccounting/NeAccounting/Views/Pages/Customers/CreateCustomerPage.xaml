@@ -281,15 +281,16 @@
                         </StackPanel>
 
                         <Button Grid.Row="7"
-                                Grid.Column="1"
-                                Padding="30 4 "
-                                Grid.ColumnSpan="2"
                                 Margin="8"
-                                Command="{Binding ViewModel.CreateCustomerCommand}"
                                 FontSize="17"
+                                Padding="30 4"
+                                Grid.Column="1"
+                                x:Name="Btn_submit"
+                                Grid.ColumnSpan="2"
                                 FontFamily="Calibri"
                                 VerticalAlignment="Center"
-                                HorizontalAlignment="Center" >
+                                HorizontalAlignment="Center" 
+                                Command="{Binding ViewModel.CreateCustomerCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت" />
                                 <TextBlock Text=" (F1)"

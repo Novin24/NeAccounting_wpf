@@ -16,7 +16,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F6"
-                 Command="{Binding ViewModel.SearchCommand}" />
+                 Command="{Binding SearchCommand}" />
     </Page.InputBindings>
     <Grid>
 
@@ -106,13 +106,14 @@
 
                                 <Button Grid.Column="2"
                                         FontSize="17"
-                                        Margin="20 0 0 6"
                                         Padding="30 5"
                                         IsDefault="True"
-                                        Command="{Binding ViewModel.SearchCommand}"
+                                        Margin="20 0 0 6"
+                                        x:Name="Btn_submit"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        HorizontalAlignment="Center" >
+                                        HorizontalAlignment="Center" 
+                                        Command="{Binding ViewModel.SearchCommand}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="نمایش" />
                                         <TextBlock Text=" (F6)"
@@ -123,15 +124,15 @@
                                 </Button>
                             </Grid>
                             <DataGrid Grid.Row="1"
-                                      IsReadOnly="True"
                                       Padding="7"
                                       FontSize="15"
+                                      IsReadOnly="True"
                                       x:Name="Workersdata"
                                       FontFamily="Calibri"
                                       CanUserResizeRows="False"
-                                      ItemsSource="{Binding ViewModel.DebList}"
+                                      AutoGenerateColumns="False"
                                       CanUserResizeColumns="False"
-                                      AutoGenerateColumns="False">
+                                      ItemsSource="{Binding ViewModel.DebList}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="نام مشتری"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"

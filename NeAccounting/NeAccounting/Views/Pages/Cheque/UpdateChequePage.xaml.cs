@@ -1,4 +1,5 @@
 ﻿using DomainShared.ViewModels;
+using Microsoft.VisualBasic.ApplicationServices;
 using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
@@ -40,6 +41,17 @@ namespace NeAccounting.Views.Pages
                 ts.CusId = user.Id;
             }
             lbl_cusId.Text = user.UniqNumber.ToString();
+        }
+
+        [RelayCommand]
+        private async Task OnCreateCustomer()
+        {
+            if (DataContext is UpdateChequePage c)
+            {
+            Btn_submit.Focus();
+            await c.ViewModel.SubmitCommand.ExecuteAsync(null);
+
+            }
         }
     }
 }

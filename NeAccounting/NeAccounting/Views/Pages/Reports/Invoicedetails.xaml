@@ -163,6 +163,7 @@
                                         Grid.Row="1">
                                 <Button Grid.Column="2"
                                         IsDefault="True"
+                                        x:Name="Btn_show"
                                         FontFamily="Calibri"
                                         Grid.Row="1"
                                         Command="{Binding ViewModel.SearchInvoiceCommand}"

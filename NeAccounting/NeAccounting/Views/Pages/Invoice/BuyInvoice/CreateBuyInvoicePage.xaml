@@ -326,9 +326,10 @@
                                 <ui:Button Grid.Column="7"
                                            Padding="4 5 "
                                            FontSize="17"
+                                           x:Name="Btn_submit"
                                            FontFamily="Calibri"
-                                           VerticalAlignment="Bottom"
                                            Click="Button_Click"
+                                           VerticalAlignment="Bottom"
                                            HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="افزودن" />

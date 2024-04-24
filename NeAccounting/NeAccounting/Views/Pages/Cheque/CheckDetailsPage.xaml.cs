@@ -28,5 +28,12 @@ namespace NeAccounting.Views.Pages
                 txt_TransferDate.Visibility = Visibility.Collapsed;
             }
         }
+
+        [RelayCommand]
+        private void OnBackClick()
+        {
+            Btn_submit.Focus();
+             ViewModel.BackClickCommand.Execute(null);
+        }
     }
 }

@@ -16,7 +16,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.CreateExpenseCommand}" />
+                 Command="{Binding CreateExpenseCommand}" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -178,14 +178,15 @@
 
                         <Button Grid.Row="6"
                                 Margin="10"
-                                Padding="30 4"
-                                VerticalAlignment="Center"
-                                Command="{Binding ViewModel.CreateExpenseCommand , Mode=OneWay}"
-                                HorizontalAlignment="Center"
-                                FontFamily="Calibri"
                                 FontSize="15"
+                                Padding="30 4"
                                 Grid.Column="1"
-                                Grid.ColumnSpan="3" >
+                                x:Name="Btn_submit"
+                                Grid.ColumnSpan="3" 
+                                FontFamily="Calibri"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Command="{Binding ViewModel.CreateExpenseCommand , Mode=OneWay}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت" />
                                 <TextBlock Text=" (F1)"

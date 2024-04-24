@@ -26,5 +26,12 @@ namespace NeAccounting.Views.Pages
             t.Remove(Priority.All);
             cmb_Priority.ItemsSource = t;
         }
+
+        [RelayCommand]
+        private async Task OnSubmit()
+        {
+            Btn_submit.Focus();
+            await ViewModel.SubmitCommand.ExecuteAsync(null);
+        }
     }
 }
