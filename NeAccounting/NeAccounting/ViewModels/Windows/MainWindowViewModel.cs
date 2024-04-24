@@ -101,8 +101,8 @@ namespace NeAccounting.ViewModels
                 //TargetPageType = typeof(MaterailListPage)
                 MenuItems = new ObservableCollection<object>
                 {
-                    new NavigationViewItem { Content = "اتمام سال مالی کنونی", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.AlignEndHorizontal20} },
-                    new NavigationViewItem { Content = "... بازگشت به سال", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.Rename20} },
+                    new NavigationViewItem { Content = "اتمام سال مالی کنونی", TargetPageType = typeof(DashboardPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.AlignEndHorizontal20} },
+                    new NavigationViewItem { Content = "... بازگشت به سال", TargetPageType = typeof(DashboardPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.Rename20} },
                 }
             },
             new NavigationViewItem()
@@ -126,8 +126,7 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem(){Content = "ایجاد چک دریافتی",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateRecChequePage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem(){Content = "ایجاد چک ضمانتی",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateGuarantChequePage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(ExpencesListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
-                    new NavigationViewItem { Content = "بیلان سالانه", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
-                    new NavigationViewItem { Content = "بیلان مشخص", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }}
+                    new NavigationViewItem { Content = "بیلان سالانه", TargetPageType = typeof(DashboardPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
                 }
             },
             new NavigationViewItem()

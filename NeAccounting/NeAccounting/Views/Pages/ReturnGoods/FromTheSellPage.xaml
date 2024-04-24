@@ -231,6 +231,7 @@
                                     <ui:TextBox x:Name="txt_Unit_price"
                                                 TextAlignment="Center"
                                                 ClearButtonEnabled="False"
+                                                FlowDirection="LeftToRight"
                                                 LostFocus="Txt_Unit_price_LostFocus"
                                                 PreviewTextInput="Txt_Unit_price_PreviewTextInput"
                                                 TextChanged="Txt_Unit_price_TextChanged"

@@ -288,6 +288,7 @@
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_Unit_price"
                                                 TextAlignment="Center"
+                                                FlowDirection="LeftToRight"
                                                 ClearButtonEnabled="False"
                                                 LostFocus="Txt_Unit_price_LostFocus"
                                                 PreviewTextInput="Txt_Unit_price_PreviewTextInput"

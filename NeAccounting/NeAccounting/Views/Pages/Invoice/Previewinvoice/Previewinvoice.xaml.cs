@@ -86,6 +86,8 @@ namespace NeAccounting.Views.Pages
             if (sender is not TextBox txt_price)
                 return;
 
+            txt_price.Text = txt_price.Text.Replace(" ", "000");
+
             if (txt_price.Text == "" || txt_price.Text == "0") return;
             CultureInfo culture = new("en-US");
             long valueBefore = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
