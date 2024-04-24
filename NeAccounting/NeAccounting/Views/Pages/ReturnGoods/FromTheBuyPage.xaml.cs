@@ -73,13 +73,14 @@ namespace NeAccounting.Views.Pages
         {
             if (sender is not TextBox txt_price)
                 return;
+            txt_price.Text = txt_price.Text.Replace(" ", "000");
 
             if (txt_price.Text == "" || txt_price.Text == "0") return;
             CultureInfo culture = new("en-US");
             long valueBefore = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
             _price = valueBefore;
             txt_price.Text = String.Format(culture, "{0:N0}", valueBefore);
-            txt_price.Select(txt_price.Text.Length, 0);
+            txt_price.CaretIndex = txt_price.Text.Length;
         }
 
         private void Txt_Unit_price_LostFocus(object sender, RoutedEventArgs e)
