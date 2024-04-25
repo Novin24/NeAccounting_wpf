@@ -8,8 +8,6 @@
                  Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
                  d:DataContext="{d:DesignInstance local:MainWindow,
                                      IsDesignTimeCreatable=True}"
-                 ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
-                 ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                  ExtendsContentIntoTitleBar="True"
                  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                  WindowBackdropType="Mica"
@@ -20,7 +18,7 @@
     <Window.InputBindings>
         <KeyBinding Key="Esc"
                     x:Name="key_esc"
-                    Command="{Binding CloseAppCommand}"/>
+                    Command="{Binding CloseAppCommand}" />
     </Window.InputBindings>
     <Grid>
         <Grid x:Name="mainGrid"
@@ -221,20 +219,19 @@
                                            FontFamily="Montserrat"
                                            Margin="0 0 0 0" />
                             </StackPanel>
-                            <TextBox FontSize="13"
-                                     FontWeight="Medium"
-                                     FontFamily="Montserrat"
-                                     Foreground="White"
-                                     CaretBrush="LightGray"
-                                     BorderBrush="DarkGray"
-                                     BorderThickness="0 ,0 ,0 ,1"
-                                     Height="28"
-                                     Name="Txt_UserName"
-                                     VerticalContentAlignment="Center"
-                                     Margin="0 5 0 0"
-                                     Padding="2 0 0 0">
+                            <ui:TextBox FontSize="13"
+                                        FontWeight="Medium"
+                                        FontFamily="Montserrat"
+                                        CaretBrush="LightGray"
+                                        BorderBrush="DarkGray"
+                                        BorderThickness="0 ,0 ,0 ,1"
+                                        Height="28"
+                                        Name="Txt_UserName"
+                                        VerticalContentAlignment="Center"
+                                        Margin="0 5 0 0"
+                                        Padding="2 0 0 0">
 
-                            </TextBox>
+                            </ui:TextBox>
                             <StackPanel Orientation="Horizontal"
                                         Margin="0 15 0 0 ">
                                 <ui:SymbolIcon Symbol="Key16"
@@ -247,20 +244,20 @@
                                            FontFamily="Montserrat"
                                            Margin="0 0 0 0" />
                             </StackPanel>
-                            <PasswordBox FontSize="15"
-                                         FontWeight="Medium"
-                                         FontFamily="Montserrat"
-                                         Foreground="White"
-                                         CaretBrush="LightGray"
-                                         BorderBrush="DarkGray"
-                                         BorderThickness="0 ,0 ,0 ,1"
-                                         Name="txt_password"
-                                         Height="28"
-                                         VerticalContentAlignment="Center"
-                                         Margin="0 5 0 0"
-                                         Padding="2 2 0 0">
+                            <ui:PasswordBox
+                                 FontSize="15"
+                                 FontWeight="Medium"
+                                 FontFamily="Montserrat"
+                                 CaretBrush="LightGray"
+                                 BorderBrush="DarkGray"
+                                 BorderThickness="0 ,0 ,0 ,1"
+                                 Name="txt_password"
+                                 Height="28"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0 5 0 0"
+                                 Padding="2 2 0 0">
 
-                            </PasswordBox>
+                            </ui:PasswordBox>
 
                             <Grid Grid.Column="2"
                                   x:Name="Btn_LogIn">
