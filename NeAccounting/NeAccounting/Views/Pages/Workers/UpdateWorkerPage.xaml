@@ -42,14 +42,57 @@
                     Grid.RowSpan="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Background="{StaticResource Left rectangle}"
-                    CornerRadius="10"></Border>
+                    CornerRadius="10">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1"
+                                         StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5"
+                                                CenterX="0.5" />
+                                <SkewTransform CenterX="0.5"
+                                               CenterY="0.5" />
+                                <RotateTransform Angle="45"
+                                                 CenterX="0.5"
+                                                 CenterY="0.5" />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                      Offset="0.3" />
+                        <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                      Offset="0.8" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
             <Border Grid.Row="3"
                     Grid.RowSpan="3"
                     Grid.Column="2"
                     Grid.ColumnSpan="3"
-                    Background="{StaticResource Right rectangle}"
-                    CornerRadius="10"></Border>
+                    CornerRadius="10">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1"
+                                         StartPoint="0.5,0">
+                        <LinearGradientBrush.RelativeTransform>
+                            <TransformGroup>
+                                <ScaleTransform CenterY="0.5"
+                                                CenterX="0.5" />
+                                <SkewTransform CenterX="0.5"
+                                               CenterY="0.5" />
+                                <RotateTransform Angle="45"
+                                                 CenterX="0.5"
+                                                 CenterY="0.5" />
+                                <TranslateTransform />
+                            </TransformGroup>
+                        </LinearGradientBrush.RelativeTransform>
+                        <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                      Offset="0.5" />
+                        <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                      Offset="0.7" />
+                    </LinearGradientBrush>
+
+                </Border.Background>
+            </Border>
             <Border Grid.Row="2"
                     Grid.RowSpan="3"
                     Grid.Column="1"
@@ -71,11 +114,11 @@
                                    NamePpage="ویرایش پرسنل"/>
                     <Border Grid.Row="1"
                             CornerRadius="9"
-                            Margin="4"
+                            Margin="10 4 4 8"
                             BorderBrush="#D6D5D5"
                             BorderThickness="0.4">
                         <Border.Background>
-                            <SolidColorBrush Color="White"
+                            <SolidColorBrush Color="Gray"
                                              Opacity="0.08" />
                         </Border.Background>
 
@@ -90,7 +133,7 @@
                                     BorderBrush="#D6D5D5"
                                     BorderThickness="0.4">
                                 <Border.Background>
-                                    <SolidColorBrush Color="White"
+                                    <SolidColorBrush Color="Gray"
                                                      Opacity="0.08" />
                                 </Border.Background>
                                 <Grid FlowDirection="RightToLeft"
@@ -133,7 +176,7 @@
                                     BorderBrush="#D6D5D5"
                                     BorderThickness="0.4">
                                 <Border.Background>
-                                    <SolidColorBrush Color="White"
+                                    <SolidColorBrush Color="Gray"
                                                      Opacity="0.08" />
                                 </Border.Background>
 
@@ -190,9 +233,9 @@
                                 CornerRadius="9"
                                 BorderBrush="#D6D5D5"
                                 BorderThickness="0.4"
-                                Margin="4">
+                                Margin="4 4 10 8">
                             <Border.Background>
-                                <SolidColorBrush Color="White"
+                                <SolidColorBrush Color="Gray"
                                                  Opacity="0.08" />
                             </Border.Background>
 

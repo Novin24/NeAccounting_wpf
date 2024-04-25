@@ -24,7 +24,7 @@
                 BorderBrush="#D6D5D5"
                 BorderThickness="0.4">
             <Border.Background>
-                <SolidColorBrush Color="White"
+                <SolidColorBrush Color="Gray"
                                  Opacity="0.08" />
             </Border.Background>
             <Grid>
@@ -78,7 +78,7 @@
                 BorderThickness="0.4">
 
             <Border.Background>
-                <SolidColorBrush Color="White"
+                <SolidColorBrush Color="Gray"
                                  Opacity="0.08" />
             </Border.Background>
             <Grid Margin="7 0 7 6">
