@@ -24,8 +24,8 @@ namespace NeAccounting.Views.Pages
             InitializeComponent();
             _snackbarService = snackbarService;
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private void OnAddRow()
         {
             if (ViewModel.OnAdd())
             {
@@ -116,6 +116,7 @@ namespace NeAccounting.Views.Pages
         [RelayCommand]
         private async Task OnSubmit()
         {
+            Btn_submit.Focus();
             if (!Validation())
             {
                 _snackbarService.Show("اخطار", "کاربر گرامی ابتدا فیلدهای ویرایشی را ثبت سپس اقدام به ثبت فاکتور نمایید!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));

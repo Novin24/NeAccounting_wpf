@@ -19,6 +19,8 @@
     <Page.InputBindings>
         <KeyBinding Key="F1"
                     Command="{Binding SubmitCommand}" />
+        <KeyBinding Key="F2"
+                    Command="{Binding AddRowCommand}" />
         <KeyBinding Key="F4"
                     Command="{Binding ViewModel.AddClickCommand}"
                     CommandParameter="CreateCustomer" />
@@ -372,7 +374,7 @@
                                         FontSize="17"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        Click="Button_Click"
+                                        Command="{Binding AddRowCommand}"
                                         HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="افزودن" />

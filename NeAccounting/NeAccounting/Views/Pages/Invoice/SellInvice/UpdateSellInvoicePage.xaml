@@ -371,7 +371,7 @@
                                         FontSize="17"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        Click="Button_Click"
+                                        Command="{Binding AddRowCommand}"
                                         HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="افزودن" />

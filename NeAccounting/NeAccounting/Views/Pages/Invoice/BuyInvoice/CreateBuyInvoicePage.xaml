@@ -18,7 +18,9 @@
       Title="CreateBuyInvoicePage">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding SubmitCommand}" />
+                    Command="{Binding SubmitCommand}" />
+        <KeyBinding Key="F2"
+                    Command="{Binding AddRowCommand}" />
         <KeyBinding Key="F4"
                  Command="{Binding ViewModel.AddClickCommand}"
                     CommandParameter="CreateCustomer" />      
@@ -372,7 +374,7 @@
                                            FontSize="17"
                                            x:Name="Btn_submit"
                                            FontFamily="Calibri"
-                                           Click="Button_Click"
+                                           Command="{Binding AddRowCommand}"
                                            VerticalAlignment="Bottom"
                                            HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">

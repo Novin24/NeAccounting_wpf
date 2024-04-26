@@ -26,8 +26,8 @@ namespace NeAccounting.Views.Pages
             _snackbarService = snackbarService;
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private void OnAddRow()
         {
             if (ViewModel.OnAdd())
             {

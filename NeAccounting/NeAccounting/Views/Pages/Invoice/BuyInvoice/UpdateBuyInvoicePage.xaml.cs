@@ -24,7 +24,8 @@ namespace NeAccounting.Views.Pages
             _snackbarService = snackbarService;
             txt_CustomerName.Focus();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private void OnAddRow()
         {
             if (ViewModel.OnAdd())
             {
