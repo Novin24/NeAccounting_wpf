@@ -90,5 +90,12 @@ namespace NeAccounting.Views.Pages
                 ViewModel.DeActiveCommand.ExecuteAsync(id);
             }
         }
+
+        [RelayCommand]
+        private async Task OnCreateUnit()
+        {
+            Btn_submit.Focus();
+            await ViewModel.CreateUnitCommand.ExecuteAsync(null);
+        }
     }
 }

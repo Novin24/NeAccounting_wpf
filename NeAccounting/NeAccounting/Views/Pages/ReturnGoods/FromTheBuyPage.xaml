@@ -312,9 +312,10 @@
                                 <Button Grid.Column="7"
                                         Padding="4 5 "
                                         FontSize="17"
+                                        x:Name="Btn_submit"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
-                                        Click="Button_Click"
+                                        Command="{Binding AddRowCommand}"
                                         HorizontalAlignment="Center">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="افزودن" />
@@ -480,13 +481,13 @@
                                                    VerticalAlignment="Center" />
                                     </Grid>
                                 </Border>
-                                <Button Padding="30 4 "
-                                        Grid.Column="1"
+                                <Button Grid.Column="1"
                                         FontSize="17"
-                                        Command="{Binding ViewModel.SubmitCommand}"
+                                        Padding="30 4 "
                                         FontFamily="Calibri"
                                         VerticalAlignment="Top"
-                                        HorizontalAlignment="Center">
+                                        HorizontalAlignment="Center"
+                                        Command="{Binding ViewModel.SubmitCommand}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="ثبت" />
                                         <TextBlock Text=" (F1)"

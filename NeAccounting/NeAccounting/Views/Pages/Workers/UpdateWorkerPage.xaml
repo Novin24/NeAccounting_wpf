@@ -149,7 +149,7 @@
                                               x:Name="rbtn_Shift"
                                               Margin="0 5"
                                               HorizontalAlignment="Center"
-                                              IsChecked="{Binding ViewModel.ShiftByHour, Mode=TwoWay}"
+                                              IsChecked="{Binding ViewModel.ShiftByHour,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Checked="RadioButton_Checked"
                                               FlowDirection="LeftToRight">ساعتی - شیفتی</CheckBox>
 
@@ -158,7 +158,7 @@
                                                   IsEnabled="False"
                                                   TabIndex="11"
                                                   x:Name="txt_ShiftPrice"
-                                                  Value="{Binding ViewModel.ShiftSalary , Mode=TwoWay}" />
+                                                  Value="{Binding ViewModel.ShiftSalary ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
 
                                     <nu:MoneyPack Grid.Row="2"
@@ -166,7 +166,7 @@
                                                   IsEnabled="False"
                                                   LabelName="اضافه کاری"
                                                   x:Name="txt_overTimeShift"
-                                                  Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay}" />
+                                                  Value="{Binding ViewModel.ShiftovertimeSalary ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                                 </Grid>
                             </Border>
@@ -193,7 +193,7 @@
                                     <CheckBox VerticalAlignment="Top"
                                               HorizontalAlignment="Center"
                                               TabIndex="13"
-                                              IsChecked="{Binding ViewModel.ShiftByMonth, Mode=TwoWay}"
+                                              IsChecked="{Binding ViewModel.ShiftByMonth,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               x:Name="rbtn_Month"
                                               Margin="0 5"
                                               Checked="RadioButton_Checked_1"
@@ -203,24 +203,24 @@
                                     <nu:MoneyPack Grid.Row="1"
                                                   LabelName="دستمزد"
                                                   x:Name="txt_MonthPrice"
-                                                  Value="{Binding ViewModel.Salary, Mode=TwoWay}" />
+                                                  Value="{Binding ViewModel.Salary,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                                     <nu:MoneyPack Grid.Row="2"
                                                   LabelName="اضافه کاری"
                                                   x:Name="txt_overtimePriceMonth"
-                                                  Value="{Binding ViewModel.OvertimeSalary, Mode=TwoWay}" />
+                                                  Value="{Binding ViewModel.OvertimeSalary,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                                     <nu:MoneyPack Grid.Row="3"
                                                   LabelName="حق بیمه"
                                                   x:Name="txt_insurancePerimum"
-                                                  Value="{Binding ViewModel.InsurancePremium, Mode=TwoWay}" />
+                                                  Value="{Binding ViewModel.InsurancePremium,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                                     <nu:NumberPack Grid.Row="4"
                                                    LabelName="تعداد روز کاری"
                                                    x:Name="txt_dayInMonth"
                                                    Minimum="0"
                                                    Maximum="31"
-                                                   Value="{Binding ViewModel.DayInMonth, Mode=TwoWay}" />
+                                                   Value="{Binding ViewModel.DayInMonth,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                                 </Grid>
                             </Border>
@@ -266,7 +266,7 @@
                                                 x:Name="txt_name"
                                                 Grid.Column="0"
                                                 Margin="0 4 3 0 "
-                                                Text="{Binding ViewModel.FullName , Mode=TwoWay}"
+                                                Text="{Binding ViewModel.FullName ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 CaretBrush="White"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
@@ -278,7 +278,7 @@
                                                               LabelName="تاریخ شروع به کار"
                                                               TabIndex="1"
                                                               x:Name="dtp"
-                                                              SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay}"
+                                                              SelectedDate="{Binding ViewModel.StartDate ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                               Margin="0 4 0 0" />
 
                                 <StackPanel Grid.Column="0"
@@ -294,7 +294,7 @@
                                                   FontSize="14"
                                                   FlowDirection="LeftToRight"
                                                   TabIndex="2"
-                                                  Text="{Binding ViewModel.PersonalId , Mode=TwoWay}"
+                                                  Text="{Binding ViewModel.PersonalId ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
@@ -309,7 +309,7 @@
                                                 TextAlignment="Center"
                                                 TabIndex="3"
                                                 FontFamily="Calibri"
-                                                Text="{Binding ViewModel.JobTitle , Mode=TwoWay}"
+                                                Text="{Binding ViewModel.JobTitle ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="0"
@@ -323,7 +323,7 @@
                                                 TabIndex="4"
                                                 x:Name="Txt_NationalCode"
                                                 LostFocus="Txt_NationalCode_LostFocus"
-                                                Text="{Binding ViewModel.NationalCode, Mode=TwoWay}"
+                                                Text="{Binding ViewModel.NationalCode,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 Margin="20 4 3 0"
                                                 TextAlignment="Center"
                                                 FontSize="14"
@@ -341,7 +341,7 @@
                                     <ui:TextBox FontSize="14"
                                                 TextAlignment="Center"
                                                 TabIndex="5"
-                                                Text="{Binding ViewModel.AccountNumber, Mode=TwoWay}"
+                                                Text="{Binding ViewModel.AccountNumber,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 FontFamily="Calibri"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
@@ -357,7 +357,7 @@
                                                 LostFocus="TextBox_LostFocus"
                                                 Margin="20 4 3 0"
                                                 FlowDirection="LeftToRight"
-                                                Text="{Binding ViewModel.Mobile, Mode=TwoWay}"
+                                                Text="{Binding ViewModel.Mobile,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 TextAlignment="Center"
                                                 FontSize="14"
                                                 TabIndex="6"
@@ -374,7 +374,7 @@
                                                Margin="1 0 0 0 " />
                                     <ComboBox FontSize="14"
                                               TabIndex="7"
-                                              SelectedIndex="{Binding ViewModel.StatusByte , Mode=TwoWay}"
+                                              SelectedIndex="{Binding ViewModel.StatusByte ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Margin="0 4 0 0 ">
                                         <ComboBoxItem Visibility="Collapsed"
                                                       Content="همه" />
@@ -412,7 +412,7 @@
                                                Text="آدرس"
                                                Grid.Column="1" />
                                     <TextBox Margin="0,20,0,0"
-                                             Text="{Binding ViewModel.Address, Mode=TwoWay}"
+                                             Text="{Binding ViewModel.Address,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              FontSize="14"
                                              TextWrapping="Wrap"
                                              TabIndex="8"

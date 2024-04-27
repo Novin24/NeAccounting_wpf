@@ -25,8 +25,10 @@ namespace NeAccounting.Views.Pages
             InitializeComponent();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private async Task OnAddRow()
         {
+            Btn_submit.Focus();
             if (DataContext is not FromTheSellPage fts)
             {
                 return;

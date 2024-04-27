@@ -147,7 +147,7 @@
                                      TabIndex="0"
                                      Margin="0 4 0 0 "
                                      x:Name="SrvicName"
-                                     Text="{Binding ViewModel.SrvicName, Mode=TwoWay}"
+                                     Text="{Binding ViewModel.SrvicName,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      CaretBrush="White"
                                      FontFamily="Calibri" />
                         </StackPanel>
@@ -163,7 +163,7 @@
                             <ComboBox FontSize="14"
                                       TabIndex="1"
                                       FontFamily="Calibri"
-                                      SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.UnitId ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       DisplayMemberPath="DisplayName"
                                       SelectedValuePath="Id"
                                       ItemsSource="{Binding ViewModel.AsuBox}"
@@ -172,7 +172,7 @@
                         <nu:MoneyPack Grid.Row="2"
                                       Grid.Column="1"
                                       Grid.ColumnSpan="3"
-                                      Value="{Binding ViewModel.Price, Mode=TwoWay}"
+                                      Value="{Binding ViewModel.Price,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       LabelName="اجرت"
                                       TabIndex="2" />
 
@@ -188,7 +188,7 @@
                                        Grid.Column="1" />
                             <TextBox Margin="0,22,0,0"
                                      FontSize="14"
-                                     Text="{Binding ViewModel.Address, Mode=TwoWay}"
+                                     Text="{Binding ViewModel.Address,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      FlowDirection="RightToLeft"
                                      Grid.ColumnSpan="2"
                                      FontFamily="Calibri"></TextBox>

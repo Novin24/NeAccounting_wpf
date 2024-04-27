@@ -31,5 +31,12 @@ namespace NeAccounting.Views.Pages
             SrvicName.Focus();
 
         }
+
+        [RelayCommand]
+        private async Task OnCreateService()
+        {
+            Btn_submit.Focus();
+            await ViewModel.CreateServiceCommand.ExecuteAsync(null);
+        }
     }
 }

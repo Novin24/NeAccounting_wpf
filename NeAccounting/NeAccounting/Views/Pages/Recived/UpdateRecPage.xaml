@@ -134,7 +134,7 @@
                                       CanUserReorderColumns="False"
                                       CanUserResizeRows="False"
                                       CanUserResizeColumns="False"
-                                      ItemsSource="{Binding ViewModel.DocList, Mode=TwoWay}"
+                                      ItemsSource="{Binding ViewModel.DocList, Mode=OneWay}"
                                       CanUserSortColumns="False"
                                       Padding="9">
                             <DataGrid.Columns>
@@ -234,7 +234,7 @@
                                         FontSize="14"
                                         IsEnabled="False"
                                         x:Name="CusName"
-                                        Text="{Binding ViewModel.CusName , Mode=TwoWay}"
+                                        Text="{Binding ViewModel.CusName ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
@@ -284,7 +284,7 @@
                             <ComboBox FontSize="14"
                                       x:Name="Cmb_PayType"
                                       SelectedValuePath="Key"
-                                      SelectedValue="{Binding ViewModel.PayTypeId , Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.PayTypeId ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       ItemsSource="{Binding ViewModel.PayTypeEnum}"
                                       DisplayMemberPath="Value"
                                       FontFamily="Calibri"
@@ -297,17 +297,17 @@
                                               LabelName="تاریخ"
                                               x:Name="pdp"
                                               Grid.Column="1"
-                                              SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}"
+                                              SelectedDate="{Binding ViewModel.SubmitDate ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Margin="0 2 15 0" />
 
                         <nu:MoneyPack Grid.Row="2"
                                       x:Name="nm_price"
-                                      Value="{Binding ViewModel.Price, Mode=TwoWay}"
+                                      Value="{Binding ViewModel.Price,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       FontFamily="Calibri"
                                       LabelName="مبلغ وجه" />
 
                         <nu:MoneyPack Grid.Column="1"
-                                      Value="{Binding ViewModel.Discount, Mode=TwoWay}"
+                                      Value="{Binding ViewModel.Discount,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Grid.Row="2"
                                       LabelName="مبلغ تخفیف" />
 
@@ -324,7 +324,7 @@
                                        Margin="7 0 0 3"/>
                             <TextBox Margin="0,24,5,0"
                                      FontSize="14"
-                                     Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                     Text="{Binding ViewModel.Description,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      FlowDirection="RightToLeft"
                                      Grid.ColumnSpan="2"
                                      FontFamily="Calibri"></TextBox>

@@ -17,6 +17,8 @@
     <Page.InputBindings>
         <KeyBinding Key="F1"
                  Command="{Binding ViewModel.SumbitCommand}" />
+        <KeyBinding Key="F2"
+                 Command="{Binding AddRowCommand}" />
         <KeyBinding Key="F4"
                  Command="{Binding ViewModel.AddClickCommand}"
                     CommandParameter="CreateCustomer" />
@@ -229,7 +231,7 @@
                                                       ClearButtonEnabled="False"
                                                       Maximum="100"
                                                       Minimum="0"
-                                                      Value="{Binding ViewModel.Commission , Mode=TwoWay}"
+                                                      Value="{Binding ViewModel.Commission ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                       Name="txt_Commission"
                                                       Icon="{ui:SymbolIcon ShoppingBagPercent24}"
                                                       SpinButtonPlacementMode="Hidden"
@@ -240,7 +242,7 @@
                                                           MinWidth="230"
                                                           HorizontalAlignment="Left"
                                                           MaxWidth="250"
-                                                          SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}"
+                                                          SelectedDate="{Binding ViewModel.SubmitDate,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                           LabelName="تاریخ"
                                                           Margin="0 21 0 0 " />
 
@@ -302,7 +304,7 @@
                                                   TextAlignment="Center"
                                                   ClearButtonEnabled="False"
                                                   FontFamily="Calibri"
-                                                  Value="{Binding ViewModel.AmountOf, Mode=TwoWay}"
+                                                  Value="{Binding ViewModel.AmountOf,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   LostFocus="Txt_amount_LostFocus"
                                                   SpinButtonPlacementMode="Hidden"
                                                   Margin="0 2 0 0" />
@@ -361,7 +363,7 @@
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_UnitDescription"
                                                 TextAlignment="Center"
-                                                Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                                Text="{Binding ViewModel.Description,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
@@ -369,6 +371,7 @@
                                 <Button Grid.Column="7"
                                         Padding="4 5 "
                                         FontSize="17"
+                                        x:Name="Btn_submit"
                                         FontFamily="Calibri"
                                         VerticalAlignment="Bottom"
                                         Command="{Binding AddRowCommand}"
@@ -538,7 +541,7 @@
                                             FontFamily="Calibri"
                                             Height="33"
                                             x:Name="txt_invDesc"
-                                            Text="{Binding ViewModel.InvDescription, Mode=TwoWay}"
+                                            Text="{Binding ViewModel.InvDescription,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             PlaceholderText="خلاصه فاکتور"
                                             VerticalAlignment="Top"
                                             HorizontalAlignment="Center" />

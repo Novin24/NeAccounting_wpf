@@ -164,5 +164,11 @@ namespace NeAccounting.Views.Pages
         {
             txt_name.Focus();
         }
+        [RelayCommand]
+        private async Task OnCreate()
+        {
+            Btn_submit.Focus();
+            await ViewModel.CreateCommand.ExecuteAsync(null);
+        }
     }
 }

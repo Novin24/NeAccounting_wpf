@@ -18,6 +18,8 @@
     <Page.InputBindings>
         <KeyBinding Key="F1"
                  Command="{Binding SubmitCommand}" />
+        <KeyBinding Key="F2"
+                 Command="{Binding AddRowCommand}" />
         <KeyBinding Key="F4"
                  Command="{Binding ViewModel.AddClickCommand}"
                     CommandParameter="CreateCustomer" />
@@ -196,10 +198,11 @@
                                                    VerticalAlignment="Center"
                                                    Margin="6 22 6 0" />
                                     </DockPanel>
-                                    <ui:TextBox FontFamily="Calibri"
+                                    <ui:TextBox Margin="0 4 0 0" 
+                                                IsReadOnly="True"
+                                                FontFamily="Calibri"
                                                 x:Name="txt_CustomerName"
-                                                Text="{Binding ViewModel.CusName}"
-                                                Margin="0 4 0 0" />
+                                                Text="{Binding ViewModel.CusName}"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1"
@@ -230,7 +233,7 @@
                                                   Maximum="100"
                                                   Minimum="0"
                                                   Margin="0 5 0 0"
-                                                  Value="{Binding ViewModel.Commission , Mode=TwoWay}"
+                                                  Value="{Binding ViewModel.Commission ,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   ClearButtonEnabled="False"
                                                   Icon="{ui:SymbolIcon ShoppingBagPercent24}"
                                                   SpinButtonPlacementMode="Hidden"
@@ -240,7 +243,7 @@
                                 <nu:PersianDatePicker FlowDirection="LeftToRight"
                                                       Grid.Column="3"
                                                       MinWidth="230"
-                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}"
+                                                      SelectedDate="{Binding ViewModel.SubmitDate,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                       HorizontalAlignment="Left"
                                                       Margin="0 20 0 0"
                                                       LabelName="تاریخ" />
@@ -301,7 +304,7 @@
                                                   TextAlignment="Center"
                                                   ClearButtonEnabled="False"
                                                   FontFamily="Calibri"
-                                                  Value="{Binding ViewModel.AmountOf, Mode=TwoWay}"
+                                                  Value="{Binding ViewModel.AmountOf,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   LostFocus="Txt_amount_LostFocus"
                                                   SpinButtonPlacementMode="Hidden"
                                                   Margin="0 2 0 0" />
@@ -359,7 +362,7 @@
                                                Text="توضیحات"
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_UnitDescription"
-                                                Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                                Text="{Binding ViewModel.Description,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 TextAlignment="Center"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
@@ -368,6 +371,7 @@
                                 <ui:Button Grid.Column="7"
                                            Padding="4 5 "
                                            FontSize="17"
+                                           x:Name="Btn_submit"
                                            FontFamily="Calibri"
                                            VerticalAlignment="Bottom"
                                            Command="{Binding AddRowCommand}"
@@ -536,7 +540,7 @@
                                             Margin="25,0"
                                             FontFamily="Calibri"
                                             Height="33"
-                                            Text="{Binding ViewModel.InvDescription, Mode=TwoWay}"
+                                            Text="{Binding ViewModel.InvDescription,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             PlaceholderText="خلاصه فاکتور"
                                             VerticalAlignment="Top"
                                             HorizontalAlignment="Center" />

@@ -165,7 +165,7 @@
                                               FlowDirection="LeftToRight"
                                               x:Name="DateFocus"
                                               Grid.Column="1"
-                                              SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}"
+                                              SelectedDate="{Binding ViewModel.SubmitDate ,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Grid.ColumnSpan="3"
                                               Margin="0 0 23 0"
                                               LabelName="تاریخ واگذاری" />
@@ -282,7 +282,7 @@
                                        Grid.Column="1"
                                        Margin="5 0 0 0 " />
                             <TextBox Margin="0,20,0,0"
-                                     Text="{Binding ViewModel.Description,Mode=TwoWay}"
+                                     Text="{Binding ViewModel.Description,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="14"
                                      FlowDirection="RightToLeft"
                                      FontFamily="Calibri"></TextBox>

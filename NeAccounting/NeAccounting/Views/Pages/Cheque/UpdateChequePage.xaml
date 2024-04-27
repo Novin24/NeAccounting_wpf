@@ -166,7 +166,7 @@
                                               FlowDirection="LeftToRight"
                                               x:Name="DateFocus"
                                               Grid.Column="1"
-                                              SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}"
+                                              SelectedDate="{Binding ViewModel.SubmitDate ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Grid.ColumnSpan="3"
                                               Margin="0 0 23 0"
                                               LabelName="تاریخ پرداخت" />
@@ -179,7 +179,7 @@
                                        Text="بانک"
                                        Margin="5 0 0 3 " />
                             <ui:TextBox TextAlignment="Center"
-                                        Text="{Binding ViewModel.Bank_Name, Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Bank_Name,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FontFamily="Calibri"
                                         FontSize="14" />
                         </StackPanel>
@@ -192,7 +192,7 @@
                                        Text="شعبه"
                                        Margin="5 0 0 3 " />
                             <ui:TextBox FontSize="14"
-                                        Text="{Binding ViewModel.Bank_Branch,Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Bank_Branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>
@@ -206,7 +206,7 @@
                                        Text="شماره چک"
                                        Margin="5 0 0 3 " />
                             <ui:TextBox TextAlignment="Center"
-                                        Text="{Binding ViewModel.Cheque_Number,Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Cheque_Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="14"
                                         FontFamily="Calibri" />
                         </StackPanel>
@@ -222,20 +222,20 @@
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
-                                        Text="{Binding ViewModel.Accunt_Number,Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Accunt_Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Height="36"
                                         FontFamily="Calibri" />
                         </StackPanel>
                         <nu:PersianDatePicker Grid.Row="3"
                                               VerticalAlignment="Center"
-                                              SelectedDate="{Binding ViewModel.DueDate,Mode=TwoWay}"
+                                              SelectedDate="{Binding ViewModel.DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               FlowDirection="LeftToRight"
                                               Margin="9 0 13 0"
                                               LabelName="تاریخ سررسید" />
                         <nu:MoneyPack Grid.Row="3"
                                       Grid.Column="1"
                                       VerticalAlignment="Center"
-                                      Value="{Binding ViewModel.Price,Mode=TwoWay}"
+                                      Value="{Binding ViewModel.Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Margin="0 0 10 0"
                                       LabelName="مبلغ چک" />
                         <StackPanel Grid.Row="4"
@@ -247,7 +247,7 @@
                                        Text="صاحب چک"
                                        Margin="5 0 3 3" />
                             <ui:TextBox FontSize="14"
-                                        Text="{Binding ViewModel.Cheque_Owner,Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Cheque_Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>
@@ -266,7 +266,7 @@
                                       Margin="0 0 0 0"
                                       SelectedValuePath="Key"
                                       DisplayMemberPath="Value"
-                                      SelectedValue="{Binding ViewModel.Substatus,Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.Substatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       ItemsSource="{Binding ViewModel.EnumSource,Mode=OneWay}"
                                       x:Name="Cmb_Status"
                                       FontFamily="Calibri"
@@ -284,7 +284,7 @@
                                        Margin="5 0 0 0 " />
                             <ui:TextBox Margin="0,21,0,0"
                                         FontSize="16"
-                                        Text="{Binding ViewModel.Description,Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FlowDirection="RightToLeft"
                                         FontFamily="Calibri"></ui:TextBox>
                         </Grid>

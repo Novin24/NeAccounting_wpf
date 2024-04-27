@@ -217,8 +217,8 @@
                                                 LabelName="تاریخ پرداخت"
                                                 MonthChosen="Dtp_MonthChosen"
                                                 YearChosen="Dtp_YearChosen"
-                                                SelectedMon="{Binding ViewModel.SubmitMonth , Mode=TwoWay}"
-                                                SelectedYear="{Binding ViewModel.SubmitYear , Mode=TwoWay}" />
+                                                SelectedMon="{Binding ViewModel.SubmitMonth ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedYear="{Binding ViewModel.SubmitYear ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <Separator Grid.Row="1"
                                            VerticalAlignment="Bottom"
                                            Background="Gray"
@@ -231,33 +231,33 @@
                                               x:Name="txt_amountOf"
                                               ValueChanged="NumberBox_ValueChanged"
                                               IsEnabled="False"
-                                              Value="{Binding ViewModel.AmountOf , Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.AmountOf ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <nu:MoneyPack Grid.Row="2"
                                               Grid.Column="1"
                                               LabelName="اضافه کاری"
                                               x:Name="txt_overtime"
                                               ValueChanged="NumberBox_ValueChanged"
                                               IsEnabled="False"
-                                              Value="{Binding ViewModel.OverTime , Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.OverTime ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <nu:MoneyPack Grid.Row="2"
                                               Grid.Column="3"
                                               LabelName="حق خوار و بار و مسکن"
                                               x:Name="txt_RighOfFood"
                                               ValueChanged="NumberBox_ValueChanged"
                                               IsEnabled="False"
-                                              Value="{Binding ViewModel.RightHousingAndFood , Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.RightHousingAndFood ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <nu:MoneyPack Grid.Row="3"
                                               LabelName="حق اولاد"
                                               x:Name="txt_ChildAllowance"
                                               ValueChanged="NumberBox_ValueChanged"
                                               IsEnabled="False"
-                                              Value="{Binding ViewModel.ChildAllowance , Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.ChildAllowance ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <nu:MoneyPack Grid.Row="3"
                                               Grid.Column="1"
                                               LabelName="سایر اضافات"
                                               x:Name="txt_OtherAdditions"
                                               ValueChanged="NumberBox_ValueChanged"
-                                              Value="{Binding ViewModel.OtherAdditions , Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.OtherAdditions ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <Grid Grid.Row="3"
                                       Grid.Column="2">
                                     <DockPanel Grid.Column="1"
@@ -294,33 +294,33 @@
                                               x:Name="txt_Aid"
                                               ValueChanged="NumberMinesBox_ValueChanged"
                                               IsEnabled="False"
-                                              Value="{Binding ViewModel.FinancialAid , Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.FinancialAid ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <nu:MoneyPack Grid.Row="4"
                                               Grid.Column="1"
                                               LabelName="حق بیمه"
                                               x:Name="txt_Insurance"
                                               ValueChanged="NumberMinesBox_ValueChanged"
                                               IsEnabled="False"
-                                              Value="{Binding ViewModel.Insurance , Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.Insurance ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <nu:MoneyPack Grid.Row="4"
                                               Grid.Column="2"
                                               LabelName="مالیات"
                                               x:Name="txt_Tax"
                                               ValueChanged="NumberMinesBox_ValueChanged"
                                               IsEnabled="False"
-                                              Value="{Binding ViewModel.Tax , Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.Tax ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <nu:MoneyPack Grid.Row="5"
                                               LabelName="وام"
                                               x:Name="txt_loanInstallment"
                                               ValueChanged="NumberMinesBox_ValueChanged"
                                               IsEnabled="False"
-                                              Value="{Binding ViewModel.LoanInstallment , Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.LoanInstallment ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <nu:MoneyPack Grid.Row="5"
                                               Grid.Column="1"
                                               LabelName="سایر کسورات"
                                               x:Name="txt_Othere"
                                               ValueChanged="NumberMinesBox_ValueChanged"
-                                              Value="{Binding ViewModel.OtherDeductions , Mode=TwoWay}" />
+                                              Value="{Binding ViewModel.OtherDeductions ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <Grid Grid.Row="5"
                                       Grid.Column="2">
                                     <DockPanel Grid.Column="1"
@@ -393,7 +393,7 @@
                                     <TextBox Margin="0,20,0,0"
                                              FontSize="14"
                                              FlowDirection="RightToLeft"
-                                             Text="{Binding ViewModel.Description , Mode=TwoWay}"
+                                             Text="{Binding ViewModel.Description ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              Grid.ColumnSpan="3"
                                              FontFamily="Calibri"></TextBox>
                                 </Grid>

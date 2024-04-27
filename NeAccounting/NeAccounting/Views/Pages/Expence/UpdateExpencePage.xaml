@@ -148,12 +148,12 @@
                                      CaretBrush="White"
                                      FontFamily="Calibri"
                                      x:Name="txt_Titele"
-                                     Text="{Binding ViewModel.Expensetype , Mode=TwoWay}" />
+                                     Text="{Binding ViewModel.Expensetype ,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
                         <nu:PersianDatePicker Grid.Row="1"
                                               FlowDirection="LeftToRight"
-                                              SelectedDate="{Binding ViewModel.SubmitDate,Mode=TwoWay}"
+                                              SelectedDate="{Binding ViewModel.SubmitDate,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               x:Name="pdp"
                                               Grid.Column="1"
                                               Grid.ColumnSpan="3"
@@ -162,7 +162,7 @@
 
                         <nu:MoneyPack Grid.Row="2"
                                       Grid.Column="1"
-                                      Value="{Binding ViewModel.Amount,Mode=TwoWay}"
+                                      Value="{Binding ViewModel.Amount,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Margin="-20,0"
                                       Grid.ColumnSpan="3"
                                       LabelName="مبلغ"
@@ -175,7 +175,7 @@
                                        FontSize="14"
                                        Text="نحوه پرداخت" />
                             <ComboBox x:Name="Cmb_PayType"
-                                      SelectedValue="{Binding ViewModel.PayTypeId , Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.PayTypeId ,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       SelectedValuePath="Key"
                                       ItemsSource="{Binding ViewModel.PayTypeEnum}"
                                       DisplayMemberPath="Value"
@@ -194,7 +194,7 @@
                             <ui:TextBox Grid.Column="0"
                                         Grid.Row="2"
                                         TabIndex="4"
-                                        Text="{Binding ViewModel.Receiver, Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Receiver,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Margin="0 4 3 0"
                                         TextAlignment="Center"
                                         FontSize="14"
@@ -213,7 +213,7 @@
                                         TabIndex="9"
                                         Height="auto"
                                         FlowDirection="RightToLeft"
-                                        Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Description,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Grid.ColumnSpan="2"
                                         TextWrapping="Wrap"
                                         FontFamily="Calibri"></ui:TextBox>
