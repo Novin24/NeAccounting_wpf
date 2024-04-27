@@ -49,6 +49,28 @@ namespace Domain.NovinEntity.Materials
             PhysicalAddress = physicalAddress;
             IsActive = true;
         }
+
+        public Material(string name,
+            int unitId,
+            bool isService,
+            long lastSellPrice,
+            string serial,
+            double entity,
+            long lastBuyPrice,
+            bool isActive,
+            string physicalAddress)
+        {
+            Name = name;
+            IsManufacturedGoods = false;
+            Entity = entity;
+            LastBuyPrice = lastBuyPrice;
+            UnitId = unitId;
+            Serial = serial;
+            IsService = isService;
+            LastSellPrice = lastSellPrice;
+            PhysicalAddress = physicalAddress;
+            IsActive = isActive;
+        }
         #endregion
     }
 }

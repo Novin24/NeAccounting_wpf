@@ -4,15 +4,35 @@ namespace Domain.BaseDomain.FinancialYears
 {
     public class FinancialYear : BaseEntity<Guid>
     {
-        public FinancialYear()
-        {
-        }
+        #region Navigaton
 
+        #endregion
+
+        #region Properteis
         public string Name { get; set; }
         public string DataBaseName { get; set; }
         public string Descripion { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public bool IsActive { get; set; }
+        #endregion
+
+        #region Ctor
+
+        public FinancialYear()
+        {
+        }
+
+        public FinancialYear(string name,
+            string dataBaseName,
+            string descripion)
+        {
+            Name = name;
+            DataBaseName = dataBaseName;
+            Descripion = descripion;
+            StartDate = DateTime.Now;
+            IsActive = true;
+        }
+        #endregion
     }
 }

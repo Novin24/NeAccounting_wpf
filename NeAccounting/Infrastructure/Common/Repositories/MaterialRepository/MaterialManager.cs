@@ -42,13 +42,13 @@ namespace Infrastructure.Repositories
                     SEntity = x.Entity.ToString("N0"),
                     UnitId = x.UnitId,
                     LastSellPrice = x.LastSellPrice,
+                    LastBuyPrice = x.LastBuyPrice,
                     UnitName = x.Unit.Name
                 }).ToListAsync();
 
             list.ForEach(t => { if (t.Entity == 0) t.SEntity = string.Empty; });
             return list;
         }
-
 
         public async Task<(string error, bool isSuccess)> CreateMaterial(string name,
             int unitId,
@@ -175,6 +175,7 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
+
         public async Task<(string error, bool isSuccess)> ChangeStatus(
            int id, bool active)
         {
@@ -195,6 +196,20 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
+
+        //public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList)
+        //{
+        //    var materialList = matList.Select(t=> new Material())
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
     }
 }
 

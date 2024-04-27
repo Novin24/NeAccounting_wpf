@@ -10,6 +10,7 @@
         public double Entity { get; set; }
         public string SEntity { get; set; }
         public long LastSellPrice { get; set; }
+        public long LastBuyPrice { get; set; }
         public string Serial { get; set; }
         public string Address { get; set; }
         public bool IsServise { get; set; }

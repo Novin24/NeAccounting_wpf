@@ -1482,6 +1482,8 @@ namespace Infrastructure.Repositories
             return new PagedResulViewModel<DalyBookDto>(totalCount, pageCount, pageNum, list);
         }
 
+        
+
         #endregion
 
         #region Cheque
@@ -2018,6 +2020,10 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
+        #endregion
+
+        #region FinancialYear
+
         #endregion
     }
 }
