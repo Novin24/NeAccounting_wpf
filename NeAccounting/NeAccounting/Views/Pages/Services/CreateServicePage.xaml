@@ -16,7 +16,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.CreateServiceCommand  }" />
+                 Command="{Binding CreateServiceCommand  }" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -194,9 +194,10 @@
 
 
                         <Button Grid.Row="5"
-                                Grid.Column="1"
-                                Grid.ColumnSpan="3"
                                 Padding="30 4 "
+                                Grid.Column="1"
+                                x:Name="Btn_submit"
+                                Grid.ColumnSpan="3"
                                 Command="{Binding ViewModel.CreateServiceCommand , Mode=OneWay}"
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"

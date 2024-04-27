@@ -215,7 +215,7 @@
                                                FontSize="14"
                                                x:Name="txt_Personel"
                                                Foreground="#BB8F60"
-                                               Text="{Binding ViewModel.PersonnelId , Mode=TwoWay}"
+                                               Text="{Binding ViewModel.PersonnelId ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                HorizontalAlignment="Right"
                                                Margin="0 0 7 0" />
                                 </DockPanel>
@@ -236,13 +236,13 @@
                                                   Margin="0 8 15 10"
                                                   Grid.Column="1"
                                                   LabelName="تاریخ پرداخت"
-                                                  SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}" />
+                                                  SelectedDate="{Binding ViewModel.SubmitDate,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <nu:MoneyPack Grid.Column="0"
                                           Grid.Row="1"
                                           LabelName="مبلغ مساعده"
                                           x:Name="txt_amountOf"
                                           FontSize="14"
-                                          Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
+                                          Value="{Binding ViewModel.AmountOf ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           FontFamily="Calibri" />
                             <Grid Grid.Column="0"
                                   Grid.ColumnSpan="2"
@@ -259,7 +259,7 @@
                                             Margin="0,30,0,0"
                                             FlowDirection="RightToLeft"
                                             Grid.ColumnSpan="2"
-                                            Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                            Text="{Binding ViewModel.Description,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             TextWrapping="Wrap"
                                             FontFamily="Calibri"></ui:TextBox>
                             </Grid>

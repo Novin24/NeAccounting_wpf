@@ -225,12 +225,12 @@
                                                 FontFamily="Calibri"
                                                 x:Name="dtp"
                                                 LabelName="تاریخ کارکرد"
-                                                SelectedMon="{Binding ViewModel.SubmitMonth, Mode=TwoWay}"
-                                                SelectedYear="{Binding ViewModel.SubmitYear, Mode=TwoWay}"/>
+                                                SelectedMon="{Binding ViewModel.SubmitMonth,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedYear="{Binding ViewModel.SubmitYear,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                 
                                 <nu:MoneyPack Grid.Column="0"
-                                              Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
+                                              Value="{Binding ViewModel.AmountOf ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Grid.Row="1"
                                               Minimum="0"
                                               Maximum="31"
@@ -240,7 +240,7 @@
                                               LabelName="اضافه کاری"
                                               Minimum="0"
                                               Maximum="120"
-                                              Value="{Binding ViewModel.OverTime , Mode=TwoWay}"
+                                              Value="{Binding ViewModel.OverTime ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Grid.Row="1" />
 
                             <Grid Grid.Column="0"

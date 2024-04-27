@@ -17,7 +17,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.CreateUnitCommand}" />
+                 Command="{Binding CreateUnitCommand}" />
     </Page.InputBindings>
 
     <Grid>
@@ -177,6 +177,7 @@
                                         Padding="4 5 "
                                         IsDefault="True"
                                         FontSize="17"
+                                        x:Name="Btn_submit"
                                         FontFamily="Calibri"
                                         Command="{Binding ViewModel.CreateUnitCommand}"
                                         VerticalAlignment="Bottom"

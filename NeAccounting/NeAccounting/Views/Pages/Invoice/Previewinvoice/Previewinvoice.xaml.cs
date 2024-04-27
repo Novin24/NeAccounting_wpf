@@ -36,6 +36,7 @@ namespace NeAccounting.Views.Pages
         [RelayCommand]
         private void OnAddRow()
         {
+            Btn_submit.Focus();
             if (ViewModel.OnAdd())
             {
                 ViewModel.AmountOf = null;

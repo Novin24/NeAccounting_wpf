@@ -1,6 +1,4 @@
-﻿using DomainShared.Enums;
-using DomainShared.Utilities;
-using NeAccounting.ViewModels;
+﻿using NeAccounting.ViewModels;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -25,6 +23,23 @@ namespace NeAccounting.Views.Pages
             //var t = Priority.All.ToEnumDictionary();
             //t.Remove(Priority.All);
             //cmb_Priority.ItemsSource = t;
+        }
+
+        /// <summary>
+        /// ثبت یاداور
+        /// </summary>
+        /// <returns></returns>
+        [RelayCommand]
+        private async Task OnSubmit()
+        {
+            cmb_Priority.Focus();
+            //if (DataContext is not UpdateNotificationPage unp)
+            //{
+            //    return;
+            //}
+            var t =  Txt_Titele.Text;
+            await ViewModel.SubmitCommand.ExecuteAsync(null);
+
         }
     }
 }

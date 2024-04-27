@@ -16,7 +16,7 @@
       mc:Ignorable="d">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                    Command="{Binding ViewModel.CreateCommand}" />
+                    Command="{Binding CreateCommand}" />
     </Page.InputBindings>
 
     <Grid>
@@ -378,6 +378,7 @@
                                 <ui:Button Grid.Row="8"
                                            HorizontalAlignment="Center"
                                            FontFamily="Calibri"
+                                           x:Name="Btn_submit"
                                            FontSize="15"
                                            Padding="30 4"
                                            Margin="12"

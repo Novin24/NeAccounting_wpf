@@ -414,13 +414,14 @@
                                 </Grid>
 
                                 <Button Grid.Row="6"
-                                        Padding="30 5 "
                                         Margin="12"
-                                        HorizontalAlignment="Center"
-                                        FontFamily="Calibri"
-                                        Command="{Binding ViewModel.CreateCommand}"
                                         FontSize="15"
-                                        Grid.ColumnSpan="2" >
+                                        Padding="30 5 "     
+                                        x:Name="Btn_submit"
+                                        Grid.ColumnSpan="2" 
+                                        FontFamily="Calibri"
+                                        HorizontalAlignment="Center"
+                                        Command="{Binding ViewModel.CreateCommand}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="ثبت" />
                                         <TextBlock Text=" (F1)"

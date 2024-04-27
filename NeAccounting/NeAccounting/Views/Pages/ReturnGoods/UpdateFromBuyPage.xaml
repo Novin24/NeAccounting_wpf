@@ -207,7 +207,7 @@
                                                       Grid.Column="3"
                                                       MinWidth="280"
                                                       HorizontalAlignment="Left"
-                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}"
+                                                      SelectedDate="{Binding ViewModel.SubmitDate,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                       Margin="0 0 0 0"
                                                       LabelName="تاریخ" />
 
@@ -267,7 +267,7 @@
                                                   TextAlignment="Center"
                                                   ClearButtonEnabled="False"
                                                   FontFamily="Calibri"
-                                                  Value="{Binding ViewModel.AmountOf, Mode=TwoWay}"
+                                                  Value="{Binding ViewModel.AmountOf,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   SpinButtonPlacementMode="Hidden"
                                                   Margin="0 2 0 0" />
                                 </StackPanel>
@@ -324,7 +324,7 @@
                                                Text="توضیحات"
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_UnitDescription"
-                                                Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                                Text="{Binding ViewModel.Description,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 TextAlignment="Center"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
@@ -530,7 +530,7 @@
                                 </Button>
                                 <ui:TextBox Grid.Column="2"
                                             FontFamily="Calibri"
-                                            Text="{Binding ViewModel.InvDescription, Mode=TwoWay}"
+                                            Text="{Binding ViewModel.InvDescription,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             PlaceholderText="خلاصه فاکتور"
                                             VerticalAlignment="Top" />
                             </Grid>

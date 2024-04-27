@@ -50,8 +50,10 @@ namespace NeAccounting.Views.Pages
         [RelayCommand]
         private async Task OnSubmit()
         {
+            btn_submit.Focus();
             if (await ViewModel.OnSumbit())
             {
+                btn_submit.Focus();
                 aus_CusName.Text = string.Empty;
                 Cmb_PayType.SelectedIndex = 0;
                 lbl_cusId.Text = string.Empty;

@@ -16,5 +16,17 @@ namespace NeAccounting.Views.Pages
             DataContext = this;
             InitializeComponent();
         }
+
+        [RelayCommand]
+        private async Task OnSumbit()
+        {
+
+            if (DataContext is not UpdatePayDocPage unp)
+            {
+                return;
+            }
+            btn_submit.Focus();
+            await unp.ViewModel.SumbitCommand.ExecuteAsync(null);
+        }
     }
 }

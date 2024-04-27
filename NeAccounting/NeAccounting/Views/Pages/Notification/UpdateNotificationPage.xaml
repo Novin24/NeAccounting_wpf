@@ -16,7 +16,7 @@
       Title="UpdateNotificationPage">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                    Command="{Binding ViewModel.SubmitCommand}" />
+                    Command="{Binding SubmitCommand}" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -106,7 +106,7 @@
                     <RowDefinition Height="*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <nu:HeaderPack NamePpage="تعریف یادآور " />
+                <nu:HeaderPack NamePpage="ویرایش یادآور " />
                 <Border Grid.Row="1"
                         CornerRadius="9"
                         BorderBrush="#D6D5D5"
@@ -146,7 +146,7 @@
                                      Grid.Column="0"
                                      Margin="0 4 3 0 "
                                      x:Name="Txt_Titele"
-                                     Text="{Binding ViewModel.Titele , Mode=TwoWay}"
+                                     Text="{Binding ViewModel.Titele , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      CaretBrush="White"
                                      FontFamily="Calibri" />
                         </StackPanel>
@@ -165,7 +165,7 @@
                                       ItemsSource="{Binding ViewModel.EnumSource}"
                                       SelectedValuePath="Key"
                                       DisplayMemberPath="Value"
-                                      SelectedValue="{Binding ViewModel.Priority,Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.Priority,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Margin="0 4 0 0">
                             </ComboBox>
                         </StackPanel>
@@ -173,7 +173,7 @@
                                               Grid.Column="1"
                                               LabelName="تاریخ سررسید"
                                               Grid.ColumnSpan="3"
-                                              SelectedDate="{Binding ViewModel.DueDate , Mode=TwoWay}"
+                                              SelectedDate="{Binding ViewModel.DueDate , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               FlowDirection="LeftToRight" />
 
                         <Grid Grid.Row="3"
@@ -184,7 +184,7 @@
                                        FontSize="14"
                                        Text="توضیحات"
                                        Margin="7 0 0 0 " />
-                            <ui:TextBox Text="{Binding ViewModel.Message , Mode=TwoWay}"
+                            <ui:TextBox Text="{Binding ViewModel.Message , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Margin="0 25 3 0"
                                         FontSize="14"
                                         FontFamily="Calibri" />
@@ -195,6 +195,7 @@
                                 Grid.Column="1"
                                 Grid.ColumnSpan="3"
                                 Padding="30 4 "
+                                x:Name="Btn_sub"
                                 Command="{Binding ViewModel.SubmitCommand}"
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"
