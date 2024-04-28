@@ -148,7 +148,7 @@
                                      Margin="0 4 3 0 "
                                      x:Name="Txt_Titele"
                                      Text="{Binding ViewModel.Titele , Mode=OneWayToSource}"
-                                     CaretBrush="White"
+                                      
                                      FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Grid.Row="1"

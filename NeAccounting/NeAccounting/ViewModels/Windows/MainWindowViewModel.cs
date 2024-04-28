@@ -26,7 +26,7 @@ namespace NeAccounting.ViewModels
         {
             new NavigationViewItem()
             {
-                Content = "Home",
+                Content = "داشبورد",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Home32 },
                 TargetPageType = typeof(DashboardPage)
             },

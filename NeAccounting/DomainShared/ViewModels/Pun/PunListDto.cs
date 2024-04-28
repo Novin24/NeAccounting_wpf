@@ -8,6 +8,7 @@
         public Guid UnitId { get; set; }
         public bool IsManufacturedGoods { get; set; }
         public double Entity { get; set; }
+        public string PhisicalAddress { get; set; }
         public string SEntity { get; set; }
         public long LastSellPrice { get; set; }
         public long LastBuyPrice { get; set; }

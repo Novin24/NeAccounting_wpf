@@ -267,7 +267,7 @@
                                                 Grid.Column="0"
                                                 Margin="0 4 3 0 "
                                                 Text="{Binding ViewModel.FullName ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                CaretBrush="White"
+                                                 
                                                 FontFamily="Calibri" />
                                 </StackPanel>
 

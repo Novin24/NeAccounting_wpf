@@ -51,5 +51,7 @@ namespace NeApplication.IRepositoryies
             long? lastPrice = null);
         Task<(string error, bool isSuccess)> ChangeStatus(
            Guid id, bool active);
+
+        Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList);
     }
 }

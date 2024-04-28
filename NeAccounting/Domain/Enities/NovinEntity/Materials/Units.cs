@@ -27,6 +27,16 @@ namespace Domain.NovinEntity.Materials
             Descrip = description;
             IsActive = true;
         }
+        public Units(
+            Guid id,
+            string name,
+            string description)
+        {
+            Id = id;
+            Name = name;
+            Descrip = description;
+            IsActive = true;
+        }
         #endregion
     }
 }
