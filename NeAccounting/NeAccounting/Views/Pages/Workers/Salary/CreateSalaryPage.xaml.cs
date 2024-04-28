@@ -29,7 +29,7 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            int id = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
+            var id = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
             ViewModel.WorkerId = id;
             await ReloadSalary();
         }
@@ -107,7 +107,7 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            if (ViewModel.WorkerId == -1)
+            if (ViewModel.WorkerId == null)
                 return;
 
             await ReloadSalary();
@@ -119,7 +119,7 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            if (ViewModel.WorkerId == -1)
+            if (ViewModel.WorkerId == null)
                 return;
 
             await ReloadSalary();

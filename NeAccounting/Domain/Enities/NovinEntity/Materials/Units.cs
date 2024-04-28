@@ -2,10 +2,10 @@
 
 namespace Domain.NovinEntity.Materials
 {
-    public class Unit : LocalEntity<Guid>
+    public class Units : LocalEntity<Guid>
     {
         #region Navigation
-        public ICollection<Material> Materials { get; private set; }
+        public ICollection<Pun> Materials { get; private set; }
         #endregion
 
         #region Property
@@ -15,12 +15,12 @@ namespace Domain.NovinEntity.Materials
         #endregion
 
         #region ctor
-        internal Unit()
+        internal Units()
         {
 
         }
 
-        public Unit(string name,
+        public Units(string name,
             string description)
         {
             Name = name;

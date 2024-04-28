@@ -79,12 +79,6 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     {
         #region validation
 
-        if (WorkerId == -1)
-        {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنلی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return;
-        }
-
         if (AmountOf <= 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تعداد روز / شیفت کاری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -191,7 +185,7 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     [RelayCommand]
     public async Task<bool> OnSelect()
     {
-        if (WorkerId == -1 || SubmitMonth == null || SubmitYear == null)
+        if ( SubmitMonth == null || SubmitYear == null)
         {
             return false;
         }

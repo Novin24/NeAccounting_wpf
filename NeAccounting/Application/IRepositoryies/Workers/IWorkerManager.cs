@@ -8,7 +8,7 @@ using NeApplication.Common;
 
 namespace NeApplication.IRepositoryies
 {
-    public interface IWorkerManager : IRepository<Worker>
+    public interface IWorkerManager : IRepository<Personel>
     {
         #region worker
 

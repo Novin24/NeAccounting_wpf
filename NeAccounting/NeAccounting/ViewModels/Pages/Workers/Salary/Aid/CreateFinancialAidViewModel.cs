@@ -25,7 +25,7 @@ namespace NeAccounting.ViewModels
         private int? _PersonelId;
 
         [ObservableProperty]
-        private int _workerId = -1;
+        private Guid? _workerId = null;
 
         [ObservableProperty]
         private long _amountOf = 0;
@@ -64,7 +64,7 @@ namespace NeAccounting.ViewModels
         private async Task OnCreate()
         {
 
-            if (WorkerId < 0)
+            if (WorkerId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -82,7 +82,7 @@ namespace NeAccounting.ViewModels
             PersianCalendar pc = new();
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.WorkerManager.AddAid(SubmitDate.Value, WorkerId, pc.GetYear(SubmitDate.Value), (byte)pc.GetMonth(SubmitDate.Value), AmountOf, Description);
+                var (error, isSuccess) = await db.WorkerManager.AddAid(SubmitDate.Value, WorkerId.Value, pc.GetYear(SubmitDate.Value), (byte)pc.GetMonth(SubmitDate.Value), AmountOf, Description);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

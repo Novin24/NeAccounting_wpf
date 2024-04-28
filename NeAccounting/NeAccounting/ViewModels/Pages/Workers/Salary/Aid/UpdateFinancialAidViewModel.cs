@@ -27,7 +27,7 @@ namespace NeAccounting.ViewModels
         private string _personnelName;
 
         [ObservableProperty]
-        private int _workerId = -1;
+        private Guid _workerId ;
 
         [ObservableProperty]
         private DateTime? _submitDate = DateTime.Now;

@@ -6,7 +6,7 @@ namespace Domain.NovinEntity.Workers
     {
         #region Navigation
         public Guid WorkerId { get; set; }
-        public Worker Worker { get; set; }
+        public Personel Worker { get; set; }
         #endregion
 
         #region Property

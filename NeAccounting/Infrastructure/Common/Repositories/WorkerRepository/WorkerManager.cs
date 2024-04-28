@@ -15,7 +15,7 @@ using System.Data.Common;
 
 namespace Infrastructure.Repositories
 {
-    public class WorkerManager(NovinDbContext context) : Repository<Worker>(context), IWorkerManager
+    public class WorkerManager(NovinDbContext context) : Repository<Personel>(context), IWorkerManager
     {
 
         #region sp
@@ -153,7 +153,7 @@ namespace Infrastructure.Repositories
 
             try
             {
-                var t = await Entities.AddAsync(new Worker(
+                var t = await Entities.AddAsync(new Personel(
                     fullName,
                     natinalCode,
                     mobile,
@@ -246,7 +246,7 @@ namespace Infrastructure.Repositories
         #region Salary
         public async Task<(bool isSuccess, SalaryWorkerViewModel item)> GetSalaryDetailBySalaryId(Guid workerId, int salaryId, byte persianMonth, int persianYear)
         {
-            var salarise = await (from w in DbContext.Set<Worker>()
+            var salarise = await (from w in DbContext.Set<Personel>()
                                                  .AsNoTracking()
                                                  .Where(t => t.Id == workerId)
 
@@ -381,7 +381,7 @@ namespace Infrastructure.Repositories
                     row.Details = new SalaryDetails()
                     {
                         Id = (int)dataReader[nameof(row.Details.Id)],
-                        WorkerId = (int)dataReader[nameof(row.Details.WorkerId)],
+                        WorkerId = (Guid)dataReader[nameof(row.Details.WorkerId)],
                         PersianMonth = (byte)dataReader[nameof(row.PersianMonth)],
                         PersianYear = (int)dataReader[nameof(row.PersianYear)]
                     };
@@ -662,7 +662,7 @@ namespace Infrastructure.Repositories
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
-            return await (from worker in DbContext.Set<Worker>()
+            return await (from worker in DbContext.Set<Personel>()
                                                          .AsNoTracking()
                                                          .Where(t => workerId == null || t.Id == workerId)
 
@@ -844,7 +844,7 @@ namespace Infrastructure.Repositories
         public async Task<List<AidViewModel>> GetAidList(Guid? workerId, int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
-            return await (from worker in DbContext.Set<Worker>()
+            return await (from worker in DbContext.Set<Personel>()
                                                .AsNoTracking()
                                                .Where(t => workerId == null || t.Id == workerId)
 

@@ -5,7 +5,7 @@ namespace Domain.NovinEntity.Workers
     public class FinancialAid : LocalEntity
     {
         #region Navigation
-        public Worker Worker { get; set; }
+        public Personel Worker { get; set; }
         public Guid WorkerId { get; set; }
         #endregion
 

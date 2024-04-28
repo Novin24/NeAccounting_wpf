@@ -100,8 +100,9 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            if (ViewModel.WorkerId == -1)
-                return;
+
+            //if (ViewModel.WorkerId == null)
+            //    return;
 
             await ReloadSalary();
         }
@@ -112,8 +113,8 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
-            if (ViewModel.WorkerId == -1)
-                return;
+            //if (ViewModel.WorkerId == -1)
+            //    return;
 
             await ReloadSalary();
         }

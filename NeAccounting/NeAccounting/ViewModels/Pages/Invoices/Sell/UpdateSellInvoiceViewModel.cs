@@ -114,7 +114,7 @@ namespace NeAccounting.ViewModels
         /// شناسه جنس انتخاب شده در سلکت باکس
         /// </summary>
         [ObservableProperty]
-        private int _materialId = -1;
+        private Guid? _materialId = null;
 
         /// <summary>
         /// مقدار انتخاب شده
@@ -205,7 +205,7 @@ namespace NeAccounting.ViewModels
         {
             #region validation
 
-            if (MaterialId < 0)
+            if (MaterialId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return false;
@@ -237,7 +237,7 @@ namespace NeAccounting.ViewModels
                 IsDeleted = false,
                 TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
                 Description = Description,
-                MaterialId = MaterialId,
+                MaterialId = MaterialId.Value,
             });
             SetCommisionValue();
             RefreshRow(ref RowId);

@@ -1255,7 +1255,7 @@ namespace Infrastructure.Repositories
             return new PagedResulViewModel<DetailRemittanceDto>(totalCount, pageCount, pageNum, Remittances);
         }
 
-        public async Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(int id,
+        public async Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(Guid id,
             bool isBuy,
             bool isSell,
             DateTime startDate,

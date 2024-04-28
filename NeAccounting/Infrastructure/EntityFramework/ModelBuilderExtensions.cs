@@ -38,7 +38,7 @@ namespace Infrastructure.Utilities
                 b.Property(r => r.IsActive).HasDefaultValue(true);
             });
 
-            builder.Entity<Worker>(b =>
+            builder.Entity<Personel>(b =>
             {
                 b.HasIndex(t => t.PersonnelId);
                 b.Property(t => t.FullName).HasMaxLength(50).IsRequired();
@@ -59,7 +59,7 @@ namespace Infrastructure.Utilities
                 b.Property(t => t.Receiver).HasMaxLength(100);
             });
 
-            builder.Entity<Material>(b =>
+            builder.Entity<Pun>(b =>
             {
 
                 b.HasIndex(t => t.Id);
@@ -88,7 +88,7 @@ namespace Infrastructure.Utilities
                 .OnDelete(DeleteBehavior.Cascade);
             });
 
-            builder.Entity<Unit>(b =>
+            builder.Entity<Units>(b =>
             {
                 b.HasIndex(t => t.Id);
                 b.Property(t => t.Name).HasMaxLength(30);

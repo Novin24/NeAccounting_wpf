@@ -95,7 +95,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     /// شناسه جنس انتخاب شده در سلکت باکس
     /// </summary>
     [ObservableProperty]
-    private int _materialId = -1;
+    private Guid? _materialId = null;
 
     /// <summary>
     /// مقدار انتخاب شده
@@ -151,7 +151,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
             return false;
         }
 
-        if (MaterialId < 0)
+        if (MaterialId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
@@ -180,7 +180,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
             RowId = rowId,
             TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
             Description = Description,
-            MaterialId = MaterialId,
+            MaterialId = MaterialId.Value,
         });
         SetCommisionValue();
         RefreshRow(ref rowId);
@@ -322,7 +322,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
         List = [];
         CusId = null;
         Commission = null;
-        MaterialId = -1;
+        MaterialId = null;
         Description = null;
         InvDescription = null;
         SubmitDate = DateTime.Now;

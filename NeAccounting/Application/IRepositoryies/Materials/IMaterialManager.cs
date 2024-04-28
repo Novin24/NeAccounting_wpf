@@ -4,7 +4,7 @@ using NeApplication.Common;
 
 namespace NeApplication.IRepositoryies
 {
-    public interface IMaterialManager : IRepository<Material>
+    public interface IMaterialManager : IRepository<Pun>
     {
         /// <summary>
         /// فیلتر شده برای فاکتور ها

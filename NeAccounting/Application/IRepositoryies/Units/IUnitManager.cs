@@ -5,7 +5,7 @@ using NeApplication.Common;
 
 namespace NeApplication.IRepositoryies
 {
-    public interface IUnitManager : IRepository<Unit>
+    public interface IUnitManager : IRepository<Units>
     {
         Task<List<SuggestBoxViewModel<Guid>>> GetUnits(bool IgnorArchive = false);
 

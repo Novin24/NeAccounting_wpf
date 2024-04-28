@@ -7,7 +7,7 @@ using NeApplication.IRepositoryies;
 
 namespace Infrastructure.Repositories
 {
-    public class UnitManager : Repository<Unit>, IUnitManager
+    public class UnitManager : Repository<Units>, IUnitManager
     {
         public UnitManager(NovinDbContext dbContext) : base(dbContext)
         {
@@ -44,7 +44,7 @@ namespace Infrastructure.Repositories
 
             try
             {
-                var t = await Entities.AddAsync(new Unit(name, description));
+                var t = await Entities.AddAsync(new Units(name, description));
             }
             catch (Exception ex)
             {

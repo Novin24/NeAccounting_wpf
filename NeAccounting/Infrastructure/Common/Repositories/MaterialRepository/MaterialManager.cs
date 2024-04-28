@@ -6,7 +6,7 @@ using NeApplication.IRepositoryies;
 
 namespace Infrastructure.Repositories
 {
-    public class MaterialManager(NovinDbContext context) : Repository<Material>(context), IMaterialManager
+    public class MaterialManager(NovinDbContext context) : Repository<Pun>(context), IMaterialManager
     {
         public Task<List<MatListDto>> GetMaterails()
         {
@@ -64,7 +64,7 @@ namespace Infrastructure.Repositories
             try
             {
 
-                var t = await Entities.AddAsync(new Material(name,
+                var t = await Entities.AddAsync(new Pun(name,
                                 unitId,
                                 isService,
                                 lastPrice,

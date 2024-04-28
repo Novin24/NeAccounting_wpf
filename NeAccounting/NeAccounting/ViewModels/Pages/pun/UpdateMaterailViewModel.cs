@@ -22,7 +22,7 @@ namespace NeAccounting.ViewModels
         }
 
         [ObservableProperty]
-        private IEnumerable<SuggestBoxViewModel<int>> _asuBox;
+        private IEnumerable<SuggestBoxViewModel<Guid>> _asuBox;
 
         [ObservableProperty]
         private string _materialName;
@@ -37,13 +37,13 @@ namespace NeAccounting.ViewModels
         private long _lastSellPrice;
 
         [ObservableProperty]
-        private int _unitId = 0;
+        private Guid? _unitId;
 
         [ObservableProperty]
         private bool _isManufacturedGoods = false;
 
         [ObservableProperty]
-        private int _materialId = 0;
+        private Guid _materialId;
 
         public void OnNavigatedFrom()
         {
@@ -75,7 +75,7 @@ namespace NeAccounting.ViewModels
             //    return;
             //}
 
-            if (UnitId == 0)
+            if (UnitId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -87,7 +87,7 @@ namespace NeAccounting.ViewModels
             //}
 
             using UnitOfWork db = new();
-            (string error, bool isSuccess) = await db.MaterialManager.UpdateMaterial(MaterialId, MaterialName, UnitId, Serial, Address, LastSellPrice, IsManufacturedGoods);
+            (string error, bool isSuccess) = await db.MaterialManager.UpdateMaterial(MaterialId, MaterialName, UnitId.Value, Serial, Address, LastSellPrice, IsManufacturedGoods);
 
             if (!isSuccess)
             {

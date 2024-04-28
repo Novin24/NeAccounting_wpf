@@ -203,7 +203,7 @@ namespace NeApplication.IRepositoryies
              int pageNum = 0,
              int pageCount = NeAccountingConstants.PageCount);
 
-        Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(int id,
+        Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(Guid id,
             bool isBuy,
             bool isSell,
             DateTime startDate,
@@ -279,7 +279,7 @@ namespace NeApplication.IRepositoryies
             DateTime? endTime,
             Guid? cusId,
             string chequeNumber,
-            ChequeStatus status, 
+            ChequeStatus status,
             bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);

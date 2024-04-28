@@ -3,10 +3,10 @@ using Domain.Enities.NovinEntity.Remittances;
 
 namespace Domain.NovinEntity.Materials
 {
-    public class Material : LocalEntity<Guid>
+    public class Pun : LocalEntity<Guid>
     {
         #region Navigation
-        public Unit Unit { get; set; }
+        public Units Unit { get; set; }
         public Guid UnitId { get; set; }
         public IEnumerable<SellRemittance> SellRemittances { get; set; }
         public IEnumerable<BuyRemittance> BuyRemittances { get; set; }
@@ -25,12 +25,12 @@ namespace Domain.NovinEntity.Materials
         #endregion
 
         #region Constructor
-        internal Material()
+        internal Pun()
         {
 
         }
 
-        public Material(string name,
+        public Pun(string name,
             Guid unitId,
             bool isService,
             long lastSellPrice,
@@ -50,8 +50,8 @@ namespace Domain.NovinEntity.Materials
             IsActive = true;
         }
 
-        public Material(string name,
-            int unitId,
+        public Pun(string name,
+            Guid unitId,
             bool isService,
             long lastSellPrice,
             string serial,
@@ -72,5 +72,6 @@ namespace Domain.NovinEntity.Materials
             IsActive = isActive;
         }
         #endregion
+
     }
 }
