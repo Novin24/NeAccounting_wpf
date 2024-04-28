@@ -2,10 +2,10 @@
 {
     public class PunListDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string MaterialName { get; set; }
         public string UnitName { get; set; }
-        public int UnitId { get; set; }
+        public Guid UnitId { get; set; }
         public bool IsManufacturedGoods { get; set; }
         public double Entity { get; set; }
         public string SEntity { get; set; }

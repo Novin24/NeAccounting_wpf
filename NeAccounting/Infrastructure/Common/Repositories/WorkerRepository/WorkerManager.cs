@@ -58,7 +58,7 @@ namespace Infrastructure.Repositories
             }).ToListAsync();
         }
 
-        public Task<WorkerVewiModel> GetWorker(int workerId)
+        public Task<WorkerVewiModel> GetWorker(Guid workerId)
         {
             return TableNoTracking.Where(t => t.Id == workerId)
                 .Select(w => new WorkerVewiModel
@@ -179,7 +179,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> Update(
-            int id,
+            Guid id,
             string fullName,
             string natinalCode,
             string mobile,
@@ -244,7 +244,7 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region Salary
-        public async Task<(bool isSuccess, SalaryWorkerViewModel item)> GetSalaryDetailBySalaryId(int workerId, int salaryId, byte persianMonth, int persianYear)
+        public async Task<(bool isSuccess, SalaryWorkerViewModel item)> GetSalaryDetailBySalaryId(Guid workerId, int salaryId, byte persianMonth, int persianYear)
         {
             var salarise = await (from w in DbContext.Set<Worker>()
                                                  .AsNoTracking()
@@ -343,7 +343,7 @@ namespace Infrastructure.Repositories
             return (true, salarise.First());
         }
 
-        public async Task<PagedResulViewModel<SalaryViewModel>> GetSalaryList(int? workerId,
+        public async Task<PagedResulViewModel<SalaryViewModel>> GetSalaryList(Guid? workerId,
             byte? startMonth,
             int? startYear,
             int? endMonth,
@@ -392,7 +392,7 @@ namespace Infrastructure.Repositories
             return new PagedResulViewModel<SalaryViewModel>(totalCount, pageCount, pageNum, rows);
         }
 
-        public async Task<(string error, bool isSuccess)> DeleteSalary(int workerId, int salaryId)
+        public async Task<(string error, bool isSuccess)> DeleteSalary(Guid workerId, int salaryId)
         {
             var worker = await Table
                .Include(t => t.Salaries.Where(s => s.Id == salaryId))
@@ -415,7 +415,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, bool isSuccess)> UpdateSalary(int workerId,
+        public async Task<(string error, bool isSuccess)> UpdateSalary(Guid workerId,
             int salaryId,
             int persianYear,
             byte persianMonth,
@@ -481,7 +481,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, bool isSuccess)> AddSalary(int workerId,
+        public async Task<(string error, bool isSuccess)> AddSalary(Guid workerId,
             byte persianMonth,
             int persianYear,
             long amountOf,
@@ -546,7 +546,7 @@ namespace Infrastructure.Repositories
 
         }
 
-        public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(int workerId, byte persianMonth,
+        public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(Guid workerId, byte persianMonth,
             int persianYear, int? salaryId = null)
         {
             long aid = 0;
@@ -626,7 +626,7 @@ namespace Infrastructure.Repositories
 
         #region Function
         public async Task<(string error, bool isSuccess)> AddFunctuion(
-            int workerId,
+            Guid workerId,
             int persianYear,
             byte persianMonth,
             byte amountOf,
@@ -658,13 +658,13 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<List<FunctionViewModel>> GetFunctionList(int workerId,
+        public async Task<List<FunctionViewModel>> GetFunctionList(Guid? workerId,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
             return await (from worker in DbContext.Set<Worker>()
                                                          .AsNoTracking()
-                                                         .Where(t => workerId == -1 || t.Id == workerId)
+                                                         .Where(t => workerId == null || t.Id == workerId)
 
                           join func in DbContext.Set<Function>()
                                                   on worker.Id equals func.WorkerId
@@ -688,7 +688,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> UpdateFunc(
-           int workerId,
+           Guid workerId,
            int persianYear,
            byte persianMonth,
            int funcId,
@@ -733,7 +733,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, bool isSuccess)> DeleteFunc(int workerId,
+        public async Task<(string error, bool isSuccess)> DeleteFunc(Guid workerId,
             int persianYear,
             byte persianMonth,
             int funcId)
@@ -772,7 +772,7 @@ namespace Infrastructure.Repositories
         #region Aid
         public async Task<(string error, bool isSuccess)> AddAid(
             DateTime submitDate,
-            int workerId,
+            Guid workerId,
             int persianYear,
             byte persianMonth,
             long amountOf,
@@ -801,7 +801,7 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> UpdateAid(
             DateTime subDate,
-            int workerId,
+            Guid workerId,
             int persianYear,
             byte persianMonth,
             int aidId,
@@ -841,12 +841,12 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<List<AidViewModel>> GetAidList(int workerId, int pageNum = 0,
+        public async Task<List<AidViewModel>> GetAidList(Guid? workerId, int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
             return await (from worker in DbContext.Set<Worker>()
                                                .AsNoTracking()
-                                               .Where(t => workerId == -1 || t.Id == workerId)
+                                               .Where(t => workerId == null || t.Id == workerId)
 
 
                           join aid in DbContext.Set<FinancialAid>()
@@ -870,7 +870,7 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<(string error, bool isSuccess)> DeleteAid(int workerId,
+        public async Task<(string error, bool isSuccess)> DeleteAid(Guid workerId,
             int persianYear,
             byte persianMonth,
             int aidId)

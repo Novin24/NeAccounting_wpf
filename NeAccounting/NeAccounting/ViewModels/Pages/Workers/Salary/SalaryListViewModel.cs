@@ -17,7 +17,7 @@ namespace NeAccounting.ViewModels
 
 
         [ObservableProperty]
-        private int? _workerId;
+        private Guid? _workerId = null;
 
         [ObservableProperty]
         private string _totalCount;

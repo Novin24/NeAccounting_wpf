@@ -2,16 +2,16 @@
 
 namespace Domain.NovinEntity.Materials
 {
-    public class Unit : LocalEntity
+    public class Unit : LocalEntity<Guid>
     {
         #region Navigation
         public ICollection<Material> Materials { get; private set; }
         #endregion
 
         #region Property
-        public string Name { get;  set; }
-        public string? Descrip { get;  set; }
-        public bool IsActive { get;  set; }
+        public string Name { get; set; }
+        public string? Descrip { get; set; }
+        public bool IsActive { get; set; }
         #endregion
 
         #region ctor

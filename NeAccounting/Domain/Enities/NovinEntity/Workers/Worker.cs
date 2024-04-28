@@ -3,7 +3,7 @@ using DomainShared.Enums;
 
 namespace Domain.NovinEntity.Workers
 {
-    public class Worker : LocalEntity
+    public class Worker : LocalEntity<Guid>
     {
         #region Navigation
         public ICollection<Salary> Salaries { get; private set; }

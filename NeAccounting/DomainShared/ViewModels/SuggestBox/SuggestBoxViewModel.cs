@@ -5,7 +5,7 @@
         public T Id { get; set; }
         public string DisplayName { get; set; }
     }
-    public class SuggestBoxViewModel<T,S>
+    public class SuggestBoxViewModel<T, S>
     {
         public T Id { get; set; }
         public string DisplayName { get; set; }
@@ -14,7 +14,7 @@
 
     public class PersonnerlSuggestBoxViewModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string DisplayName { get; set; }
         public int PersonnelId { get; set; }
     }

@@ -17,10 +17,10 @@ namespace NeAccounting.ViewModels
 
 
         [ObservableProperty]
-        private int _workerId = -1;
+        private Guid? _workerId = null;
 
         [ObservableProperty]
-        private int _pageNum ;
+        private int _pageNum;
 
         [ObservableProperty]
         private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;

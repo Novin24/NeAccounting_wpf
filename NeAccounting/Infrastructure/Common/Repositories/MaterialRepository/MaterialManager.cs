@@ -51,7 +51,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> CreateMaterial(string name,
-            int unitId,
+            Guid unitId,
             bool isService,
             long lastPrice,
             string serial,
@@ -80,9 +80,9 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> UpdateMaterial(
-            int materialId,
+            Guid materialId,
             string name,
-            int unitId,
+            Guid unitId,
             string serial,
             string address,
             long lastPrice,
@@ -111,7 +111,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, PunListDto pun)> GetMaterailById(int Id)
+        public async Task<(string error, PunListDto pun)> GetMaterailById(Guid Id)
         {
             var mt = await TableNoTracking
                 .Include(t => t.Unit)
@@ -133,7 +133,7 @@ namespace Infrastructure.Repositories
             });
         }
 
-        public async Task<(string errore, bool isSuccess)> UpdateMaterialEntity(int materialId,
+        public async Task<(string errore, bool isSuccess)> UpdateMaterialEntity(Guid materialId,
             double entity,
             bool sellOrBuy,
             long? lastPrice = null)
@@ -177,7 +177,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> ChangeStatus(
-           int id, bool active)
+           Guid id, bool active)
         {
             var unit = await Entities.FirstOrDefaultAsync(t => t.Id == id);
             if (unit == null)

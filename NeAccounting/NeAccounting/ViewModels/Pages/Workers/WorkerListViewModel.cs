@@ -123,7 +123,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnUpdateWorker(int parameter)
+        private async Task OnUpdateWorker(Guid parameter)
         {
             Type? pageType = NameToPageTypeConverter.Convert("UpdateWorker");
 
@@ -135,7 +135,7 @@ namespace NeAccounting.ViewModels
 
             var worker = List.First(t => t.Id == parameter);
 
-            IEnumerable<SuggestBoxViewModel<int>> asuBox;
+            IEnumerable<SuggestBoxViewModel<Guid>> asuBox;
 
             using (UnitOfWork db = new())
             {

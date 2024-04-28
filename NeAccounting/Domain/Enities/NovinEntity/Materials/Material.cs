@@ -3,11 +3,11 @@ using Domain.Enities.NovinEntity.Remittances;
 
 namespace Domain.NovinEntity.Materials
 {
-    public class Material : LocalEntity
+    public class Material : LocalEntity<Guid>
     {
         #region Navigation
         public Unit Unit { get; set; }
-        public int UnitId { get; set; }
+        public Guid UnitId { get; set; }
         public IEnumerable<SellRemittance> SellRemittances { get; set; }
         public IEnumerable<BuyRemittance> BuyRemittances { get; set; }
         #endregion
@@ -31,7 +31,7 @@ namespace Domain.NovinEntity.Materials
         }
 
         public Material(string name,
-            int unitId,
+            Guid unitId,
             bool isService,
             long lastSellPrice,
             string serial,

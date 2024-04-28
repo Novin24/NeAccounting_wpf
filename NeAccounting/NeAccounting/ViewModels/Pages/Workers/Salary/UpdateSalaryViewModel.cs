@@ -12,7 +12,7 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     private readonly INavigationService _navigationService;
 
     [ObservableProperty]
-    private int _workerId = -1;
+    private Guid _workerId ;
 
     [ObservableProperty]
     private int _salaryId = -1;

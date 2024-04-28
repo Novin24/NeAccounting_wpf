@@ -10,7 +10,7 @@
         /// <summary>
         /// شناسه کارگر
         /// </summary>
-        public int WorkerId { get; set; }
+        public Guid WorkerId { get; set; }
 
         public int PersianYear { get; set; }
         public byte PersianMonth { get; set; }

@@ -22,7 +22,7 @@ namespace NeAccounting.ViewModels
             _dialogService = dialogService;
         }
         [ObservableProperty]
-        private int _id;
+        private Guid _id;
 
         [ObservableProperty]
         private string _fullName;
