@@ -116,10 +116,6 @@
                         Margin="10 0 4 8"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4">
-                    <Border.Background>
-                        <SolidColorBrush Color="Gray"
-                                         Opacity="0.14" />
-                    </Border.Background>
                     <!--اخرین چک ها-->
                     <Grid>
                         <TextBlock FontFamily="Calibri"

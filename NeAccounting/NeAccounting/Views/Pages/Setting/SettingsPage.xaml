@@ -19,29 +19,39 @@
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
 
-    <StackPanel>
-        <TextBlock FontSize="20"
+    <StackPanel FlowDirection="RightToLeft" Margin="20 30 30 30">
+        <TextBlock FontSize="22"
                    FontWeight="Medium"
-                   Text="Personalization" />
-        <TextBlock Margin="0,12,0,0"
-                   Text="Theme" />
-        <RadioButton Margin="0,12,0,0"
+                   FontFamily="Calibri"
+                   Text="شخصی سازی" />
+        <TextBlock Margin="1,12,0,0"
+                   Text="تم" 
+                   FontSize="14"
+                   FontFamily="Calibri"/>
+        <RadioButton Margin="1,12,0,0"
                      Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
                      CommandParameter="theme_light"
-                     Content="Light"
+                     HorizontalAlignment="Left"
+                     Content="روشن"
+                     FontSize="16"
                      GroupName="themeSelect"
+                   FontFamily="Calibri"
                      IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
         <RadioButton Margin="0,8,0,0"
                      Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
                      CommandParameter="theme_dark"
-                     Content="Dark"
+                     Content="تیره"
+                     FontSize="16"
+                     FontFamily="Calibri"
+                     HorizontalAlignment="Left"
                      GroupName="themeSelect"
                      IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />
 
         <TextBlock Margin="0,24,0,0"
-                   FontSize="20"
+                   FontSize="22"
                    FontWeight="Medium"
-                   Text="About NeAccounting" />
+                   Text="ورژن برنامه" 
+                   FontFamily="Calibri"/>
         <TextBlock Margin="0,12,0,0"
                    Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
     </StackPanel>

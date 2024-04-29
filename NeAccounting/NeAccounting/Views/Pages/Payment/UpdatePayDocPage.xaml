@@ -112,10 +112,6 @@
                         Margin="10 0 4 8"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4">
-                    <Border.Background>
-                        <SolidColorBrush Color="Black"
-                                         Opacity="0.08" />
-                    </Border.Background>
                     <!--اخرین چک ها-->
                     <Grid>
                         <TextBlock FontFamily="Calibri"
@@ -196,7 +192,7 @@
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4">
                     <Border.Background>
-                        <SolidColorBrush Color="Black"
+                        <SolidColorBrush Color="Gray"
                                          Opacity="0.08" />
                     </Border.Background>
                     <Grid FlowDirection="RightToLeft">
