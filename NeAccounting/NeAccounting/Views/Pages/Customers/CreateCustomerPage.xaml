@@ -118,7 +118,7 @@
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4">
                     <Border.Background>
-                        <SolidColorBrush Color="Black"
+                        <SolidColorBrush Color="Gray"
                                          Opacity="0.08" />
                     </Border.Background>
                     <Grid FlowDirection="RightToLeft"

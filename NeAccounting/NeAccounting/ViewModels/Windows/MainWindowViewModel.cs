@@ -101,8 +101,8 @@ namespace NeAccounting.ViewModels
                 //TargetPageType = typeof(MaterailListPage)
                 MenuItems = new ObservableCollection<object>
                 {
-                    new NavigationViewItem { Content = "اتمام سال مالی کنونی", TargetPageType = typeof(DashboardPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.AlignEndHorizontal20} },
-                    new NavigationViewItem { Content = "... بازگشت به سال", TargetPageType = typeof(DashboardPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.Rename20} },
+                    new NavigationViewItem { Content = "اتمام سال مالی کنونی", TargetPageType = typeof(CreateFiscalYear) , Icon = new SymbolIcon{ Symbol = SymbolRegular.AlignEndHorizontal20} },
+                    new NavigationViewItem { Content = "... بازگشت به سال", TargetPageType = typeof(FiscalYearListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.Rename20} },
                 }
             },
             new NavigationViewItem()
