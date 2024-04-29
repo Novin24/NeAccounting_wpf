@@ -49,6 +49,7 @@ namespace Infrastructure.Repositories
                     HavePromissoryNote = x.HavePromissoryNote,
                     UniqNumber = x.CusId,
                     PromissoryNote = x.PromissoryNote,
+                    TTotalCredit = x.TotalCredit,
                     TotalCredit = x.TotalCredit.ToString("N0"),
                     CusTypeName = x.Type.ToDisplay(DisplayProperty.Name),
                     CusType = x.Type,
@@ -186,6 +187,34 @@ namespace Infrastructure.Repositories
                 TotalCredit = mt.TotalCredit.ToString("N0"),
                 CusType = mt.Type,
             });
+        }
+
+
+        public async Task<(string error, bool isSuccess)> AddAllCusInNewYear(List<CustomerListDto> cusList)
+        {
+            var units = cusList.Select(t => new Customer(t.Name,
+                t.Mobile,
+                t.TTotalCredit,
+                t.ChequeCredit,
+                t.PromissoryNote,
+                t.NationalCode,
+                t.Address,
+                t.CusType,
+                t.HavePromissoryNote,
+                t.HaveCashCredit,
+                t.Buyer,
+                t.Seller,
+                t.Id));
+
+            try
+            {
+                await Entities.AddRangeAsync(units);
+            }
+            catch (Exception)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
         }
 
     }

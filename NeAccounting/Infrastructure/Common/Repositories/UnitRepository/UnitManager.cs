@@ -103,7 +103,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<UnitListDto> unitList)
+        public async Task<(string error, bool isSuccess)> AddAllUnitsInNewYear(List<UnitListDto> unitList)
         {
             var units = unitList.Select(t => new Units(t.Id,t.UnitName,t.Description));
             try

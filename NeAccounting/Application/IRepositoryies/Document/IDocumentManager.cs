@@ -353,6 +353,11 @@ namespace NeApplication.IRepositoryies
 
         Task<(string error, bool isSuccess)> RemoveCheque(Guid docId);
         #endregion
+
+        #region FinancialYear
+        Task<List<UserLeftOve>> GetUserLeftOver();
+        Task<(bool isSuccess, string error)> AddUserLeftOver(List<UserLeftOve> userDocs);
+        #endregion
     }
 }
 

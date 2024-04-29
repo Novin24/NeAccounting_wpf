@@ -10,6 +10,7 @@ using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using NeApplication.IRepositoryies;
 using System.Globalization;
 
@@ -1482,12 +1483,19 @@ namespace Infrastructure.Repositories
             return new PagedResulViewModel<DalyBookDto>(totalCount, pageCount, pageNum, list);
         }
 
-        
+
 
         #endregion
 
         #region Cheque
-        public async Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime, DateTime? endTime, Guid? cusId, string chequeNumber, ChequeStatus status, bool isInit, int pageNum = 0, int pageCount = NeAccountingConstants.PageCount)
+        public async Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime,
+            DateTime? endTime,
+            Guid? cusId,
+            string chequeNumber,
+            ChequeStatus status,
+            bool isInit,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
         {
             PersianCalendar pc = new();
             var query = (from che in DbContext.Set<Cheque>()
@@ -2023,7 +2031,54 @@ namespace Infrastructure.Repositories
         #endregion
 
         #region FinancialYear
+        public async Task<List<UserLeftOve>> GetUserLeftOver()
+        {
+            var result = await (from d in DbContext.Set<Document>()
+                                    .AsNoTracking()
+                                join c in DbContext.Set<Customer>() on d.CustomerId equals c.Id
+                                group new { d, c } by c.Id into grouped
+                                select new UserLeftOve
+                                {
+                                    UserId = grouped.Key,
+                                    Debt = grouped.Sum(x => x.d.IsReceived ? x.d.Price : 0),
+                                    Credit = grouped.Sum(x => !x.d.IsReceived ? x.d.Price : 0)
+                                }).ToListAsync();
 
+            List<UserLeftOve> list = [];
+            foreach (var item in result)
+            {
+                if (item.Credit == item.Debt)
+                {
+                    continue;
+                }
+
+                // منها یعنی مشتری بدهکاره
+                // مثبت یعنی  مشتری طلبکاره
+                item.LeftOver = item.Debt - item.Credit;
+                list.Add(item);
+            }
+            return list;
+        }
+
+        public async Task<(bool isSuccess, string error)> AddUserLeftOver(List<UserLeftOve> userDocs)
+        {
+            var docs = userDocs.Select(t => new Document(t.UserId,
+                Math.Abs(t.LeftOver),
+                DocumntType.LeftOver,
+                PaymentType.Other,
+                "باقیمانده از سال مالی قبل",
+                DateTime.Now, t.LeftOver > 0));
+
+            try
+            {
+                await Entities.AddRangeAsync(docs);
+            }
+            catch (Exception ex)
+            {
+                return new(false, ex.Message);
+            }
+            return new(true, string.Empty);
+        }
         #endregion
     }
 }
