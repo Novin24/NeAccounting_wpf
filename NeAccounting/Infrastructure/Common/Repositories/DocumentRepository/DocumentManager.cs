@@ -1255,7 +1255,7 @@ namespace Infrastructure.Repositories
             return new PagedResulViewModel<DetailRemittanceDto>(totalCount, pageCount, pageNum, Remittances);
         }
 
-        public async Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(int id,
+        public async Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(Guid id,
             bool isBuy,
             bool isSell,
             DateTime startDate,
@@ -1481,6 +1481,8 @@ namespace Infrastructure.Repositories
             list = list.Skip(--pageNum * pageCount).Take(pageCount).ToList();
             return new PagedResulViewModel<DalyBookDto>(totalCount, pageCount, pageNum, list);
         }
+
+        
 
         #endregion
 
@@ -2018,6 +2020,10 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
+        #endregion
+
+        #region FinancialYear
+
         #endregion
     }
 }

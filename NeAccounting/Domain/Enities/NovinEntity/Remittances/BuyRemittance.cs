@@ -7,8 +7,8 @@ namespace Domain.Enities.NovinEntity.Remittances
     public class BuyRemittance : LocalEntity<Guid>
     {
         #region Navigation
-        public Material Material { get; private set; }
-        public int MaterialId { get;  set; }
+        public Pun Material { get; private set; }
+        public Guid MaterialId { get; set; }
         public Document Document { get; private set; }
         public Guid DocumentId { get; private set; }
         #endregion
@@ -17,7 +17,7 @@ namespace Domain.Enities.NovinEntity.Remittances
         internal BuyRemittance() { }
 
         public BuyRemittance(
-            int materialId,
+            Guid materialId,
             double amountOf,
             long price,
             long toatalPrice,

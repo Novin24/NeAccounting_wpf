@@ -60,8 +60,8 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("MaterialId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("MaterialId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("Price")
                         .HasColumnType("bigint");
@@ -78,7 +78,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("MaterialId");
 
-                    b.ToTable("BuyRemittance", (string)null);
+                    b.ToTable("BuyRemittance");
                 });
 
             modelBuilder.Entity("Domain.Enities.NovinEntity.Remittances.SellRemittance", b =>
@@ -119,8 +119,8 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("MaterialId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("MaterialId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<long>("Price")
                         .HasColumnType("bigint");
@@ -137,7 +137,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("MaterialId");
 
-                    b.ToTable("SellRemittance", (string)null);
+                    b.ToTable("SellRemittance");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Bank.Bank", b =>
@@ -186,7 +186,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bank", (string)null);
+                    b.ToTable("Bank");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Cheques.Cheque", b =>
@@ -273,7 +273,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Cheque", (string)null);
+                    b.ToTable("Cheque");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Customers.Customer", b =>
@@ -369,7 +369,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Customer", (string)null);
+                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Documents.Document", b =>
@@ -444,7 +444,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Serial");
 
-                    b.ToTable("Document", (string)null);
+                    b.ToTable("Document");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Expense.Expense", b =>
@@ -501,16 +501,15 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Expense", (string)null);
+                    b.ToTable("Expense");
                 });
 
-            modelBuilder.Entity("Domain.NovinEntity.Materials.Material", b =>
+            modelBuilder.Entity("Domain.NovinEntity.Materials.Pun", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -568,8 +567,8 @@ namespace Infrastructure.Migrations.NovinDb
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("UnitId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UnitId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -577,16 +576,15 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Material", (string)null);
+                    b.ToTable("Pun");
                 });
 
-            modelBuilder.Entity("Domain.NovinEntity.Materials.Unit", b =>
+            modelBuilder.Entity("Domain.NovinEntity.Materials.Units", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -624,7 +622,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Unit", (string)null);
+                    b.ToTable("Units");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.FinancialAid", b =>
@@ -672,8 +670,8 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<DateTime>("SubmitDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("WorkerId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("WorkerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -683,7 +681,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("FinancialAid", (string)null);
+                    b.ToTable("FinancialAid");
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Function", b =>
@@ -731,8 +729,8 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<int>("PersianYear")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkerId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("WorkerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -742,102 +740,15 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("Function", (string)null);
+                    b.ToTable("Function");
                 });
 
-            modelBuilder.Entity("Domain.NovinEntity.Workers.Salary", b =>
+            modelBuilder.Entity("Domain.NovinEntity.Workers.Personel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<long>("AmountOf")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ChildAllowance")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<long>("FinancialAid")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Insurance")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("LastModifireId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("LeftOver")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("LoanInstallment")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("OtherAdditions")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("OtherDeductions")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("OverTime")
-                        .HasColumnType("bigint");
-
-                    b.Property<byte>("PersianMonth")
-                        .HasColumnType("tinyint");
-
-                    b.Property<int>("PersianYear")
-                        .HasColumnType("int");
-
-                    b.Property<long>("RightHousingAndFood")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Tax")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("WorkerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersianMonth");
-
-                    b.HasIndex("PersianYear");
-
-                    b.HasIndex("WorkerId");
-
-                    b.ToTable("Salary", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.NovinEntity.Workers.Worker", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
 
                     b.Property<string>("AccountNumber")
                         .IsRequired()
@@ -933,7 +844,93 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("PersonnelId");
 
-                    b.ToTable("Worker", (string)null);
+                    b.ToTable("Personel");
+                });
+
+            modelBuilder.Entity("Domain.NovinEntity.Workers.Salary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<long>("AmountOf")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ChildAllowance")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<long>("FinancialAid")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Insurance")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastModifireId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long>("LeftOver")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("LoanInstallment")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("OtherAdditions")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("OtherDeductions")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("OverTime")
+                        .HasColumnType("bigint");
+
+                    b.Property<byte>("PersianMonth")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("PersianYear")
+                        .HasColumnType("int");
+
+                    b.Property<long>("RightHousingAndFood")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Tax")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid>("WorkerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersianMonth");
+
+                    b.HasIndex("PersianYear");
+
+                    b.HasIndex("WorkerId");
+
+                    b.ToTable("Salary");
                 });
 
             modelBuilder.Entity("Domain.Enities.NovinEntity.Remittances.BuyRemittance", b =>
@@ -944,7 +941,7 @@ namespace Infrastructure.Migrations.NovinDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.NovinEntity.Materials.Material", "Material")
+                    b.HasOne("Domain.NovinEntity.Materials.Pun", "Material")
                         .WithMany("BuyRemittances")
                         .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -963,7 +960,7 @@ namespace Infrastructure.Migrations.NovinDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.NovinEntity.Materials.Material", "Material")
+                    b.HasOne("Domain.NovinEntity.Materials.Pun", "Material")
                         .WithMany("SellRemittances")
                         .HasForeignKey("MaterialId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -994,9 +991,9 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Navigation("P_Document");
                 });
 
-            modelBuilder.Entity("Domain.NovinEntity.Materials.Material", b =>
+            modelBuilder.Entity("Domain.NovinEntity.Materials.Pun", b =>
                 {
-                    b.HasOne("Domain.NovinEntity.Materials.Unit", "Unit")
+                    b.HasOne("Domain.NovinEntity.Materials.Units", "Unit")
                         .WithMany("Materials")
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1007,7 +1004,7 @@ namespace Infrastructure.Migrations.NovinDb
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.FinancialAid", b =>
                 {
-                    b.HasOne("Domain.NovinEntity.Workers.Worker", "Worker")
+                    b.HasOne("Domain.NovinEntity.Workers.Personel", "Worker")
                         .WithMany("Aids")
                         .HasForeignKey("WorkerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1018,7 +1015,7 @@ namespace Infrastructure.Migrations.NovinDb
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Function", b =>
                 {
-                    b.HasOne("Domain.NovinEntity.Workers.Worker", "Worker")
+                    b.HasOne("Domain.NovinEntity.Workers.Personel", "Worker")
                         .WithMany("Functions")
                         .HasForeignKey("WorkerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1029,7 +1026,7 @@ namespace Infrastructure.Migrations.NovinDb
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Salary", b =>
                 {
-                    b.HasOne("Domain.NovinEntity.Workers.Worker", "Worker")
+                    b.HasOne("Domain.NovinEntity.Workers.Personel", "Worker")
                         .WithMany("Salaries")
                         .HasForeignKey("WorkerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1049,19 +1046,19 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Navigation("SellRemittances");
                 });
 
-            modelBuilder.Entity("Domain.NovinEntity.Materials.Material", b =>
+            modelBuilder.Entity("Domain.NovinEntity.Materials.Pun", b =>
                 {
                     b.Navigation("BuyRemittances");
 
                     b.Navigation("SellRemittances");
                 });
 
-            modelBuilder.Entity("Domain.NovinEntity.Materials.Unit", b =>
+            modelBuilder.Entity("Domain.NovinEntity.Materials.Units", b =>
                 {
                     b.Navigation("Materials");
                 });
 
-            modelBuilder.Entity("Domain.NovinEntity.Workers.Worker", b =>
+            modelBuilder.Entity("Domain.NovinEntity.Workers.Personel", b =>
                 {
                     b.Navigation("Aids");
 

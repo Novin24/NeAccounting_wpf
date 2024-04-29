@@ -4,7 +4,7 @@ using NeApplication.Common;
 
 namespace NeApplication.IRepositoryies
 {
-    public interface IMaterialManager : IRepository<Material>
+    public interface IMaterialManager : IRepository<Pun>
     {
         /// <summary>
         /// فیلتر شده برای فاکتور ها
@@ -18,9 +18,9 @@ namespace NeApplication.IRepositoryies
         /// <param name="serial"></param>
         /// <returns></returns>
         Task<List<PunListDto>> GetMaterails(string name, string serial);
-        Task<(string error, PunListDto pun)> GetMaterailById(int Id);
+        Task<(string error, PunListDto pun)> GetMaterailById(Guid Id);
         Task<(string error, bool isSuccess)> CreateMaterial(string name,
-            int unitId,
+            Guid unitId,
             bool isService,
             long lastPrice,
             string serial,
@@ -28,9 +28,9 @@ namespace NeApplication.IRepositoryies
             bool isManufacturedGoods);
 
         Task<(string error, bool isSuccess)> UpdateMaterial(
-            int materialId,
+            Guid materialId,
             string name,
-            int unitId,
+            Guid unitId,
             string serial,
             string address,
             long lastPrice,
@@ -45,11 +45,11 @@ namespace NeApplication.IRepositoryies
         /// <param name="DecreaseOrIncrease"></param>
         /// <param name="lastPrice"></param>
         /// <returns></returns>
-        Task<(string errore, bool isSuccess)> UpdateMaterialEntity(int materialId,
+        Task<(string errore, bool isSuccess)> UpdateMaterialEntity(Guid materialId,
             double entity,
             bool DecreaseOrIncrease,
             long? lastPrice = null);
         Task<(string error, bool isSuccess)> ChangeStatus(
-           int id, bool active);
+           Guid id, bool active);
     }
 }

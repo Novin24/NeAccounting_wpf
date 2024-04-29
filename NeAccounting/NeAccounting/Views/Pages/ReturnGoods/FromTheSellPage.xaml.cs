@@ -37,7 +37,7 @@ namespace NeAccounting.Views.Pages
             if (await fts.ViewModel.OnAdd())
             {
                 fts.ViewModel.AmountOf = null;
-                fts.ViewModel.MaterialId = -1;
+                fts.ViewModel.MaterialId = null;
                 fts.ViewModel.Description = null;
                 fts.ViewModel.MatPrice = null;
                 txt_MaterialName.Text = string.Empty;

@@ -3,6 +3,7 @@ using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
+using System.Security.Principal;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -17,7 +18,7 @@ namespace NeAccounting.ViewModels
 
 
         [ObservableProperty]
-        private int _workerId = -1;
+        private Guid? _workerId = null;
 
         [ObservableProperty]
         private int _pageNum;

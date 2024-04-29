@@ -107,7 +107,7 @@ public partial class UpdateFromTheBuyViewModel(ISnackbarService snackbarService,
     /// شناسه جنس انتخاب شده در سلکت باکس
     /// </summary>
     [ObservableProperty]
-    private int _materialId = -1;
+    private Guid? _materialId = null;
 
     /// <summary>
     /// مقدار انتخاب شده
@@ -140,7 +140,7 @@ public partial class UpdateFromTheBuyViewModel(ISnackbarService snackbarService,
     internal async Task<bool> OnAdd()
     {
         #region validation
-        if (MaterialId < 0)
+        if (MaterialId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
@@ -206,7 +206,7 @@ public partial class UpdateFromTheBuyViewModel(ISnackbarService snackbarService,
             RowId = rowId,
             TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
             Description = Description,
-            MaterialId = MaterialId,
+            MaterialId = MaterialId.Value,
         });
         long total = List.Sum(t => t.TotalPrice);
         SetTotal();

@@ -27,7 +27,7 @@ namespace NeAccounting.ViewModels
         }
 
         [ObservableProperty]
-        private IEnumerable<SuggestBoxViewModel<int>> _asuBox;
+        private IEnumerable<SuggestBoxViewModel<Guid>> _asuBox;
 
         /// <summary>
         /// عنوان کار
@@ -48,7 +48,7 @@ namespace NeAccounting.ViewModels
         private string _address = string.Empty;
 
         [ObservableProperty]
-        private int? _unitId;
+        private Guid? _unitId;
         public void OnNavigatedFrom()
         {
         }
@@ -67,7 +67,7 @@ namespace NeAccounting.ViewModels
 
             if (AsuBox.Any())
             {
-                UnitId = AsuBox.FirstOrDefault().Id;
+                UnitId = AsuBox.First().Id;
             }
 
             _isInitialized = true;
@@ -80,7 +80,7 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("عنوان خدمت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            if (UnitId is null or 0)
+            if (UnitId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -92,7 +92,7 @@ namespace NeAccounting.ViewModels
             }
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(SrvicName, UnitId.Value,true, Price.Value,string.Empty, Address , false);
+                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(SrvicName, UnitId.Value, true, Price.Value, string.Empty, Address, false);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

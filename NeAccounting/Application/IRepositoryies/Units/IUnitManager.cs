@@ -5,9 +5,9 @@ using NeApplication.Common;
 
 namespace NeApplication.IRepositoryies
 {
-    public interface IUnitManager : IRepository<Unit>
+    public interface IUnitManager : IRepository<Units>
     {
-        Task<List<SuggestBoxViewModel<int>>> GetUnits(bool IgnorArchive = false);
+        Task<List<SuggestBoxViewModel<Guid>>> GetUnits(bool IgnorArchive = false);
 
         Task<List<UnitListDto>> GetUnitList();
 
@@ -15,10 +15,10 @@ namespace NeApplication.IRepositoryies
             string description);
 
         Task<(string error, bool isSuccess)> UpdateUnit(
-            int id,
+            Guid id,
             string name,
             string description);
 
-        Task<(string error, bool isSuccess)> ChangeStatus(int id, bool active);
+        Task<(string error, bool isSuccess)> ChangeStatus(Guid id, bool active);
     }
 }

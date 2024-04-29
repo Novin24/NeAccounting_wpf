@@ -6,7 +6,7 @@ using NeApplication.IRepositoryies;
 
 namespace Infrastructure.Repositories
 {
-    public class MaterialManager(NovinDbContext context) : Repository<Material>(context), IMaterialManager
+    public class MaterialManager(NovinDbContext context) : Repository<Pun>(context), IMaterialManager
     {
         public Task<List<MatListDto>> GetMaterails()
         {
@@ -42,6 +42,7 @@ namespace Infrastructure.Repositories
                     SEntity = x.Entity.ToString("N0"),
                     UnitId = x.UnitId,
                     LastSellPrice = x.LastSellPrice,
+                    LastBuyPrice = x.LastBuyPrice,
                     UnitName = x.Unit.Name
                 }).ToListAsync();
 
@@ -49,9 +50,8 @@ namespace Infrastructure.Repositories
             return list;
         }
 
-
         public async Task<(string error, bool isSuccess)> CreateMaterial(string name,
-            int unitId,
+            Guid unitId,
             bool isService,
             long lastPrice,
             string serial,
@@ -64,7 +64,7 @@ namespace Infrastructure.Repositories
             try
             {
 
-                var t = await Entities.AddAsync(new Material(name,
+                var t = await Entities.AddAsync(new Pun(name,
                                 unitId,
                                 isService,
                                 lastPrice,
@@ -80,9 +80,9 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> UpdateMaterial(
-            int materialId,
+            Guid materialId,
             string name,
-            int unitId,
+            Guid unitId,
             string serial,
             string address,
             long lastPrice,
@@ -111,7 +111,7 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, PunListDto pun)> GetMaterailById(int Id)
+        public async Task<(string error, PunListDto pun)> GetMaterailById(Guid Id)
         {
             var mt = await TableNoTracking
                 .Include(t => t.Unit)
@@ -133,7 +133,7 @@ namespace Infrastructure.Repositories
             });
         }
 
-        public async Task<(string errore, bool isSuccess)> UpdateMaterialEntity(int materialId,
+        public async Task<(string errore, bool isSuccess)> UpdateMaterialEntity(Guid materialId,
             double entity,
             bool sellOrBuy,
             long? lastPrice = null)
@@ -175,8 +175,9 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
+
         public async Task<(string error, bool isSuccess)> ChangeStatus(
-           int id, bool active)
+           Guid id, bool active)
         {
             var unit = await Entities.FirstOrDefaultAsync(t => t.Id == id);
             if (unit == null)
@@ -195,6 +196,20 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
+
+        //public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList)
+        //{
+        //    var materialList = matList.Select(t=> new Material())
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
     }
 }
 

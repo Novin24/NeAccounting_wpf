@@ -37,7 +37,7 @@ namespace NeAccounting.Views.Pages
                 return;
             }
 
-            int id = int.Parse(btn.Tag.ToString());
+            Guid id = Guid.Parse(btn.Tag.ToString());
             var unit = ViewModel.List.First(x => x.Id == id);
             ViewModel.UnitName = unit.UnitName;
             ViewModel.Description = unit.Description;
@@ -54,7 +54,7 @@ namespace NeAccounting.Views.Pages
             if (btn.Tag == null)
                 return;
 
-            int id = int.Parse(btn.Tag.ToString());
+            Guid id = Guid.Parse(btn.Tag.ToString());
             var unit = ViewModel.List.First(x => x.Id == id);
             if (unit.IsActive)
             {
@@ -71,7 +71,7 @@ namespace NeAccounting.Views.Pages
             if (btn.Tag == null)
                 return;
 
-            int id = int.Parse(btn.Tag.ToString());
+            Guid id = Guid.Parse(btn.Tag.ToString());
             var unit = ViewModel.List.First(x => x.Id == id);
             if (!unit.IsActive)
             {

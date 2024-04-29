@@ -12,7 +12,7 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     private readonly INavigationService _navigationService;
 
     [ObservableProperty]
-    private int _workerId = -1;
+    private Guid _workerId ;
 
     [ObservableProperty]
     private int _salaryId = -1;
@@ -78,12 +78,6 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     private async Task OnCreate()
     {
         #region validation
-
-        if (WorkerId == -1)
-        {
-            _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنلی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-            return;
-        }
 
         if (AmountOf <= 0)
         {
@@ -191,7 +185,7 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     [RelayCommand]
     public async Task<bool> OnSelect()
     {
-        if (WorkerId == -1 || SubmitMonth == null || SubmitYear == null)
+        if ( SubmitMonth == null || SubmitYear == null)
         {
             return false;
         }

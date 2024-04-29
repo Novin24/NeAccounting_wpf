@@ -3,7 +3,7 @@ using DomainShared.Enums;
 
 namespace Domain.NovinEntity.Workers
 {
-    public class Worker : LocalEntity
+    public class Personel : LocalEntity<Guid>
     {
         #region Navigation
         public ICollection<Salary> Salaries { get; private set; }
@@ -109,14 +109,14 @@ namespace Domain.NovinEntity.Workers
         #endregion
 
         #region Constructor
-        public Worker()
+        public Personel()
         {
             Salaries = new List<Salary>();
             Functions = new List<Function>();
             Aids = new List<FinancialAid>();
         }
 
-        public Worker(
+        public Personel(
             string fullName,
             string natinalCode,
             string mobile,
@@ -156,17 +156,17 @@ namespace Domain.NovinEntity.Workers
         #endregion
 
         #region Methods
-        public Worker AddSalary(Salary salary)
+        public Personel AddSalary(Salary salary)
         {
             Salaries.Add(salary);
             return this;
         }
-        public Worker AddAid(FinancialAid aid)
+        public Personel AddAid(FinancialAid aid)
         {
             Aids.Add(aid);
             return this;
         }
-        public Worker AddFunction(Function func)
+        public Personel AddFunction(Function func)
         {
             Functions.Add(func);
             return this;

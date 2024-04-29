@@ -14,7 +14,7 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
     private readonly INavigationService _navigationService;
 
     [ObservableProperty]
-    private int _workerId = -1;
+    private Guid? _workerId = null;
 
     [ObservableProperty]
     private int? _personelId;
@@ -80,7 +80,7 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
     private async Task OnCreate()
     {
         #region validation
-        if (WorkerId == -1)
+        if (WorkerId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنلی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
@@ -144,7 +144,7 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
         using (UnitOfWork db = new())
         {
             var (error, isSuccess) = await db.WorkerManager.AddSalary(
-                   WorkerId,
+                   WorkerId.Value,
                    SubmitMonth.Value,
                    SubmitYear.Value,
                    AmountOf,
@@ -191,13 +191,13 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
 
     public async Task<bool> OnSelect()
     {
-        if (WorkerId == -1 || SubmitMonth == null || SubmitYear == null)
+        if (WorkerId == null || SubmitMonth == null || SubmitYear == null)
         {
             return false;
         }
         using UnitOfWork db = new();
-        var worker = await db.WorkerManager.GetWorker(WorkerId);
-        var details = await db.WorkerManager.GetSalaryDetailByWorkerId(WorkerId, SubmitMonth.Value, SubmitYear.Value);
+        var worker = await db.WorkerManager.GetWorker(WorkerId.Value);
+        var details = await db.WorkerManager.GetSalaryDetailByWorkerId(WorkerId.Value, SubmitMonth.Value, SubmitYear.Value);
 
         if (!details.Success)
         {

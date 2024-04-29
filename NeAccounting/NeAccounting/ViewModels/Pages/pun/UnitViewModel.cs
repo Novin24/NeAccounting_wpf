@@ -17,7 +17,7 @@ namespace NeAccounting.ViewModels
         }
 
         [ObservableProperty]
-        private int? _unitId;
+        private Guid? _unitId;
 
         [ObservableProperty]
         private string _unitName;
@@ -91,7 +91,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnActive(int id)
+        private async Task OnActive(Guid id)
         {
             using UnitOfWork db = new();
             await db.UnitManager.ChangeStatus(id, true);
@@ -100,7 +100,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnDeActive(int id)
+        private async Task OnDeActive(Guid id)
         {
             using UnitOfWork db = new();
             await db.UnitManager.ChangeStatus(id, false);

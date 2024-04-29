@@ -31,7 +31,7 @@ namespace NeAccounting.Views.Pages
             if (ViewModel.OnAdd())
             {
                 ViewModel.AmountOf = null;
-                ViewModel.MaterialId = -1;
+                ViewModel.MaterialId = null;
                 ViewModel.Description = null;
                 ViewModel.MatPrice = null;
                 ViewModel.RemId = null;
