@@ -147,7 +147,7 @@
                                      Margin="0 4 3 0 "
                                      x:Name="Txt_Titele"
                                      Text="{Binding ViewModel.Titele , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     CaretBrush="White"
+                                      
                                      FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Grid.Row="1"

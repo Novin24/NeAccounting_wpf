@@ -318,7 +318,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     private async Task Reload()
     {
         using UnitOfWork db = new();
-        LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
+        LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.BuyInv);
         List = [];
         CusId = null;
         Commission = null;

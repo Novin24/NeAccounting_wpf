@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages" 
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       d:DataContext="{d:DesignInstance local:CreateMaterailPage,
                                      IsDesignTimeCreatable=False}"
@@ -17,7 +17,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding CreateMaterialCommand }" />
+                    Command="{Binding CreateMaterialCommand }" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -107,7 +107,7 @@
                     <RowDefinition Height="*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <nu:HeaderPack NamePpage="تعریف اجناس "/>
+                <nu:HeaderPack NamePpage="تعریف اجناس " />
                 <Border Grid.Row="1"
                         CornerRadius="9"
                         BorderBrush="#D6D5D5"
@@ -130,11 +130,11 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="1"
                                     Grid.ColumnSpan="3"
@@ -143,17 +143,18 @@
                                        FontSize="14"
                                        Text="نام کالا"
                                        Margin="7 0 0 0 " />
-                            <TextBox TextAlignment="Center"
-                                     FontSize="14"
-                                     x:Name="MaterialName"
-                                     Grid.Row="0"
-                                     Grid.Column="0"
-                                     Text="{Binding ViewModel.MaterialName , Mode=OneWayToSource}"
-                                     Margin="0 4 3 0 "
-                                     CaretBrush="White"
-                                     FontFamily="Calibri" />
+                            <ui:TextBox TextAlignment="Center"
+                                        FontSize="14"
+                                        x:Name="MaterialName"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Text="{Binding ViewModel.MaterialName , Mode=OneWayToSource}"
+                                        Margin="0 4 3 0 "
+                                         
+                                        FontFamily="Calibri" />
                         </StackPanel>
-                        <StackPanel Grid.Row="1" Grid.Column="1"
+                        <StackPanel Grid.Row="1"
+                                    Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     Margin="20 0 20 0">
 
@@ -173,8 +174,8 @@
                                       Grid.Column="1"
                                       Grid.ColumnSpan="3"
                                       LabelName="آخرین قیمت فروش"
-                                      Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay}"/>
-                        <StackPanel Grid.Row="3" 
+                                      Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay}" />
+                        <StackPanel Grid.Row="3"
                                     Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     Margin="20 4 20 0">
@@ -229,9 +230,9 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت" />
                                 <TextBlock Text=" (F1)"
-                                                   FontSize="12"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="#FFA3A3A3" />
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           Foreground="#FFA3A3A3" />
                             </StackPanel>
                         </Button>
 

@@ -50,7 +50,10 @@
         /// برگشت از خرید
         /// </summary>
         ReturnFromBuy,
-        Other = 59
+
+        Other = 59,
+
+        LeftOver = 60
 
     }
 }

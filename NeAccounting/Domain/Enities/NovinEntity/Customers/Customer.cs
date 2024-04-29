@@ -41,6 +41,24 @@ namespace Domain.NovinEntity.Customers
             Type = type;
             IsActive = true;
         }
+
+        public Customer(
+            string name,
+            string mobile,
+            long totalCredit,
+            long cashCredit,
+            long promissoryNote,
+            string nationalCode,
+            string address,
+            CustomerType type,
+            bool havePromissoryNote,
+            bool haveCashCredit,
+            bool isBuyer,
+            bool isSeller,
+            Guid id) : this(name,mobile,totalCredit,cashCredit,promissoryNote,nationalCode,address,type,havePromissoryNote,haveCashCredit,isBuyer,isSeller)
+        {
+            Id = id;
+        }
         #endregion
 
         #region properties
@@ -59,7 +77,7 @@ namespace Domain.NovinEntity.Customers
         public bool HaveChequeGuarantee { get; set; }
         public bool HaveCashCredit { get; set; }
         public bool HavePromissoryNote { get; set; }
-        public bool IsActive{ get; set; }
+        public bool IsActive { get; set; }
         #endregion
     }
 }

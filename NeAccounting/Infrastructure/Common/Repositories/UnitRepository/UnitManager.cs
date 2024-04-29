@@ -1,5 +1,6 @@
 ﻿using Domain.NovinEntity.Materials;
 using DomainShared.ViewModels;
+using DomainShared.ViewModels.Pun;
 using DomainShared.ViewModels.unit;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -96,6 +97,20 @@ namespace Infrastructure.Repositories
                 var t = Entities.Update(unit);
             }
             catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> AddAllUnitsInNewYear(List<UnitListDto> unitList)
+        {
+            var units = unitList.Select(t => new Units(t.Id,t.UnitName,t.Description));
+            try
+            {
+                await Entities.AddRangeAsync(units);
+            }
+            catch (Exception)
             {
                 return new("خطا دراتصال به پایگاه داده!!!", false);
             }

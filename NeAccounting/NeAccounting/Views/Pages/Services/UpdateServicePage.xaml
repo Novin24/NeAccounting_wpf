@@ -148,7 +148,7 @@
                                      Margin="0 4 0 0 "
                                      x:Name="SrvicName"
                                      Text="{Binding ViewModel.SrvicName,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                     CaretBrush="White"
+                                      
                                      FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Grid.Row="1"

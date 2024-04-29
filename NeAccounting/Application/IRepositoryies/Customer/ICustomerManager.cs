@@ -40,5 +40,7 @@ namespace NeApplication.IRepositoryies
             bool haveCashCredit,
             bool isBuyer,
             bool isSeller);
+
+        Task<(string error, bool isSuccess)> AddAllCusInNewYear(List<CustomerListDto> cusList);
     }
 }

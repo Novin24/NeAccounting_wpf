@@ -20,5 +20,7 @@ namespace NeApplication.IRepositoryies
             string description);
 
         Task<(string error, bool isSuccess)> ChangeStatus(Guid id, bool active);
+
+        Task<(string error, bool isSuccess)> AddAllUnitsInNewYear(List<UnitListDto> unitList);
     }
 }

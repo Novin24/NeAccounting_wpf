@@ -197,19 +197,30 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        //public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList)
-        //{
-        //    var materialList = matList.Select(t=> new Material())
-        //    try
-        //    {
+        public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList)
+        {
+            var materialList = matList.Select(t => new Pun(t.Id,
+                t.MaterialName,
+                t.UnitId,
+                t.IsServise,
+                t.LastSellPrice,
+                t.Serial,
+                t.Entity,
+                t.LastBuyPrice,
+                t.IsActive,
+                t.PhisicalAddress));
 
-        //    }
-        //    catch (Exception)
-        //    {
+            try
+            {
+                await Entities.AddRangeAsync(materialList);
+            }
+            catch (Exception)
+            {
 
-        //        throw;
-        //    }
-        //}
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
     }
 }
 

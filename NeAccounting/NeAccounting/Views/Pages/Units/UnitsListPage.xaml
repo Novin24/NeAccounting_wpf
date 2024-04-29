@@ -153,7 +153,7 @@
                                     <ui:TextBox x:Name="txt_name"
                                                 TextAlignment="Center"
                                                 ClearButtonEnabled="False"
-                                                Text="{Binding ViewModel.UnitName, Mode=TwoWay}"
+                                                Text="{Binding ViewModel.UnitName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
@@ -168,7 +168,7 @@
                                                HorizontalAlignment="Left" />
                                     <ui:TextBox x:Name="txt_description"
                                                 TextAlignment="Center"
-                                                Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                                Text="{Binding ViewModel.Description,UpdateSourceTrigger=PropertyChanged}"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>

@@ -147,7 +147,7 @@
                             <TextBox TextAlignment="Center"
                                      FontSize="14"
                                      Margin="0 4 3 0 "
-                                     CaretBrush="White"
+                                      
                                      FontFamily="Calibri"
                                      x:Name="txt_Titele"
                                      Text="{Binding ViewModel.Expensetype , Mode=TwoWay}" />
