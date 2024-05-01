@@ -1,7 +1,9 @@
-﻿using DomainShared.ViewModels.Customer;
+﻿using DomainShared.Constants;
+using DomainShared.ViewModels.Customer;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
+using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -13,12 +15,14 @@ namespace NeAccounting.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
+        private bool _isreadonly = true;
 
         public CustomerListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
-            _snackbarService = snackbarService;
+            _snackbarService = snackbarService; _isreadonly = NeAccountingConstants.ReadOnlyMode;
+
         }
 
 
@@ -104,6 +108,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private void OnUpdateCus(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             Type? pageType = NameToPageTypeConverter.Convert("UpdateCustomer");
 
             if (pageType == null)
@@ -138,6 +147,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private void OnAddGaranteeCheque(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             Type? pageType = NameToPageTypeConverter.Convert("CreateGuarantCheque");
 
             if (pageType == null)
@@ -160,6 +174,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnActive(Guid id)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             using UnitOfWork db = new();
             await db.CustomerManager.ArchiveCustomer(id, true);
             await db.SaveChangesAsync();
@@ -168,6 +187,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnDeActive(Guid id)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             using UnitOfWork db = new();
             await db.CustomerManager.ArchiveCustomer(id, false);
             await db.SaveChangesAsync();

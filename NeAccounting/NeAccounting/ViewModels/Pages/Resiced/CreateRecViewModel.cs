@@ -7,13 +7,16 @@ using System.Windows.Media;
 using Wpf.Ui.Controls;
 using Wpf.Ui;
 using DomainShared.Utilities;
+using DomainShared.Constants;
 
 namespace NeAccounting.ViewModels
 {
     public partial class CreateRecViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
     {
         private readonly ISnackbarService _snackbarService = snackbarService;
-        private readonly INavigationService _navigationService = navigationService;
+        private readonly INavigationService _navigationService = navigationService; 
+        private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
+
 
 
         /// <summary>
@@ -118,6 +121,11 @@ namespace NeAccounting.ViewModels
         internal async Task<bool> OnSumbit()
         {
             #region validation
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return false;
+            }
             if (CusId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

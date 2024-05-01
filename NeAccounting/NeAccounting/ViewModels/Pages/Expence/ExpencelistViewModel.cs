@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Utilities;
 using DomainShared.ViewModels.Expense;
 using Infrastructure.UnitOfWork;
@@ -15,6 +16,7 @@ namespace NeAccounting.ViewModels
     {
         private bool _isInit;
 
+        private bool _isreadonly = true;
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
@@ -23,6 +25,7 @@ namespace NeAccounting.ViewModels
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
             _snackbarService = snackbarService;
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
         }
 
         [ObservableProperty]
@@ -106,6 +109,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private void OnUpdate(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             Type? pageType = NameToPageTypeConverter.Convert("UpdateExpence");
 
             if (pageType == null)
@@ -133,6 +141,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnRemove(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
                 Title = "هشدار !!!",

@@ -17,7 +17,9 @@ namespace NeAccounting.ViewModels
 {
     public partial class CreateServiceViewModel : ObservableObject, INavigationAware
     {
-        private bool _isInitialized = false;
+        private bool _isInitialized = false;    
+        private bool _isreadonly = true;
+
         private readonly INavigationService _navigationService;
         private readonly ISnackbarService _snackbarService;
         public CreateServiceViewModel(INavigationService navigationService, ISnackbarService snackbarService)
