@@ -12,13 +12,15 @@ using Wpf.Ui.Controls;
 
 public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAware
 {
-    private readonly ISnackbarService _snackbarService;
+    private bool _isreadonly = true;
+    private readonly ISnackbarService _snackbarService; 
     private readonly INavigationService _navigationService;
 
     public UpdateBuyInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService)
     {
         _snackbarService = snackbarService;
         _navigationService = navigationService;
+        _isreadonly = NeAccountingConstants.ReadOnlyMode;
     }
 
     #region Properties
@@ -202,6 +204,11 @@ public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAw
     internal bool OnAdd()
     {
         #region validation
+        if (_isreadonly)
+        {
+            _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
         if (MaterialId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

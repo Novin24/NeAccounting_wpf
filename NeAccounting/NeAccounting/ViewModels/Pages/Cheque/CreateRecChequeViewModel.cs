@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.Extension;
 using DomainShared.ViewModels;
@@ -13,6 +14,7 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
+    private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
 
     /// <summary>
@@ -108,6 +110,11 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
     private async Task OnSubmit()
     {
         #region validation
+        if (_isreadonly)
+        {
+            _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+            return;
+        }
         if (CusId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
@@ -10,6 +11,8 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService;
     private readonly INavigationService _navigationService;
+    private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
+
 
     [ObservableProperty]
     private Guid _workerId ;
@@ -79,6 +82,11 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     {
         #region validation
 
+        if (_isreadonly)
+        {
+            _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+            return;
+        }
         if (AmountOf <= 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تعداد روز / شیفت کاری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

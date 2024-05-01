@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.Extension;
 using Infrastructure.UnitOfWork;
@@ -13,6 +14,7 @@ namespace NeAccounting.ViewModels
     {
         private readonly ISnackbarService _snackbarService = snackbarService;
         private readonly INavigationService _navigationService = navigationService;
+        private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
         /// <summary>
         /// توضیحات
@@ -48,6 +50,12 @@ namespace NeAccounting.ViewModels
         private async Task OnSubmit()
         {
             #region validation
+
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             if (string.IsNullOrEmpty(Titele))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("عنوان یادآور"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
