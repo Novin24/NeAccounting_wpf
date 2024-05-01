@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Notifications;
 using DomainShared.Utilities;
 using Infrastructure.UnitOfWork;
@@ -16,12 +17,14 @@ namespace NeAccounting.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
+        private bool _isreadonly = true;
 
         public NotifListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
             _snackbarService = snackbarService;
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
         }
 
         #region Properties
@@ -113,6 +116,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnRemove(int parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
                 Title = "هشدار !!!",
@@ -141,6 +149,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private void OnUpdate(int parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             Type? pageType = NameToPageTypeConverter.Convert("UpdateNotification");
 
             if (pageType == null)

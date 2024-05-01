@@ -1,4 +1,5 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Constants;
+using DomainShared.Errore;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
@@ -13,6 +14,7 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
     private readonly IContentDialogService _contentDialogService = contentDialogService;
+    private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
 
     private int rowId = 1;
@@ -135,6 +137,11 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
     internal async Task<bool> OnAdd()
     {
         #region validation
+        if (_isreadonly)
+        {
+            _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
         if (MaterialId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

@@ -1,4 +1,5 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Constants;
+using DomainShared.Errore;
 using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
@@ -12,6 +13,8 @@ namespace NeAccounting.ViewModels
     {
 
         private bool _isInitialized = false;
+        private bool _isreadonly = true;
+
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
 
@@ -19,6 +22,7 @@ namespace NeAccounting.ViewModels
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
         }
 
         [ObservableProperty]
@@ -45,6 +49,7 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private Guid _materialId;
 
+
         public void OnNavigatedFrom()
         {
 
@@ -64,6 +69,12 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnUpdate()
         {
+            if (_isreadonly )
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
             if (string.IsNullOrEmpty(MaterialName))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

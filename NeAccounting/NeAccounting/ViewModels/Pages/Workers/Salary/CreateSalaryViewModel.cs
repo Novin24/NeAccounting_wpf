@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
@@ -12,6 +13,7 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService;
     private readonly INavigationService _navigationService;
+    private bool _isreadonly = true;
 
     [ObservableProperty]
     private Guid? _workerId = null;
@@ -74,12 +76,18 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
         PersianCalendar pc = new();
         SubmitMonth = (byte)pc.GetMonth(DateTime.Now);
         SubmitYear = pc.GetYear(DateTime.Now);
+        _isreadonly = NeAccountingConstants.ReadOnlyMode;
     }
 
     [RelayCommand]
     private async Task OnCreate()
     {
         #region validation
+        if (_isreadonly)
+        {
+            _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+            return;
+        }
         if (WorkerId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنلی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

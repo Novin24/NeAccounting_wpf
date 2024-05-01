@@ -1,4 +1,6 @@
-﻿using DomainShared.Enums;
+using DomainShared.Constants;
+using DomainShared.Enums;
+using DomainShared.Errore;
 using DomainShared.Extension;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
@@ -19,12 +21,14 @@ namespace NeAccounting.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
+        private bool _isreadonly = true;
 
         public ChequebookViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
-            _snackbarService = snackbarService;
+            _snackbarService = snackbarService; _isreadonly = NeAccountingConstants.ReadOnlyMode;
+
         }
 
         #region Properties
@@ -135,6 +139,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnRemoveDoc(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
                 Title = "هشدار !!!",
@@ -167,6 +176,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnUpdateDoc(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             using UnitOfWork db = new();
 
             var (s, i) = await db.DocumentManager.GetChequeDetailById(parameter);
@@ -301,6 +315,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnTransfer(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             Type? pageType = NameToPageTypeConverter.Convert("TransferCheque");
 
             if (pageType == null)
@@ -364,6 +383,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnConvertToCash(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
                 Title = "هشدار !!!",
@@ -393,6 +417,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnRejects(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
                 Title = "هشدار !!!",

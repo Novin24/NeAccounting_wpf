@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
@@ -13,6 +14,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
+    private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
     private int rowId = 1;
 
@@ -145,6 +147,11 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     internal bool OnAdd()
     {
         #region validaion
+        if (_isreadonly)
+        {
+            _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
         if (CusId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

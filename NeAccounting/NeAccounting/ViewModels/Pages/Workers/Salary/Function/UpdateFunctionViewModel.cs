@@ -6,6 +6,7 @@ using NeAccounting.Helpers;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using System.Windows.Media;
+using DomainShared.Constants;
 
 namespace NeAccounting.ViewModels
 {
@@ -13,11 +14,14 @@ namespace NeAccounting.ViewModels
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
+        private bool _isreadonly = true;
 
         public UpdateFunctionViewModel(INavigationService navigationService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _snackbarService = snackbarService;
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
+
         }
 
         [ObservableProperty]
@@ -66,6 +70,11 @@ namespace NeAccounting.ViewModels
         private async Task OnUpdate()
         {
 
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             if (AmountOf < 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("کارکرد"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
