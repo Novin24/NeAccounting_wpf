@@ -15,6 +15,7 @@ namespace Domain.BaseDomain.FinancialYears
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public bool IsActive { get; set; }
+        public bool IsCurrent { get; set; }
         #endregion
 
         #region Ctor
@@ -32,6 +33,7 @@ namespace Domain.BaseDomain.FinancialYears
             Descripion = descripion;
             StartDate = DateTime.Now;
             IsActive = true;
+            IsCurrent = true;
         }
         #endregion
     }

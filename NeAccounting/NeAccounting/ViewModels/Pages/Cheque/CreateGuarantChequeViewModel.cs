@@ -7,11 +7,13 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
+namespace NeAccounting.ViewModels;
 public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
 
+    #region Properties
 
     /// <summary>
     /// لیست مشتری ها
@@ -82,7 +84,9 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
     /// </summary>
     [ObservableProperty]
     private SubmitChequeStatus _status = SubmitChequeStatus.Register;
+    #endregion
 
+    #region Method
     public async void OnNavigatedTo()
     {
         await InitializeViewModel();
@@ -177,4 +181,5 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
         _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
         #endregion
     }
+    #endregion
 }

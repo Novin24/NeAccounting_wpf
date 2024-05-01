@@ -1,11 +1,9 @@
 ﻿using DomainShared.Enums;
-using DomainShared.Errore;
 using DomainShared.Extension;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
-using Microsoft.VisualBasic.ApplicationServices;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
 using System.Globalization;

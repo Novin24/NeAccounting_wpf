@@ -218,6 +218,7 @@ namespace NeAccounting
                 #region FiscalYear 
 
                 services.AddTransient<FiscalYearListPage>();
+                services.AddTransient<FiscalYearViewModel>();
                 services.AddTransient<CreateFiscalYear>();
 
                 #endregion
