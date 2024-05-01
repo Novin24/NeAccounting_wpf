@@ -37,14 +37,57 @@
                 Grid.RowSpan="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Left rectangle}"
-                CornerRadius="10"></Border>
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.3" />
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.8" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="2"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Right rectangle}"
-                CornerRadius="10"></Border>
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.5" />
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.7" />
+                </LinearGradientBrush>
+
+            </Border.Background>
+        </Border>
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="1"
@@ -67,10 +110,10 @@
                         CornerRadius="9"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4"
-                        Margin="4"
+                        Margin="10 4 10 8"
                         FlowDirection="RightToLeft">
                     <Border.Background>
-                        <SolidColorBrush Color="White"
+                        <SolidColorBrush Color="Gray"
                                          Opacity="0.08" />
 
                     </Border.Background>
@@ -84,7 +127,8 @@
                         <!--#region Search -->
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="1.3*" />
+                                <ColumnDefinition Width="1.3*" />
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                                 <ColumnDefinition />
@@ -93,32 +137,66 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <StackPanel Margin="10 5 7 0"
-                                        Grid.Row="1">
-                                <DockPanel>
-                                    <TextBlock FontFamily="Calibri"
+                            <StackPanel Margin="10 10 7 0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width=".2*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Row="0"
+                                               Grid.Column="0"
+                                               HorizontalAlignment="Left"
+                                               FontFamily="Calibri"
                                                FontSize="14"
                                                Text="مشتری"
                                                Margin="5 0 0 3 " />
-                                    <TextBlock FontFamily="Calibri"
-                                               FontSize="14"
+                                    <TextBlock Grid.Row="0"
+                                               Grid.Column="0"
+                                               HorizontalAlignment="Right"
+                                               FontFamily="Calibri"
+                                               FontSize="16"
+                                               x:Name="lbl_num"
                                                Text="{Binding ViewModel.PersonelId}"
                                                Foreground="#BB8F60"
-                                               HorizontalAlignment="Right"
                                                Margin="2 0 0 3" />
-                                </DockPanel>
-                                <ui:AutoSuggestBox FontSize="16"
-                                                   Icon="{ui:SymbolIcon Search24}"
-                                                   OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
-                                                   DisplayMemberPath="DisplayName"
-                                                   SuggestionChosen="Txt_name_SuggestionChosen"
-                                                   PlaceholderText="Search ..."
-                                                   FontFamily="Calibri"
-                                                   x:Name="txt_Name"
-                                                   Height="33.5" />
+
+                                    <Button Grid.Row="1"
+                                            Grid.Column="1"
+                                            Padding="7"
+                                            Name="Dismiss"
+                                            ToolTip="حذف"
+                                            TabIndex="1"
+                                            VerticalAlignment="Center"
+                                            IsTabStop="True"
+                                            HorizontalAlignment="Left"
+                                            Click="Dismiss_Click">
+                                        <ui:SymbolIcon Symbol="Dismiss20"
+                                                       FontSize="10" />
+                                    </Button>
+
+                                    <ui:AutoSuggestBox FontSize="16"
+                                                       Grid.Row="1"
+                                                       Margin="0 0 5 0 "
+                                                       Grid.Column="0"
+                                                       Icon="{ui:SymbolIcon Search24}"
+                                                       OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
+                                                       DisplayMemberPath="DisplayName"
+                                                       SuggestionChosen="Txt_name_SuggestionChosen"
+                                                       PlaceholderText="Search ..."
+                                                       FontFamily="Calibri"
+                                                       x:Name="txt_Name"
+                                                       Height="33.5" />
+                                </Grid>
                             </StackPanel>
 
-                            <StackPanel Margin="10 2 7 0 ">
+                            <StackPanel Margin="10 7 7 0 "
+                                        Grid.Column="1">
 
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="15"
@@ -129,17 +207,17 @@
                                            SelectedValue="{Binding ViewModel.Status , Mode=TwoWay}"
                                            DisplayMemberPath="Value"
                                            FontFamily="Calibri"
-                                           Padding="10 8 0 6" />
+                                           Padding="10 8 0 9" />
                             </StackPanel>
 
-                            <ui:CardAction FontFamily="Calibri"
+                            <ui:CardAction Grid.Column="2"
+                                           FontFamily="Calibri"
                                            Margin="20 9 4 0"
-                                           Grid.Column="1"
                                            FontSize="15"
                                            Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
                                            CommandParameter="CreateGuarantCheque"
                                            MaxWidth="170"
-                                           Padding="9 0"
+                                           Padding="9 0 0 0"
                                            IsChevronVisible="False">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -158,20 +236,20 @@
                                                       Text="ثبت"
                                                       TextWrapping="WrapWithOverflow" />
                                         <ui:TextBlock Appearance="Tertiary"
-                                                      Text="چک ضمانتی..."
+                                                      Text="چک ضمانتی ..."
                                                       TextWrapping="WrapWithOverflow" />
                                     </StackPanel>
                                 </Grid>
                             </ui:CardAction>
 
-                            <ui:CardAction FontFamily="Calibri"
+                            <ui:CardAction Grid.Column="3"
+                                           FontFamily="Calibri"
                                            FontSize="15"
                                            MaxWidth="170"
-                                           Grid.Column="2"
                                            Margin="20 9 4 0"
                                            Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
                                            CommandParameter="CreatePayCheque"
-                                           Padding="9 0"
+                                           Padding="9 0 0 0"
                                            IsChevronVisible="False">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -196,14 +274,14 @@
                                 </Grid>
                             </ui:CardAction>
 
-                            <ui:CardAction FontFamily="Calibri"
+                            <ui:CardAction Grid.Column="4"
+                                           FontFamily="Calibri"
                                            Margin="20 9 4 0"
-                                           Grid.Column="3"
                                            FontSize="15"
                                            MaxWidth="170"
                                            Command="{Binding ViewModel.AddClickCommand, Mode=OneWay}"
                                            CommandParameter="CreateRecCheque"
-                                           Padding="9 0"
+                                           Padding="9 0 0 0"
                                            IsChevronVisible="False">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -227,37 +305,60 @@
                                     </StackPanel>
                                 </Grid>
                             </ui:CardAction>
+                            
+                            <Grid Grid.Row="1"
+                                  Grid.ColumnSpan="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
 
-                            <nu:PersianDatePicker Grid.Column="1"
-                                                  Grid.Row="1"
-                                                  VerticalAlignment="Center"
-                                                  FlowDirection="LeftToRight"
-                                                  SelectedDate="{Binding ViewModel.StartDate,Mode=TwoWay}"
-                                                  LabelName="از تاریخ"
-                                                  Margin="0 0 0 6" />
+                                <StackPanel  Grid.Row="1"
+                                             Grid.Column="2"
+                                             Margin="10 4 90 0 ">
 
-                            <nu:PersianDatePicker Grid.Column="2"
-                                                  Grid.Row="1"
-                                                  VerticalAlignment="Center"
-                                                  FlowDirection="LeftToRight"
-                                                  SelectedDate="{Binding ViewModel.EndDate,Mode=TwoWay}"
-                                                  LabelName="تا تاریخ"
-                                                  Margin="0 0 0 6" />
-                            <Button Grid.Row="1"
-                                    Grid.Column="3"
-                                    Margin="20 26 0 10"
-                                    Padding="17 4 17 10"
-                                    Command="{Binding ViewModel.SearchCommand}"
-                                    HorizontalAlignment="Left"
-                                    IsDefault="True">جستجو</Button>
+
+                                    <TextBlock FontFamily="Calibri"
+                                               FontSize="15"
+                                               Text="شماره چک"
+                                               Margin="5 0 0 3 " />
+                                    <ui:TextBox Text="{Binding ViewModel.ChequeNumber , Mode=OneWayToSource}"
+                                                PreviewTextInput="TextBox_PreviewTextInput"
+                                                FontSize="16"
+                                                FontFamily="Calibri" />
+                                </StackPanel>
+                                <nu:PersianDatePicker Grid.Row="1"
+                                                      Grid.Column="0"
+                                                      VerticalAlignment="Center"
+                                                      FlowDirection="LeftToRight"
+                                                      SelectedDate="{Binding ViewModel.StartDate,Mode=TwoWay}"
+                                                      LabelName="از تاریخ"
+                                                      Margin="0 0 0 6" />
+
+                                <nu:PersianDatePicker Grid.Column="1"
+                                                      Grid.Row="1"
+                                                      VerticalAlignment="Center"
+                                                      FlowDirection="LeftToRight"
+                                                      SelectedDate="{Binding ViewModel.EndDate,Mode=TwoWay}"
+                                                      LabelName="تا تاریخ"
+                                                      Margin="0 0 0 6" />
+                                <Button Grid.Row="1"
+                                        Grid.Column="3"
+                                        Margin="0 22.5 0 10"
+                                        Padding="17 4 17 10"
+                                        Command="{Binding ViewModel.SearchCommand}"
+                                        HorizontalAlignment="Right"
+                                        IsDefault="True">جستجو</Button>
+                            </Grid>
                         </Grid>
                         <!--#endregion-->
 
                         <!--#region DataGrid-->
                         <DataGrid Grid.Row="1"
                                   Padding="7"
-                                  IsReadOnly="True"
                                   Margin="0 10 0 10"
+                                  IsReadOnly="True"
                                   CanUserResizeColumns="False"
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"
@@ -283,18 +384,8 @@
                                                     Binding="{Binding CheckNumber}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".44*">
-                                    <DataGridTextColumn.CellStyle>
-                                        <Style TargetType="DataGridCell">
-                                            <Setter Property="ToolTip">
-                                                <Setter.Value>
-                                                    <TextBlock FontSize='17'
-                                                               Text='{Binding CheckNumber}' />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </DataGridTextColumn.CellStyle>
-                                </DataGridTextColumn>
+                                                    Width=".44*" />
+
                                 <DataGridTextColumn Header="پرداخت کننده"
                                                     Binding="{Binding Payer}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"

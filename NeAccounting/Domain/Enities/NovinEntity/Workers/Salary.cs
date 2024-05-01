@@ -5,8 +5,8 @@ namespace Domain.NovinEntity.Workers
     public class Salary : LocalEntity
     {
         #region Navigation
-        public int WorkerId { get; set; }
-        public Worker Worker { get; set; }
+        public Guid WorkerId { get; set; }
+        public Personel Worker { get; set; }
         #endregion
 
         #region Property

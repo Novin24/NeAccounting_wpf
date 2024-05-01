@@ -7,6 +7,7 @@ using Wpf.Ui;
 using Wpf.Ui.Controls;
 using System.Windows.Media;
 using System.Globalization;
+using DomainShared.Constants;
 
 namespace NeAccounting.ViewModels
 {
@@ -14,6 +15,7 @@ namespace NeAccounting.ViewModels
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
+        private bool _isreadonly = true;
 
         public CreateFunctionViewModel(INavigationService navigationService, ISnackbarService snackbarService)
         {
@@ -22,13 +24,14 @@ namespace NeAccounting.ViewModels
             PersianCalendar pc = new();
             SubmitMonth = (byte)pc.GetMonth(DateTime.Now);
             SubmitYear = pc.GetYear(DateTime.Now);
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
         }
 
         [ObservableProperty]
         private int? _PersonelId;
 
         [ObservableProperty]
-        private int _workerId = -1;
+        private Guid? _workerId = null;
 
         [ObservableProperty]
         private byte _amountOf = 0;
@@ -36,9 +39,11 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private byte _overTime = 0;
 
-
         [ObservableProperty]
         private byte? _submitMonth;
+
+        [ObservableProperty]
+        private string _displayDate;
 
         [ObservableProperty]
         private int? _submitYear;
@@ -74,7 +79,12 @@ namespace NeAccounting.ViewModels
         private async Task OnCreate()
         {
 
-            if (WorkerId < 0)
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            if (WorkerId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -109,7 +119,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.WorkerManager.AddFunctuion(WorkerId, SubmitYear.Value, SubmitMonth.Value, AmountOf, OverTime, Description);
+                var (error, isSuccess) = await db.WorkerManager.AddFunctuion(WorkerId.Value, SubmitYear.Value, SubmitMonth.Value, AmountOf, OverTime, Description);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

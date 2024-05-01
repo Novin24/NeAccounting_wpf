@@ -38,5 +38,12 @@ namespace NeAccounting.Views.Pages
             }
             lbl_cusId.Text = user.UniqNumber.ToString();
         }
+
+        [RelayCommand]
+        private async Task OnSubmit()
+        {
+            Btn_submit.Focus();
+            await ViewModel.SubmitCommand.ExecuteAsync(null);
+        }
     }
 }

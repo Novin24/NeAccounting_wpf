@@ -19,10 +19,10 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F6"
-                    Command="{Binding ViewModel.SearchInvoiceCommand}" />
+                    Command="{Binding SearchInvoiceCommand}" />
         <KeyBinding Key="p"
                     Modifiers="Ctrl"
-                    Command="{Binding ViewModel.PrintListCommand}" />
+                    Command="{Binding PrintListCommand}" />
     </Page.InputBindings>
 
     <Grid Margin="-12">
@@ -46,14 +46,57 @@
                 Grid.RowSpan="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Left rectangle}"
-                CornerRadius="10"></Border>
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.3" />
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.8" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="2"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Right rectangle}"
-                CornerRadius="10"></Border>
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.5" />
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.7" />
+                </LinearGradientBrush>
+
+            </Border.Background>
+        </Border>
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="1"
@@ -76,9 +119,9 @@
                         CornerRadius="9"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4"
-                        Margin="4">
+                        Margin="10 0 10 8">
                     <Border.Background>
-                        <SolidColorBrush Color="White"
+                        <SolidColorBrush Color="Gray"
                                          Opacity="0.08" />
 
                     </Border.Background>
@@ -162,6 +205,7 @@
                                                   SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay}" />
                             <StackPanel Grid.Row="1"
                                         Grid.Column="2"
+                                        x:Name="Btn_show"
                                         Margin="20 20 20 0"
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Center">
@@ -348,7 +392,7 @@
                                 </DataGridTextColumn>
 
                                 <DataGridTemplateColumn Header="عملیات"
-                                                        Width="130"
+                                                        Width="150"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -361,6 +405,10 @@
                                                             Click="Btn_PrintOneInvoice_Click"
                                                             Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Print20" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="پرینت"
+                                                                   FontSize="16" />
+                                                    </Button.ToolTip>
                                                 </ui:Button>
                                                 <Button  Margin="2"
                                                          Visibility="{Binding IsEditable ,  Converter={StaticResource BoolToVis}}"
@@ -368,6 +416,21 @@
                                                          Command="{Binding Path=DataContext.ViewModel.UpdateDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                          Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Pen16" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="ویرایش"
+                                                                   FontSize="16" />
+                                                    </Button.ToolTip>
+                                                </Button>
+                                                <Button Margin="2"
+                                                        Visibility="{Binding HaveReturned,  Converter={StaticResource BoolToVis}}"
+                                                        CommandParameter="{Binding Id , Mode=OneWay}"
+                                                        Command="{Binding Path=DataContext.ViewModel.ReturnGoodsCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                        Padding="7,5">
+                                                    <ui:SymbolIcon Symbol="ArrowHookDownLeft20" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="اجناس بازگشتی"
+                                                                   FontSize="16" />
+                                                    </Button.ToolTip>
                                                 </Button>
                                                 <Button Margin="3"
                                                         Visibility="{Binding IsDeletable,  Converter={StaticResource BoolToVis}}"
@@ -375,6 +438,10 @@
                                                         Command="{Binding Path=DataContext.ViewModel.RemoveDocCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
                                                         Padding="7,5">
                                                     <ui:SymbolIcon Symbol="Delete16" />
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="حذف"
+                                                                   FontSize="16" />
+                                                    </Button.ToolTip>
                                                 </Button>
                                             </StackPanel>
                                         </DataTemplate>

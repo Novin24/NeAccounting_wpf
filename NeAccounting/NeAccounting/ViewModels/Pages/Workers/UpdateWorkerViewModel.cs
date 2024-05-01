@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
@@ -14,15 +15,17 @@ namespace NeAccounting.ViewModels
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _dialogService;
+        private bool _isreadonly = true;
 
         public UpdateWorkerViewModel(INavigationService navigationService, ISnackbarService snackbarService, IContentDialogService dialogService)
         {
             _navigationService = navigationService;
             _snackbarService = snackbarService;
-            _dialogService = dialogService;
+            _dialogService = dialogService; 
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
         }
         [ObservableProperty]
-        private int _id;
+        private Guid _id;
 
         [ObservableProperty]
         private string _fullName;
@@ -49,7 +52,7 @@ namespace NeAccounting.ViewModels
         private string _nationalCode;
 
         [ObservableProperty]
-        private string? _description;
+        private string _description;
 
         public Shift WorkerShift
         {
@@ -109,7 +112,11 @@ namespace NeAccounting.ViewModels
         private async Task OnUpdate()
         {
             #region validation
-
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             if (string.IsNullOrEmpty(FullName))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کارگر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -125,12 +132,12 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موبایل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            if (string.IsNullOrEmpty(Address))
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("آدرس"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
-            if (PersonalId == null || PersonalId <= 0)
+            //if (string.IsNullOrEmpty(Address))
+            //{
+            //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("آدرس"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            //    return;
+            //}
+            if (PersonalId <= 0)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMore("شماره پرسنلی", "صفر"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;

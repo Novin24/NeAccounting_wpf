@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
@@ -11,6 +12,7 @@ namespace NeAccounting.ViewModels
     public partial class UpdateExpenceViewModel : ObservableObject, INavigationAware
     {
         private bool _isInitialized = false;
+        private bool _isreadonly = true;
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
 
@@ -18,6 +20,7 @@ namespace NeAccounting.ViewModels
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
         }
         /// <summary>
         /// تایپ پرداخت 
@@ -47,7 +50,7 @@ namespace NeAccounting.ViewModels
         /// Enum Id 
         /// </summary>
         [ObservableProperty]
-        private PaymentType _payTypeId ;
+        private PaymentType _payTypeId;
 
         /// <summary>
         /// دریافت کننده 
@@ -85,6 +88,11 @@ namespace NeAccounting.ViewModels
         private async Task OnUpdate()
         {
             #region validation
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             if (SubmitDate == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

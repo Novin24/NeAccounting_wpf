@@ -1,4 +1,4 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.UpdateChequePage"
+<Page x:Class="NeAccounting.Views.Pages.UpdateChequePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,6 +14,11 @@
       d:DesignHeight="800"
       d:DesignWidth="1200"
       Loaded="Page_Loaded">
+
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                    Command="{Binding SubmitCommand}" />
+    </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -35,14 +40,57 @@
                 Grid.RowSpan="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Left rectangle}"
-                CornerRadius="10" />
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.3" />
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.8" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="2"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Right rectangle}"
-                CornerRadius="10" />
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.5" />
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.7" />
+                </LinearGradientBrush>
+
+            </Border.Background>
+        </Border>
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="1"
@@ -66,7 +114,7 @@
                         Grid.Row="1"
                         Grid.ColumnSpan="2"
                         CornerRadius="9"
-                        Margin="4"
+                        Margin="10 0 10 8"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4"
                         Background="{DynamicResource ControlSolidFillColorDefaultBrush}">
@@ -118,7 +166,7 @@
                                               FlowDirection="LeftToRight"
                                               x:Name="DateFocus"
                                               Grid.Column="1"
-                                              SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}"
+                                              SelectedDate="{Binding ViewModel.SubmitDate ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Grid.ColumnSpan="3"
                                               Margin="0 0 23 0"
                                               LabelName="تاریخ پرداخت" />
@@ -131,7 +179,7 @@
                                        Text="بانک"
                                        Margin="5 0 0 3 " />
                             <ui:TextBox TextAlignment="Center"
-                                        Text="{Binding ViewModel.Bank_Name, Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Bank_Name,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FontFamily="Calibri"
                                         FontSize="14" />
                         </StackPanel>
@@ -144,7 +192,7 @@
                                        Text="شعبه"
                                        Margin="5 0 0 3 " />
                             <ui:TextBox FontSize="14"
-                                        Text="{Binding ViewModel.Bank_Branch,Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Bank_Branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>
@@ -158,7 +206,7 @@
                                        Text="شماره چک"
                                        Margin="5 0 0 3 " />
                             <ui:TextBox TextAlignment="Center"
-                                        Text="{Binding ViewModel.Cheque_Number,Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Cheque_Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="14"
                                         FontFamily="Calibri" />
                         </StackPanel>
@@ -174,18 +222,22 @@
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
-                                        Text="{Binding ViewModel.Accunt_Number,Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Accunt_Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Height="36"
                                         FontFamily="Calibri" />
                         </StackPanel>
                         <nu:PersianDatePicker Grid.Row="3"
-                                              SelectedDate="{Binding ViewModel.DueDate,Mode=TwoWay}"
+
+                                              VerticalAlignment="Center"
+                                              SelectedDate="{Binding ViewModel.DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               FlowDirection="LeftToRight"
                                               Margin="9 0 13 0"
                                               LabelName="تاریخ سررسید" />
                         <nu:MoneyPack Grid.Row="3"
                                       Grid.Column="1"
-                                      Value="{Binding ViewModel.Price,Mode=TwoWay}"
+
+                                      VerticalAlignment="Center"
+                                      Value="{Binding ViewModel.Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Margin="0 0 10 0"
                                       LabelName="مبلغ چک" />
                         <StackPanel Grid.Row="4"
@@ -197,7 +249,7 @@
                                        Text="صاحب چک"
                                        Margin="5 0 3 3" />
                             <ui:TextBox FontSize="14"
-                                        Text="{Binding ViewModel.Cheque_Owner,Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Cheque_Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>
@@ -216,7 +268,7 @@
                                       Margin="0 0 0 0"
                                       SelectedValuePath="Key"
                                       DisplayMemberPath="Value"
-                                      SelectedValue="{Binding ViewModel.Substatus,Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.Substatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       ItemsSource="{Binding ViewModel.EnumSource,Mode=OneWay}"
                                       x:Name="Cmb_Status"
                                       FontFamily="Calibri"
@@ -230,29 +282,30 @@
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="توضیحات"
-                                       Grid.Column="1" 
-                                       Margin="5 0 0 0 "/>
+                                       Grid.Column="1"
+                                       Margin="5 0 0 0 " />
                             <ui:TextBox Margin="0,21,0,0"
                                         FontSize="16"
-                                        Text="{Binding ViewModel.Description,Mode=TwoWay}"
+                                        Text="{Binding ViewModel.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FlowDirection="RightToLeft"
                                         FontFamily="Calibri"></ui:TextBox>
                         </Grid>
 
                         <Button Grid.Row="6"
-                                Padding="30 4 "
                                 Margin="10"
-                                Command="{Binding ViewModel.SubmitCommand}"
-                                HorizontalAlignment="Center"
-                                FontFamily="Calibri"
                                 FontSize="15"
-                                Grid.ColumnSpan="2" >
+                                Padding="30 4"
+                                x:Name="Btn_submit"
+                                Grid.ColumnSpan="2"
+                                FontFamily="Calibri"
+                                HorizontalAlignment="Center"
+                                Command="{Binding ViewModel.SubmitCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت چک" />
                                 <TextBlock Text=" (F1)"
-                                                   FontSize="12"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="#FFA3A3A3" />
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           Foreground="#FFA3A3A3" />
                             </StackPanel>
                         </Button>
                     </Grid>

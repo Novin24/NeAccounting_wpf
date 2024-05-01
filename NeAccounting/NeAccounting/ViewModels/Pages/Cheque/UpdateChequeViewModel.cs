@@ -1,8 +1,11 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
+using DomainShared.Extension;
 using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using System.Globalization;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -12,6 +15,7 @@ namespace NeAccounting.ViewModels
     {
         private readonly ISnackbarService _snackbarService = snackbarService;
         private readonly INavigationService _navigationService = navigationService;
+        private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
 
         /// <summary>
@@ -136,7 +140,12 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnSubmit()
         {
-            #region validation
+            #region validation          
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             if (CusId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -192,26 +201,42 @@ namespace NeAccounting.ViewModels
 
             #endregion
 
-            #region CreatePayDocumetn
+            #region UpdatePayDocumetn
             using UnitOfWork db = new();
             var (e, s) = await db.DocumentManager.UpdateCheque(DocId, CusId.Value, Substatus, Description, SubmitDate.Value, DueDate, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
-            if (s)
+            if (!s)
             {
-                await db.SaveChangesAsync();
-                _snackbarService.Show("کاربر گرامی", $"ویرایش چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
-
-                Type? pageType = NameToPageTypeConverter.Convert("Chequebook");
-
-                if (pageType == null)
-                {
-                    return;
-                }
-
-                _navigationService.Navigate(pageType);
+                _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
+            await db.SaveChangesAsync();
+            #endregion
 
-            _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            #region UpdateNotif
+            if (Status != ChequeStatus.Guarantee)
+            {
+                PersianCalendar pc = new();
+                using BaseUnitOfWork baseDb = new();
+                var (er, i) = await baseDb.NotifRepository.UpdateNotif(DocId, DueDate.Value.ToShamsiDate(pc) + " به مبلغ " + Price.Value.ToString("N0"), DueDate.Value);
+                if (!i)
+                {
+                    _snackbarService.Show("خطا", er, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                }
+                await baseDb.SaveChangesAsync();
+            }
+            #endregion
+
+
+            #region ReDirect
+            _snackbarService.Show("کاربر گرامی", $"ویرایش چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+            Type? pageType = NameToPageTypeConverter.Convert("Chequebook");
+
+            if (pageType == null)
+            {
+                return;
+            }
+            _navigationService.Navigate(pageType);
             #endregion
         }
     }

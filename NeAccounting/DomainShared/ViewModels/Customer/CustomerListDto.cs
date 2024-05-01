@@ -8,6 +8,7 @@ namespace DomainShared.ViewModels.Customer
         public string Name { get; set; }
         public long UniqNumber { get; set; }
         public string Mobile { get; set; }
+        public long TTotalCredit { get; set; }
         public string TotalCredit { get; set; }
         public long ChequeCredit { get; set; }
         public long CashCredit { get; set; }

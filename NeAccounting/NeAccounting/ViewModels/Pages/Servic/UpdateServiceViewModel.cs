@@ -1,4 +1,5 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Constants;
+using DomainShared.Errore;
 using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -19,16 +20,18 @@ namespace NeAccounting.ViewModels
     {
 
         private bool _isInitialized = false;
+        private bool _isreadonly = true;
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
         public UpdateServiceViewModel(ISnackbarService snackbarService, INavigationService navigationService)
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
-            ;
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
+
         }
         [ObservableProperty]
-        private IEnumerable<SuggestBoxViewModel<int>> _asuBox;
+        private IEnumerable<SuggestBoxViewModel<Guid>> _asuBox;
 
         /// <summary>
         /// عنوان کار
@@ -43,12 +46,12 @@ namespace NeAccounting.ViewModels
         private long? _price;
 
         [ObservableProperty]
-        private int? _unitId;
+        private Guid? _unitId;
 
         [ObservableProperty]
-        private int _materialId;
+        private Guid _materialId;
 
-        [ObservableProperty] 
+        [ObservableProperty]
         private string _address = string.Empty;
 
         public void OnNavigatedFrom()
@@ -69,12 +72,18 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnUpdate()
         {
+
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             if (string.IsNullOrEmpty(SrvicName))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("عنوان خدمت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            if (UnitId is null or 0  )
+            if (UnitId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد خدمت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -85,7 +94,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
             using UnitOfWork db = new();
-            (string error, bool isSuccess)=await db.MaterialManager.UpdateMaterial(MaterialId, SrvicName,UnitId.Value, string.Empty, Address , Price.Value,false);
+            (string error, bool isSuccess) = await db.MaterialManager.UpdateMaterial(MaterialId, SrvicName, UnitId.Value, string.Empty, Address, Price.Value, false);
 
             if (!isSuccess)
             {

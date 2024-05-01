@@ -10,12 +10,20 @@ namespace NeAccounting.Views.Pages
     {
         public CreditorsViewModel ViewModel { get; }
 
-    public CreditorsListPage(CreditorsViewModel viewModel)
-    {
-        ViewModel = viewModel;
-        DataContext = this;
-        InitializeComponent();
+        public CreditorsListPage(CreditorsViewModel viewModel)
+        {
+            ViewModel = viewModel;
+            DataContext = this;
+            InitializeComponent();
+
+        }
+        [RelayCommand]
+        private async Task OnSearch()
+        {
+            Btn_submit.Focus();
+            await ViewModel.SearchCommand.ExecuteAsync(null);
+        }
+
 
     }
-}
 }

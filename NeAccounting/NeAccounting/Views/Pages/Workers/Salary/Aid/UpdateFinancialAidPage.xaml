@@ -9,8 +9,8 @@
       d:DataContext="{d:DesignInstance local:UpdateFinancialAidPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
-      d:DesignHeight="450"
-      d:DesignWidth="800"
+      d:DesignHeight="800"
+      d:DesignWidth="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="UpdateFinancialAidPage">
@@ -40,14 +40,57 @@
                 Grid.RowSpan="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Left rectangle}"
-                CornerRadius="10"></Border>
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.3" />
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.8" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="2"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Right rectangle}"
-                CornerRadius="10"></Border>
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.5" />
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.7" />
+                </LinearGradientBrush>
+
+            </Border.Background>
+        </Border>
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="1"
@@ -70,11 +113,11 @@
                                Grid.ColumnSpan="2"/>
                 <Border Grid.Row="1"
                         CornerRadius="9"
-                        Margin="4"
+                        Margin="10 4 4 8"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4">
                     <Border.Background>
-                        <SolidColorBrush Color="White"
+                        <SolidColorBrush Color="Gray"
                                          Opacity="0.08" />
                     </Border.Background>
 
@@ -84,10 +127,6 @@
                                 Margin="5"
                                 BorderBrush="#D6D5D5"
                                 BorderThickness="0.4">
-                            <Border.Background>
-                                <SolidColorBrush Color="White"
-                                                 Opacity="0.08" />
-                            </Border.Background>
 
                             <StackPanel Margin="10 10 10 10">
 
@@ -144,9 +183,9 @@
                             CornerRadius="9"
                             BorderBrush="#D6D5D5"
                             BorderThickness="0.4"
-                            Margin="4">
+                            Margin="4 4 10 8">
                         <Border.Background>
-                            <SolidColorBrush Color="White"
+                            <SolidColorBrush Color="Gray"
                                              Opacity="0.08" />
                         </Border.Background>
 
@@ -172,7 +211,7 @@
                                                FontSize="14"
                                                x:Name="txt_Personel"
                                                Foreground="#BB8F60"
-                                               Text="{Binding ViewModel.PersonnelId , Mode=TwoWay}"
+                                               Text="{Binding ViewModel.PersonnelId ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                HorizontalAlignment="Right"
                                                Margin="0 0 7 0" />
                                 </DockPanel>
@@ -193,13 +232,13 @@
                                                   Margin="0 8 15 10"
                                                   Grid.Column="1"
                                                   LabelName="تاریخ پرداخت"
-                                                  SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}" />
+                                                  SelectedDate="{Binding ViewModel.SubmitDate,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <nu:MoneyPack Grid.Column="0"
                                           Grid.Row="1"
                                           LabelName="مبلغ مساعده"
                                           x:Name="txt_amountOf"
                                           FontSize="14"
-                                          Value="{Binding ViewModel.AmountOf , Mode=TwoWay}"
+                                          Value="{Binding ViewModel.AmountOf ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           FontFamily="Calibri" />
                             <Grid Grid.Column="0"
                                   Grid.ColumnSpan="2"
@@ -216,7 +255,7 @@
                                             Margin="0,30,0,0"
                                             FlowDirection="RightToLeft"
                                             Grid.ColumnSpan="2"
-                                            Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                            Text="{Binding ViewModel.Description,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             TextWrapping="Wrap"
                                             FontFamily="Calibri"></ui:TextBox>
                             </Grid>
@@ -227,7 +266,6 @@
                                         HorizontalAlignment="Center"
                                         FontFamily="Calibri"
                                         FontSize="15"
-                                        IsDefault="True"
                                         Command="{Binding ViewModel.UpdateCommand}"
                                         Grid.ColumnSpan="2" >
                                 <StackPanel Orientation="Horizontal">

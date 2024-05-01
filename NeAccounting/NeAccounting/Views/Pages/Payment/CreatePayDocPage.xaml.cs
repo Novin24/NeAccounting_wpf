@@ -44,6 +44,7 @@ namespace NeAccounting.Views.Pages
         [RelayCommand]
         private async Task OnSubmit()
         {
+            btn_submit.Focus();
             if (await ViewModel.OnSumbit())
             {
                 aus_CusName.Text = string.Empty;

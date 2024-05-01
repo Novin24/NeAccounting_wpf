@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
@@ -7,11 +8,15 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
+namespace NeAccounting.ViewModels;
 public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
+    private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
+
+    #region Properties
 
     /// <summary>
     /// لیست مشتری ها
@@ -82,7 +87,9 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
     /// </summary>
     [ObservableProperty]
     private SubmitChequeStatus _status = SubmitChequeStatus.Register;
+    #endregion
 
+    #region Method
     public async void OnNavigatedTo()
     {
         await InitializeViewModel();
@@ -105,7 +112,11 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
     [RelayCommand]
     private async Task OnSubmit()
     {
-        #region validation
+        #region validationif (_isreadonly)
+        {
+            _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+            return;
+        }
         if (CusId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -177,4 +188,5 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
         _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
         #endregion
     }
+    #endregion
 }

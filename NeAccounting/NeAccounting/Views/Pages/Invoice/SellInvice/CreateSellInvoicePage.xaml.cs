@@ -1,5 +1,6 @@
 ﻿using DomainShared.ViewModels;
 using DomainShared.ViewModels.Pun;
+using NeAccounting.ViewModels;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Media;
@@ -25,13 +26,14 @@ namespace NeAccounting.Views.Pages
             _snackbarService = snackbarService;
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        [RelayCommand]
+        private void OnAddRow()
         {
+            Btn_submit.Focus();
             if (ViewModel.OnAdd())
             {
                 ViewModel.AmountOf = null;
-                ViewModel.MaterialId = -1;
+                ViewModel.MaterialId = null;
                 ViewModel.Description = null;
                 ViewModel.MatPrice = null;
                 txt_MaterialName.Text = string.Empty;
@@ -92,12 +94,15 @@ namespace NeAccounting.Views.Pages
             if (sender is not TextBox txt_price)
                 return;
 
+            txt_price.Text = txt_price.Text.Replace(" ", "000");
+
             if (txt_price.Text == "" || txt_price.Text == "0") return;
             CultureInfo culture = new("en-US");
             long valueBefore = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
             _price = valueBefore;
             txt_price.Text = String.Format(culture, "{0:N0}", valueBefore);
-            txt_price.Select(txt_price.Text.Length, 0);
+            //txt_price.Select(txt_price.Text.Length, 0);
+            txt_price.CaretIndex = txt_price.Text.Length;
         }
 
         private void Txt_Unit_price_LostFocus(object sender, RoutedEventArgs e)

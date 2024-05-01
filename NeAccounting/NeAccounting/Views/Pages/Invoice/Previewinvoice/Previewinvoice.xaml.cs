@@ -36,10 +36,11 @@ namespace NeAccounting.Views.Pages
         [RelayCommand]
         private void OnAddRow()
         {
+            Btn_submit.Focus();
             if (ViewModel.OnAdd())
             {
                 ViewModel.AmountOf = null;
-                ViewModel.MaterialId = -1;
+                ViewModel.MaterialId = null;
                 ViewModel.Description = null;
                 ViewModel.MatPrice = null;
                 txt_MaterialName.Text = string.Empty;
@@ -85,6 +86,8 @@ namespace NeAccounting.Views.Pages
         {
             if (sender is not TextBox txt_price)
                 return;
+
+            txt_price.Text = txt_price.Text.Replace(" ", "000");
 
             if (txt_price.Text == "" || txt_price.Text == "0") return;
             CultureInfo culture = new("en-US");

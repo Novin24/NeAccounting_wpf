@@ -1,7 +1,5 @@
-﻿using Infrastructure.Common.BaseRepositories.BackapRepository;
-using Infrastructure.Common.BaseRepositories.Users;
+﻿using Infrastructure.BaseRepositories;
 using Infrastructure.EntityFramework;
-using Infrastructure.Repositories;
 using NeApplication.IBaseRepositories;
 
 namespace Infrastructure.UnitOfWork

@@ -230,7 +230,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width=".8*" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock FlowDirection="RightToLeft"
@@ -271,9 +271,9 @@
                           FontFamily="arial"
                           FontSize="15"
                           SelectionChanged="ComboBoxMonths_SelectionChanged">
-                    <ComboBoxItem Content="فروردین"
+                    <ComboBoxItem Content="فروردین"/>
+                    <ComboBoxItem Content="اردیبهشت"
                                   IsSelected="True" />
-                    <ComboBoxItem Content="اردیبهشت" />
                     <ComboBoxItem Content="خرداد" />
 
                     <ComboBoxItem Content="تیر" />
@@ -289,24 +289,26 @@
                     <ComboBoxItem Content="اسفند" />
                 </ComboBox>
                 <Button x:Name="previousMonth"
-                        Content=" &gt; "
                         Grid.Column="3"
+                        IsTabStop="False"
                         Click="PreviousMonth_Click"
-                        HorizontalAlignment="Right"
-                        Height="26"
+                        Height="25"
                         Focusable="True"
-                        Width="25"
-                        Padding="0 0 0 4" />
+                        Padding="0 0 0 0">
+                    <ui:SymbolIcon Symbol="CaretDown20"
+                                   FontSize="25" />
+
+                </Button>
                 <Button x:Name="nextMonth"
-                        Content=" &lt;  "
+                        IsTabStop="False"
                         Focusable="True"
                         Grid.Column="0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
                         Click="NextMonth_Click"
-                        Padding="2 0 0 4"
-                        Width="25"
-                        Height="25" />
+                        Padding="0 0 0 0"
+                        Height="25">
+                    <ui:SymbolIcon Symbol="CaretUp20"
+                                   FontSize="25" />
+                </Button>
 
             </Grid>
             <StackPanel Grid.Row="1"
@@ -403,6 +405,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlockJome0"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="6"
@@ -415,6 +418,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock5Shanbe0"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="5"
                                 MinWidth="20"
@@ -426,6 +430,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock4Shanbe0"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 TabIndex="4"
                                 MinHeight="16"
                                 MinWidth="16"
@@ -436,6 +441,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock3Shanbe0"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="3"
@@ -447,6 +453,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock2Shanbe0"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="2"
                                 MinWidth="20"
@@ -458,6 +465,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock1Shanbe0"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="1"
@@ -469,6 +477,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlockShanbe0"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="0"
@@ -487,6 +496,7 @@
                         <Button x:Name="TextBlockJome1"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 TabIndex="13"
                                 MinWidth="20"
                                 Margin="2,0"
@@ -498,6 +508,7 @@
                         <Button x:Name="TextBlock5Shanbe1"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 MinWidth="20"
                                 TabIndex="12"
                                 Margin="2,0"
@@ -509,6 +520,7 @@
                         <Button x:Name="TextBlock4Shanbe1"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 MinWidth="20"
                                 TabIndex="11"
                                 Margin="2,0"
@@ -520,6 +532,7 @@
                         <Button x:Name="TextBlock3Shanbe1"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 MinWidth="20"
                                 TabIndex="10"
                                 Margin="2,0"
@@ -531,6 +544,7 @@
                         <Button x:Name="TextBlock2Shanbe1"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 MinWidth="20"
                                 TabIndex="9"
                                 Margin="2,0"
@@ -541,6 +555,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock1Shanbe1"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="8"
@@ -552,6 +567,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlockShanbe1"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="7"
@@ -569,6 +585,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlockJome2"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="20"
@@ -580,6 +597,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock5Shanbe2"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="19"
                                 MinWidth="20"
@@ -591,6 +609,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock4Shanbe2"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="18"
                                 MinWidth="20"
@@ -602,6 +621,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock3Shanbe2"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="17"
@@ -613,6 +633,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock2Shanbe2"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="16"
                                 MinWidth="20"
@@ -624,6 +645,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock1Shanbe2"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="15"
                                 MinWidth="20"
@@ -635,6 +657,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlockShanbe2"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="14"
@@ -652,6 +675,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlockJome3"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="27"
                                 MinWidth="20"
@@ -663,6 +687,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock5Shanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="26"
                                 MinWidth="20"
@@ -674,6 +699,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock4Shanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="25"
                                 MinWidth="20"
@@ -685,6 +711,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock3Shanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="24"
                                 MinWidth="20"
@@ -696,6 +723,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock2Shanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="23"
                                 MinWidth="20"
@@ -707,6 +735,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock1Shanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="22"
                                 MinWidth="20"
@@ -718,6 +747,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlockShanbe3"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="21"
@@ -735,6 +765,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlockJome4"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 MinWidth="20"
                                 TabIndex="34"
@@ -746,6 +777,7 @@
                           Style="{DynamicResource GridStyle}">
                         <Button x:Name="TextBlock5Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
+                                IsTabStop="False"
                                 MinHeight="20"
                                 TabIndex="33"
                                 MinWidth="20"
@@ -758,6 +790,7 @@
                         <Button x:Name="TextBlock4Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 TabIndex="32"
                                 MinWidth="20"
                                 Margin="2,0"
@@ -769,6 +802,7 @@
                         <Button x:Name="TextBlock3Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 TabIndex="31"
                                 MinWidth="20"
                                 Margin="2,0"
@@ -780,6 +814,7 @@
                         <Button x:Name="TextBlock2Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 TabIndex="30"
                                 MinWidth="20"
                                 Margin="2,0"
@@ -791,6 +826,7 @@
                         <Button x:Name="TextBlock1Shanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 TabIndex="29"
                                 MinWidth="20"
                                 Margin="2,0"
@@ -802,6 +838,7 @@
                         <Button x:Name="TextBlockShanbe4"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 TabIndex="28"
                                 MinWidth="20"
                                 Margin="2,0"
@@ -820,6 +857,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 MinWidth="20"
+                                IsTabStop="False"
                                 TabIndex="41"
                                 Margin="2,0"
                                 FontFamily="arial">۶</Button>
@@ -830,6 +868,7 @@
                         <Button x:Name="TextBlock5Shanbe5"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 TabIndex="40"
                                 MinWidth="20"
                                 Margin="2,0"
@@ -841,6 +880,7 @@
                         <Button x:Name="TextBlock4Shanbe5"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 MinWidth="20"
                                 TabIndex="39"
                                 Margin="2,0"
@@ -853,6 +893,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 TabIndex="38"
+                                IsTabStop="False"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۳</Button>
@@ -864,6 +905,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 TabIndex="37"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۲</Button>
@@ -875,6 +917,7 @@
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
                                 TabIndex="36"
+                                IsTabStop="False"
                                 MinWidth="20"
                                 Margin="2,0"
                                 FontFamily="arial">۱</Button>
@@ -885,6 +928,7 @@
                         <Button x:Name="TextBlockShanbe5"
                                 Style="{DynamicResource TextBlockStyle1}"
                                 MinHeight="20"
+                                IsTabStop="False"
                                 TabIndex="35"
                                 MinWidth="20"
                                 Margin="2,0"

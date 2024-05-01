@@ -13,8 +13,8 @@ namespace Infrastructure.Repositories
     {
         public async Task<(string error, bool isSuccess)> CreateExpense(DateTime submitDate, string expensetype, long amount, PaymentType payType, string receiver, string description)
         {
-            if (await TableNoTracking.AnyAsync(t => t.Expensetype == expensetype))
-                return new("کاربر گرامی این هزینه از قبل تعریف شده می‌باشد!!!", false);
+            //if (await TableNoTracking.AnyAsync(t => t.Expensetype == expensetype))
+            //    return new("کاربر گرامی این هزینه از قبل تعریف شده می‌باشد!!!", false);
 
             try
             {
@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
                 x.Receiver = receiver;
                 x.Description = description;
 
-                Update(x, false);
+                Entities.Update(x);
             }
             catch (Exception ex)
             {
@@ -88,7 +88,7 @@ namespace Infrastructure.Repositories
                     pageNum++;
                 }
             }
-            var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();          
+            var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
 
             return new PagedResulViewModel<ExpenselistDto>(totalCount, pageCount, pageNum, li);
         }

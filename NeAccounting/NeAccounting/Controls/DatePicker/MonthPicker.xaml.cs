@@ -163,7 +163,10 @@ namespace NeAccounting.Controls
         {
             comboBoxMonths.SelectedIndex = month - 1 ?? currentMonth - 1;
             if (SelectedMon != null && SelectedYear != null)
+            {
                 lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
+                DisplayDate = comboBoxYear.SelectedValue.ToString() + "  " + ((ComboBoxItem)comboBoxMonths.SelectedValue).Content;
+            }
         }
 
         protected virtual void InitialYear(int? year)
@@ -171,7 +174,10 @@ namespace NeAccounting.Controls
             comboBoxYear.ItemsSource = LoadYear(year ?? currentYear);
             comboBoxYear.SelectedItem = year ?? currentYear;
             if (SelectedMon != null && SelectedYear != null)
+            {
                 lbl_Display.Text = SelectedYear.ToString() + " / " + SelectedMon.ToString();
+                DisplayDate = comboBoxYear.SelectedValue.ToString() + "  " + ((ComboBoxItem)comboBoxMonths.SelectedValue).Content;
+            }
         }
 
         #endregion
@@ -238,7 +244,6 @@ namespace NeAccounting.Controls
             }
             IsCalculated = false;
             selectedMonth = Convert.ToByte(cmbox.SelectedIndex + 1);
-            DisplayDate = comboBoxYear.SelectedValue.ToString() + "  " + ((ComboBoxItem)cmbox.SelectedValue).Content;
             SelectedMon = selectedMonth;
         }
 
@@ -257,7 +262,6 @@ namespace NeAccounting.Controls
                 SelectedMon = currentMonth;
                 selectedMonth = currentMonth;
             }
-            DisplayDate = comboBoxYear.SelectedValue.ToString() + "  " + ((ComboBoxItem)cmbox.SelectedValue).Content;
         }
 
         private void Dismiss_Click(object sender, RoutedEventArgs e)

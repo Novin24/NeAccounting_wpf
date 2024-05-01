@@ -20,9 +20,9 @@
                 <TranslateTransform />
             </TransformGroup>
         </LinearGradientBrush.RelativeTransform>
-        <GradientStop Color="#FF313131"
+        <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
                       Offset="0.3" />
-        <GradientStop Color="#FF202020"
+        <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
                       Offset="0.8" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="Right rectangle"
@@ -40,9 +40,9 @@
                 <TranslateTransform />
             </TransformGroup>
         </LinearGradientBrush.RelativeTransform>
-        <GradientStop Color="#FF202020"
+        <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
                       Offset="0.5" />
-        <GradientStop Color="#FF313131"
+        <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
                       Offset="0.7" />
     </LinearGradientBrush>
 

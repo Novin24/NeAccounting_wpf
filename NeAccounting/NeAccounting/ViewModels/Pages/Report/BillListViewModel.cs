@@ -16,6 +16,9 @@ using DomainShared.Extension;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using DomainShared.ViewModels.Customer;
+using static Stimulsoft.Client.Designer.Images.StiDesignerWpfImages;
+using System.Collections.ObjectModel;
 
 namespace NeAccounting.ViewModels
 {
@@ -179,8 +182,8 @@ namespace NeAccounting.ViewModels
             var result = await _contentDialogService.ShowSimpleDialogAsync(
             new SimpleContentDialogCreateOptions()
             {
-                Title = "آیا از حذف اطمینان دارید!!!",
-                Content = Application.Current.Resources["DeleteDialogContent"],
+                Title = "هشدار !!!",
+                Content = new TextBlock() { Text = "آیا از حذف سند اطمینان دارید ؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
                 PrimaryButtonText = "بله",
                 SecondaryButtonText = "خیر",
                 CloseButtonText = "انصراف",
@@ -241,6 +244,50 @@ namespace NeAccounting.ViewModels
                                 _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                                 return;
                             }
+
+                            var (isEx, li) = await db.DocumentManager.GetRetrunSellInvoiceGoods(parameter);
+                            #endregion
+
+                            #region UpdateMaterial
+                            foreach (var item in itm.RemList)
+                            {
+                                var amountOf = isEx ? item.AmountOf - li.Where(t => t.MaterialId == item.MaterialId).Sum(t => t.AmountOf) : item.AmountOf;
+                                if (amountOf == 0)
+                                    continue;
+                                var (errore, isSucess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, amountOf, true, item.Price);
+                                if (!isSucess)
+                                {
+                                    _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                    db.Dispose();
+                                    return;
+                                }
+                            }
+                            #endregion
+
+                            var (isSuccess, e) = await db.DocumentManager.DeleteDocument(parameter);
+                            if (!isSuccess)
+                            {
+                                _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                db.Dispose();
+                                return;
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+                        await OnSearchInvoice();
+                        break;
+
+                    case DocumntType.ReturnFromBuy:
+                        using (UnitOfWork db = new())
+                        {
+                            #region GetDoc
+                            var (isSucces, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
+                            if (!isSucces)
+                            {
+                                _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                return;
+                            }
                             #endregion
 
                             #region UpdateMaterial
@@ -271,6 +318,51 @@ namespace NeAccounting.ViewModels
                         break;
 
                     case DocumntType.BuyInv:
+                        using (UnitOfWork db = new())
+                        {
+                            #region GetDoc
+                            var (isSucces, itm) = await db.DocumentManager.GetBuyInvoiceDetail(parameter);
+                            if (!isSucces)
+                            {
+                                _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                return;
+                            }
+
+                            var (isEx, li) = await db.DocumentManager.GetRetrunBuyInvoiceGoods(parameter);
+
+                            #endregion
+
+                            #region UpdateMaterial
+                            foreach (var item in itm.RemList)
+                            {
+                                var amountOf = isEx ? item.AmountOf - li.Where(t => t.MaterialId == item.MaterialId).Sum(t => t.AmountOf) : item.AmountOf;
+                                if (amountOf == 0)
+                                    continue;
+                                var (errore, isSucess) = await db.MaterialManager.UpdateMaterialEntity(item.MaterialId, amountOf, false, item.Price);
+                                if (!isSucess)
+                                {
+                                    _snackbarService.Show("خطا", errore, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                    db.Dispose();
+                                    return;
+                                }
+                            }
+                            #endregion
+
+                            var (isSuccess, e) = await db.DocumentManager.DeleteDocument(parameter);
+                            if (!isSuccess)
+                            {
+                                _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                                db.Dispose();
+                                return;
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                        _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+                        await OnSearchInvoice();
+                        break;
+
+                    case DocumntType.ReturnFromSell:
                         using (UnitOfWork db = new())
                         {
                             #region GetDoc
@@ -450,6 +542,118 @@ namespace NeAccounting.ViewModels
                     _navigationService.Navigate(pagType);
                     break;
 
+                case DocumntType.ReturnFromSell:
+                    Type? pagTyp = NameToPageTypeConverter.Convert("UpdateFromSell");
+
+                    if (pagTyp == null || doc.ParentId == null)
+                    {
+                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var srvis = _navigationService.GetNavigationControl();
+
+                    var (isSuccess, itm) = await db.DocumentManager.GetFromTheSellInvoiceDetail(doc.ParentId.Value, parameter);
+                    if (!isSuccess)
+                    {
+                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                    (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
+
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        _snackbarService.Show("خطا", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var cntx = new UpdateFromSellPage(_snackbarService, new UpdateFromTheSellViewModel(_snackbarService, _navigationService, _contentDialogService)
+                    {
+                        CusName = cus.Name,
+                        CusId = cus.Id,
+                        ReturndocId = parameter,
+                        ParentDocId = doc.ParentId.Value,
+                        CusNum = cus.UniqNumber,
+                        InvDescription = itm.Description,
+                        SubmitDate = itm.Date,
+                        TotalPrice = itm.TotalInvPrice.ToString("N0"),
+                        MatList = itm.ParentRemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
+                        {
+                            Id = t.MaterialId,
+                            IsService = t.IsService,
+                            UnitName = t.UnitName,
+                            MaterialName = t.MatName,
+                            LastBuyPrice = t.Price,
+                            LastSellPrice = t.Price
+                        }).ToList(),
+                        StaticList = itm.ReturnRemList,
+                        SellGoods = itm.ParentRemList,
+                        List = new ObservableCollection<RemittanceListViewModel>(itm.ReturnRemList),
+                        ParentInvoiceSerial = itm.ParentSerial,
+                        ReturnInvoicSerial = itm.ReturnSerial,
+                    });
+                    srvis.Navigate(pagTyp, cntx);
+
+                    break;
+
+                case DocumntType.ReturnFromBuy:
+                    Type? pgTyp = NameToPageTypeConverter.Convert("UpdateFromBuy");
+
+                    if (pgTyp == null || doc.ParentId == null)
+                    {
+                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var srvs = _navigationService.GetNavigationControl();
+
+                    var (sc, itmm) = await db.DocumentManager.GetFromTheBuyInvoiceDetail(doc.ParentId.Value, parameter);
+                    if (!sc)
+                    {
+                        _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var stuv = await db.DocumentManager.GetStatus(itmm.CustomerId);
+                    (string err, CustomerListDto cuss) = await db.CustomerManager.GetCustomerById(itmm.CustomerId);
+
+                    if (!string.IsNullOrEmpty(err))
+                    {
+                        _snackbarService.Show("خطا", err, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                        return;
+                    }
+
+                    var cnx = new UpdateFromBuyPage(_snackbarService, new UpdateFromTheBuyViewModel(_snackbarService, _navigationService, _contentDialogService)
+                    {
+                        CusName = cuss.Name,
+                        CusId = cuss.Id,
+                        ReturndocId = parameter,
+                        ParentDocId = doc.ParentId.Value,
+                        CusNum = cuss.UniqNumber,
+                        InvDescription = itmm.Description,
+                        SubmitDate = itmm.Date,
+                        TotalPrice = itmm.TotalInvPrice.ToString("N0"),
+                        MatList = itmm.ParentRemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
+                        {
+                            Id = t.MaterialId,
+                            IsService = t.IsService,
+                            UnitName = t.UnitName,
+                            MaterialName = t.MatName,
+                            LastBuyPrice = t.Price,
+                            LastSellPrice = t.Price
+                        }).ToList(),
+                        BuyGoods = itmm.ParentRemList,
+                        List = new ObservableCollection<RemittanceListViewModel>(itmm.ReturnRemList),
+                        StaticList = itmm.ReturnRemList,
+                        ParentInvoiceSerial = itmm.ParentSerial,
+                        ReturnInvoicSerial = itmm.ReturnSerial,
+                    });
+                    srvs.Navigate(pgTyp, cnx);
+
+                    break;
+
                 case DocumntType.Cheque:
                     break;
                 default:
@@ -492,6 +696,117 @@ namespace NeAccounting.ViewModels
                 {"Status",$"{list.Last().Status}"}};
 
             _printServices.PrintInvoice(@"Required\Reports\ReportInvoices.mrt", "InvoiceListDtos", list, dic);
+        }
+
+        [RelayCommand]
+        private async Task OnReturnGoods(Guid parameter)
+        {
+            var doc = InvList.FirstOrDefault(x => x.Id == parameter);
+            if (doc == null)
+            {
+                _snackbarService.Show("کاربر گرامی", "ردیف مورد نظر برای ویرایش یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
+            using UnitOfWork db = new();
+            if (doc.Type == DocumntType.SellInv)
+            {
+                Type? pagetyp = NameToPageTypeConverter.Convert("FromTheSell");
+
+                if (pagetyp == null)
+                {
+                    return;
+                }
+                var servis = _navigationService.GetNavigationControl();
+
+                var (isSuccess, itm) = await db.DocumentManager.GetSellInvoiceDetail(parameter);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+
+                var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    _snackbarService.Show("خطا", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+
+                var contex = new FromTheSellPage(_snackbarService, new FromTheSellViewModel(_snackbarService, _navigationService, _contentDialogService)
+                {
+                    CusName = cus.Name,
+                    CusId = cus.Id,
+                    DocId = parameter,
+                    CusNum = cus.UniqNumber,
+                    Status = stu.Status,
+                    Debt = stu.Debt,
+                    MatList = itm.RemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
+                    {
+                        Id = t.MaterialId,
+                        IsService = t.IsService,
+                        UnitName = t.UnitName,
+                        MaterialName = t.MatName,
+                        LastBuyPrice = t.Price,
+                        LastSellPrice = t.Price
+                    }).ToList(),
+                    Credit = stu.Credit,
+                    SellGoods = itm.RemList,
+                    LastInvoice = itm.Serial,
+                });
+                servis.Navigate(pagetyp, contex);
+            }
+            else
+            {
+                Type? pagetyp = NameToPageTypeConverter.Convert("FromTheBuy");
+
+                if (pagetyp == null)
+                {
+                    return;
+                }
+                var servis = _navigationService.GetNavigationControl();
+
+                var (isSuccess, itm) = await db.DocumentManager.GetBuyInvoiceDetail(parameter);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("خطا", "فاکتور مورد نظر یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+
+                var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
+
+                if (!string.IsNullOrEmpty(error))
+                {
+                    _snackbarService.Show("خطا", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+
+                var contex = new FromTheBuyPage(_snackbarService, new FromTheBuyViewModel(_snackbarService, _navigationService, _contentDialogService)
+                {
+                    CusName = cus.Name,
+                    CusId = cus.Id,
+                    DocId = parameter,
+                    CusNum = cus.UniqNumber,
+                    Status = stu.Status,
+                    Debt = stu.Debt,
+                    MatList = itm.RemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
+                    {
+                        Id = t.MaterialId,
+                        IsService = t.IsService,
+                        UnitName = t.UnitName,
+                        MaterialName = t.MatName,
+                        LastBuyPrice = t.Price,
+                        LastSellPrice = t.Price
+                    }).ToList(),
+                    Credit = stu.Credit,
+                    BuyGoods = itm.RemList,
+                    LastInvoice = itm.Serial,
+                });
+                servis.Navigate(pagetyp, contex);
+            }
         }
         #endregion
     }

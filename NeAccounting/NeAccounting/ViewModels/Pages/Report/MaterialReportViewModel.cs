@@ -37,7 +37,7 @@ namespace NeAccounting.ViewModels
         private bool _buy = true;
 
         [ObservableProperty]
-        private int _materialId = -1;
+        private Guid? _materialId = null;
 
         [ObservableProperty]
         private int _currentPage = 1;
@@ -81,7 +81,7 @@ namespace NeAccounting.ViewModels
         private async Task OnSearchInvoice()
         {
 
-            if (MaterialId == -1)
+            if (MaterialId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام جنس"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -106,7 +106,7 @@ namespace NeAccounting.ViewModels
 
             _isInit = true;
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetMaterialReport(MaterialId, Buy, Sell, StartDate.Value, EndDate.Value, false, _isInit);
+            var t = await db.DocumentManager.GetMaterialReport(MaterialId.Value, Buy, Sell, StartDate.Value, EndDate.Value, false, _isInit);
             CurrentPage = t.CurrentPage;
             MatReportList = t.Items;
             PageCount = t.PageCount;
@@ -120,7 +120,7 @@ namespace NeAccounting.ViewModels
             {
                 return;
             }
-            if (MaterialId == -1)
+            if (MaterialId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام جنس"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -144,7 +144,7 @@ namespace NeAccounting.ViewModels
             }
 
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetMaterialReport(MaterialId, Buy, Sell, StartDate.Value, EndDate.Value, false, _isInit);
+            var t = await db.DocumentManager.GetMaterialReport(MaterialId.Value, Buy, Sell, StartDate.Value, EndDate.Value, false, _isInit);
             CurrentPage = t.CurrentPage;
             MatReportList = t.Items;
             PageCount = t.PageCount;

@@ -7,6 +7,7 @@ using Wpf.Ui;
 using Wpf.Ui.Controls;
 using System.Windows.Media;
 using System.Globalization;
+using DomainShared.Constants;
 
 namespace NeAccounting.ViewModels
 {
@@ -14,18 +15,22 @@ namespace NeAccounting.ViewModels
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
+        private bool _isreadonly = true;
 
         public CreateFinancialAidViewModel(INavigationService navigationService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _snackbarService = snackbarService;
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
+
         }
 
         [ObservableProperty]
         private int? _PersonelId;
 
         [ObservableProperty]
-        private int _workerId = -1;
+        private Guid? _workerId = null;
 
         [ObservableProperty]
         private long _amountOf = 0;
@@ -64,7 +69,12 @@ namespace NeAccounting.ViewModels
         private async Task OnCreate()
         {
 
-            if (WorkerId < 0)
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            if (WorkerId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام پرسنل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -82,7 +92,7 @@ namespace NeAccounting.ViewModels
             PersianCalendar pc = new();
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.WorkerManager.AddAid(SubmitDate.Value, WorkerId, pc.GetYear(SubmitDate.Value), (byte)pc.GetMonth(SubmitDate.Value), AmountOf, Description);
+                var (error, isSuccess) = await db.WorkerManager.AddAid(SubmitDate.Value, WorkerId.Value, pc.GetYear(SubmitDate.Value), (byte)pc.GetMonth(SubmitDate.Value), AmountOf, Description);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

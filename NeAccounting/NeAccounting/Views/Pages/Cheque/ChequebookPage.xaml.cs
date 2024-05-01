@@ -2,6 +2,7 @@
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
 using NeAccounting.ViewModels;
+using System.Text.RegularExpressions;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
@@ -44,6 +45,21 @@ namespace NeAccounting.Views.Pages
             var us = ((SuggestBoxViewModel<Guid, long>)args.SelectedItem);
             ViewModel.CusId = us.Id;
             ViewModel.PersonelId = us.UniqNumber;
+        }
+
+        private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = MyRegex().IsMatch(e.Text);
+        }
+
+        [GeneratedRegex("[^0-9]+")]
+        private static partial Regex MyRegex();
+
+        private void Dismiss_Click(object sender, RoutedEventArgs e)
+        {
+            txt_Name.Text = string.Empty;
+            lbl_num.Text = string.Empty;
+            ViewModel.CusId = null;
         }
     }
 }

@@ -17,7 +17,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.SubmitCommand}" />
+                 Command="{Binding SubmitCommand}" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -40,14 +40,57 @@
                 Grid.RowSpan="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Left rectangle}"
-                CornerRadius="10" />
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.3" />
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.8" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="2"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Right rectangle}"
-                CornerRadius="10" />
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.5" />
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.7" />
+                </LinearGradientBrush>
+
+            </Border.Background>
+        </Border>
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="1"
@@ -62,13 +105,13 @@
 
                 </Grid.RowDefinitions>
 
-                <nu:HeaderPack NamePpage="واگذاری چک ضمانتی" />
+                <nu:HeaderPack NamePpage="واگذاری چک دریافتی" />
 
                 <Border Grid.Column="0"
                         Grid.Row="1"
                         Grid.ColumnSpan="2"
                         CornerRadius="9"
-                        Margin="4"
+                        Margin="10 0 10 8"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4"
                         Background="{DynamicResource ControlSolidFillColorDefaultBrush}">
@@ -90,7 +133,8 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Row="0"
-                                    Margin="30 0 20 0">
+                                    Margin="30 0 20 0"
+                                    VerticalAlignment="Center">
                             <DockPanel>
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="15"
@@ -241,12 +285,13 @@
 
                         <Button Grid.Row="6"
                                 Margin="15"
-                                Command="{Binding ViewModel.SubmitCommand}"
-                                Padding="30 4 "
-                                HorizontalAlignment="Center"
-                                FontFamily="Calibri"
                                 FontSize="15"
-                                Grid.ColumnSpan="2" >
+                                Padding="30 4 "
+                                x:Name="Btn_submit"
+                                Grid.ColumnSpan="2"
+                                FontFamily="Calibri"
+                                HorizontalAlignment="Center"
+                                Command="{Binding ViewModel.SubmitCommand}" >
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت چک" />
                                 <TextBlock Text=" (F1)"

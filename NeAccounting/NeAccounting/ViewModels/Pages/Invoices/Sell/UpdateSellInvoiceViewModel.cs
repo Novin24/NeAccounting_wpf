@@ -17,11 +17,13 @@ namespace NeAccounting.ViewModels
     {
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
+        private bool _isreadonly = true;
 
         public UpdateSellInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService)
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
         }
         #region properties
 
@@ -114,7 +116,7 @@ namespace NeAccounting.ViewModels
         /// شناسه جنس انتخاب شده در سلکت باکس
         /// </summary>
         [ObservableProperty]
-        private int _materialId = -1;
+        private Guid? _materialId = null;
 
         /// <summary>
         /// مقدار انتخاب شده
@@ -205,7 +207,12 @@ namespace NeAccounting.ViewModels
         {
             #region validation
 
-            if (MaterialId < 0)
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return false;
+            }
+            if (MaterialId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return false;
@@ -237,7 +244,7 @@ namespace NeAccounting.ViewModels
                 IsDeleted = false,
                 TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
                 Description = Description,
-                MaterialId = MaterialId,
+                MaterialId = MaterialId.Value,
             });
             SetCommisionValue();
             RefreshRow(ref RowId);

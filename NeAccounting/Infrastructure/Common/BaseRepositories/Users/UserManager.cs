@@ -5,7 +5,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IBaseRepositories;
 
-namespace Infrastructure.Common.BaseRepositories.Users
+namespace Infrastructure.BaseRepositories
 {
     public class UserManager : BaseRepository<IdentityUser>, IIdentityUserManager
     {

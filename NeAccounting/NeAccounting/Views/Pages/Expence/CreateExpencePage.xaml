@@ -16,7 +16,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.CreateExpenseCommand}" />
+                 Command="{Binding CreateExpenseCommand}" />
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -42,14 +42,57 @@
                 Grid.RowSpan="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Left rectangle}"
-                CornerRadius="10"></Border>
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.3" />
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.8" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="3"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Right rectangle}"
-                CornerRadius="10"></Border>
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.5" />
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.7" />
+                </LinearGradientBrush>
+
+            </Border.Background>
+        </Border>
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="2"
@@ -71,7 +114,7 @@
                         BorderThickness="0.4"
                         Margin="4">
                     <Border.Background>
-                        <SolidColorBrush Color="White"
+                        <SolidColorBrush Color="Gray"
                                          Opacity="0.08" />
 
                     </Border.Background>
@@ -104,7 +147,7 @@
                             <TextBox TextAlignment="Center"
                                      FontSize="14"
                                      Margin="0 4 3 0 "
-                                     CaretBrush="White"
+                                      
                                      FontFamily="Calibri"
                                      x:Name="txt_Titele"
                                      Text="{Binding ViewModel.Expensetype , Mode=TwoWay}" />
@@ -178,14 +221,15 @@
 
                         <Button Grid.Row="6"
                                 Margin="10"
-                                Padding="30 4"
-                                VerticalAlignment="Center"
-                                Command="{Binding ViewModel.CreateExpenseCommand , Mode=OneWay}"
-                                HorizontalAlignment="Center"
-                                FontFamily="Calibri"
                                 FontSize="15"
+                                Padding="30 4"
                                 Grid.Column="1"
-                                Grid.ColumnSpan="3" >
+                                x:Name="Btn_submit"
+                                Grid.ColumnSpan="3" 
+                                FontFamily="Calibri"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Command="{Binding ViewModel.CreateExpenseCommand , Mode=OneWay}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت" />
                                 <TextBlock Text=" (F1)"

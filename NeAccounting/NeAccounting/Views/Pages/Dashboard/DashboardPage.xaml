@@ -24,13 +24,13 @@
                 BorderBrush="#D6D5D5"
                 BorderThickness="0.4">
             <Border.Background>
-                <SolidColorBrush Color="White"
+                <SolidColorBrush Color="Gray"
                                  Opacity="0.08" />
             </Border.Background>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <ui:CardAction Grid.Row="0"
@@ -78,7 +78,7 @@
                 BorderThickness="0.4">
 
             <Border.Background>
-                <SolidColorBrush Color="White"
+                <SolidColorBrush Color="Gray"
                                  Opacity="0.08" />
             </Border.Background>
             <Grid Margin="7 0 7 6">
@@ -125,16 +125,18 @@
                                     <StackPanel Grid.Column="1"
                                                 Margin="24"
                                                 VerticalAlignment="Center">
-                                        <TextBlock FontSize="12"
+                                        <TextBlock FontSize="16"
+                                                   FontWeight="Heavy"
+                                                   FontFamily="calibri"
                                                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                                                    Text="{Binding Titele, Mode=OneWay}"
                                                    HorizontalAlignment="Center" />
                                         <TextBlock Margin="0 18 0 0"
-                                                   FontSize="16"
-                                                   FontWeight="Medium"
+                                                   FontSize="15"
                                                    Text="{Binding Message, Mode=OneWay}"
                                                    TextWrapping="WrapWithOverflow"
                                                    HorizontalAlignment="Center"
+                                                   FontFamily="calibri"
                                                    VerticalAlignment="Center"
                                                    FlowDirection="RightToLeft" />
 

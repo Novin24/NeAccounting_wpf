@@ -26,7 +26,7 @@ namespace NeAccounting.ViewModels
         {
             new NavigationViewItem()
             {
-                Content = "Home",
+                Content = "داشبورد",
                 Icon = new SymbolIcon { Symbol = SymbolRegular.Home32 },
                 TargetPageType = typeof(DashboardPage)
             },
@@ -101,8 +101,8 @@ namespace NeAccounting.ViewModels
                 //TargetPageType = typeof(MaterailListPage)
                 MenuItems = new ObservableCollection<object>
                 {
-                    new NavigationViewItem { Content = "اتمام سال مالی کنونی", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.AlignEndHorizontal20} },
-                    new NavigationViewItem { Content = "... بازگشت به سال", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.Rename20} },
+                    new NavigationViewItem { Content = "اتمام سال مالی کنونی", TargetPageType = typeof(CreateFiscalYear) , Icon = new SymbolIcon{ Symbol = SymbolRegular.AlignEndHorizontal20} },
+                    new NavigationViewItem { Content = "... بازگشت به سال", TargetPageType = typeof(FiscalYearListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.Rename20} },
                 }
             },
             new NavigationViewItem()
@@ -126,8 +126,7 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem(){Content = "ایجاد چک دریافتی",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateRecChequePage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem(){Content = "ایجاد چک ضمانتی",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateGuarantChequePage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(ExpencesListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
-                    new NavigationViewItem { Content = "بیلان سالانه", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
-                    new NavigationViewItem { Content = "بیلان مشخص", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }}
+                    new NavigationViewItem { Content = "بیلان سالانه", TargetPageType = typeof(DashboardPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
                 }
             },
             new NavigationViewItem()
@@ -137,7 +136,7 @@ namespace NeAccounting.ViewModels
                 //TargetPageType = typeof(MaterailListPage)
                 MenuItems = new ObservableCollection<object>
                 {
-                    new NavigationViewItem { Content = "کارگران", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
+                    new NavigationViewItem { Content = "کارگران و کارمندان", TargetPageType = typeof(WorkersListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                     new NavigationViewItem(){Content = "به روز رسانی پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(UpdateWorkerPage),
                         Visibility = Visibility.Collapsed},
                     new NavigationViewItem(){Content = "افزودن پرسنل",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateWorkerPage),
@@ -181,7 +180,12 @@ namespace NeAccounting.ViewModels
                 #region ChangePassword
                     new NavigationViewItem {Content = "تغییر رمز عبور",TargetPageType = typeof(ChangePassword) , Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                 #endregion
-
+                    
+                #region ChangePassword
+                    new NavigationViewItem {Content = "یادآورها",TargetPageType = typeof(NotificationListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
+                    new NavigationViewItem(){Content = "ایجاد یادآور",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateNotificationPage),
+                        Visibility = Visibility.Collapsed},
+                #endregion
 
                 }
             },
@@ -216,13 +220,14 @@ namespace NeAccounting.ViewModels
             {
                 if (await db.UserRepository.LogInUser(userName, password))
                 {
-                    var (s, name) = await db.FinancialYearRepository.GetActiveYear();
+                    var (s, name, isCurrent) = await db.FinancialYearRepository.GetActiveYear();
                     if (!s)
                     {
-                        LogInError = " !!!";
+                        LogInError = "!!!";
                         return true;
                     }
                     NeAccountingConstants.NvoinDbConnectionStrint = name;
+                    NeAccountingConstants.ReadOnlyMode = !isCurrent;
                     LogInError = "ورود با موفقیت انجام شد !!!";
                     return true;
                 }

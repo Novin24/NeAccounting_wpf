@@ -17,6 +17,14 @@ namespace DomainShared.ViewModels.Document
         public bool IsDeletable { get; set; } = false;
         public bool IsEditable { get; set; } = false;
         public bool IsPrintable { get; set; } = false;
+        /// <summary>
+        /// ایا  دکمه اجناس بازگشتی داشته باشد یا خیر
+        /// </summary>
+        public bool HaveReturned { get; set; } = false;
+        /// <summary>
+        /// شناسه فاکتور والد درصورت لزوم
+        /// </summary>
+        public Guid? ParentId { get; set; }
         public DocumntType Type { get; set; }
     }
 }

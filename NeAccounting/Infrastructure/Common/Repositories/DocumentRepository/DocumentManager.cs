@@ -10,6 +10,7 @@ using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using NeApplication.IRepositoryies;
 using System.Globalization;
 
@@ -116,16 +117,17 @@ namespace Infrastructure.Repositories
                 doc.Description = descripion;
                 doc.SubmitDate = submitDate;
 
+                var discountDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.PayDiscount || t.Type == DocumntType.RecDiscount);
                 // به روز رسانی تخفیف
-                if (doc.RelatedDocuments.Count > 0)
+                if (discountDoc != null)
                 {
                     if (discount == null || discount == 0)
                     {
-                        Entities.Remove(doc.RelatedDocuments.First());
+                        Entities.Remove(discountDoc);
                     }
                     else
                     {
-                        doc.RelatedDocuments.First().Price = discount.Value;
+                        discountDoc.Price = discount.Value;
                     }
                 }
                 else
@@ -145,6 +147,7 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
+
         public async Task<(bool isSuccess, string errore)> DeleteDocument(Guid parameter)
         {
             var doc = await Entities
@@ -162,7 +165,6 @@ namespace Infrastructure.Repositories
             try
             {
                 foreach (var d in doc.RelatedDocuments.ToList()) Entities.Remove(d);
-
                 Entities.Remove(doc);
             }
             catch (Exception ex)
@@ -228,6 +230,15 @@ namespace Infrastructure.Repositories
             // به روز رسانی تک تک قلم های فاکتور
             foreach (var item in remittances)
             {
+                if (item.IsDeleted)
+                {
+                    var rem = doc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem != null)
+                    {
+                        doc.SellRemittances.Remove(rem);
+                        continue;
+                    }
+                }
                 if (item.RremId == Guid.Empty)
                 {
                     doc.SellRemittances.Add(new SellRemittance(
@@ -252,16 +263,18 @@ namespace Infrastructure.Repositories
                 }
             }
 
+            var comDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.PayCom);
             // به روز رسانی پورسانت فاکتور
-            if (doc.RelatedDocuments.Count > 0)
+            if (comDoc != null)
             {
                 if (commission != null && commission != 0)
                 {
-                    doc.RelatedDocuments.First().Price = (long)(price * (commission.Value / 100));
+                    comDoc.Price = (long)(price * (commission.Value / 100));
+                    comDoc.Commission = (byte)commission.Value;
                 }
                 else
                 {
-                    Entities.Remove(doc.RelatedDocuments.First());
+                    Entities.Remove(comDoc);
                 }
             }
             else
@@ -337,6 +350,15 @@ namespace Infrastructure.Repositories
             // به روز رسانی تک تک قلم های فاکتور
             foreach (var item in remittances)
             {
+                if (item.IsDeleted)
+                {
+                    var rem = doc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem != null)
+                    {
+                        doc.BuyRemittances.Remove(rem);
+                        continue;
+                    }
+                }
                 if (item.RremId == Guid.Empty)
                 {
                     doc.BuyRemittances.Add(new BuyRemittance(
@@ -361,16 +383,18 @@ namespace Infrastructure.Repositories
                 }
             }
 
+            var comDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.RecCom);
             // به روز رسانی پورسانت فاکتور
-            if (doc.RelatedDocuments.Count > 0)
+            if (comDoc != null)
             {
                 if (commission != null && commission != 0)
                 {
-                    doc.RelatedDocuments.First().Price = (long)(price * (commission.Value / 100));
+                    comDoc.Price = (long)(price * (commission.Value / 100));
+                    comDoc.Commission = (byte)commission.Value;
                 }
                 else
                 {
-                    Entities.Remove(doc.RelatedDocuments.First());
+                    Entities.Remove(comDoc);
                 }
             }
             else
@@ -384,6 +408,73 @@ namespace Infrastructure.Repositories
 
             try
             {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+
+        public async Task<(string error, bool isSuccess)> ReturnFromSell(Guid docId,
+            Guid customerId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances)
+        {
+            List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
+
+            var doc = await Entities
+                .Include(t => t.RelatedDocuments)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null)
+                return new("سند مورد نظر یافت نشد!!!", false);
+
+
+            if (string.IsNullOrEmpty(descripion))
+                descripion = $"فاکتور اجناس برگشت از فروش {doc.Serial}";
+
+            try
+            {
+                doc.RelatedDocuments.Add(new Document(customerId, price, DocumntType.ReturnFromSell, PaymentType.Other, descripion, submitDate, true)
+                .AddBuyRemittance(list));
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> ReturnFromBuy(Guid docId,
+            Guid customerId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances)
+        {
+            List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
+
+            var doc = await Entities
+                .Include(t => t.RelatedDocuments)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+
+            if (doc == null)
+                return new("سند مورد نظر یافت نشد!!!", false);
+
+            if (string.IsNullOrEmpty(descripion))
+                descripion = $"فاکتور اجناس برگشت از خرید {doc.Serial}";
+
+            try
+            {
+                doc.RelatedDocuments.Add(new Document(customerId, price, DocumntType.ReturnFromBuy, PaymentType.Other, descripion, submitDate, false)
+                .AddSellRemittance(list));
                 Entities.Update(doc);
             }
             catch (Exception ex)
@@ -410,13 +501,14 @@ namespace Infrastructure.Repositories
                     Serial = c.Serial.ToString(),
                     Date = c.SubmitDate,
                     TotalPrice = c.Price,
-                    Commission = c.RelatedDocuments.Sum(t => t.Commission),
-                    CommissionPrice = c.RelatedDocuments.Sum(t => t.Price),
+                    Commission = c.RelatedDocuments.Where(t => t.Type == DocumntType.PayCom).Sum(t => t.Commission),
+                    CommissionPrice = c.RelatedDocuments.Where(t => t.Type == DocumntType.PayCom).Sum(t => t.Price),
                     InvoiceDescription = c.Description,
                     RemList = c.SellRemittances.Select(t => new RemittanceListViewModel()
                     {
                         AmountOf = t.AmountOf,
                         Description = t.Description,
+                        IsService = t.Material.IsService,
                         MatName = t.Material.Name,
                         UnitName = t.Material.Unit.Name,
                         MaterialId = t.MaterialId,
@@ -436,6 +528,62 @@ namespace Infrastructure.Repositories
             return new(true, inv);
         }
 
+        public async Task<(bool isSuccess, List<RemittanceListViewModel> itm)> GetRetrunSellInvoiceGoods(Guid parentInvoiceId)
+        {
+            var inv = await TableNoTracking
+                .Include(r => r.BuyRemittances)
+                .Where(t => t.DocumentId == parentInvoiceId)
+                .Select(c => new InvoiceDetailUpdateDto()
+                {
+                    RemList = c.BuyRemittances.Select(t => new RemittanceListViewModel()
+                    {
+                        AmountOf = t.AmountOf,
+                        Description = t.Description,
+                        IsService = t.Material.IsService,
+                        MatName = t.Material.Name,
+                        UnitName = t.Material.Unit.Name,
+                        MaterialId = t.MaterialId,
+                        Price = t.Price,
+                        RremId = t.Id,
+                        TotalPrice = t.TotalPrice
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+
+            if (inv == null)
+            {
+                return new(false, []);
+            }
+            return new(true, inv.RemList);
+        }
+
+        public async Task<(bool isSuccess, List<RemittanceListViewModel> itm)> GetRetrunBuyInvoiceGoods(Guid parentInvoiceId)
+        {
+            var inv = await TableNoTracking
+                .Include(r => r.SellRemittances)
+                .Where(t => t.DocumentId == parentInvoiceId)
+                .Select(c => new InvoiceDetailUpdateDto()
+                {
+                    RemList = c.SellRemittances.Select(t => new RemittanceListViewModel()
+                    {
+                        AmountOf = t.AmountOf,
+                        Description = t.Description,
+                        IsService = t.Material.IsService,
+                        MatName = t.Material.Name,
+                        UnitName = t.Material.Unit.Name,
+                        MaterialId = t.MaterialId,
+                        Price = t.Price,
+                        RremId = t.Id,
+                        TotalPrice = t.TotalPrice
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+
+            if (inv == null)
+            {
+                return new(false, []);
+            }
+            return new(true, inv.RemList);
+        }
+
         public async Task<(bool isSuccess, InvoiceDetailUpdateDto itm)> GetBuyInvoiceDetail(Guid invoiceId)
         {
             var inv = await TableNoTracking
@@ -448,13 +596,14 @@ namespace Infrastructure.Repositories
                     Serial = c.Serial.ToString(),
                     Date = c.SubmitDate,
                     TotalPrice = c.Price,
-                    Commission = c.RelatedDocuments.Sum(t => t.Commission),
-                    CommissionPrice = c.RelatedDocuments.Sum(t => t.Price),
+                    Commission = c.RelatedDocuments.Where(t => t.Type == DocumntType.RecCom).Sum(t => t.Commission),
+                    CommissionPrice = c.RelatedDocuments.Where(t => t.Type == DocumntType.RecCom).Sum(t => t.Price),
                     InvoiceDescription = c.Description,
                     RemList = c.BuyRemittances.Select(t => new RemittanceListViewModel()
                     {
                         AmountOf = t.AmountOf,
                         Description = t.Description,
+                        IsService = t.Material.IsService,
                         MaterialId = t.MaterialId,
                         MatName = t.Material.Name,
                         UnitName = t.Material.Unit.Name,
@@ -472,6 +621,126 @@ namespace Infrastructure.Repositories
             inv.RemList.ForEach(t => { t.RowId = row++; });
 
             return new(true, inv);
+        }
+
+        public async Task<(bool isSuccess, ReturnInvoiceDetailUpdateDto itm)> GetFromTheSellInvoiceDetail(Guid parentInvoiceId, Guid returnId)
+        {
+            try
+            {
+                var inv = await TableNoTracking
+                    .Include(r => r.SellRemittances)
+                    .Include(r => r.BuyRemittances)
+                    .Include(r => r.RelatedDocuments)
+                    .Where(t => t.Id == parentInvoiceId)
+                    .Select(c => new ReturnInvoiceDetailUpdateDto()
+                    {
+                        CustomerId = c.CustomerId,
+                        ParentSerial = c.Serial.ToString(),
+                        ReturnSerial = c.RelatedDocuments.First(t => t.Id == returnId).Serial.ToString(),
+                        TotalInvPrice = c.RelatedDocuments.First(t => t.Id == returnId).Price,
+                        Description = c.RelatedDocuments.First(t => t.Id == returnId).Description,
+                        Date = c.RelatedDocuments.First(t => t.Id == returnId).SubmitDate,
+                        ParentRemList = c.SellRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList(),
+                        ReturnRemList = c.RelatedDocuments.First(t => t.Id == returnId).BuyRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList()
+                    }).FirstOrDefaultAsync();
+
+                if (inv == null)
+                {
+                    return new(false, new ReturnInvoiceDetailUpdateDto());
+                }
+                int row = 1;
+                inv.ParentRemList.ForEach(t => { t.RowId = row++; });
+                row = 1;
+                inv.ReturnRemList.ForEach(t => { t.RowId = row++; });
+
+                return new(true, inv);
+            }
+            catch
+            {
+                return new(false, new ReturnInvoiceDetailUpdateDto());
+            }
+        }
+
+        public async Task<(bool isSuccess, ReturnInvoiceDetailUpdateDto itm)> GetFromTheBuyInvoiceDetail(Guid parentInvoiceId, Guid returnId)
+        {
+            try
+            {
+                var inv = await TableNoTracking
+                    .Include(r => r.SellRemittances)
+                    .Include(r => r.BuyRemittances)
+                    .Include(r => r.RelatedDocuments)
+                    .Where(t => t.Id == parentInvoiceId)
+                    .Select(c => new ReturnInvoiceDetailUpdateDto()
+                    {
+                        CustomerId = c.CustomerId,
+                        ParentSerial = c.Serial.ToString(),
+                        ReturnSerial = c.RelatedDocuments.First(t => t.Id == returnId).Serial.ToString(),
+                        TotalInvPrice = c.RelatedDocuments.First(t => t.Id == returnId).Price,
+                        Description = c.RelatedDocuments.First(t => t.Id == returnId).Description,
+                        Date = c.RelatedDocuments.First(t => t.Id == returnId).SubmitDate,
+                        ParentRemList = c.BuyRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList(),
+                        ReturnRemList = c.RelatedDocuments.First(t => t.Id == returnId).SellRemittances.Select(t => new RemittanceListViewModel()
+                        {
+                            AmountOf = t.AmountOf,
+                            Description = t.Description,
+                            IsService = t.Material.IsService,
+                            MaterialId = t.MaterialId,
+                            MatName = t.Material.Name,
+                            UnitName = t.Material.Unit.Name,
+                            Price = t.Price,
+                            RremId = t.Id,
+                            TotalPrice = t.TotalPrice
+                        }).ToList()
+                    }).FirstOrDefaultAsync();
+
+                if (inv == null)
+                {
+                    return new(false, new ReturnInvoiceDetailUpdateDto());
+                }
+                int row = 1;
+                inv.ParentRemList.ForEach(t => { t.RowId = row++; });
+                row = 1;
+                inv.ReturnRemList.ForEach(t => { t.RowId = row++; });
+
+                return new(true, inv);
+            }
+            catch
+            {
+                return new(false, new ReturnInvoiceDetailUpdateDto());
+            }
         }
 
         public async Task<(bool isSuccess, DocUpdateDto itm)> GetDocumentById(Guid docId)
@@ -498,6 +767,145 @@ namespace Infrastructure.Repositories
             return new(true, inv);
         }
 
+        public async Task<(string error, bool isSuccess)> UpdateReturnFromTheBuyInvoice(Guid parentDocId,
+            Guid docId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances)
+        {
+            var doc = await Entities
+                .Include(t => t.RelatedDocuments)
+                .ThenInclude(c => c.SellRemittances)
+                .FirstOrDefaultAsync(t => t.Id == parentDocId);
+
+
+            if (doc == null || doc.RelatedDocuments.FirstOrDefault(t => t.Id == docId) == null)
+                return new("سند مورد نظر یافت نشد!!!", false);
+
+            var returntDoc = doc.RelatedDocuments.First(t => t.Id == docId);
+
+            returntDoc.Price = price;
+            returntDoc.Description = descripion;
+            returntDoc.SubmitDate = submitDate;
+
+            // به روز رسانی تک تک قلم های فاکتور
+            foreach (var item in remittances)
+            {
+                if (item.IsDeleted)
+                {
+                    var rem = returntDoc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem != null)
+                    {
+                        returntDoc.SellRemittances.Remove(rem);
+                        continue;
+                    }
+                }
+                if (item.RremId == Guid.Empty)
+                {
+                    returntDoc.SellRemittances.Add(new SellRemittance(
+                        item.MaterialId,
+                        item.AmountOf,
+                        item.Price,
+                        item.TotalPrice,
+                        submitDate,
+                        item.Description));
+                }
+                else
+                {
+                    var rem = returntDoc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem == null)
+                        continue;
+                    rem.MaterialId = item.MaterialId;
+                    rem.AmountOf = item.AmountOf;
+                    rem.Price = item.Price;
+                    rem.TotalPrice = item.TotalPrice;
+                    rem.SubmitDate = submitDate;
+                    rem.Description = item.Description;
+                }
+            }
+
+
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> UpdateReturnFromTheSellInvoice(Guid parentDocId,
+            Guid docId,
+            long price,
+            string? descripion,
+            DateTime submitDate,
+            List<RemittanceListViewModel> remittances)
+        {
+            var doc = await Entities
+                .Include(t => t.RelatedDocuments)
+                .ThenInclude(c => c.BuyRemittances)
+                .FirstOrDefaultAsync(t => t.Id == parentDocId);
+
+
+            if (doc == null || doc.RelatedDocuments.FirstOrDefault(t => t.Id == docId) == null)
+                return new("سند مورد نظر یافت نشد!!!", false);
+
+            var returntDoc = doc.RelatedDocuments.First(t => t.Id == docId);
+
+            returntDoc.Price = price;
+            returntDoc.Description = descripion;
+            returntDoc.SubmitDate = submitDate;
+
+            // به روز رسانی تک تک قلم های فاکتور
+            foreach (var item in remittances)
+            {
+                if (item.IsDeleted)
+                {
+                    var rem = returntDoc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem != null)
+                    {
+                        returntDoc.BuyRemittances.Remove(rem);
+                        continue;
+                    }
+                }
+                if (item.RremId == Guid.Empty)
+                {
+                    returntDoc.BuyRemittances.Add(new BuyRemittance(
+                        item.MaterialId,
+                        item.AmountOf,
+                        item.Price,
+                        item.TotalPrice,
+                        submitDate,
+                        item.Description));
+                }
+                else
+                {
+                    var rem = returntDoc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                    if (rem == null)
+                        continue;
+                    rem.MaterialId = item.MaterialId;
+                    rem.AmountOf = item.AmountOf;
+                    rem.Price = item.Price;
+                    rem.TotalPrice = item.TotalPrice;
+                    rem.SubmitDate = submitDate;
+                    rem.Description = item.Description;
+                }
+            }
+
+
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
         #endregion
 
         #region Status
@@ -577,9 +985,11 @@ namespace Infrastructure.Repositories
                 .Select(t => new InvoiceDto()
                 {
                     Id = t.Id,
+                    ParentId = t.DocumentId,
                     Type = t.Type,
                     Date = t.SubmitDate,
                     Serial = t.Serial,
+                    HaveReturned = t.RelatedDocuments.Any(t => t.Type == DocumntType.ReturnFromSell || t.Type == DocumntType.ReturnFromBuy),
                     Description = t.Description,
                     Price = t.Price,
                     ReceivedOrPaid = t.IsReceived
@@ -606,7 +1016,9 @@ namespace Infrastructure.Repositories
             {
                 Description = t.Description,
                 Date = t.Date,
+                ParentId = t.ParentId,
                 Type = t.Type,
+                HaveReturned = t.HaveReturned,
                 Serial = t.Serial.ToString(),
                 Id = t.Id,
                 ShamsiDate = t.Date.ToShamsiDate(pc),
@@ -617,8 +1029,10 @@ namespace Infrastructure.Repositories
             Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDtos
             {
                 Description = t.Description,
+                ParentId = t.ParentId,
                 Date = t.Date,
                 Type = t.Type,
+                HaveReturned = t.HaveReturned,
                 Id = t.Id,
                 Serial = t.Serial.ToString(),
                 ShamsiDate = t.Date.ToShamsiDate(pc),
@@ -634,11 +1048,12 @@ namespace Infrastructure.Repositories
                 long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Sum(p => p.Bed);
                 long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Sum(p => p.Bes);
 
-                if (item.Type == DocumntType.PayDoc || item.Type == DocumntType.RecDoc || item.Type == DocumntType.SellInv || item.Type == DocumntType.BuyInv)
+                if (item.Type == DocumntType.PayDoc || item.Type == DocumntType.RecDoc || item.Type == DocumntType.SellInv || item.Type == DocumntType.BuyInv || item.Type == DocumntType.ReturnFromBuy || item.Type == DocumntType.ReturnFromSell)
                 {
                     if (item.Type == DocumntType.SellInv || item.Type == DocumntType.BuyInv)
                     {
                         item.IsPrintable = true;
+                        item.HaveReturned = !item.HaveReturned;
                     }
                     item.IsDeletable = true;
                     item.IsEditable = true;
@@ -703,7 +1118,7 @@ namespace Infrastructure.Repositories
                 .Where(et => et.SubmitDate < endTime)
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
-                .Where(s => s.Type != DocumntType.SellInv && s.Type != DocumntType.BuyInv && s.Type != DocumntType.GarantyCheque)
+                .Where(s => s.Type != DocumntType.SellInv && s.Type != DocumntType.ReturnFromBuy && s.Type != DocumntType.ReturnFromSell && s.Type != DocumntType.BuyInv && s.Type != DocumntType.GarantyCheque)
                 .Select(t => new DetailRemittanceDto()
                 {
                     Serial = t.Serial.ToString(),
@@ -775,6 +1190,7 @@ namespace Infrastructure.Repositories
                 DetailRemittanceDto rem = new()
                 {
                     Row = 0,
+                    IsLeftOver = true,
                     Date = startTime,
                     ShamsiDate = startTime.ToShamsiDate(pc),
                     MaterialName = "باقی مانده از قبل",
@@ -791,13 +1207,16 @@ namespace Infrastructure.Repositories
             foreach (var item in Remittances)
             {
                 item.Row = i;
-                if (item.IsRecived)
+                if (!item.IsLeftOver)
                 {
-                    item.Bed = 0;
-                }
-                else
-                {
-                    item.Bes = 0;
+                    if (item.IsRecived)
+                    {
+                        item.Bed = 0;
+                    }
+                    else
+                    {
+                        item.Bes = 0;
+                    }
                 }
                 item.ShamsiDate = item.Date.ToShamsiDate(pc);
                 long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bed).Sum();
@@ -837,7 +1256,7 @@ namespace Infrastructure.Repositories
             return new PagedResulViewModel<DetailRemittanceDto>(totalCount, pageCount, pageNum, Remittances);
         }
 
-        public async Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(int id,
+        public async Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(Guid id,
             bool isBuy,
             bool isSell,
             DateTime startDate,
@@ -1064,19 +1483,29 @@ namespace Infrastructure.Repositories
             return new PagedResulViewModel<DalyBookDto>(totalCount, pageCount, pageNum, list);
         }
 
+
+
         #endregion
 
         #region Cheque
-        public async Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime, DateTime? endTime, Guid? cusId, ChequeStatus status, bool isInit, int pageNum = 0, int pageCount = NeAccountingConstants.PageCount)
+        public async Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime,
+            DateTime? endTime,
+            Guid? cusId,
+            string chequeNumber,
+            ChequeStatus status,
+            bool isInit,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
         {
             PersianCalendar pc = new();
             var query = (from che in DbContext.Set<Cheque>()
                                    .AsNoTracking()
                                    .Where(t => status == ChequeStatus.AllCheques || t.Status == status)
+                                   .Where(t => string.IsNullOrEmpty(chequeNumber) || t.Cheque_Number.Contains(chequeNumber))
+                                   .Where(t => !startTime.HasValue || t.Due_Date >= startTime)
+                                   .Where(t => !endTime.HasValue || t.Due_Date < endTime)
 
                          join doc in DbContext.Set<Document>()
-                               .Where(st => !startTime.HasValue || st.SubmitDate >= startTime)
-                               .Where(et => !endTime.HasValue || et.SubmitDate < endTime)
                                .Where(p => !cusId.HasValue || p.CustomerId == cusId)
                                                  on che.DocumetnId equals doc.Id
 
@@ -1093,6 +1522,7 @@ namespace Infrastructure.Repositories
                              StatusName = che.Status.ToDisplay(DisplayProperty.Name),
                              Id = doc.Id,
                              CheckNumber = che.Cheque_Number,
+                             DueDate = che.Due_Date,
                              DueShamsiDate = che.Due_Date.ToShamsiDate(pc),
                              Payer = pay.Name,
                              IsEditable = true,
@@ -1112,15 +1542,15 @@ namespace Infrastructure.Repositories
                     pageNum++;
                 }
             }
-            var li = await query.Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
+            var li = await query.OrderBy(t => t.DueDate).Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
 
             for (int i = 1; i <= li.Count; i++)
             {
                 li[i - 1].Row = i;
-                if (li[i - 1].Status == ChequeStatus.Transferred)
-                {
-                    li[i - 1].IsEditable = false;
-                }
+                //if (li[i - 1].Status == ChequeStatus.Transferred)
+                //{
+                //    li[i - 1].IsEditable = false;
+                //}
 
                 if (li[i - 1].Status == ChequeStatus.Rejected || li[i - 1].Status == ChequeStatus.InBox)
                 {
@@ -1206,6 +1636,8 @@ namespace Infrastructure.Repositories
                                  Cheque_Number = che.Cheque_Number,
                                  Cheque_Owner = che.Cheque_Owner,
                                  PayCusName = payCus.Name,
+                                 PayerId = payCus.Id,
+                                 ReceverId = recCus.Id,
                                  PayCusNum = payCus.CusId.ToString(),
                                  RecCusNum = recCus.CusId.ToString(),
                                  RecCusName = recCus.Name,
@@ -1220,7 +1652,7 @@ namespace Infrastructure.Repositories
             return (true, itm);
         }
 
-        public async Task<(string error, bool isSuccess)> CreateRecCheque(Guid customerId,
+        public async Task<(string error, bool isSuccess, Guid docId)> CreateRecCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
             string? descripion,
             DateTime submitDate,
@@ -1232,34 +1664,38 @@ namespace Infrastructure.Repositories
             string bank_Branch,
             string cheque_Owner)
         {
+            Guid id;
             try
             {
                 if (dueDate.Date < submitDate.Date)
                 {
-                    return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false);
+                    return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false, Guid.Empty);
                 }
 
-                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, true)
-                .AddCheque(new Cheque(submitStatus,
-                ChequeStatus.InBox,
-                Guid.Empty,
-                customerId,
-                dueDate,
-                cheque_Number,
-                accunt_Number,
-                bank_Name,
-                bank_Branch,
-                cheque_Owner)));
+                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, true)
+                 .AddCheque(new Cheque(submitStatus,
+                 ChequeStatus.InBox,
+                 Guid.Empty,
+                 customerId,
+                 dueDate,
+                 cheque_Number,
+                 accunt_Number,
+                 bank_Name,
+                 bank_Branch,
+                 cheque_Owner)));
 
+                await DbContext.SaveChangesAsync();
+                id = t.Entity.Id;
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new("خطا دراتصال به پایگاه داده!!!", false, Guid.Empty);
             }
-            return new(string.Empty, true);
+
+            return new(string.Empty, true, id);
         }
 
-        public async Task<(string error, bool isSuccess)> CreatePayCheque(Guid customerId,
+        public async Task<(string error, bool isSuccess, Guid docId)> CreatePayCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
             string? descripion,
             DateTime submitDate,
@@ -1271,31 +1707,33 @@ namespace Infrastructure.Repositories
             string bank_Branch,
             string cheque_Owner)
         {
+            Guid id;
             try
             {
                 if (dueDate.Date < submitDate.Date)
                 {
-                    return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false);
+                    return new("تاریخ سررسید نباید کوچک‌تر از تاریخ ثبت باشد!!!", false, Guid.Empty);
                 }
 
-                await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, false)
-                .AddCheque(new Cheque(submitStatus,
-                ChequeStatus.Payed,
-                customerId,
-                Guid.Empty,
-                dueDate,
-                cheque_Number,
-                accunt_Number,
-                bank_Name,
-                bank_Branch,
-                cheque_Owner)));
-
+                var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.Cheque, PaymentType.Cheque, descripion, submitDate, false)
+                  .AddCheque(new Cheque(submitStatus,
+                  ChequeStatus.Payed,
+                  customerId,
+                  Guid.Empty,
+                  dueDate,
+                  cheque_Number,
+                  accunt_Number,
+                  bank_Name,
+                  bank_Branch,
+                  cheque_Owner)));
+                await DbContext.SaveChangesAsync();
+                id = t.Entity.Id;
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new("خطا دراتصال به پایگاه داده!!!", false, Guid.Empty);
             }
-            return new(string.Empty, true);
+            return new(string.Empty, true, id);
         }
 
         public async Task<(string error, bool isSuccess)> CreateGarantyCheque(Guid customerId,
@@ -1510,6 +1948,38 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
+        public async Task<(string error, bool isSuccess)> UpdateAssignCheque(
+            Guid docId,
+            Guid cusId,
+            DateTime transferDate,
+            string desc)
+        {
+            var doc = await Entities
+                .Include(t => t.Cheques)
+                .Include(s => s.RelatedDocuments)
+                .FirstOrDefaultAsync(t => t.Id == docId);
+
+            if (doc == null || doc.Cheques.Count == 0 || doc.RelatedDocuments.Count == 0)
+                return new("چک مورد نظر یافت نشد!!!", false);
+
+            var che = doc.Cheques.First();
+            che.TransferdDate = transferDate;
+            che.Reciver = cusId;
+            var assDoc = doc.RelatedDocuments.First();
+            assDoc.Description = desc;
+            assDoc.CustomerId = cusId;
+            assDoc.SubmitDate = transferDate;
+            try
+            {
+                Entities.Update(doc);
+            }
+            catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
         public async Task<(string error, bool isSuccess)> RemoveCheque(Guid docId)
         {
             var doc = await Entities.Include(t => t.Cheques)
@@ -1557,6 +2027,57 @@ namespace Infrastructure.Repositories
                 return new("خطا دراتصال به پایگاه داده!!!", false);
             }
             return new(string.Empty, true);
+        }
+        #endregion
+
+        #region FinancialYear
+        public async Task<List<UserLeftOve>> GetUserLeftOver()
+        {
+            var result = await (from d in DbContext.Set<Document>()
+                                    .AsNoTracking()
+                                join c in DbContext.Set<Customer>() on d.CustomerId equals c.Id
+                                group new { d, c } by c.Id into grouped
+                                select new UserLeftOve
+                                {
+                                    UserId = grouped.Key,
+                                    Debt = grouped.Sum(x => x.d.IsReceived ? x.d.Price : 0),
+                                    Credit = grouped.Sum(x => !x.d.IsReceived ? x.d.Price : 0)
+                                }).ToListAsync();
+
+            List<UserLeftOve> list = [];
+            foreach (var item in result)
+            {
+                if (item.Credit == item.Debt)
+                {
+                    continue;
+                }
+
+                // منها یعنی مشتری بدهکاره
+                // مثبت یعنی  مشتری طلبکاره
+                item.LeftOver = item.Debt - item.Credit;
+                list.Add(item);
+            }
+            return list;
+        }
+
+        public async Task<(bool isSuccess, string error)> AddUserLeftOver(List<UserLeftOve> userDocs)
+        {
+            var docs = userDocs.Select(t => new Document(t.UserId,
+                Math.Abs(t.LeftOver),
+                DocumntType.LeftOver,
+                PaymentType.Other,
+                "باقیمانده از سال مالی قبل",
+                DateTime.Now, t.LeftOver > 0));
+
+            try
+            {
+                await Entities.AddRangeAsync(docs);
+            }
+            catch (Exception ex)
+            {
+                return new(false, ex.Message);
+            }
+            return new(true, string.Empty);
         }
         #endregion
     }

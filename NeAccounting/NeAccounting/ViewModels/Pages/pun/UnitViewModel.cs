@@ -1,4 +1,5 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Constants;
+using DomainShared.Errore;
 using DomainShared.ViewModels.unit;
 using Infrastructure.UnitOfWork;
 using System.Windows.Media;
@@ -10,14 +11,18 @@ namespace NeAccounting.ViewModels
     public partial class UnitViewModel : ObservableObject, INavigationAware
     {
         private bool _isInitialized = false;
-        private readonly ISnackbarService _snackbarService;
+        private readonly ISnackbarService _snackbarService; 
+        private bool _isreadonly = true;
+
         public UnitViewModel(ISnackbarService snackbarService)
         {
-            _snackbarService = snackbarService;
+            _snackbarService = snackbarService; 
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
+
         }
 
         [ObservableProperty]
-        private int? _unitId;
+        private Guid? _unitId;
 
         [ObservableProperty]
         private string _unitName;
@@ -52,6 +57,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnCreateUnit()
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             if (string.IsNullOrEmpty(UnitName))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام واحد"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -91,7 +101,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnActive(int id)
+        private async Task OnActive(Guid id)
         {
             using UnitOfWork db = new();
             await db.UnitManager.ChangeStatus(id, true);
@@ -100,7 +110,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnDeActive(int id)
+        private async Task OnDeActive(Guid id)
         {
             using UnitOfWork db = new();
             await db.UnitManager.ChangeStatus(id, false);

@@ -40,7 +40,7 @@ namespace NeAccounting
                 #region Main
                 services.AddHostedService<ApplicationHostService>();
                 services.AddSingleton<MainWindow>();
-                services.AddSingleton<LoadingWindow>();
+                //services.AddSingleton<LoadingWindow>(); 
                 services.AddSingleton<MainWindowViewModel>();
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<ISnackbarService, SnackbarService>();
@@ -132,6 +132,9 @@ namespace NeAccounting
 
                 services.AddTransient<TransferChequePage>();
                 services.AddTransient<TransferChequeViewModel>();
+
+                services.AddTransient<UpdateTransferChequePage>();
+                services.AddTransient<UpdateTransferChequeViewModel>();
                 #endregion
 
                 #region Recived
@@ -171,6 +174,20 @@ namespace NeAccounting
                 services.AddTransient<UpdateSellInvoiceViewModel>();
                 #endregion
 
+                #region ReturnGoods
+                services.AddTransient<FromTheSellPage>();
+                services.AddTransient<FromTheSellViewModel>();
+
+                services.AddTransient<FromTheBuyPage>();
+                services.AddTransient<FromTheBuyViewModel>();
+
+                services.AddTransient<UpdateFromSellPage>();
+                services.AddTransient<UpdateFromTheSellViewModel>();
+
+                services.AddTransient<UpdateFromBuyPage>();
+                services.AddTransient<UpdateFromTheBuyViewModel>();
+                #endregion
+
                 #endregion
 
                 #region Expense
@@ -196,6 +213,13 @@ namespace NeAccounting
 
                 services.AddTransient<UnitsListPage>();
                 services.AddTransient<UnitViewModel>();
+
+                #endregion
+                #region FiscalYear 
+
+                services.AddTransient<FiscalYearListPage>();
+                services.AddTransient<FiscalYearViewModel>();
+                services.AddTransient<CreateFiscalYear>();
 
                 #endregion
 
@@ -267,6 +291,17 @@ namespace NeAccounting
                 #region ChangePassword
                 services.AddTransient<ChangePassword>();
                 services.AddTransient<ChangePassViewModel>();
+                #endregion
+
+                #region Notification
+                services.AddTransient<NotificationListPage>();
+                services.AddTransient<NotifListViewModel>();
+
+                services.AddTransient<CreateNotificationPage>();
+                services.AddTransient<CreateNotifViewModel>();
+
+                services.AddTransient<UpdateNotificationPage>();
+                services.AddTransient<UpdateNotifViewModel>();
                 #endregion
 
             }).Build();

@@ -43,14 +43,57 @@
                 Grid.RowSpan="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Left rectangle}"
-                CornerRadius="10"></Border>
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.3" />
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.8" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="3"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Right rectangle}"
-                CornerRadius="10"></Border>
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.5" />
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.7" />
+                </LinearGradientBrush>
+
+            </Border.Background>
+        </Border>
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="2"
@@ -69,9 +112,9 @@
                         CornerRadius="9"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4"
-                        Margin="4">
+                        Margin="10 0 10 8">
                     <Border.Background>
-                        <SolidColorBrush Color="White"
+                        <SolidColorBrush Color="Gray"
                                          Opacity="0.08" />
 
                     </Border.Background>
@@ -104,8 +147,8 @@
                                      TabIndex="0"
                                      Margin="0 4 0 0 "
                                      x:Name="SrvicName"
-                                     Text="{Binding ViewModel.SrvicName, Mode=TwoWay}"
-                                     CaretBrush="White"
+                                     Text="{Binding ViewModel.SrvicName,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      
                                      FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Grid.Row="1"
@@ -120,7 +163,7 @@
                             <ComboBox FontSize="14"
                                       TabIndex="1"
                                       FontFamily="Calibri"
-                                      SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.UnitId ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       DisplayMemberPath="DisplayName"
                                       SelectedValuePath="Id"
                                       ItemsSource="{Binding ViewModel.AsuBox}"
@@ -129,7 +172,7 @@
                         <nu:MoneyPack Grid.Row="2"
                                       Grid.Column="1"
                                       Grid.ColumnSpan="3"
-                                      Value="{Binding ViewModel.Price, Mode=TwoWay}"
+                                      Value="{Binding ViewModel.Price,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       LabelName="اجرت"
                                       TabIndex="2" />
 
@@ -145,7 +188,7 @@
                                        Grid.Column="1" />
                             <TextBox Margin="0,22,0,0"
                                      FontSize="14"
-                                     Text="{Binding ViewModel.Address, Mode=TwoWay}"
+                                     Text="{Binding ViewModel.Address,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      FlowDirection="RightToLeft"
                                      Grid.ColumnSpan="2"
                                      FontFamily="Calibri"></TextBox>

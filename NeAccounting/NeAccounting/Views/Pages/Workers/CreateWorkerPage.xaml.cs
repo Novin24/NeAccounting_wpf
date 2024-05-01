@@ -62,5 +62,13 @@ namespace NeAccounting.Views.Pages
             txt_overTimeShift.IsEnabled = false;
             txt_overTimeShift.Value = 0;
         }
+
+        [RelayCommand]
+        private async Task OnCreate()
+        {
+
+            Btn_submit.Focus();
+            await ViewModel.CreateCommand.ExecuteAsync(null);
+        }
     }
 }

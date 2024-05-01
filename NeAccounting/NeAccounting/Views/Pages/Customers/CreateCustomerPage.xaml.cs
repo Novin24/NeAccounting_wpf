@@ -70,5 +70,12 @@ namespace NeAccounting.Views.Pages
         {
             CalculateTotal();
         }
+
+        [RelayCommand]
+        private async Task OnCreateCustomer()
+        {
+            Btn_submit.Focus();
+            await ViewModel.CreateCustomerCommand.ExecuteAsync(null);
+        }
     }
 }

@@ -449,7 +449,7 @@ namespace NeAccounting.Controls
                 case 0:
                     TextBlockShanbe0.Content = persianDate;
                     TextBlockShanbe0.Style = (Style)FindResource(persianTextBlockResourceName);
-                    Ellipse5Shanbe2.Style = new Style();
+                    EllipseShanbe0.Style = new Style();
                     if (isCurrentDay) EllipseShanbe0.Style = (Style)FindResource("EllipseStyleToday");
                     if (tooltip_context != "") GridShanbe0.ToolTip = tooltip_context;
                     else GridShanbe0.ToolTip = null;
@@ -972,6 +972,11 @@ namespace NeAccounting.Controls
                 return;
             }
             if (e.Key == Key.Enter)
+            {
+                Click?.Invoke(this, e);
+                return;
+            }
+            if (e.Key == Key.Space)
             {
                 Click?.Invoke(this, e);
                 return;

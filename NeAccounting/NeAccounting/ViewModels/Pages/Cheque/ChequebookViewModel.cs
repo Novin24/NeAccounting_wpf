@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.Extension;
 using DomainShared.Utilities;
@@ -20,12 +21,14 @@ namespace NeAccounting.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
+        private bool _isreadonly = true;
 
         public ChequebookViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
-            _snackbarService = snackbarService;
+            _snackbarService = snackbarService; _isreadonly = NeAccountingConstants.ReadOnlyMode;
+
         }
 
         #region Properties
@@ -41,6 +44,9 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private Guid? _cusId;
+
+        [ObservableProperty]
+        private string _chequeNumber;
 
         [ObservableProperty]
         private DateTime? _startDate;
@@ -81,7 +87,7 @@ namespace NeAccounting.ViewModels
         {
             _isInit = true;
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetChequeByDate(null, null, CusId, Status, _isInit, CurrentPage);
+            var t = await db.DocumentManager.GetChequeByDate(null, null, CusId, ChequeNumber, Status, _isInit, CurrentPage);
             CurrentPage = t.CurrentPage;
             InvList = t.Items;
             PageCount = t.PageCount;
@@ -94,7 +100,7 @@ namespace NeAccounting.ViewModels
         {
             _isInit = true;
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, Status, _isInit, CurrentPage);
+            var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, ChequeNumber, Status, _isInit, CurrentPage);
             CurrentPage = t.CurrentPage;
             InvList = t.Items;
             PageCount = t.PageCount;
@@ -108,24 +114,24 @@ namespace NeAccounting.ViewModels
             {
                 return;
             }
-            if (!CusId.HasValue)
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
-            if (StartDate == null)
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ شروع"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
+            //if (!CusId.HasValue)
+            //{
+            //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+            //    return;
+            //}
+            //if (StartDate == null)
+            //{
+            //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ شروع"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            //    return;
+            //}
 
-            if (EndDate == null)
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پایان"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
+            //if (EndDate == null)
+            //{
+            //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ پایان"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            //    return;
+            //}
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, Status, _isInit, CurrentPage);
+            var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, ChequeNumber, Status, _isInit, CurrentPage);
             InvList = t.Items;
             PageCount = t.PageCount;
         }
@@ -133,6 +139,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnRemoveDoc(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
                 Title = "هشدار !!!",
@@ -145,34 +156,79 @@ namespace NeAccounting.ViewModels
             {
                 using UnitOfWork db = new();
                 var (e, s) = await db.DocumentManager.RemoveCheque(parameter);
-                if (s)
+                if (!s)
                 {
-                    await db.SaveChangesAsync();
-                    _snackbarService.Show("کاربر گرامی", $"حذف چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
-                    var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, Status, _isInit, CurrentPage);
-                    InvList = t.Items;
-                    PageCount = t.PageCount;
+                    _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
+                await db.SaveChangesAsync();
+                _snackbarService.Show("کاربر گرامی", $"حذف چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+                var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, ChequeNumber, Status, _isInit, CurrentPage);
+                InvList = t.Items;
+                PageCount = t.PageCount;
 
-                _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                using BaseUnitOfWork baseDb = new();
+                await baseDb.NotifRepository.DeleteNotif(parameter);
+                await baseDb.SaveChangesAsync();
             }
         }
 
         [RelayCommand]
         private async Task OnUpdateDoc(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            using UnitOfWork db = new();
+
+            var (s, i) = await db.DocumentManager.GetChequeDetailById(parameter);
+
+            var users = await db.CustomerManager.GetDisplayUser();
+            var payer = users.FirstOrDefault(t => t.Id == i.PayerId);
+            if (payer != null)
+            {
+                users.Remove(payer);
+            }
+            if (i.Status == ChequeStatus.Transferred)
+            {
+                Type? pagType = NameToPageTypeConverter.Convert("UpdateTransferCheque");
+
+                if (pagType == null)
+                {
+                    return;
+                }
+                var cntx = new UpdateTransferChequePage(new UpdateTransferChequeViewModel(_snackbarService, _navigationService)
+                {
+                    CusId = i.ReceverId,
+                    Substatus = i.SubmitStatus,
+                    SubmitDate = i.TransferDate,
+                    Accunt_Number = i.Accunt_Number,
+                    Bank_Branch = i.Bank_Branch,
+                    Bank_Name = i.Bank_Name,
+                    PayerName = i.PayCusName,
+                    Cheque_Number = i.Cheque_Number,
+                    CusName = i.RecCusName,
+                    Cuslist = users,
+                    Cheque_Owner = i.Cheque_Owner,
+                    CusNum = i.RecCusNum,
+                    Description = i.RecDescripion,
+                    DocId = parameter,
+                    DueDate = i.DueDate,
+                    Price = i.Price,
+                    EnumSource = SubmitChequeStatus.Register.ToEnumDictionary()
+                });
+
+                var servis = _navigationService.GetNavigationControl();
+                servis.Navigate(pagType, cntx);
+                return;
+            }
+
             Type? pageType = NameToPageTypeConverter.Convert("UpdateCheque");
 
             if (pageType == null)
             {
-                return;
-            }
-            using UnitOfWork db = new();
-            var (s, i) = await db.DocumentManager.GetChequeById(parameter);
-            if (!s)
-            {
-                _snackbarService.Show("کاربر گرامی", $"چک مورد نظر یافت نشد!!!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
                 return;
             }
             string pageName;
@@ -190,19 +246,19 @@ namespace NeAccounting.ViewModels
             }
             var context = new UpdateChequePage(new UpdateChequeViewModel(_snackbarService, _navigationService)
             {
-                CusId = i.CustomerId,
+                CusId = i.PayerId,
                 Substatus = i.SubmitStatus,
                 SubmitDate = i.SubmitDate,
                 Accunt_Number = i.Accunt_Number,
                 Bank_Branch = i.Bank_Branch,
                 Bank_Name = i.Bank_Name,
                 Cheque_Number = i.Cheque_Number,
-                CusName = i.CusName,
+                CusName = i.PayCusName,
                 Cuslist = await db.CustomerManager.GetDisplayUser(),
                 Cheque_Owner = i.Cheque_Owner,
-                CusNum = i.CusNum,
-                Description = i.Descripion,
-                DocId = i.Id,
+                CusNum = i.PayCusNum,
+                Description = i.PayDescripion,
+                DocId = parameter,
                 DueDate = i.DueDate,
                 Status = i.Status,
                 PageName = pageName,
@@ -259,6 +315,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnTransfer(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             Type? pageType = NameToPageTypeConverter.Convert("TransferCheque");
 
             if (pageType == null)
@@ -274,6 +335,13 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
+            var users = await db.CustomerManager.GetDisplayUser();
+            var payer = users.FirstOrDefault(t => t.Id == i.CustomerId);
+            if (payer != null)
+            {
+                users.Remove(payer);
+            }
+
             var context = new TransferChequePage(new TransferChequeViewModel(_snackbarService, _navigationService)
             {
                 Substatus = i.SubmitStatus,
@@ -282,7 +350,7 @@ namespace NeAccounting.ViewModels
                 Bank_Name = i.Bank_Name,
                 PayerName = i.CusName,
                 Cheque_Number = i.Cheque_Number,
-                Cuslist = await db.CustomerManager.GetDisplayUser(),
+                Cuslist = users,
                 Cheque_Owner = i.Cheque_Owner,
                 DocId = i.Id,
                 DueDate = i.DueDate,
@@ -315,6 +383,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnConvertToCash(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
                 Title = "هشدار !!!",
@@ -331,7 +404,7 @@ namespace NeAccounting.ViewModels
                 {
                     await db.SaveChangesAsync();
                     _snackbarService.Show("کاربر گرامی", $"نقد چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
-                    var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, Status, _isInit, CurrentPage);
+                    var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, ChequeNumber, Status, _isInit, CurrentPage);
                     InvList = t.Items;
                     PageCount = t.PageCount;
                     return;
@@ -344,6 +417,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnRejects(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
                 Title = "هشدار !!!",
@@ -360,7 +438,7 @@ namespace NeAccounting.ViewModels
                 {
                     await db.SaveChangesAsync();
                     _snackbarService.Show("کاربر گرامی", $"نقد چک با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
-                    var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, Status, _isInit, CurrentPage);
+                    var t = await db.DocumentManager.GetChequeByDate(StartDate, EndDate, CusId, ChequeNumber, Status, _isInit, CurrentPage);
                     InvList = t.Items;
                     PageCount = t.PageCount;
                     return;

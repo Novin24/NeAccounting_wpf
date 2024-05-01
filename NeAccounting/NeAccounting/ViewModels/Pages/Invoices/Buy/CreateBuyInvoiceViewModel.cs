@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
@@ -13,6 +14,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
+    private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
     private int rowId = 1;
 
@@ -95,7 +97,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     /// شناسه جنس انتخاب شده در سلکت باکس
     /// </summary>
     [ObservableProperty]
-    private int _materialId = -1;
+    private Guid? _materialId = null;
 
     /// <summary>
     /// مقدار انتخاب شده
@@ -145,13 +147,18 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     internal bool OnAdd()
     {
         #region validaion
+        if (_isreadonly)
+        {
+            _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
         if (CusId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
 
-        if (MaterialId < 0)
+        if (MaterialId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
@@ -180,7 +187,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
             RowId = rowId,
             TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
             Description = Description,
-            MaterialId = MaterialId,
+            MaterialId = MaterialId.Value,
         });
         SetCommisionValue();
         RefreshRow(ref rowId);
@@ -318,11 +325,11 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     private async Task Reload()
     {
         using UnitOfWork db = new();
-        LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
+        LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.BuyInv);
         List = [];
         CusId = null;
         Commission = null;
-        MaterialId = -1;
+        MaterialId = null;
         Description = null;
         InvDescription = null;
         SubmitDate = DateTime.Now;

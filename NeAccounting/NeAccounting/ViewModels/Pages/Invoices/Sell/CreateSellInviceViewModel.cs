@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
@@ -9,10 +10,12 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
+namespace NeAccounting.ViewModels;
 public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
+    private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
     private int rowId = 1;
 
@@ -95,7 +98,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     /// شناسه جنس انتخاب شده در سلکت باکس
     /// </summary>
     [ObservableProperty]
-    private int _materialId = -1;
+    private Guid? _materialId = null;
 
     /// <summary>
     /// مقدار انتخاب شده
@@ -146,6 +149,11 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     {
         #region validation
 
+        if (_isreadonly)
+        {
+            _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+            return false;
+        }
         if (CusId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -153,7 +161,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         }
 
 
-        if (MaterialId < 0)
+        if (MaterialId == null)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
@@ -188,7 +196,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
             RowId = rowId,
             TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
             Description = Description,
-            MaterialId = MaterialId,
+            MaterialId = MaterialId.Value,
         });
         SetCommisionValue();
         RefreshRow(ref rowId);
@@ -335,7 +343,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         List = [];
         CusId = null;
         Commission = null;
-        MaterialId = -1;
+        MaterialId = null;
         InvDescription = null;
         Description = null;
         SubmitDate = DateTime.Now;

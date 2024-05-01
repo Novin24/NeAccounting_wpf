@@ -41,6 +41,12 @@ namespace NeAccounting.Views.Pages
             e.Handled = MyRegex().IsMatch(e.Text);
         }
 
+        [RelayCommand]
+        private async Task OnSubmit()
+        {
+            Btn_submit.Focus();
+            await ViewModel.SubmitCommand.ExecuteAsync(null);
+        }
         [GeneratedRegex("[^0-9]+")]
         private static partial Regex MyRegex();
     }

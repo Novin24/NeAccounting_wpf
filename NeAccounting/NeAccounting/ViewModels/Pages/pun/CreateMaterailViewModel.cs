@@ -1,4 +1,5 @@
-﻿using DomainShared.Errore;
+﻿using DomainShared.Constants;
+using DomainShared.Errore;
 using DomainShared.ViewModels;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
@@ -14,14 +15,16 @@ namespace NeAccounting.ViewModels
         private bool _isInitialized = false;
         private readonly INavigationService _navigationService;
         private readonly ISnackbarService _snackbarService;
+        private bool _isreadonly = true;
         public CreateMaterailViewModel(ISnackbarService snackbarService, INavigationService navigationService)
         {
             _snackbarService = snackbarService;
             _navigationService = navigationService;
+            _isreadonly = NeAccountingConstants.ReadOnlyMode;
         }
 
         [ObservableProperty]
-        private IEnumerable<SuggestBoxViewModel<int>> _asuBox;
+        private IEnumerable<SuggestBoxViewModel<Guid>> _asuBox;
 
         [ObservableProperty]
         private string _materialName;
@@ -36,7 +39,7 @@ namespace NeAccounting.ViewModels
         private long _lastSellPrice = 0;
 
         [ObservableProperty]
-        private int _unitId = 0;
+        private Guid? _unitId;
 
         [ObservableProperty]
         private bool _isManufacturedGoods = false;
@@ -70,6 +73,12 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnCreateMaterial()
         {
+
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             if (string.IsNullOrEmpty(MaterialName))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -80,7 +89,7 @@ namespace NeAccounting.ViewModels
             //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("سریال کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             //    return;
             //}
-            if (UnitId == 0)
+            if (UnitId == null)
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
@@ -93,7 +102,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(MaterialName, UnitId, false, LastSellPrice, Serial, Address, IsManufacturedGoods);
+                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(MaterialName, UnitId.Value, false, LastSellPrice, Serial, Address, IsManufacturedGoods);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

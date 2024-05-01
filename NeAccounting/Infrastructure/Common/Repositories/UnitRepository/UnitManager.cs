@@ -1,5 +1,6 @@
 ﻿using Domain.NovinEntity.Materials;
 using DomainShared.ViewModels;
+using DomainShared.ViewModels.Pun;
 using DomainShared.ViewModels.unit;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ using NeApplication.IRepositoryies;
 
 namespace Infrastructure.Repositories
 {
-    public class UnitManager : Repository<Unit>, IUnitManager
+    public class UnitManager : Repository<Units>, IUnitManager
     {
         public UnitManager(NovinDbContext dbContext) : base(dbContext)
         {
@@ -26,10 +27,10 @@ namespace Infrastructure.Repositories
             }).ToListAsync();
         }
 
-        public Task<List<SuggestBoxViewModel<int>>> GetUnits(bool IgnorArchive = false)
+        public Task<List<SuggestBoxViewModel<Guid>>> GetUnits(bool IgnorArchive = false)
         {
             return TableNoTracking.Where(t => IgnorArchive || t.IsActive)
-                .Select(x => new SuggestBoxViewModel<int>
+                .Select(x => new SuggestBoxViewModel<Guid>
                 {
                     Id = x.Id,
                     DisplayName = x.Name
@@ -44,7 +45,7 @@ namespace Infrastructure.Repositories
 
             try
             {
-                var t = await Entities.AddAsync(new Unit(name, description));
+                var t = await Entities.AddAsync(new Units(name, description));
             }
             catch (Exception ex)
             {
@@ -54,7 +55,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> UpdateUnit(
-            int id,
+            Guid id,
             string name,
             string description)
         {
@@ -82,7 +83,7 @@ namespace Infrastructure.Repositories
         }
 
         public async Task<(string error, bool isSuccess)> ChangeStatus(
-            int id, bool active)
+            Guid id, bool active)
         {
             var unit = await Entities.FirstOrDefaultAsync(t => t.Id == id);
             if (unit == null)
@@ -96,6 +97,20 @@ namespace Infrastructure.Repositories
                 var t = Entities.Update(unit);
             }
             catch (Exception ex)
+            {
+                return new("خطا دراتصال به پایگاه داده!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> AddAllUnitsInNewYear(List<UnitListDto> unitList)
+        {
+            var units = unitList.Select(t => new Units(t.Id,t.UnitName,t.Description));
+            try
+            {
+                await Entities.AddRangeAsync(units);
+            }
+            catch (Exception)
             {
                 return new("خطا دراتصال به پایگاه داده!!!", false);
             }

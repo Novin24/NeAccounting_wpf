@@ -24,7 +24,7 @@ namespace NeAccounting.Views.Pages
         {
             if (sender is ComboBox cmb)
             {
-                ViewModel.UnitId = ((SuggestBoxViewModel<int>)cmb.SelectedItem).Id;
+                ViewModel.UnitId = ((SuggestBoxViewModel<Guid>)cmb.SelectedItem).Id;
             }
         }
     }

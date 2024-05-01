@@ -81,5 +81,12 @@ namespace NeAccounting.Views.Pages
                 ViewModel.BindFiles();
             }
         }
+
+        [RelayCommand]
+        private async Task OnSubmit()
+        {
+            Btn_submit.Focus();
+            await ViewModel.SubmitCommand.ExecuteAsync(null);
+        }
     }
 }

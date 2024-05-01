@@ -17,8 +17,8 @@ namespace Infrastructure.EntityFramework
             optionsBuilder.UseSqlServer($"Server=(LocalDb)\\MSSQLLocalDB;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;");
         }
 
-        private static readonly MethodInfo ConfigureBasePropertiesMethodInfo = typeof(NovinDbContext)
-                .GetMethod(nameof(ConfigureBaseProperties),
+        private static readonly MethodInfo ConfigurePropertiesMethodInfo = typeof(NovinDbContext)
+                .GetMethod(nameof(ConfigureProperties),
                 BindingFlags.Instance | BindingFlags.NonPublic)!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,14 +33,14 @@ namespace Infrastructure.EntityFramework
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                ConfigureBasePropertiesMethodInfo
+                ConfigurePropertiesMethodInfo
                     .MakeGenericMethod(entityType.ClrType)
                     .Invoke(this, new object[] { modelBuilder, entityType });
             }
-            modelBuilder.ConfigureDbContext();
+            modelBuilder.ConfigureNovinDbContext();
         }
 
-        protected virtual void ConfigureBaseProperties<TEntity>(ModelBuilder modelBuilder, IMutableEntityType mutableEntityType)
+        protected virtual void ConfigureProperties<TEntity>(ModelBuilder modelBuilder, IMutableEntityType mutableEntityType)
                     where TEntity : class
         {
             if (mutableEntityType.IsOwned())
@@ -104,6 +104,13 @@ namespace Infrastructure.EntityFramework
                                 .Where(e => e.State == EntityState.Deleted || e.State == EntityState.Modified || e.State == EntityState.Added);
             foreach (var entity in entities)
             {
+                if (entity.State == EntityState.Modified && entity.Entity is IEntities)
+                {
+                    var book = entity.Entity as IEntities;
+                    book.LastModifireId = CurrentUser.CurrentUserId;
+                    book.LastModificationTime = DateTime.Now;
+                }
+
                 if (entity.State == EntityState.Deleted && entity.Entity is ISoftDeleted)
                 {
                     entity.State = EntityState.Modified;
@@ -111,13 +118,6 @@ namespace Infrastructure.EntityFramework
                     book.DeletionTime = DateTime.Now;
                     book.DeleterId = CurrentUser.CurrentUserId;
                     book.IsDeleted = true;
-                }
-
-                if (entity.State == EntityState.Modified && entity.Entity is IEntities)
-                {
-                    var book = entity.Entity as IEntities;
-                    book.LastModifireId = CurrentUser.CurrentUserId;
-                    book.LastModificationTime = DateTime.Now;
                 }
 
                 if (entity.State == EntityState.Added && entity.Entity is IEntities)

@@ -15,7 +15,7 @@
       mc:Ignorable="d">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                    Command="{Binding ViewModel.SumbitCommand}" />
+                    Command="{Binding SumbitCommand}" />
     </Page.InputBindings>
     <Grid Margin="-15">
         <Grid.RowDefinitions>
@@ -38,14 +38,57 @@
                 Grid.RowSpan="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Left rectangle}"
-                CornerRadius="10" />
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.3" />
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.8" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="2"
                 Grid.ColumnSpan="3"
-                Background="{StaticResource Right rectangle}"
-                CornerRadius="10" />
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.5" />
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.7" />
+                </LinearGradientBrush>
+
+            </Border.Background>
+        </Border>
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="1"
@@ -66,13 +109,9 @@
                                NamePpage="ویرایش اسناد پرداختی" />
                 <Border Grid.Row="1"
                         CornerRadius="9"
-                        Margin="5"
+                        Margin="10 0 4 8"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4">
-                    <Border.Background>
-                        <SolidColorBrush Color="White"
-                                         Opacity="0.08" />
-                    </Border.Background>
                     <!--اخرین چک ها-->
                     <Grid>
                         <TextBlock FontFamily="Calibri"
@@ -89,7 +128,7 @@
                                   IsReadOnly="True"
                                   CanUserResizeRows="False"
                                   CanUserResizeColumns="False"
-                                  ItemsSource="{Binding ViewModel.DocList, Mode=TwoWay}"
+                                  ItemsSource="{Binding ViewModel.DocList, Mode=OneWay}"
                                   CanUserSortColumns="False"
                                   Padding="9">
                             <DataGrid.Columns>
@@ -149,11 +188,11 @@
                 <Border Grid.Row="1"
                         Grid.Column="1"
                         CornerRadius="9"
-                        Margin="4"
+                        Margin="4 0 10 8"
                         BorderBrush="#D6D5D5"
                         BorderThickness="0.4">
                     <Border.Background>
-                        <SolidColorBrush Color="White"
+                        <SolidColorBrush Color="Gray"
                                          Opacity="0.08" />
                     </Border.Background>
                     <Grid FlowDirection="RightToLeft">
@@ -189,7 +228,7 @@
                                         FontSize="14"
                                         Grid.Row="0"
                                         IsEnabled="False"
-                                        Text="{Binding ViewModel.CusName , Mode=TwoWay}"
+                                        Text="{Binding ViewModel.CusName ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
@@ -239,7 +278,7 @@
                             <ComboBox FontSize="14"
                                       x:Name="Cmb_PayType"
                                       SelectedValuePath="Key"
-                                      SelectedValue="{Binding ViewModel.PayTypeId , Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.PayTypeId ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       ItemsSource="{Binding ViewModel.PayTypeEnum}"
                                       DisplayMemberPath="Value"
                                       FontFamily="Calibri"
@@ -252,17 +291,17 @@
                                               LabelName="تاریخ"
                                               x:Name="pdp"
                                               Grid.Column="1"
-                                              SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}"
+                                              SelectedDate="{Binding ViewModel.SubmitDate ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Margin="0 2 15 0" />
 
                         <nu:MoneyPack Grid.Row="2"
                                       x:Name="nm_price"
-                                      Value="{Binding ViewModel.Price, Mode=TwoWay}"
+                                      Value="{Binding ViewModel.Price,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       FontFamily="Calibri"
                                       LabelName="مبلغ وجه" />
 
                         <nu:MoneyPack Grid.Column="1"
-                                      Value="{Binding ViewModel.Discount, Mode=TwoWay}"
+                                      Value="{Binding ViewModel.Discount,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Grid.Row="2"
                                       LabelName="مبلغ تخفیف" />
 
@@ -279,7 +318,7 @@
                                        Margin="7 0 0 3" />
                             <TextBox Margin="0,24,5,0"
                                      FontSize="14"
-                                     Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                     Text="{Binding ViewModel.Description,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      FlowDirection="RightToLeft"
                                      Grid.ColumnSpan="2"
                                      FontFamily="Calibri"></TextBox>

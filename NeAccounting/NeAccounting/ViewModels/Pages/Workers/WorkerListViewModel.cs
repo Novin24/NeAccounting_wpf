@@ -1,4 +1,5 @@
-﻿using DomainShared.Enums;
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
@@ -15,6 +16,7 @@ namespace NeAccounting.ViewModels
         private readonly ISnackbarService _snackbarService;
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
+        private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
         [ObservableProperty]
         private string _fullName = "";
@@ -97,6 +99,11 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         private async Task OnRemoveWorker(int parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             var result = await _contentDialogService.ShowSimpleDialogAsync(
             new SimpleContentDialogCreateOptions()
             {
@@ -123,8 +130,13 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnUpdateWorker(int parameter)
+        private async Task OnUpdateWorker(Guid parameter)
         {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             Type? pageType = NameToPageTypeConverter.Convert("UpdateWorker");
 
             if (pageType == null)
@@ -135,7 +147,7 @@ namespace NeAccounting.ViewModels
 
             var worker = List.First(t => t.Id == parameter);
 
-            IEnumerable<SuggestBoxViewModel<int>> asuBox;
+            IEnumerable<SuggestBoxViewModel<Guid>> asuBox;
 
             using (UnitOfWork db = new())
             {
