@@ -1,4 +1,4 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.UpdateChequePage"
+<Page x:Class="NeAccounting.Views.Pages.UpdateChequePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -227,6 +227,7 @@
                                         FontFamily="Calibri" />
                         </StackPanel>
                         <nu:PersianDatePicker Grid.Row="3"
+
                                               VerticalAlignment="Center"
                                               SelectedDate="{Binding ViewModel.DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               FlowDirection="LeftToRight"
@@ -234,6 +235,7 @@
                                               LabelName="تاریخ سررسید" />
                         <nu:MoneyPack Grid.Row="3"
                                       Grid.Column="1"
+
                                       VerticalAlignment="Center"
                                       Value="{Binding ViewModel.Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Margin="0 0 10 0"

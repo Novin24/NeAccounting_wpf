@@ -159,7 +159,6 @@
                         </StackPanel>
 
                         <nu:PersianDatePicker Grid.Row="0"
-                                              VerticalAlignment="Center"
                                               FlowDirection="LeftToRight"
                                               x:Name="DateFocus"
                                               Grid.Column="1"
@@ -223,7 +222,6 @@
                         </StackPanel>
 
                         <nu:PersianDatePicker Grid.Row="3"
-                                              VerticalAlignment="Center"
                                               FlowDirection="LeftToRight"
                                               SelectedDate="{Binding ViewModel.DueDate,Mode=OneTime}"
                                               Margin="9 0 13 0"
@@ -231,7 +229,6 @@
                                               LabelName="تاریخ سررسید" />
                         <nu:MoneyPack Grid.Row="3"
                                       Grid.Column="1"
-                                      VerticalAlignment="Center"
                                       Margin="0 0 10 0"
                                       Value="{Binding ViewModel.Price,Mode=OneTime}"
                                       IsEnabled="False"

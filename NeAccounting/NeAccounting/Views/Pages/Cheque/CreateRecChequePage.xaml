@@ -226,14 +226,12 @@
                                         FontFamily="Calibri" />
                         </StackPanel>
                         <nu:PersianDatePicker Grid.Row="3"
-                                              VerticalAlignment="Center"
                                               SelectedDate="{Binding ViewModel.DueDate,Mode=TwoWay}"
                                               FlowDirection="LeftToRight"
                                               Margin="9 0 13 0"
                                               LabelName="تاریخ سررسید" />
                         <nu:MoneyPack Grid.Row="3"
                                       Grid.Column="1"
-                                      VerticalAlignment="Center"
                                       Value="{Binding ViewModel.Price,Mode=OneWayToSource}"
                                       Margin="0 0 10 0"
                                       LabelName="مبلغ چک" />
