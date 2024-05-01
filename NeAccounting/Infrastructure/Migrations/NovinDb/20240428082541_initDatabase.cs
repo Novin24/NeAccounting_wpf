@@ -41,7 +41,7 @@ namespace Infrastructure.Migrations.NovinDb
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CusId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("SqlServer:Identity", "397, 1"),
                     Mobile = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     TotalCredit = table.Column<long>(type: "bigint", nullable: false),
                     ChequeCredit = table.Column<long>(type: "bigint", nullable: false),
@@ -84,7 +84,7 @@ namespace Infrastructure.Migrations.NovinDb
                     IsReceived = table.Column<bool>(type: "bit", nullable: false),
                     Commission = table.Column<byte>(type: "tinyint", nullable: true),
                     Serial = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("SqlServer:Identity", "4732, 1"),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -199,7 +199,7 @@ namespace Infrastructure.Migrations.NovinDb
                     Due_Date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Cheque_Number = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Serial = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("SqlServer:Identity", "987, 1"),
                     Accunt_Number = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Bank_Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Bank_Branch = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),

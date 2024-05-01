@@ -220,13 +220,14 @@ namespace NeAccounting.ViewModels
             {
                 if (await db.UserRepository.LogInUser(userName, password))
                 {
-                    var (s, name) = await db.FinancialYearRepository.GetActiveYear();
+                    var (s, name, isCurrent) = await db.FinancialYearRepository.GetActiveYear();
                     if (!s)
                     {
-                        LogInError = " !!!";
+                        LogInError = "!!!";
                         return true;
                     }
                     NeAccountingConstants.NvoinDbConnectionStrint = name;
+                    NeAccountingConstants.ReadOnlyMode = !isCurrent;
                     LogInError = "ورود با موفقیت انجام شد !!!";
                     return true;
                 }

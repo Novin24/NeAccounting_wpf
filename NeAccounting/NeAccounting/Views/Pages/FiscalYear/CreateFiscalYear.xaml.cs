@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using NeAccounting.ViewModels;
+using Wpf.Ui.Controls;
 
 namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for CreateFiscalYear.xaml
     /// </summary>
-    public partial class CreateFiscalYear : Page
+    public partial class CreateFiscalYear : INavigableView<CreateFinancialViewModel>
     {
-        public CreateFiscalYear()
+        public CreateFinancialViewModel ViewModel { get; }
+        public CreateFiscalYear(CreateFinancialViewModel viewModel)
         {
+            ViewModel = viewModel;
+            DataContext = this;
             InitializeComponent();
         }
     }
