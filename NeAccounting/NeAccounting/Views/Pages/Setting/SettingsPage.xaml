@@ -19,7 +19,7 @@
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
 
-    <StackPanel FlowDirection="RightToLeft" Margin="20 30 30 30">
+    <StackPanel FlowDirection="RightToLeft" Margin="30 30 30 30">
         <TextBlock FontSize="22"
                    FontWeight="Medium"
                    FontFamily="Calibri"
@@ -50,9 +50,43 @@
         <TextBlock Margin="0,24,0,0"
                    FontSize="22"
                    FontWeight="Medium"
+                   Text="تماس با ما" 
+                   FontFamily="Calibri"/>
+        <Grid>
+
+            <TextBlock Margin="0,12,0,0"
+                   Text="تلفن همراه : 09906131727" />
+            <TextBlock Margin="0,12,0,0"
+                   Text="آدرس سایت : www.Christ24.ir"
+                       HorizontalAlignment="Right"/>
+        </Grid>
+        <TextBlock Margin="0,24,0,0"
+                   FontSize="22"
+                   FontWeight="Medium"
                    Text="ورژن برنامه" 
                    FontFamily="Calibri"/>
         <TextBlock Margin="0,12,0,0"
                    Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
+        <TextBlock Margin="0,24,0,0"
+           FontSize="22"
+           FontWeight="Medium"
+           Text="شناسه کاربری فعال" 
+           FontFamily="Calibri"/>
+        <TextBlock Margin="0,12,0,0"
+           Text="{Binding ViewModel.UserName, Mode=OneWay}" />
+        <TextBlock Margin="0,24,0,0"
+           FontSize="22"
+           FontWeight="Medium"
+           Text="نام کاربر فعال" 
+           FontFamily="Calibri"/>
+        <TextBlock Margin="0,12,0,0"
+           Text="{Binding ViewModel.FullName, Mode=OneWay}" />
+        <TextBlock Margin="0,24,0,0"
+           FontSize="22"
+           FontWeight="Medium"
+           Text="سال مالی فعال" 
+           FontFamily="Calibri"/>
+        <TextBlock Margin="0,12,0,0"
+           Text="{Binding ViewModel.FiscalYear, Mode=OneWay}" />
     </StackPanel>
 </Page>
