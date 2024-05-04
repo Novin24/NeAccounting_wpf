@@ -12,6 +12,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using NeApplication.IRepositoryies;
+using System.Data;
 using System.Globalization;
 
 namespace Infrastructure.Repositories

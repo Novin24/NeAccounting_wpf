@@ -16,5 +16,10 @@ namespace NeAccounting.Views.Pages
             InitializeComponent();
             txt_name.Focus();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

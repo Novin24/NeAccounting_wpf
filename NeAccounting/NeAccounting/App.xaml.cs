@@ -215,11 +215,13 @@ namespace NeAccounting
                 services.AddTransient<UnitViewModel>();
 
                 #endregion
+
                 #region FiscalYear 
 
                 services.AddTransient<FiscalYearListPage>();
                 services.AddTransient<FiscalYearViewModel>();
                 services.AddTransient<CreateFiscalYear>();
+                services.AddTransient<CreateFinancialViewModel>();
 
                 #endregion
 

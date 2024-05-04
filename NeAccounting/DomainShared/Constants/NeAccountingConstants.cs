@@ -7,9 +7,4 @@
 
         public static string NvoinDbConnectionStrint = "23dh46ehje67oj9";
     }
-
-    public static class SqlStoredProcedureConstants
-    {
-        public const string GetSalaryList = "GetSalaryList";
-    }
 }

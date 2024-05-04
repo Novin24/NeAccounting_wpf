@@ -16,5 +16,9 @@ namespace NeApplication.IBaseRepositories
         Task<(bool isSuccess, string error)> ChangeFinancialYear(Guid id);
         Task<bool> CreateNewFinancialYear(string name, string databaseName, string description);
         Task<bool> CloseLastFinancialYear();
+
+        Task<(bool isSuccess, string error)> CreateNewDatabase(string databaseName,
+           string dFileName,
+           string dLogFileName);
     }
 }

@@ -4,14 +4,92 @@ using DomainShared.Extension;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.PagedResul;
 using Infrastructure.EntityFramework;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using NeApplication.IBaseRepositories;
+using System.Data;
+using System.Data.Common;
 using System.Globalization;
 
 namespace Infrastructure.BaseRepositories
 {
     public class FinancialYearManager(BaseDomainDbContext context) : BaseRepository<FinancialYear>(context), IFinancialYearManager
     {
+
+        #region sp
+        private DbCommand CreateCommand(string commandText, CommandType commandType, params SqlParameter[] parameters)
+        {
+            var command = DbContext.Database.GetDbConnection().CreateCommand();
+            command.CommandText = commandText;
+            command.CommandType = commandType;
+            command.Transaction = DbContext.Database.CurrentTransaction?.GetDbTransaction();
+            command.CommandTimeout = 20;
+            foreach (var parameter in parameters)
+            {
+                command.Parameters.Add(parameter);
+            }
+
+            return command;
+        }
+
+        private async Task EnsureConnectionOpenAsync(CancellationToken cancellationToken = default)
+        {
+            var connection = DbContext.Database.GetDbConnection();
+
+            if (connection.State != ConnectionState.Open)
+            {
+                await connection.OpenAsync(cancellationToken);
+            }
+        }
+        #endregion
+
+        #region CreateDatabase
+        public async Task<(bool isSuccess, string error)> CreateNewDatabase(string databaseName,
+           string dFileName,
+           string dLogFileName)
+        {
+            await EnsureConnectionOpenAsync();
+            var parameters = new[] // sqlINput
+        {
+            new SqlParameter("DbName",databaseName),
+            new SqlParameter(nameof(dFileName), dFileName),
+            new SqlParameter(nameof(dLogFileName), dLogFileName)
+        };
+            bool isSuccess = false;
+            string error = string.Empty;
+            using (var command = CreateCommand(SqlStoredProcedureConstants.AddDatabase, CommandType.StoredProcedure, parameters))
+            {
+                using var dataReader = await command.ExecuteReaderAsync();
+
+
+                while (await dataReader.ReadAsync()) //Sql OutPut
+                {
+                isSuccess = ((bool)dataReader[("IsSuccess")]);
+                error = ((string)dataReader[("ErrorMessage")]);
+                //    SalaryViewModel row = new();
+                //    row.FullName = (string)dataReader[nameof(row.FullName)];
+                //    row.AmountOf = ((long)dataReader[nameof(row.AmountOf)]).ToString("N0");
+                //    row.LeftOver = ((long)dataReader[nameof(row.LeftOver)]).ToString("N0");
+                //    row.OverTime = ((long)dataReader[nameof(row.OverTime)]).ToString("N0");
+                //    row.TotalDebt = ((long)dataReader[nameof(row.TotalDebt)]).ToString("N0");
+                //    row.PersianMonth = (byte)dataReader[nameof(row.PersianMonth)];
+                //    row.PersianYear = (int)dataReader[nameof(row.PersianYear)];
+                //    row.Details = new SalaryDetails()
+                //    {
+                //        Id = (int)dataReader[nameof(row.Details.Id)],
+                //        WorkerId = (Guid)dataReader[nameof(row.Details.WorkerId)],
+                //        PersianMonth = (byte)dataReader[nameof(row.PersianMonth)],
+                //        PersianYear = (int)dataReader[nameof(row.PersianYear)]
+                //    };
+                //    totalCount = ((int)dataReader[("TotalRecord")]);
+                //    rows.Add(row);
+                }
+            }
+            return new(isSuccess, error);
+        }
+        #endregion
+
         public async Task<(bool isSuccess, string databaseName, bool isCurrent)> GetActiveYear()
         {
             var t = await TableNoTracking.FirstOrDefaultAsync(t => t.IsActive);
