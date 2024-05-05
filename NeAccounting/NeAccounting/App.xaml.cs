@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeAccounting.Controls;
+using NeAccounting.Resources;
 using NeAccounting.Services;
 using NeAccounting.ViewModels;
 using NeAccounting.ViewModels.Pages;
@@ -40,8 +41,10 @@ namespace NeAccounting
                 #region Main
                 services.AddHostedService<ApplicationHostService>();
                 services.AddSingleton<MainWindow>();
+                services.AddSingleton<WhatingWindow>();
                 //services.AddSingleton<LoadingWindow>(); 
-                services.AddSingleton<MainWindowViewModel>();
+                services.AddSingleton<MainWindowViewModel>(); 
+                services.AddSingleton<WindowsProviderService>();
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<ISnackbarService, SnackbarService>();
                 services.AddSingleton<IContentDialogService, ContentDialogService>();

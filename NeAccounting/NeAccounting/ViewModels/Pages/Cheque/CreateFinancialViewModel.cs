@@ -6,17 +6,21 @@ using DomainShared.ViewModels.Pun;
 using DomainShared.ViewModels.unit;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Resources;
+using NeAccounting.Windows;
 using System.IO;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels;
-public partial class CreateFinancialViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject
+public partial class CreateFinancialViewModel(ISnackbarService snackbarService, INavigationService navigationService, WindowsProviderService serviceProvider) : ObservableObject
 {
     private bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
+    private readonly WindowsProviderService _windowsProviderService = serviceProvider;
+
 
     #region Properties
 
@@ -58,6 +62,9 @@ public partial class CreateFinancialViewModel(ISnackbarService snackbarService, 
         }
         #endregion
 
+
+        _windowsProviderService.Show<WhatingWindow>();
+
         var users = new List<CustomerListDto>();
         var units = new List<UnitListDto>();
         var mat = new List<PunListDto>();
@@ -70,8 +77,6 @@ public partial class CreateFinancialViewModel(ISnackbarService snackbarService, 
             leftOver = await oDb.DocumentManager.GetUserLeftOver();
         }
 
-
-
         #region CreatePayDocumetn
         using BaseUnitOfWork db = new();
         var g = Guid.NewGuid().ToString().Replace("-", "")[15..];
@@ -82,15 +87,18 @@ public partial class CreateFinancialViewModel(ISnackbarService snackbarService, 
         var s = await db.FinancialYearRepository.CreateNewFinancialYear(Titele, g, Description);
         if (!s)
         {
+            //msg.Close();
             _snackbarService.Show("خطا", "خطا در افتتاح سال مالی جدید!!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
         }
         var d = await db.FinancialYearRepository.CloseLastFinancialYear();
         if (!d)
         {
+            //msg.Close();
             _snackbarService.Show("خطا", "خطا در ثبت سند اختتامیه!!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
         }
+        NeAccountingConstants.NvoinDbConnectionStrint = g;
 
 
         using (UnitOfWork nDb = new())
@@ -101,6 +109,7 @@ public partial class CreateFinancialViewModel(ISnackbarService snackbarService, 
             var (erro, iscu) = await nDb.MaterialManager.AddAllMaterialsInNewYear(mat);
             if (!(iss && isc && iscu))
             {
+                //msg.Close();
                 _snackbarService.Show("خطا", "خطا در ثبت سند افتتاحیه!!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
@@ -109,7 +118,8 @@ public partial class CreateFinancialViewModel(ISnackbarService snackbarService, 
 
         await db.SaveChangesAsync();
 
-        NeAccountingConstants.NvoinDbConnectionStrint = g;
+        //msg.Close();
+
         _snackbarService.Show("کاربر گرامی", $"افتتاح سال مالی جدید با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
         Type? pageType = NameToPageTypeConverter.Convert("Dashboard");

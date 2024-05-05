@@ -244,18 +244,17 @@
                                            FontFamily="Montserrat"
                                            Margin="0 0 0 0" />
                             </StackPanel>
-                            <ui:PasswordBox
-                                 FontSize="15"
-                                 FontWeight="Medium"
-                                 FontFamily="Montserrat"
-                                 CaretBrush="LightGray"
-                                 BorderBrush="DarkGray"
-                                 BorderThickness="0 ,0 ,0 ,1"
-                                 Name="txt_password"
-                                 Height="28"
-                                 VerticalContentAlignment="Center"
-                                 Margin="0 5 0 0"
-                                 Padding="2 2 0 0">
+                            <ui:PasswordBox FontSize="15"
+                                            FontWeight="Medium"
+                                            FontFamily="Montserrat"
+                                            CaretBrush="LightGray"
+                                            BorderBrush="DarkGray"
+                                            BorderThickness="0 ,0 ,0 ,1"
+                                            Name="txt_password"
+                                            Height="28"
+                                            VerticalContentAlignment="Center"
+                                            Margin="0 5 0 0"
+                                            Padding="2 2 0 0">
 
                             </ui:PasswordBox>
 
@@ -327,6 +326,5 @@
                 </Border>
             </Border>
         </Grid>
-
     </Grid>
 </ui:FluentWindow>

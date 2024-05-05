@@ -1,0 +1,68 @@
+﻿<ui:FluentWindow x:Class="NeAccounting.Windows.WhatingWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:local="clr-namespace:NeAccounting.Windows"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 MaxWidth="450"
+                 BorderThickness="0"
+                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                 Background="{DynamicResource ApplicationBackgroundBrush}"
+                 WindowStyle="None"
+                 mc:Ignorable="d"
+                 FontSize="14"
+                 FontWeight="Regular"
+                 ShowInTaskbar="False"
+                 RenderOptions.BitmapScalingMode="Fant"
+                 ResizeMode="NoResize"
+                 WindowStartupLocation="CenterScreen"
+                 Title="WhatingWindow"
+                 SnapsToDevicePixels="True"
+                 Width="450">
+
+    <Grid FlowDirection="RightToLeft">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="Title"
+                   Grid.Row="0"
+                   Margin="12,12,12,0"
+                   FontWeight="SemiBold"
+                   Text="اخطار !!!">
+            <TextBlock.Foreground>
+                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+            </TextBlock.Foreground>
+        </TextBlock>
+
+        <TextBlock x:Name="Content"
+                   Grid.Row="1"
+                   Margin="12,12,12,0"
+                   FontWeight="SemiBold"
+                   Text="در طی عملیات تغییر سال مالی به هیچ عنوان سیستم خود را خاموش نفرمایید.">
+            <TextBlock.Foreground>
+                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
+            </TextBlock.Foreground>
+        </TextBlock>
+        <Border Grid.Row="2"
+                Padding="12"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="0">
+            <Border.Background>
+                <SolidColorBrush Color="{DynamicResource ControlStrokeColorSecondary}" />
+            </Border.Background>
+            <Grid>
+                <Button Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        Content="لطفا منتظر بمانید ..."
+                        IsDefault="True" />
+            </Grid>
+        </Border>
+    </Grid>
+</ui:FluentWindow>
