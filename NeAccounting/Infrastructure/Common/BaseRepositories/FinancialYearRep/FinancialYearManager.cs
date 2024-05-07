@@ -89,7 +89,7 @@ namespace Infrastructure.BaseRepositories
         }
         #endregion
 
-        public async Task<(bool isSuccess, string databaseName, bool isCurrent)> GetActiveYear()
+        public async Task<FiscalYearDtailsDto> GetActiveYear()
 
         {
             var t = await TableNoTracking.FirstOrDefaultAsync(t => t.IsActive);
