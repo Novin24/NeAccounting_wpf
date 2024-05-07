@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(10t46993)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -77,7 +77,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(20t46993)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -98,7 +98,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(30t46993)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -112,7 +112,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(40t46993)!!!", false);
             }
             return new(string.Empty, true);
         }

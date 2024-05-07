@@ -3,6 +3,8 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using DomainShared.Constants;
+using DomainShared.ViewModels.Document;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels.Pages
@@ -13,6 +15,15 @@ namespace NeAccounting.ViewModels.Pages
 
         [ObservableProperty]
         private string _appVersion = String.Empty;
+
+        [ObservableProperty]
+        private string _UserName = String.Empty;
+
+        [ObservableProperty]
+        private string _FullName = String.Empty;
+
+        [ObservableProperty]
+        private string _FiscalYear = String.Empty;
 
         [ObservableProperty]
         private Wpf.Ui.Appearance.ApplicationTheme _currentTheme = Wpf.Ui.Appearance.ApplicationTheme.Unknown;
@@ -29,7 +40,9 @@ namespace NeAccounting.ViewModels.Pages
         {
             CurrentTheme = Wpf.Ui.Appearance.ApplicationThemeManager.GetAppTheme();
             AppVersion = $"NeAccounting - {GetAssemblyVersion()}";
-
+            UserName = CurrentUser.CurrentUserName;
+            FullName = CurrentUser.CurrentFullName;
+            FiscalYear = NeAccountingConstants.NvoinCurentDb;
             _isInitialized = true;
         }
 

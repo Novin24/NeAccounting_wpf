@@ -16,7 +16,6 @@ namespace Infrastructure.BaseRepositories
 {
     public class FinancialYearManager(BaseDomainDbContext context) : BaseRepository<FinancialYear>(context), IFinancialYearManager
     {
-
         #region sp
         private DbCommand CreateCommand(string commandText, CommandType commandType, params SqlParameter[] parameters)
         {
@@ -91,13 +90,20 @@ namespace Infrastructure.BaseRepositories
         #endregion
 
         public async Task<(bool isSuccess, string databaseName, bool isCurrent)> GetActiveYear()
+
         {
             var t = await TableNoTracking.FirstOrDefaultAsync(t => t.IsActive);
             if (t == null)
             {
-                return new(false, string.Empty, false);
+                return new FiscalYearDtailsDto() { isSucces = false };
             }
-            return new(true, t.DataBaseName, t.IsCurrent);
+            return new FiscalYearDtailsDto()
+            {
+                isSucces = true,
+                databaseName = t.DataBaseName,
+                databaseTitle = t.Name,
+                isCurrent = t.IsCurrent
+            };
         }
 
         public async Task<PagedResulViewModel<FiscalYearDto>> GetFiscalYears(

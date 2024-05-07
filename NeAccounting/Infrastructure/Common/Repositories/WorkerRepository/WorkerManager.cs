@@ -410,7 +410,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(50t46993)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -476,7 +476,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(60t46993)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -540,7 +540,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(70t46993)!!!", false);
             }
             return new(string.Empty, true);
 
@@ -652,7 +652,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(80t46993)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -728,7 +728,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(90t46993)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -763,7 +763,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(01t46993)!!!", false);
             }
             return new(string.Empty, true);
         }

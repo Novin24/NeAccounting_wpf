@@ -8,7 +8,8 @@ namespace NeApplication.IBaseRepositories
 {
     public interface IFinancialYearManager : IBaseRepository<FinancialYear>
     {
-        Task<(bool isSuccess, string databaseName, bool isCurrent)> GetActiveYear();
+        
+        Task<FiscalYearDtailsDto> GetActiveYear();
         Task<PagedResulViewModel<FiscalYearDto>> GetFiscalYears(
             bool isInit,
             int pageNum = 0,
