@@ -9,7 +9,13 @@ namespace Domain.BaseDomain.FinancialYears
         #endregion
 
         #region Properteis
+        /// <summary>
+        /// عنوان نمایشی
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// guid name
+        /// </summary>
         public string DataBaseName { get; set; }
         public string Descripion { get; set; }
         public DateTime StartDate { get; set; }

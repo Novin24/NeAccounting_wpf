@@ -15,7 +15,12 @@ namespace NeApplication.IBaseRepositories
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
         Task<(bool isSuccess, string error)> ChangeFinancialYear(Guid id);
+        Task<bool> CheckNameExist(string name);
         Task<bool> CreateNewFinancialYear(string name, string databaseName, string description);
         Task<bool> CloseLastFinancialYear();
+
+        Task<(bool isSuccess, string error)> CreateNewDatabase(string databaseName,
+           string dFileName,
+           string dLogFileName);
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeAccounting.Controls;
+using NeAccounting.Resources;
 using NeAccounting.Services;
 using NeAccounting.ViewModels;
 using NeAccounting.ViewModels.Pages;
@@ -40,11 +41,18 @@ namespace NeAccounting
                 #region Main
                 services.AddHostedService<ApplicationHostService>();
                 services.AddSingleton<MainWindow>();
+
                 //services.AddSingleton<LoadingWindow>(); 
                 services.AddSingleton<MainWindowViewModel>();
+                services.AddSingleton<WindowsProviderService>();
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<ISnackbarService, SnackbarService>();
                 services.AddSingleton<IContentDialogService, ContentDialogService>();
+                #endregion
+
+                #region WatingWindow
+                services.AddSingleton<WatingWindow>();
+                services.AddSingleton<WatingWindowViewModel>();
                 #endregion
 
                 #region Dashboard
@@ -215,11 +223,13 @@ namespace NeAccounting
                 services.AddTransient<UnitViewModel>();
 
                 #endregion
+
                 #region FiscalYear 
 
                 services.AddTransient<FiscalYearListPage>();
                 services.AddTransient<FiscalYearViewModel>();
                 services.AddTransient<CreateFiscalYear>();
+                services.AddTransient<CreateFinancialViewModel>();
 
                 #endregion
 
