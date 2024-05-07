@@ -1,51 +1,64 @@
-﻿<ui:FluentWindow x:Class="NeAccounting.Windows.WhatingWindow"
+﻿<ui:FluentWindow x:Class="NeAccounting.Windows.WatingWindow"
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 xmlns:local="clr-namespace:NeAccounting.Windows"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:NeAccounting.Windows"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  MaxWidth="450"
+                 Closing="FluentWindow_Closing"
                  BorderThickness="0"
+                 d:DataContext="{d:DesignInstance local:WatingWindow,
+                                     IsDesignTimeCreatable=False}"
                  Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                  Background="{DynamicResource ApplicationBackgroundBrush}"
-                 WindowStyle="None"
                  mc:Ignorable="d"
                  FontSize="14"
+                 Height="250"
                  FontWeight="Regular"
                  ShowInTaskbar="False"
                  RenderOptions.BitmapScalingMode="Fant"
                  ResizeMode="NoResize"
-                 WindowStartupLocation="CenterScreen"
-                 Title="WhatingWindow"
+                 WindowStartupLocation="CenterOwner"
                  SnapsToDevicePixels="True"
                  Width="450">
 
     <Grid FlowDirection="RightToLeft">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock x:Name="Title"
                    Grid.Row="0"
-                   Margin="12,12,12,0"
+                   Margin="20,20,12,0"
                    FontWeight="SemiBold"
+                   FontFamily="Calibri"
+                   FontSize="18"
                    Text="اخطار !!!">
             <TextBlock.Foreground>
                 <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
             </TextBlock.Foreground>
         </TextBlock>
 
+
         <TextBlock x:Name="Content"
                    Grid.Row="1"
-                   Margin="12,12,12,0"
+                   Margin="30,12,20,0"
                    FontWeight="SemiBold"
-                   Text="در طی عملیات تغییر سال مالی به هیچ عنوان سیستم خود را خاموش نفرمایید.">
+                   TextWrapping="Wrap"
+                   FontFamily="Calibri"
+                   FontSize="16"
+                   Text="{Binding ViewModel.Content}">
             <TextBlock.Foreground>
                 <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
             </TextBlock.Foreground>
+            <Button Grid.Column="0"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Click="btn_close_Click"
+                    IsCancel="True" />
         </TextBlock>
         <Border Grid.Row="2"
                 Padding="12"
@@ -60,8 +73,28 @@
             <Grid>
                 <Button Grid.Column="0"
                         HorizontalAlignment="Stretch"
+                        FontFamily="Calibri"
+                        FontSize="16"
+                        x:Name="Btn_start"
+                        Content="شروع فرایند"
+                        Click="Btn_start_Click"
+                        IsDefault="True" />
+                <Button Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        Visibility="Collapsed"
+                        FontFamily="Calibri"
+                        IsEnabled="False"
+                        FontSize="16"
+                        x:Name="btn_End"
                         Content="لطفا منتظر بمانید ..."
                         IsDefault="True" />
+                <Button Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        x:Name="btn_close"
+                        Visibility="Collapsed"
+                        Content="اتمام"
+                        Click="btn_close_Click"
+                        IsCancel="True" />
             </Grid>
         </Border>
     </Grid>

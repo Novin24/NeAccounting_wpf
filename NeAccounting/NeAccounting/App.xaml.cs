@@ -41,13 +41,18 @@ namespace NeAccounting
                 #region Main
                 services.AddHostedService<ApplicationHostService>();
                 services.AddSingleton<MainWindow>();
-                services.AddSingleton<WhatingWindow>();
+
                 //services.AddSingleton<LoadingWindow>(); 
-                services.AddSingleton<MainWindowViewModel>(); 
+                services.AddSingleton<MainWindowViewModel>();
                 services.AddSingleton<WindowsProviderService>();
                 services.AddSingleton<INavigationService, NavigationService>();
                 services.AddSingleton<ISnackbarService, SnackbarService>();
                 services.AddSingleton<IContentDialogService, ContentDialogService>();
+                #endregion
+
+                #region WatingWindow
+                services.AddSingleton<WatingWindow>();
+                services.AddSingleton<WatingWindowViewModel>();
                 #endregion
 
                 #region Dashboard

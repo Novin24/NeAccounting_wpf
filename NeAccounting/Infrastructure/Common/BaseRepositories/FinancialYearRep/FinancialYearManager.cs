@@ -65,25 +65,25 @@ namespace Infrastructure.BaseRepositories
 
                 while (await dataReader.ReadAsync()) //Sql OutPut
                 {
-                isSuccess = ((bool)dataReader[("IsSuccess")]);
-                error = ((string)dataReader[("ErrorMessage")]);
-                //    SalaryViewModel row = new();
-                //    row.FullName = (string)dataReader[nameof(row.FullName)];
-                //    row.AmountOf = ((long)dataReader[nameof(row.AmountOf)]).ToString("N0");
-                //    row.LeftOver = ((long)dataReader[nameof(row.LeftOver)]).ToString("N0");
-                //    row.OverTime = ((long)dataReader[nameof(row.OverTime)]).ToString("N0");
-                //    row.TotalDebt = ((long)dataReader[nameof(row.TotalDebt)]).ToString("N0");
-                //    row.PersianMonth = (byte)dataReader[nameof(row.PersianMonth)];
-                //    row.PersianYear = (int)dataReader[nameof(row.PersianYear)];
-                //    row.Details = new SalaryDetails()
-                //    {
-                //        Id = (int)dataReader[nameof(row.Details.Id)],
-                //        WorkerId = (Guid)dataReader[nameof(row.Details.WorkerId)],
-                //        PersianMonth = (byte)dataReader[nameof(row.PersianMonth)],
-                //        PersianYear = (int)dataReader[nameof(row.PersianYear)]
-                //    };
-                //    totalCount = ((int)dataReader[("TotalRecord")]);
-                //    rows.Add(row);
+                    isSuccess = ((bool)dataReader[("IsSuccess")]);
+                    error = ((string)dataReader[("ErrorMessage")]);
+                    //    SalaryViewModel row = new();
+                    //    row.FullName = (string)dataReader[nameof(row.FullName)];
+                    //    row.AmountOf = ((long)dataReader[nameof(row.AmountOf)]).ToString("N0");
+                    //    row.LeftOver = ((long)dataReader[nameof(row.LeftOver)]).ToString("N0");
+                    //    row.OverTime = ((long)dataReader[nameof(row.OverTime)]).ToString("N0");
+                    //    row.TotalDebt = ((long)dataReader[nameof(row.TotalDebt)]).ToString("N0");
+                    //    row.PersianMonth = (byte)dataReader[nameof(row.PersianMonth)];
+                    //    row.PersianYear = (int)dataReader[nameof(row.PersianYear)];
+                    //    row.Details = new SalaryDetails()
+                    //    {
+                    //        Id = (int)dataReader[nameof(row.Details.Id)],
+                    //        WorkerId = (Guid)dataReader[nameof(row.Details.WorkerId)],
+                    //        PersianMonth = (byte)dataReader[nameof(row.PersianMonth)],
+                    //        PersianYear = (int)dataReader[nameof(row.PersianYear)]
+                    //    };
+                    //    totalCount = ((int)dataReader[("TotalRecord")]);
+                    //    rows.Add(row);
                 }
             }
             return new(isSuccess, error);
@@ -137,6 +137,11 @@ namespace Infrastructure.BaseRepositories
             }
 
             return new PagedResulViewModel<FiscalYearDto>(totalCount, pageCount, pageNum, li);
+        }
+
+        public async Task<bool> CheckNameExist(string name)
+        {
+            return await TableNoTracking.AnyAsync(t => t.Name == name);
         }
 
         public async Task<bool> CreateNewFinancialYear(string name, string databaseName, string description)

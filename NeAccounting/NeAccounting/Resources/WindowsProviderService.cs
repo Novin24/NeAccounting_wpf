@@ -28,7 +28,25 @@ public class WindowsProviderService
         Window windowInstance = _serviceProvider.GetService<T>() as Window ?? throw new InvalidOperationException("Window is not registered as service.");
 
         windowInstance.Owner = Application.Current.MainWindow;
-        windowInstance.IsEnabled = false;
+        windowInstance.Show();
+    }
+
+    public void ShowDialog<T>(object? obj = null) where T : class
+    {
+        if (!typeof(Window).IsAssignableFrom(typeof(T)))
+        {
+            throw new InvalidOperationException(
+                $"The window class should be derived from {typeof(Window)}."
+            );
+        }
+        var t = Application.Current.Windows;
+
+        Window windowInstance = _serviceProvider.GetService<T>() as Window ?? throw new InvalidOperationException("Window is not registered as service.");
+        windowInstance.Owner = Application.Current.MainWindow;
+        if (obj != null)
+        {
+            windowInstance.DataContext = obj;
+        }
         windowInstance.ShowDialog();
     }
 }
