@@ -32,7 +32,7 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
-		<PackageReference Include="WPF-UI" Version="3.44.0" />
+		<PackageReference Include="WPF-UI" Version="3.52.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -71,5 +71,9 @@
 		<Resource Include="Assets\persone.png" />
 		<Resource Include="Assets\pexels-johannes-plenio-1103970.jpg" />
 		<Resource Include="Assets\user9.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Required\DataBases\" />
 	</ItemGroup>
 </Project>

@@ -14,6 +14,7 @@ namespace NeAccounting.Views.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+            MaterialName.Focus();
         }
     }
 }

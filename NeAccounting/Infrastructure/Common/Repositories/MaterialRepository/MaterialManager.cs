@@ -208,7 +208,7 @@ namespace Infrastructure.Repositories
                 t.Entity,
                 t.LastBuyPrice,
                 t.IsActive,
-                t.PhisicalAddress));
+                t.Address));
 
             try
             {
