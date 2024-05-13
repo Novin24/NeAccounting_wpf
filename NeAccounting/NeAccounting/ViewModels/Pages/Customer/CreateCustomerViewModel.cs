@@ -64,6 +64,12 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
+            // محمد تقی در تاریخ 23 اردیبهشت 1403 گفت کملی الزامی نباشد
+            //if (string.IsNullOrEmpty(NationalCode))
+            //{
+            //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("کد ملی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            //    return;
+            //}
             if (string.IsNullOrEmpty(Mobile))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موبایل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -96,6 +102,10 @@ namespace NeAccounting.ViewModels
                         return;
                     }
                 }
+            }
+            else
+            {
+                NationalCode = string.Empty;
             }
 
             Mobile = Mobile.Trim();
