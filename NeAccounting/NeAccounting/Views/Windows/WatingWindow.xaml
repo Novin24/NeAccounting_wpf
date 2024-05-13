@@ -93,8 +93,7 @@
                         x:Name="btn_close"
                         Visibility="Collapsed"
                         Content="اتمام"
-                        Click="btn_close_Click"
-                        IsCancel="True" />
+                        Click="btn_close_Click"/>
             </Grid>
         </Border>
     </Grid>

@@ -64,11 +64,6 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            if (string.IsNullOrEmpty(NationalCode))
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("کد ملی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
             if (string.IsNullOrEmpty(Mobile))
             {
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موبایل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
@@ -84,19 +79,22 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اعتبار نقدی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            if (!NationalCode.ValidNationalCode(_snackbarService))
+            if (!string.IsNullOrEmpty(NationalCode))
             {
-                var result = await _dialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+                if (!NationalCode.ValidNationalCode(_snackbarService))
                 {
-                    Title = "کد ملی نامعتبر !!!",
-                    Content = new TextBlock() { Text = "آیا ادامه میدهید ؟؟؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
-                    PrimaryButtonText = "بله",
-                    SecondaryButtonText = "خیر",
-                    CloseButtonText = "انصراف",
-                });
-                if (result != ContentDialogResult.Primary)
-                {
-                    return;
+                    var result = await _dialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
+                    {
+                        Title = "کد ملی نامعتبر !!!",
+                        Content = new TextBlock() { Text = "آیا ادامه میدهید ؟؟؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
+                        PrimaryButtonText = "بله",
+                        SecondaryButtonText = "خیر",
+                        CloseButtonText = "انصراف",
+                    });
+                    if (result != ContentDialogResult.Primary)
+                    {
+                        return;
+                    }
                 }
             }
 
