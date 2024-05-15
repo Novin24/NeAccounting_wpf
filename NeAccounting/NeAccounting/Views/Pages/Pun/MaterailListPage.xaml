@@ -330,6 +330,22 @@
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
+                                <DataGridTextColumn Header="نوع"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Width="70"
+                                                    Binding="{Binding ServiceType}">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Address}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
                                 <DataGridTemplateColumn Header="عملیات"
                                                         Width="75"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">

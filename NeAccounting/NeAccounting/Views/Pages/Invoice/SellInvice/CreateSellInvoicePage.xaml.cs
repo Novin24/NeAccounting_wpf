@@ -18,6 +18,7 @@ namespace NeAccounting.Views.Pages
         public CreateSellInvoiceViewModel ViewModel { get; }
         private double _totalEntity;
         private long _price;
+        private bool _isService;
 
         public CreateSellInvoicePage(CreateSellInvoiceViewModel viewModel, ISnackbarService snackbarService)
         {
@@ -64,6 +65,7 @@ namespace NeAccounting.Views.Pages
             ViewModel.MaterialId = mat.Id;
             ViewModel.MatPrice = mat.LastSellPrice;
             _totalEntity = mat.Entity;
+            _isService = mat.IsService;
             txt_UnitName.Text = mat.UnitName;
             txt_Unit_price.Text = mat.LastSellPrice.ToString("N0");
             _price = mat.LastSellPrice;
@@ -77,7 +79,7 @@ namespace NeAccounting.Views.Pages
             if (nb.Value == null)
                 return;
 
-            if (nb.Value > _totalEntity)
+            if (!_isService && nb.Value > _totalEntity)
             {
                 _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
             }

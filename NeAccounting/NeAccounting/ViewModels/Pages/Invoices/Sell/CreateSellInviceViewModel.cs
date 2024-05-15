@@ -173,19 +173,20 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
             return false;
         }
 
-        if (AmountOf > MatList.First(t => t.Id == MaterialId).Entity)
-        {
-            _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
-        }
 
         if (MatPrice == null || MatPrice == 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
-        #endregion
 
         var mat = MatList.First(t => t.Id == MaterialId);
+        if (!mat.IsService && AmountOf > MatList.First(t => t.Id == MaterialId).Entity)
+        {
+            _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+        }
+        #endregion
+
         List.Add(new RemittanceListViewModel()
         {
             AmountOf = AmountOf.Value,
