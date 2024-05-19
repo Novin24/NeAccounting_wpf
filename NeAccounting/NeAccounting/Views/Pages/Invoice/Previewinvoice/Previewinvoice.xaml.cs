@@ -105,6 +105,11 @@ namespace NeAccounting.Views.Pages
             if (ViewModel.AmountOf == null)
                 return;
 
+            if (string.IsNullOrEmpty(txt_price.Text))
+            {
+                _snackbarService.Show("اخطار", "وارد کردن مبلغ واحد الزامیست!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
 
             ViewModel.MatPrice = _price = Int64.Parse(txt_price.Text, NumberStyles.AllowThousands);
 

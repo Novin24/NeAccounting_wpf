@@ -92,5 +92,10 @@ namespace Infrastructure.Repositories
 
             return new PagedResulViewModel<ExpenselistDto>(totalCount, pageCount, pageNum, li);
         }
+
+        public async Task<long> GetTotalExp()
+        {
+            return await TableNoTracking.SumAsync(t => t.Amount);
+        }
     }
 }

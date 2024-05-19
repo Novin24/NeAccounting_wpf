@@ -340,7 +340,7 @@
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
                                                     <TextBlock FontSize='17'
-                                                               Text='{Binding Address}' />
+                                                               Text='{Binding ServiceType}' />
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>

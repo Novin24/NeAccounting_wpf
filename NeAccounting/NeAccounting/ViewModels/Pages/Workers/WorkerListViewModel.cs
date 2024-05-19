@@ -97,7 +97,7 @@ namespace NeAccounting.ViewModels
         }
 
         [RelayCommand]
-        private async Task OnRemoveWorker(int parameter)
+        private async Task OnRemoveWorker(Guid parameter)
         {
             if (_isreadonly)
             {

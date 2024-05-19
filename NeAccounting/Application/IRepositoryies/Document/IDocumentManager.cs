@@ -193,6 +193,8 @@ namespace NeApplication.IRepositoryies
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 
+        Task<ProfitStatementDto> GetProfitandLossStatement();
+
         Task<PagedResulViewModel<DetailRemittanceDto>> GetRemittancesByDate(DateTime StartTime,
              DateTime EndTime,
              Guid CusId,

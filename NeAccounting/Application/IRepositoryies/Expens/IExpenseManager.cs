@@ -23,5 +23,11 @@ namespace NeApplication.IRepositoryies.Expens
             string Receiver,
             string Description);
         Task<(string error, bool isSuccess)> UpdateExpense(Guid ExpenseID, DateTime submitDate, string Expensetype, long Amount, PaymentType PayType, string Receiver, string Description);
+
+        /// <summary>
+        /// مبلغ کل هزینه ها برای صورت سود و زیان
+        /// </summary>
+        /// <returns></returns>
+        Task<long> GetTotalExp();
     }
 }

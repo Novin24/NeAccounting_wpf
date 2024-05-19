@@ -392,6 +392,12 @@ namespace Infrastructure.Repositories
             return new PagedResulViewModel<SalaryViewModel>(totalCount, pageCount, pageNum, rows);
         }
 
+        public async Task<long> GetTotalSalary()
+        {
+            return await DbContext.Set<Salary>().SumAsync(t => t.AmountOf + t.ChildAllowance + t.RightHousingAndFood + t.OverTime + t.OtherAdditions);
+        }
+
+
         public async Task<(string error, bool isSuccess)> DeleteSalary(Guid workerId, int salaryId)
         {
             var worker = await Table

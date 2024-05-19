@@ -224,6 +224,11 @@ namespace NeAccounting
 
                 #endregion
 
+                #region ProfitOrLess
+                services.AddTransient<ProfitOrLessPage>();
+                services.AddTransient<ProfitOrLessViewModel>();
+                #endregion
+
                 #region FiscalYear 
 
                 services.AddTransient<FiscalYearListPage>();
