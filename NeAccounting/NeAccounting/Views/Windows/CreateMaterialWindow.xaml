@@ -6,6 +6,7 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:local="clr-namespace:NeAccounting.Windows"
                  xmlns:nu="clr-namespace:NeAccounting.Controls"
+                 Loaded="FluentWindow_Loaded"
                  d:DataContext="{d:DesignInstance local:CreateMaterialWindow,
                     IsDesignTimeCreatable=False}"
                  Foreground="{DynamicResource TextFillColorSecondaryBrush}"

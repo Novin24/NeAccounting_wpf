@@ -5,16 +5,16 @@ using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Resources;
 using NeAccounting.Windows;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService) : ObservableObject, INavigationAware
+public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService, WindowsProviderService serviceProvider) : ObservableObject, INavigationAware
 {
-    private readonly IContentDialogService _contentDialogService = contentDialogService;
     private readonly ISnackbarService _snackbarService = snackbarService;
-    private readonly INavigationService _navigationService = navigationService;
+    private readonly WindowsProviderService _windowsProviderService = serviceProvider;
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
     private int rowId = 1;
@@ -381,16 +381,14 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
         //_ = _navigationService.Navigate(pageType);
         if (parameter == "CreateCustomer")
         {
-            CreateCustomerWindow cw = new(new NeAccounting.ViewModels.HotCreateCustomerViewModel(_snackbarService));
-            cw.ShowDialog();
+            _windowsProviderService.ShowDialog<CreateCustomerWindow>();
             using UnitOfWork db = new();
             Cuslist = await db.CustomerManager.GetDisplayUser(false, true);
         }
 
         if (parameter == "CreateMaterail")
         {
-            CreateMaterialWindow cw = new(new NeAccounting.ViewModels.HotCreateMaterailViewModel(_snackbarService));
-            cw.ShowDialog();
+            _windowsProviderService.ShowDialog<CreateMaterialWindow>();
             using UnitOfWork db = new();
             MatList = (await db.MaterialManager.GetMaterails()).Where(t => !t.IsService).ToList();
         }

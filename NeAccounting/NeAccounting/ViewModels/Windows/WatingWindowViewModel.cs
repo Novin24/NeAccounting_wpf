@@ -38,6 +38,8 @@ public partial class WatingWindowViewModel : ObservableObject
     public WatingWindowViewModel(ISnackbarService snackbarService)
     {
         _snackbarService = snackbarService;
+        Titele = NeAccountingConstants.NewDbTitel;
+        Description = NeAccountingConstants.NewDbDesc;
     }
     #endregion
 

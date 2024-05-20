@@ -9,11 +9,10 @@ using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class HotCreateMaterailViewModel(ISnackbarService snackbarService) : ObservableObject, INavigationAware
+    public partial class HotCreateMaterailViewModel(ISnackbarService snackbarService) : ObservableObject
     {
 
         private readonly ISnackbarService _snackbarService = snackbarService;
-        private bool _isInitialized = false;
         private bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
         [ObservableProperty]
         private IEnumerable<SuggestBoxViewModel<Guid>> _asuBox;
@@ -36,18 +35,8 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private bool _isManufacturedGoods = false;
 
-        public void OnNavigatedFrom()
-        {
-
-        }
-
-        public async void OnNavigatedTo()
-        {
-            if (!_isInitialized)
-                await InitializeViewModel();
-        }
-
-        private async Task InitializeViewModel()
+        [RelayCommand]
+        private async Task OnInitializeViewModel()
         {
             using (UnitOfWork db = new())
             {
@@ -59,7 +48,6 @@ namespace NeAccounting.ViewModels
                 UnitId = AsuBox.First().Id;
             }
 
-            _isInitialized = true;
         }
 
         [RelayCommand]

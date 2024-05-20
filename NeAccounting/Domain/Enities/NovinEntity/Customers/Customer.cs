@@ -65,9 +65,22 @@ namespace Domain.NovinEntity.Customers
         public string Name { get; set; }
         public long CusId { get; set; }
         public string Mobile { get; set; }
+        /// <summary>
+        /// مجموع اعتبار
+        /// </summary>
         public long TotalCredit { get; set; }
+        /// <summary>
+        /// مبلغ چک ضمانتی
+        /// </summary>
         public long ChequeCredit { get; set; }
+        /// <summary>
+        /// ضمانت نقدی
+        /// </summary>
         public long CashCredit { get; set; }
+
+        /// <summary>
+        /// ضمانت سفته
+        /// </summary>
         public long PromissoryNote { get; set; }
         public string NationalCode { get; set; }
         public string Address { get; set; }

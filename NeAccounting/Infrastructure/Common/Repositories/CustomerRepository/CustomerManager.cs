@@ -21,7 +21,8 @@ namespace Infrastructure.Repositories
                 {
                     Id = x.Id,
                     DisplayName = x.Name,
-                    UniqNumber = x.CusId
+                    UniqNumber = x.CusId,
+                    TotalValidity = x.TotalCredit
                 }).ToListAsync();
         }
 

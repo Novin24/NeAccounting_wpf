@@ -156,22 +156,6 @@
                                                    FontSize="15"
                                                    Text="نام مشتری"
                                                    Margin="2 21 0 0 " />
-                                        <StackPanel DockPanel.Dock="Right">
-                                            <TextBlock Text="F3"
-                                                       TextAlignment="Center"
-                                                       FontSize="11" />
-                                            <Button Padding="1 0 "
-                                                    FontSize="21"
-                                                    IsTabStop="False"
-                                                    Focusable="False"
-                                                    FontFamily="Calibri"
-                                                    CommandParameter="CreateMaterail"
-                                                    Command="{Binding ViewModel.AddClickCommand}">
-
-                                                <ui:SymbolIcon Symbol="QrCode20" />
-
-                                            </Button>
-                                        </StackPanel>
                                         <StackPanel Margin="0 0 5 0"
                                                     DockPanel.Dock="Right">
                                             <TextBlock Text="F4"
@@ -181,7 +165,6 @@
                                                     FontSize="21"
                                                     IsTabStop="False"
                                                     FontFamily="Calibri"
-                                                    CommandParameter="CreateCustomer"
                                                     Command="{Binding ViewModel.AddClickCommand}">
 
                                                 <ui:SymbolIcon Symbol="PersonAdd20"

@@ -5,7 +5,7 @@ namespace NeAccounting.Windows
     /// <summary>
     /// Interaction logic for CreateMaterialWindow.xaml
     /// </summary>
-    public partial class CreateMaterialWindow 
+    public partial class CreateMaterialWindow
     {
         public HotCreateMaterailViewModel ViewModel { get; }
 
@@ -14,6 +14,7 @@ namespace NeAccounting.Windows
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+            MaterialName.Focus();
         }
 
         [RelayCommand]
@@ -27,7 +28,12 @@ namespace NeAccounting.Windows
                 return;
             }
 
-          await cmw.ViewModel.CreateMatCommand.ExecuteAsync(this);
+            await cmw.ViewModel.CreateMatCommand.ExecuteAsync(this);
+        }
+
+        private async void FluentWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.InitializeViewModelCommand.ExecuteAsync(null);
         }
     }
 }

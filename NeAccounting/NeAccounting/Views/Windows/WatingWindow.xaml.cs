@@ -21,14 +21,11 @@ namespace NeAccounting.Windows
             this.Visibility = Visibility.Hidden;
         }
 
-
         [RelayCommand]
         private void OnClose()
         {
             Visibility = Visibility.Hidden;
         }
-
-
 
         private async void Btn_start_Click(object sender, RoutedEventArgs e)
         {

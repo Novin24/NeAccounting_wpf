@@ -1,7 +1,6 @@
 ﻿using DomainShared.Constants;
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
-using NeAccounting.Helpers;
 using NeAccounting.Resources;
 using NeAccounting.Windows;
 using System.Windows.Media;
@@ -9,11 +8,10 @@ using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels;
-public partial class CreateFinancialViewModel(ISnackbarService snackbarService, INavigationService navigationService, WindowsProviderService serviceProvider) : ObservableObject
+public partial class CreateFinancialViewModel(ISnackbarService snackbarService, WindowsProviderService serviceProvider) : ObservableObject
 {
     private bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
     private readonly ISnackbarService _snackbarService = snackbarService;
-    private readonly INavigationService _navigationService = navigationService;
     private readonly WindowsProviderService _windowsProviderService = serviceProvider;
 
 
@@ -82,9 +80,11 @@ public partial class CreateFinancialViewModel(ISnackbarService snackbarService, 
             _snackbarService.Show("خطا", "عنوان وارد شده تکراری میباشد \n لطفا عنوان جدید انتخاب نمایید", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(5000));
             return;
         }
-
-        _windowsProviderService.ShowDialog<WatingWindow>(new WatingWindow(new WatingWindowViewModel(_snackbarService) { Description = Description, Titele = Titele }));
-
+        NeAccountingConstants.NewDbTitel = Titele;
+        NeAccountingConstants.NewDbDesc = Description;
+        _windowsProviderService.ShowDialog<WatingWindow>();
+        NeAccountingConstants.NewDbTitel = string.Empty;
+        NeAccountingConstants.NewDbDesc = string.Empty;
 
         //var users = new List<CustomerListDto>();
         //var units = new List<UnitListDto>();

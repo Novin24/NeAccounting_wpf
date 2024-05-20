@@ -14,6 +14,7 @@ namespace NeAccounting.Windows
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+            txt_fullName.Focus();
         }
 
         [RelayCommand]

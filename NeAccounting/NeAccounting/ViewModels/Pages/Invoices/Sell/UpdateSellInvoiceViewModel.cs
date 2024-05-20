@@ -416,7 +416,6 @@ namespace NeAccounting.ViewModels
             rowId = row;
         }
 
-
         /// <summary>
         /// به روز رسانی مبلغ پورسانت
         /// </summary>
@@ -435,23 +434,6 @@ namespace NeAccounting.ViewModels
                 Totalcommission = "0";
             }
             RemainPrice = total.ToString("N0");
-        }
-        [RelayCommand]
-        private void OnAddClick(string parameter)
-        {
-            if (string.IsNullOrWhiteSpace(parameter))
-            {
-                return;
-            }
-
-            Type? pageType = NameToPageTypeConverter.Convert(parameter);
-
-            if (pageType == null)
-            {
-                return;
-            }
-
-            _ = _navigationService.Navigate(pageType);
         }
         #endregion
     }
