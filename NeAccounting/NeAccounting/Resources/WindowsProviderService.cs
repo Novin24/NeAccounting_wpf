@@ -39,7 +39,6 @@ public class WindowsProviderService
                 $"The window class should be derived from {typeof(Window)}."
             );
         }
-        var t = Application.Current.Windows;
 
         Window windowInstance = _serviceProvider.GetService<T>() as Window ?? throw new InvalidOperationException("Window is not registered as service.");
         windowInstance.Owner = Application.Current.MainWindow;

@@ -166,6 +166,7 @@
                                                     FontSize="21"
                                                     IsTabStop="False"
                                                     FontFamily="Calibri"
+                                                    ToolTip="افزودن اجناس"
                                                     CommandParameter="CreateMaterail"
                                                     Command="{Binding ViewModel.AddClickCommand}">
 
@@ -181,6 +182,7 @@
                                             <Button Padding="1 0 "
                                                     FontSize="21"
                                                     IsTabStop="False"
+                                                    ToolTip="افزودن کاربر"
                                                     FontFamily="Calibri"
                                                     CommandParameter="CreateCustomer"
                                                     Command="{Binding ViewModel.AddClickCommand}">

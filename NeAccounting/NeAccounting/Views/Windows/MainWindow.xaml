@@ -5,6 +5,7 @@
                  xmlns:local="clr-namespace:NeAccounting.Windows"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 Closing="mainWin_Closing"
                  Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
                  d:DataContext="{d:DesignInstance local:MainWindow,
                                      IsDesignTimeCreatable=True}"

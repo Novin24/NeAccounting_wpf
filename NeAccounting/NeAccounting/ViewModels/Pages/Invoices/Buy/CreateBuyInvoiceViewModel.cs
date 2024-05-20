@@ -5,13 +5,14 @@ using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
-using NeAccounting.Helpers;
+using NeAccounting.Windows;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService) : ObservableObject, INavigationAware
 {
+    private readonly IContentDialogService _contentDialogService = contentDialogService;
     private readonly ISnackbarService _snackbarService = snackbarService;
     private readonly INavigationService _navigationService = navigationService;
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
@@ -361,21 +362,37 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
         }
         RemainPrice = total.ToString("N0");
     }
+
     [RelayCommand]
-    private void OnAddClick(string parameter)
+    private async Task OnAddClick(string parameter)
     {
-        if (string.IsNullOrWhiteSpace(parameter))
+        //if (string.IsNullOrWhiteSpace(parameter))
+        //{
+        //    return;
+        //}
+
+        //Type? pageType = NameToPageTypeConverter.Convert(parameter);
+
+        //if (pageType == null)
+        //{
+        //    return;
+        //}
+
+        //_ = _navigationService.Navigate(pageType);
+        if (parameter == "CreateCustomer")
         {
-            return;
+            CreateCustomerWindow cw = new(new NeAccounting.ViewModels.HotCreateCustomerViewModel(_snackbarService));
+            cw.ShowDialog();
+            using UnitOfWork db = new();
+            Cuslist = await db.CustomerManager.GetDisplayUser(false, true);
         }
 
-        Type? pageType = NameToPageTypeConverter.Convert(parameter);
-
-        if (pageType == null)
+        if (parameter == "CreateMaterail")
         {
-            return;
+            CreateMaterialWindow cw = new(new NeAccounting.ViewModels.HotCreateMaterailViewModel(_snackbarService));
+            cw.ShowDialog();
+            using UnitOfWork db = new();
+            MatList = (await db.MaterialManager.GetMaterails()).Where(t => !t.IsService).ToList();
         }
-
-        _ = _navigationService.Navigate(pageType);
     }
 }

@@ -1,0 +1,111 @@
+﻿using DomainShared.Constants;
+using DomainShared.Enums;
+using DomainShared.Errore;
+using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers.Extention;
+using NeAccounting.Windows;
+using System.Windows.Media;
+using Wpf.Ui;
+using Wpf.Ui.Controls;
+
+namespace NeAccounting.ViewModels
+{
+    public partial class HotCreateCustomerViewModel(ISnackbarService snackbarService) : ObservableObject
+    {
+        private readonly ISnackbarService _snackbarService = snackbarService;
+        private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
+        [ObservableProperty]
+        private string _fullName;
+
+        [ObservableProperty]
+        private string _nationalCode;
+
+        [ObservableProperty]
+        private string _mobile;
+
+        [ObservableProperty]
+        private byte _cusType = 0;
+
+        [ObservableProperty]
+        private string _address;
+
+        [ObservableProperty]
+        private bool _buyer = true;
+
+        [ObservableProperty]
+        private bool _seller = true;
+
+        [ObservableProperty]
+        private bool _haveCashCredit = false;
+
+        [ObservableProperty]
+        private bool _havePromissoryNote = false;
+
+        [ObservableProperty]
+        private long? _promissoryNote = 0;
+
+        [ObservableProperty]
+        private long? _cashCredit = 0;
+
+
+
+        [RelayCommand]
+        private async Task OnCreateCustomer(CreateCustomerWindow window)
+        {
+            if (_isreadonly)
+            {
+                _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            if (string.IsNullOrEmpty(FullName))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("نام مشتری"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            // محمد تقی در تاریخ 23 اردیبهشت 1403 گفت کملی الزامی نباشد
+            //if (string.IsNullOrEmpty(NationalCode))
+            //{
+            //    _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("کد ملی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            //    return;
+            //}
+            if (string.IsNullOrEmpty(Mobile))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("موبایل"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            if (HavePromissoryNote && (PromissoryNote == null || PromissoryNote == 0))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اعتبار سفته"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            if (HaveCashCredit && (CashCredit == null || CashCredit == 0))
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اعتبار نقدی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+
+            if (string.IsNullOrEmpty(NationalCode))
+            {
+                NationalCode = string.Empty;
+            }
+
+            CashCredit ??= 0;
+            PromissoryNote ??= 0;
+
+
+            using (UnitOfWork db = new())
+            {
+                var (error, isSuccess) = await db.CustomerManager.CreateCustomer(FullName, Mobile, CashCredit.Value, PromissoryNote.Value, NationalCode, Address, (CustomerType)CusType, HavePromissoryNote, HaveCashCredit, Buyer, Seller);
+                if (!isSuccess)
+                {
+                    _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                    return;
+                }
+                await db.SaveChangesAsync();
+            }
+            _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+
+            window.Visibility = Visibility.Hidden;
+        }
+    }
+}
