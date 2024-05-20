@@ -22,10 +22,10 @@
         <KeyBinding Key="F2"
                     Command="{Binding AddRowCommand}" />
         <KeyBinding Key="F4"
-                 Command="{Binding ViewModel.AddClickCommand}"
-                    CommandParameter="CreateCustomer" />      
+                    Command="{Binding ViewModel.AddClickCommand}"
+                    CommandParameter="CreateCustomer" />
         <KeyBinding Key="F3"
-                 Command="{Binding ViewModel.AddClickCommand}"
+                    Command="{Binding ViewModel.AddClickCommand}"
                     CommandParameter="CreateMaterail" />
     </Page.InputBindings>
     <Grid>
@@ -483,7 +483,6 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                             <RowDefinition />
-                                            <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
@@ -491,36 +490,31 @@
                                                    Text="وضعیت شخصی :"
                                                    HorizontalAlignment="Right" />
 
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Text="{Binding ViewModel.Status}"
-                                                   Margin="15 0 0 0"
-                                                   Grid.Column="1"
-                                                   HorizontalAlignment="Center" />
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Center"
+                                                    Grid.Column="1">
+
+                                            <TextBlock FontFamily="Calibri"
+                                                       FontSize="16"
+                                                       Margin="5 0"
+                                                       Text="{Binding ViewModel.Debt}" />
+
+                                            <TextBlock FontFamily="Calibri"
+                                                       FontSize="15"
+                                                       Text="{Binding ViewModel.Status}" />
+
+                                        </StackPanel>
 
                                         <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
                                                    Grid.Row="1"
-                                                   Text="مبلغ :"
-                                                   HorizontalAlignment="Right" />
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Text="{Binding ViewModel.Debt}"
-                                                   Grid.Column="1"
-                                                   Grid.Row="1"
-                                                   Margin="15 0 4 0"
-                                                   HorizontalAlignment="Center" />
-
-                                        <TextBlock FontFamily="Calibri"
-                                                   Grid.Row="2"
                                                    FontSize="15"
                                                    Text="اعتبار :"
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
+                                                   FontSize="17"
                                                    x:Name="txt_Credit"
+                                                   Grid.Row="1"
                                                    Text="0"
-                                                   Grid.Row="2"
                                                    Grid.Column="1"
                                                    Margin="15 0 4 0"
                                                    HorizontalAlignment="Center" />

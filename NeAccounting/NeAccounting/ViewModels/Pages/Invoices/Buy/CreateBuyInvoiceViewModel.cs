@@ -17,7 +17,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     private readonly WindowsProviderService _windowsProviderService = serviceProvider;
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
-    private int rowId = 1;
+    private int roowId = 1;
 
     /// <summary>
     /// لیست اجناس  فاکتور
@@ -185,13 +185,13 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
             UnitName = mat.UnitName,
             MatName = mat.MaterialName,
             Price = MatPrice.Value,
-            RowId = rowId,
+            RowId = roowId,
             TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
             Description = Description,
             MaterialId = MaterialId.Value,
         });
         SetCommisionValue();
-        RefreshRow(ref rowId);
+        RefreshRow(ref roowId);
         return true;
     }
 

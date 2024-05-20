@@ -175,6 +175,7 @@ namespace NeAccounting.ViewModels
             {
                 List.Add(it);
             }
+            RowId = itm.RemList.Count + 1;
             CusName = cus.Name;
             CusNumber = cus.UniqNumber;
             Status = stu.Status;

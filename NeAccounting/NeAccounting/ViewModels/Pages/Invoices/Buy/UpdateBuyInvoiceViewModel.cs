@@ -180,7 +180,8 @@ public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAw
         CusNumber = cus.UniqNumber;
         Status = stu.Status;
         Debt = stu.Amount;
-        Credit= cus.TotalCredit;
+        RowId = itm.RemList.Count + 1;
+        Credit = cus.TotalCredit;
         SubmitDate = itm.Date;
         StaticList = itm.RemList;
         InvDescription = itm.InvoiceDescription;
