@@ -178,8 +178,8 @@ namespace NeAccounting.ViewModels
             CusName = cus.Name;
             CusNumber = cus.UniqNumber;
             Status = stu.Status;
-            Debt = stu.Debt;
-            Credit = stu.Credit;
+            Debt = stu.Amount;
+            Credit = cus.TotalCredit;
             SubmitDate = itm.Date;
             StaticList = itm.RemList;
             InvDescription = itm.InvoiceDescription;

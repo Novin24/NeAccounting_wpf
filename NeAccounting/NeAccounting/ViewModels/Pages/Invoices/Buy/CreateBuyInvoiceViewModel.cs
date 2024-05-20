@@ -205,8 +205,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
         using UnitOfWork db = new();
         var s = await db.DocumentManager.GetStatus(custId);
         Status = s.Status;
-        Credit = s.Credit;
-        Debt = s.Debt;
+        Debt = s.Amount;
     }
 
     /// <summary>

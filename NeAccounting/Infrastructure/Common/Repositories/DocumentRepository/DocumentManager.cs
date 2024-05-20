@@ -937,10 +937,8 @@ namespace Infrastructure.Repositories
                 return new UserDebtStatus
                 {
                     Status = "بدهکار",
-                    Amount = res,
-                    Credit = "0",
-                    Debt = Math.Abs(res).ToString("N0"),
-
+                    Amount = Math.Abs(res).ToString("N0"),
+                    LAmount = res
                 };
             }
             if (res < 0)
@@ -948,17 +946,15 @@ namespace Infrastructure.Repositories
                 return new UserDebtStatus()
                 {
                     Status = "طلبکار",
-                    Amount = res,
-                    Debt = "0",
-                    Credit = Math.Abs(res).ToString("N0")
+                    Amount = Math.Abs(res).ToString("N0"),
+                    LAmount = res
                 };
             }
             return new UserDebtStatus()
             {
                 Status = "تسویه",
-                Amount = 0,
-                Credit = "0",
-                Debt = "0"
+                Amount = "0",
+                LAmount = 0
             };
         }
         #endregion

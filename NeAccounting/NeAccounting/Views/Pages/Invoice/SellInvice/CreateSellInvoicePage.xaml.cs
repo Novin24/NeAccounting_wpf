@@ -54,6 +54,7 @@ namespace NeAccounting.Views.Pages
             var user = (SuggestBoxViewModel<Guid, long>)args.SelectedItem;
             ViewModel.CusId = user.Id;
             lbl_cusId.Text = user.UniqNumber.ToString();
+            txt_Credit.Text = user.TotalValidity.ToString("N0");
             await ViewModel.OnSelectCus(user.Id);
         }
 

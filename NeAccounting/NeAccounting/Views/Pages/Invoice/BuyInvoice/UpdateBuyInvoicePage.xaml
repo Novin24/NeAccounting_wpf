@@ -17,14 +17,14 @@
       Title="UpdateBuyInvoicePage">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding SubmitCommand}" />
+                    Command="{Binding SubmitCommand}" />
         <KeyBinding Key="F2"
-                 Command="{Binding AddRowCommand}" />
+                    Command="{Binding AddRowCommand}" />
         <KeyBinding Key="F4"
-                 Command="{Binding ViewModel.AddClickCommand}"
+                    Command="{Binding ViewModel.AddClickCommand}"
                     CommandParameter="CreateCustomer" />
         <KeyBinding Key="F3"
-                 Command="{Binding ViewModel.AddClickCommand}"
+                    Command="{Binding ViewModel.AddClickCommand}"
                     CommandParameter="CreateMaterail" />
     </Page.InputBindings>
 
@@ -180,11 +180,11 @@
                                                    VerticalAlignment="Center"
                                                    Margin="6 22 6 0" />
                                     </DockPanel>
-                                    <ui:TextBox Margin="0 4 0 0" 
+                                    <ui:TextBox Margin="0 4 0 0"
                                                 IsReadOnly="True"
                                                 FontFamily="Calibri"
                                                 x:Name="txt_CustomerName"
-                                                Text="{Binding ViewModel.CusName}"/>
+                                                Text="{Binding ViewModel.CusName}" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1"
@@ -493,11 +493,11 @@
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
                                                    Grid.Row="1"
-                                                   Text="طلبکاری :"
+                                                   Text="مبلغ کل :"
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="{Binding ViewModel.Credit}"
+                                                   Text="{Binding ViewModel.Debt}"
                                                    Grid.Column="1"
                                                    Grid.Row="1"
                                                    Margin="15 0 4 0"
@@ -506,11 +506,11 @@
                                         <TextBlock FontFamily="Calibri"
                                                    Grid.Row="2"
                                                    FontSize="15"
-                                                   Text="بدهکاری :"
+                                                   Text="اعتبار :"
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="{Binding ViewModel.Debt}"
+                                                   Text="{Binding ViewModel.Credit}"
                                                    Grid.Row="2"
                                                    Grid.Column="1"
                                                    Margin="15 0 4 0"

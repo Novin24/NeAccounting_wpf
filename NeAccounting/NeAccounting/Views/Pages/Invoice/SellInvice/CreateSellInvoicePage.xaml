@@ -24,9 +24,6 @@
         <KeyBinding Key="F4"
                     Command="{Binding ViewModel.AddClickCommand}"
                     CommandParameter="CreateCustomer" />
-        <KeyBinding Key="F3"
-                    Command="{Binding ViewModel.AddClickCommand}"
-                    CommandParameter="CreateMaterail" />
     </Page.InputBindings>
     <Grid>
 
@@ -484,11 +481,11 @@
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
                                                    Grid.Row="1"
-                                                   Text="طلبکاری :"
+                                                   Text="مبلغ کل :"
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="{Binding ViewModel.Credit}"
+                                                   Text="{Binding ViewModel.Debt}"
                                                    Grid.Column="1"
                                                    Grid.Row="1"
                                                    Margin="15 0 4 0"
@@ -497,12 +494,13 @@
                                         <TextBlock FontFamily="Calibri"
                                                    Grid.Row="2"
                                                    FontSize="15"
-                                                   Text="بدهکاری :"
+                                                   Text="اعتبار :"
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="{Binding ViewModel.Debt}"
+                                                   x:Name="txt_Credit"
                                                    Grid.Row="2"
+                                                   Text="0"
                                                    Grid.Column="1"
                                                    Margin="15 0 4 0"
                                                    HorizontalAlignment="Center" />

@@ -53,12 +53,6 @@ namespace NeAccounting.ViewModels
         private string _totalPrice = "0";
 
         /// <summary>
-        /// مبلغ کل وضعیت
-        /// </summary>
-        [ObservableProperty]
-        private long _totalPricee = 0;
-
-        /// <summary>
         /// مبلغ وارد شده 
         /// </summary>
         [ObservableProperty]
@@ -109,8 +103,7 @@ namespace NeAccounting.ViewModels
             DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.RecDoc);
             var s = await db.DocumentManager.GetStatus(custId);
             Status = s.Status;
-            TotalPricee = Math.Abs(s.Amount);
-            TotalPrice = Math.Abs(s.Amount).ToString("N0");
+            TotalPrice = s.Amount;
         }
 
 
@@ -174,7 +167,6 @@ namespace NeAccounting.ViewModels
             Description = string.Empty;
             Status = "تسویه";
             TotalPrice = "0";
-            TotalPricee = 0;
             Price = 0;
             Discount = 0;
             CusId = null;

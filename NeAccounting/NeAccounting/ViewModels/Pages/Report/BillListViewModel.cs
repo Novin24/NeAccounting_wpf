@@ -1,8 +1,10 @@
 ﻿using DomainShared.Constants;
 using DomainShared.Enums;
 using DomainShared.Errore;
+using DomainShared.Extension;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
+using DomainShared.ViewModels.Customer;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
@@ -10,15 +12,12 @@ using NeAccounting.Models;
 using NeAccounting.Views.Pages;
 using NeApplication.Services;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
-using DomainShared.Extension;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
-using DomainShared.ViewModels.Customer;
-using static Stimulsoft.Client.Designer.Images.StiDesignerWpfImages;
-using System.Collections.ObjectModel;
 
 namespace NeAccounting.ViewModels
 {
@@ -469,8 +468,7 @@ namespace NeAccounting.ViewModels
                         DocId = parameter,
                         DocList = docs,
                         Price = itme.Price,
-                        TotalPrice = Math.Abs(st.Amount).ToString("N0"),
-                        TotalPricee = Math.Abs(st.Amount),
+                        TotalPrice = st.Amount,
                         CusNumber = Cuslist.First(t => t.Id == itme.CustomerId).UniqNumber,
                         CusName = Cuslist.First(t => t.Id == itme.CustomerId).DisplayName
                     });
@@ -508,8 +506,7 @@ namespace NeAccounting.ViewModels
                         DocId = parameter,
                         DocList = dc,
                         Price = item.Price,
-                        TotalPrice = Math.Abs(s.Amount).ToString("N0"),
-                        TotalPricee = Math.Abs(s.Amount),
+                        TotalPrice = s.Amount,
                         CusNumber = Cuslist.First(t => t.Id == item.CustomerId).UniqNumber,
                         CusName = Cuslist.First(t => t.Id == item.CustomerId).DisplayName
                     });
@@ -560,7 +557,7 @@ namespace NeAccounting.ViewModels
                         return;
                     }
 
-                    var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                   // var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
                     (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
 
                     if (!string.IsNullOrEmpty(error))
@@ -616,7 +613,7 @@ namespace NeAccounting.ViewModels
                         return;
                     }
 
-                    var stuv = await db.DocumentManager.GetStatus(itmm.CustomerId);
+                    //var stuv = await db.DocumentManager.GetStatus(itmm.CustomerId);
                     (string err, CustomerListDto cuss) = await db.CustomerManager.GetCustomerById(itmm.CustomerId);
 
                     if (!string.IsNullOrEmpty(err))
@@ -726,7 +723,7 @@ namespace NeAccounting.ViewModels
                     return;
                 }
 
-                var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                //var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
                 (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
 
                 if (!string.IsNullOrEmpty(error))
@@ -741,8 +738,6 @@ namespace NeAccounting.ViewModels
                     CusId = cus.Id,
                     DocId = parameter,
                     CusNum = cus.UniqNumber,
-                    Status = stu.Status,
-                    Debt = stu.Debt,
                     MatList = itm.RemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
                     {
                         Id = t.MaterialId,
@@ -752,7 +747,6 @@ namespace NeAccounting.ViewModels
                         LastBuyPrice = t.Price,
                         LastSellPrice = t.Price
                     }).ToList(),
-                    Credit = stu.Credit,
                     SellGoods = itm.RemList,
                     LastInvoice = itm.Serial,
                 });
@@ -775,7 +769,7 @@ namespace NeAccounting.ViewModels
                     return;
                 }
 
-                var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                //var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
                 (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
 
                 if (!string.IsNullOrEmpty(error))
@@ -790,8 +784,6 @@ namespace NeAccounting.ViewModels
                     CusId = cus.Id,
                     DocId = parameter,
                     CusNum = cus.UniqNumber,
-                    Status = stu.Status,
-                    Debt = stu.Debt,
                     MatList = itm.RemList.Select(t => new DomainShared.ViewModels.Pun.MatListDto()
                     {
                         Id = t.MaterialId,
@@ -801,7 +793,6 @@ namespace NeAccounting.ViewModels
                         LastBuyPrice = t.Price,
                         LastSellPrice = t.Price
                     }).ToList(),
-                    Credit = stu.Credit,
                     BuyGoods = itm.RemList,
                     LastInvoice = itm.Serial,
                 });

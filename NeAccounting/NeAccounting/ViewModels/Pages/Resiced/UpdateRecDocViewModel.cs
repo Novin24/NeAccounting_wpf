@@ -72,12 +72,6 @@ namespace NeAccounting.ViewModels
         private string _totalPrice = "0";
 
         /// <summary>
-        /// مبلغ کل وضعیت
-        /// </summary>
-        [ObservableProperty]
-        private long _totalPricee = 0;
-
-        /// <summary>
         /// مبلغ وارد شده 
         /// </summary>
         [ObservableProperty]
@@ -158,7 +152,6 @@ namespace NeAccounting.ViewModels
             await db.SaveChangesAsync();
             _snackbarService.Show("کاربر گرامی", $"ثبت سند با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
             #endregion
-
 
             #region BackToBillPage
             Type? pageType = NameToPageTypeConverter.Convert("Bill");
