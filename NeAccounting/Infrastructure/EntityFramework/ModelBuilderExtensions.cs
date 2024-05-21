@@ -32,7 +32,7 @@ namespace Infrastructure.Utilities
                 b.HasIndex(b => b.Id);
                 b.Property(b => b.CusId).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
                 b.Property(r => r.Name).HasMaxLength(50).IsRequired();
-                b.Property(r => r.NationalCode).HasMaxLength(10).IsRequired();
+                b.Property(r => r.NationalCode).HasMaxLength(12).IsRequired();
                 b.Property(r => r.Mobile).HasMaxLength(20).IsRequired();
                 b.Property(r => r.Address).HasMaxLength(150);
                 b.Property(r => r.IsActive).HasDefaultValue(true);
@@ -42,13 +42,13 @@ namespace Infrastructure.Utilities
             {
                 b.HasIndex(t => t.PersonnelId);
                 b.Property(t => t.FullName).HasMaxLength(50).IsRequired();
-                b.Property(t => t.NationalCode).HasMaxLength(10);
-                b.Property(t => t.Mobile).IsRequired();
-                b.Property(t => t.Address).HasMaxLength(150);
-                b.Property(t => t.Description).HasMaxLength(200);
+                b.Property(t => t.Mobile).HasMaxLength(20).IsRequired();
                 b.Property(t => t.AccountNumber).HasMaxLength(26).IsRequired();
-                b.Property(r => r.IsActive).HasDefaultValue(true);
                 b.Property(t => t.JobTitle).HasMaxLength(50).IsRequired();
+                b.Property(t => t.Address).HasMaxLength(150);
+                b.Property(t => t.NationalCode).HasMaxLength(12);
+                b.Property(t => t.Description).HasMaxLength(200);
+                b.Property(r => r.IsActive).HasDefaultValue(true);
             });
 
             builder.Entity<Expense>(b =>

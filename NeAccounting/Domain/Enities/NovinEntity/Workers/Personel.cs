@@ -1,5 +1,6 @@
 ﻿using Domain.Common;
 using DomainShared.Enums;
+using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Workers
 {
@@ -15,22 +16,22 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// نام کامل
         /// </summary>
-        public string FullName { get; set; }
+        public string FullName { get; private set; }
 
         /// <summary>
         /// کد ملی
         /// </summary>
-        public string? NationalCode { get; set; }
+        public string? NationalCode { get; private set; }
 
         /// <summary>
         /// موبایل
         /// </summary>
-        public string Mobile { get; set; }
+        public string Mobile { get; private set; }
 
         /// <summary>
         /// ادرس
         /// </summary>
-        public string? Address { get; set; }
+        public string? Address { get; private set; }
 
         /// <summary>
         /// تاریخ شروع به کار
@@ -50,12 +51,12 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// شماره حساب
         /// </summary>
-        public string AccountNumber { get; set; }
+        public string AccountNumber { get; private set; }
 
         /// <summary>
         /// توضیحات
         /// </summary>
-        public string? Description { get; set; }
+        public string? Description { get; private set; }
 
         /// <summary>
         /// وضعیت
@@ -70,7 +71,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// عنوان شغلی
         /// </summary>
-        public string JobTitle { get; set; }
+        public string JobTitle { get; private set; }
 
         /// <summary>
         /// دستمزد
@@ -111,9 +112,9 @@ namespace Domain.NovinEntity.Workers
         #region Constructor
         public Personel()
         {
-            Salaries = new List<Salary>();
-            Functions = new List<Function>();
-            Aids = new List<FinancialAid>();
+            Salaries = [];
+            Functions = [];
+            Aids = [];
         }
 
         public Personel(
@@ -134,28 +135,93 @@ namespace Domain.NovinEntity.Workers
             long insurancePremium,
             byte dayInMonth)
         {
-            IsActive = true;
-            FullName = fullName;
-            NationalCode = natinalCode;
-            Mobile = mobile;
+            SetFullName(fullName);
+            SetNationalCode(natinalCode);
+            SetMobile(mobile);
+            SetAddress(address);
+            SetDesc(description);
+            SetJobTitele(jobTitle);
+            SetAccountNumber(accountNumber);
             DayInMonth = dayInMonth;
             Salary = salary;
             OverTimeSalary = overtimeSalary;
             InsurancePremium = insurancePremium;
-            Address = address;
             StartDate = startDate;
             PersonnelId = personalId;
-            AccountNumber = accountNumber;
-            Description = description;
             ShiftSalary = shiftSalary;
             ShiftOverTimeSalary = shiftOvertimeSalary;
-            JobTitle = jobTitle;
             Status = Status.InWork;
             ShiftStatus = shift;
+            IsActive = true;
         }
         #endregion
 
         #region Methods
+        public Personel SetFullName(string fullName)
+        {
+            if (fullName.Length > 50)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("نام پرسنل", "پنجاه"));
+            }
+            FullName = fullName;
+            return this;
+        }
+        public Personel SetNationalCode(string nationalCode)
+        {
+            if (!string.IsNullOrEmpty(nationalCode) && nationalCode.Length > 12)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("کدملی", "دوازده"));
+            }
+            NationalCode = nationalCode;
+            return this;
+        }
+        public Personel SetMobile(string mobile)
+        {
+            if (mobile.Length > 20)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("موبایل", "بیست"));
+            }
+            Mobile = mobile;
+            return this;
+        }
+        public Personel SetAddress(string address)
+        {
+            if (!string.IsNullOrEmpty(address) && address.Length > 150)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("آدرس", "صدوپنجاه"));
+            }
+            Address = address;
+            return this;
+        }
+        public Personel SetDesc(string description)
+        {
+            if (!string.IsNullOrEmpty(description) && description.Length > 200)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("توضیحات", "دویست"));
+            }
+            Description = description;
+            return this;
+        }
+        public Personel SetAccountNumber(string accountNumber)
+        {
+            if (accountNumber.Length > 26)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("شماره حساب", "بیست و شش"));
+            }
+            AccountNumber = accountNumber;
+            return this;
+        }
+        public Personel SetJobTitele(string jobTitle)
+        {
+            if (jobTitle.Length > 50)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("عنوان شغلی", "پنجاه"));
+            }
+            JobTitle = jobTitle;
+            return this;
+        }
+
+
         public Personel AddSalary(Salary salary)
         {
             Salaries.Add(salary);

@@ -25,7 +25,7 @@ public static class NeErrorCodes
 
     public static string IsLess(string name1, string name2)
     {
-        return $"{name1} باید از {name2} کمتر باشد";
+        return $"{name1} باید از {name2} کاراکتر کمتر باشد";
     }
 
     public static string IsMore(string name1, string name2)

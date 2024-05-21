@@ -1,6 +1,7 @@
 ﻿using Domain.Common;
 using Domain.NovinEntity.Documents;
 using DomainShared.Enums;
+using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Cheques
 {
@@ -38,7 +39,7 @@ namespace Domain.NovinEntity.Cheques
         /// <summary>
         /// شماره چک
         /// </summary>
-        public string Cheque_Number { get; set; }
+        public string Cheque_Number { get; private set; }
 
         /// <summary>
         /// سریال دیتابیسی
@@ -48,22 +49,22 @@ namespace Domain.NovinEntity.Cheques
         /// <summary>
         /// شماره حساب
         /// </summary>
-        public string? Accunt_Number { get; set; }
+        public string? Accunt_Number { get; private set; }
 
         /// <summary>
         /// نام بانک
         /// </summary>
-        public string Bank_Name { get; set; }
+        public string Bank_Name { get; private set; }
 
         /// <summary>
         /// نام شعبه
         /// </summary>
-        public string? Bank_Branch { get; set; }
+        public string? Bank_Branch { get; private set; }
 
         /// <summary>
         /// صاحب چک
         /// </summary>
-        public string Cheque_Owner { get; set; }
+        public string Cheque_Owner { get; private set; }
         #endregion
 
         #region Constructor
@@ -83,16 +84,66 @@ namespace Domain.NovinEntity.Cheques
             string bank_Branch,
             string cheque_Owner)
         {
+            SetBank_Name(bank_Name);
+            SetBank_Name(bank_Branch);
+            SetAccunt_Number(accunt_Number);
+            SetCheque_Owner(cheque_Owner);
+            SetCheque_Number(cheque_Number);
             Payer = payer;
             Reciver = reciver;
-            Bank_Name = bank_Name;
-            Bank_Branch = bank_Branch;
             Due_Date = dueDate;
-            Cheque_Number = cheque_Number;
-            Accunt_Number = accunt_Number;
-            Cheque_Owner = cheque_Owner;
             SubmitStatus = submitStatus;
             Status = chequeStatus;
+        }
+
+        public Cheque SetBank_Branch(string? bank_Branch)
+        {
+            if (!string.IsNullOrEmpty(bank_Branch) && bank_Branch.Length > 50)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("شعبه بانک", "پنجاه"));
+            }
+            Bank_Branch = bank_Branch;
+            return this;
+        }
+
+        public Cheque SetBank_Name(string bank_Name)
+        {
+            if (bank_Name.Length > 50)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("نام بانک", "پنجاه"));
+            }
+            Bank_Name = bank_Name;
+            return this;
+        }
+
+        public Cheque SetAccunt_Number(string? accunt_Number)
+        {
+            if (!string.IsNullOrEmpty(accunt_Number) && accunt_Number.Length > 100)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("شماره حساب", "صد"));
+            }
+            Accunt_Number = accunt_Number;
+            return this;
+        }
+
+        public Cheque SetCheque_Owner(string cheque_Owner)
+        {
+            if (cheque_Owner.Length > 50)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("صاحب چک", "پنجاه"));
+            }
+            Cheque_Owner = cheque_Owner;
+            return this;
+        }
+
+        public Cheque SetCheque_Number(string cheque_Number)
+        {
+            if (cheque_Number.Length > 100)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("شماره چک", "صد"));
+            }
+            Cheque_Number = cheque_Number;
+            return this;
         }
         #endregion
     }

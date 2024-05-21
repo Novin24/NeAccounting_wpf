@@ -1,5 +1,6 @@
 ﻿using Domain.Common;
 using DomainShared.Enums;
+using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Customers
 {
@@ -25,14 +26,14 @@ namespace Domain.NovinEntity.Customers
             bool isBuyer,
             bool isSeller)
         {
+            SetName(name);
+            SetMobile(mobile);
+            SetNationalCode(nationalCode);
             HaveChequeGuarantee = false;
             ChequeCredit = 0;
-            Name = name;
-            Mobile = mobile;
             TotalCredit = totalCredit;
             CashCredit = cashCredit;
             PromissoryNote = promissoryNote;
-            NationalCode = nationalCode;
             HavePromissoryNote = havePromissoryNote;
             HaveCashCredit = haveCashCredit;
             Address = address;
@@ -55,16 +56,16 @@ namespace Domain.NovinEntity.Customers
             bool haveCashCredit,
             bool isBuyer,
             bool isSeller,
-            Guid id) : this(name,mobile,totalCredit,cashCredit,promissoryNote,nationalCode,address,type,havePromissoryNote,haveCashCredit,isBuyer,isSeller)
+            Guid id) : this(name, mobile, totalCredit, cashCredit, promissoryNote, nationalCode, address, type, havePromissoryNote, haveCashCredit, isBuyer, isSeller)
         {
             Id = id;
         }
         #endregion
 
         #region properties
-        public string Name { get; set; }
+        public string Name { get; private set; }
         public long CusId { get; set; }
-        public string Mobile { get; set; }
+        public string Mobile { get; private set; }
         /// <summary>
         /// مجموع اعتبار
         /// </summary>
@@ -82,8 +83,8 @@ namespace Domain.NovinEntity.Customers
         /// ضمانت سفته
         /// </summary>
         public long PromissoryNote { get; set; }
-        public string NationalCode { get; set; }
-        public string Address { get; set; }
+        public string NationalCode { get; private set; }
+        public string Address { get; private set; }
         public bool Buyer { get; set; }
         public bool Seller { get; set; }
         public CustomerType Type { get; set; }
@@ -91,6 +92,48 @@ namespace Domain.NovinEntity.Customers
         public bool HaveCashCredit { get; set; }
         public bool HavePromissoryNote { get; set; }
         public bool IsActive { get; set; }
+        #endregion
+
+        #region Method
+        public Customer SetNationalCode(string nationalCode)
+        {
+            if (nationalCode.Length > 11)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("کد ملی", "یازده"));
+            }
+            NationalCode = nationalCode;
+            return this;
+        }
+
+        public Customer SetName(string name)
+        {
+            if (name.Length > 50)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("نام مشتری", "پنجاه"));
+            }
+            Name = name;
+            return this;
+        }
+
+        public Customer SetMobile(string mobile)
+        {
+            if (mobile.Length > 20)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("موبایل", "بیست"));
+            }
+            Mobile = mobile;
+            return this;
+        }
+
+        public Customer SetAddress(string address)
+        {
+            if (address.Length > 150)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("آدرس", "صد و پنجاه"));
+            }
+            Address = address;
+            return this;
+        }
         #endregion
     }
 }

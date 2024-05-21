@@ -89,10 +89,15 @@ namespace Infrastructure.Repositories
                     haveCashCredit,
                     isBuyer,
                     isSeller));
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
+                return new(" خطا در اتصال به پایگاه داده code(07t43493)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -118,12 +123,12 @@ namespace Infrastructure.Repositories
                 if (mt == null)
                     return new("مشتری مورد نظر یافت نشد !!!", false);
 
-                mt.Name = name;
-                mt.NationalCode = nationalCode;
-                mt.Mobile = mobile;
+                mt.SetName(name);
+                mt.SetNationalCode(nationalCode);
+                mt.SetMobile(mobile);
+                mt.SetAddress(address);
                 mt.Seller = isSeller;
                 mt.Buyer = isBuyer;
-                mt.Address = address;
                 mt.CashCredit = cashCredit;
                 mt.HaveCashCredit = haveCashCredit;
                 mt.HavePromissoryNote = havePromissoryNote;
@@ -135,6 +140,10 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(07t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -154,7 +163,7 @@ namespace Infrastructure.Repositories
                 cus.IsActive = isActive;
                 Entities.Update(cus);
             }
-            catch (Exception ex)
+            catch 
             {
                 return new(" خطا در اتصال به پایگاه داده code(17t46993)!!!", false);
             }

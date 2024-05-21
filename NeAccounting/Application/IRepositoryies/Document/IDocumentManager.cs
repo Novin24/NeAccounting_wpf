@@ -215,6 +215,12 @@ namespace NeApplication.IRepositoryies
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 
+        /// <summary>
+        /// دریافت 15 سند اخر
+        /// </summary>
+        /// <param name="CusId"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         Task<List<SummaryDoc>> GetSummaryDocs(Guid? CusId, DocumntType type);
 
 

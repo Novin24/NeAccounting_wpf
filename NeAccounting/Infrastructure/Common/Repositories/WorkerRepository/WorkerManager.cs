@@ -153,27 +153,32 @@ namespace Infrastructure.Repositories
 
             try
             {
-                var t = await Entities.AddAsync(new Personel(
-                    fullName,
-                    natinalCode,
-                    mobile,
-                    address,
-                    personalId,
-                    accountNumber,
-                    description,
-                    jobTitle,
-                    startDate,
-                    shift,
-                    salary,
-                    overtimeSalary,
-                    shiftSalary,
-                    shiftOvertimeSalary,
-                    insurancePremium,
-                    dayInMonth));
+                await Entities.AddAsync(new Personel(
+                   fullName,
+                   natinalCode,
+                   mobile,
+                   address,
+                   personalId,
+                   accountNumber,
+                   description,
+                   jobTitle,
+                   startDate,
+                   shift,
+                   salary,
+                   overtimeSalary,
+                   shiftSalary,
+                   shiftOvertimeSalary,
+                   insurancePremium,
+                   dayInMonth));
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
+                return new(" خطا در اتصال به پایگاه داده code(68t46923)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -213,31 +218,36 @@ namespace Infrastructure.Repositories
                 }
             }
 
-            worker.NationalCode = natinalCode;
-            worker.PersonnelId = personalId;
-            worker.AccountNumber = accountNumber;
-            worker.Description = description;
-            worker.Status = status;
-            worker.FullName = fullName;
-            worker.Mobile = mobile;
-            worker.Address = address;
-            worker.StartDate = startDate;
-            worker.ShiftStatus = shift;
-            worker.JobTitle = jobTitle;
-            worker.Salary = salary;
-            worker.OverTimeSalary = overtimeSalary;
-            worker.ShiftSalary = shiftSalary;
-            worker.ShiftOverTimeSalary = shiftOvertimeSalary;
-            worker.InsurancePremium = insurancePremium;
-            worker.DayInMonth = dayInMonth;
-
             try
             {
+                worker.SetNationalCode(natinalCode);
+                worker.SetAccountNumber(accountNumber);
+                worker.SetDesc(description);
+                worker.SetFullName(fullName);
+                worker.SetMobile(mobile);
+                worker.SetAddress(address);
+                worker.SetJobTitele(jobTitle);
+                worker.PersonnelId = personalId;
+                worker.Status = status;
+                worker.StartDate = startDate;
+                worker.ShiftStatus = shift;
+                worker.Salary = salary;
+                worker.OverTimeSalary = overtimeSalary;
+                worker.ShiftSalary = shiftSalary;
+                worker.ShiftOverTimeSalary = shiftOvertimeSalary;
+                worker.InsurancePremium = insurancePremium;
+                worker.DayInMonth = dayInMonth;
+
                 Entities.Update(worker);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
+                return new(" خطا در اتصال به پایگاه داده code(18t43973)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -398,27 +408,73 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<(string error, bool isSuccess)> DeleteSalary(Guid workerId, int salaryId)
+        public async Task<(string error, bool isSuccess)> AddSalary(Guid workerId,
+            byte persianMonth,
+            int persianYear,
+            long amountOf,
+            long financialAid,
+            long overTime,
+            long tax,
+            long childAllowance,
+            long rightHousingAndFood,
+            long insurance,
+            long loanInstallment,
+            long otherAdditions,
+            long otherDeductions,
+            long leftOver,
+            string? description)
         {
-            var worker = await Table
-               .Include(t => t.Salaries.Where(s => s.Id == salaryId))
-               .FirstOrDefaultAsync(t => t.Id == workerId);
+            var worker = await Entities
+                .Include(s => s.Salaries)
+                .Include(s => s.Functions.Where(t =>
+                t.PersianYear == persianYear && t.PersianMonth == persianMonth))
+                .FirstOrDefaultAsync(t => t.Id == workerId);
 
-            if (worker == null || worker.Salaries.Count == 0)
+            if (worker == null)
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
 
-            var salary = worker.Salaries.First();
+            if (worker.Functions.Count == 0)
+            {
+                return new(" برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
+            }
 
-            worker.Salaries.Remove(salary);
+            if (worker.Salaries.Any(t =>
+            t.PersianMonth == persianMonth && t.PersianYear == persianYear))
+            {
+                return new(" برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
+            }
+
             try
             {
+                worker.AddSalary(new Salary(
+                        persianYear,
+                        persianMonth,
+                        amountOf,
+                        financialAid,
+                        overTime,
+                        tax,
+                        childAllowance,
+                        rightHousingAndFood,
+                        insurance,
+                        loanInstallment,
+                        otherAdditions,
+                        otherDeductions,
+                        leftOver,
+                        description));
+
                 Entities.Update(worker);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                return new(" خطا در اتصال به پایگاه داده code(50t46993)!!!", false);
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
+                return new(" خطا در اتصال به پایگاه داده code(70t46993)!!!", false);
             }
             return new(string.Empty, true);
+
         }
 
         public async Task<(string error, bool isSuccess)> UpdateSalary(Guid workerId,
@@ -459,97 +515,61 @@ namespace Infrastructure.Repositories
             {
                 return new(" برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
             }
-
             var salary = worker.Salaries.First(s => s.Id == salaryId);
-            salary.PersianMonth = persianMonth;
-            salary.PersianYear = persianYear;
-            salary.Insurance = insurance;
-            salary.Description = description;
-            salary.OtherDeductions = otherDeductions;
-            salary.ChildAllowance = childAllowance;
-            salary.AmountOf = amountOf;
-            salary.LeftOver = leftOver;
-            salary.OtherAdditions = otherAdditions;
-            salary.RightHousingAndFood = rightHousingAndFood;
-            salary.FinancialAid = financialAid;
-            salary.OverTime = overTime;
-            salary.Tax = tax;
-            salary.LoanInstallment = loanInstallment;
 
             try
             {
+                salary.SetDesc(description);
+                salary.PersianMonth = persianMonth;
+                salary.PersianYear = persianYear;
+                salary.Insurance = insurance;
+                salary.OtherDeductions = otherDeductions;
+                salary.ChildAllowance = childAllowance;
+                salary.AmountOf = amountOf;
+                salary.LeftOver = leftOver;
+                salary.OtherAdditions = otherAdditions;
+                salary.RightHousingAndFood = rightHousingAndFood;
+                salary.FinancialAid = financialAid;
+                salary.OverTime = overTime;
+                salary.Tax = tax;
+                salary.LoanInstallment = loanInstallment;
+
                 Entities.Update(worker);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(60t46993)!!!", false);
             }
             return new(string.Empty, true);
         }
 
-        public async Task<(string error, bool isSuccess)> AddSalary(Guid workerId,
-            byte persianMonth,
-            int persianYear,
-            long amountOf,
-            long financialAid,
-            long overTime,
-            long tax,
-            long childAllowance,
-            long rightHousingAndFood,
-            long insurance,
-            long loanInstallment,
-            long otherAdditions,
-            long otherDeductions,
-            long leftOver,
-            string? description)
+        public async Task<(string error, bool isSuccess)> DeleteSalary(Guid workerId, int salaryId)
         {
-            var worker = await Entities
-                .Include(s => s.Salaries)
-                .Include(s => s.Functions.Where(t =>
-                t.PersianYear == persianYear && t.PersianMonth == persianMonth))
-                .FirstOrDefaultAsync(t => t.Id == workerId);
+            var worker = await Table
+               .Include(t => t.Salaries.Where(s => s.Id == salaryId))
+               .FirstOrDefaultAsync(t => t.Id == workerId);
 
-            if (worker == null)
+            if (worker == null || worker.Salaries.Count == 0)
                 return new("کارگر مورد نظر یافت نشد!!!!", false);
 
-            if (worker.Functions.Count == 0)
-            {
-                return new(" برای ماه مورد نظر هیچ کارکردی ثبت نشده!!!", false);
-            }
-
-            if (worker.Salaries.Any(t =>
-            t.PersianMonth == persianMonth && t.PersianYear == persianYear))
-            {
-                return new(" برای این پرسنل در این ماه فیش حقوقی صادر شده !!!", false);
-            }
-
-            worker.AddSalary(
-                new Salary(
-                    persianYear,
-                    persianMonth,
-                    amountOf,
-                    financialAid,
-                    overTime,
-                    tax,
-                    childAllowance,
-                    rightHousingAndFood,
-                    insurance,
-                    loanInstallment,
-                    otherAdditions,
-                    otherDeductions,
-                    leftOver,
-                    description));
+            var salary = worker.Salaries.First();
 
             try
             {
+                worker.Salaries.Remove(salary);
                 Entities.Update(worker);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                return new(" خطا در اتصال به پایگاه داده code(70t46993)!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(50t46993)!!!", false);
             }
             return new(string.Empty, true);
-
         }
 
         public async Task<SalaryWorkerViewModel> GetSalaryDetailByWorkerId(Guid workerId, byte persianMonth,
@@ -650,47 +670,22 @@ namespace Infrastructure.Repositories
             {
                 return new("برای این پرسنل در این ماه کارکرد ثبت شده !!!", false);
             }
-            worker.AddFunction(new Function(persianMonth, persianYear, amountOf, amountOfOverTime, description));
+
             try
             {
+                worker.AddFunction(new Function(persianMonth, persianYear, amountOf, amountOfOverTime, description));
                 Entities.Update(worker);
-
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(80t46993)!!!", false);
             }
             return new(string.Empty, true);
-        }
-
-
-        public async Task<List<FunctionViewModel>> GetFunctionList(Guid? workerId,
-            int pageNum = 0,
-            int pageCount = NeAccountingConstants.PageCount)
-        {
-            return await (from worker in DbContext.Set<Personel>()
-                                                         .AsNoTracking()
-                                                         .Where(t => workerId == null || t.Id == workerId)
-
-                          join func in DbContext.Set<Function>()
-                                                  on worker.Id equals func.WorkerId
-
-                          select new FunctionViewModel()
-                          {
-                              Name = worker.FullName,
-                              Amountof = func.AmountOf,
-                              OverTime = func.AmountOfOverTime,
-                              Description = func.Description,
-                              PersonelId = worker.PersonnelId,
-                              PersianMonth = func.PersianMonth,
-                              PersianYear = func.PersianYear,
-                              Details = new FucntionDetails() { Id = func.Id, WorkerId = worker.Id }
-                          })
-                      .OrderByDescending(c => c.PersianYear)
-                      .ThenByDescending(c => c.PersianMonth)
-                      .Skip(pageNum * pageCount)
-                      .Take(pageCount)
-                      .ToListAsync();
         }
 
         public async Task<(string error, bool isSuccess)> UpdateFunc(
@@ -722,18 +717,22 @@ namespace Infrastructure.Repositories
             if (worker.Salaries.FirstOrDefault(t => t.PersianYear == persianYear && t.PersianMonth == persianMonth) != null)
                 return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
 
-            func.PersianMonth = persianMonth;
-            func.PersianYear = persianYear;
-            func.AmountOf = amountOf;
-            func.AmountOfOverTime = overTime;
-            func.Description = description;
-
             try
             {
+                func.SetDesc(description);
+                func.PersianMonth = persianMonth;
+                func.PersianYear = persianYear;
+                func.AmountOf = amountOf;
+                func.AmountOfOverTime = overTime;
                 Entities.Update(worker);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(90t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -762,17 +761,52 @@ namespace Infrastructure.Repositories
             if (worker.Salaries.FirstOrDefault(t => t.PersianYear == persianYear && t.PersianMonth == persianMonth) != null)
                 return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
 
-            worker.Functions.Remove(func);
             try
             {
+                worker.Functions.Remove(func);
                 Entities.Update(worker);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(01t46993)!!!", false);
             }
             return new(string.Empty, true);
         }
+
+        public async Task<List<FunctionViewModel>> GetFunctionList(Guid? workerId,
+            int pageNum = 0,
+            int pageCount = NeAccountingConstants.PageCount)
+        {
+            return await (from worker in DbContext.Set<Personel>()
+                                                         .AsNoTracking()
+                                                         .Where(t => workerId == null || t.Id == workerId)
+
+                          join func in DbContext.Set<Function>()
+                                                  on worker.Id equals func.WorkerId
+
+                          select new FunctionViewModel()
+                          {
+                              Name = worker.FullName,
+                              Amountof = func.AmountOf,
+                              OverTime = func.AmountOfOverTime,
+                              Description = func.Description,
+                              PersonelId = worker.PersonnelId,
+                              PersianMonth = func.PersianMonth,
+                              PersianYear = func.PersianYear,
+                              Details = new FucntionDetails() { Id = func.Id, WorkerId = worker.Id }
+                          })
+                      .OrderByDescending(c => c.PersianYear)
+                      .ThenByDescending(c => c.PersianMonth)
+                      .Skip(pageNum * pageCount)
+                      .Take(pageCount)
+                      .ToListAsync();
+        }
+
         #endregion
 
         #region Aid
@@ -792,15 +826,19 @@ namespace Infrastructure.Repositories
                 return new("کارگر مورد نظر یافت نشد!!!", false);
             }
 
-            worker.AddAid(new FinancialAid(submitDate, persianMonth, persianYear, amountOf, description));
             try
             {
+                worker.AddAid(new FinancialAid(submitDate, persianMonth, persianYear, amountOf, description));
                 Entities.Update(worker);
-
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
+                return new(" خطا در اتصال به پایگاه داده code(68t96423)!!!", false);
             }
             return new(string.Empty, true);
         }
@@ -830,19 +868,62 @@ namespace Infrastructure.Repositories
             if (worker.Salaries.Count != 0)
                 return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
 
-            aid.SubmitDate = subDate;
-            aid.PersianMonth = persianMonth;
-            aid.PersianYear = persianYear;
-            aid.AmountOf = amount;
-            aid.Description = description;
-
             try
             {
+                aid.SetDesc(description);
+                aid.SubmitDate = subDate;
+                aid.PersianMonth = persianMonth;
+                aid.PersianYear = persianYear;
+                aid.AmountOf = amount;
                 Entities.Update(worker);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
+                return new(" خطا در اتصال به پایگاه داده code(68t43423)!!!", false);
+            }
+            return new(string.Empty, true);
+        }
+
+        public async Task<(string error, bool isSuccess)> DeleteAid(Guid workerId,
+            int persianYear,
+            byte persianMonth,
+            int aidId)
+        {
+            var worker = await Entities
+                .Include(c => c.Salaries.Where(t => t.PersianMonth == persianMonth && t.PersianYear == persianYear))
+                .Include(c => c.Aids.Where(c => c.Id == aidId))
+                .FirstOrDefaultAsync(t => t.Id == workerId);
+
+            if (worker == null)
+                return new("کارگر مورد نظر یافت نشد!!!!", false);
+
+            var aid = worker.Aids.FirstOrDefault(t => t.Id == aidId);
+
+            if (aid == null)
+                return new("مساعده مورد نظر یافت نشد!!!!", false);
+
+            if (worker.Salaries.Count != 0)
+                return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
+
+            try
+            {
+                worker.Aids.Remove(aid);
+                Entities.Update(worker);
+                await DbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
+                return new(" خطا در اتصال به پایگاه داده code(31t46948)!!!", false);
+
             }
             return new(string.Empty, true);
         }
@@ -873,41 +954,6 @@ namespace Infrastructure.Repositories
                           .Take(pageCount)
                           .ToListAsync();
 
-        }
-
-
-        public async Task<(string error, bool isSuccess)> DeleteAid(Guid workerId,
-            int persianYear,
-            byte persianMonth,
-            int aidId)
-        {
-
-            var worker = await Entities
-                .Include(c => c.Salaries.Where(t => t.PersianMonth == persianMonth && t.PersianYear == persianYear))
-                .Include(c => c.Aids.Where(c => c.Id == aidId))
-                .FirstOrDefaultAsync(t => t.Id == workerId);
-
-            if (worker == null)
-                return new("کارگر مورد نظر یافت نشد!!!!", false);
-
-            var aid = worker.Aids.FirstOrDefault(t => t.Id == aidId);
-
-            if (aid == null)
-                return new("مساعده مورد نظر یافت نشد!!!!", false);
-
-            if (worker.Salaries.Count != 0)
-                return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);
-
-            worker.Aids.Remove(aid);
-            try
-            {
-                Entities.Update(worker);
-            }
-            catch (Exception ex)
-            {
-                return new("خطا دراتصال به پایگاه داده!!!", false);
-            }
-            return new(string.Empty, true);
         }
         #endregion
     }

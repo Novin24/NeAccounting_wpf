@@ -155,10 +155,8 @@ namespace NeAccounting.ViewModels
             {
                 _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             }
-            await db.SaveChangesAsync();
             _snackbarService.Show("کاربر گرامی", $"ثبت سند با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
             #endregion
-
 
             #region BackToBillPage
             Type? pageType = NameToPageTypeConverter.Convert("Bill");
