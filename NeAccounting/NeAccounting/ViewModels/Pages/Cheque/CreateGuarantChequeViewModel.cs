@@ -112,7 +112,8 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
     [RelayCommand]
     private async Task OnSubmit()
     {
-        #region validationif (_isreadonly)
+        #region validation
+        if (_isreadonly)
         {
             _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
             return;

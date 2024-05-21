@@ -5,6 +5,8 @@ using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Resources;
+using NeAccounting.Windows;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using Wpf.Ui;
@@ -13,12 +15,14 @@ using Wpf.Ui.Controls;
 public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAware
 {
     private bool _isreadonly = true;
-    private readonly ISnackbarService _snackbarService; 
+    private readonly WindowsProviderService _windowsProviderService;
+    private readonly ISnackbarService _snackbarService;
     private readonly INavigationService _navigationService;
 
-    public UpdateBuyInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService)
+    public UpdateBuyInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService, WindowsProviderService serviceProvider)
     {
         _snackbarService = snackbarService;
+        _windowsProviderService = serviceProvider;
         _navigationService = navigationService;
         _isreadonly = NeAccountingConstants.ReadOnlyMode;
     }
@@ -175,8 +179,9 @@ public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAw
         CusName = cus.Name;
         CusNumber = cus.UniqNumber;
         Status = stu.Status;
-        Debt = stu.Debt;
-        Credit = stu.Credit;
+        Debt = stu.Amount;
+        RowId = itm.RemList.Count + 1;
+        Credit = cus.TotalCredit;
         SubmitDate = itm.Date;
         StaticList = itm.RemList;
         InvDescription = itm.InvoiceDescription;
@@ -430,21 +435,12 @@ public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAw
     }
 
     [RelayCommand]
-    private void OnAddClick(string parameter)
+    private async Task OnAddClick()
     {
-        if (string.IsNullOrWhiteSpace(parameter))
-        {
-            return;
-        }
+        _windowsProviderService.ShowDialog<CreateMaterialWindow>();
+        using UnitOfWork db = new();
+        MatList = (await db.MaterialManager.GetMaterails()).Where(t => !t.IsService).ToList();
 
-        Type? pageType = NameToPageTypeConverter.Convert(parameter);
-
-        if (pageType == null)
-        {
-            return;
-        }
-
-        _ = _navigationService.Navigate(pageType);
     }
     #endregion
 }

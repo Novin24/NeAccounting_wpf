@@ -1,0 +1,161 @@
+﻿<ui:FluentWindow x:Class="NeAccounting.Windows.CreateMaterialWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:NeAccounting.Windows"
+                 xmlns:nu="clr-namespace:NeAccounting.Controls"
+                 Loaded="FluentWindow_Loaded"
+                 d:DataContext="{d:DesignInstance local:CreateMaterialWindow,
+                    IsDesignTimeCreatable=False}"
+                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                 Background="{DynamicResource ApplicationBackgroundBrush}"
+                 mc:Ignorable="d"
+                 FontSize="14"
+                 BorderThickness="0"
+                 Height="500"
+                 FontWeight="Regular"
+                 ShowInTaskbar="False"
+                 RenderOptions.BitmapScalingMode="Fant"
+                 ResizeMode="NoResize"
+                 Title="window-CreateMat"
+                 WindowStartupLocation="CenterScreen"
+                 SnapsToDevicePixels="True"
+                 Width="450">
+
+    <Window.InputBindings>
+        <KeyBinding Key="Esc"
+                    Command="{Binding CloseCommand}" />
+
+        <KeyBinding Key="F1"
+                    Command="{Binding CreateMatCommand}" />
+    </Window.InputBindings>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <nu:HeaderPack NamePpage="تعریف اجناس " />
+        <Border Grid.Row="1"
+                CornerRadius="9"
+                BorderBrush="#D6D5D5"
+                BorderThickness="0.4"
+                Margin="10 0 10 8">
+            <Border.Background>
+                <SolidColorBrush Color="Gray"
+                                 Opacity="0.08" />
+
+            </Border.Background>
+            <Grid FlowDirection="RightToLeft"
+                  Margin="0 20 0 20 ">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".3*"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width=".3*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="3"
+                            Margin="20 0 20 0">
+                    <TextBlock FontFamily="Calibri"
+                               FontSize="14"
+                               Text="نام کالا"
+                               Margin="7 0 0 0 " />
+                    <ui:TextBox TextAlignment="Center"
+                                FontSize="14"
+                                x:Name="MaterialName"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Text="{Binding ViewModel.MaterialName , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                Margin="0 4 3 0 "
+                                FontFamily="Calibri" />
+                </StackPanel>
+                <StackPanel Grid.Row="1"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="3"
+                            Margin="20 0 20 0">
+
+                    <TextBlock FontFamily="Calibri"
+                               FontSize="14"
+                               Text="واحد شمارش"
+                               Margin="7 0 0 0 " />
+                    <ComboBox FontSize="14"
+                              FontFamily="Calibri"
+                              SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              DisplayMemberPath="DisplayName"
+                              SelectedValuePath="Id"
+                              ItemsSource="{Binding ViewModel.AsuBox}"
+                              Margin="0 4 0 0" />
+                </StackPanel>
+                <nu:MoneyPack Grid.Row="2"
+                              Grid.Column="1"
+                              Grid.ColumnSpan="3"
+                              LabelName="آخرین قیمت فروش"
+                              Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel Grid.Row="3"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="3"
+                            Margin="20 4 20 0">
+
+                    <TextBlock FontFamily="Calibri"
+                               FontSize="14"
+                               Text="محل نگهداری"
+                               Margin="7 0 0 0 " />
+                    <ui:TextBox FontSize="14"
+                                TextAlignment="Center"
+                                Text="{Binding ViewModel.Address , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                FontFamily="Calibri"
+                                Margin="0 4 0 0" />
+                </StackPanel>
+                <StackPanel Grid.Row="4"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="3"
+                            Margin="20 0 20 0">
+                    <TextBlock FontFamily="Calibri"
+                               FontSize="14"
+                               Text="شماره سریال"
+                               Margin="7 0 0 0 " />
+                    <ui:TextBox Grid.Column="0"
+                                Grid.Row="2"
+                                Text="{Binding ViewModel.Serial , Mode=OneWayToSource , UpdateSourceTrigger=PropertyChanged}"
+                                Margin="0 4 3 0"
+                                TextAlignment="Center"
+                                FontSize="14"
+                                FontFamily="Calibri" />
+                </StackPanel>
+                <Button Grid.Row="5"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="3"
+                        Padding="30 4 "
+                        x:Name="Btn_submit"
+                        Command="{Binding CreateMatCommand , Mode=OneWay}"
+                        HorizontalAlignment="Center"
+                        FontFamily="Calibri"
+                        FontSize="17">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="ثبت" />
+                        <TextBlock Text=" (F1)"
+                                   FontSize="12"
+                                   VerticalAlignment="Center"
+                                   Foreground="#FFA3A3A3" />
+                    </StackPanel>
+                </Button>
+
+            </Grid>
+
+        </Border>
+    </Grid>
+</ui:FluentWindow>

@@ -2,19 +2,17 @@
 using DomainShared.Enums;
 using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
-using NeAccounting.Helpers;
 using NeAccounting.Helpers.Extention;
+using NeAccounting.Windows;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class CreateCustomerViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService dialogService) : ObservableObject
+    public partial class HotCreateCustomerViewModel(ISnackbarService snackbarService) : ObservableObject
     {
-        private readonly INavigationService _navigationService = navigationService;
         private readonly ISnackbarService _snackbarService = snackbarService;
-        private readonly IContentDialogService _dialogService = dialogService;
         private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
         [ObservableProperty]
         private string _fullName;
@@ -52,7 +50,7 @@ namespace NeAccounting.ViewModels
 
 
         [RelayCommand]
-        private async Task OnCreateCustomer()
+        private async Task OnCreateCustomer(CreateCustomerWindow window)
         {
             if (_isreadonly)
             {
@@ -85,44 +83,10 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اعتبار نقدی"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            if (!string.IsNullOrEmpty(NationalCode))
-            {
-                if (!NationalCode.ValidNationalCode(_snackbarService))
-                {
-                    var result = await _dialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
-                    {
-                        Title = "کد ملی نامعتبر !!!",
-                        Content = new TextBlock() { Text = "آیا ادامه میدهید ؟؟؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
-                        PrimaryButtonText = "بله",
-                        SecondaryButtonText = "خیر",
-                        CloseButtonText = "انصراف",
-                    });
-                    if (result != ContentDialogResult.Primary)
-                    {
-                        return;
-                    }
-                }
-            }
-            else
+
+            if (string.IsNullOrEmpty(NationalCode))
             {
                 NationalCode = string.Empty;
-            }
-
-            Mobile = Mobile.Trim();
-            if (!Mobile.ValidMobileNumber())
-            {
-                var result = await _dialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
-                {
-                    Title = "موبایل نامعتبر !!!",
-                    Content = new TextBlock() { Text = "آیا ادامه میدهید ؟؟؟", FlowDirection = FlowDirection.RightToLeft, FontFamily = new FontFamily("Calibri"), FontSize = 16 },
-                    PrimaryButtonText = "بله",
-                    SecondaryButtonText = "خیر",
-                    CloseButtonText = "انصراف",
-                });
-                if (result != ContentDialogResult.Primary)
-                {
-                    return;
-                }
             }
 
             CashCredit ??= 0;
@@ -139,17 +103,9 @@ namespace NeAccounting.ViewModels
                 }
                 await db.SaveChangesAsync();
             }
-
-
             _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
-            Type? pageType = NameToPageTypeConverter.Convert("CustomerList");
-
-            if (pageType == null)
-            {
-                return;
-            }
-            _ = _navigationService.Navigate(pageType);
+            window.Visibility = Visibility.Hidden;
         }
     }
 }

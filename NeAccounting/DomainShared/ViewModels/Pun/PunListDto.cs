@@ -13,6 +13,13 @@
         public long LastBuyPrice { get; set; }
         public string Serial { get; set; }
         public string Address { get; set; }
+        public string ServiceType
+        {
+            get
+            {
+                return IsServise ? "خدماتی" : "کالا";
+            }
+        }
         public bool IsServise { get; set; }
         public bool IsActive { get; set; }
 

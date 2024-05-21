@@ -5,7 +5,7 @@ namespace NeAccounting.Windows
     /// <summary>
     /// Interaction logic for WatingWindow.xaml
     /// </summary>
-    public partial class WatingWindow 
+    public partial class WatingWindow
     {
         public WatingWindowViewModel ViewModel { get; }
 
@@ -18,7 +18,13 @@ namespace NeAccounting.Windows
 
         private void btn_close_Click(object sender, RoutedEventArgs e)
         {
-            base.Close();
+            this.Visibility = Visibility.Hidden;
+        }
+
+        [RelayCommand]
+        private void OnClose()
+        {
+            Visibility = Visibility.Hidden;
         }
 
         private async void Btn_start_Click(object sender, RoutedEventArgs e)
@@ -27,17 +33,13 @@ namespace NeAccounting.Windows
             {
                 return;
             }
+            btn_ex.Command = null;
             Btn_start.Visibility = Visibility.Collapsed;
             btn_End.Visibility = Visibility.Visible;
             await ww.ViewModel.ChangeYearCommand.ExecuteAsync(null);
             btn_End.Visibility = Visibility.Collapsed;
             btn_close.Visibility = Visibility.Visible;
-        }
-
-        private void FluentWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            this.Visibility = Visibility.Hidden;
-            e.Cancel = true;
+            btn_ex.Command = closeCommand;
         }
     }
 }

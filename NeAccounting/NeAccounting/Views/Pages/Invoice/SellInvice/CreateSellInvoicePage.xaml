@@ -24,9 +24,6 @@
         <KeyBinding Key="F4"
                     Command="{Binding ViewModel.AddClickCommand}"
                     CommandParameter="CreateCustomer" />
-        <KeyBinding Key="F3"
-                    Command="{Binding ViewModel.AddClickCommand}"
-                    CommandParameter="CreateMaterail" />
     </Page.InputBindings>
     <Grid>
 
@@ -156,22 +153,6 @@
                                                    FontSize="15"
                                                    Text="نام مشتری"
                                                    Margin="2 21 0 0 " />
-                                        <StackPanel DockPanel.Dock="Right">
-                                            <TextBlock Text="F3"
-                                                       TextAlignment="Center"
-                                                       FontSize="11" />
-                                            <Button Padding="1 0 "
-                                                    FontSize="21"
-                                                    IsTabStop="False"
-                                                    Focusable="False"
-                                                    FontFamily="Calibri"
-                                                    CommandParameter="CreateMaterail"
-                                                    Command="{Binding ViewModel.AddClickCommand}">
-
-                                                <ui:SymbolIcon Symbol="QrCode20" />
-
-                                            </Button>
-                                        </StackPanel>
                                         <StackPanel Margin="0 0 5 0"
                                                     DockPanel.Dock="Right">
                                             <TextBlock Text="F4"
@@ -181,7 +162,6 @@
                                                     FontSize="21"
                                                     IsTabStop="False"
                                                     FontFamily="Calibri"
-                                                    CommandParameter="CreateCustomer"
                                                     Command="{Binding ViewModel.AddClickCommand}">
 
                                                 <ui:SymbolIcon Symbol="PersonAdd20"
@@ -483,7 +463,6 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                             <RowDefinition />
-                                            <RowDefinition />
                                         </Grid.RowDefinitions>
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
@@ -491,35 +470,31 @@
                                                    Text="وضعیت شخصی :"
                                                    HorizontalAlignment="Right" />
 
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Center"
+                                                    Grid.Column="1">
+                                            
+                                        <TextBlock FontFamily="Calibri"
+                                                   FontSize="16"
+                                                   Margin="5 0"
+                                                   Text="{Binding ViewModel.Debt}"/>
+                                            
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="{Binding ViewModel.Status}"
-                                                   Margin="15 0 0 0"
-                                                   Grid.Column="1"
-                                                   HorizontalAlignment="Center" />
+                                                   Text="{Binding ViewModel.Status}"/>
+
+                                        </StackPanel>
 
                                         <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
                                                    Grid.Row="1"
-                                                   Text="طلبکاری :"
+                                                   FontSize="15"
+                                                   Text="اعتبار :"
                                                    HorizontalAlignment="Right" />
                                         <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Text="{Binding ViewModel.Credit}"
-                                                   Grid.Column="1"
+                                                   FontSize="17"
+                                                   x:Name="txt_Credit"
                                                    Grid.Row="1"
-                                                   Margin="15 0 4 0"
-                                                   HorizontalAlignment="Center" />
-
-                                        <TextBlock FontFamily="Calibri"
-                                                   Grid.Row="2"
-                                                   FontSize="15"
-                                                   Text="بدهکاری :"
-                                                   HorizontalAlignment="Right" />
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Text="{Binding ViewModel.Debt}"
-                                                   Grid.Row="2"
+                                                   Text="0"
                                                    Grid.Column="1"
                                                    Margin="15 0 4 0"
                                                    HorizontalAlignment="Center" />

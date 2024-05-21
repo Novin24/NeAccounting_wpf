@@ -109,6 +109,9 @@ namespace NeAccounting
                 services.AddTransient<CustomerListPage>();
                 services.AddTransient<CustomerListViewModel>();
 
+                services.AddTransient<CreateCustomerWindow>();
+                services.AddTransient<HotCreateCustomerViewModel>();
+
                 services.AddTransient<CreateCustomerPage>();
                 services.AddTransient<CreateCustomerViewModel>();
 
@@ -224,6 +227,11 @@ namespace NeAccounting
 
                 #endregion
 
+                #region ProfitOrLess
+                services.AddTransient<ProfitOrLessPage>();
+                services.AddTransient<ProfitOrLessViewModel>();
+                #endregion
+
                 #region FiscalYear 
 
                 services.AddTransient<FiscalYearListPage>();
@@ -234,6 +242,9 @@ namespace NeAccounting
                 #endregion
 
                 #region materials
+                services.AddTransient<CreateMaterialWindow>();
+                services.AddTransient<HotCreateMaterailViewModel>();
+                
                 services.AddTransient<CreateMaterailPage>();
                 services.AddTransient<CreateMaterailViewModel>();
 

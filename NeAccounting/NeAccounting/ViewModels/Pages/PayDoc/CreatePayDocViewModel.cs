@@ -49,12 +49,6 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService) : O
     private string _totalPrice = "0";
 
     /// <summary>
-    /// مبلغ کل وضعیت
-    /// </summary>
-    [ObservableProperty]
-    private long _totalPricee = 0;
-
-    /// <summary>
     /// مبلغ وارد شده 
     /// </summary>
     [ObservableProperty]
@@ -105,8 +99,7 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService) : O
         DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.PayDoc);
         var s = await db.DocumentManager.GetStatus(custId);
         Status = s.Status;
-        TotalPricee = Math.Abs(s.Amount);
-        TotalPrice = Math.Abs(s.Amount).ToString("N0");
+        TotalPrice = s.Amount;
     }
 
 
@@ -170,7 +163,6 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService) : O
         Description = string.Empty;
         Status = "تسویه";
         TotalPrice = "0";
-        TotalPricee = 0;
         Price = 0;
         Discount = 0;
         CusId = null;

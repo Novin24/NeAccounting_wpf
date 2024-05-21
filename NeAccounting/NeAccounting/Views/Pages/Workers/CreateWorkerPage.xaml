@@ -17,7 +17,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.CreateCommand}" />
+                    Command="{Binding ViewModel.CreateCommand}" />
     </Page.InputBindings>
     <Grid>
 
@@ -111,7 +111,7 @@
 
                     </Grid.RowDefinitions>
                     <nu:HeaderPack Grid.ColumnSpan="2"
-                                   NamePpage="تعریف پرسنل"/>
+                                   NamePpage="تعریف پرسنل" />
                     <Border Grid.Row="1"
                             CornerRadius="9"
                             Margin="10 4 4 8"
@@ -156,7 +156,7 @@
                                                   IsEnabled="False"
                                                   TabIndex="11"
                                                   x:Name="txt_ShiftPrice"
-                                                  Value="{Binding ViewModel.ShiftSalary , Mode=TwoWay}" />
+                                                  Value="{Binding ViewModel.ShiftSalary , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
 
                                     <nu:MoneyPack Grid.Row="2"
@@ -164,7 +164,7 @@
                                                   IsEnabled="False"
                                                   LabelName="اضافه کاری"
                                                   x:Name="txt_overTimeShift"
-                                                  Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay}" />
+                                                  Value="{Binding ViewModel.ShiftovertimeSalary , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
                                 </Grid>
                             </Border>
@@ -200,30 +200,30 @@
                                     <nu:MoneyPack Grid.Row="1"
                                                   LabelName="دستمزد"
                                                   x:Name="txt_MonthPrice"
-                                                  Value="{Binding ViewModel.Salary, Mode=TwoWay}" />
+                                                  Value="{Binding ViewModel.Salary, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
                                     <nu:MoneyPack Grid.Row="2"
                                                   LabelName="اضافه کاری"
                                                   x:Name="txt_overtimePriceMonth"
-                                                  Value="{Binding ViewModel.OvertimeSalary, Mode=TwoWay}" />
+                                                  Value="{Binding ViewModel.OvertimeSalary, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
                                     <nu:MoneyPack Grid.Row="3"
                                                   LabelName="حق بیمه"
                                                   x:Name="txt_insurancePerimum"
-                                                  Value="{Binding ViewModel.InsurancePremium, Mode=TwoWay}" />
+                                                  Value="{Binding ViewModel.InsurancePremium, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
                                     <nu:NumberPack Grid.Row="4"
-                                                  LabelName="تعداد روز کاری"
+                                                   LabelName="تعداد روز کاری"
                                                    x:Name="txt_dayInMonth"
                                                    Minimum="0"
                                                    Maximum="31"
-                                                   Value="{Binding ViewModel.DayInMonth, Mode=TwoWay}" />
+                                                   Value="{Binding ViewModel.DayInMonth, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
                                 </Grid>
                             </Border>
                         </Grid>
                     </Border>
-                    
+
                     <Grid Grid.Column="1"
                           Grid.Row="1">
 
@@ -262,19 +262,19 @@
                                                 TabIndex="0"
                                                 x:Name="txt_name"
                                                 Margin="0 4 3 0 "
-                                                Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
+                                                Text="{Binding ViewModel.FullName , Mode=OneWayToSource , UpdateSourceTrigger=PropertyChanged}"
                                                 FontFamily="Calibri" />
                                 </StackPanel>
 
                                 <nu:PersianDatePicker FontSize="15"
-                                                              Grid.Column="1"
-                                                              LabelName="تاریخ شروع به کار"
-                                                              FlowDirection="LeftToRight"
-                                                              FontFamily="Calibri"
-                                                              TabIndex="1"
-                                                              x:Name="dtp"
-                                                              SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay}"
-                                                              Margin="0 4 0 0" />
+                                                      Grid.Column="1"
+                                                      LabelName="تاریخ شروع به کار"
+                                                      FlowDirection="LeftToRight"
+                                                      FontFamily="Calibri"
+                                                      TabIndex="1"
+                                                      x:Name="dtp"
+                                                      SelectedDate="{Binding ViewModel.StartDate , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      Margin="0 4 0 0" />
 
                                 <StackPanel Grid.Column="0"
                                             Grid.Row="1">
@@ -289,7 +289,7 @@
                                                   FontSize="15"
                                                   FlowDirection="LeftToRight"
                                                   TabIndex="2"
-                                                  Text="{Binding ViewModel.PersonalId , Mode=TwoWay}"
+                                                  Text="{Binding ViewModel.PersonalId , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   FontFamily="Calibri" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="1"
@@ -304,7 +304,7 @@
                                                 TextAlignment="Center"
                                                 TabIndex="3"
                                                 FontFamily="Calibri"
-                                                Text="{Binding ViewModel.JobTitle , Mode=OneWayToSource}"
+                                                Text="{Binding ViewModel.JobTitle , Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="0"
@@ -317,7 +317,7 @@
                                                 Grid.Row="2"
                                                 TabIndex="4"
                                                 x:Name="Txt_NationalCode"
-                                                Text="{Binding ViewModel.NationalCode, Mode=OneWayToSource}"
+                                                Text="{Binding ViewModel.NationalCode, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
                                                 Margin="20 4 3 0"
                                                 TextAlignment="Center"
                                                 FontSize="15"
@@ -335,7 +335,7 @@
                                     <ui:TextBox FontSize="15"
                                                 TextAlignment="Center"
                                                 TabIndex="5"
-                                                Text="{Binding ViewModel.AccountNumber, Mode=OneWayToSource}"
+                                                Text="{Binding ViewModel.AccountNumber, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
                                                 FontFamily="Calibri"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
@@ -350,7 +350,7 @@
                                                 Grid.Row="2"
                                                 Margin="20 4 3 0"
                                                 FlowDirection="LeftToRight"
-                                                Text="{Binding ViewModel.Mobile, Mode=OneWayToSource}"
+                                                Text="{Binding ViewModel.Mobile, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
                                                 TextAlignment="Center"
                                                 FontSize="15"
                                                 TabIndex="6"
@@ -383,15 +383,15 @@
                                                FontSize="15"
                                                Text="آدرس"
                                                Grid.Column="1" />
-                                    <TextBox Text="{Binding ViewModel.Address, Mode=OneWayToSource}"
-                                                 FontSize="15"
-                                                 TextWrapping="Wrap"
-                                                 TabIndex="8"
-                                                 Margin="0,22,0,0"
-                                                  FlowDirection="RightToLeft"
-                                                 Grid.ColumnSpan="2"
-                                                 VerticalScrollBarVisibility="Visible"
-                                                 FontFamily="Calibri"></TextBox>
+                                    <TextBox Text="{Binding ViewModel.Address, Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
+                                             FontSize="15"
+                                             TextWrapping="Wrap"
+                                             TabIndex="8"
+                                             Margin="0,22,0,0"
+                                             FlowDirection="RightToLeft"
+                                             Grid.ColumnSpan="2"
+                                             VerticalScrollBarVisibility="Visible"
+                                             FontFamily="Calibri"></TextBox>
                                 </Grid>
                                 <Grid Grid.Column="0"
                                       Grid.ColumnSpan="2"
@@ -404,21 +404,21 @@
                                                Grid.Column="1" />
 
                                     <ui:TextBox Margin="0,20,0,0"
-                                                    FontSize="15"
-                                                    TabIndex="9"
-                                                    Text="{Binding ViewModel.Description,Mode=OneWayToSource}"
-                                                    FlowDirection="RightToLeft"
-                                                    Grid.ColumnSpan="2"
-                                                    TextWrapping="Wrap"
-                                                    FontFamily="Calibri"></ui:TextBox>
+                                                FontSize="15"
+                                                TabIndex="9"
+                                                Text="{Binding ViewModel.Description,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
+                                                FlowDirection="RightToLeft"
+                                                Grid.ColumnSpan="2"
+                                                TextWrapping="Wrap"
+                                                FontFamily="Calibri"></ui:TextBox>
                                 </Grid>
 
                                 <Button Grid.Row="6"
                                         Margin="12"
                                         FontSize="15"
-                                        Padding="30 5 "     
+                                        Padding="30 5 "
                                         x:Name="Btn_submit"
-                                        Grid.ColumnSpan="2" 
+                                        Grid.ColumnSpan="2"
                                         FontFamily="Calibri"
                                         HorizontalAlignment="Center"
                                         Command="{Binding ViewModel.CreateCommand}">

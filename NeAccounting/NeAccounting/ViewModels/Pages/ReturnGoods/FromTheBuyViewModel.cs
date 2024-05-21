@@ -72,24 +72,6 @@ public partial class FromTheBuyViewModel(ISnackbarService snackbarService, INavi
 
 
     /// <summary>
-    /// وضعیت مشتری
-    /// </summary>
-    [ObservableProperty]
-    private string _status = "تسویه";
-
-    /// <summary>
-    /// بدهکاری مشتری
-    /// </summary>
-    [ObservableProperty]
-    private string _debt = "0";
-
-    /// <summary>
-    /// طلبکاری مشتری
-    /// </summary>
-    [ObservableProperty]
-    private string _credit = "0";
-
-    /// <summary>
     /// مبلغ کل فاکتور
     /// </summary>
     [ObservableProperty]

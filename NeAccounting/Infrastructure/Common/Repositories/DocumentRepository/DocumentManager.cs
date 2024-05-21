@@ -937,10 +937,8 @@ namespace Infrastructure.Repositories
                 return new UserDebtStatus
                 {
                     Status = "بدهکار",
-                    Amount = res,
-                    Credit = "0",
-                    Debt = Math.Abs(res).ToString("N0"),
-
+                    Amount = Math.Abs(res).ToString("N0"),
+                    LAmount = res
                 };
             }
             if (res < 0)
@@ -948,17 +946,15 @@ namespace Infrastructure.Repositories
                 return new UserDebtStatus()
                 {
                     Status = "طلبکار",
-                    Amount = res,
-                    Debt = "0",
-                    Credit = Math.Abs(res).ToString("N0")
+                    Amount = Math.Abs(res).ToString("N0"),
+                    LAmount = res
                 };
             }
             return new UserDebtStatus()
             {
                 Status = "تسویه",
-                Amount = 0,
-                Credit = "0",
-                Debt = "0"
+                Amount = "0",
+                LAmount = 0
             };
         }
         #endregion
@@ -1255,6 +1251,57 @@ namespace Infrastructure.Repositories
             }
 
             return new PagedResulViewModel<DetailRemittanceDto>(totalCount, pageCount, pageNum, Remittances);
+        }
+
+        public async Task<ProfitStatementDto> GetProfitandLossStatement()
+        {
+            var buyRemitance = await (from buyRem in DbContext.Set<BuyRemittance>()
+                           .AsNoTracking()
+                                      group buyRem by buyRem.MaterialId into s
+                                      select new PunProfitListDto()
+                                      {
+                                          MatId = s.Key,
+                                          Total = s.Sum(t => t.TotalPrice),
+                                          Count = s.Sum(t => t.AmountOf)
+                                      }).ToListAsync();
+
+            var sellRemitance = await (from sellRem in DbContext.Set<SellRemittance>()
+                           .AsNoTracking()
+                                       group sellRem by sellRem.MaterialId into s
+                                       select new PunProfitListDto()
+                                       {
+                                           MatId = s.Key,
+                                           Total = s.Sum(t => t.TotalPrice),
+                                           Count = s.Sum(t => t.AmountOf)
+                                       }).ToListAsync();
+
+            long profitOrLess = 0;
+            long leftOverInventory = 0;
+            foreach (var item in buyRemitance)
+            {
+                double amountOfSell = 0;
+                var t = sellRemitance.FirstOrDefault(t => t.MatId == item.MatId);
+                if (t is not null)
+                {
+                    long totalSell = (long)Math.Round(t.Count * t.Fixedprice);
+                    long totalBuy = (long)Math.Round(t.Count * item.Fixedprice);
+                    profitOrLess += totalSell - totalBuy;
+                    amountOfSell += t.Count;
+                }
+
+                if (item.Count - amountOfSell != 0)
+                {
+                    leftOverInventory += (long)Math.Round((item.Count - amountOfSell) * item.Fixedprice);
+                }
+            }
+
+            return new ProfitStatementDto()
+            {
+                ProfitLossStatement = profitOrLess,
+                Inventory = leftOverInventory,
+                TotalSell = sellRemitance.Sum(t => t.Total),
+                TotalBuy = buyRemitance.Sum(t => t.Total),
+            };
         }
 
         public async Task<PagedResulViewModel<MaterialReportDto>> GetMaterialReport(Guid id,

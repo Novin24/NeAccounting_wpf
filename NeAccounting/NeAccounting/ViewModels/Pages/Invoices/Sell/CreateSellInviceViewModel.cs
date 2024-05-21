@@ -6,18 +6,23 @@ using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Resources;
+using NeAccounting.Windows;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels;
-public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService,  WindowsProviderService serviceProvider) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
-    private readonly INavigationService _navigationService = navigationService;
+    private readonly WindowsProviderService _windowsProviderService = serviceProvider;
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
     private int rowId = 1;
+
+    #region Property
+
 
     /// <summary>
     /// لیست اجناس  فاکتور
@@ -123,6 +128,9 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     /// </summary>
     [ObservableProperty]
     private string? _invDescription;
+    #endregion
+
+    #region Method
 
     public async void OnNavigatedTo()
     {
@@ -173,19 +181,20 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
             return false;
         }
 
-        if (AmountOf > MatList.First(t => t.Id == MaterialId).Entity)
-        {
-            _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
-        }
 
         if (MatPrice == null || MatPrice == 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("مبلغ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return false;
         }
-        #endregion
 
         var mat = MatList.First(t => t.Id == MaterialId);
+        if (!mat.IsService && AmountOf > MatList.First(t => t.Id == MaterialId).Entity)
+        {
+            _snackbarService.Show("اخطار", "موجودی انبار منفی میشود !!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Red)), TimeSpan.FromMilliseconds(3000));
+        }
+        #endregion
+
         List.Add(new RemittanceListViewModel()
         {
             AmountOf = AmountOf.Value,
@@ -213,8 +222,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         using UnitOfWork db = new();
         var s = await db.DocumentManager.GetStatus(custId);
         Status = s.Status;
-        Credit = s.Credit;
-        Debt = s.Debt;
+        Debt = s.Amount;
     }
 
     /// <summary>
@@ -375,21 +383,14 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         }
         RemainPrice = total.ToString("N0");
     }
+
     [RelayCommand]
-    private void OnAddClick(string parameter)
+    private async Task OnAddClick()
     {
-        if (string.IsNullOrWhiteSpace(parameter))
-        {
-            return;
-        }
-
-        Type? pageType = NameToPageTypeConverter.Convert(parameter);
-
-        if (pageType == null)
-        {
-            return;
-        }
-
-        _ = _navigationService.Navigate(pageType);
+        _windowsProviderService.ShowDialog<CreateCustomerWindow>();
+        using UnitOfWork db = new();
+        Cuslist = await db.CustomerManager.GetDisplayUser(false, true);
     }
+    #endregion
+
 }

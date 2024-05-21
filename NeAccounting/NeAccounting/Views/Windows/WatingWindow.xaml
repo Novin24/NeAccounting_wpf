@@ -6,7 +6,6 @@
                  xmlns:local="clr-namespace:NeAccounting.Windows"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  MaxWidth="450"
-                 Closing="FluentWindow_Closing"
                  BorderThickness="0"
                  d:DataContext="{d:DesignInstance local:WatingWindow,
                                      IsDesignTimeCreatable=False}"
@@ -16,14 +15,19 @@
                  FontSize="14"
                  Height="250"
                  FontWeight="Regular"
+                 Title="window-wating"
                  ShowInTaskbar="False"
                  RenderOptions.BitmapScalingMode="Fant"
                  ResizeMode="NoResize"
                  WindowStartupLocation="CenterOwner"
                  SnapsToDevicePixels="True"
                  Width="450">
-
-    <Grid FlowDirection="RightToLeft">
+    <Window.InputBindings>
+        <KeyBinding Key="Esc"
+                    x:Name="btn_ex"
+                    Command="{Binding CloseCommand}" />
+    </Window.InputBindings>
+        <Grid FlowDirection="RightToLeft">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
@@ -54,11 +58,6 @@
             <TextBlock.Foreground>
                 <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
             </TextBlock.Foreground>
-            <Button Grid.Column="0"
-                    Background="Transparent"
-                    BorderBrush="Transparent"
-                    Click="btn_close_Click"
-                    IsCancel="True" />
         </TextBlock>
         <Border Grid.Row="2"
                 Padding="12"
@@ -93,8 +92,7 @@
                         x:Name="btn_close"
                         Visibility="Collapsed"
                         Content="اتمام"
-                        Click="btn_close_Click"
-                        IsCancel="True" />
+                        Click="btn_close_Click"/>
             </Grid>
         </Border>
     </Grid>

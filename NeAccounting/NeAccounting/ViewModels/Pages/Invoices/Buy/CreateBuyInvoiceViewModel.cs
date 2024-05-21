@@ -5,18 +5,19 @@ using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
-using NeAccounting.Helpers;
+using NeAccounting.Resources;
+using NeAccounting.Windows;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService, WindowsProviderService serviceProvider) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
-    private readonly INavigationService _navigationService = navigationService;
+    private readonly WindowsProviderService _windowsProviderService = serviceProvider;
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
-    private int rowId = 1;
+    private int roowId = 1;
 
     /// <summary>
     /// لیست اجناس  فاکتور
@@ -184,13 +185,13 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
             UnitName = mat.UnitName,
             MatName = mat.MaterialName,
             Price = MatPrice.Value,
-            RowId = rowId,
+            RowId = roowId,
             TotalPrice = (long)(MatPrice.Value * AmountOf.Value),
             Description = Description,
             MaterialId = MaterialId.Value,
         });
         SetCommisionValue();
-        RefreshRow(ref rowId);
+        RefreshRow(ref roowId);
         return true;
     }
 
@@ -204,8 +205,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
         using UnitOfWork db = new();
         var s = await db.DocumentManager.GetStatus(custId);
         Status = s.Status;
-        Credit = s.Credit;
-        Debt = s.Debt;
+        Debt = s.Amount;
     }
 
     /// <summary>
@@ -361,21 +361,35 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
         }
         RemainPrice = total.ToString("N0");
     }
+
     [RelayCommand]
-    private void OnAddClick(string parameter)
+    private async Task OnAddClick(string parameter)
     {
-        if (string.IsNullOrWhiteSpace(parameter))
+        //if (string.IsNullOrWhiteSpace(parameter))
+        //{
+        //    return;
+        //}
+
+        //Type? pageType = NameToPageTypeConverter.Convert(parameter);
+
+        //if (pageType == null)
+        //{
+        //    return;
+        //}
+
+        //_ = _navigationService.Navigate(pageType);
+        if (parameter == "CreateCustomer")
         {
-            return;
+            _windowsProviderService.ShowDialog<CreateCustomerWindow>();
+            using UnitOfWork db = new();
+            Cuslist = await db.CustomerManager.GetDisplayUser(false, true);
         }
 
-        Type? pageType = NameToPageTypeConverter.Convert(parameter);
-
-        if (pageType == null)
+        if (parameter == "CreateMaterail")
         {
-            return;
+            _windowsProviderService.ShowDialog<CreateMaterialWindow>();
+            using UnitOfWork db = new();
+            MatList = (await db.MaterialManager.GetMaterails()).Where(t => !t.IsService).ToList();
         }
-
-        _ = _navigationService.Navigate(pageType);
     }
 }

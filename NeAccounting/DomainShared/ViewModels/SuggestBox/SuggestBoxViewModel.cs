@@ -10,6 +10,7 @@
         public T Id { get; set; }
         public string DisplayName { get; set; }
         public S UniqNumber { get; set; }
+        public long TotalValidity { get; set; } = 0;
     }
 
     public class PersonnerlSuggestBoxViewModel

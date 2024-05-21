@@ -68,25 +68,6 @@ public partial class FromTheSellViewModel(ISnackbarService snackbarService, INav
     [ObservableProperty]
     private DateTime? _submitDate = DateTime.Now;
 
-
-    /// <summary>
-    /// وضعیت مشتری
-    /// </summary>
-    [ObservableProperty]
-    private string _status = "تسویه";
-
-    /// <summary>
-    /// بدهکاری مشتری
-    /// </summary>
-    [ObservableProperty]
-    private string _debt = "0";
-
-    /// <summary>
-    /// طلبکاری مشتری
-    /// </summary>
-    [ObservableProperty]
-    private string _credit = "0";
-
     /// <summary>
     /// مبلغ کل فاکتور
     /// </summary>

@@ -175,11 +175,12 @@ namespace NeAccounting.ViewModels
             {
                 List.Add(it);
             }
+            RowId = itm.RemList.Count + 1;
             CusName = cus.Name;
             CusNumber = cus.UniqNumber;
             Status = stu.Status;
-            Debt = stu.Debt;
-            Credit = stu.Credit;
+            Debt = stu.Amount;
+            Credit = cus.TotalCredit;
             SubmitDate = itm.Date;
             StaticList = itm.RemList;
             InvDescription = itm.InvoiceDescription;
@@ -416,7 +417,6 @@ namespace NeAccounting.ViewModels
             rowId = row;
         }
 
-
         /// <summary>
         /// به روز رسانی مبلغ پورسانت
         /// </summary>
@@ -435,23 +435,6 @@ namespace NeAccounting.ViewModels
                 Totalcommission = "0";
             }
             RemainPrice = total.ToString("N0");
-        }
-        [RelayCommand]
-        private void OnAddClick(string parameter)
-        {
-            if (string.IsNullOrWhiteSpace(parameter))
-            {
-                return;
-            }
-
-            Type? pageType = NameToPageTypeConverter.Convert(parameter);
-
-            if (pageType == null)
-            {
-                return;
-            }
-
-            _ = _navigationService.Navigate(pageType);
         }
         #endregion
     }

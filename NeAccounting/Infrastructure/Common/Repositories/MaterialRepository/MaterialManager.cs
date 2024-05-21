@@ -192,7 +192,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                return new(" خطا در اتصال به پایگاه داده code(99t46993)!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(93t46993)!!!", false);
             }
             return new(string.Empty, true);
         }

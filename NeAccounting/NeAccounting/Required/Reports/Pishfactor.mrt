@@ -114,7 +114,7 @@
           <Components isList="true" count="9">
             <Text1 Ref="9" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>2.6,0,2.2,0.5</ClientRectangle>
+              <ClientRectangle>2.3,0,3.6,0.5</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,21.75,Bold,Point,False,178</Font>
@@ -130,7 +130,7 @@
             </Text1>
             <Text4 Ref="10" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>6,0.2,1.4,0.3</ClientRectangle>
+              <ClientRectangle>6,0.7,1.4,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
@@ -147,7 +147,7 @@
             </Text4>
             <Text5 Ref="11" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.1,0.5,2.1,0.3</ClientRectangle>
+              <ClientRectangle>5.1,1,2.1,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
@@ -736,10 +736,10 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>4/23/2024 9:35:25 AM</ReportChanged>
+  <ReportChanged>5/16/2024 9:46:15 AM</ReportChanged>
   <ReportCreated>4/13/2021 2:18:22 AM</ReportCreated>
   <ReportFile>D:\Source\Wpf\N2\Np_NovinWpf\NeAccounting\NeAccounting\Required\Reports\Pishfactor.mrt</ReportFile>
-  <ReportGuid>678ed3d2f9ba413e8e27267fb0e74df2</ReportGuid>
+  <ReportGuid>fe48e354bd584c7aa3ef275ef3d34998</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>
