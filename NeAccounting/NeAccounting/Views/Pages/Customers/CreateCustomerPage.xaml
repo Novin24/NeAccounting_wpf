@@ -237,7 +237,7 @@
                                         TextAlignment="Center"
                                         TabIndex="6"
                                         TextWrapping="Wrap"
-                                        Text="{Binding ViewModel.Address, Mode=OneWayToSource}"
+                                        Text="{Binding ViewModel.Address, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                         FontFamily="Calibri" />
                         </Grid>
                         <Separator Grid.Row="4"
@@ -255,7 +255,7 @@
                                   TabIndex="7"
                                   Checked="CashCheckBox_Checked"
                                   Unchecked="CashCheckBox_Checked"
-                                  IsChecked="{Binding ViewModel.HaveCashCredit, Mode=TwoWay}"
+                                  IsChecked="{Binding ViewModel.HaveCashCredit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   FlowDirection="LeftToRight">اعتبار نقدی</CheckBox>
 
                         <nu:MoneyPack Grid.Row="4"
@@ -266,7 +266,7 @@
                                       ValueChanged="Txt_ValueChanged"
                                       IsEnabled="False"
                                       x:Name="txt_CashGrantee"
-                                      Value="{Binding ViewModel.CashCredit, Mode=TwoWay}"
+                                      Value="{Binding ViewModel.CashCredit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       TabIndex="8"
                                       FontFamily="Calibri"
                                       Margin="20 0 20 0" />
@@ -286,7 +286,7 @@
                                   HorizontalAlignment="Center"
                                   Checked="PromissoryCheckBox_Checked"
                                   Unchecked="PromissoryCheckBox_Checked"
-                                  IsChecked="{Binding ViewModel.HavePromissoryNote, Mode=TwoWay}"
+                                  IsChecked="{Binding ViewModel.HavePromissoryNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   FontFamily="Calibri"
                                   FlowDirection="LeftToRight">اعتبار سفته</CheckBox>
 
@@ -299,7 +299,7 @@
                                       ValueChanged="Txt_ValueChanged"
                                       x:Name="txt_Grantee"
                                       IsEnabled="False"
-                                      Value="{Binding ViewModel.PromissoryNote, Mode=TwoWay}"
+                                      Value="{Binding ViewModel.PromissoryNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       FontFamily="Calibri"
                                       Margin="20 0" />
 
@@ -318,7 +318,7 @@
                                         TextAlignment="Center"
                                         x:Name="txt_total"
                                         IsEnabled="False"
-                                        Text="{Binding ViewModel.FullName , Mode=OneWayToSource}"
+                                        Text="{Binding ViewModel.FullName , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="14"
                                         FontFamily="Calibri" />
                         </StackPanel>
