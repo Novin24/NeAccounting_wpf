@@ -13,21 +13,22 @@ namespace Infrastructure.Repositories
     {
         public async Task<(string error, bool isSuccess)> CreateExpense(DateTime submitDate, string expensetype, long amount, PaymentType payType, string receiver, string description)
         {
-            //if (await TableNoTracking.AnyAsync(t => t.Expensetype == expensetype))
-            //    return new("کاربر گرامی این هزینه از قبل تعریف شده می‌باشد!!!", false);
-
             try
             {
-
-                var t = await Entities.AddAsync(new Expense(submitDate,
-                                expensetype,
-                                amount,
-                                payType,
-                                receiver,
-                                description));
+                await Entities.AddAsync(new Expense(submitDate,
+                               expensetype,
+                               amount,
+                               payType,
+                               receiver,
+                               description));
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(59t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -38,25 +39,29 @@ namespace Infrastructure.Repositories
             try
             {
                 var x = await Entities.FindAsync(expenseID);
-
                 if (x == null)
                     return new(" مورد  مد نظر یافت نشد !!!", false);
 
+                x.SetDesc(description);
                 x.SubmitDate = submitDate;
                 x.Expensetype = expensetype;
                 x.Amount = amount;
                 x.PayType = payType;
                 x.Receiver = receiver;
-                x.Description = description;
-
                 Entities.Update(x);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(59t46993)!!!", false);
             }
             return new(string.Empty, true);
         }
+
         public async Task<PagedResulViewModel<ExpenselistDto>> GetExpenselist(DateTime? startDate,
             DateTime? endDate,
             bool isInit,

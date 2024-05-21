@@ -1,5 +1,6 @@
 ﻿using Domain.Common;
 using Domain.Enities.NovinEntity.Remittances;
+using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Materials
 {
@@ -13,13 +14,13 @@ namespace Domain.NovinEntity.Materials
         #endregion
 
         #region Property
-        public string Name { get; set; }
-        public string Serial { get; set; }
+        public string Name { get; private set; }
+        public string Serial { get; private set; }
         public double Entity { get; set; }
         public long LastSellPrice { get; set; }
         public long LastBuyPrice { get; set; }
         public bool IsManufacturedGoods { get; set; }
-        public string PhysicalAddress { get; set; }
+        public string PhysicalAddress { get; private set; }
         public bool IsActive { get; set; }
         public bool IsService { get; set; }
         #endregion
@@ -38,15 +39,15 @@ namespace Domain.NovinEntity.Materials
             string physicalAddress,
             bool isManufacturedGoods)
         {
-            Name = name;
+            SetAddress(name);
+            SetAddress(serial);
+            SetAddress(physicalAddress);
             IsManufacturedGoods = isManufacturedGoods;
             UnitId = unitId;
-            Serial = serial;
             IsService = isService;
             Entity = 0;
             LastBuyPrice = 0;
             LastSellPrice = lastSellPrice;
-            PhysicalAddress = physicalAddress;
             IsActive = true;
         }
 
@@ -98,5 +99,33 @@ namespace Domain.NovinEntity.Materials
         }
         #endregion
 
+        #region Methods
+        public Pun SetName(string name)
+        {
+            if (name.Length > 100)
+                throw new ArgumentException(NeErrorCodes.IsLess("عنوان", "صد"));
+
+            Name = name;
+            return this;
+        }
+
+        public Pun SetSerial(string serial)
+        {
+            if (!string.IsNullOrEmpty(serial) && serial.Length > 50)
+                throw new ArgumentException(NeErrorCodes.IsLess("سریال", "پنجاه"));
+
+            Serial = serial;
+            return this;
+        }
+
+        public Pun SetAddress(string physicalAddress)
+        {
+            if (!string.IsNullOrEmpty(physicalAddress) && physicalAddress.Length > 100)
+                throw new ArgumentException(NeErrorCodes.IsLess("ادرس فیزیکی", "صد"));
+
+            PhysicalAddress = physicalAddress;
+            return this;
+        }
+        #endregion
     }
 }

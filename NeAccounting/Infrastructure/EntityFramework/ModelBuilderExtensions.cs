@@ -92,6 +92,7 @@ namespace Infrastructure.Utilities
             {
                 b.HasIndex(t => t.Id);
                 b.Property(t => t.Name).HasMaxLength(30);
+                b.Property(t => t.Descrip).HasMaxLength(100);
             });
 
             builder.Entity<Salary>(b =>

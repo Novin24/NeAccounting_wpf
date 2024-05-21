@@ -45,10 +45,15 @@ namespace Infrastructure.Repositories
 
             try
             {
-                var t = await Entities.AddAsync(new Units(name, description));
+                await Entities.AddAsync(new Units(name, description));
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(10t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -68,15 +73,20 @@ namespace Infrastructure.Repositories
                 return new("واحد مورد نظر یافت نشد!!", false);
             }
 
-            unit.Name = name;
-            unit.Descrip = description;
-
             try
             {
-                var t = Entities.Update(unit);
+                unit.SetName(name);
+                unit.SetDesc(description);
+
+                Entities.Update(unit);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(20t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -105,7 +115,7 @@ namespace Infrastructure.Repositories
 
         public async Task<(string error, bool isSuccess)> AddAllUnitsInNewYear(List<UnitListDto> unitList)
         {
-            var units = unitList.Select(t => new Units(t.Id,t.UnitName,t.Description));
+            var units = unitList.Select(t => new Units(t.UnitName, t.Description, t.Id));
             try
             {
                 await Entities.AddRangeAsync(units);

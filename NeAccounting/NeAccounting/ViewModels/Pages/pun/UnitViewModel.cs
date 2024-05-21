@@ -11,12 +11,12 @@ namespace NeAccounting.ViewModels
     public partial class UnitViewModel : ObservableObject, INavigationAware
     {
         private bool _isInitialized = false;
-        private readonly ISnackbarService _snackbarService; 
+        private readonly ISnackbarService _snackbarService;
         private bool _isreadonly = true;
 
         public UnitViewModel(ISnackbarService snackbarService)
         {
-            _snackbarService = snackbarService; 
+            _snackbarService = snackbarService;
             _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
         }
@@ -77,7 +77,6 @@ namespace NeAccounting.ViewModels
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
-                await db.SaveChangesAsync();
                 UnitId = null;
                 UnitName = string.Empty;
                 Description = string.Empty;
@@ -92,7 +91,6 @@ namespace NeAccounting.ViewModels
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
-                await db.SaveChangesAsync();
                 _snackbarService.Show("کاربر گرامی", "عملیات ثبت با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
             }
             List = await db.UnitManager.GetUnitList();

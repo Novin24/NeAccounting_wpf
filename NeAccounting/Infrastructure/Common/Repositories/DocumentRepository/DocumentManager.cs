@@ -205,10 +205,10 @@ namespace Infrastructure.Repositories
             DateTime submitDate,
             List<RemittanceListViewModel> remittances)
         {
-            List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
-
             try
             {
+                List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
+
                 var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.SellInv, PaymentType.Other, descripion, submitDate, false)
                 .AddSellRemittance(list));
                 if (commission != null && commission != 0)
@@ -225,6 +225,10 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(87t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -281,7 +285,7 @@ namespace Infrastructure.Repositories
                         rem.Price = item.Price;
                         rem.TotalPrice = item.TotalPrice;
                         rem.SubmitDate = submitDate;
-                        rem.Description = item.Description;
+                        rem.SetDesc(item.Description);
                     }
                 }
 
@@ -329,10 +333,10 @@ namespace Infrastructure.Repositories
             DateTime submitDate,
             List<RemittanceListViewModel> remittances)
         {
-            List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
 
             try
             {
+                List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
                 var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.BuyInv, PaymentType.Other, descripion, submitDate, true)
                 .AddBuyRemittance(list));
                 if (commission != null && commission != 0)
@@ -349,6 +353,10 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(08t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -405,7 +413,7 @@ namespace Infrastructure.Repositories
                         rem.Price = item.Price;
                         rem.TotalPrice = item.TotalPrice;
                         rem.SubmitDate = submitDate;
-                        rem.Description = item.Description;
+                        rem.SetDesc(item.Description);
                     }
                 }
 
@@ -852,7 +860,7 @@ namespace Infrastructure.Repositories
                         rem.Price = item.Price;
                         rem.TotalPrice = item.TotalPrice;
                         rem.SubmitDate = submitDate;
-                        rem.Description = item.Description;
+                        rem.SetDesc(item.Description);
                     }
                 }
 
@@ -861,6 +869,10 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(48t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -921,16 +933,18 @@ namespace Infrastructure.Repositories
                         rem.Price = item.Price;
                         rem.TotalPrice = item.TotalPrice;
                         rem.SubmitDate = submitDate;
-                        rem.Description = item.Description;
+                        rem.SetDesc(item.Description);
                     }
                 }
-
-
 
                 Entities.Update(doc);
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(58t46993)!!!", false);
             }
             return new(string.Empty, true);

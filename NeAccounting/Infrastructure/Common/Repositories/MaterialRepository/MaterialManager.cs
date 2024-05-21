@@ -63,17 +63,21 @@ namespace Infrastructure.Repositories
 
             try
             {
-
-                var t = await Entities.AddAsync(new Pun(name,
-                                unitId,
-                                isService,
-                                lastPrice,
-                                serial,
-                                address,
-                                isManufacturedGoods));
+                await Entities.AddAsync(new Pun(name,
+                               unitId,
+                               isService,
+                               lastPrice,
+                               serial,
+                               address,
+                               isManufacturedGoods));
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(69t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -88,24 +92,29 @@ namespace Infrastructure.Repositories
             long lastPrice,
             bool isManufacturedGoods)
         {
+            var mt = await Entities.FindAsync(materialId);
+
+            if (mt == null)
+                return new("کالای مورد نظر یافت نشد !!!", false);
+
             try
             {
-                var mt = await Entities.FindAsync(materialId);
-
-                if (mt == null)
-                    return new("کالای مورد نظر یافت نشد !!!", false);
-
-                mt.Name = name;
+                mt.SetName(name);
+                mt.SetSerial(serial);
+                mt.SetAddress(address);
                 mt.UnitId = unitId;
-                mt.Serial = serial;
                 mt.LastSellPrice = lastPrice;
-                mt.PhysicalAddress = address;
                 mt.IsManufacturedGoods = isManufacturedGoods;
 
                 Entities.Update(mt);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(79t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -138,21 +147,21 @@ namespace Infrastructure.Repositories
             bool sellOrBuy,
             long? lastPrice = null)
         {
+            var mt = await Entities.FindAsync(materialId);
+
+            if (mt == null)
+                return new("کالای مورد نظر یافت نشد !!!", false);
+
+            if (mt.IsService)
+            {
+                return new(string.Empty, true);
+            }
+
+            if (!sellOrBuy && mt.Entity < entity)
+                return new("موجودی منفی میشود!!!", false);
+
             try
             {
-                var mt = await Entities.FindAsync(materialId);
-
-                if (mt == null)
-                    return new("کالای مورد نظر یافت نشد !!!", false);
-
-                if (mt.IsService)
-                {
-                    return new(string.Empty, true);
-                }
-
-                if (!sellOrBuy && mt.Entity < entity)
-                    return new("موجودی منفی میشود!!!", false);
-
                 if (sellOrBuy)
                     mt.Entity += entity;
                 else mt.Entity -= entity;
@@ -171,6 +180,10 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(89t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -184,14 +197,18 @@ namespace Infrastructure.Repositories
             {
                 return new("مورد مدنظر یافت نشد!!", false);
             }
-            unit.IsActive = active;
 
             try
             {
+                unit.IsActive = active;
                 var t = Entities.Update(unit);
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(93t46993)!!!", false);
             }
             return new(string.Empty, true);

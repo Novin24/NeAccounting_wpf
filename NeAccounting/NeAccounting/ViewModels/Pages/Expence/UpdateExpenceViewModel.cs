@@ -115,11 +115,9 @@ namespace NeAccounting.ViewModels
             var (error, isSuccess) = await db.ExpenseManager.UpdateExpense(ExpenseID, SubmitDate.Value, Expensetype, Amount.Value, PayTypeId, Receiver, Description);
             if (!isSuccess)
             {
-                await db.SaveChangesAsync();
                 _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            await db.SaveChangesAsync();
             _snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 
 

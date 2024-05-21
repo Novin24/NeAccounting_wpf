@@ -169,7 +169,6 @@ namespace NeAccounting.ViewModels
 
                 using BaseUnitOfWork baseDb = new();
                 await baseDb.NotifRepository.DeleteNotif(parameter);
-                await baseDb.SaveChangesAsync();
             }
         }
 
