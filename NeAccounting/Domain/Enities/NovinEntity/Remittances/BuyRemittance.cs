@@ -1,6 +1,7 @@
 ﻿using Domain.Common;
 using Domain.NovinEntity.Documents;
 using Domain.NovinEntity.Materials;
+using DomainShared.Errore;
 
 namespace Domain.Enities.NovinEntity.Remittances
 {
@@ -24,21 +25,32 @@ namespace Domain.Enities.NovinEntity.Remittances
             DateTime submitDate,
             string? descripion)
         {
+            SetDesc(descripion);
             MaterialId = materialId;
             TotalPrice = toatalPrice;
             AmountOf = amountOf;
             Price = price;
-            Description = descripion;
             SubmitDate = submitDate;
         }
         #endregion
 
         #region Properties
         public long Price { get; set; }
-        public string? Description { get; set; }
+        public string? Description { get; private set; }
         public DateTime SubmitDate { get; set; }
         public long TotalPrice { get; set; }
         public double AmountOf { get; set; }
+        #endregion
+
+        #region Methods
+        public BuyRemittance SetDesc(string? description)
+        {
+            if (!string.IsNullOrEmpty(description) && description.Length > 100)
+                throw new ArgumentException(NeErrorCodes.IsLess("توضیحات", "صد"));
+
+            Description = description;
+            return this;
+        }
         #endregion
     }
 }

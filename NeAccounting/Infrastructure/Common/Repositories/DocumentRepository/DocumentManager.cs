@@ -31,9 +31,14 @@ namespace Infrastructure.Repositories
             try
             {
                 var t = await Entities.AddAsync(new Document(customerId, price, type, payType, descripion, submitDate, receivedOrPaid));
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(47t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -60,9 +65,14 @@ namespace Infrastructure.Repositories
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
                 };
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(57t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -90,9 +100,14 @@ namespace Infrastructure.Repositories
                     t.Entity.AddDocument(comDoc);
                     Entities.Update(t.Entity);
                 };
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(67t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -113,9 +128,9 @@ namespace Infrastructure.Repositories
                 if (doc == null)
                     return new("سند مورد نظر یافت نشد!!!", false);
 
+                doc.SetDesc(descripion);
                 doc.PayType = paymentType;
                 doc.Price = price;
-                doc.Description = descripion;
                 doc.SubmitDate = submitDate;
 
                 var discountDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.PayDiscount || t.Type == DocumntType.RecDiscount);
@@ -141,9 +156,14 @@ namespace Infrastructure.Repositories
                 }
 
                 Entities.Update(doc);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(77t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -185,10 +205,10 @@ namespace Infrastructure.Repositories
             DateTime submitDate,
             List<RemittanceListViewModel> remittances)
         {
-            List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
-
             try
             {
+                List<SellRemittance> list = remittances.Select(t => new SellRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
+
                 var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.SellInv, PaymentType.Other, descripion, submitDate, false)
                 .AddSellRemittance(list));
                 if (commission != null && commission != 0)
@@ -205,6 +225,10 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(87t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -220,79 +244,83 @@ namespace Infrastructure.Repositories
             var doc = await Entities.Include(t => t.RelatedDocuments)
                 .Include(s => s.SellRemittances)
                 .FirstOrDefaultAsync(t => t.Id == docId);
-
-            if (doc == null)
-                return new("سند مورد نظر یافت نشد!!!", false);
-
-            doc.Price = price;
-            doc.Description = descripion;
-            doc.SubmitDate = submitDate;
-
-            // به روز رسانی تک تک قلم های فاکتور
-            foreach (var item in remittances)
-            {
-                if (item.IsDeleted)
-                {
-                    var rem = doc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
-                    if (rem != null)
-                    {
-                        doc.SellRemittances.Remove(rem);
-                        continue;
-                    }
-                }
-                if (item.RremId == Guid.Empty)
-                {
-                    doc.SellRemittances.Add(new SellRemittance(
-                        item.MaterialId,
-                        item.AmountOf,
-                        item.Price,
-                        item.TotalPrice,
-                        submitDate,
-                        item.Description));
-                }
-                else
-                {
-                    var rem = doc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
-                    if (rem == null)
-                        continue;
-                    rem.MaterialId = item.MaterialId;
-                    rem.AmountOf = item.AmountOf;
-                    rem.Price = item.Price;
-                    rem.TotalPrice = item.TotalPrice;
-                    rem.SubmitDate = submitDate;
-                    rem.Description = item.Description;
-                }
-            }
-
-            var comDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.PayCom);
-            // به روز رسانی پورسانت فاکتور
-            if (comDoc != null)
-            {
-                if (commission != null && commission != 0)
-                {
-                    comDoc.Price = (long)(price * (commission.Value / 100));
-                    comDoc.Commission = (byte)commission.Value;
-                }
-                else
-                {
-                    Entities.Remove(comDoc);
-                }
-            }
-            else
-            {
-                if (commission != null && commission != 0)
-                {
-                    doc.RelatedDocuments.Add(new(doc.CustomerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
-                     PaymentType.Other, $" پورسانت فاکتور  {doc.Serial} ", submitDate, true, (byte)commission.Value));
-                }
-            }
-
             try
             {
+                if (doc == null)
+                    return new("سند مورد نظر یافت نشد!!!", false);
+
+                doc.Price = price;
+                doc.SetDesc(descripion);
+                doc.SubmitDate = submitDate;
+
+                // به روز رسانی تک تک قلم های فاکتور
+                foreach (var item in remittances)
+                {
+                    if (item.IsDeleted)
+                    {
+                        var rem = doc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                        if (rem != null)
+                        {
+                            doc.SellRemittances.Remove(rem);
+                            continue;
+                        }
+                    }
+                    if (item.RremId == Guid.Empty)
+                    {
+                        doc.SellRemittances.Add(new SellRemittance(
+                            item.MaterialId,
+                            item.AmountOf,
+                            item.Price,
+                            item.TotalPrice,
+                            submitDate,
+                            item.Description));
+                    }
+                    else
+                    {
+                        var rem = doc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                        if (rem == null)
+                            continue;
+                        rem.MaterialId = item.MaterialId;
+                        rem.AmountOf = item.AmountOf;
+                        rem.Price = item.Price;
+                        rem.TotalPrice = item.TotalPrice;
+                        rem.SubmitDate = submitDate;
+                        rem.SetDesc(item.Description);
+                    }
+                }
+
+                var comDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.PayCom);
+                // به روز رسانی پورسانت فاکتور
+                if (comDoc != null)
+                {
+                    if (commission != null && commission != 0)
+                    {
+                        comDoc.Price = (long)(price * (commission.Value / 100));
+                        comDoc.Commission = (byte)commission.Value;
+                    }
+                    else
+                    {
+                        Entities.Remove(comDoc);
+                    }
+                }
+                else
+                {
+                    if (commission != null && commission != 0)
+                    {
+                        doc.RelatedDocuments.Add(new(doc.CustomerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
+                         PaymentType.Other, $" پورسانت فاکتور  {doc.Serial} ", submitDate, true, (byte)commission.Value));
+                    }
+                }
+
+
                 Entities.Update(doc);
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(97t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -305,10 +333,10 @@ namespace Infrastructure.Repositories
             DateTime submitDate,
             List<RemittanceListViewModel> remittances)
         {
-            List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
 
             try
             {
+                List<BuyRemittance> list = remittances.Select(t => new BuyRemittance(t.MaterialId, t.AmountOf, t.Price, t.TotalPrice, submitDate, t.Description)).ToList();
                 var t = await Entities.AddAsync(new Document(customerId, price, DocumntType.BuyInv, PaymentType.Other, descripion, submitDate, true)
                 .AddBuyRemittance(list));
                 if (commission != null && commission != 0)
@@ -325,6 +353,10 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(08t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -343,76 +375,80 @@ namespace Infrastructure.Repositories
 
             if (doc == null)
                 return new("سند مورد نظر یافت نشد!!!", false);
-
-            doc.Price = price;
-            doc.Description = descripion;
-            doc.SubmitDate = submitDate;
-
-            // به روز رسانی تک تک قلم های فاکتور
-            foreach (var item in remittances)
-            {
-                if (item.IsDeleted)
-                {
-                    var rem = doc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
-                    if (rem != null)
-                    {
-                        doc.BuyRemittances.Remove(rem);
-                        continue;
-                    }
-                }
-                if (item.RremId == Guid.Empty)
-                {
-                    doc.BuyRemittances.Add(new BuyRemittance(
-                        item.MaterialId,
-                        item.AmountOf,
-                        item.Price,
-                        item.TotalPrice,
-                        submitDate,
-                        item.Description));
-                }
-                else
-                {
-                    var rem = doc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
-                    if (rem == null)
-                        continue;
-                    rem.MaterialId = item.MaterialId;
-                    rem.AmountOf = item.AmountOf;
-                    rem.Price = item.Price;
-                    rem.TotalPrice = item.TotalPrice;
-                    rem.SubmitDate = submitDate;
-                    rem.Description = item.Description;
-                }
-            }
-
-            var comDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.RecCom);
-            // به روز رسانی پورسانت فاکتور
-            if (comDoc != null)
-            {
-                if (commission != null && commission != 0)
-                {
-                    comDoc.Price = (long)(price * (commission.Value / 100));
-                    comDoc.Commission = (byte)commission.Value;
-                }
-                else
-                {
-                    Entities.Remove(comDoc);
-                }
-            }
-            else
-            {
-                if (commission != null && commission != 0)
-                {
-                    doc.RelatedDocuments.Add(new(doc.CustomerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
-                     PaymentType.Other, $" پورسانت فاکتور  {doc.Serial} ", submitDate, true, (byte)commission.Value));
-                }
-            }
-
             try
             {
+                doc.Price = price;
+                doc.SetDesc(descripion);
+                doc.SubmitDate = submitDate;
+
+                // به روز رسانی تک تک قلم های فاکتور
+                foreach (var item in remittances)
+                {
+                    if (item.IsDeleted)
+                    {
+                        var rem = doc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                        if (rem != null)
+                        {
+                            doc.BuyRemittances.Remove(rem);
+                            continue;
+                        }
+                    }
+                    if (item.RremId == Guid.Empty)
+                    {
+                        doc.BuyRemittances.Add(new BuyRemittance(
+                            item.MaterialId,
+                            item.AmountOf,
+                            item.Price,
+                            item.TotalPrice,
+                            submitDate,
+                            item.Description));
+                    }
+                    else
+                    {
+                        var rem = doc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                        if (rem == null)
+                            continue;
+                        rem.MaterialId = item.MaterialId;
+                        rem.AmountOf = item.AmountOf;
+                        rem.Price = item.Price;
+                        rem.TotalPrice = item.TotalPrice;
+                        rem.SubmitDate = submitDate;
+                        rem.SetDesc(item.Description);
+                    }
+                }
+
+                var comDoc = doc.RelatedDocuments.FirstOrDefault(t => t.Type == DocumntType.RecCom);
+                // به روز رسانی پورسانت فاکتور
+                if (comDoc != null)
+                {
+                    if (commission != null && commission != 0)
+                    {
+                        comDoc.Price = (long)(price * (commission.Value / 100));
+                        comDoc.Commission = (byte)commission.Value;
+                    }
+                    else
+                    {
+                        Entities.Remove(comDoc);
+                    }
+                }
+                else
+                {
+                    if (commission != null && commission != 0)
+                    {
+                        doc.RelatedDocuments.Add(new(doc.CustomerId, (long)(price * (commission.Value / 100)), DocumntType.PayCom,
+                         PaymentType.Other, $" پورسانت فاکتور  {doc.Serial} ", submitDate, true, (byte)commission.Value));
+                    }
+                }
+
+
                 Entities.Update(doc);
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(18t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -784,55 +820,59 @@ namespace Infrastructure.Repositories
             if (doc == null || doc.RelatedDocuments.FirstOrDefault(t => t.Id == docId) == null)
                 return new("سند مورد نظر یافت نشد!!!", false);
 
-            var returntDoc = doc.RelatedDocuments.First(t => t.Id == docId);
-
-            returntDoc.Price = price;
-            returntDoc.Description = descripion;
-            returntDoc.SubmitDate = submitDate;
-
-            // به روز رسانی تک تک قلم های فاکتور
-            foreach (var item in remittances)
-            {
-                if (item.IsDeleted)
-                {
-                    var rem = returntDoc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
-                    if (rem != null)
-                    {
-                        returntDoc.SellRemittances.Remove(rem);
-                        continue;
-                    }
-                }
-                if (item.RremId == Guid.Empty)
-                {
-                    returntDoc.SellRemittances.Add(new SellRemittance(
-                        item.MaterialId,
-                        item.AmountOf,
-                        item.Price,
-                        item.TotalPrice,
-                        submitDate,
-                        item.Description));
-                }
-                else
-                {
-                    var rem = returntDoc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
-                    if (rem == null)
-                        continue;
-                    rem.MaterialId = item.MaterialId;
-                    rem.AmountOf = item.AmountOf;
-                    rem.Price = item.Price;
-                    rem.TotalPrice = item.TotalPrice;
-                    rem.SubmitDate = submitDate;
-                    rem.Description = item.Description;
-                }
-            }
-
-
             try
             {
+                var returntDoc = doc.RelatedDocuments.First(t => t.Id == docId);
+
+                returntDoc.Price = price;
+                returntDoc.SetDesc(descripion);
+                returntDoc.SubmitDate = submitDate;
+
+                // به روز رسانی تک تک قلم های فاکتور
+                foreach (var item in remittances)
+                {
+                    if (item.IsDeleted)
+                    {
+                        var rem = returntDoc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                        if (rem != null)
+                        {
+                            returntDoc.SellRemittances.Remove(rem);
+                            continue;
+                        }
+                    }
+                    if (item.RremId == Guid.Empty)
+                    {
+                        returntDoc.SellRemittances.Add(new SellRemittance(
+                            item.MaterialId,
+                            item.AmountOf,
+                            item.Price,
+                            item.TotalPrice,
+                            submitDate,
+                            item.Description));
+                    }
+                    else
+                    {
+                        var rem = returntDoc.SellRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                        if (rem == null)
+                            continue;
+                        rem.MaterialId = item.MaterialId;
+                        rem.AmountOf = item.AmountOf;
+                        rem.Price = item.Price;
+                        rem.TotalPrice = item.TotalPrice;
+                        rem.SubmitDate = submitDate;
+                        rem.SetDesc(item.Description);
+                    }
+                }
+
+
                 Entities.Update(doc);
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(48t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -853,56 +893,58 @@ namespace Infrastructure.Repositories
 
             if (doc == null || doc.RelatedDocuments.FirstOrDefault(t => t.Id == docId) == null)
                 return new("سند مورد نظر یافت نشد!!!", false);
-
-            var returntDoc = doc.RelatedDocuments.First(t => t.Id == docId);
-
-            returntDoc.Price = price;
-            returntDoc.Description = descripion;
-            returntDoc.SubmitDate = submitDate;
-
-            // به روز رسانی تک تک قلم های فاکتور
-            foreach (var item in remittances)
-            {
-                if (item.IsDeleted)
-                {
-                    var rem = returntDoc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
-                    if (rem != null)
-                    {
-                        returntDoc.BuyRemittances.Remove(rem);
-                        continue;
-                    }
-                }
-                if (item.RremId == Guid.Empty)
-                {
-                    returntDoc.BuyRemittances.Add(new BuyRemittance(
-                        item.MaterialId,
-                        item.AmountOf,
-                        item.Price,
-                        item.TotalPrice,
-                        submitDate,
-                        item.Description));
-                }
-                else
-                {
-                    var rem = returntDoc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
-                    if (rem == null)
-                        continue;
-                    rem.MaterialId = item.MaterialId;
-                    rem.AmountOf = item.AmountOf;
-                    rem.Price = item.Price;
-                    rem.TotalPrice = item.TotalPrice;
-                    rem.SubmitDate = submitDate;
-                    rem.Description = item.Description;
-                }
-            }
-
-
             try
             {
+                var returntDoc = doc.RelatedDocuments.First(t => t.Id == docId);
+
+                returntDoc.Price = price;
+                returntDoc.SetDesc(descripion);
+                returntDoc.SubmitDate = submitDate;
+
+                // به روز رسانی تک تک قلم های فاکتور
+                foreach (var item in remittances)
+                {
+                    if (item.IsDeleted)
+                    {
+                        var rem = returntDoc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                        if (rem != null)
+                        {
+                            returntDoc.BuyRemittances.Remove(rem);
+                            continue;
+                        }
+                    }
+                    if (item.RremId == Guid.Empty)
+                    {
+                        returntDoc.BuyRemittances.Add(new BuyRemittance(
+                            item.MaterialId,
+                            item.AmountOf,
+                            item.Price,
+                            item.TotalPrice,
+                            submitDate,
+                            item.Description));
+                    }
+                    else
+                    {
+                        var rem = returntDoc.BuyRemittances.FirstOrDefault(t => t.Id == item.RremId);
+                        if (rem == null)
+                            continue;
+                        rem.MaterialId = item.MaterialId;
+                        rem.AmountOf = item.AmountOf;
+                        rem.Price = item.Price;
+                        rem.TotalPrice = item.TotalPrice;
+                        rem.SubmitDate = submitDate;
+                        rem.SetDesc(item.Description);
+                    }
+                }
+
                 Entities.Update(doc);
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(58t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -1737,6 +1779,10 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false, Guid.Empty);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(68t46993)!!!", false, Guid.Empty);
             }
 
@@ -1779,6 +1825,10 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false, Guid.Empty);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(78t46993)!!!", false, Guid.Empty);
             }
             return new(string.Empty, true, id);
@@ -1841,11 +1891,9 @@ namespace Infrastructure.Repositories
             string bank_Branch,
             string cheque_Owner)
         {
-
             var doc = await Entities.Include(t => t.Cheques)
                 .Include(s => s.SellRemittances)
                 .FirstOrDefaultAsync(t => t.Id == docId);
-
 
             if (doc == null || doc.Cheques.Count == 0)
                 return new("چک مورد نظر یافت نشد!!!", false);
@@ -1877,7 +1925,7 @@ namespace Infrastructure.Repositories
                 }
 
                 doc.Price = price;
-                doc.Description = descripion;
+                doc.SetDesc(descripion);
                 doc.SubmitDate = submitDate;
                 doc.CustomerId = cusId;
 
@@ -1890,19 +1938,23 @@ namespace Infrastructure.Repositories
                     checque.Payer = cusId;
                 }
 
-                checque.Accunt_Number = accunt_Number;
-                checque.Bank_Branch = bank_Branch;
-                checque.Cheque_Owner = cheque_Owner;
-                checque.Due_Date = dueDate;
-                checque.Cheque_Number = cheque_Number;
-                checque.Bank_Name = bank_Name;
+                checque.SetAccunt_Number(accunt_Number);
+                checque.SetBank_Branch(bank_Branch);
+                checque.SetCheque_Owner(cheque_Owner);
+                checque.SetCheque_Number(cheque_Number);
+                checque.SetBank_Branch(bank_Name);
                 checque.SubmitStatus = submitStatus;
+                checque.Due_Date = dueDate;
 
                 Entities.Update(doc);
-
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(98t46993)!!!", false);
             }
             return new(string.Empty, true);
@@ -2010,19 +2062,24 @@ namespace Infrastructure.Repositories
             if (doc == null || doc.Cheques.Count == 0 || doc.RelatedDocuments.Count == 0)
                 return new("چک مورد نظر یافت نشد!!!", false);
 
-            var che = doc.Cheques.First();
-            che.TransferdDate = transferDate;
-            che.Reciver = cusId;
-            var assDoc = doc.RelatedDocuments.First();
-            assDoc.Description = desc;
-            assDoc.CustomerId = cusId;
-            assDoc.SubmitDate = transferDate;
             try
             {
+                var che = doc.Cheques.First();
+                che.TransferdDate = transferDate;
+                che.Reciver = cusId;
+                var assDoc = doc.RelatedDocuments.First();
+                assDoc.SetDesc(desc);
+                assDoc.CustomerId = cusId;
+                assDoc.SubmitDate = transferDate;
                 Entities.Update(doc);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new(" خطا در اتصال به پایگاه داده code(39t46993)!!!", false);
             }
             return new(string.Empty, true);

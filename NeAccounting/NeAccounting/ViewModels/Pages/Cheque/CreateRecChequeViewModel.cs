@@ -183,8 +183,6 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
 
         if (!i)
             _snackbarService.Show("خطا", er, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-
-        await baseDb.SaveChangesAsync();
         #endregion
 
         #region redirect

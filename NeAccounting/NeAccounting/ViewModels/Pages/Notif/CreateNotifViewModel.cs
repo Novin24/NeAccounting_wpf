@@ -76,7 +76,6 @@ namespace NeAccounting.ViewModels
             #endregion
 
             #region CreateNotif
-            PersianCalendar pc = new();
             using BaseUnitOfWork baseDb = new();
             var (er, i) = await baseDb.NotifRepository.CreateNotif(Titele, Message, Priority, DueDate.Value);
             if (!i)
@@ -84,7 +83,6 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", er, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            await baseDb.SaveChangesAsync();
             _snackbarService.Show("کاربر گرامی", $"ثبت یادآور با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
             #endregion
 

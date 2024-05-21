@@ -138,7 +138,6 @@ namespace NeAccounting.ViewModels
                     _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                     return;
                 }
-                await db.SaveChangesAsync();
                 _snackbarService.Show("کاربر گرامی", $"حذف یادآور با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
                 var t = await db.NotifRepository.GetNotifs(Titele, Priority, StartDate, EndDate, _isInit, CurrentPage);
                 NotifList = t.Items;

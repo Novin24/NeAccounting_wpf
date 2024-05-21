@@ -1,5 +1,7 @@
 ﻿using Domain.Common;
+using Domain.NovinEntity.Workers;
 using DomainShared.Enums;
+using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Expense
 {
@@ -32,7 +34,7 @@ namespace Domain.NovinEntity.Expense
         /// <summary>
         /// توضیحات
         /// </summary>
-        public string? Description { get; set; }
+        public string? Description { get; private set; }
         #endregion
 
         #region Constructor
@@ -45,14 +47,25 @@ namespace Domain.NovinEntity.Expense
             string description
             )
         {
+            SetDesc(description);
             SubmitDate = submitDate;
             Expensetype = expensetype;
             Amount = amount;
             PayType = payType;
             Receiver = receiver;
-            Description = description;
         }
         #endregion
 
+
+        #region Methods
+        public Expense SetDesc(string? description)
+        {
+            if (!string.IsNullOrEmpty(description) && description.Length > 200)
+                throw new ArgumentException(NeErrorCodes.IsLess("توضیحات", "دویست"));
+
+            Description = description;
+            return this;
+        }
+        #endregion
     }
 }

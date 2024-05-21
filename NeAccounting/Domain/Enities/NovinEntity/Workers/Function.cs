@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Workers
 {
@@ -34,7 +35,7 @@ namespace Domain.NovinEntity.Workers
         /// <summary>
         /// توضیحات
         /// </summary>
-        public string? Description { get; set; }
+        public string? Description { get; private set; }
 
         #endregion
 
@@ -51,11 +52,22 @@ namespace Domain.NovinEntity.Workers
             byte amountOfOverTime,
             string? description)
         {
+            SetDesc(description);
             PersianMonth = persianMonth;
             PersianYear = persianYear;
             AmountOf = amountOf;
             AmountOfOverTime = amountOfOverTime;
+        }
+        #endregion
+
+        #region Methods
+        public Function SetDesc(string? description)
+        {
+            if (!string.IsNullOrEmpty(description) && description.Length > 200)
+                throw new ArgumentException(NeErrorCodes.IsLess("توضیحات", "دویست"));
+
             Description = description;
+            return this;
         }
         #endregion
     }

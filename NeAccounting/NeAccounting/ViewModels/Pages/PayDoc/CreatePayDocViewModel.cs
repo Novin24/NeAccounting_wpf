@@ -145,7 +145,6 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService) : O
         var (e, s) = await db.DocumentManager.CreatePayDocument(CusId.Value, Type, Price, Discount, Description, SubmitDate.Value);
         if (s)
         {
-            await db.SaveChangesAsync();
             _snackbarService.Show("کاربر گرامی", $"ثبت سند با موفقیت انجام شد ", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
             await Reload();
             return true;

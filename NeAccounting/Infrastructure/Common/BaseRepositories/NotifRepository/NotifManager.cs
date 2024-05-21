@@ -74,14 +74,20 @@ namespace Infrastructure.BaseRepositories
 
             try
             {
-                var t = await Entities.AddAsync(new Notification(docId,
+                var t = await Entities.AddAsync(new Notification(
                     titel,
                     message,
                     priority,
-                    dueDate));
+                    dueDate,
+                    docId));
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new("خطا دراتصال به پایگاه داده!!!", false);
             }
             return new(string.Empty, true);
@@ -95,14 +101,19 @@ namespace Infrastructure.BaseRepositories
         {
             try
             {
-                var t = await Entities.AddAsync(new Notification(
-                    titel,
-                    message,
-                    priority,
-                    dueDate));
+                await Entities.AddAsync(new Notification(
+                   titel,
+                   message,
+                   priority,
+                   dueDate));
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new("خطا دراتصال به پایگاه داده!!!", false);
             }
             return new(string.Empty, true);
@@ -113,17 +124,18 @@ namespace Infrastructure.BaseRepositories
             string message,
             DateTime dueDate)
         {
+            var mt = await Entities.FirstOrDefaultAsync(t => t.DocumentId == id);
+
+            if (mt == null)
+                return new("یاد آور مورد نظر یافت نشد !!!", false);
             try
             {
-                var mt = await Entities.FirstOrDefaultAsync(t => t.DocumentId == id);
 
-                if (mt == null)
-                    return new("یاد آور مورد نظر یافت نشد !!!", false);
-
-                mt.Message = message;
+                mt.SetMessage(message);
                 mt.DueDate = dueDate;
 
                 Entities.Update(mt);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -145,15 +157,19 @@ namespace Infrastructure.BaseRepositories
 
                 if (mt == null)
                     return new("یاد آور مورد نظر یافت نشد !!!", false);
-                mt.Titel = titele;
-                mt.Message = message;
+                mt.SetTitel(titele);
+                mt.SetMessage(message);
                 mt.DueDate = dueDate;
                 mt.Priority = priority;
-
                 Entities.Update(mt);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                if (ex is ArgumentException aex)
+                {
+                    return new(aex.Message, false);
+                }
                 return new($"خطا دراتصال به پایگاه داده!!!\n {ex}", false);
             }
             return new(string.Empty, true);
@@ -169,6 +185,7 @@ namespace Infrastructure.BaseRepositories
                     return new("یاد آور مورد نظر یافت نشد !!!", false);
 
                 Entities.Remove(mt);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -179,14 +196,14 @@ namespace Infrastructure.BaseRepositories
 
         public async Task<(string error, bool isSuccess)> DeleteNotif(int docId)
         {
-            try
-            {
                 var mt = await Entities.FindAsync(docId);
 
                 if (mt == null)
                     return new("یاد آور مورد نظر یافت نشد !!!", false);
-
+            try
+            {
                 Entities.Remove(mt);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {

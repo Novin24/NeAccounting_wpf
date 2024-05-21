@@ -2,6 +2,7 @@
 using Domain.Enities.NovinEntity.Remittances;
 using Domain.NovinEntity.Cheques;
 using DomainShared.Enums;
+using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Documents
 {
@@ -36,7 +37,7 @@ namespace Domain.NovinEntity.Documents
             Price = price;
             Type = type;
             PayType = payType;
-            Description = descripion;
+            SetDesc(descripion);
             SubmitDate = submitDate;
             IsReceived = isReceived;
             RelatedDocuments = [];
@@ -53,25 +54,15 @@ namespace Domain.NovinEntity.Documents
             string? descripion,
             DateTime submitDate,
             bool isReceived,
-            byte commission)
+            byte commission) : this(customerId, price, type, payType, descripion, submitDate, isReceived)
         {
-            CustomerId = customerId;
-            Price = price;
             Commission = commission;
-            Type = type;
-            PayType = payType;
-            Description = descripion;
-            SubmitDate = submitDate;
-            IsReceived = isReceived;
-            RelatedDocuments = [];
-            SellRemittances = [];
-            BuyRemittances = [];
         }
         #endregion
 
         #region Properties
         public long Price { get; set; }
-        public string? Description { get; set; }
+        public string? Description { get; private set; }
         public DateTime SubmitDate { get; set; }
         public PaymentType PayType { get; set; }
         public DocumntType Type { get; set; }
@@ -84,6 +75,16 @@ namespace Domain.NovinEntity.Documents
         #endregion
 
         #region Methods
+        public Document SetDesc(string? desc)
+        {
+            if (!string.IsNullOrEmpty(desc) && desc.Length > 150)
+            {
+                throw new ArgumentException(NeErrorCodes.IsLess("توضیحات", "صدوپنجاه"));
+            }
+            Description = desc;
+            return this;
+        }
+
         public Document AddSellRemittance(List<SellRemittance> list)
         {
             SellRemittances.AddRange(list);
