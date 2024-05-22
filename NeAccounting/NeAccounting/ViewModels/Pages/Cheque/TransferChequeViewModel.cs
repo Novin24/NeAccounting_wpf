@@ -9,7 +9,7 @@ using Wpf.Ui;
 using Wpf.Ui.Controls;
 namespace NeAccounting.ViewModels
 {
-    public partial class TransferChequeViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
+    public partial class TransferChequeViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject
     {
         private readonly ISnackbarService _snackbarService = snackbarService;
         private readonly INavigationService _navigationService = navigationService;
@@ -101,15 +101,6 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private SubmitChequeStatus _substatus = SubmitChequeStatus.NotRegister;
-
-        public async void OnNavigatedTo()
-        {
-        }
-
-
-        public void OnNavigatedFrom()
-        {
-        }
 
         /// <summary>
         /// ثبت فاکتور

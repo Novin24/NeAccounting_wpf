@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      Loaded="Page_Loaded"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       mc:Ignorable="d"
       d:DesignHeight="450"
@@ -13,7 +14,10 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="DailyBook">
-
+    <Page.InputBindings>
+        <KeyBinding Key="F6"
+                    Command="{Binding ViewModel.SearchCommand}" />
+    </Page.InputBindings>
 
     <Grid Margin="-12">
         <Grid.RowDefinitions>
@@ -119,26 +123,38 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition ></RowDefinition>
+                            <RowDefinition></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
                         </Grid.RowDefinitions>
 
                         <Grid Grid.Row="0"
-                                  Margin="20 ,5,40,15">
+                              Margin="20 ,5,40,15">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
-                                <ColumnDefinition  />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <nu:PersianDatePicker VerticalAlignment="Center"
-                                                      FlowDirection="LeftToRight"
-                                                      SelectedDate="{Binding ViewModel.Date, Mode=TwoWay}"
-                                                      LabelName="تاریخ"
-                                                      x:Name="date" />
-                            <Button Grid.Column="2"
-                                        Margin="40 32 40 12"
-                                        Padding="17 5 17 8"
-                                        Command="{Binding ViewModel.SearchCommand}"
-                                        IsDefault="True">نمایش</Button>
+                            <nu:PersianDatePicker Grid.Column="0"
+                                                  VerticalAlignment="Center"
+                                                  FlowDirection="LeftToRight"
+                                                  SelectedDate="{Binding ViewModel.Date, Mode=TwoWay}"
+                                                  LabelName="تاریخ"
+                                                  x:Name="Dtp_date" />
+                            <Button Grid.Column="1"
+                                    Margin="0 32 0 12"
+                                    FontFamily="calibri"
+                                    Padding="17 5 17 8"
+                                    HorizontalAlignment="Right"
+                                    Command="{Binding ViewModel.SearchCommand}"
+                                    IsDefault="True">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="نمایش"
+                                               FontSize="16" />
+                                    <TextBlock Text=" (F6)"
+                                               FontSize="14"
+                                               Foreground="#FFA3A3A3"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
                         </Grid>
                         <DataGrid Grid.Row="1"
                                   Padding="7"
@@ -150,17 +166,17 @@
                                   CanUserDeleteRows="False"
                                   CanUserResizeRows="False"
                                   CanUserSortColumns="False"
-                              AutoGenerateColumns="False"
-                              CanUserResizeColumns="False"
-                              CanUserReorderColumns="False"
-                              ItemsSource="{Binding ViewModel.InvList}">
-                        <DataGrid.Columns>
+                                  AutoGenerateColumns="False"
+                                  CanUserResizeColumns="False"
+                                  CanUserReorderColumns="False"
+                                  ItemsSource="{Binding ViewModel.InvList}">
+                            <DataGrid.Columns>
 
                                 <DataGridTextColumn Header="#"
-                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                Binding="{Binding Row}"
-                                                Width="30" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Binding="{Binding Row}"
+                                                    Width="30">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -189,10 +205,10 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>-->
                                 <DataGridTextColumn Header="نام مشتری"
-                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                Binding="{Binding CustomerName}"
-                                                Width=".8*" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Binding="{Binding CustomerName}"
+                                                    Width=".8*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -205,26 +221,27 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="شرح"
-                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                Binding="{Binding Description}"
-                                                Width="*" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Binding="{Binding Description}"
+                                                    Width="*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
                                                     <TextBlock FontSize='17'
-                                                               Text='{Binding Description}' TextWrapping="Wrap"/>
+                                                               Text='{Binding Description}'
+                                                               TextWrapping="Wrap" />
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="سریال"
-                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                Binding="{Binding Serial}"
-                                                Width="65" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Binding="{Binding Serial}"
+                                                    Width="65">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -237,10 +254,10 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="بدهکاری"
-                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                Binding="{Binding Bed}"
-                                                Width=".8*" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Binding="{Binding Bed}"
+                                                    Width=".8*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -253,10 +270,10 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="طلبکاری"
-                                                HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                Binding="{Binding Bes}"
-                                                Width=".8*" >
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    Binding="{Binding Bes}"
+                                                    Width=".8*">
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
@@ -268,16 +285,16 @@
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
-                        </DataGrid.Columns>
+                            </DataGrid.Columns>
                         </DataGrid>
 
                         <nu:Pagination  Grid.Row="2"
-                                Margin="0,10"
-                                PageCount="{Binding ViewModel.PageCount}"
-                                CurrntPage="{Binding ViewModel.CurrentPage, Mode=TwoWay}"
-                                PageChosen="Pagination_PageChosen"
-                                HorizontalAlignment="Center"
-                                FlowDirection="LeftToRight" />
+                                        Margin="0,10"
+                                        PageCount="{Binding ViewModel.PageCount}"
+                                        CurrntPage="{Binding ViewModel.CurrentPage, Mode=TwoWay}"
+                                        PageChosen="Pagination_PageChosen"
+                                        HorizontalAlignment="Center"
+                                        FlowDirection="LeftToRight" />
                     </Grid>
                 </Border>
             </Grid>

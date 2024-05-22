@@ -85,7 +85,7 @@ namespace Domain.NovinEntity.Cheques
             string cheque_Owner)
         {
             SetBank_Name(bank_Name);
-            SetBank_Name(bank_Branch);
+            SetBank_Branch(bank_Branch);
             SetAccunt_Number(accunt_Number);
             SetCheque_Owner(cheque_Owner);
             SetCheque_Number(cheque_Number);

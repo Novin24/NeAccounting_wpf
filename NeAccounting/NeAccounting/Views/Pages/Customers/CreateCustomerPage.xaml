@@ -17,7 +17,7 @@
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                 Command="{Binding ViewModel.CreateCustomerCommand}" />
+                    Command="{Binding ViewModel.CreateCustomerCommand}" />
     </Page.InputBindings>
     <Grid Margin="-30">
         <Grid.RowDefinitions>
@@ -179,9 +179,9 @@
                             <ComboBox SelectedIndex="{Binding ViewModel.CusType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       FontSize="14"
                                       TabIndex="2">
+                                <ComboBoxItem Content="حقوقی" />
                                 <ComboBoxItem Content="حقیقی"
                                               IsSelected="True" />
-                                <ComboBoxItem Content="حقوقی" />
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Grid.Row="2"
@@ -332,14 +332,14 @@
                                 Grid.ColumnSpan="2"
                                 FontFamily="Calibri"
                                 VerticalAlignment="Center"
-                                HorizontalAlignment="Center" 
+                                HorizontalAlignment="Center"
                                 Command="{Binding ViewModel.CreateCustomerCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="ثبت" />
                                 <TextBlock Text=" (F1)"
-                                                   FontSize="12"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="#FFA3A3A3" />
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           Foreground="#FFA3A3A3" />
                             </StackPanel>
                         </Button>
                     </Grid>

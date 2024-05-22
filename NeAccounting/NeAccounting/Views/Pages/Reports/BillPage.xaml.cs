@@ -26,9 +26,9 @@ namespace NeAccounting.Views.Pages
         {
             ViewModel = viewModel;
             DataContext = this;
-            InitializeComponent();
             _snackbarService = snackbarService;
             _printServices = printServices;
+            InitializeComponent();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

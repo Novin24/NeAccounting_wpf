@@ -967,10 +967,10 @@ namespace Infrastructure.Repositories
 
         public async Task<UserDebtStatus> GetStatus(Guid customerId)
         {
-            var tal = await TableNoTracking.Where(p => !p.IsReceived && p.CustomerId == customerId)
+            var tal = await TableNoTracking.Where(p => !p.IsReceived && p.CustomerId == customerId && p.PayType != PaymentType.GurantyCheque)
                 .Select(p => p.Price).SumAsync();
 
-            var bed = await TableNoTracking.Where(p => p.IsReceived && p.CustomerId == customerId)
+            var bed = await TableNoTracking.Where(p => p.IsReceived && p.CustomerId == customerId && p.PayType != PaymentType.GurantyCheque)
                 .Select(p => p.Price).SumAsync();
 
             long res = tal - bed;
@@ -1016,8 +1016,8 @@ namespace Infrastructure.Repositories
             PersianCalendar pc = new();
             List<InvoiceListDtos> Remittances = [];
             var MyDoc = await TableNoTracking
-                .Where(st => leftOver || st.SubmitDate >= startTime)
-                .Where(et => et.SubmitDate < endTime)
+                .Where(st => leftOver || st.SubmitDate.Date >= startTime.Date)
+                .Where(et => et.SubmitDate < endTime.Date.AddHours(23).AddMinutes(59).AddSeconds(59))
                 .Where(s => s.PayType != PaymentType.GurantyCheque)
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
@@ -1036,22 +1036,22 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
 
 
-            if (leftOver)
+            if (MyDoc.Count != 0 && leftOver)
             {
                 InvoiceListDtos rem = new()
                 {
                     Row = 0,
-                    Date = startTime,
-                    ShamsiDate = startTime.ToShamsiDate(pc),
+                    Date = MyDoc.Min(t => t.Date).Date.AddDays(-1),
+                    ShamsiDate = "",
                     Description = "باقی مانده از قبل",
-                    Bed = MyDoc.Where(p => p.Date < startTime && !p.ReceivedOrPaid).Sum(p => p.Price),
-                    Bes = MyDoc.Where(p => p.Date < startTime && p.ReceivedOrPaid).Sum(p => p.Price),
+                    Bed = MyDoc.Where(p => p.Date.Date < startTime.Date && !p.ReceivedOrPaid).Sum(p => p.Price),
+                    Bes = MyDoc.Where(p => p.Date.Date < startTime.Date && p.ReceivedOrPaid).Sum(p => p.Price),
                     Type = DocumntType.Other
                 };
                 Remittances.Add(rem);
             }
 
-            Remittances.AddRange(MyDoc.Where(p => !p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDtos
+            Remittances.AddRange(MyDoc.Where(p => !p.ReceivedOrPaid && p.Date.Date >= startTime.Date).Select(t => new InvoiceListDtos
             {
                 Description = t.Description,
                 Date = t.Date,
@@ -1065,7 +1065,7 @@ namespace Infrastructure.Repositories
                 Bes = 0,
             }).ToList());
 
-            Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date >= startTime).Select(t => new InvoiceListDtos
+            Remittances.AddRange(MyDoc.Where(p => p.ReceivedOrPaid && p.Date.Date >= startTime.Date).Select(t => new InvoiceListDtos
             {
                 Description = t.Description,
                 ParentId = t.ParentId,
@@ -1153,8 +1153,8 @@ namespace Infrastructure.Repositories
 
             // گرفتن تمام سند های مربوط از دیتابیس
             Remittances.AddRange(await TableNoTracking
-                .Where(st => st.SubmitDate >= startTime)
-                .Where(et => et.SubmitDate < endTime)
+                .Where(st => st.SubmitDate.Date >= startTime.Date)
+                .Where(et => et.SubmitDate < endTime.Date.AddHours(23).AddMinutes(59).AddSeconds(59))
                 .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                 .Where(p => p.CustomerId == cusId)
                 .Where(s => s.Type != DocumntType.SellInv && s.Type != DocumntType.ReturnFromBuy && s.Type != DocumntType.ReturnFromSell && s.Type != DocumntType.BuyInv && s.Type != DocumntType.GarantyCheque)
@@ -1172,8 +1172,8 @@ namespace Infrastructure.Repositories
             // اضافه کردن فاکتور های فروش
             Remittances.AddRange(await (from doc in DbContext.Set<Document>()
                       .AsNoTracking()
-                      .Where(st => st.SubmitDate >= startTime)
-                      .Where(et => et.SubmitDate < endTime)
+                      .Where(st => st.SubmitDate.Date >= startTime.Date)
+                      .Where(et => et.SubmitDate < endTime.Date.AddHours(23).AddMinutes(59).AddSeconds(59))
                       .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                       .Where(p => p.CustomerId == cusId)
 
@@ -1198,8 +1198,8 @@ namespace Infrastructure.Repositories
             // اضافه کردن فاکتورهای خرید
             Remittances.AddRange(await (from doc in DbContext.Set<Document>()
                .AsNoTracking()
-               .Where(st => st.SubmitDate >= startTime)
-               .Where(et => et.SubmitDate < endTime)
+               .Where(st => st.SubmitDate.Date >= startTime.Date)
+               .Where(et => et.SubmitDate < endTime.Date.AddHours(23).AddMinutes(59).AddSeconds(59))
                .Where(et => string.IsNullOrEmpty(desc) || et.Description.Contains(desc))
                .Where(p => p.CustomerId == cusId)
 
@@ -1224,17 +1224,20 @@ namespace Infrastructure.Repositories
             PersianCalendar pc = new();
 
             // اگر تیک باقیمانده زده باشد
-            if (leftOver)
+            if (Remittances.Count != 0 && leftOver)
             {
                 DetailRemittanceDto rem = new()
                 {
                     Row = 0,
                     IsLeftOver = true,
-                    Date = startTime,
-                    ShamsiDate = startTime.ToShamsiDate(pc),
+                    Date = Remittances.Min(t => t.Date).Date.AddDays(-1),
+                    ShamsiDate = "",
                     MaterialName = "باقی مانده از قبل",
-                    Bed = await TableNoTracking.Where(p => p.SubmitDate < startTime && !p.IsReceived).SumAsync(p => p.Price),
-                    Bes = await TableNoTracking.Where(p => p.SubmitDate < startTime && p.IsReceived).SumAsync(p => p.Price),
+                    Bed = await TableNoTracking.Where(p => p.CustomerId == cusId && (string.IsNullOrEmpty(desc) || p.Description.Contains(desc))
+                    && p.Type != DocumntType.GarantyCheque && p.SubmitDate.Date < startTime.Date && !p.IsReceived).SumAsync(p => p.Price),
+
+                    Bes = await TableNoTracking.Where(p => p.CustomerId == cusId && (string.IsNullOrEmpty(desc) || p.Description.Contains(desc))
+                    && p.Type != DocumntType.GarantyCheque && p.SubmitDate.Date < startTime.Date && p.IsReceived).SumAsync(p => p.Price),
                 };
                 Remittances.Add(rem);
             }
@@ -1256,8 +1259,8 @@ namespace Infrastructure.Repositories
                     {
                         item.Bes = 0;
                     }
+                    item.ShamsiDate = item.Date.ToShamsiDate(pc);
                 }
-                item.ShamsiDate = item.Date.ToShamsiDate(pc);
                 long bed = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bed).Sum();
                 long bes = Remittances.Where(p => p.Row <= i && p.Row >= 1).Select(p => p.Bes).Sum();
                 item.LeftOver = Math.Abs(bed - bes);
@@ -1944,7 +1947,7 @@ namespace Infrastructure.Repositories
                 checque.SetBank_Branch(bank_Branch);
                 checque.SetCheque_Owner(cheque_Owner);
                 checque.SetCheque_Number(cheque_Number);
-                checque.SetBank_Branch(bank_Name);
+                checque.SetBank_Name(bank_Name);
                 checque.SubmitStatus = submitStatus;
                 checque.Due_Date = dueDate;
 

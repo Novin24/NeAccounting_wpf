@@ -4,7 +4,6 @@ using DomainShared.Errore;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Helpers.Extention;
-using System.Text.RegularExpressions;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
