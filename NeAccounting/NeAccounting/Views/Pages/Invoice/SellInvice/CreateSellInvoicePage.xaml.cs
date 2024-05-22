@@ -141,6 +141,7 @@ namespace NeAccounting.Views.Pages
                 txt_MaterialName.Text = string.Empty;
                 txt_UnitName.Text = string.Empty;
                 txt_Unit_price.Text = string.Empty;
+                txt_Credit.Text = "0";
                 txt_total_price.Text = string.Empty;
                 txt_UnitDescription.Text = string.Empty;
                 lbl_cusId.Text = string.Empty;

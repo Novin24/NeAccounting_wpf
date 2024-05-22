@@ -1,29 +1,39 @@
 ﻿using DomainShared.Constants;
 using DomainShared.Enums;
 using DomainShared.Errore;
+using DomainShared.Extension;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Models;
 using NeAccounting.Resources;
 using NeAccounting.Windows;
+using NeApplication.Services;
+using Newtonsoft.Json;
+using System.Globalization;
+using System.IO;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels;
-public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService,  WindowsProviderService serviceProvider) : ObservableObject, INavigationAware
+public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService, WindowsProviderService serviceProvider, IPrintServices printServices) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
+    private readonly IPrintServices _printServices = printServices;
     private readonly WindowsProviderService _windowsProviderService = serviceProvider;
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
     private int rowId = 1;
 
+    /// <summary>
+    /// مبلغ باقی مانده
+    /// </summary>
+    private long _longRemainPrice = 0;
+
     #region Property
-
-
     /// <summary>
     /// لیست اجناس  فاکتور
     /// </summary>
@@ -116,6 +126,12 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     /// </summary>
     [ObservableProperty]
     private long? _matPrice;
+
+    /// <summary>
+    /// پرینت پس از تایید
+    /// </summary>
+    [ObservableProperty]
+    private bool _print = false;
 
     /// <summary>
     /// توضیحات ردیف
@@ -319,6 +335,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
 
         #region reload
         _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور با موفقیت انجام شد", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+        if (Print) PrintOneInvoice();
 
         await Reload();
         return true;
@@ -353,6 +370,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         Commission = null;
         MaterialId = null;
         InvDescription = null;
+        Print = false;
         Description = null;
         SubmitDate = DateTime.Now;
         MatPrice = null;
@@ -381,6 +399,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         {
             Totalcommission = "0";
         }
+        _longRemainPrice = total;
         RemainPrice = total.ToString("N0");
     }
 
@@ -390,6 +409,33 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         _windowsProviderService.ShowDialog<CreateCustomerWindow>();
         using UnitOfWork db = new();
         Cuslist = await db.CustomerManager.GetDisplayUser(false, true);
+    }
+
+    private void PrintOneInvoice()
+    {
+        var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Required\Reports\PrintInfo.json"));
+        if (printInfo == null)
+        {
+            _snackbarService.Show("خطا", "فایل پرینت یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return;
+        }
+        var cus = Cuslist.First(t => t.Id == CusId);
+        PersianCalendar pc = new();
+        Dictionary<string, string> dic = new()
+            {
+                {"Customer_Name",$"({cus.UniqNumber}) _ {cus.DisplayName}"},
+                {"SubmitTime",$"{SubmitDate.ToShamsiDate(pc)}"},
+                {"PrintTime",DateTime.Now.ToShamsiDate(pc) },
+                {"Total_InvoicePrice",TotalPrice},
+                {"Commission",Totalcommission},
+                {"LeftOverPrice",RemainPrice},
+                {"TotalSLeftOver",_longRemainPrice.ToString().NumberToPersianString()},
+                {"Management",$"{printInfo.Management}"},
+                {"Company_Name",$"{printInfo.Company_Name}"},
+                {"Tabligh",$"{printInfo.Tabligh}"}
+            };
+
+        _printServices.PrintInvoice(@"Required\Reports\ReportOneInvoice.mrt", "DetailListDtos", List, dic);
     }
     #endregion
 

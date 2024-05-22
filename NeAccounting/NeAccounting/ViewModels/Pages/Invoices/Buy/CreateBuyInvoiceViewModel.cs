@@ -19,6 +19,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
 
     private int roowId = 1;
 
+    #region Properties
     /// <summary>
     /// لیست اجناس  فاکتور
     /// </summary>
@@ -113,6 +114,12 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     private long? _matPrice;
 
     /// <summary>
+    /// پرینت پس از تایید
+    /// </summary>
+    [ObservableProperty]
+    private bool _print = false;
+
+    /// <summary>
     /// توضیحات ردیف
     /// </summary>
     [ObservableProperty]
@@ -123,7 +130,9 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     /// </summary>
     [ObservableProperty]
     private string? _invDescription;
+    #endregion
 
+    #region Method
     public async void OnNavigatedTo()
     {
         await InitializeViewModel();
@@ -331,6 +340,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
         Commission = null;
         MaterialId = null;
         Description = null;
+        Print = false;
         InvDescription = null;
         SubmitDate = DateTime.Now;
         MatPrice = null;
@@ -392,4 +402,6 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
             MatList = (await db.MaterialManager.GetMaterails()).Where(t => !t.IsService).ToList();
         }
     }
+    #endregion
+
 }
