@@ -6,7 +6,6 @@ using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.UnitOfWork;
-using NeAccounting.Helpers;
 using NeAccounting.Models;
 using NeAccounting.Resources;
 using NeAccounting.Windows;
@@ -26,14 +25,15 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     private readonly WindowsProviderService _windowsProviderService = serviceProvider;
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
-    private int rowId = 1;
 
+    #region Property
     /// <summary>
     /// مبلغ باقی مانده
     /// </summary>
     private long _longRemainPrice = 0;
 
-    #region Property
+    private int rowId = 1;
+
     /// <summary>
     /// لیست اجناس  فاکتور
     /// </summary>
