@@ -365,6 +365,7 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     {
         using UnitOfWork db = new();
         LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
+        MatList = await db.MaterialManager.GetMaterails();
         List = [];
         CusId = null;
         Commission = null;
