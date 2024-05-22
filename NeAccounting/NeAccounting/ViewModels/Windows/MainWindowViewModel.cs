@@ -1,5 +1,6 @@
 ﻿using DomainShared.Constants;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
 using System.Collections.ObjectModel;
 using Wpf.Ui;
@@ -237,6 +238,24 @@ namespace NeAccounting.ViewModels
             }
             LogInError = "عدم تطابق نام کاربری و گذرواژه !!!";
             return false;
+        }
+
+        [RelayCommand]
+        private void OnAddClick(string parameter)
+        {
+            if (string.IsNullOrWhiteSpace(parameter))
+            {
+                return;
+            }
+
+            Type? pageType = NameToPageTypeConverter.Convert(parameter);
+
+            if (pageType == null)
+            {
+                return;
+            }
+
+            _ = _navigationService.Navigate(pageType);
         }
     }
 }
