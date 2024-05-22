@@ -20,6 +20,22 @@
         <KeyBinding Key="Esc"
                     x:Name="key_esc"
                     Command="{Binding CloseAppCommand}" />
+        <KeyBinding Key="Q"
+                    Modifiers="Ctrl"
+                    CommandParameter="CreateSellInvoice"
+                    Command="{Binding ViewModel.AddClickCommand}"/>
+        <KeyBinding Key="W"
+                    Modifiers="Ctrl"
+                    CommandParameter="CreateBuyInvoice"
+                    Command="{Binding ViewModel.AddClickCommand}" />
+        <KeyBinding Key="E"
+                    Modifiers="Ctrl"
+                    CommandParameter="CreatePayDoc"
+                    Command="{Binding ViewModel.AddClickCommand}" />
+        <KeyBinding Key="A"
+                    Modifiers="Ctrl"
+                    CommandParameter="CreateRec"
+                    Command="{Binding ViewModel.AddClickCommand}" />
     </Window.InputBindings>
     <Grid>
         <Grid x:Name="mainGrid"
