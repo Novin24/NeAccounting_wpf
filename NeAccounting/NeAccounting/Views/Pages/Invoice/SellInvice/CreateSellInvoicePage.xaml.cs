@@ -68,6 +68,7 @@ namespace NeAccounting.Views.Pages
             _totalEntity = mat.Entity;
             _isService = mat.IsService;
             txt_UnitName.Text = mat.UnitName;
+            txt_amount.Text = "0";
             txt_Unit_price.Text = mat.LastSellPrice.ToString("N0");
             _price = mat.LastSellPrice;
         }

@@ -383,6 +383,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
         {
             Totalcommission = "0";
         }
+        _longRemainPrice = total;
         RemainPrice = total.ToString("N0");
     }
 

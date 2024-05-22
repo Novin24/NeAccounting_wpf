@@ -104,7 +104,7 @@
                                Text="اسناد دریافتی :"
                                FontFamily="Calibri"
                                FontSize="16"/>
-                    <Button Content="Ctrl + A"
+                    <Button Content="Ctrl + R"
                             IsEnabled="False"
                             FontWeight="Bold"
                             FontSize="12"/>

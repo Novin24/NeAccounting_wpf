@@ -32,7 +32,7 @@
                     Modifiers="Ctrl"
                     CommandParameter="CreatePayDoc"
                     Command="{Binding ViewModel.AddClickCommand}" />
-        <KeyBinding Key="A"
+        <KeyBinding Key="R"
                     Modifiers="Ctrl"
                     CommandParameter="CreateRec"
                     Command="{Binding ViewModel.AddClickCommand}" />
