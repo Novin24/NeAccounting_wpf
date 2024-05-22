@@ -244,7 +244,7 @@ namespace NeAccounting
                 #region materials
                 services.AddTransient<CreateMaterialWindow>();
                 services.AddTransient<HotCreateMaterailViewModel>();
-                
+
                 services.AddTransient<CreateMaterailPage>();
                 services.AddTransient<CreateMaterailViewModel>();
 
@@ -267,7 +267,7 @@ namespace NeAccounting
 
                 #region Reports
                 services.AddTransient<BillPage>();
-                services.AddTransient<BillListViewModel>();
+                services.AddScoped<BillListViewModel>();
 
                 services.AddTransient<Invoicedetails>();
                 services.AddTransient<InvoicedetailsViewModel>();

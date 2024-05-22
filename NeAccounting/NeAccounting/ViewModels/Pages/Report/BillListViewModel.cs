@@ -24,6 +24,7 @@ namespace NeAccounting.ViewModels
     public partial class BillListViewModel : ObservableObject, INavigationAware
     {
         private bool _isInit;
+        private bool _isInitialized = false;
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
@@ -82,7 +83,8 @@ namespace NeAccounting.ViewModels
         #region Methods
         public async void OnNavigatedTo()
         {
-            await InitializeViewModel();
+
+                await InitializeViewModel();
         }
         public void OnNavigatedFrom()
         {
@@ -93,6 +95,16 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             Cuslist = await db.CustomerManager.GetDisplayUser(true);
+            if (CusId.HasValue && EndDate.HasValue && StartDate.HasValue)
+            {
+                _isInit = true;
+                var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, true, CurrentPage);
+                CurrentPage = t.CurrentPage;
+                InvList = t.Items;
+                PageCount = t.PageCount;
+                _isInit = false;
+            }
+            _isInitialized = true;
         }
 
         [RelayCommand]
@@ -433,7 +445,7 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("کاربر گرامی", "ردیف مورد نظر برای ویرایش یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-
+            _isInitialized = false;
             using UnitOfWork db = new();
             switch (doc.Type)
             {
@@ -557,7 +569,7 @@ namespace NeAccounting.ViewModels
                         return;
                     }
 
-                   // var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
+                    // var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
                     (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
 
                     if (!string.IsNullOrEmpty(error))
