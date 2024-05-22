@@ -19,13 +19,13 @@
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height=".8*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height=".8*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"></ColumnDefinition>
@@ -105,7 +105,7 @@
                     <RowDefinition Height="*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <nu:HeaderPack NamePpage="هزینه ها" />
+                <nu:HeaderPack NamePpage="ویرایش هزینه" />
 
                 <Border Grid.Row="1"
                         CornerRadius="9"

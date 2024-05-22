@@ -41,7 +41,7 @@ namespace NeAccounting.ViewModels
         /// اجرت کار
         /// </summary>
         [ObservableProperty]
-        private long? _price;
+        private long _price;
 
         /// <summary>
         /// توضیحات
@@ -87,14 +87,9 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("واحد کالا"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-            if (Price == null || Price == 0)
-            {
-                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("اجرت"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
-                return;
-            }
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(SrvicName, UnitId.Value, true, Price.Value, string.Empty, Address, false);
+                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(SrvicName, UnitId.Value, true, Price, string.Empty, Address, false);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

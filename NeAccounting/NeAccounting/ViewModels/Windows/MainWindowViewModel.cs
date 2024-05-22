@@ -89,6 +89,8 @@ namespace NeAccounting.ViewModels
                 #region Doc
                     new NavigationViewItem {Content = "دریافتی از مشتری",TargetPageType = typeof(CreateRecPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem {Content = "پرداختی به مشتری",TargetPageType = typeof(CreatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+                    new NavigationViewItem {Content = "ثبت چک دریافتی از مشتری",TargetPageType = typeof(CreateRecChequePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+                    new NavigationViewItem {Content = "ثبت چک پرداختی به مشتری",TargetPageType = typeof(CreatePayChequePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 	            #endregion
                     new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(CreateExpencePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 
@@ -117,17 +119,16 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem {Content = "به روز رسانی دریافتی به مشتری",TargetPageType = typeof(UpdateRecDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility = Visibility.Collapsed},
                     new NavigationViewItem {Content = "به روز رسانی فاکتور فروش",TargetPageType = typeof(UpdateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility =Visibility.Collapsed },
                     new NavigationViewItem { Content = "صورتحساب جزییات", TargetPageType = typeof(Invoicedetails) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20 } },
+                    new NavigationViewItem { Content = "صورت سود و زیان", TargetPageType = typeof(ProfitOrLessPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
                     new NavigationViewItem { Content = "گزارش اجناس", TargetPageType = typeof(MaterialReportPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                     new NavigationViewItem { Content = "بدهکاران", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem { Content = "طلبکاران", TargetPageType = typeof(CreditorsListPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem { Content = "دفتر روزانه", TargetPageType = typeof(DailyBookPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20}},
-                    new NavigationViewItem { Content = "صورت سود و زیان", TargetPageType = typeof(ProfitOrLessPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
                     new NavigationViewItem { Content = "دفتر چک", TargetPageType = typeof(ChequebookPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
                     new NavigationViewItem(){Content = "ایجاد چک پرداختی",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreatePayChequePage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem(){Content = "ایجاد چک دریافتی",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateRecChequePage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem(){Content = "ایجاد چک ضمانتی",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateGuarantChequePage),Visibility = Visibility.Collapsed,},
                     new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(ExpencesListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
-                    new NavigationViewItem { Content = "بیلان سالانه", TargetPageType = typeof(DashboardPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
                 }
             },
             new NavigationViewItem()

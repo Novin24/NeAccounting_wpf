@@ -1495,12 +1495,14 @@ namespace Infrastructure.Repositories
             return list;
         }
 
-        public async Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,
+        public async Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(
+            DateTime date,
+            int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
             var list = await (from doc in DbContext.Set<Document>()
                                                .AsNoTracking()
-                                               .Where(t => t.CreationTime.Day == DateTime.Now.Day)
+                                               .Where(t => t.CreationTime.Day == date.Day)
                               join cus in DbContext.Set<Customer>()
                                                                        on doc.CustomerId equals cus.Id
 
