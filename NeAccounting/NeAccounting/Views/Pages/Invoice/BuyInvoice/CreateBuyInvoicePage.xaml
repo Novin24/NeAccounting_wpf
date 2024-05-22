@@ -156,7 +156,7 @@
                                     <DockPanel LastChildFill="False">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
-                                                   Text="نام مشتری"
+                                                   Text="نام فروشنده"
                                                    Margin="2 21 0 0 " />
 
                                         <StackPanel Margin="0 0 3 0"

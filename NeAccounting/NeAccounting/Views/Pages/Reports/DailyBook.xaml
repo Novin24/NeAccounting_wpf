@@ -1,6 +1,7 @@
 ﻿<Page x:Class="NeAccounting.Views.Pages.DailyBookPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:NeAccounting.Views.Pages"
@@ -117,18 +118,38 @@
                     </Border.Background>
                     <Grid>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition ></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <DataGrid Padding="7"
-                              FontSize="15"
-                              IsReadOnly="True"
-                              Margin="40 10 40 0"
-                              FontFamily="Calibri"
-                              CanUserAddRows="False"
-                              CanUserDeleteRows="False"
-                              CanUserResizeRows="False"
-                              CanUserSortColumns="False"
+
+                        <Grid Grid.Row="0"
+                                  Margin="20 ,5,40,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition  />
+                            </Grid.ColumnDefinitions>
+                            <nu:PersianDatePicker VerticalAlignment="Center"
+                                                      FlowDirection="LeftToRight"
+                                                      SelectedDate="{Binding ViewModel.Date, Mode=TwoWay}"
+                                                      LabelName="تاریخ"
+                                                      x:Name="date" />
+                            <Button Grid.Column="2"
+                                        Margin="40 32 40 12"
+                                        Padding="17 5 17 8"
+                                        Command="{Binding ViewModel.SearchCommand}"
+                                        IsDefault="True">نمایش</Button>
+                        </Grid>
+                        <DataGrid Grid.Row="1"
+                                  Padding="7"
+                                  FontSize="15"
+                                  IsReadOnly="True"
+                                  Margin="40 10 40 0"
+                                  FontFamily="Calibri"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  CanUserSortColumns="False"
                               AutoGenerateColumns="False"
                               CanUserResizeColumns="False"
                               CanUserReorderColumns="False"

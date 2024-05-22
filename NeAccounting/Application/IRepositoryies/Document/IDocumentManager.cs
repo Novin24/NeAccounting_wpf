@@ -263,7 +263,9 @@ namespace NeApplication.IRepositoryies
 
         Task<(bool isSuccess, DocUpdateDto itm)> GetDocumentById(Guid docId);
 
-        Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(int pageNum = 0,
+        Task<PagedResulViewModel<DalyBookDto>> GetDalyBook(
+            DateTime date,
+            int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 
         Task<(string error, bool isSuccess)> UpdateReturnFromTheBuyInvoice(Guid parentDocId,

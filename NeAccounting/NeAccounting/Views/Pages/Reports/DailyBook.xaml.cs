@@ -14,6 +14,7 @@ namespace NeAccounting.Views.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+            date.Focus();
         }
 
         private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
