@@ -113,7 +113,6 @@
                         <Border.Background>
                             <SolidColorBrush Color="Gray"
                                              Opacity="0.08" />
-
                         </Border.Background>
 
                         <Grid Margin="50 15 50 0">

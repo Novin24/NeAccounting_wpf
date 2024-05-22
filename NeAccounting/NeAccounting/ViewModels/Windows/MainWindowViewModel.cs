@@ -89,8 +89,8 @@ namespace NeAccounting.ViewModels
                 #region Doc
                     new NavigationViewItem {Content = "دریافتی از مشتری",TargetPageType = typeof(CreateRecPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
                     new NavigationViewItem {Content = "پرداختی به مشتری",TargetPageType = typeof(CreatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
-                    new NavigationViewItem {Content = "ثبت چک دریافتی از مشتری",TargetPageType = typeof(CreateRecChequePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
-                    new NavigationViewItem {Content = "ثبت چک پرداختی به مشتری",TargetPageType = typeof(CreatePayChequePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+                    new NavigationViewItem {Content = "ثبت چک دریافتی ",TargetPageType = typeof(CreateRecChequePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
+                    new NavigationViewItem {Content = "ثبت چک پرداختی ",TargetPageType = typeof(CreatePayChequePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 	            #endregion
                     new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(CreateExpencePage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20}},
 

@@ -11,7 +11,7 @@ namespace Infrastructure.Migrations.NovinDb
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql(@"
-                CREATE OR ALTER PROCEDURE dbo.GetSalaryList @workerId INT = NULL,
+                CREATE OR ALTER PROCEDURE dbo.GetSalaryList @workerId UNIQUEIDENTIFIER = NULL,
                 @StartMonth tinyint = NULL,
                 @StartYear INT = NULL,
                 @EndMonth INT = NULL,
@@ -40,7 +40,7 @@ namespace Infrastructure.Migrations.NovinDb
                         AND fa.PersianMonth = s.PersianMonth
                         AND fa.PersianYear = s.PersianYear)
                       , 0) + s.LoanInstallment + s.OtherDeductions + s.Tax + s.Insurance TotalDebt
-                    FROM Worker w
+                    FROM Personel w
                     JOIN Salary s
                       ON w.Id = s.WorkerId
                     WHERE s.IsDeleted = 0

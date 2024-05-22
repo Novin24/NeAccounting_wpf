@@ -178,7 +178,7 @@
                                 <ui:TextBox Margin="0 4 0 0"
                                             FontFamily="Calibri"
                                             TextAlignment="Center"
-                                            Text="{Binding ViewModel.Desc, Mode=TwoWay}" />
+                                            Text="{Binding ViewModel.Desc, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
 
                             <CheckBox Grid.Column="2"
@@ -187,14 +187,14 @@
                                       Margin="10 22 10 0 "
                                       Content="به احتساب مانده قبلی"
                                       HorizontalAlignment="Center"
-                                      IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay}" />
+                                      IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
                             <nu:PersianDatePicker Grid.Row="1"
                                                   x:Name="Dtp_Start"
                                                   LabelName="از تاریخ"
                                                   VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
-                                                  SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay}" />
+                                                  SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
                             <nu:PersianDatePicker Grid.Row="1"
                                                   Grid.Column="1"
@@ -202,7 +202,7 @@
                                                   LabelName="تا تاریخ"
                                                   VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
-                                                  SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay}" />
+                                                  SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <StackPanel Grid.Row="1"
                                         Grid.Column="2"
                                         x:Name="Btn_show"

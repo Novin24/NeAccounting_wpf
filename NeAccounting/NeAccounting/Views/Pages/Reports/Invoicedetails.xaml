@@ -174,14 +174,14 @@
                                            Text="جزییات"
                                            Margin="5 0 0 4 " />
                                 <ui:TextBox TextAlignment="Center"
-                                            Text="{Binding ViewModel.Desc, Mode=TwoWay}"
+                                            Text="{Binding ViewModel.Desc, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"
                                             FontFamily="Calibri" />
                             </StackPanel>
 
                             <CheckBox Content="به احتساب مانده قبلی"
                                       Grid.Column="2"
                                       FontFamily="Calibri"
-                                      IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay}"
+                                      IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                       Margin="10 22 10 0 "
                                       HorizontalAlignment="Center"
                                       FontSize="14" />
@@ -189,13 +189,13 @@
                             <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
                                                   x:Name="Dtp_Start"
-                                                  SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay}"
+                                                  SelectedDate="{Binding ViewModel.StartDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                   LabelName="از تاریخ"
                                                   Grid.Row="1" />
                             <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
                                                   x:Name="Dtp_End"
-                                                  SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay}"
+                                                  SelectedDate="{Binding ViewModel.EndDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                   LabelName="تا تاریخ"
                                                   Grid.Row="1"
                                                   Grid.Column="1" />

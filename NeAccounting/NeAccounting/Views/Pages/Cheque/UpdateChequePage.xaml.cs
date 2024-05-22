@@ -44,13 +44,12 @@ namespace NeAccounting.Views.Pages
         }
 
         [RelayCommand]
-        private async Task OnCreateCustomer()
+        private async Task OnSubmit()
         {
             if (DataContext is UpdateChequePage c)
             {
-            Btn_submit.Focus();
-            await c.ViewModel.SubmitCommand.ExecuteAsync(null);
-
+                Btn_submit.Focus();
+                await c.ViewModel.SubmitCommand.ExecuteAsync(null);
             }
         }
     }
