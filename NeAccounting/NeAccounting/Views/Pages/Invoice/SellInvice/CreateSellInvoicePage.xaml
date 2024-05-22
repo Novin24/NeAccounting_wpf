@@ -134,20 +134,21 @@
                                 <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="4*"></RowDefinition>
                                 <RowDefinition Height="auto"></RowDefinition>
-
                             </Grid.RowDefinitions>
 
-                            <Grid Margin="0 ,5,0,5">
+                            <Grid Grid.Row="0"
+                                  Margin="0 5"
+                                  HorizontalAlignment="Center">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition  Width=".56*" />
+                                    <ColumnDefinition Width=".4*" />
+                                    <ColumnDefinition Width=".7*" />
+                                    <ColumnDefinition Width=".4*" />
                                     <ColumnDefinition Width="78" />
                                     <ColumnDefinition />
+                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
-                                <StackPanel  Margin="4 4 5 0 "
-                                             MaxWidth="300"
-                                             MinWidth="190"
-                                             HorizontalAlignment="Right">
+                                <StackPanel Grid.Column="1"
+                                            Margin="4 4 5 0 ">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
@@ -162,8 +163,8 @@
                                                     FontSize="21"
                                                     IsTabStop="False"
                                                     FontFamily="Calibri"
+                                                    ToolTip="افزودن کاربر"
                                                     Command="{Binding ViewModel.AddClickCommand}">
-
                                                 <ui:SymbolIcon Symbol="PersonAdd20"
                                                                FontSize="21" />
 
@@ -184,8 +185,7 @@
                                                        DisplayMemberPath="DisplayName"
                                                        Margin="0 4 0 0" />
                                 </StackPanel>
-
-                                <StackPanel Grid.Column="1"
+                                <StackPanel Grid.Column="2"
                                             Margin="5 25 5 0 ">
 
                                     <TextBlock FontFamily="Calibri"
@@ -200,13 +200,13 @@
                                              Text="{Binding ViewModel.LastInvoice}"
                                              IsReadOnly="True" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="2"
-                                            Margin="5 29 0 0 ">
+                                <StackPanel Grid.Column="3"
+                                            Margin="5 26 0 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
                                                Text="پورسانت"
-                                               Margin="2 0 0 0 " />
+                                               Margin="2 0 0 4" />
                                     <ui:NumberBox TextAlignment="Center"
                                                   FontFamily="Calibri"
                                                   ClearButtonEnabled="False"
@@ -218,17 +218,22 @@
                                                   SpinButtonPlacementMode="Hidden"
                                                   FlowDirection="LeftToRight" />
                                 </StackPanel>
-                                <nu:PersianDatePicker FlowDirection="LeftToRight"
-                                                      Grid.Column="3"
-                                                      MinWidth="230"
-                                                      HorizontalAlignment="Left"
-                                                      MaxWidth="250"
-                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}"
+                                <nu:PersianDatePicker Grid.Column="4"
                                                       LabelName="تاریخ"
-                                                      Margin="0 21 0 0 " />
-
-
-                                <Line Grid.ColumnSpan="5"
+                                                      Margin="0 21 0 0 "
+                                                      FlowDirection="LeftToRight"
+                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}" />
+                                <CheckBox Grid.Column="5"
+                                          Margin="0 32 0 0"
+                                          HorizontalAlignment="Center"
+                                          FontFamily="calibri"
+                                          FontSize="14"
+                                          IsChecked="{Binding ViewModel.Print}"
+                                          FlowDirection="LeftToRight"
+                                          Content="چاپ ">
+                                </CheckBox>
+                                <Line Grid.Column="1"
+                                      Grid.ColumnSpan="5"
                                       X1="0"
                                       Y1="9.5"
                                       X2="1300"
@@ -473,15 +478,15 @@
                                         <StackPanel Orientation="Horizontal"
                                                     HorizontalAlignment="Center"
                                                     Grid.Column="1">
-                                            
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="16"
-                                                   Margin="5 0"
-                                                   Text="{Binding ViewModel.Debt}"/>
-                                            
-                                        <TextBlock FontFamily="Calibri"
-                                                   FontSize="15"
-                                                   Text="{Binding ViewModel.Status}"/>
+
+                                            <TextBlock FontFamily="Calibri"
+                                                       FontSize="16"
+                                                       Margin="5 0"
+                                                       Text="{Binding ViewModel.Debt}" />
+
+                                            <TextBlock FontFamily="Calibri"
+                                                       FontSize="15"
+                                                       Text="{Binding ViewModel.Status}" />
 
                                         </StackPanel>
 

@@ -4,20 +4,34 @@ using DomainShared.Errore;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.Pun;
+using DomainShared.Extension;
 using Infrastructure.UnitOfWork;
+using NeAccounting.Models;
 using NeAccounting.Resources;
 using NeAccounting.Windows;
+using Newtonsoft.Json;
+using System.Globalization;
+using System.IO;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using NeApplication.Services;
 
-public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService, WindowsProviderService serviceProvider) : ObservableObject, INavigationAware
+public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService, WindowsProviderService serviceProvider, IPrintServices printServices) : ObservableObject, INavigationAware
 {
     private readonly ISnackbarService _snackbarService = snackbarService;
+    private readonly IPrintServices _printServices = printServices;
     private readonly WindowsProviderService _windowsProviderService = serviceProvider;
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
+
+    #region Properties
     private int roowId = 1;
+
+    /// <summary>
+    /// مبلغ باقی مانده
+    /// </summary>
+    private long _longRemainPrice = 0;
 
     /// <summary>
     /// لیست اجناس  فاکتور
@@ -113,6 +127,12 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     private long? _matPrice;
 
     /// <summary>
+    /// پرینت پس از تایید
+    /// </summary>
+    [ObservableProperty]
+    private bool _print = false;
+
+    /// <summary>
     /// توضیحات ردیف
     /// </summary>
     [ObservableProperty]
@@ -123,7 +143,9 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     /// </summary>
     [ObservableProperty]
     private string? _invDescription;
+    #endregion
 
+    #region Method
     public async void OnNavigatedTo()
     {
         await InitializeViewModel();
@@ -297,6 +319,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
 
         #region reload
         _snackbarService.Show("کاربر گرامی", $"ثبت فاکتور با موفقیت انجام شد", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+        if (Print) PrintOneInvoice();
 
         await Reload();
         return true;
@@ -331,6 +354,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
         Commission = null;
         MaterialId = null;
         Description = null;
+        Print = false;
         InvDescription = null;
         SubmitDate = DateTime.Now;
         MatPrice = null;
@@ -392,4 +416,33 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
             MatList = (await db.MaterialManager.GetMaterails()).Where(t => !t.IsService).ToList();
         }
     }
+
+    private void PrintOneInvoice()
+    {
+        var printInfo = JsonConvert.DeserializeObject<PrintInfo>(File.ReadAllText(@"Required\Reports\PrintInfo.json"));
+        if (printInfo == null)
+        {
+            _snackbarService.Show("خطا", "فایل پرینت یافت نشد!!!", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+            return;
+        }
+        var cus = Cuslist.First(t => t.Id == CusId);
+        PersianCalendar pc = new();
+        Dictionary<string, string> dic = new()
+            {
+                {"Customer_Name",$"({cus.UniqNumber}) _ {cus.DisplayName}"},
+                {"SubmitTime",$"{SubmitDate.ToShamsiDate(pc)}"},
+                {"PrintTime",DateTime.Now.ToShamsiDate(pc) },
+                {"Total_InvoicePrice",TotalPrice},
+                {"Commission",Totalcommission},
+                {"LeftOverPrice",RemainPrice},
+                {"TotalSLeftOver",_longRemainPrice.ToString().NumberToPersianString()},
+                {"Management",$"{printInfo.Management}"},
+                {"Company_Name",$"{printInfo.Company_Name}"},
+                {"Tabligh",$"{printInfo.Tabligh}"}
+            };
+
+        _printServices.PrintInvoice(@"Required\Reports\ReportOneInvoice.mrt", "DetailListDtos", List, dic);
+    }
+    #endregion
+
 }

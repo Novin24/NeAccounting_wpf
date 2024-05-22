@@ -17,12 +17,9 @@
       Title="UpdateBuyInvoicePage">
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                    Command="{Binding SubmitCommand}" />
+                    Command="{Binding ViewModel.SumbitCommand}" />
         <KeyBinding Key="F2"
                     Command="{Binding AddRowCommand}" />
-        <KeyBinding Key="F4"
-                    Command="{Binding ViewModel.AddClickCommand}"
-                    CommandParameter="CreateCustomer" />
         <KeyBinding Key="F3"
                     Command="{Binding ViewModel.AddClickCommand}"
                     CommandParameter="CreateMaterail" />
@@ -165,6 +162,7 @@
                                             <Button Padding="1 0 "
                                                     FontSize="21"
                                                     IsTabStop="False"
+                                                    ToolTip="افزودن"
                                                     FontFamily="Calibri"
                                                     Command="{Binding ViewModel.AddClickCommand}">
 

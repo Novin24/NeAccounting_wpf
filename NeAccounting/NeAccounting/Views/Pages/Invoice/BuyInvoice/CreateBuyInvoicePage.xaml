@@ -114,6 +114,7 @@
                         <RowDefinition Height="6*"></RowDefinition>
 
                     </Grid.RowDefinitions>
+
                     <nu:HeaderPack NamePpage="فاکتور خرید"
                                    Margin="25 0" />
 
@@ -139,18 +140,19 @@
 
                             </Grid.RowDefinitions>
 
-                            <Grid Margin="0 ,5,0,5">
+                            <Grid Grid.Row="0"
+                                  Margin="0 5"
+                                  HorizontalAlignment="Center">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width=".56*" />
+                                    <ColumnDefinition Width=".4*" />
+                                    <ColumnDefinition Width=".7*" />
+                                    <ColumnDefinition Width=".4*" />
                                     <ColumnDefinition Width="78" />
                                     <ColumnDefinition />
+                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Margin="4 4 5 0 "
-                                            MaxWidth="300"
-                                            MinWidth="190"
-                                            HorizontalAlignment="Right">
-
+                                <StackPanel Grid.Column="1"
+                                            Margin="4 4 5 0 ">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock FontFamily="Calibri"
                                                    FontSize="15"
@@ -184,7 +186,6 @@
                                                     IsTabStop="False"
                                                     ToolTip="افزودن کاربر"
                                                     FontFamily="Calibri"
-                                                    CommandParameter="CreateCustomer"
                                                     Command="{Binding ViewModel.AddClickCommand}">
 
                                                 <ui:SymbolIcon Symbol="PersonAdd20"
@@ -195,8 +196,8 @@
                                         <TextBlock FontFamily="Calibri"
                                                    DockPanel.Dock="Right"
                                                    FontSize="14"
-                                                   Foreground="#BB8F60"
                                                    x:Name="lbl_cusId"
+                                                   Foreground="#BB8F60"
                                                    VerticalAlignment="Center"
                                                    Margin="6 22 6 0" />
                                     </DockPanel>
@@ -207,9 +208,8 @@
                                                        DisplayMemberPath="DisplayName"
                                                        Margin="0 4 0 0" />
                                 </StackPanel>
-
-                                <StackPanel Grid.Column="1"
-                                            Margin="5 23 5 0 ">
+                                <StackPanel Grid.Column="2"
+                                            Margin="5 25 5 0 ">
 
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
@@ -224,34 +224,39 @@
                                                 IsTabStop="False"
                                                 FlowDirection="LeftToRight" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="2"
-                                            Margin="5 23 0 0 ">
-
+                                <StackPanel Grid.Column="3"
+                                            Margin="5 26 0 0 ">
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="15"
-                                               Text="پورسانت "
-                                               Margin="2 0 0 0 " />
+                                               Text="پورسانت"
+                                               Margin="2 0 0 4 " />
                                     <ui:NumberBox TextAlignment="Center"
                                                   FontFamily="Calibri"
+                                                  ClearButtonEnabled="False"
                                                   Maximum="100"
                                                   Minimum="0"
-                                                  Margin="0 5 0 0"
                                                   Value="{Binding ViewModel.Commission , Mode=TwoWay}"
-                                                  ClearButtonEnabled="False"
+                                                  Name="txt_Commission"
                                                   Icon="{ui:SymbolIcon ShoppingBagPercent24}"
                                                   SpinButtonPlacementMode="Hidden"
                                                   FlowDirection="LeftToRight" />
                                 </StackPanel>
-
-                                <nu:PersianDatePicker FlowDirection="LeftToRight"
-                                                      Grid.Column="3"
-                                                      MinWidth="230"
-                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}"
-                                                      HorizontalAlignment="Left"
-                                                      Margin="0 20 0 0"
-                                                      LabelName="تاریخ" />
-
-                                <Line Grid.ColumnSpan="4"
+                                <nu:PersianDatePicker Grid.Column="4"
+                                                      LabelName="تاریخ"
+                                                      Margin="0 21 0 0 "
+                                                      FlowDirection="LeftToRight"
+                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}" />
+                                <CheckBox Grid.Column="5"
+                                          Margin="5 32 5 0"
+                                          HorizontalAlignment="Center"
+                                          FontFamily="calibri"
+                                          IsChecked="{Binding ViewModel.Print}"
+                                          FontSize="16"
+                                          FlowDirection="LeftToRight"
+                                          Content="چاپ ">
+                                </CheckBox>
+                                <Line Grid.Column="1"
+                                      Grid.ColumnSpan="5"
                                       X1="0"
                                       Y1="9.5"
                                       X2="1300"
