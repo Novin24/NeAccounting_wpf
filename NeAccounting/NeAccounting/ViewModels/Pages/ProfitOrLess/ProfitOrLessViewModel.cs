@@ -36,6 +36,18 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private string? _totalBuy;
 
+        /// <summary>
+        /// حالت انتظار
+        /// </summary>
+        [ObservableProperty]
+        private bool _wating = true;
+
+        /// <summary>
+        /// دیتاگرید 
+        /// </summary>
+        [ObservableProperty]
+        private bool _showData = false;
+
         public void OnNavigatedFrom()
         {
 
@@ -49,6 +61,7 @@ namespace NeAccounting.ViewModels
 
         private async Task InitializeViewModel()
         {
+            await Task.Delay(2000);
             using (UnitOfWork db = new())
             {
                 var p = await db.DocumentManager.GetProfitandLossStatement();
@@ -62,7 +75,8 @@ namespace NeAccounting.ViewModels
                 Salary = salary.ToString("N0");
                 NetProfit = (p.ProfitLossStatement - (exp + salary)).ToString("N0");
             }
-
+            ShowData = true;
+            Wating = false;
             _isInitialized = true;
         }
     }
