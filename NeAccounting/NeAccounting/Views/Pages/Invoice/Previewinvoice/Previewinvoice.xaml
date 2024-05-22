@@ -210,7 +210,7 @@
                                               TextAlignment="Center"
                                               ClearButtonEnabled="False"
                                               FontFamily="Calibri"
-                                              Value="{Binding ViewModel.AmountOf, Mode=TwoWay}"
+                                              Value="{Binding ViewModel.AmountOf, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"
                                               LostFocus="Txt_amount_LostFocus"
                                               SpinButtonPlacementMode="Hidden"
                                               Margin="0 2 0 0" />

@@ -235,7 +235,7 @@
                                                   ClearButtonEnabled="False"
                                                   Maximum="100"
                                                   Minimum="0"
-                                                  Value="{Binding ViewModel.Commission , Mode=TwoWay}"
+                                                  Value="{Binding ViewModel.Commission , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   Name="txt_Commission"
                                                   Icon="{ui:SymbolIcon ShoppingBagPercent24}"
                                                   SpinButtonPlacementMode="Hidden"
@@ -312,7 +312,7 @@
                                                   TextAlignment="Center"
                                                   ClearButtonEnabled="False"
                                                   FontFamily="Calibri"
-                                                  Value="{Binding ViewModel.AmountOf, Mode=TwoWay}"
+                                                  Value="{Binding ViewModel.AmountOf, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   LostFocus="Txt_amount_LostFocus"
                                                   SpinButtonPlacementMode="Hidden"
                                                   Margin="0 2 0 0" />
@@ -370,7 +370,7 @@
                                                Text="توضیحات"
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_UnitDescription"
-                                                Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                                Text="{Binding ViewModel.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 TextAlignment="Center"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
