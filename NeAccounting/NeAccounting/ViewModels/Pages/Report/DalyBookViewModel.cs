@@ -1,5 +1,7 @@
-﻿using DomainShared.ViewModels.Document;
+﻿using DomainShared.Errore;
+using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -7,16 +9,10 @@ using static Stimulsoft.Client.Designer.Components.StiCloudPageSetupWindow;
 
 namespace NeAccounting.ViewModels
 {
-    public partial class DalyBookViewModel : ObservableObject, INavigationAware
+    public partial class DalyBookViewModel(ISnackbarService snackbarService) : ObservableObject, INavigationAware
     {
-        private readonly IContentDialogService _contentDialogService;
-        private readonly ISnackbarService _snackbarService;
+        private readonly ISnackbarService _snackbarService = snackbarService;
 
-        public DalyBookViewModel(IContentDialogService contentDialogService, ISnackbarService snackbarService)
-        {
-            _contentDialogService = contentDialogService;
-            _snackbarService = snackbarService;
-        }
         /// <summary>
         /// لیست فاکتور
         /// </summary>
@@ -27,7 +23,7 @@ namespace NeAccounting.ViewModels
         private int _pageCount = 1;
 
         [ObservableProperty]
-        private DateTime _date = DateTime.Now;
+        private DateTime? _date = DateTime.Now;
 
         [ObservableProperty]
         private int _currentPage = 1;
@@ -45,7 +41,7 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            var result = await db.DocumentManager.GetDalyBook(Date, CurrentPage);
+            var result = await db.DocumentManager.GetDalyBook(Date.Value, CurrentPage);
             PageCount = result.PageCount;
             CurrentPage = result.CurrentPage;
             InvList = result.Items;
@@ -54,10 +50,31 @@ namespace NeAccounting.ViewModels
         [RelayCommand]
         public async Task OnSearch()
         {
+            if (Date == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetDalyBook(Date, CurrentPage);
+            var t = await db.DocumentManager.GetDalyBook(Date.Value, CurrentPage);
             CurrentPage = t.CurrentPage;
             PageCount = t.PageCount;
+            InvList = t.Items;
+        }
+
+
+        [RelayCommand]
+        private async Task OnPageChenge()
+        {
+            if (Date == null)
+            {
+                _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("تاریخ"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            using UnitOfWork db = new();
+            var result = await db.DocumentManager.GetDalyBook(Date.Value, CurrentPage);
+            PageCount = result.PageCount;
+            InvList = result.Items;
         }
 
         //[RelayCommand]
@@ -156,14 +173,5 @@ namespace NeAccounting.ViewModels
 
         //    //servise.Navigate(pageType, context);
         //}
-
-        [RelayCommand]
-        private async Task OnPageChenge()
-        {
-            using UnitOfWork db = new();
-            var result = await db.DocumentManager.GetDalyBook(Date,CurrentPage);
-            PageCount = result.PageCount;
-            InvList = result.Items;
-        }
     }
 }

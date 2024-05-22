@@ -39,8 +39,8 @@ namespace Domain.NovinEntity.Materials
             string physicalAddress,
             bool isManufacturedGoods)
         {
-            SetAddress(name);
-            SetAddress(serial);
+            SetName (name);
+            SetSerial(serial);
             SetAddress(physicalAddress);
             IsManufacturedGoods = isManufacturedGoods;
             UnitId = unitId;

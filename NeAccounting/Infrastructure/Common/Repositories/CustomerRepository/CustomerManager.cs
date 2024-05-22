@@ -137,6 +137,7 @@ namespace Infrastructure.Repositories
                 mt.Type = type;
 
                 Entities.Update(mt);
+                await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {

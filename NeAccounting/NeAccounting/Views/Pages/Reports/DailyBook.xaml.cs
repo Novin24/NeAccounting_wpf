@@ -14,7 +14,6 @@ namespace NeAccounting.Views.Pages
             ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-            date.Focus();
         }
 
         private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
@@ -24,6 +23,11 @@ namespace NeAccounting.Views.Pages
                 return;
             }
             ViewModel.PageChengeCommand.Execute(null);
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Dtp_date.txt_date.Focus();
         }
     }
 }
