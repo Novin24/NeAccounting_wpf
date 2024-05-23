@@ -395,7 +395,7 @@
                                     <ui:TextBox Margin="0,20,0,0"
                                                 FontSize="14"
                                                 TabIndex="9"
-                                                Text="{Binding ViewModel.Description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                Text="{Binding ViewModel.Description,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 FlowDirection="RightToLeft"
                                                 Grid.ColumnSpan="2"
                                                 TextWrapping="Wrap"

@@ -148,7 +148,7 @@
                                      Grid.Row="0"
                                      Grid.Column="0"
                                      x:Name="MaterialName"
-                                     Text="{Binding ViewModel.MaterialName}"
+                                     Text="{Binding ViewModel.MaterialName, UpdateSourceTrigger=PropertyChanged}"
                                      Margin="0 4 0 0 "
                                       
                                      FontFamily="Calibri" />
