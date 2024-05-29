@@ -7,13 +7,48 @@
       xmlns:local="clr-namespace:NeAccounting.Views.Pages.Test"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:modalcontrol="clr-namespace:ModalControl;assembly=ModalControl"
       d:DataContext="{d:DesignInstance local:TestPage,
                                      IsDesignTimeCreatable=False}"
       mc:Ignorable="d"
+      d:Height="800"
+      d:Width="800"
       Title="TestPage"
       x:Name="root">
 
-    <Grid >
-        
+    <Grid  Background="Khaki">
+        <modalcontrol:Modal  x:Name="md_newModal"
+                             IsOpen="True"
+                             Panel.ZIndex="100">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0"
+                            x:Name="sp_total"
+                            Orientation="Vertical">
+                    <ui:TextBox Text="text me every thing"
+                                Foreground="Black"></ui:TextBox>
+                </StackPanel>
+                <Button  Grid.Row="1"
+                         Content="CloseME"
+                         Foreground="Aqua"
+                         Click="Button_Click"></Button>
+            </Grid>
+        </modalcontrol:Modal>
+        <StackPanel>
+
+            <Button Background="Black"
+                    Content="open"
+                    Click="Button_Click_1"></Button>
+            <Button Background="Black"
+                    Content="open2"
+                    Click="Button_Click_2"></Button>
+
+            <Button Background="Black"
+                    Content="open3"
+                    Click="Button_Click_3"></Button>
+        </StackPanel>
     </Grid>
 </Page>
