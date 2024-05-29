@@ -4,6 +4,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.NovinDb
 {
     [DbContext(typeof(NovinDbContext))]
-    partial class NovinDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240529084128_editPunProduct")]
+    partial class editPunProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -537,7 +540,7 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<bool>("IsManufacturedGoods")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsRawMaterial")
+                    b.Property<bool>("IsRawmaterial")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsService")
@@ -590,8 +593,8 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid>("RawMaterialId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Ratio")
-                        .HasColumnType("float");
+                    b.Property<int>("Ratio")
+                        .HasColumnType("int");
 
                     b.Property<byte>("UsagePercentage")
                         .HasColumnType("tinyint");
@@ -1034,13 +1037,13 @@ namespace Infrastructure.Migrations.NovinDb
             modelBuilder.Entity("Domain.NovinEntity.Materials.PunProduct", b =>
                 {
                     b.HasOne("Domain.NovinEntity.Materials.Pun", "Production")
-                        .WithMany("RawMaterials")
+                        .WithMany("Productions")
                         .HasForeignKey("ProductionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.NovinEntity.Materials.Pun", "RawMaterial")
-                        .WithMany("Productions")
+                        .WithMany("RawMaterials")
                         .HasForeignKey("RawMaterialId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();

@@ -8,10 +8,17 @@ namespace Infrastructure.Repositories
 {
     public class MaterialManager(NovinDbContext context) : Repository<Pun>(context), IMaterialManager
     {
-        public Task<List<MatListDto>> GetMaterails()
+        public async Task<List<MatListDto>> GetMaterails()
         {
+            var ss = await TableNoTracking.Include(t => t.Productions).ToListAsync();
+            var sss = await Entities.Include(t => t.RawMaterials).ToListAsync();
 
-            return TableNoTracking.Where(t => t.IsActive).Select(x => new MatListDto
+            var rr = sss.First(t => t.Id == Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c1f9314"));
+            var rn = sss.First(t => t.Id == Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c9f9314"));
+            var pr = sss.First(t => t.Id == Guid.Parse("71cd42c4-5f0f-ef11-8a52-581122929fa3"));
+            pr.RawMaterials.Add(new PunProduct(Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c1f9314"), 7,88,3));
+            pr.RawMaterials.Add(new PunProduct(Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c1f9314"), 7,12,.2));
+            var t = await TableNoTracking.Where(t => t.IsActive).Select(x => new MatListDto
             {
                 Id = x.Id,
                 MaterialName = x.Name,
@@ -19,8 +26,15 @@ namespace Infrastructure.Repositories
                 LastSellPrice = x.LastSellPrice,
                 LastBuyPrice = x.LastBuyPrice,
                 UnitName = x.Unit.Name,
+                IsManufacturedGoods = x.IsManufacturedGoods,
+                RawMaterials = x.RawMaterials.Select(t => new RawMaterial()
+                {
+                    Ratio = t.Ratio,
+                }).ToList(),
                 IsService = x.IsService,
             }).ToListAsync();
+
+            return t;
         }
 
         public async Task<List<PunListDto>> GetMaterails(string name, string serial)
@@ -69,7 +83,7 @@ namespace Infrastructure.Repositories
                                lastPrice,
                                serial,
                                address,
-                               isManufacturedGoods));
+                               isManufacturedGoods, false));
                 await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)

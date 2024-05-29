@@ -14,8 +14,8 @@ namespace Infrastructure.EntityFramework
         protected override void OnConfiguring(
                         DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer($"Server=(LocalDb)\\MSSQLLocalDB;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;");
-            //optionsBuilder.UseSqlServer($"Data Source=192.168.10.242\\DESKTOP-L3HJTMF\\SQLEXPRESS,1434;Database={NeAccountingConstants.NvoinDbConnectionStrint};TrustServerCertificate=True;User Id=MyLogIn;Password=P123a@h;");
+            //optionsBuilder.UseSqlServer($"Server=(LocalDb)\\MSSQLLocalDB;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer($"Data Source=192.168.10.242\\DESKTOP-L3HJTMF\\SQLEXPRESS,1434;Database={NeAccountingConstants.NvoinDbConnectionStrint};TrustServerCertificate=True;User Id=MyLogIn;Password=P123a@h;");
         }
 
         private static readonly MethodInfo ConfigurePropertiesMethodInfo = typeof(NovinDbContext)
@@ -105,9 +105,9 @@ namespace Infrastructure.EntityFramework
                                 .Where(e => e.State == EntityState.Deleted || e.State == EntityState.Modified || e.State == EntityState.Added);
             foreach (var entity in entities)
             {
-                if (entity.State == EntityState.Modified && entity.Entity is IEntities)
+                if (entity.State == EntityState.Modified && entity.Entity is IAuditEntity)
                 {
-                    var book = entity.Entity as IEntities;
+                    var book = entity.Entity as IAuditEntity;
                     book.LastModifireId = CurrentUser.CurrentUserId;
                     book.LastModificationTime = DateTime.Now;
                 }
@@ -121,9 +121,9 @@ namespace Infrastructure.EntityFramework
                     book.IsDeleted = true;
                 }
 
-                if (entity.State == EntityState.Added && entity.Entity is IEntities)
+                if (entity.State == EntityState.Added && entity.Entity is IAuditEntity)
                 {
-                    var book = entity.Entity as IEntities;
+                    var book = entity.Entity as IAuditEntity;
                     book.CreatorId = CurrentUser.CurrentUserId;
                     book.CreationTime = DateTime.Now;
                 }

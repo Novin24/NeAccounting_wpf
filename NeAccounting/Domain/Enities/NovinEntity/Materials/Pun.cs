@@ -11,6 +11,8 @@ namespace Domain.NovinEntity.Materials
         public Guid UnitId { get; set; }
         public IEnumerable<SellRemittance> SellRemittances { get; set; }
         public IEnumerable<BuyRemittance> BuyRemittances { get; set; }
+        public virtual ICollection<PunProduct> Productions { get; set; } = [];
+        public virtual ICollection<PunProduct> RawMaterials { get; set; } = [];
         #endregion
 
         #region Property
@@ -20,6 +22,7 @@ namespace Domain.NovinEntity.Materials
         public long LastSellPrice { get; set; }
         public long LastBuyPrice { get; set; }
         public bool IsManufacturedGoods { get; set; }
+        public bool IsRawMaterial { get; set; }
         public string PhysicalAddress { get; private set; }
         public bool IsActive { get; set; }
         public bool IsService { get; set; }
@@ -37,12 +40,14 @@ namespace Domain.NovinEntity.Materials
             long lastSellPrice,
             string serial,
             string physicalAddress,
-            bool isManufacturedGoods)
+            bool isManufacturedGoods,
+            bool isRawmaterial)
         {
-            SetName (name);
+            SetName(name);
             SetSerial(serial);
             SetAddress(physicalAddress);
             IsManufacturedGoods = isManufacturedGoods;
+            IsRawMaterial = isRawmaterial;
             UnitId = unitId;
             IsService = isService;
             Entity = 0;
@@ -59,10 +64,13 @@ namespace Domain.NovinEntity.Materials
             double entity,
             long lastBuyPrice,
             bool isActive,
-            string physicalAddress)
+            string physicalAddress,
+            bool isManufacturedGoods,
+            bool isRawmaterial)
         {
             Name = name;
-            IsManufacturedGoods = false;
+            IsManufacturedGoods = isManufacturedGoods;
+            IsRawMaterial = isRawmaterial;
             Entity = entity;
             LastBuyPrice = lastBuyPrice;
             UnitId = unitId;

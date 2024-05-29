@@ -16,8 +16,8 @@
       Title="TestPage"
       x:Name="root">
 
-    <Grid  Background="Khaki">
-        <modalcontrol:Modal  x:Name="md_newModal"
+    <Grid >
+        <!--<modalcontrol:Modal  x:Name="md_newModal"
                              IsOpen="True"
                              Panel.ZIndex="100">
             <Grid>
@@ -49,6 +49,6 @@
             <Button Background="Black"
                     Content="open3"
                     Click="Button_Click_3"></Button>
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Page>

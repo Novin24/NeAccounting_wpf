@@ -9,6 +9,7 @@ using Domain.NovinEntity.Workers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Reflection;
+using System.Reflection.Emit;
 
 namespace Infrastructure.Utilities
 {
@@ -61,7 +62,6 @@ namespace Infrastructure.Utilities
 
             builder.Entity<Pun>(b =>
             {
-
                 b.HasIndex(t => t.Id);
                 b.Property(r => r.IsActive).HasDefaultValue(true);
                 b.Property(t => t.Name).HasMaxLength(100).IsRequired();
@@ -71,6 +71,22 @@ namespace Infrastructure.Utilities
                 .WithMany(s => s.Materials)
                 .HasForeignKey(t => t.UnitId)
                 .OnDelete(DeleteBehavior.Cascade);
+            });
+
+
+            builder.Entity<PunProduct>(b =>
+            {
+                b.HasKey(e => new { e.ProductionId, e.RawMaterialId });
+
+                b.HasOne(e => e.Production)
+                .WithMany(e => e.RawMaterials)
+                .HasForeignKey(e => e.ProductionId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+                b.HasOne(e => e.RawMaterial)
+                .WithMany(e => e.Productions)
+                .HasForeignKey(e => e.RawMaterialId)
+                .OnDelete(DeleteBehavior.NoAction);
             });
 
             builder.Entity<Cheque>(b =>

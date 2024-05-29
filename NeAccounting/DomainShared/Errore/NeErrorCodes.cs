@@ -27,8 +27,18 @@ public static class NeErrorCodes
     {
         return $"{name1} باید از {name2} کاراکتر کمتر باشد";
     }
+    
+    public static string IsLessNumber(string name1, string name2)
+    {
+        return $"{name1} باید از {name2}  کمتر باشد";
+    }
 
     public static string IsMore(string name1, string name2)
+    {
+        return $"{name1} باید از {name2} کاراکتر بیشتر باشد";
+    }
+    
+    public static string IsMoreNumber(string name1, string name2)
     {
         return $"{name1} باید از {name2} بیشتر باشد";
     }

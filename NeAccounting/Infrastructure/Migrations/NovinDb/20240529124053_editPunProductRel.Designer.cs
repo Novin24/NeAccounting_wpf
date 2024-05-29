@@ -4,6 +4,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.NovinDb
 {
     [DbContext(typeof(NovinDbContext))]
-    partial class NovinDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240529124053_editPunProductRel")]
+    partial class editPunProductRel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -590,8 +593,8 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<Guid>("RawMaterialId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Ratio")
-                        .HasColumnType("float");
+                    b.Property<int>("Ratio")
+                        .HasColumnType("int");
 
                     b.Property<byte>("UsagePercentage")
                         .HasColumnType("tinyint");

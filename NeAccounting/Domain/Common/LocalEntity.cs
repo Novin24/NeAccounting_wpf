@@ -2,7 +2,7 @@
 
 namespace Domain.Common
 {
-    public abstract class LocalEntity<TKey> : IEntities , ISoftDeleted
+    public abstract class LocalEntity<TKey> : IAuditEntity, ISoftDeleted
     {
         [Key]
         public TKey Id { get; set; }
