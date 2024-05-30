@@ -36,12 +36,12 @@ namespace Domain.NovinEntity.Materials
 
         }
         public PunProduct(
-            Guid rawMaterialId,
             byte wasetPrc,
             byte usagePrc,
-            double ratio)
+            double ratio , 
+            Pun rawMat)
         {
-            RawMaterialId = rawMaterialId;
+            SetRawMaterial(rawMat);
             SetRatio(ratio);
             SetWaste(wasetPrc);
             SetUsage(usagePrc);
@@ -69,13 +69,19 @@ namespace Domain.NovinEntity.Materials
 
         public PunProduct SetRatio(double ratio)
         {
-            if (Ratio > double.MaxValue)
+            if (ratio > double.MaxValue)
                 throw new ArgumentException(NeErrorCodes.IsLessNumber("نسبت", "2000000000"));
 
-            if (Ratio <= 0)
+            if (ratio <= 0)
                 throw new ArgumentException(NeErrorCodes.IsMoreNumber("نسبت", "صفر"));
 
             Ratio = ratio;
+            return this;
+        }
+
+        public PunProduct SetRawMaterial(Pun mat)
+        {
+            RawMaterial = mat;
             return this;
         }
         #endregion

@@ -25,7 +25,9 @@ namespace NeApplication.IRepositoryies
             long lastPrice,
             string serial,
             string address,
-            bool isManufacturedGoods);
+            bool isManufacturedGoods,
+            bool isRawMaterial,
+            List<RawMaterial> rawMaterials);
 
         Task<(string error, bool isSuccess)> UpdateMaterial(
             Guid materialId,
@@ -34,7 +36,9 @@ namespace NeApplication.IRepositoryies
             string serial,
             string address,
             long lastPrice,
-            bool isManufacturedGoods);
+            bool isManufacturedGoods,
+            bool isRawMaterial,
+            List<RawMaterial> rawMaterials);
 
         /// <summary>
         /// Increase =

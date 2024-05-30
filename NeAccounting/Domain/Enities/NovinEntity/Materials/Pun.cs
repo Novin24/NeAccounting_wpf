@@ -41,11 +41,13 @@ namespace Domain.NovinEntity.Materials
             string serial,
             string physicalAddress,
             bool isManufacturedGoods,
-            bool isRawmaterial)
+            bool isRawmaterial,
+            List<PunProduct> pnp)
         {
             SetName(name);
             SetSerial(serial);
             SetAddress(physicalAddress);
+            SetRawMaterials(pnp);
             IsManufacturedGoods = isManufacturedGoods;
             IsRawMaterial = isRawmaterial;
             UnitId = unitId;
@@ -56,31 +58,20 @@ namespace Domain.NovinEntity.Materials
             IsActive = true;
         }
 
-        public Pun(string name,
-            Guid unitId,
-            bool isService,
-            long lastSellPrice,
-            string serial,
-            double entity,
-            long lastBuyPrice,
-            bool isActive,
-            string physicalAddress,
-            bool isManufacturedGoods,
-            bool isRawmaterial)
-        {
-            Name = name;
-            IsManufacturedGoods = isManufacturedGoods;
-            IsRawMaterial = isRawmaterial;
-            Entity = entity;
-            LastBuyPrice = lastBuyPrice;
-            UnitId = unitId;
-            Serial = serial;
-            IsService = isService;
-            LastSellPrice = lastSellPrice;
-            PhysicalAddress = physicalAddress;
-            IsActive = isActive;
-        }
 
+        /// <summary>
+        /// برای افزودن اجناس یکجا در سال مالی جدید
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="unitId"></param>
+        /// <param name="isService"></param>
+        /// <param name="lastSellPrice"></param>
+        /// <param name="serial"></param>
+        /// <param name="entity"></param>
+        /// <param name="lastBuyPrice"></param>
+        /// <param name="isActive"></param>
+        /// <param name="physicalAddress"></param>
         public Pun(
             Guid id,
             string name,
@@ -132,6 +123,15 @@ namespace Domain.NovinEntity.Materials
                 throw new ArgumentException(NeErrorCodes.IsLess("ادرس فیزیکی", "صد"));
 
             PhysicalAddress = physicalAddress;
+            return this;
+        }
+
+        public Pun SetRawMaterials(List<PunProduct> rawMaterials)
+        {
+            if (IsManufacturedGoods && rawMaterials.Count == 0)
+                throw new ArgumentException(NeErrorCodes.IsMandatory("مواد اولیه"));
+
+            RawMaterials = rawMaterials;
             return this;
         }
         #endregion

@@ -10,29 +10,37 @@ namespace Infrastructure.Repositories
     {
         public async Task<List<MatListDto>> GetMaterails()
         {
-            var ss = await TableNoTracking.Include(t => t.Productions).ToListAsync();
-            var sss = await Entities.Include(t => t.RawMaterials).ToListAsync();
+            //var sss = await Entities.Include(t => t.RawMaterials).ToListAsync();
 
-            var rr = sss.First(t => t.Id == Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c1f9314"));
-            var rn = sss.First(t => t.Id == Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c9f9314"));
-            var pr = sss.First(t => t.Id == Guid.Parse("71cd42c4-5f0f-ef11-8a52-581122929fa3"));
-            pr.RawMaterials.Add(new PunProduct(Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c1f9314"), 7,88,3));
-            pr.RawMaterials.Add(new PunProduct(Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c1f9314"), 7,12,.2));
-            var t = await TableNoTracking.Where(t => t.IsActive).Select(x => new MatListDto
-            {
-                Id = x.Id,
-                MaterialName = x.Name,
-                Entity = x.Entity,
-                LastSellPrice = x.LastSellPrice,
-                LastBuyPrice = x.LastBuyPrice,
-                UnitName = x.Unit.Name,
-                IsManufacturedGoods = x.IsManufacturedGoods,
-                RawMaterials = x.RawMaterials.Select(t => new RawMaterial()
+            //var rr = sss.First(t => t.Id == Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c1f9314"));
+            //var rn = sss.First(t => t.Id == Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c9f9314"));
+            //var pr = sss.First(t => t.Id == Guid.Parse("71cd42c4-5f0f-ef11-8a52-581122929fa3"));
+            //pr.RawMaterials.Add(new PunProduct(7, 88, 3, rr));
+            ////pr.RawMaterials.Add(new PunProduct(pr.Id, Guid.Parse("5e3c0e59-5a45-4eed-b80a-ae6c6c1f9314"), 7, 12, .2));
+            //Entities.Update(pr);
+            //await DbContext.SaveChangesAsync();
+            var t = await TableNoTracking.Include(t => t.RawMaterials)
+                .Where(t => t.IsActive)
+                .Select(x => new MatListDto
                 {
-                    Ratio = t.Ratio,
-                }).ToList(),
-                IsService = x.IsService,
-            }).ToListAsync();
+                    Id = x.Id,
+                    MaterialName = x.Name,
+                    Entity = x.Entity,
+                    LastSellPrice = x.LastSellPrice,
+                    LastBuyPrice = x.LastBuyPrice,
+                    UnitName = x.Unit.Name,
+                    IsManufacturedGoods = x.IsManufacturedGoods,
+                    RawMaterials = x.RawMaterials.Select(t => new RawMaterial()
+                    {
+                        Ratio = t.Ratio,
+                        MaterialId = t.RawMaterialId,
+                        MaterialName = t.RawMaterial.Name,
+                        UnitName = t.RawMaterial.Unit.Name,
+                        UsagePercentage = t.UsagePercentage,
+                        WastePercentage = t.WastePercentage,
+                    }).ToList(),
+                    IsService = x.IsService,
+                }).ToListAsync();
 
             return t;
         }
@@ -70,20 +78,35 @@ namespace Infrastructure.Repositories
             long lastPrice,
             string serial,
             string address,
-            bool isManufacturedGoods)
+            bool isManufacturedGoods,
+            bool isRawMaterial,
+            List<RawMaterial> rawMaterials)
         {
+
             if (await TableNoTracking.AnyAsync(t => t.Name == name))
                 return new("کاربر گرامی این کالا از قبل تعریف شده می‌باشد!!!", false);
+
+            List<PunProduct> pnp = [];
+            if (isManufacturedGoods)
+            {
+                var mats = await Entities.Where(t => rawMaterials.Select(t => t.MaterialId).Contains(t.Id)).ToListAsync();
+                foreach (var mat in rawMaterials)
+                {
+                    pnp.Add(new PunProduct(mat.WastePercentage, mat.UsagePercentage, mat.Ratio, mats.First(t => t.Id == mat.MaterialId)));
+                }
+            }
 
             try
             {
                 await Entities.AddAsync(new Pun(name,
-                               unitId,
-                               isService,
-                               lastPrice,
-                               serial,
-                               address,
-                               isManufacturedGoods, false));
+                                unitId,
+                                isService,
+                                lastPrice,
+                                serial,
+                                address,
+                                isManufacturedGoods,
+                                isRawMaterial,
+                                pnp));
                 await DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -104,18 +127,37 @@ namespace Infrastructure.Repositories
             string serial,
             string address,
             long lastPrice,
-            bool isManufacturedGoods)
+            bool isManufacturedGoods,
+            bool isRawMaterial,
+            List<RawMaterial> rawMaterials)
         {
+
+            if (await TableNoTracking.AnyAsync(t => t.Name == name && t.Id != materialId))
+                return new("کاربر گرامی این کالا از قبل تعریف شده می‌باشد!!!", false);
+
             var mt = await Entities.FindAsync(materialId);
 
             if (mt == null)
                 return new("کالای مورد نظر یافت نشد !!!", false);
+
+            List<PunProduct> pnp = [];
+
+            if (isManufacturedGoods)
+            {
+                var mats = await Entities.Where(t => rawMaterials.Select(t => t.MaterialId).Contains(t.Id)).ToListAsync();
+                foreach (var mat in rawMaterials)
+                {
+                    pnp.Add(new PunProduct(mat.WastePercentage, mat.UsagePercentage, mat.Ratio, mats.First(t => t.Id == mat.MaterialId)));
+                }
+            }
 
             try
             {
                 mt.SetName(name);
                 mt.SetSerial(serial);
                 mt.SetAddress(address);
+                mt.RawMaterials.Clear();
+                mt.SetRawMaterials(pnp);
                 mt.UnitId = unitId;
                 mt.LastSellPrice = lastPrice;
                 mt.IsManufacturedGoods = isManufacturedGoods;
