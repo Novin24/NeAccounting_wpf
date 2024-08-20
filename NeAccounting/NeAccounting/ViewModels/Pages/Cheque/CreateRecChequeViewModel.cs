@@ -164,7 +164,7 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
 
         #endregion
 
-        #region CreatePayDocumetn
+        #region CreateRecDocumetn&Cheque
         using UnitOfWork db = new();
         var (e, s, docId) = await db.DocumentManager.CreateRecCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
         if (!s)

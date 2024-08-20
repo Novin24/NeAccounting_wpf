@@ -2,6 +2,7 @@
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
+using NeAccounting.Views.Pages.Test;
 using System.Collections.ObjectModel;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -34,12 +35,12 @@ namespace NeAccounting.ViewModels
 
             new NavigationViewItemSeparator(),
 
-            //new NavigationViewItem()
-            //{
-            //    Content = "test",
-            //    Icon = new SymbolIcon { Symbol = SymbolRegular.TextEditStyle20 },
-            //    TargetPageType = typeof(TestPage)
-            //},
+            new NavigationViewItem()
+            {
+                Content = "test",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.TextEditStyle20 },
+                TargetPageType = typeof(TestPage)
+            },
             new NavigationViewItem()
             {
                 Content = "تعاریف اولیه",

@@ -63,6 +63,9 @@ namespace Domain.NovinEntity.Documents
         #region Properties
         public long Price { get; set; }
         public string? Description { get; private set; }
+        /// <summary>
+        /// تاریخ دریافت سند
+        /// </summary>
         public DateTime SubmitDate { get; set; }
         public PaymentType PayType { get; set; }
         public DocumntType Type { get; set; }
