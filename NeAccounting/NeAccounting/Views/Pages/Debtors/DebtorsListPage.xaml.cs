@@ -16,12 +16,5 @@ namespace NeAccounting.Views.Pages
             DataContext = this;
             InitializeComponent();
         }
-
-        [RelayCommand]
-        private async Task OnCreateCustomer()
-        {
-            Btn_submit.Focus();
-            await ViewModel.SearchCommand.ExecuteAsync(null);
-        }
     }
 }
