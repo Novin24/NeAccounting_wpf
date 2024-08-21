@@ -11,6 +11,7 @@
         public string? SEndDate { get; set; }
         public bool IsCurrent { get; set; }
         public bool NotActive { get; set; }
+        public bool IsActive { get { return !NotActive; }} 
         public string Des { get; set; }
     }
 
