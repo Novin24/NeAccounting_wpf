@@ -86,7 +86,7 @@ namespace NeAccounting.ViewModels
                 _snackbarService.Show("خطا", i, ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
                 return;
             }
-
+            await db.SaveChangesAsync();
             _snackbarService.Show("کاربر گرامی", $"تعویض سال مالی با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
             var servise = _navigationService.Navigate(pageType);
         }
