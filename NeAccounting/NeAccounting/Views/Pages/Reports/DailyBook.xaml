@@ -144,8 +144,7 @@
                                     FontFamily="calibri"
                                     Padding="17 5 17 8"
                                     HorizontalAlignment="Right"
-                                    Command="{Binding ViewModel.SearchCommand}"
-                                    IsDefault="True">
+                                    Command="{Binding ViewModel.SearchCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="نمایش"
                                                FontSize="16" />

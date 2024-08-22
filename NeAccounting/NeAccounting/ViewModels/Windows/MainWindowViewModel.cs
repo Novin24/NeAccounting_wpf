@@ -35,12 +35,12 @@ namespace NeAccounting.ViewModels
 
             new NavigationViewItemSeparator(),
 
-            new NavigationViewItem()
-            {
-                Content = "test",
-                Icon = new SymbolIcon { Symbol = SymbolRegular.TextEditStyle20 },
-                TargetPageType = typeof(TestPage)
-            },
+            //new NavigationViewItem()
+            //{
+            //    Content = "test",
+            //    Icon = new SymbolIcon { Symbol = SymbolRegular.TextEditStyle20 },
+            //    TargetPageType = typeof(TestPage)
+            //},
             new NavigationViewItem()
             {
                 Content = "تعاریف اولیه",

@@ -193,7 +193,6 @@
                                                   FlowDirection="LeftToRight"
                                                   SelectedDate="{Binding ViewModel.EndDate , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <Button Grid.Column="4"
-                                    IsDefault="True"
                                     Padding="10 5.5"
                                     Margin="10 19 0 0"
                                     FontFamily="Calibri"
