@@ -65,7 +65,7 @@ namespace NeAccounting.ViewModels
         /// به احتساب مانده قبلی
         /// </summary>
         [ObservableProperty]
-        private bool _leftOver;
+        private bool _leftOver = true;
 
         /// <summary>
         /// لیست مشتری ها
@@ -84,7 +84,7 @@ namespace NeAccounting.ViewModels
         public async void OnNavigatedTo()
         {
 
-                await InitializeViewModel();
+            await InitializeViewModel();
         }
         public void OnNavigatedFrom()
         {

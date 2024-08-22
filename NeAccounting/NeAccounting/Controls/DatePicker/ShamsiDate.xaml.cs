@@ -925,7 +925,23 @@ namespace NeAccounting.Controls
             {
                 return;
             }
-            CalculateMonth(yearForNavigating, comboBoxMonths.SelectedIndex + 1);
+
+            //CalculateMonth(yearForNavigating, comboBoxMonths.SelectedIndex + 1);
+            try
+            {
+                SelectedDate = new DateTime(selectedYear, comboBoxMonths.SelectedIndex + 1, selectedDay, persianCalendar);
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    SelectedDate = new DateTime(selectedYear, comboBoxMonths.SelectedIndex + 1, 1, persianCalendar);
+                }
+                else
+                {
+                    SelectedDate = new DateTime(selectedYear, 1, 1, persianCalendar);
+                }
+            }
         }
 
         private void ComboBoxYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -934,7 +950,8 @@ namespace NeAccounting.Controls
             {
                 return;
             }
-            CalculateMonth((int)comboBoxYear.SelectedItem, monthForNavigating);
+            //CalculateMonth((int)comboBoxYear.SelectedItem, monthForNavigating);
+            SelectedDate = new DateTime((int)comboBoxYear.SelectedItem, monthForNavigating, selectedDay, persianCalendar);
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

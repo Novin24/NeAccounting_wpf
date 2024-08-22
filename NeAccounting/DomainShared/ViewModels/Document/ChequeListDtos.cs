@@ -4,7 +4,7 @@ namespace DomainShared.ViewModels.Document
 {
     public class ChequeListDtos
     {
-        public int Row { get; set; }
+        public ulong Row { get; set; }
         /// <summary>
         /// DocId
         /// </summary>
