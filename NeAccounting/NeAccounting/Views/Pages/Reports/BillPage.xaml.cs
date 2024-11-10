@@ -1,4 +1,5 @@
 ﻿using DomainShared.Extension;
+using DomainShared.Utilities;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
@@ -106,6 +107,8 @@ namespace NeAccounting.Views.Pages
                 {"PrintTime",DateTime.Now.ToShamsiDate(pc) },
                 {"Total_InvoicePrice",invoice.TotalPrice.ToString("N0")},
                 {"Commission",invoice.CommissionSPrice},
+                {"FactorType",invoice.Type.ToDisplay()}, 
+                {"FactorNumber",invoice.Serial},
                 {"LeftOverPrice",leftOverPrice.ToString("N0")},
                 {"TotalSLeftOver",leftOverPrice.ToString().NumberToPersianString()},
                 {"Management",$"{printInfo.Management}"},
@@ -114,7 +117,7 @@ namespace NeAccounting.Views.Pages
             };
 
             _printServices.PrintInvoice(@"Required\Reports\ReportOneInvoice.mrt", "DetailListDtos", invoice.RemList, dic);
-        }
+            }
 
         [RelayCommand]
         private async Task OnSearchInvoice()
