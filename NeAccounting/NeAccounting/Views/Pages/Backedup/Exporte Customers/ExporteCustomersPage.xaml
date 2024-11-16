@@ -191,7 +191,7 @@
                                                 VerticalAlignment="Center">
                                         <ui:TextBlock Margin="0"
                                                       FontTypography="BodyStrong"
-                                                      Text="پشتیبان گیری"
+                                                      Text="وارد کردن"
                                                       TextWrapping="WrapWithOverflow" />
                                         <ui:TextBlock Appearance="Tertiary"
                                                       Text="شروع مراحل (F1)"
@@ -216,11 +216,11 @@
 
                                 <DataGrid.Columns>
 
-                                    <DataGridTextColumn Header="نام فایل"
+                                    <DataGridTextColumn Header="نام و نام خانوادگی"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding FileName}"
-                                                        Width="1.5*" >
+                                                        Width="1*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
@@ -232,11 +232,11 @@
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="آدرس فایل"
+                                    <DataGridTextColumn Header="کد ملی"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding FulePath}"
-                                                        Width="2*" >
+                                                        Width="1*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
@@ -248,7 +248,7 @@
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="تاریخ "
+                                    <DataGridTextColumn Header="نوع مشتری "
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding CreationDate}"
@@ -263,38 +263,74 @@
                                             </Style>
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="ساعت "
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding CreationTime}"
-                                                        Width="75" />
-                                    <DataGridTemplateColumn Header="عملیات"
-                                                            Width="88"
-                                                            HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal"
-                                                            HorizontalAlignment="Center">
-                                                    <ui:Button Margin="6"
-                                                               x:Name="btn_restoer"
-                                                               CommandParameter="{Binding Id , Mode=OneWay}"
-                                                               Command="{Binding Path=DataContext.ViewModel.RestorCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                               Padding="7,5">
-                                                        <Button.ToolTip>
-                                                            <TextBlock FontSize="15"
-                                                                       Text="بازگردانی" />
-                                                        </Button.ToolTip>
-                                                        <ui:SymbolIcon Symbol="ArrowReset20" />
-                                                    </ui:Button>
-                                                    <ui:Button  Margin="6"
-                                                                Padding="7,5"
-                                                                ToolTip="حذف">
-                                                        <ui:SymbolIcon  Symbol="Delete16" />
-                                                    </ui:Button>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
+
+                                    <DataGridTextColumn Header="موبایل"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding Mobile}"
+                                                    Width=".75*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Mobile}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Header="خریدار"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding Mobile}"
+                                                    Width="44" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Mobile}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Header="فروشنده"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding Mobile}"
+                                                    Width="50" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Mobile}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Header="آدرس"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding Mobile}"
+                                                    Width="1*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Mobile}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
