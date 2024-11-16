@@ -302,15 +302,17 @@ namespace NeAccounting
 
                 #region Services
                 services.AddTransient<IPrintServices, PrintServices>();
-                #endregion
+				#endregion
 
-                #region Backup
-                services.AddTransient<BackupPage>();
-                services.AddTransient<BackupViewModel>();
-                #endregion
+				#region Backup
+				services.AddTransient<BackupPage>();
+				services.AddTransient<BackupViewModel>();
 
-                #region ChangePassword
-                services.AddTransient<ChangePassword>();
+				services.AddTransient<ExporteCustomersPage>();
+				#endregion
+
+				#region ChangePassword
+				services.AddTransient<ChangePassword>();
                 services.AddTransient<ChangePassViewModel>();
                 #endregion
 

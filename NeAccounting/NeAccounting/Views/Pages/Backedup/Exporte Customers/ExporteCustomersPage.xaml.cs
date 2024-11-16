@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NeAccounting.Views.Pages.Backedup.Exporte_Customers
+namespace NeAccounting.Views.Pages
 {
 	/// <summary>
-	/// Interaction logic for ExporteCustomers.xaml
+	/// Interaction logic for ExporteCustomersPage.xaml
 	/// </summary>
-	public partial class ExporteCustomers : Page
+	public partial class ExporteCustomersPage : Page
 	{
-		public ExporteCustomers()
+		public ExporteCustomersPage()
 		{
 			InitializeComponent();
 		}
