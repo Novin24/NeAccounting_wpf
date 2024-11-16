@@ -16,8 +16,9 @@ namespace Domain.NovinEntity.Materials
         #region Property
         public string Name { get; private set; }
         public string Serial { get; private set; }
-        public double Entity { get; set; }
-        public long LastSellPrice { get; set; }
+		public double Entity { get; set; }
+		public double MiniEntity { get; set; }
+		public long LastSellPrice { get; set; }
         public long LastBuyPrice { get; set; }
         public bool IsManufacturedGoods { get; set; }
         public string PhysicalAddress { get; private set; }
@@ -45,34 +46,47 @@ namespace Domain.NovinEntity.Materials
             IsManufacturedGoods = isManufacturedGoods;
             UnitId = unitId;
             IsService = isService;
-            Entity = 0;
-            LastBuyPrice = 0;
+			Entity = 0;
+			LastBuyPrice = 0;
             LastSellPrice = lastSellPrice;
             IsActive = true;
         }
 
-        public Pun(string name,
-            Guid unitId,
-            bool isService,
-            long lastSellPrice,
-            string serial,
-            double entity,
-            long lastBuyPrice,
-            bool isActive,
-            string physicalAddress)
-        {
-            Name = name;
-            IsManufacturedGoods = false;
-            Entity = entity;
-            LastBuyPrice = lastBuyPrice;
-            UnitId = unitId;
-            Serial = serial;
-            IsService = isService;
-            LastSellPrice = lastSellPrice;
-            PhysicalAddress = physicalAddress;
-            IsActive = isActive;
-        }
+        //public Pun(string name,
+        //    Guid unitId,
+        //    bool isService,
+        //    long lastSellPrice,
+        //    string serial,
+        //    double entity,
+        //    long lastBuyPrice,
+        //    bool isActive,
+        //    string physicalAddress)
+        //{
+        //    Name = name;
+        //    IsManufacturedGoods = false;
+        //    Entity = entity;
+        //    LastBuyPrice = lastBuyPrice;
+        //    UnitId = unitId;
+        //    Serial = serial;
+        //    IsService = isService;
+        //    LastSellPrice = lastSellPrice;
+        //    PhysicalAddress = physicalAddress;
+        //    IsActive = isActive;
+        //}
 
+        /// <summary>
+        /// سال مالی جدید
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="unitId"></param>
+        /// <param name="isService"></param>
+        /// <param name="lastSellPrice"></param>
+        /// <param name="serial"></param>
+        /// <param name="entity"></param>
+        /// <param name="lastBuyPrice"></param>
+        /// <param name="isActive"></param>
+        /// <param name="physicalAddress"></param>
         public Pun(
             Guid id,
             string name,

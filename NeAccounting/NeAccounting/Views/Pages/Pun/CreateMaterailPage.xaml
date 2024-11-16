@@ -175,7 +175,12 @@
                                       Grid.ColumnSpan="3"
                                       LabelName="آخرین قیمت فروش"
                                       Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay}" />
-                        <StackPanel Grid.Row="3"
+                        <nu:MoneyPack Grid.Row="3"
+                                      Grid.Column="1"
+                                      Grid.ColumnSpan="3"
+                                      LabelName="حداقل موجودی"
+                                      Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay}" />
+                        <StackPanel Grid.Row="4"
                                     Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     Margin="20 4 20 0">
@@ -190,7 +195,7 @@
                                         FontFamily="Calibri"
                                         Margin="0 4 0 0" />
                         </StackPanel>
-                        <StackPanel Grid.Row="4"
+                        <StackPanel Grid.Row="5"
                                     Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     Margin="20 0 20 0">
@@ -206,16 +211,16 @@
                                         FontSize="14"
                                         FontFamily="Calibri" />
                         </StackPanel>
-                        <StackPanel Grid.Column="1"
+                        <!--<StackPanel Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     Grid.Row="5"
                                     HorizontalAlignment="Center">
-                            <!--<CheckBox FontFamily="Calibri"
+                            --><!--<CheckBox FontFamily="Calibri"
                                       FontSize="14"
                                       IsChecked="{Binding ViewModel.IsManufacturedGoods , Mode=OneWayToSource}"
-                                      Margin="2 0 0 0 ">تعریف به عنوان کالای تولیدی</CheckBox>-->
+                                      Margin="2 0 0 0 ">تعریف به عنوان کالای تولیدی</CheckBox>--><!--
 
-                        </StackPanel>
+                        </StackPanel>-->
 
 
                         <Button Grid.Row="6"
