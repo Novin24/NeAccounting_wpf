@@ -2,6 +2,7 @@
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
+using NeAccounting.Views.Pages.Test;
 using System.Collections.ObjectModel;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -119,7 +120,7 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem {Content = "به روز رسانی پرداختی به مشتری",TargetPageType = typeof(UpdatePayDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility = Visibility.Collapsed},
                     new NavigationViewItem {Content = "به روز رسانی دریافتی به مشتری",TargetPageType = typeof(UpdateRecDocPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility = Visibility.Collapsed},
                     new NavigationViewItem {Content = "به روز رسانی فاکتور فروش",TargetPageType = typeof(UpdateSellInvoicePage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20},Visibility =Visibility.Collapsed },
-                    new NavigationViewItem { Content = "صورتحساب جزییات", TargetPageType = typeof(Invoicedetails) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20 } },
+                    new NavigationViewItem { Content = "صورتحساب جزییات", TargetPageType = typeof(InvoicedetailsPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20 } },
                     new NavigationViewItem { Content = "صورت سود و زیان", TargetPageType = typeof(ProfitOrLessPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
                     new NavigationViewItem { Content = "گزارش اجناس", TargetPageType = typeof(MaterialReportPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                     new NavigationViewItem { Content = "بدهکاران", TargetPageType = typeof(DebtorsListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20}},

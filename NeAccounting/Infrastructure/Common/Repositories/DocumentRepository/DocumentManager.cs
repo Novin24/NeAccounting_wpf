@@ -537,6 +537,7 @@ namespace Infrastructure.Repositories
                     CustomerId = c.CustomerId,
                     Serial = c.Serial.ToString(),
                     Date = c.SubmitDate,
+                    Type = c.Type,
                     TotalPrice = c.Price,
                     Commission = c.RelatedDocuments.Where(t => t.Type == DocumntType.PayCom).Sum(t => t.Commission),
                     CommissionPrice = c.RelatedDocuments.Where(t => t.Type == DocumntType.PayCom).Sum(t => t.Price),
@@ -633,6 +634,7 @@ namespace Infrastructure.Repositories
                     Serial = c.Serial.ToString(),
                     Date = c.SubmitDate,
                     TotalPrice = c.Price,
+                    Type = c.Type,
                     Commission = c.RelatedDocuments.Where(t => t.Type == DocumntType.RecCom).Sum(t => t.Commission),
                     CommissionPrice = c.RelatedDocuments.Where(t => t.Type == DocumntType.RecCom).Sum(t => t.Price),
                     InvoiceDescription = c.Description,
@@ -1547,7 +1549,7 @@ namespace Infrastructure.Repositories
         {
             var list = await (from doc in DbContext.Set<Document>()
                                                .AsNoTracking()
-                                               .Where(t => t.CreationTime.Day == date.Day)
+                                               .Where(t => t.CreationTime.Date == date.Date)
                               join cus in DbContext.Set<Customer>()
                                                                        on doc.CustomerId equals cus.Id
 
@@ -1628,7 +1630,7 @@ namespace Infrastructure.Repositories
                          }).AsQueryable();
 
             var totalCount = await query.CountAsync();
-
+            ulong row = 1;
             if (isInit && totalCount != 0)
             {
                 pageNum = totalCount / pageCount;
@@ -1638,10 +1640,10 @@ namespace Infrastructure.Repositories
                 }
             }
             var li = await query.OrderBy(t => t.DueDate).Skip((pageNum - 1) * pageCount).Take(pageCount).ToListAsync();
-
+            row = (ulong)((pageNum-1) * pageCount);
             for (int i = 1; i <= li.Count; i++)
             {
-                li[i - 1].Row = i;
+                li[i - 1].Row = ++row;
                 //if (li[i - 1].Status == ChequeStatus.Transferred)
                 //{
                 //    li[i - 1].IsEditable = false;

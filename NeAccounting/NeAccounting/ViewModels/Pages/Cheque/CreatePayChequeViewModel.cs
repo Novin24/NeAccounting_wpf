@@ -167,7 +167,7 @@ namespace NeAccounting.ViewModels
 
             #endregion
 
-            #region CreatePayDocumetn
+            #region CreatePayDocumetn&Cheque
             using UnitOfWork db = new();
             var (e, s, docId) = await db.DocumentManager.CreatePayCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
             if (!s)

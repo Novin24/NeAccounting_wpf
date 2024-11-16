@@ -23,7 +23,7 @@ namespace Infrastructure.Repositories
                     DisplayName = x.Name,
                     UniqNumber = x.CusId,
                     TotalValidity = x.TotalCredit
-                }).ToListAsync();
+                }).OrderBy(c=> c.DisplayName).ToListAsync();
         }
 
         public Task<List<CustomerListDto>> GetCustomerList(string name, string nationalCode, string mobile)
@@ -54,7 +54,7 @@ namespace Infrastructure.Repositories
                     TotalCredit = x.TotalCredit.ToString("N0"),
                     CusTypeName = x.Type.ToDisplay(DisplayProperty.Name),
                     CusType = x.Type,
-                }).ToListAsync();
+                }).OrderBy(t=> t.Name).ToListAsync();
         }
 
 

@@ -1,4 +1,6 @@
-﻿namespace DomainShared.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DomainShared.Enums
 {
     public enum DocumntType : byte
     {
@@ -13,10 +15,12 @@
         /// <summary>
         /// فاکتور فروش
         /// </summary>
+        [Display(Name ="فاکتور فروش")]
         SellInv = 3,
         /// <summary>
         /// فاکتور خرید
         /// </summary>
+        [Display(Name ="فاکتور خرید")]
         BuyInv = 4,
         /// <summary>
         /// پورسانت دریافتی

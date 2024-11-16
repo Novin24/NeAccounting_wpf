@@ -181,6 +181,23 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="سال جاری در برنامه"
+                                                        Width="100"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center">
+                                                <CheckBox  Margin="2"
+                                                           IsEnabled="False"
+                                                           Padding="7,5"
+                                                           IsChecked="{Binding IsActive , Mode=OneTime}"
+                                                           ToolTip="بازگشت به ...">
+                                                </CheckBox>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="جزئیات"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     Binding="{Binding Des}"

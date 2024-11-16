@@ -305,7 +305,7 @@
                                     </StackPanel>
                                 </Grid>
                             </ui:CardAction>
-                            
+
                             <Grid Grid.Row="1"
                                   Grid.ColumnSpan="5">
                                 <Grid.ColumnDefinitions>
@@ -348,8 +348,7 @@
                                         Margin="0 22.5 0 10"
                                         Padding="17 4 17 10"
                                         Command="{Binding ViewModel.SearchCommand}"
-                                        HorizontalAlignment="Right"
-                                        IsDefault="True">جستجو</Button>
+                                        HorizontalAlignment="Right">جستجو</Button>
                             </Grid>
                         </Grid>
                         <!--#endregion-->
@@ -378,7 +377,7 @@
                                                     Binding="{Binding Row}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="30" />
+                                                    Width="50" />
 
                                 <DataGridTextColumn Header="شماره چک"
                                                     Binding="{Binding CheckNumber}"

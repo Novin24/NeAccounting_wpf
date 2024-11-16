@@ -267,9 +267,9 @@ namespace NeAccounting
 
                 #region Reports
                 services.AddTransient<BillPage>();
-                services.AddScoped<BillListViewModel>();
+                services.AddTransient<BillListViewModel>();
 
-                services.AddTransient<Invoicedetails>();
+                services.AddTransient<InvoicedetailsPage>();
                 services.AddTransient<InvoicedetailsViewModel>();
 
                 services.AddTransient<MaterialReportPage>();
@@ -343,7 +343,7 @@ namespace NeAccounting
         /// </summary>
         private async void OnStartup(object sender, StartupEventArgs e)
         {
-            _ = new Mutex(true, "ApplicationName", out bool runed);
+            _ = new Mutex(true, "NovinAcoounting", out bool runed);
             if (!runed)
             {
                 Wpf.Ui.Controls.MessageBox ms = new Wpf.Ui.Controls.MessageBox()

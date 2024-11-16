@@ -2,7 +2,7 @@
 {
     public class PagedResulViewModel<T>
     {
-        private IEnumerable<T> _items;
+        private IEnumerable<T> _items = [];
         private int currentPage;
         public int TotalCount { get; set; }
         public int RowInPage { get; set; }
@@ -25,9 +25,9 @@
         }
         public IEnumerable<T> Items
         {
-            get { return _items ??= new List<T>(); }
+            get { return _items ??= []; }
             set { _items = value; }
-        }
+        } 
 
         public PagedResulViewModel(int totalCount, int rowInPage, int currentPage, IEnumerable<T> items)
         {

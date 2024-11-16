@@ -244,8 +244,7 @@
                                     Margin="0 22.3 0 0"
                                     Padding="17 4 17 9"
                                     Command="{Binding ViewModel.SearchCusCommand}"
-                                    HorizontalAlignment="Left"
-                                    IsDefault="True">جستجو</Button>
+                                    HorizontalAlignment="Left">جستجو</Button>
                         </Grid>
                         <DataGrid Grid.Row="2"
                                   Padding="7"
