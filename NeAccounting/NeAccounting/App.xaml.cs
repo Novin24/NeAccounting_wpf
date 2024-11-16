@@ -269,7 +269,7 @@ namespace NeAccounting
                 services.AddTransient<BillPage>();
                 services.AddTransient<BillListViewModel>();
 
-                services.AddTransient<Invoicedetails>();
+                services.AddTransient<InvoicedetailsPage>();
                 services.AddTransient<InvoicedetailsViewModel>();
 
                 services.AddTransient<MaterialReportPage>();

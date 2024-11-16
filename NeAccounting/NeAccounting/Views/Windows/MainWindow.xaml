@@ -36,6 +36,14 @@
                     Modifiers="Ctrl"
                     CommandParameter="CreateRec"
                     Command="{Binding ViewModel.AddClickCommand}" />
+        <KeyBinding Key="D"
+                    Modifiers="Ctrl"
+                    CommandParameter="Bill"
+                    Command="{Binding ViewModel.AddClickCommand}" />
+        <KeyBinding Key="F"
+                    Modifiers="Ctrl"
+                    CommandParameter="Invoicedetails"
+                    Command="{Binding ViewModel.AddClickCommand}" />
     </Window.InputBindings>
     <Grid>
         <Grid x:Name="mainGrid"

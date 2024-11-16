@@ -15,12 +15,12 @@ namespace NeAccounting.Views.Pages
     /// <summary>
     /// Interaction logic for Invoicedetails.xaml
     /// </summary>
-    public partial class Invoicedetails : INavigableView<InvoicedetailsViewModel>
+    public partial class InvoicedetailsPage : INavigableView<InvoicedetailsViewModel>
     {
         public InvoicedetailsViewModel ViewModel { get; }
         private readonly IPrintServices _printServices;
         private readonly ISnackbarService _snackbarService;
-        public Invoicedetails(InvoicedetailsViewModel viewModel, IPrintServices printServices, ISnackbarService snackbarService)
+        public InvoicedetailsPage(InvoicedetailsViewModel viewModel, IPrintServices printServices, ISnackbarService snackbarService)
         {
             ViewModel = viewModel;
             DataContext = this;
