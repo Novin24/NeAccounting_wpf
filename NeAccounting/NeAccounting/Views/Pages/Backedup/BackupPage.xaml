@@ -108,7 +108,7 @@
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <nu:HeaderPack NamePpage="پشتیبان گیری"
+                <nu:HeaderPack NamePpage="پشتیبان گیری از پایگاه داده"
                                Margin="30 0" />
 
                 <Border Grid.Row="1"
