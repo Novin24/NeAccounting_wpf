@@ -309,6 +309,7 @@ namespace NeAccounting
 				services.AddTransient<BackupViewModel>();
 
 				services.AddTransient<ExporteCustomersPage>();
+				services.AddTransient<importCustomersPage>();
 				#endregion
 
 				#region ChangePassword
