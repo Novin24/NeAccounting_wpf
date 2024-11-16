@@ -295,7 +295,7 @@
                                             </Setter>
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
-                                </DataGridTextColumn> 
+                                </DataGridTextColumn>
                                 
                                 <DataGridTextColumn Header="موبایل"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
