@@ -309,6 +309,8 @@ namespace NeAccounting
 				services.AddTransient<BackupViewModel>();
 
 				services.AddTransient<ExporteCustomersPage>();
+				services.AddTransient<ExporteCustomerViewModel>();
+
 				services.AddTransient<importCustomersPage>();
 				#endregion
 

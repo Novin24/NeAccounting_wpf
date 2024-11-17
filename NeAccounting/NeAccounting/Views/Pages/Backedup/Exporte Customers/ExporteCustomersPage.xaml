@@ -10,7 +10,8 @@
       d:DesignHeight="800"
       d:DesignWidth="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
-      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"     
+      d:DataContext="{d:DesignInstance local:ExporteCustomersPage ,IsDesignTimeCreatable=False}"
       Title="ExporteCustomersPage">
 
     <Grid>
@@ -128,7 +129,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="130" />
+                                <ColumnDefinition Width="155" />
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Column="0"
@@ -142,6 +144,8 @@
                                 <ui:TextBox TextAlignment="Center"
                                             ClearButtonEnabled="False"
                                             IsReadOnly="True"
+                                            x:Name="txt_name"
+                                            Text="{Binding ViewModel.FileName, Mode=TwoWay}"
                                             FontFamily="Calibri"
                                             Margin="0 2 15 0" />
                             </StackPanel>
@@ -156,20 +160,36 @@
                                               HorizontalAlignment="Left" />
                                 <ui:TextBox TextAlignment="Center"
                                             IsEnabled="False"
-                                            PlaceholderText="مسیر پیشفرض برنامه ..."
+                                            PlaceholderText="مسیر فایل ..."
                                             FontSize="15"
                                             FontFamily="Calibri"
+                                            Text="{Binding ViewModel.ExPaht , Mode=TwoWay}"
                                             Margin="0 2 0 0" />
                             </StackPanel>
-                            <Button Grid.Column="1"
+                            <Button Click="Btn_Brows_Click"
+                                    Grid.Column="1"
                                     VerticalAlignment="Bottom"
                                     Height="30"
                                     Margin="0 0 10 0"
                                     HorizontalAlignment="Right">
                                 . . .
                             </Button>
+                            <StackPanel Grid.Row="2"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    Grid.Column="2"
+                                    Margin="0 8 0 0">
+                                <CheckBox Grid.Row="3"
+                                      Margin="0 0 0 5"
+                                      FontFamily="Calibri"
+                                          VerticalAlignment="Bottom"
+                                      FlowDirection="LeftToRight"
+                                          Checked="CheckBox_IsArchive_Checked"
+                                          Unchecked="CheckBox_IsArchive_Unchecked">شامل بایگانی شده ها</CheckBox>
 
-                            <ui:CardAction Grid.Column="2"
+                            </StackPanel>
+
+                            <ui:CardAction Grid.Column="3"
                                            FontFamily="Calibri"
                                            FontSize="15"
                                            Padding="9 0"
@@ -212,20 +232,22 @@
                                       CanUserSortColumns="False"
                                       CanUserReorderColumns="False"
                                       FontFamily="Calibri"
-                                      AutoGenerateColumns="False">
+                                      AutoGenerateColumns="False"
+                                      ItemsSource="{Binding ViewModel.List, Mode=TwoWay}">
 
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn Header="نام و نام خانوادگی"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding FileName}"
+                                                        Binding="{Binding Name}"
                                                         Width="1*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
-                                                        <TextBlock FontSize='17'/>
+                                                        <TextBlock FontSize='17'
+                                                                   Text='{Binding Name}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -235,13 +257,14 @@
                                     <DataGridTextColumn Header="کد ملی"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding FulePath}"
+                                                        Binding="{Binding NationalCode}"
                                                         Width="1*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
-                                                        <TextBlock FontSize='17'/>
+                                                        <TextBlock FontSize='17'
+                                                                   Text='{Binding NationalCode}' />
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -251,13 +274,14 @@
                                     <DataGridTextColumn Header="نوع مشتری "
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding CreationDate}"
+                                                        Binding="{Binding CusTypeName}"
                                                         Width="75" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
-                                                        <TextBlock FontSize='17' />
+                                                        <TextBlock FontSize='17' 
+                                                               Text='{Binding CusTypeName}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -281,51 +305,49 @@
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="خریدار"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding Mobile}"
-                                                    Width="44" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="DataGridCell">
-                                                <Setter Property="ToolTip">
-                                                    <Setter.Value>
-                                                        <TextBlock FontSize='17'
-                                                               Text='{Binding Mobile}' />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                    </DataGridTextColumn>
+                                    <DataGridTemplateColumn Header="خریدار"
+                                                        Width="44"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center">
+                                                    <CheckBox IsChecked="{Binding Buyer}"
+                                                          Margin="5 0 -5 0"
+                                                          IsEnabled="False"
+                                                          Padding="0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
-                                    <DataGridTextColumn Header="فروشنده"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding Mobile}"
-                                                    Width="50" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="DataGridCell">
-                                                <Setter Property="ToolTip">
-                                                    <Setter.Value>
-                                                        <TextBlock FontSize='17'
-                                                               Text='{Binding Mobile}' />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                    </DataGridTextColumn>
+                                    <DataGridTemplateColumn Header="فروشنده"
+                                                        Width="44"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center">
+                                                    <CheckBox IsChecked="{Binding Seller}"
+                                                          Margin="5 0 -5 0"
+                                                          IsEnabled="False"
+                                                          Padding="0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
                                     <DataGridTextColumn Header="آدرس"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding Mobile}"
+                                                    Binding="{Binding Address}"
                                                     Width="1*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                               Text='{Binding Mobile}' />
+                                                               Text='{Binding Address}' />
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>

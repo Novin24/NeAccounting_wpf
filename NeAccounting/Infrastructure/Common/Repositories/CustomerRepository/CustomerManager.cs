@@ -24,9 +24,26 @@ namespace Infrastructure.Repositories
                     UniqNumber = x.CusId,
                     TotalValidity = x.TotalCredit
                 }).OrderBy(c=> c.DisplayName).ToListAsync();
-        }
+		}
 
-        public Task<List<CustomerListDto>> GetCustomerList(string name, string nationalCode, string mobile)
+		public Task<List<ExporteCustomerListDto>> GetExporteCustomerList(bool IsArchive)
+		{
+            return TableNoTracking
+                .Where(t => IsArchive == true || t.IsActive != IsArchive)
+				.Where(c => c.Id != Guid.Empty)
+				.Select(t => new ExporteCustomerListDto
+                {
+                    Name = t.Name,
+                    NationalCode = t.NationalCode,
+					CusTypeName = t.Type.ToDisplay(DisplayProperty.Name),
+                    Mobile = t.Mobile,
+                    Buyer = t.Buyer,
+                    Seller = t.Seller,
+                    Address = t.Address,
+				}).OrderBy(t => t.Name).ToListAsync();
+		}
+
+		public Task<List<CustomerListDto>> GetCustomerList(string name, string nationalCode, string mobile)
         {
             return TableNoTracking
                 .Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name))
@@ -227,6 +244,5 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
-
-    }
+	}
 }
