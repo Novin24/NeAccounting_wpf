@@ -10,8 +10,15 @@ namespace NeApplication.IRepositoryies
     {
         Task<List<SuggestBoxViewModel<Guid, long>>> GetDisplayUser(bool includeDeArchive = false, bool? seller = null, bool? buyer = null);
         Task<List<CustomerListDto>> GetCustomerList(string name, string nationalCode, string mobile);
-        Task<(string error, CustomerListDto cus)> GetCustomerById(Guid Id);
-        Task<(string error, bool isSuccess)> CreateCustomer(string name,
+        
+        /// <summary>
+        /// لیست برای خروجی گرفتن از کاربران
+        /// </summary>
+        /// <param name="IsArchive"></param>
+        /// <returns></returns>
+		Task<List<ExporteCustomerListDto>> GetExporteCustomerList(bool IsArchive);
+		Task<(string error, CustomerListDto cus)> GetCustomerById(Guid Id);
+        Task<(string error, bool isSuccess, bool Show)> CreateCustomer(string name,
             string mobile,
             long cashCredit,
             long promissoryNote,
