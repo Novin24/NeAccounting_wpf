@@ -1,9 +1,12 @@
-﻿namespace DomainShared.ViewModels.Customer
+﻿using DomainShared.Enums;
+
+namespace DomainShared.ViewModels.Customer
 {
 	public struct ExporteCustomerListDto
 	{
 		public string Name { get; set; }
 		public string NationalCode { get; set; }
+		public CustomerType CusType { get; set; }
 		public string CusTypeName { get; set; }
 		public string Mobile { get; set; }
         public bool Buyer { get; set; }

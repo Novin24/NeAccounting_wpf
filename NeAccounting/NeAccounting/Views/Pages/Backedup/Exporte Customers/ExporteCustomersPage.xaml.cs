@@ -50,5 +50,10 @@ namespace NeAccounting.Views.Pages
 		{
 			ViewModel.LoadCustomerList(false);
 		}
+		private async void Btn_Export_Click(object sender, RoutedEventArgs e)
+		{
+			await ViewModel.ExportToExcel();
+		}
+
 	}
 }

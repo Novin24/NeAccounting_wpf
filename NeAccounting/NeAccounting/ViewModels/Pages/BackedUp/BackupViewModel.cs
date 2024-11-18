@@ -59,7 +59,7 @@ public partial class BackupViewModel(ISnackbarService snackbarService) : Observa
 	}
 
 	/// <summary>
-	/// ثبت فاکتور
+	/// آغاز پشتیبان گیری
 	/// </summary>
 	/// <returns></returns>
 	[RelayCommand]

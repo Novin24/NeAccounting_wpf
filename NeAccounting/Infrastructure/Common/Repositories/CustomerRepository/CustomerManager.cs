@@ -35,6 +35,7 @@ namespace Infrastructure.Repositories
                 {
                     Name = t.Name,
                     NationalCode = t.NationalCode,
+					CusType = t.Type,
 					CusTypeName = t.Type.ToDisplay(DisplayProperty.Name),
                     Mobile = t.Mobile,
                     Buyer = t.Buyer,

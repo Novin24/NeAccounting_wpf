@@ -193,7 +193,7 @@
                                            FontFamily="Calibri"
                                            FontSize="15"
                                            Padding="9 0"
-                                           Command="{Binding ViewModel.SubmitCommand}"
+                                           Command="{Binding ViewModel.ExportToExcelCommand}"
                                            IsChevronVisible="False"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom">
