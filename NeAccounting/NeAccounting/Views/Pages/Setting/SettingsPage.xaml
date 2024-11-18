@@ -60,6 +60,8 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <TextBlock 
                     Text="کلید های میانبر" 
@@ -105,6 +107,28 @@
                                FontFamily="Calibri"
                                FontSize="16"/>
                     <Button Content="Ctrl + R"
+                            IsEnabled="False"
+                            FontWeight="Bold"
+                            FontSize="12"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="5" Margin="3.8 4 0 0">
+
+                    <TextBlock Margin="0,4,5,0"
+                               Text="صورتحساب :"
+                               FontFamily="Calibri"
+                               FontSize="16"/>
+                    <Button Content="Ctrl + D"
+                            IsEnabled="False"
+                            FontWeight="Bold"
+                            FontSize="12"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="6" Margin="3.8 4 0 0">
+
+                    <TextBlock Margin="0,4,5,0"
+                               Text="صورتحساب جزییات :"
+                               FontFamily="Calibri"
+                               FontSize="16"/>
+                    <Button Content="Ctrl + F"
                             IsEnabled="False"
                             FontWeight="Bold"
                             FontSize="12"/>
