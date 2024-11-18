@@ -11,6 +11,7 @@
       d:DesignWidth="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      d:DataContext="{d:DesignInstance local:ExporteCustomersPage ,IsDesignTimeCreatable=False}"
       Title="ImportCustomersPage">
 
 
@@ -144,6 +145,7 @@
                                             ClearButtonEnabled="False"
                                             IsReadOnly="True"
                                             FontFamily="Calibri"
+                                            Text="{Binding ViewModel.FileName, Mode=TwoWay}"
                                             Margin="0 2 15 0" />
                             </StackPanel>
 
@@ -176,7 +178,7 @@
                                            FontFamily="Calibri"
                                            FontSize="15"
                                            Padding="9 0"
-                                           Command="{Binding ViewModel.SubmitCommand}"
+                                           Command="{Binding ViewModel.ImportCustomerCommand}"
                                            IsChevronVisible="False"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom">
@@ -215,20 +217,22 @@
                                       CanUserSortColumns="False"
                                       CanUserReorderColumns="False"
                                       FontFamily="Calibri"
-                                      AutoGenerateColumns="False">
+                                      AutoGenerateColumns="False"
+                                      ItemsSource="{Binding ViewModel.List, Mode=TwoWay}">
 
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn Header="نام و نام خانوادگی"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding FileName}"
+                                                        Binding="{Binding Name}"
                                                         Width="1*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
-                                                        <TextBlock FontSize='17'/>
+                                                        <TextBlock FontSize='17'
+                                                                   Text='{Binding Name}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -238,13 +242,14 @@
                                     <DataGridTextColumn Header="کد ملی"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding FulePath}"
+                                                        Binding="{Binding NationalCode}"
                                                         Width="1*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
-                                                        <TextBlock FontSize='17'/>
+                                                        <TextBlock FontSize='17'
+                                                                   Text='{Binding NationalCode}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -254,13 +259,14 @@
                                     <DataGridTextColumn Header="نوع مشتری "
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding CreationDate}"
+                                                        Binding="{Binding CusTypeName}"
                                                         Width="75" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
-                                                        <TextBlock FontSize='17' />
+                                                        <TextBlock FontSize='17' 
+                                                                   Text='{Binding CusTypeName}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -284,51 +290,48 @@
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="خریدار"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding Mobile}"
-                                                    Width="44" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="DataGridCell">
-                                                <Setter Property="ToolTip">
-                                                    <Setter.Value>
-                                                        <TextBlock FontSize='17'
-                                                               Text='{Binding Mobile}' />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                    </DataGridTextColumn>
+                                    <DataGridTemplateColumn Header="خریدار"
+                                                        Width="44"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center">
+                                                    <CheckBox IsChecked="{Binding Buyer}"
+                                                          Margin="5 0 -5 0"
+                                                          IsEnabled="False"
+                                                          Padding="0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
 
-                                    <DataGridTextColumn Header="فروشنده"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding Mobile}"
-                                                    Width="50" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="DataGridCell">
-                                                <Setter Property="ToolTip">
-                                                    <Setter.Value>
-                                                        <TextBlock FontSize='17'
-                                                               Text='{Binding Mobile}' />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                    </DataGridTextColumn>
-
+                                    <DataGridTemplateColumn Header="فروشنده"
+                                                        Width="44"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center">
+                                                    <CheckBox IsChecked="{Binding Seller}"
+                                                          Margin="5 0 -5 0"
+                                                          IsEnabled="False"
+                                                          Padding="0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                     <DataGridTextColumn Header="آدرس"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding Mobile}"
+                                                    Binding="{Binding Address}"
                                                     Width="1*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                               Text='{Binding Mobile}' />
+                                                               Text='{Binding Address}' />
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -337,18 +340,7 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
-                        <Grid  Grid.Row="1">
-                            <StackPanel HorizontalAlignment="Center"
-                                        VerticalAlignment="Center">
-                                <ui:ProgressRing IsIndeterminate="True"
-                                                 Height="100"
-                                                 Width="100" />
-                                <TextBlock FontFamily="Calibri"
-                                           FontSize="15"
-                                           Margin="12"
-                                           Text="لطفا منتظر بمانید ..."></TextBlock>
-                            </StackPanel>
-                        </Grid>
+                        
                     </Grid>
 
 

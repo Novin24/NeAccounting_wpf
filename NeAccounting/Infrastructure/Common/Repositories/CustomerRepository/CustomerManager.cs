@@ -76,7 +76,7 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<(string error, bool isSuccess)> CreateCustomer(string name,
+        public async Task<(string error, bool isSuccess , bool Show)> CreateCustomer(string name,
             string mobile,
             long cashCredit,
             long promissoryNote,
@@ -89,7 +89,7 @@ namespace Infrastructure.Repositories
             bool isSeller)
         {
             if (await TableNoTracking.AnyAsync(t => t.Name == name))
-                return new("کاربر گرامی این مشتری از قبل تعریف شده می‌باشد!!!", false);
+                return new("کاربر گرامی این مشتری از قبل تعریف شده می‌باشد!!!", false , false);
 
             try
             {
@@ -113,11 +113,11 @@ namespace Infrastructure.Repositories
             {
                 if (ex is ArgumentException aex)
                 {
-                    return new(aex.Message, false);
+                    return new(aex.Message, false ,false);
                 }
-                return new(" خطا در اتصال به پایگاه داده code(07t43493)!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(07t43493)!!!", false ,true);
             }
-            return new(string.Empty, true);
+            return new(string.Empty, true ,false);
         }
 
         public async Task<(string error, bool isSuccess)> UpdateCustomer(

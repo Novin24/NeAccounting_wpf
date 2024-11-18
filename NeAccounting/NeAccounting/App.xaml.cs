@@ -12,6 +12,7 @@ using NeAccounting.Resources;
 using NeAccounting.Services;
 using NeAccounting.ViewModels;
 using NeAccounting.ViewModels.Pages;
+using NeAccounting.ViewModels.Pages.BackedUp.ImportCustomers;
 using NeAccounting.Views.Pages;
 using NeAccounting.Views.Pages.Test;
 using NeAccounting.Windows;
@@ -311,7 +312,8 @@ namespace NeAccounting
 				services.AddTransient<ExporteCustomersPage>();
 				services.AddTransient<ExporteCustomerViewModel>();
 
-				services.AddTransient<importCustomersPage>();
+				services.AddTransient<ImportCustomersPage>();
+				services.AddTransient<ImportCustomerViewModel>();
 				#endregion
 
 				#region ChangePassword

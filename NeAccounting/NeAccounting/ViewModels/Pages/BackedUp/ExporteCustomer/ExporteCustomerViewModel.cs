@@ -8,12 +8,14 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using DomainShared.Enums;
+using Wpf.Ui;
 
 namespace NeAccounting.ViewModels;
 
-public partial class ExporteCustomerViewModel : ObservableObject, INavigationAware
+public partial class ExporteCustomerViewModel(ISnackbarService snackbarService) : ObservableObject, INavigationAware
 {
 
+	private readonly ISnackbarService _snackbarService = snackbarService;
 	/// <summary>
 	/// ادرس فایل
 	/// </summary>
@@ -66,7 +68,7 @@ public partial class ExporteCustomerViewModel : ObservableObject, INavigationAwa
 		{
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
-				ExPaht = dialog.SelectedPath; // آدرس فولدر را به متغیر مربوطه نسبت دهید
+				ExPaht = dialog.SelectedPath; 
 			}
 		}
 	}
@@ -76,7 +78,7 @@ public partial class ExporteCustomerViewModel : ObservableObject, INavigationAwa
 	}
 
 	/// <summary>
-	/// خروجی اکسل از کاربران
+	/// خروجی اکسل کاربران
 	/// </summary>
 	/// <returns></returns>
 	[RelayCommand]
@@ -131,6 +133,7 @@ public partial class ExporteCustomerViewModel : ObservableObject, INavigationAwa
 			// ذخیره‌سازی فایل
 			var fileInfo = new FileInfo(filePath);
 			package.SaveAs(fileInfo);
+			_snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
 		}
 
 	}

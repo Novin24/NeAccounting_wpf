@@ -18,7 +18,7 @@ namespace NeApplication.IRepositoryies
         /// <returns></returns>
 		Task<List<ExporteCustomerListDto>> GetExporteCustomerList(bool IsArchive);
 		Task<(string error, CustomerListDto cus)> GetCustomerById(Guid Id);
-        Task<(string error, bool isSuccess)> CreateCustomer(string name,
+        Task<(string error, bool isSuccess, bool Show)> CreateCustomer(string name,
             string mobile,
             long cashCredit,
             long promissoryNote,
