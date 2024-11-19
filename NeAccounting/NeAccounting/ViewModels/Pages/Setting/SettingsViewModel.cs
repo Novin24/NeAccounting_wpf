@@ -63,8 +63,9 @@ namespace NeAccounting.ViewModels.Pages
 
                     Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Light);
                     CurrentTheme = Wpf.Ui.Appearance.ApplicationTheme.Light;
+					CurrentUser.CurrentTheme = DomainShared.Enums.Themes.Theme.Light;
 
-                    break;
+					break;
 
                 default:
                     if (CurrentTheme == Wpf.Ui.Appearance.ApplicationTheme.Dark)
@@ -72,8 +73,9 @@ namespace NeAccounting.ViewModels.Pages
 
                     Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Dark);
                     CurrentTheme = Wpf.Ui.Appearance.ApplicationTheme.Dark;
+					CurrentUser.CurrentTheme = DomainShared.Enums.Themes.Theme.Dark;
 
-                    break;
+					break;
             }
         }
     }
