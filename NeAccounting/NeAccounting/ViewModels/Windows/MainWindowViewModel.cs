@@ -1,10 +1,13 @@
 ﻿using DomainShared.Constants;
+using DomainShared.Enums.Themes;
+using Infrastructure.BaseRepositories;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
 using NeAccounting.Views.Pages;
 using NeAccounting.Views.Pages.Test;
 using System.Collections.ObjectModel;
 using Wpf.Ui;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels
@@ -233,7 +236,14 @@ namespace NeAccounting.ViewModels
                     NeAccountingConstants.NvoinDbConnectionStrint = r.databaseName;
                     NeAccountingConstants.NvoinCurentDb= r.databaseTitle;
                     NeAccountingConstants.ReadOnlyMode = !r.isCurrent;
-                    LogInError = "ورود با موفقیت انجام شد !!!";
+
+					// بارگذاری تم کاربر پس از ورود
+					var theme = await db.UserRepository.LoadUserTheme(CurrentUser.CurrentUserId);
+                    if(theme == Theme.Dark)
+						ApplicationThemeManager.Apply(ApplicationTheme.Dark);
+                    else
+                        ApplicationThemeManager.Apply(ApplicationTheme.Light);
+					LogInError = "ورود با موفقیت انجام شد !!!";
                     return true;
                 }
             }
