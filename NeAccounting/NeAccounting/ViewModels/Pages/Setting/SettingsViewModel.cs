@@ -5,6 +5,7 @@
 
 using DomainShared.Constants;
 using DomainShared.ViewModels.Document;
+using Infrastructure.UnitOfWork;
 using Wpf.Ui.Controls;
 
 namespace NeAccounting.ViewModels.Pages
@@ -51,32 +52,38 @@ namespace NeAccounting.ViewModels.Pages
             return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
                 ?? String.Empty;
         }
+		[RelayCommand]
+		private async void OnChangeTheme(string parameter)
+		{
+			using (BaseUnitOfWork db = new BaseUnitOfWork())
+			{
+				switch (parameter)
+				{
+					case "theme_light":
+						if (CurrentTheme == Wpf.Ui.Appearance.ApplicationTheme.Light)
+							break;
 
-        [RelayCommand]
-        private void OnChangeTheme(string parameter)
-        {
-            switch (parameter)
-            {
-                case "theme_light":
-                    if (CurrentTheme == Wpf.Ui.Appearance.ApplicationTheme.Light)
-                        break;
+						Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Light);
+						CurrentTheme = Wpf.Ui.Appearance.ApplicationTheme.Light;
 
-                    Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Light);
-                    CurrentTheme = Wpf.Ui.Appearance.ApplicationTheme.Light;
-					CurrentUser.CurrentTheme = DomainShared.Enums.Themes.Theme.Light;
+						// به‌روزرسانی تم در دیتابیس
+						await db.UserRepository.UpdateUserTheme(CurrentUser.CurrentUserId, DomainShared.Enums.Themes.Theme.Light);
+						break;
 
-					break;
+					default:
+						if (CurrentTheme == Wpf.Ui.Appearance.ApplicationTheme.Dark)
+							break;
 
-                default:
-                    if (CurrentTheme == Wpf.Ui.Appearance.ApplicationTheme.Dark)
-                        break;
+						Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Dark);
+						CurrentTheme = Wpf.Ui.Appearance.ApplicationTheme.Dark;
 
-                    Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Dark);
-                    CurrentTheme = Wpf.Ui.Appearance.ApplicationTheme.Dark;
-					CurrentUser.CurrentTheme = DomainShared.Enums.Themes.Theme.Dark;
+						// به‌روزرسانی تم در دیتابیس
+						await db.UserRepository.UpdateUserTheme(CurrentUser.CurrentUserId, DomainShared.Enums.Themes.Theme.Dark);
+						break;
+				}
 
-					break;
-            }
-        }
-    }
+				await db.SaveChangesAsync();
+			}
+		}
+	}
 }

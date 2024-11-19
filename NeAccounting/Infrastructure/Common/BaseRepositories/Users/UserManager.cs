@@ -2,6 +2,7 @@
 using Domain.BaseDomain.User;
 using DomainShared.Constants;
 using Infrastructure.EntityFramework;
+using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IBaseRepositories;
 
@@ -67,9 +68,26 @@ namespace Infrastructure.BaseRepositories
             }
             return (true, string.Empty);
         }
+		public async Task UpdateUserTheme(Guid userId, DomainShared.Enums.Themes.Theme theme)
+		{
+			var user = await GetUser(userId);
+			if (user != null)
+			{
+				user.CurrentTheme = theme; // فرض بر این است که این فیلد در IdentityUser وجود دارد
+				Entities.Update(user);
+			}
+		}
+		public async Task<DomainShared.Enums.Themes.Theme> LoadUserTheme(Guid userId)
+		{
+			var user = await GetUser(userId);
+			if (user != null)
+			{
+				return user.CurrentTheme; // فرض بر این است که این فیلد در IdentityUser وجود دارد
+			}
+			return DomainShared.Enums.Themes.Theme.Dark; // مقدار پیش‌فرض در صورت عدم وجود کاربر
+		}
 
-
-    }
+	}
 
 
 }
