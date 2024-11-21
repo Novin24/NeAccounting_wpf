@@ -41,7 +41,8 @@ namespace NeAccounting.Views.Pages
             {
                 ViewModel.ExPaht = System.IO.Path.GetDirectoryName(dialog.FileName); // آدرس کامل فایل را ذخیره می‌کند
                 ViewModel.FileName = System.IO.Path.GetFileName(dialog.FileName); //نام فایل را ذخیره میکند
-            }
+				ViewModel.ReadExcelFile(dialog.FileName);
+			}
         }
     }
 }

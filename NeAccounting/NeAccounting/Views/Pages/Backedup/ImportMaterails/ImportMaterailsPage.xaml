@@ -224,14 +224,14 @@
                                     <DataGridTextColumn Header="نام کالا"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding Name}"
+                                                        Binding="{Binding MaterialName}"
                                                         Width="*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                                   Text='{Binding Name}'/>
+                                                                   Text='{Binding MaterialName}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -241,14 +241,14 @@
                                     <DataGridTextColumn Header="موجودی انبار"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding NationalCode}"
+                                                        Binding="{Binding SEntity}"
                                                         Width="*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                                   Text='{Binding NationalCode}'/>
+                                                                   Text='{Binding SEntity}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -258,14 +258,31 @@
                                     <DataGridTextColumn Header="واحد"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding CusTypeName}"
+                                                        Binding="{Binding UnitName}"
                                                         Width="*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17' 
-                                                                   Text='{Binding CusTypeName}'/>
+                                                                   Text='{Binding UnitName}'/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Header="آخرین قیمت فروش"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding LastSellPrice}"
+                                                        Width="*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17' 
+                                                                   Text='{Binding LastSellPrice}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
@@ -275,35 +292,39 @@
                                     <DataGridTextColumn Header="شماره سریال"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding Mobile}"
+                                                    Binding="{Binding Serial}"
                                                     Width="*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                               Text='{Binding Mobile}' />
+                                                               Text='{Binding Serial}' />
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTemplateColumn Header="محل نگهداری"
-                                                        Width="*"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal"
-                                                        HorizontalAlignment="Center">
-                                                    <CheckBox IsChecked="{Binding Buyer}"
-                                                          Margin="5 0 -5 0"
-                                                          IsEnabled="False"
-                                                          Padding="0"/>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
+
+
+
+                                    <DataGridTextColumn Header="محل نگهداری"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding Address}"
+                                                    Width="*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Address}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
 
                                 </DataGrid.Columns>
                             </DataGrid>
