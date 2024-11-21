@@ -23,12 +23,37 @@ namespace Domain.NovinEntity.Materials
         /// سریال
         /// </summary>
         public string Serial { get; private set; }
+
+        /// <summary>
+        /// موجودی
+        /// </summary>
         public double Entity { get; set; }
+
+        /// <summary>
+        /// آخرین قسمت فروش
+        /// </summary>
         public long LastSellPrice { get; set; }
+
+        /// <summary>
+        /// آخرین قیمت خرید
+        /// </summary>
         public long LastBuyPrice { get; set; }
+
         public bool IsManufacturedGoods { get; set; }
+
+        /// <summary>
+        /// محل نگهداری
+        /// </summary>
         public string PhysicalAddress { get; private set; }
+
+        /// <summary>
+        /// فعال بودن
+        /// </summary>
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// آیا سرویس هست؟
+        /// </summary>
         public bool IsService { get; set; }
         #endregion
 
