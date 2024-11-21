@@ -177,7 +177,7 @@
                                            FontFamily="Calibri"
                                            FontSize="15"
                                            Padding="9 0"
-                                           Command="{Binding ViewModel.ImportCustomerCommand}"
+                                           Command="{Binding ViewModel.ImportMaterialsCommand}"
                                            IsChevronVisible="False"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom">
@@ -232,23 +232,6 @@
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
                                                                    Text='{Binding MaterialName}'/>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                    </DataGridTextColumn>
-
-                                    <DataGridTextColumn Header="موجودی انبار"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding SEntity}"
-                                                        Width="*" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="DataGridCell">
-                                                <Setter Property="ToolTip">
-                                                    <Setter.Value>
-                                                        <TextBlock FontSize='17'
-                                                                   Text='{Binding SEntity}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>

@@ -66,6 +66,7 @@ namespace NeAccounting.ViewModels;
 
 		List = customers; // لیست مشتری‌ها را به روز می‌کند
 	}
+
 	[RelayCommand]
 	private async Task OnImportCustomer()
 	{

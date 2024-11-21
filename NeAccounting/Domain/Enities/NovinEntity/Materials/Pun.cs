@@ -14,7 +14,14 @@ namespace Domain.NovinEntity.Materials
         #endregion
 
         #region Property
+        /// <summary>
+        /// نام
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// سریال
+        /// </summary>
         public string Serial { get; private set; }
         public double Entity { get; set; }
         public long LastSellPrice { get; set; }
