@@ -77,5 +77,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Required\DataBases\" />
+	  <Folder Include="Views\Pages\Backedup\ExporteMaterails\" />
 	</ItemGroup>
 </Project>

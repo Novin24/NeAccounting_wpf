@@ -12,7 +12,6 @@ using NeAccounting.Resources;
 using NeAccounting.Services;
 using NeAccounting.ViewModels;
 using NeAccounting.ViewModels.Pages;
-using NeAccounting.ViewModels.Pages.BackedUp.ImportCustomers;
 using NeAccounting.Views.Pages;
 using NeAccounting.Views.Pages.Test;
 using NeAccounting.Windows;
