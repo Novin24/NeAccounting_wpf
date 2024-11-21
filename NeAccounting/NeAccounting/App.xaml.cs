@@ -313,6 +313,9 @@ namespace NeAccounting
 
 				services.AddTransient<ImportCustomersPage>();
 				services.AddTransient<ImportCustomerViewModel>();
+
+				services.AddTransient<ImportMaterailsPage>();
+				services.AddTransient<ImportMaterailViewModel>();
 				#endregion
 
 				#region ChangePassword

@@ -99,7 +99,7 @@
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <nu:HeaderPack NamePpage="وارد کردن کاربران"
+                <nu:HeaderPack NamePpage="وارد کردن اجناس"
                                Margin="30 0" />
 
                 <Border Grid.Row="1"
@@ -221,11 +221,11 @@
 
                                 <DataGrid.Columns>
 
-                                    <DataGridTextColumn Header="نام و نام خانوادگی"
+                                    <DataGridTextColumn Header="نام کالا"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding Name}"
-                                                        Width="1*" >
+                                                        Width="*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
@@ -238,11 +238,11 @@
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="کد ملی"
+                                    <DataGridTextColumn Header="موجودی انبار"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding NationalCode}"
-                                                        Width="1*" >
+                                                        Width="*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
@@ -255,11 +255,11 @@
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="نوع مشتری "
+                                    <DataGridTextColumn Header="واحد"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding CusTypeName}"
-                                                        Width="75" >
+                                                        Width="*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
@@ -272,11 +272,11 @@
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="موبایل"
+                                    <DataGridTextColumn Header="شماره سریال"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     Binding="{Binding Mobile}"
-                                                    Width=".75*" >
+                                                    Width="*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
@@ -289,8 +289,8 @@
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTemplateColumn Header="خریدار"
-                                                        Width="44"
+                                    <DataGridTemplateColumn Header="محل نگهداری"
+                                                        Width="*"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -305,37 +305,6 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
 
-                                    <DataGridTemplateColumn Header="فروشنده"
-                                                        Width="44"
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal"
-                                                        HorizontalAlignment="Center">
-                                                    <CheckBox IsChecked="{Binding Seller}"
-                                                          Margin="5 0 -5 0"
-                                                          IsEnabled="False"
-                                                          Padding="0"/>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="آدرس"
-                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                    Binding="{Binding Address}"
-                                                    Width="1*" >
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="DataGridCell">
-                                                <Setter Property="ToolTip">
-                                                    <Setter.Value>
-                                                        <TextBlock FontSize='17'
-                                                               Text='{Binding Address}' />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                    </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

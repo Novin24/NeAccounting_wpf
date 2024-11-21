@@ -100,7 +100,7 @@
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <nu:HeaderPack NamePpage="وارد کردن کاربران"
+                <nu:HeaderPack NamePpage="وارد کردن مشتریان"
                                Margin="30 0" />
 
                 <Border Grid.Row="1"

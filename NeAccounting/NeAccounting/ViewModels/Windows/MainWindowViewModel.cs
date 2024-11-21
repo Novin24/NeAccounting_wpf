@@ -182,8 +182,9 @@ namespace NeAccounting.ViewModels
                 {
                 
                     new NavigationViewItem(){Content = "پشتبان گیری از پایگاه داده",TargetPageType = typeof(BackupPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
-					new NavigationViewItem {Content = "وارد کردن مشتری",TargetPageType = typeof(ImportCustomersPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
-					new NavigationViewItem {Content = "خروجی گرفتن از کاربران",TargetPageType = typeof(ExporteCustomersPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
+					new NavigationViewItem {Content = "وارد کردن مشتریان",TargetPageType = typeof(ImportCustomersPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
+					new NavigationViewItem {Content = "خروجی گرفتن از مشتریان",TargetPageType = typeof(ExporteCustomersPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
+					new NavigationViewItem {Content = "وارد کردن اجناس",TargetPageType = typeof(ImportMaterailsPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
 
 				}
             },
