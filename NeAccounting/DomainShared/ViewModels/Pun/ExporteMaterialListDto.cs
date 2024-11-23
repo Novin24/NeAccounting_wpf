@@ -1,6 +1,6 @@
 ﻿namespace DomainShared.ViewModels.Pun
 {
-	public class ImportMaterailListDto
+	public class ExporteMaterialListDto
 	{
 		/// <summary>
 		/// نام اجناس
@@ -31,5 +31,6 @@
 		/// محل نگهداری( آدرس )
 		/// </summary>
 		public string Address { get; set; }
+
 	}
 }

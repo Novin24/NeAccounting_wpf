@@ -20,10 +20,10 @@ namespace NeAccounting.Views.Pages
 	/// <summary>
 	/// Interaction logic for ExporteMaterailsPage.xaml
 	/// </summary>
-	public partial class ExporteMaterailsPage : INavigableView<ExporteMaterailViewModel>
+	public partial class ExporteMaterailsPage : INavigableView<ExporteMaterialViewModel>
 	{
-		public ExporteMaterailViewModel ViewModel { get; }
-		public ExporteMaterailsPage()
+		public ExporteMaterialViewModel ViewModel { get; }
+		public ExporteMaterailsPage(ExporteMaterialViewModel viewModel)
 		{
 			InitializeComponent();
 			ViewModel = viewModel;
@@ -45,10 +45,12 @@ namespace NeAccounting.Views.Pages
 
 		private async void CheckBox_IsArchive_Checked(object sender, RoutedEventArgs e)
 		{
+			ViewModel.LoadMaterialList(true);
 		}
 
 		private async void CheckBox_IsArchive_Unchecked(object sender, RoutedEventArgs e)
 		{
+			ViewModel.LoadMaterialList(false);
 		}
 	}
 }

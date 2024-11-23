@@ -194,6 +194,7 @@
                                            FontFamily="Calibri"
                                            FontSize="15"
                                            Padding="9 0"
+                                           Command="{Binding ViewModel.ExportToExcelCommand}"
                                            IsChevronVisible="False"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom">
@@ -232,7 +233,8 @@
                                       CanUserSortColumns="False"
                                       CanUserReorderColumns="False"
                                       FontFamily="Calibri"
-                                      AutoGenerateColumns="False">
+                                      AutoGenerateColumns="False"
+                                      ItemsSource="{Binding ViewModel.List, Mode=TwoWay}">
 
                                 <DataGrid.Columns>
 

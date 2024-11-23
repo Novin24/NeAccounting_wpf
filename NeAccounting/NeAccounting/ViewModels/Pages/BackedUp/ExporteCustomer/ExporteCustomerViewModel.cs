@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows;
 using DomainShared.Enums;
 using Wpf.Ui;
+using static Stimulsoft.Report.StiOptions;
 
 namespace NeAccounting.ViewModels;
 
@@ -84,7 +85,6 @@ public partial class ExporteCustomerViewModel(ISnackbarService snackbarService) 
 	[RelayCommand]
 	public async Task OnExportToExcel()
 	{
-		FileName = SetName();
 		ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 		if (List == null || !List.Any())
@@ -133,9 +133,10 @@ public partial class ExporteCustomerViewModel(ISnackbarService snackbarService) 
 			// ذخیره‌سازی فایل
 			var fileInfo = new FileInfo(filePath);
 			package.SaveAs(fileInfo);
-			_snackbarService.Show("کاربر گرامی", "عملیات با موفقیت انجام شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(3000));
+			_snackbarService.Show("کاربر گرامی", $"عملیات با موفقیت انجام شد \n فایل {FileName} در مسیر {ExPaht} ذخیره شد.", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle20), TimeSpan.FromMilliseconds(7000));
 		}
 
+		FileName = SetName();
 	}
 
 }

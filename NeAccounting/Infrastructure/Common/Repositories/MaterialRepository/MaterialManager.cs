@@ -238,7 +238,23 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
-    }
+
+		public Task<List<ExporteMaterialListDto>> GetExporteMaterialList(bool IsArchive)
+		{
+            return TableNoTracking
+                .Where(t => IsArchive == true || t.IsActive != IsArchive)
+                .Where(t => t.IsService == false)
+                .Select(x => new ExporteMaterialListDto
+                {
+                    MaterialName = x.Name,
+                    LastSellPrice = x.LastSellPrice,
+                    UnitName = x.Unit.Name,
+                    Address = x.PhysicalAddress,
+                    Serial = x.Serial,
+                    UnitId = x.UnitId,
+                }).OrderBy(t => t.MaterialName).ToListAsync();
+		}
+	}
 }
 
 
