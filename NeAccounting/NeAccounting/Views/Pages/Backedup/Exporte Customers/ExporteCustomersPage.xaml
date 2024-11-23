@@ -14,6 +14,11 @@
       d:DataContext="{d:DesignInstance local:ExporteCustomersPage ,IsDesignTimeCreatable=False}"
       Title="ExporteCustomersPage">
 
+
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.ExportToExcelCommand}" />
+    </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />

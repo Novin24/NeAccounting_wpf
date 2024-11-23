@@ -13,11 +13,12 @@
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       mc:Ignorable="d"
+      
       Title="DefinitionOfPun">
 
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                    Command="{Binding CreateMaterialCommand }" />
+                    Command="{Binding CreateMaterialCommand }"/>
     </Page.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -148,7 +149,7 @@
                                         x:Name="MaterialName"
                                         Grid.Row="0"
                                         Grid.Column="0"
-                                        Text="{Binding ViewModel.MaterialName , Mode=OneWayToSource}"
+                                        Text="{Binding ViewModel.MaterialName , Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
                                         Margin="0 4 3 0 "
                                          
                                         FontFamily="Calibri" />
@@ -164,7 +165,7 @@
                                        Margin="7 0 0 0 " />
                             <ComboBox FontSize="14"
                                       FontFamily="Calibri"
-                                      SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                       DisplayMemberPath="DisplayName"
                                       SelectedValuePath="Id"
                                       ItemsSource="{Binding ViewModel.AsuBox}"
@@ -174,7 +175,7 @@
                                       Grid.Column="1"
                                       Grid.ColumnSpan="3"
                                       LabelName="آخرین قیمت فروش"
-                                      Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay}" />
+                                      Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                         <StackPanel Grid.Row="3"
                                     Grid.Column="1"
                                     Grid.ColumnSpan="3"
@@ -186,7 +187,7 @@
                                        Margin="7 0 0 0 " />
                             <ui:TextBox FontSize="14"
                                         TextAlignment="Center"
-                                        Text="{Binding ViewModel.Address , Mode=OneWayToSource}"
+                                        Text="{Binding ViewModel.Address , Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
                                         FontFamily="Calibri"
                                         Margin="0 4 0 0" />
                         </StackPanel>
@@ -200,7 +201,7 @@
                                        Margin="7 0 0 0 " />
                             <ui:TextBox Grid.Column="0"
                                         Grid.Row="2"
-                                        Text="{Binding ViewModel.Serial , Mode=OneWayToSource}"
+                                        Text="{Binding ViewModel.Serial , Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
                                         Margin="0 4 3 0"
                                         TextAlignment="Center"
                                         FontSize="14"

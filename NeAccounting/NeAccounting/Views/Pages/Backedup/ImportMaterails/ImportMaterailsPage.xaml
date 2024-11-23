@@ -15,6 +15,11 @@
       Title="ImportMaterailsPage">
 
 
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                 Command="{Binding ViewModel.ImportMaterialsCommand}" />
+    </Page.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -144,6 +149,7 @@
                                 <ui:TextBox TextAlignment="Center"
                                             ClearButtonEnabled="False"
                                             IsReadOnly="True"
+                                            x:Name="txt_name"
                                             FontFamily="Calibri"
                                             Text="{Binding ViewModel.FileName, Mode=TwoWay}"
                                             Margin="0 2 15 0" />
