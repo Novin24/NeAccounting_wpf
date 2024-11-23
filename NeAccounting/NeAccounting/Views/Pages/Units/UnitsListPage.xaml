@@ -225,14 +225,14 @@
 
                                     <DataGridTextColumn Header="1-1-1-"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding Unit}"
+                                                        Binding="{Binding IdForImportExport}"
                                                         Width="46" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                               Text='{Binding UnitName}' />
+                                                               Text='{Binding IdForImportExport}' />
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>

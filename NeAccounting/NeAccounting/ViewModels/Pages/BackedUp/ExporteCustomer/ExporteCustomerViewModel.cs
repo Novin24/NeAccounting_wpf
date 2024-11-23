@@ -82,7 +82,7 @@ public partial class ExporteCustomerViewModel(ISnackbarService snackbarService) 
 	/// </summary>
 	/// <returns></returns>
 	[RelayCommand]
-	public async Task ExportToExcel()
+	public async Task OnExportToExcel()
 	{
 		FileName = SetName();
 		ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
