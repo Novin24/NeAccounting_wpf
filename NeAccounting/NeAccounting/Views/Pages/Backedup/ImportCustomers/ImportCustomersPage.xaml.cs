@@ -29,6 +29,7 @@ namespace NeAccounting.Views.Pages
 			DataContext = this;
 			ViewModel = viewModel;
 			InitializeComponent();
+			txt_name.Focus();
 		}
 		private void Btn_Brows_Click(object sender, RoutedEventArgs e)
 		{

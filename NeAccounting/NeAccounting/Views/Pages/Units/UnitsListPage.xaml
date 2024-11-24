@@ -137,7 +137,7 @@
                                   Margin="8 0 8 16">
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="46" />
+                                    <ColumnDefinition Width="75" />
                                     <ColumnDefinition Width=".4*" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="85" />
@@ -225,14 +225,14 @@
 
                                     <DataGridTextColumn Header="1-1-1-"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding Unit}"
-                                                        Width="46" >
+                                                        Binding="{Binding IdNumber}"
+                                                        Width="70" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                               Text='{Binding UnitName}' />
+                                                               Text='{Binding IdNumber}' />
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>

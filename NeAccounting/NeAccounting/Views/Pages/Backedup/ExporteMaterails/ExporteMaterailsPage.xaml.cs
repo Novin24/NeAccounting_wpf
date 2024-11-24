@@ -18,18 +18,19 @@ using Wpf.Ui.Controls;
 namespace NeAccounting.Views.Pages
 {
 	/// <summary>
-	/// Interaction logic for ExporteCustomersPage.xaml
+	/// Interaction logic for ExporteMaterailsPage.xaml
 	/// </summary>
-	public partial class ExporteCustomersPage : INavigableView<ExporteCustomerViewModel>
+	public partial class ExporteMaterailsPage : INavigableView<ExporteMaterialViewModel>
 	{
-		public ExporteCustomerViewModel ViewModel { get; }
-		public ExporteCustomersPage(ExporteCustomerViewModel viewModel)
+		public ExporteMaterialViewModel ViewModel { get; }
+		public ExporteMaterailsPage(ExporteMaterialViewModel viewModel)
 		{
-			DataContext = this;
-			ViewModel = viewModel;
 			InitializeComponent();
+			ViewModel = viewModel;
+			DataContext = this;
 			txt_name.Focus();
 		}
+
 		private void Btn_Brows_Click(object sender, RoutedEventArgs e)
 		{
 			System.Windows.Forms.FolderBrowserDialog dialog = new();
@@ -41,14 +42,15 @@ namespace NeAccounting.Views.Pages
 				ViewModel.ExPaht = dialog.SelectedPath;
 			}
 		}
+
 		private async void CheckBox_IsArchive_Checked(object sender, RoutedEventArgs e)
 		{
-			ViewModel.LoadCustomerList(true);
+			ViewModel.LoadMaterialList(true);
 		}
 
 		private async void CheckBox_IsArchive_Unchecked(object sender, RoutedEventArgs e)
 		{
-			ViewModel.LoadCustomerList(false);
+			ViewModel.LoadMaterialList(false);
 		}
 	}
 }

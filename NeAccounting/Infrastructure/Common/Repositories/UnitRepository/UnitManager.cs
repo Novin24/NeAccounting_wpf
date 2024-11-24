@@ -22,7 +22,8 @@ namespace Infrastructure.Repositories
                 Id = x.Id,
                 UnitName = x.Name,
                 IsActive = x.IsActive,
-                Description = x.Descrip
+                Description = x.Descrip,
+                IdNumber = x.IdNumber,
 
             }).ToListAsync();
         }

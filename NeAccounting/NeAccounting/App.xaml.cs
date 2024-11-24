@@ -316,6 +316,9 @@ namespace NeAccounting
 
 				services.AddTransient<ImportMaterailsPage>();
 				services.AddTransient<ImportMaterailViewModel>();
+
+				services.AddTransient<ExporteMaterailsPage>();
+				services.AddTransient<ExporteMaterialViewModel>();
 				#endregion
 
 				#region ChangePassword
