@@ -137,12 +137,25 @@
                                   Margin="8 0 8 16">
 
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="46" />
                                     <ColumnDefinition Width=".4*" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="85" />
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0"
+                                            Margin="2 14 2 0 ">
+
+                                    <TextBlock FontFamily="Calibri"
+                                               FontSize="15"
+                                               Text="شناسه واحد"
+                                               Margin="3 0 0 0 "
+                                               TextWrapping="Wrap"
+                                               HorizontalAlignment="Left" />
+                                   
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1"
                                             Margin="2 14 2 0 ">
 
                                     <TextBlock FontFamily="Calibri"
@@ -158,7 +171,7 @@
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
 
-                                <StackPanel Grid.Column="1"
+                                <StackPanel Grid.Column="2"
                                             Margin="2 14 4 0 ">
 
                                     <TextBlock FontFamily="Calibri"
@@ -173,7 +186,7 @@
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
 
-                                <Button Grid.Column="2"
+                                <Button Grid.Column="3"
                                         Padding="4 5 "
                                         IsDefault="True"
                                         FontSize="17"
@@ -209,6 +222,22 @@
                                       AutoGenerateColumns="False">
 
                                 <DataGrid.Columns>
+
+                                    <DataGridTextColumn Header="1-1-1-"
+                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                        Binding="{Binding Unit}"
+                                                        Width="46" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding UnitName}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
 
                                     <DataGridTextColumn ElementStyle="{StaticResource CenterDtaGridCell}"
                                                         Binding="{Binding UnitName}"

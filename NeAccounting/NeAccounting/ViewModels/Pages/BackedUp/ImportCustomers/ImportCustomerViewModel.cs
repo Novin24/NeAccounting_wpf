@@ -12,7 +12,7 @@ using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.ViewModels.Pages.BackedUp.ImportCustomers;
+namespace NeAccounting.ViewModels;
 
 	public partial class ImportCustomerViewModel(ISnackbarService snackbarService) : ObservableObject
 {
@@ -66,6 +66,7 @@ namespace NeAccounting.ViewModels.Pages.BackedUp.ImportCustomers;
 
 		List = customers; // لیست مشتری‌ها را به روز می‌کند
 	}
+
 	[RelayCommand]
 	private async Task OnImportCustomer()
 	{

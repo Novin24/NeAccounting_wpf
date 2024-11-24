@@ -126,5 +126,14 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
-    }
+		public async Task<(string error, Guid unitId)> GetUnitIdByName(string unitName)
+		{
+			var unit = await TableNoTracking.FirstOrDefaultAsync(t => t.Name == unitName);
+			if (unit == null)
+			{
+				return new("واحد مورد نظر یافت نشد!!", Guid.Empty);
+			}
+			return new(string.Empty, unit.Id);
+		}
+	}
 }
