@@ -13,7 +13,7 @@
 		public string UnitName { get; set; }
 
 		/// <summary>
-		/// شناسه واحد
+		/// شماره واحد
 		/// </summary>
 		public int UnitNumber { get; set; }
 

@@ -89,7 +89,7 @@ namespace NeAccounting.ViewModels
             }
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(SrvicName, UnitId.Value, true, Price, string.Empty, Address, false);
+                var (error, isSuccess, Show) = await db.MaterialManager.CreateMaterial(SrvicName, UnitId.Value, true, Price, string.Empty, Address, false);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
