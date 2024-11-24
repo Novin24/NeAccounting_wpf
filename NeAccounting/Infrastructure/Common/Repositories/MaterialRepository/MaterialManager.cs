@@ -251,7 +251,7 @@ namespace Infrastructure.Repositories
                     UnitName = x.Unit.Name,
                     Address = x.PhysicalAddress,
                     Serial = x.Serial,
-                    UnitId = x.UnitId,
+                    UnitNumber = x.Unit.IdNumber,
                 }).OrderBy(t => t.MaterialName).ToListAsync();
 		}
 	}

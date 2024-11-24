@@ -15,7 +15,7 @@
 		/// <summary>
 		/// شناسه واحد
 		/// </summary>
-		public Guid UnitId { get; set; }
+		public int UnitNumber { get; set; }
 
 		/// <summary>
 		/// آخرین قیمت فروش

@@ -101,7 +101,7 @@ public partial class ExporteMaterialViewModel(ISnackbarService snackbarService) 
 				var item = List.ElementAt(i);
 				worksheet.Cells[i + 2, 1].Value = item.MaterialName;
 				worksheet.Cells[i + 2, 2].Value = item.UnitName;
-				worksheet.Cells[i + 2, 3].Value = item.UnitId;
+				worksheet.Cells[i + 2, 3].Value = item.UnitNumber;
 				worksheet.Cells[i + 2, 4].Value = item.LastSellPrice;
 				worksheet.Cells[i + 2, 5].Value = item.Serial;
 				worksheet.Cells[i + 2, 6].Value = item.Address;
