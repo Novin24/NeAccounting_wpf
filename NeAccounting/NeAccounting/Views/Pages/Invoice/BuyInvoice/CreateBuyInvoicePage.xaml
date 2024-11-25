@@ -530,7 +530,7 @@
                                             Margin="25,0"
                                             FontFamily="Calibri"
                                             Height="33"
-                                            Text="{Binding ViewModel.InvDescription, Mode=TwoWay}"
+                                            Text="{Binding ViewModel.InvDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             PlaceholderText="خلاصه فاکتور"
                                             VerticalAlignment="Top"
                                             HorizontalAlignment="Center" />
