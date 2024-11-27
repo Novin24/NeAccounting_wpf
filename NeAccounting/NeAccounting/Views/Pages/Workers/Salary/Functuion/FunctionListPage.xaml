@@ -170,7 +170,7 @@
                                 <ui:AutoSuggestBox x:Name="ASBoxSuggestions"
                                                        Icon="{ui:SymbolIcon Search24}"
                                                        PlaceholderText="جستجو ..."
-                                                       OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
+                                                       OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                                                        SuggestionChosen="txt_name_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
                                                        FontSize="14"

@@ -141,7 +141,7 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
-                                <StackPanel Margin="4 4 5 0 "
+                                <StackPanel Margin="4 0 5 0 "
                                             MaxWidth="300"
                                             MinWidth="190"
                                             HorizontalAlignment="Right">
@@ -165,7 +165,7 @@
                                     <ui:TextBox FontFamily="Calibri"
                                                 x:Name="txt_CustomerName"
                                                 IsReadOnly="True"
-                                                Text="{Binding ViewModel.CusName}"
+                                                Text="{Binding ViewModel.CusName, UpdateSourceTrigger=PropertyChanged}"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
 
@@ -180,7 +180,7 @@
                                     <ui:TextBox TextAlignment="Center"
                                                 FontFamily="Calibri"
                                                 Margin="0 5 0 0"
-                                                Text="{Binding ViewModel.ParentInvoiceSerial}"
+                                                Text="{Binding ViewModel.ParentInvoiceSerial, UpdateSourceTrigger=PropertyChanged}"
                                                 IsReadOnly="True"
                                                 IsTabStop="False"
                                                 FlowDirection="LeftToRight" />
@@ -197,7 +197,7 @@
                                     <ui:TextBox TextAlignment="Center"
                                                 FontFamily="Calibri"
                                                 Margin="0 5 0 0"
-                                                Text="{Binding ViewModel.ReturnInvoicSerial}"
+                                                Text="{Binding ViewModel.ReturnInvoicSerial, UpdateSourceTrigger=PropertyChanged}"
                                                 IsReadOnly="True"
                                                 IsTabStop="False"
                                                 FlowDirection="LeftToRight" />
@@ -251,7 +251,7 @@
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
                                                        FontFamily="Calibri"
-                                                       OriginalItemsSource="{Binding ViewModel.MatList}"
+                                                       OriginalItemsSource="{Binding ViewModel.MatList, UpdateSourceTrigger=PropertyChanged}"
                                                        DisplayMemberPath="MaterialName"
                                                        SuggestionChosen="Txt_mat_SuggestionChosen"
                                                        Margin="0 2 0 0" />
