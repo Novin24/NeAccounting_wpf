@@ -12,6 +12,9 @@ namespace Domain.NovinEntity.Materials
         public IEnumerable<SellRemittance> SellRemittances { get; set; }
         public IEnumerable<BuyRemittance> BuyRemittances { get; set; }
         public virtual ICollection<PunProduct> Productions { get; set; } = [];
+        /// <summary>
+        /// مواد خامی که این جنس  برای تولید لازم دارد
+        /// </summary>
         public virtual ICollection<PunProduct> RawMaterials { get; set; } = [];
         #endregion
 
