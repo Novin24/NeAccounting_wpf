@@ -226,7 +226,7 @@
                                                    PlaceholderText="جستجو ..."
                                                    FontSize="14"
                                                    Height="37"
-                                                   OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
+                                                   OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"
                                                    SuggestionChosen="txt_name_SuggestionChosen"
                                                    DisplayMemberPath="DisplayName"
                                                    Margin="0 6 3 0 "

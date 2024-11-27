@@ -175,7 +175,7 @@
                                            Text="عنوان"
                                            Margin="4 0 0 0 " />
                                 <ui:TextBox TextAlignment="Center"
-                                            Text="{Binding ViewModel.Titele,Mode=OneWayToSource}"
+                                            Text="{Binding ViewModel.Titele,Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                             x:Name="Txt_Titele"
                                             FontFamily="Calibri" />
                             </StackPanel>
@@ -192,17 +192,17 @@
                                           x:Name="cmb_Priority"
                                           SelectedValuePath="Key"
                                           DisplayMemberPath="Value"
-                                          SelectedValue="{Binding ViewModel.Priority ,Mode=TwoWay}">
+                                          SelectedValue="{Binding ViewModel.Priority ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 </ComboBox>
                             </StackPanel>
 
                             <nu:PersianDatePicker Grid.Row="1"
                                                   LabelName="از تاریخ"
-                                                  SelectedDate="{Binding ViewModel.StartDate ,Mode=TwoWay}"
+                                                  SelectedDate="{Binding ViewModel.StartDate ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   FlowDirection="LeftToRight" />
 
                             <nu:PersianDatePicker Grid.Row="1"
-                                                  SelectedDate="{Binding ViewModel.EndDate ,Mode=TwoWay}"
+                                                  SelectedDate="{Binding ViewModel.EndDate ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   Grid.Column="1"
                                                   LabelName="تا تاریخ"
                                                   FlowDirection="LeftToRight" />
