@@ -171,7 +171,7 @@
                                     <ui:AutoSuggestBox FontSize="16"
                                                        x:Name="txt_name"
                                                        Icon="{ui:SymbolIcon Search24}"
-                                                       OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
+                                                       OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                        SuggestionChosen="txt_name_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
                                                        FontFamily="Calibri" />
@@ -187,8 +187,8 @@
                                                 LabelName="تاریخ پرداخت"
                                                 MonthChosen="dtp_MonthChosen"
                                                 YearChosen="dtp_YearChosen"
-                                                SelectedMon="{Binding ViewModel.SubmitMonth, Mode=TwoWay}"
-                                                SelectedYear="{Binding ViewModel.SubmitYear, Mode=TwoWay}" />
+                                                SelectedMon="{Binding ViewModel.SubmitMonth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedYear="{Binding ViewModel.SubmitYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <Separator Grid.Row="1"
                                            VerticalAlignment="Bottom"
                                            Background="Gray"

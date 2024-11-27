@@ -269,7 +269,7 @@
                                            HorizontalAlignment="Center" />
                                 <ui:TextBox x:Name="txt_UnitDescription"
                                             TextAlignment="Center"
-                                            Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                            Text="{Binding ViewModel.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             FontFamily="Calibri"
                                             Margin="0 2 0 0" />
                             </StackPanel>

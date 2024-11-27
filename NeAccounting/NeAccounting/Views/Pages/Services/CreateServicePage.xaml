@@ -144,7 +144,7 @@
                             <TextBox TextAlignment="Center"
                                      FontSize="14"
                                      x:Name="SrvicName"
-                                     Text="{Binding ViewModel.SrvicName , Mode=OneWayToSource}"
+                                     Text="{Binding ViewModel.SrvicName , Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"
                                      TabIndex="0"
                                      Margin="0 4 0 0 "
                                       
@@ -161,7 +161,7 @@
                             <ComboBox FontSize="14"
                                       TabIndex="1"
                                       FontFamily="Calibri"
-                                      SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.UnitId , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                       DisplayMemberPath="DisplayName"
                                       SelectedValuePath="Id"
                                       ItemsSource="{Binding ViewModel.AsuBox}"
@@ -173,7 +173,7 @@
                                       Grid.ColumnSpan="3"
                                       LabelName="اجرت"
                                       TabIndex="2"
-                                          Value="{Binding ViewModel.Price , Mode= TwoWay}"/>
+                                          Value="{Binding ViewModel.Price , Mode= TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         <Grid Grid.Row="3"
                               Grid.Column="1"
                               Grid.ColumnSpan="3"
@@ -186,7 +186,7 @@
                                        Grid.Column="1"/>
                             <TextBox Margin="0,22,0,0"
                                      FontSize="16"
-                                     Text="{Binding ViewModel.Address, Mode=TwoWay}"
+                                     Text="{Binding ViewModel.Address, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                      FlowDirection="RightToLeft"
                                      Grid.ColumnSpan="2"
                                      FontFamily="Calibri"></TextBox>

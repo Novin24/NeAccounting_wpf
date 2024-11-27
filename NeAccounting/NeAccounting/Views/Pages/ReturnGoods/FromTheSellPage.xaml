@@ -159,7 +159,7 @@
                                     <ui:TextBox FontFamily="Calibri"
                                                 x:Name="txt_CustomerName"
                                                 IsReadOnly="True"
-                                                Text="{Binding ViewModel.CusName}"
+                                                Text="{Binding ViewModel.CusName,UpdateSourceTrigger=PropertyChanged}"
                                                 Margin="0 4 0 0" />
                                 </StackPanel>
 
@@ -175,7 +175,7 @@
                                              FontFamily="Calibri"
                                              Margin="0 4 0 0"
                                              IsTabStop="False"
-                                             Text="{Binding ViewModel.LastInvoice}"
+                                             Text="{Binding ViewModel.LastInvoice,UpdateSourceTrigger=PropertyChanged}"
                                              IsReadOnly="True" />
                                 </StackPanel>
 
@@ -184,7 +184,7 @@
                                                       MinWidth="230"
                                                       HorizontalAlignment="Left"
                                                       MaxWidth="290"
-                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay}"
+                                                      SelectedDate="{Binding ViewModel.SubmitDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                       LabelName="تاریخ"
                                                       Margin="0 2 0 0 " />
 
@@ -229,7 +229,7 @@
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
-                                                       OriginalItemsSource="{Binding ViewModel.MatList}"
+                                                       OriginalItemsSource="{Binding ViewModel.MatList, UpdateSourceTrigger=PropertyChanged}"
                                                        DisplayMemberPath="MaterialName"
                                                        SuggestionChosen="Txt_mat_SuggestionChosen"
                                                        FontFamily="Calibri"
@@ -304,7 +304,7 @@
                                                HorizontalAlignment="Center" />
                                     <ui:TextBox x:Name="txt_UnitDescription"
                                                 TextAlignment="Center"
-                                                Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                                Text="{Binding ViewModel.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 FontFamily="Calibri"
                                                 Margin="0 2 0 0" />
                                 </StackPanel>
