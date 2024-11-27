@@ -107,6 +107,7 @@ namespace Domain.NovinEntity.Workers
         /// وضعیت فعال
         /// </summary>
         public bool IsActive { get; set; }
+
         #endregion
 
         #region Constructor

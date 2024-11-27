@@ -95,7 +95,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.CustomerManager.CreateCustomer(FullName, Mobile, CashCredit.Value, PromissoryNote.Value, NationalCode, Address, (CustomerType)CusType, HavePromissoryNote, HaveCashCredit, Buyer, Seller);
+                var (error, isSuccess, Show) = await db.CustomerManager.CreateCustomer(FullName, Mobile, CashCredit.Value, PromissoryNote.Value, NationalCode, Address, (CustomerType)CusType, HavePromissoryNote, HaveCashCredit, Buyer, Seller);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

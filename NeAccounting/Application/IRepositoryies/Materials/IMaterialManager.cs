@@ -1,4 +1,5 @@
 ﻿using Domain.NovinEntity.Materials;
+using DomainShared.ViewModels.Customer;
 using DomainShared.ViewModels.Pun;
 using NeApplication.Common;
 
@@ -11,6 +12,7 @@ namespace NeApplication.IRepositoryies
         /// </summary>
         /// <returns></returns>
         Task<List<MatListDto>> GetMaterails();
+
         /// <summary>
         /// فیلتر نشده برای لیست اجناس
         /// </summary>
@@ -18,7 +20,16 @@ namespace NeApplication.IRepositoryies
         /// <param name="serial"></param>
         /// <returns></returns>
         Task<List<PunListDto>> GetMaterails(string name, string serial);
-        Task<(string error, PunListDto pun)> GetMaterailById(Guid Id);
+
+		/// <summary>
+		/// لیست برای خروجی گرفتن از اجناس
+		/// </summary>
+		/// <param name="IsArchive"></param>
+		/// <returns></returns>
+		Task<List<ExporteMaterialListDto>> GetExporteMaterialList(bool IsArchive);
+
+		Task<(string error, PunListDto pun)> GetMaterailById(Guid Id);
+
         Task<(string error, bool isSuccess)> CreateMaterial(string name,
             Guid unitId,
             bool isService,

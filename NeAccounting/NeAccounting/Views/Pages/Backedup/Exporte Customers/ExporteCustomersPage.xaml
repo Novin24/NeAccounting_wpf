@@ -1,28 +1,24 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.BackupPage"
+﻿<Page x:Class="NeAccounting.Views.Pages.ExporteCustomersPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:nu="clr-namespace:NeAccounting.Controls"
-      mc:Ignorable="d"
-      d:DataContext="{d:DesignInstance local:BackupPage,
-                                        IsDesignTimeCreatable=False}"
+      mc:Ignorable="d" 
       d:DesignHeight="800"
       d:DesignWidth="1200"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="Backup"
-      x:Name="root">
+      d:DataContext="{d:DesignInstance local:ExporteCustomersPage ,IsDesignTimeCreatable=False}"
+      Title="ExporteCustomersPage">
+
+
     <Page.InputBindings>
         <KeyBinding Key="F1"
-                    Command="{Binding SubmitCommand}" />
+                 Command="{Binding ViewModel.ExportToExcelCommand}" />
     </Page.InputBindings>
-    <Page.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />
-    </Page.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -108,7 +104,7 @@
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <nu:HeaderPack NamePpage="پشتیبان گیری از پایگاه داده"
+                <nu:HeaderPack NamePpage="خروجی گرفتن از کاربران"
                                Margin="30 0" />
 
                 <Border Grid.Row="1"
@@ -138,7 +134,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="130" />
+                                <ColumnDefinition Width="155" />
                             </Grid.ColumnDefinitions>
 
                             <StackPanel Grid.Column="0"
@@ -168,29 +165,40 @@
                                               HorizontalAlignment="Left" />
                                 <ui:TextBox TextAlignment="Center"
                                             IsEnabled="False"
-                                            PlaceholderText="مسیر پیشفرض برنامه ..."
-                                            x:Name="txt_Address"
+                                            PlaceholderText="مسیر فایل ..."
                                             FontSize="15"
                                             FontFamily="Calibri"
                                             Text="{Binding ViewModel.ExPaht , Mode=TwoWay}"
                                             Margin="0 2 0 0" />
                             </StackPanel>
-                            <Button Grid.Column="1"
+                            <Button Click="Btn_Brows_Click"
+                                    Grid.Column="1"
                                     VerticalAlignment="Bottom"
                                     Height="30"
-                                    x:Name="Btn_Brows"
-                                    Click="Btn_Brows_Click"
                                     Margin="0 0 10 0"
                                     HorizontalAlignment="Right">
                                 . . .
                             </Button>
+                            <StackPanel Grid.Row="2"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    Grid.Column="2"
+                                    Margin="0 8 0 0">
+                                <CheckBox Grid.Row="3"
+                                      Margin="0 0 0 5"
+                                      FontFamily="Calibri"
+                                          VerticalAlignment="Bottom"
+                                      FlowDirection="LeftToRight"
+                                          Checked="CheckBox_IsArchive_Checked"
+                                          Unchecked="CheckBox_IsArchive_Unchecked">شامل بایگانی شده ها</CheckBox>
 
-                            <ui:CardAction Grid.Column="2"
+                            </StackPanel>
+
+                            <ui:CardAction Grid.Column="3"
                                            FontFamily="Calibri"
                                            FontSize="15"
                                            Padding="9 0"
-                                           x:Name="Btn_submit"
-                                           Command="{Binding ViewModel.SubmitCommand}"
+                                           Command="{Binding ViewModel.ExportToExcelCommand}"
                                            IsChevronVisible="False"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom">
@@ -208,7 +216,7 @@
                                                 VerticalAlignment="Center">
                                         <ui:TextBlock Margin="0"
                                                       FontTypography="BodyStrong"
-                                                      Text="پشتیبان گیری"
+                                                      Text="خروجی گرفتن"
                                                       TextWrapping="WrapWithOverflow" />
                                         <ui:TextBlock Appearance="Tertiary"
                                                       Text="شروع مراحل (F1)"
@@ -218,124 +226,140 @@
                             </ui:CardAction>
                         </Grid>
                         <Grid Grid.Row="1"
-                              Margin="0 10"
-                              Visibility="{Binding ViewModel.ShowData,  Converter={StaticResource BoolToVis}}">
+                              Margin="0 10">
                             <DataGrid Padding="5"
                                       IsReadOnly="True"
                                       FontSize="15"
                                       CanUserResizeColumns="False"
                                       CanUserDeleteRows="False"
                                       CanUserResizeRows="False"
-                                      x:Name="dgv_Files"
                                       CanUserAddRows="False"
-                                      ItemsSource="{Binding ViewModel.BakFiles}"
                                       CanUserSortColumns="False"
                                       CanUserReorderColumns="False"
                                       FontFamily="Calibri"
-                                      AutoGenerateColumns="False">
+                                      AutoGenerateColumns="False"
+                                      ItemsSource="{Binding ViewModel.List, Mode=TwoWay}">
 
                                 <DataGrid.Columns>
 
-                                    <DataGridTextColumn Header="نام فایل"
+                                    <DataGridTextColumn Header="نام و نام خانوادگی"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding FileName}"
-                                                        Width="1.5*" >
+                                                        Binding="{Binding Name}"
+                                                        Width="1*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                               Text='{Binding FileName}' TextWrapping="Wrap"/>
+                                                                   Text='{Binding Name}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="آدرس فایل"
+                                    <DataGridTextColumn Header="کد ملی"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding FulePath}"
-                                                        Width="2*" >
+                                                        Binding="{Binding NationalCode}"
+                                                        Width="1*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17'
-                                                               Text='{Binding FulePath}' TextWrapping="Wrap" />
+                                                                   Text='{Binding NationalCode}' />
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="تاریخ "
+                                    <DataGridTextColumn Header="نوع مشتری "
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding CreationDate}"
+                                                        Binding="{Binding CusTypeName}"
                                                         Width="75" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
-                                                        <TextBlock FontSize='17'
-                                                               Text='{Binding CreationDate}' />
+                                                        <TextBlock FontSize='17' 
+                                                               Text='{Binding CusTypeName}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="ساعت "
-                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                        ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding CreationTime}"
-                                                        Width="75" />
-                                    <DataGridTemplateColumn Header="عملیات"
-                                                            Width="88"
-                                                            HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+
+                                    <DataGridTextColumn Header="موبایل"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding Mobile}"
+                                                    Width=".75*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Mobile}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTemplateColumn Header="خریدار"
+                                                        Width="44"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal"
-                                                            HorizontalAlignment="Center">
-                                                    <ui:Button Margin="6"
-                                                               x:Name="btn_restoer"
-                                                               CommandParameter="{Binding Id , Mode=OneWay}"
-                                                               Command="{Binding Path=DataContext.ViewModel.RestorCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                               Padding="7,5">
-                                                        <Button.ToolTip>
-                                                            <TextBlock FontSize="15"
-                                                                       Text="بازگردانی" />
-                                                        </Button.ToolTip>
-                                                        <ui:SymbolIcon Symbol="ArrowReset20" />
-                                                    </ui:Button>
-                                                    <ui:Button  Margin="6"
-                                                                Tag="{Binding Id}"
-                                                                Padding="7,5"
-                                                                x:Name="btn_Delete"
-                                                                Click="Btn_Delete_Click"
-                                                                ToolTip="حذف">
-                                                        <ui:SymbolIcon  Symbol="Delete16" />
-                                                    </ui:Button>
+                                                        HorizontalAlignment="Center">
+                                                    <CheckBox IsChecked="{Binding Buyer}"
+                                                          Margin="5 0 -5 0"
+                                                          IsEnabled="False"
+                                                          Padding="0"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
+
+                                    <DataGridTemplateColumn Header="فروشنده"
+                                                        Width="44"
+                                                        HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center">
+                                                    <CheckBox IsChecked="{Binding Seller}"
+                                                          Margin="5 0 -5 0"
+                                                          IsEnabled="False"
+                                                          Padding="0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTextColumn Header="آدرس"
+                                                    ElementStyle="{StaticResource CenterDtaGridCell}"
+                                                    HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                                    Binding="{Binding Address}"
+                                                    Width="1*" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip">
+                                                    <Setter.Value>
+                                                        <TextBlock FontSize='17'
+                                                               Text='{Binding Address}' />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                        </Grid>
-                        <Grid  Grid.Row="1"
-                               Visibility="{Binding ViewModel.Wating,  Converter={StaticResource BoolToVis}}">
-                            <StackPanel HorizontalAlignment="Center"
-                                        VerticalAlignment="Center">
-                                <ui:ProgressRing IsIndeterminate="True"
-                                                 Height="100"
-                                                 Width="100" />
-                                <TextBlock FontFamily="Calibri"
-                                           FontSize="15"
-                                           Margin="12"
-                                           Text="لطفا منتظر بمانید ..."></TextBlock>
-                            </StackPanel>
                         </Grid>
                     </Grid>
 

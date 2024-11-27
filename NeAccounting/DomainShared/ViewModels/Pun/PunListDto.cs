@@ -1,6 +1,6 @@
 ﻿namespace DomainShared.ViewModels.Pun
 {
-    public class PunListDto
+	public class PunListDto
     {
         public Guid Id { get; set; }
         public string MaterialName { get; set; }
@@ -23,5 +23,5 @@
         public bool IsServise { get; set; }
         public bool IsActive { get; set; }
 
-    }
+	}
 }
