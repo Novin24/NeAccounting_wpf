@@ -18,6 +18,11 @@
 		public Guid UnitId { get; set; }
 
 		/// <summary>
+		/// شماره واحد
+		/// </summary>
+		public int UnitNumber { get; set; }
+
+		/// <summary>
 		/// آخرین قیمت فروش
 		/// </summary>
 		public long LastSellPrice { get; set; }

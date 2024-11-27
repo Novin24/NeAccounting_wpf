@@ -124,12 +124,40 @@
                           Margin="45 5 45 15">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="4*"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
 
                         </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0"
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ui:InfoBar Title="نکته"
+                                    Grid.ColumnSpan="2"
+                                    IsOpen="True"
+                                    Height="46"
+                                    Padding="0"
+                                    Margin="5 0 200 0"
+                                    VerticalAlignment="Top"
+                                    ToolTip="شناسه واحد در فایل اکسل حتماً با شناسه واحد در بخش تعاریف اولیه و زیرمجموعه واحدها تطابق داشته باشد. در غیر اینصورت ردیف مورد نظر وارد پایگاه داده نمیشود."
+                                    IsClosable="False"
+                                    Message="شناسه واحد در فایل اکسل حتماً با شناسه واحد در بخش تعاریف اولیه و زیرمجموعه واحدها تطابق داشته باشد. در غیر اینصورت ردیف مورد نظر وارد پایگاه داده نمیشود."
+                                    Severity="Warning" />
+
+                        <Button Grid.Column="1"
+                                VerticalAlignment="Bottom"
+                                Height="30"
+                                Command="{Binding ViewModel.ExportToExcelCommand}"
+                                Margin="0 0 5 0"
+                                FontFamily="Calibri"
+                                HorizontalAlignment="Right">
+                            فایل نمونه ی اکسل 
+                        </Button>
+                        <Grid Grid.Row="1"
+                              Grid.ColumnSpan="2"
                               Margin="5 5 5 16">
 
                             <Grid.ColumnDefinitions>
@@ -211,7 +239,8 @@
                                 </Grid>
                             </ui:CardAction>
                         </Grid>
-                        <Grid Grid.Row="1"
+                        <Grid Grid.Row="2"
+                              Grid.ColumnSpan="2"
                               Margin="0 10">
                             <DataGrid Padding="5"
                                       IsReadOnly="True"
@@ -245,17 +274,17 @@
                                         </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTextColumn Header="واحد"
+                                    <DataGridTextColumn Header="شناسه واحد"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                         ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                        Binding="{Binding UnitName}"
+                                                        Binding="{Binding UnitNumber}"
                                                         Width="*" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Setter Property="ToolTip">
                                                     <Setter.Value>
                                                         <TextBlock FontSize='17' 
-                                                                   Text='{Binding UnitName}'/>
+                                                                   Text='{Binding UnitNumber}'/>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>

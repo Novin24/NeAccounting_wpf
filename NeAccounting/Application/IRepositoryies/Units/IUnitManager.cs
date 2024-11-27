@@ -51,12 +51,12 @@ namespace NeApplication.IRepositoryies
 		/// <returns></returns>
 		Task<(string error, bool isSuccess)> AddAllUnitsInNewYear(List<UnitListDto> unitList);
 
-        /// <summary>
-        /// تبدیل نام واحد به شناسه ی واحد
-        /// </summary>
-        /// <param name="unitName"></param>
-        /// <returns></returns>
-        Task<(string error, Guid unitId)> GetUnitIdByName(string unitName);
+		/// <summary>
+		/// تبدیل نام واحد به شناسه ی واحد
+		/// </summary>
+		/// <param name="UnitNumber"></param>
+		/// <returns></returns>
+		Task<(string error, Guid unitId)> GetUnitIdByUnitNumber(int UnitNumber);
 
 	}
 }
