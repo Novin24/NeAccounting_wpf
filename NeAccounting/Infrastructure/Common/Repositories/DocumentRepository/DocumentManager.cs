@@ -1032,7 +1032,7 @@ namespace Infrastructure.Repositories
                     Date = t.SubmitDate,
                     Serial = t.Serial,
                     HaveReturned = t.RelatedDocuments.Any(t => t.Type == DocumntType.ReturnFromSell || t.Type == DocumntType.ReturnFromBuy),
-					Description = seePaymentType ? $"{t.Description} {t.PayType}" : t.Description,
+					Description = seePaymentType ? $"{t.Description} (  {t.PayType.ToDisplay(DisplayProperty.Name)}  )" : t.Description,
 					Price = t.Price,
                     ReceivedOrPaid = t.IsReceived
                 }).OrderBy(p => p.Date)
