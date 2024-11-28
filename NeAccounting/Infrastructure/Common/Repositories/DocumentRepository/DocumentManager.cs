@@ -1010,7 +1010,8 @@ namespace Infrastructure.Repositories
             Guid cusId,
             bool leftOver,
             bool ignorePagination,
-            bool isInit,
+			bool seePaymentType,
+			bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
@@ -1031,8 +1032,8 @@ namespace Infrastructure.Repositories
                     Date = t.SubmitDate,
                     Serial = t.Serial,
                     HaveReturned = t.RelatedDocuments.Any(t => t.Type == DocumntType.ReturnFromSell || t.Type == DocumntType.ReturnFromBuy),
-                    Description = t.Description,
-                    Price = t.Price,
+					Description = seePaymentType ? $"{t.Description} {t.PayType}" : t.Description,
+					Price = t.Price,
                     ReceivedOrPaid = t.IsReceived
                 }).OrderBy(p => p.Date)
                 .ToListAsync();
@@ -1144,7 +1145,8 @@ namespace Infrastructure.Repositories
             Guid cusId,
             bool leftOver,
             string desc,
-            bool ignorePagination,
+			bool seePaymentType,
+			bool ignorePagination,
             bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
@@ -1189,7 +1191,7 @@ namespace Infrastructure.Repositories
                                             IsRecived = doc.IsReceived,
                                             AmuontOf = sellRem.AmountOf.ToString(),
                                             Serial = doc.Serial.ToString(),
-                                            Description = sellRem.Description,
+                                            Description = seePaymentType ? $"{sellRem.Description} {doc.PayType}" : sellRem.Description,
                                             Price = sellRem.Price.ToString("N0"),
                                             Bed = sellRem.TotalPrice,
                                             Bes = 0,
@@ -1215,7 +1217,7 @@ namespace Infrastructure.Repositories
                                             IsRecived = doc.IsReceived,
                                             AmuontOf = buyRem.AmountOf.ToString(),
                                             Serial = doc.Serial.ToString(),
-                                            Description = buyRem.Description,
+                                            Description = seePaymentType ? $"{buyRem.Description} {doc.PayType}" : buyRem.Description ,
                                             Bes = buyRem.TotalPrice,
                                             Price = buyRem.Price.ToString("N0"),
                                             Bed = 0,

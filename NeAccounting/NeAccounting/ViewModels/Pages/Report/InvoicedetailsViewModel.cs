@@ -33,7 +33,10 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private Guid? _cusId;
 
-        [ObservableProperty]
+		[ObservableProperty]
+		private bool _seePaymentType = false;
+
+		[ObservableProperty]
         private string _desc = "";
 
         [ObservableProperty]
@@ -98,7 +101,7 @@ namespace NeAccounting.ViewModels
             }
             _isInit = true;
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetRemittancesByDate(StartDate.Value, EndDate.Value, CusId.Value, LeftOver, Desc, false, true, CurrentPage);
+            var t = await db.DocumentManager.GetRemittancesByDate(StartDate.Value, EndDate.Value, CusId.Value, LeftOver, Desc, SeePaymentType, false, true, CurrentPage);
             CurrentPage = t.CurrentPage;
             InvList = t.Items;
             PageCount = t.PageCount;
@@ -129,7 +132,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetRemittancesByDate(StartDate.Value, EndDate.Value, CusId.Value, LeftOver, Desc, false, false, CurrentPage);
+            var t = await db.DocumentManager.GetRemittancesByDate(StartDate.Value, EndDate.Value, CusId.Value, LeftOver, Desc, SeePaymentType, false, false, CurrentPage);
             InvList = t.Items;
             PageCount = t.PageCount;
         }
@@ -153,7 +156,7 @@ namespace NeAccounting.ViewModels
                 return (new List<DetailRemittanceDto>(), false);
             }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetRemittancesByDate(StartDate.Value, EndDate.Value, CusId.Value, LeftOver, Desc, true, true, CurrentPage);
+            var t = await db.DocumentManager.GetRemittancesByDate(StartDate.Value, EndDate.Value, CusId.Value, LeftOver, Desc, SeePaymentType, true, true, CurrentPage);
             return new(t.Items, true);
         }
         #endregion

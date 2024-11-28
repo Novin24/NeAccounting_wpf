@@ -178,13 +178,29 @@
                                             FontFamily="Calibri" />
                             </StackPanel>
 
-                            <CheckBox Content="به احتساب مانده قبلی"
+                            <Grid Grid.Column="2" >
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="55" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <ui:ToggleSwitch Grid.Column="0" 
+                                                 Margin="0 0 0 8"
+                                                 ToolTip="نمایش نوع سند" 
+                                                 VerticalAlignment="Bottom"
+                                                 HorizontalAlignment="Center"
+                                                 IsChecked="{Binding ViewModel.SeePaymentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+                                <CheckBox Content="به احتساب مانده قبلی"
                                       Grid.Column="2"
                                       FontFamily="Calibri"
                                       IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                       Margin="10 22 10 0 "
                                       HorizontalAlignment="Center"
                                       FontSize="14" />
+
+                            </Grid>
 
                             <nu:PersianDatePicker VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"

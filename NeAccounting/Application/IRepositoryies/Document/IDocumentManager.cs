@@ -189,7 +189,8 @@ namespace NeApplication.IRepositoryies
             Guid CusId,
             bool LeftOver,
             bool ignorePagination,
-            bool isInit,
+			bool seePaymentType,
+			bool isInit,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 
@@ -200,7 +201,8 @@ namespace NeApplication.IRepositoryies
              Guid CusId,
              bool LeftOver,
              string Description,
-             bool ignorePagination,
+             bool seePaymentType,
+			 bool ignorePagination,
              bool isInit,
              int pageNum = 0,
              int pageCount = NeAccountingConstants.PageCount);

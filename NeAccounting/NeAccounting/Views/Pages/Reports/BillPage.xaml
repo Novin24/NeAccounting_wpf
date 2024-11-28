@@ -168,8 +168,9 @@
                                                    OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}" />
                             </StackPanel>
 
-                            <StackPanel Grid.Column="1"
-                                        Margin="20 0 7 4 ">
+
+                            <StackPanel Margin="20 0 7 4 "
+                                            Grid.Column="1">
 
                                 <TextBlock FontSize="14"
                                            Text="جزییات"
@@ -180,8 +181,20 @@
                                             TextAlignment="Center"
                                             Text="{Binding ViewModel.Desc, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
+                            <Grid Grid.Column="2" >
 
-                            <CheckBox Grid.Column="2"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="55" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <ui:ToggleSwitch Grid.Column="0" 
+                                                 Margin="0 0 0 8"
+                                                 ToolTip="نمایش نوع سند" 
+                                                 VerticalAlignment="Bottom"
+                                                 HorizontalAlignment="Center"
+                                                 IsChecked="{Binding ViewModel.SeePaymentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                                <CheckBox Grid.Column="1"
                                       FontSize="14"
                                       FontFamily="Calibri"
                                       Margin="10 22 10 0 "
@@ -189,6 +202,7 @@
                                       HorizontalAlignment="Center"
                                       IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
+                            </Grid>
                             <nu:PersianDatePicker Grid.Row="1"
                                                   x:Name="Dtp_Start"
                                                   LabelName="از تاریخ"
