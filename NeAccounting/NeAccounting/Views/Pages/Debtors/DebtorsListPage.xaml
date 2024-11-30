@@ -139,11 +139,11 @@
                                 <nu:MoneyPack LabelName="از مبلغ"
                                               MinWidth="200"
                                               MaxWidth="300"
-                                              Value="{Binding ViewModel.Min , Mode=TwoWay}"/>
+                                              Value="{Binding ViewModel.Min , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                 <nu:MoneyPack Grid.Column="1"
                                               LabelName="تا مبلغ"
-                                              Value="{Binding ViewModel.Max ,Mode=TwoWay}"
+                                              Value="{Binding ViewModel.Max ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               MinWidth="200"
                                               MaxWidth="300" />
 

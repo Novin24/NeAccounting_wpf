@@ -43,7 +43,12 @@ namespace Domain.NovinEntity.Customers
             IsActive = true;
         }
 
-        public Customer(
+		/// <summary>
+		/// اضافه کردن همه به سال مالی جدید
+		/// </summary>
+		/// <param name="cusList"></param>
+		/// <returns></returns>
+		public Customer(
             string name,
             string mobile,
             long totalCredit,
@@ -63,8 +68,19 @@ namespace Domain.NovinEntity.Customers
         #endregion
 
         #region properties
+        /// <summary>
+        /// نام
+        /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// شماره مشتری
+        /// </summary>
         public long CusId { get; set; }
+
+        /// <summary>
+        /// شماره موبایل
+        /// </summary>
         public string Mobile { get; private set; }
         /// <summary>
         /// مجموع اعتبار
@@ -83,14 +99,50 @@ namespace Domain.NovinEntity.Customers
         /// ضمانت سفته
         /// </summary>
         public long PromissoryNote { get; set; }
+
+        /// <summary>
+        /// کدملی
+        /// </summary>
         public string NationalCode { get; private set; }
+
+        /// <summary>
+        /// آدرس
+        /// </summary>
         public string Address { get; private set; }
+
+        /// <summary>
+        /// خریدار
+        /// </summary>
         public bool Buyer { get; set; }
+
+        /// <summary>
+        /// فروشنده
+        /// </summary>
         public bool Seller { get; set; }
+
+        /// <summary>
+        /// نوع مشتری
+        /// </summary>
         public CustomerType Type { get; set; }
+
+        /// <summary>
+        /// آیا مشتری چک گارانتی دارد؟
+        /// </summary>
         public bool HaveChequeGuarantee { get; set; }
+
+        /// <summary>
+        /// آیا مشتری اعتبار نقدی دارد
+        /// </summary>
         public bool HaveCashCredit { get; set; }
+
+        /// <summary>
+        /// آیا مشتری سفته دارد
+        /// </summary>
         public bool HavePromissoryNote { get; set; }
+
+        /// <summary>
+        /// آیا فعال است؟
+        /// </summary>
         public bool IsActive { get; set; }
         #endregion
 
