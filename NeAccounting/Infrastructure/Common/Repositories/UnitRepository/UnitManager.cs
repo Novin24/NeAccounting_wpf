@@ -17,14 +17,17 @@ namespace Infrastructure.Repositories
 
         public Task<List<UnitListDto>> GetUnitList()
         {
-            return TableNoTracking.Select(x => new UnitListDto
+            var b = TableNoTracking.Select(x => new UnitListDto
             {
                 Id = x.Id,
                 UnitName = x.Name,
                 IsActive = x.IsActive,
-                Description = x.Descrip
+                Description = x.Descrip,
+                IdNumber = x.IdNumber,
 
             }).ToListAsync();
+
+            return b;
         }
 
         public Task<List<SuggestBoxViewModel<Guid>>> GetUnits(bool IgnorArchive = false)
@@ -126,5 +129,14 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
-    }
+		public async Task<(string error, Guid unitId)> GetUnitIdByUnitNumber(int UnitNumber)
+		{
+			var unit = await TableNoTracking.FirstOrDefaultAsync(t => t.IdNumber == UnitNumber);
+			if (unit == null)
+			{
+				return new("واحد مورد نظر یافت نشد!!", Guid.Empty);
+			}
+			return new(string.Empty, unit.Id);
+		}
+	}
 }

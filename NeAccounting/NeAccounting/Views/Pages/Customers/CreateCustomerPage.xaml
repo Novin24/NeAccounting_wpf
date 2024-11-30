@@ -318,7 +318,6 @@
                                         TextAlignment="Center"
                                         x:Name="txt_total"
                                         IsEnabled="False"
-                                        Text="{Binding ViewModel.FullName , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="14"
                                         FontFamily="Calibri" />
                         </StackPanel>
