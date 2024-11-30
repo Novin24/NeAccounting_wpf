@@ -145,7 +145,7 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <StackPanel Margin="21 0 7 4">
+                            <StackPanel Margin="21 0 7 10">
                                 <DockPanel>
                                     <TextBlock FontFamily="Calibri"
                                                FontSize="14"
@@ -167,7 +167,7 @@
                                                    FontFamily="Calibri" />
                             </StackPanel>
                             <StackPanel Grid.Column="1"
-                                        Margin="21 0 7 4 ">
+                                        Margin="21 0 7 10 ">
 
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="14"
@@ -178,25 +178,36 @@
                                             FontFamily="Calibri" />
                             </StackPanel>
 
-                            <Grid Grid.Column="2" >
+                            <Grid Grid.Column="2" Margin="0 0 0 10">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="55" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ui:ToggleSwitch Grid.Column="0" 
-                                                 Margin="0 0 0 8"
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="10 0"
+                                            HorizontalAlignment="Center">
+
+                                    <ui:ToggleSwitch Margin="0 0 0 8"
                                                  ToolTip="نمایش نوع سند" 
                                                  VerticalAlignment="Bottom"
                                                  HorizontalAlignment="Center"
                                                  IsChecked="{Binding ViewModel.SeePaymentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
+                                    <TextBlock FontSize="14"
+                                               Text="نمایش توضیحات تکمیلی"
+                                               Margin="5 0 0 0 "
+                                               FontFamily="Calibri" 
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
 
-                                <CheckBox Content="به احتساب مانده قبلی"
-                                      Grid.Column="2"
+
+                                <CheckBox Grid.Row="1"
+                                      Content="به احتساب مانده قبلی"
                                       FontFamily="Calibri"
                                       IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                      Margin="10 22 10 0 "
+                                      Margin="10 0 10 0 "
                                       HorizontalAlignment="Center"
                                       FontSize="14" />
 
