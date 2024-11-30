@@ -171,7 +171,7 @@
 
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="14"
-                                           Text="جزییات"
+                                           Text="توضیحات"
                                            Margin="5 0 0 4 " />
                                 <ui:TextBox TextAlignment="Center"
                                             Text="{Binding ViewModel.Desc, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}"
@@ -190,7 +190,6 @@
                                             HorizontalAlignment="Center">
 
                                     <ui:ToggleSwitch Margin="0 0 0 8"
-                                                 ToolTip="نمایش نوع سند" 
                                                  VerticalAlignment="Bottom"
                                                  HorizontalAlignment="Center"
                                                  IsChecked="{Binding ViewModel.SeePaymentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

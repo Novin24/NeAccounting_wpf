@@ -173,7 +173,7 @@
                                             Grid.Column="1">
 
                                 <TextBlock FontSize="14"
-                                           Text="جزییات"
+                                           Text="توضیحات"
                                            Margin="2 0 0 0 "
                                            FontFamily="Calibri" />
                                 <ui:TextBox Margin="0 4 0 0"
@@ -191,7 +191,6 @@
                                             Margin="10 0"
                                             HorizontalAlignment="Center">
                                     <ui:ToggleSwitch Margin="0 0 0 0"
-                                                 ToolTip="نمایش نوع سند" 
                                                  VerticalAlignment="Center"
                                                  HorizontalAlignment="Center"
                                                  IsChecked="{Binding ViewModel.SeePaymentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
