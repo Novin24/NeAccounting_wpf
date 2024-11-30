@@ -132,12 +132,12 @@
                                 </Grid.ColumnDefinitions>
                                 <nu:PersianDatePicker VerticalAlignment="Center"
                                                       FlowDirection="LeftToRight"
-                                                      SelectedDate="{Binding ViewModel.Startdate, Mode=TwoWay}"
+                                                      SelectedDate="{Binding ViewModel.Startdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                       LabelName="از تاریخ"
                                                       x:Name="date" />
                                 <nu:PersianDatePicker VerticalAlignment="Center"
                                                       FlowDirection="LeftToRight"
-                                                      SelectedDate="{Binding ViewModel.Enddate, Mode=TwoWay}"
+                                                      SelectedDate="{Binding ViewModel.Enddate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                       Grid.Column="1"
                                                       LabelName="تا تاریخ" />
                                 <Button Grid.Column="2"
