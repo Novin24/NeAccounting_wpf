@@ -94,7 +94,7 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            Cuslist = await db.CustomerManager.GetDisplayUser(true);
+            Cuslist = await db.CustomerManager.GetDisplayUser(false);
             if (CusId.HasValue && EndDate.HasValue && StartDate.HasValue)
             {
                 _isInit = true;

@@ -1482,7 +1482,8 @@ namespace Infrastructure.Repositories
             var result = await (from d in DbContext.Set<Document>()
                                     .AsNoTracking()
                                 join c in DbContext.Set<Customer>() on d.CustomerId equals c.Id
-                                group new { d, c } by c.Name into grouped
+								where c.IsActive
+								group new { d, c } by c.Name into grouped
                                 select new CreditorsOrDebtorsReport
                                 {
                                     Name = grouped.Key,
@@ -1516,8 +1517,10 @@ namespace Infrastructure.Repositories
             PersianCalendar pc = new();
             var result = await (from d in DbContext.Set<Document>()
                                     .AsNoTracking()
+
                                 join c in DbContext.Set<Customer>() on d.CustomerId equals c.Id
-                                group new { d, c } by c.Name into grouped
+								where c.IsActive
+								group new { d, c } by c.Name into grouped
                                 select new CreditorsOrDebtorsReport
                                 {
                                     Name = grouped.Key,

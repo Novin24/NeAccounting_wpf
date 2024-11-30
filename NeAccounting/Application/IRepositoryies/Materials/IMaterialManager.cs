@@ -30,7 +30,18 @@ namespace NeApplication.IRepositoryies
 
 		Task<(string error, PunListDto pun)> GetMaterailById(Guid Id);
 
-        Task<(string error, bool isSuccess)> CreateMaterial(string name,
+        /// <summary>
+        /// ثبت
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="unitId"></param>
+        /// <param name="isService"></param>
+        /// <param name="lastPrice"></param>
+        /// <param name="serial"></param>
+        /// <param name="address"></param>
+        /// <param name="isManufacturedGoods"></param>
+        /// <returns></returns>
+        Task<(string error, bool isSuccess, bool Show)> CreateMaterial(string name,
             Guid unitId,
             bool isService,
             long lastPrice,

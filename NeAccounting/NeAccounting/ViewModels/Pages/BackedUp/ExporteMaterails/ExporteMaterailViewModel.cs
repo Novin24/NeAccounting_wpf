@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Diagnostics;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -52,7 +53,9 @@ public partial class ExporteMaterialViewModel(ISnackbarService snackbarService) 
 	private static string SetName()
 	{
 		return Guid.NewGuid().ToString().Replace("-", "") + ".xlsx ";
-	}/// <summary>
+	}
+	
+	 /// <summary>
 	 /// پر کردن لیست هنگام ورود به صفحه
 	 /// </summary>
 	 /// <returns></returns>
@@ -88,7 +91,7 @@ public partial class ExporteMaterialViewModel(ISnackbarService snackbarService) 
 			var worksheet = package.Workbook.Worksheets.Add("لیست اجناس");
 
 			// افزودن هدرها
-			worksheet.Cells[1, 1].Value = "نام اجناس";
+			worksheet.Cells[1, 1].Value = "نام کالا";
 			worksheet.Cells[1, 2].Value = "نام واحد";
 			worksheet.Cells[1, 3].Value = "شناسه واحد";
 			worksheet.Cells[1, 4].Value = "آخرین قیمت فروش";
@@ -101,7 +104,7 @@ public partial class ExporteMaterialViewModel(ISnackbarService snackbarService) 
 				var item = List.ElementAt(i);
 				worksheet.Cells[i + 2, 1].Value = item.MaterialName;
 				worksheet.Cells[i + 2, 2].Value = item.UnitName;
-				worksheet.Cells[i + 2, 3].Value = item.UnitId;
+				worksheet.Cells[i + 2, 3].Value = item.UnitNumber;
 				worksheet.Cells[i + 2, 4].Value = item.LastSellPrice;
 				worksheet.Cells[i + 2, 5].Value = item.Serial;
 				worksheet.Cells[i + 2, 6].Value = item.Address;
@@ -116,4 +119,5 @@ public partial class ExporteMaterialViewModel(ISnackbarService snackbarService) 
 
 		FileName = SetName();
 	}
+
 }
