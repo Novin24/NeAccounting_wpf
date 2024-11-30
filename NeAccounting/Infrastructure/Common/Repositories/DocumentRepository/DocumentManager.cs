@@ -1169,7 +1169,8 @@ namespace Infrastructure.Repositories
                     Bes = t.Price,
                     Bed = t.Price,
                     IsRecived = t.IsReceived,
-                    MaterialName = t.Description
+                    MaterialName = t.Description,
+                    Description = seePaymentType ? t.PayType.ToDisplay(DisplayProperty.Name) : "",
                 }).ToListAsync());
 
 
@@ -1191,7 +1192,7 @@ namespace Infrastructure.Repositories
                                             IsRecived = doc.IsReceived,
                                             AmuontOf = sellRem.AmountOf.ToString(),
                                             Serial = doc.Serial.ToString(),
-                                            Description = seePaymentType ? $"{sellRem.Description} {doc.PayType}" : sellRem.Description,
+                                            Description = sellRem.Description,
                                             Price = sellRem.Price.ToString("N0"),
                                             Bed = sellRem.TotalPrice,
                                             Bes = 0,
@@ -1217,7 +1218,7 @@ namespace Infrastructure.Repositories
                                             IsRecived = doc.IsReceived,
                                             AmuontOf = buyRem.AmountOf.ToString(),
                                             Serial = doc.Serial.ToString(),
-                                            Description = seePaymentType ? $"{buyRem.Description} {doc.PayType}" : buyRem.Description ,
+                                            Description = buyRem.Description ,
                                             Bes = buyRem.TotalPrice,
                                             Price = buyRem.Price.ToString("N0"),
                                             Bed = 0,

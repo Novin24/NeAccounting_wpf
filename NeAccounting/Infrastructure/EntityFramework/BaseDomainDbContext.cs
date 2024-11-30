@@ -14,8 +14,9 @@ namespace Infrastructure.EntityFramework
         protected override void OnConfiguring(
                         DbContextOptionsBuilder optionsBuilder)
         {
-			//optionsBuilder.UseSqlServer("Server=ALI\\SQLEXPRESS;Database=BaseDomain;Trusted_Connection=True;");
-			optionsBuilder.UseSqlServer("Data Source=(localDb)\\MssqlLocalDb;Database=BaseDomain;Integrated Security=True;User ID=DESKTOP-N0GO0QP\\ALI;");
+            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
+            //optionsBuilder.UseSqlServer("Server=ALI\\SQLEXPRESS;Database=BaseDomain;Trusted_Connection=True;");
+            //optionsBuilder.UseSqlServer("Data Source=(localDb)\\MssqlLocalDb;Database=BaseDomain;Integrated Security=True;User ID=DESKTOP-N0GO0QP\\ALI;");
 		}
 
         private static readonly MethodInfo ConfigureBasePropertiesMethodInfo = typeof(BaseDomainDbContext)

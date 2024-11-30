@@ -17,9 +17,10 @@ namespace Infrastructure.EntityFramework
         protected override void OnConfiguring(
                         DbContextOptionsBuilder optionsBuilder)
         {
-			//optionsBuilder.UseSqlServer($"Server=ALI\\SQLEXPRESS;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;");
-			optionsBuilder.UseSqlServer($"Data Source=(localDb)\\MssqlLocalDb;Database={NeAccountingConstants.NvoinDbConnectionStrint};Integrated Security=True;User ID=DESKTOP-N0GO0QP\\ALI;");
-		}
+            optionsBuilder.UseSqlServer($"Server=.\\SQLExpress;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
+            //optionsBuilder.UseSqlServer($"Server=ALI\\SQLEXPRESS;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;");
+            //optionsBuilder.UseSqlServer($"Data Source=(localDb)\\MssqlLocalDb;Database={NeAccountingConstants.NvoinDbConnectionStrint};Integrated Security=True;User ID=DESKTOP-N0GO0QP\\ALI;");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
