@@ -145,7 +145,7 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <StackPanel Grid.Row="0"
-                                        Margin="23 0 7 4">
+                                        Margin="23 0 7 10">
                                 <DockPanel>
                                     <TextBlock FontSize="14"
                                                Text="مشتری"
@@ -168,11 +168,12 @@
                                                    OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}" />
                             </StackPanel>
 
-                            <StackPanel Grid.Column="1"
-                                        Margin="20 0 7 4 ">
+
+                            <StackPanel Margin="20 0 7 10 "
+                                            Grid.Column="1">
 
                                 <TextBlock FontSize="14"
-                                           Text="جزییات"
+                                           Text="توضیحات"
                                            Margin="2 0 0 0 "
                                            FontFamily="Calibri" />
                                 <ui:TextBox Margin="0 4 0 0"
@@ -180,15 +181,35 @@
                                             TextAlignment="Center"
                                             Text="{Binding ViewModel.Desc, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
+                            <Grid Grid.Column="2"  Margin="0 0 0 0">
 
-                            <CheckBox Grid.Column="2"
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="10 0 10 -10"
+                                            HorizontalAlignment="Center">
+                                    <ui:ToggleSwitch Margin="0 0 0 0"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 IsChecked="{Binding ViewModel.SeePaymentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                                    <TextBlock FontSize="14"
+                                               Text="نمایش توضیحات تکمیلی"
+                                               Margin="5 0 0 0 "
+                                               FontFamily="Calibri" 
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <CheckBox Grid.Row="1"
                                       FontSize="14"
                                       FontFamily="Calibri"
-                                      Margin="10 22 10 0 "
+                                      Margin="10 0 10 0 "
                                       Content="به احتساب مانده قبلی"
                                       HorizontalAlignment="Center"
                                       IsChecked="{Binding ViewModel.LeftOver, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
+                            </Grid>
                             <nu:PersianDatePicker Grid.Row="1"
                                                   x:Name="Dtp_Start"
                                                   LabelName="از تاریخ"
