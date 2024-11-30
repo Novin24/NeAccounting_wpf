@@ -186,11 +186,11 @@
                                 </Grid.RowDefinitions>
 
                                 <StackPanel Orientation="Horizontal"
-                                            Margin="10 0"
+                                            Margin="10 0 10 -10"
                                             HorizontalAlignment="Center">
 
-                                    <ui:ToggleSwitch Margin="0 0 0 8"
-                                                 VerticalAlignment="Bottom"
+                                    <ui:ToggleSwitch Margin="0 0 0 0"
+                                                 VerticalAlignment="Center"
                                                  HorizontalAlignment="Center"
                                                  IsChecked="{Binding ViewModel.SeePaymentType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
