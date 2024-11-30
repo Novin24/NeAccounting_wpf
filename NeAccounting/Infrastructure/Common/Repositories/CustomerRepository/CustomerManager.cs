@@ -24,9 +24,27 @@ namespace Infrastructure.Repositories
                     UniqNumber = x.CusId,
                     TotalValidity = x.TotalCredit
                 }).OrderBy(c=> c.DisplayName).ToListAsync();
-        }
+		}
 
-        public Task<List<CustomerListDto>> GetCustomerList(string name, string nationalCode, string mobile)
+		public Task<List<ExporteCustomerListDto>> GetExporteCustomerList(bool IsArchive)
+		{
+            return TableNoTracking
+                .Where(t => IsArchive == true || t.IsActive != IsArchive)
+				.Where(c => c.Id != Guid.Empty)
+				.Select(t => new ExporteCustomerListDto
+                {
+                    Name = t.Name,
+                    NationalCode = t.NationalCode,
+					CusType = t.Type,
+					CusTypeName = t.Type.ToDisplay(DisplayProperty.Name),
+                    Mobile = t.Mobile,
+                    Buyer = t.Buyer,
+                    Seller = t.Seller,
+                    Address = t.Address,
+				}).OrderBy(t => t.Name).ToListAsync();
+		}
+
+		public Task<List<CustomerListDto>> GetCustomerList(string name, string nationalCode, string mobile)
         {
             return TableNoTracking
                 .Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name))
@@ -58,7 +76,7 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<(string error, bool isSuccess)> CreateCustomer(string name,
+        public async Task<(string error, bool isSuccess , bool Show)> CreateCustomer(string name,
             string mobile,
             long cashCredit,
             long promissoryNote,
@@ -71,7 +89,7 @@ namespace Infrastructure.Repositories
             bool isSeller)
         {
             if (await TableNoTracking.AnyAsync(t => t.Name == name))
-                return new("کاربر گرامی این مشتری از قبل تعریف شده می‌باشد!!!", false);
+                return new("کاربر گرامی این مشتری از قبل تعریف شده می‌باشد!!!", false , false);
 
             try
             {
@@ -95,11 +113,11 @@ namespace Infrastructure.Repositories
             {
                 if (ex is ArgumentException aex)
                 {
-                    return new(aex.Message, false);
+                    return new(aex.Message, false ,false);
                 }
-                return new(" خطا در اتصال به پایگاه داده code(07t43493)!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(07t43493)!!!", false ,true);
             }
-            return new(string.Empty, true);
+            return new(string.Empty, true ,false);
         }
 
         public async Task<(string error, bool isSuccess)> UpdateCustomer(
@@ -227,6 +245,5 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
-
-    }
+	}
 }

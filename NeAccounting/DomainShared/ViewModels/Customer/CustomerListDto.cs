@@ -2,7 +2,7 @@
 
 namespace DomainShared.ViewModels.Customer
 {
-    public struct CustomerListDto
+	public struct CustomerListDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -23,5 +23,5 @@ namespace DomainShared.ViewModels.Customer
         public bool HaveCashCredit { get; set; }
         public bool HavePromissoryNote { get; set; }
         public bool IsActive { get; set; }
-    }
+	}
 }

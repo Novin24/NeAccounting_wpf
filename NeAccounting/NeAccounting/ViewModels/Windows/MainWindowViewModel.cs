@@ -77,7 +77,7 @@ namespace NeAccounting.ViewModels
             },
             new NavigationViewItem()
             {
-                Content = "عملیات روزانه",
+                Content = " عملیات روزانه",
                 Icon = new SymbolIcon { Symbol = SymbolRegular. TaskListAdd20 },
                 //TargetPageType = typeof(MaterailListPage)
                 MenuItems = new ObservableCollection<object>
@@ -136,6 +136,7 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem { Content = "هزینه ها", TargetPageType = typeof(ExpencesListPage) , Icon = new SymbolIcon { Symbol = SymbolRegular.CaretRight20 }},
                 }
             },
+
             new NavigationViewItem()
             {
                 Content = "پرسنل",
@@ -172,7 +173,22 @@ namespace NeAccounting.ViewModels
 
                 }
             },
-            new NavigationViewItem(){Content = "پشتبان گیری",TargetPageType = typeof(BackupPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
+            new NavigationViewItem()
+            {
+                Content = "پشتبان گیری",
+                Icon = new SymbolIcon { Symbol = SymbolRegular. TaskListAdd20 },
+                //TargetPageType = typeof(MaterailListPage)
+                MenuItems = new ObservableCollection<object>
+                {
+                
+                    new NavigationViewItem(){Content = "پشتبان گیری از پایگاه داده",TargetPageType = typeof(BackupPage) ,Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
+					new NavigationViewItem {Content = "وارد کردن مشتریان",TargetPageType = typeof(ImportCustomersPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
+					new NavigationViewItem {Content = "خروجی گرفتن از مشتریان",TargetPageType = typeof(ExporteCustomersPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
+					new NavigationViewItem {Content = "وارد کردن اجناس",TargetPageType = typeof(ImportMaterailsPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
+					new NavigationViewItem {Content = "خروجی گرفتن از اجناس",TargetPageType = typeof(ExporteMaterailsPage),Icon = new SymbolIcon{ Symbol = SymbolRegular.CopySelect20}},
+
+				}
+            },
         };
 
         [ObservableProperty]
