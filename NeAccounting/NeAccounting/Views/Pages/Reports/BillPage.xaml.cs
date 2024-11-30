@@ -131,5 +131,6 @@ namespace NeAccounting.Views.Pages
             btn_Print.Focus();
             await ViewModel.PrintListCommand.ExecuteAsync(null);
         }
-    }
+		
+	}
 }

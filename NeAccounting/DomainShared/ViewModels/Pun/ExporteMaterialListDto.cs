@@ -13,9 +13,9 @@
 		public string UnitName { get; set; }
 
 		/// <summary>
-		/// شناسه واحد
+		/// شماره واحد
 		/// </summary>
-		public Guid UnitId { get; set; }
+		public int UnitNumber { get; set; }
 
 		/// <summary>
 		/// آخرین قیمت فروش

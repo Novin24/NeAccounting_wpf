@@ -22,6 +22,6 @@
 		/// <summary>
 		/// شماره واحد
 		/// </summary>
-		public int IdNumber { get; set; } = 86210;
+		public int IdNumber { get; set; }
 	}
 }
