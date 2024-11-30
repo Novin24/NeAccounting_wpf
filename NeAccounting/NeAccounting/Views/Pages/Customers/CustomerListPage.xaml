@@ -202,7 +202,7 @@
                                             x:Name="CusName_txt"
                                             TabIndex="1"
                                             ClearButtonEnabled="False"
-                                            Text="{Binding ViewModel.Name , Mode=TwoWay}"
+                                            Text="{Binding ViewModel.Name , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             FontFamily="Calibri"
                                             Margin="0 4 0 0" />
                             </StackPanel>
@@ -219,7 +219,7 @@
                                             FontFamily="Calibri"
                                             ClearButtonEnabled="False"
                                             TabIndex="0"
-                                            Text="{Binding ViewModel.NationalCode, Mode=TwoWay}"
+                                            Text="{Binding ViewModel.NationalCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             Margin="0 4 0 0" />
 
                             </StackPanel>
@@ -234,7 +234,7 @@
                                 <ui:TextBox TextAlignment="Center"
                                             TabIndex="3"
                                             ClearButtonEnabled="False"
-                                            Text="{Binding ViewModel.Mobile, Mode=TwoWay}"
+                                            Text="{Binding ViewModel.Mobile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             FontFamily="Calibri"
                                             Margin="0 4 0 0" />
                             </StackPanel>

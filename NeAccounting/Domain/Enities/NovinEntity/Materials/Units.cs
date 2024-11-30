@@ -10,13 +10,31 @@ namespace Domain.NovinEntity.Materials
         #endregion
 
         #region Property
-        public string Name { get; private set; }
-        public string? Descrip { get;private set; }
-        public bool IsActive { get; set; }
-        #endregion
 
-        #region ctor
-        internal Units()
+        /// <summary>
+        /// نام
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// توضیحات
+        /// </summary>
+        public string? Descrip { get;private set; }
+
+		/// <summary>
+		/// فعال بودن
+		/// </summary>
+		public bool IsActive { get; set; }
+
+
+        /// <summary>
+        /// شماره واحد
+        /// </summary>
+		public int IdNumber { get; set; }
+		#endregion
+
+		#region ctor
+		internal Units()
         {
 
         }
@@ -28,7 +46,14 @@ namespace Domain.NovinEntity.Materials
             SetDesc(description);
             IsActive = true;
         }
-        public Units(
+
+		/// <summary>
+		/// اضافه کردن همه به سال مالی جدید
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="description"></param>
+		/// <param name="id"></param>
+		public Units(
             string name,
             string description,
             Guid id) : this(name, description)
