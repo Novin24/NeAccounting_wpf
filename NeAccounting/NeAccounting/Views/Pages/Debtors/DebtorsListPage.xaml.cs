@@ -12,9 +12,14 @@ namespace NeAccounting.Views.Pages
 
         public DebtorsListPage(DebtorsViewModel viewModel)
         {
-            ViewModel = viewModel;
+			ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
-        }
-    }
+		}
+
+		private void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+			Dtp_Start.nm_box.Focus();
+		}
+	}
 }

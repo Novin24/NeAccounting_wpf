@@ -77,7 +77,7 @@ public partial class DebtorsViewModel : ObservableObject, INavigationAware
 	}
 
 	[RelayCommand]
-	private async Task OnPrintDebList()
+	private async Task OnPrintDebtorsList()
 	{
 		var (list, isSuccess) = await PrintDebtors();
 		if (!isSuccess)
@@ -104,7 +104,7 @@ public partial class DebtorsViewModel : ObservableObject, INavigationAware
 			{"Company_Name",$"{printInfo.Company_Name}"},
 			{"Tabligh",$"{printInfo.Tabligh}"},
 		};
-		_printServices.PrintInvoice(@"Required\Reports\DebtorsReport.mrt", "CreditorsOrDebtorsReport", list, dic);
+		_printServices.PrintInvoice(@"Required\Reports\DebtorsReport.mrt", "DebtorsListDtos", list, dic);
 	}
 	#endregion
 }

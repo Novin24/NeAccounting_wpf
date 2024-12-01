@@ -2,20 +2,19 @@
 <StiSerializer version="1.02" type="Net" application="StiReport">
   <Dictionary Ref="1" type="Dictionary" isKey="true">
     <BusinessObjects isList="true" count="1">
-      <DebtorsListDtos Ref="2" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
-        <Alias>DebtorsListDtos</Alias>
+      <CreditorsListDtos Ref="2" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+        <Alias>CreditorsListDtos</Alias>
         <BusinessObjects isList="true" count="0" />
-        <Category>DebtorsListDtos</Category>
-        <Columns isList="true" count="4">
-          <value>Name,System.String</value>
-          <value>Debt,System.Int64</value>
-          <value>Total,System.String</value>
+        <Category>CreditorsListDtos</Category>
+        <Columns isList="true" count="3">
           <value>ShamsiDate,System.String</value>
+          <value>Total,System.String</value>
+          <value>Name,System.String</value>
         </Columns>
         <Dictionary isRef="1" />
-        <Guid>dc65d75d83214ce5b5c781e5f6abca88</Guid>
-        <Name>DebtorsListDtos</Name>
-      </DebtorsListDtos>
+        <Guid>6b64143c89b241669882d2657b5b96b7</Guid>
+        <Name>CreditorsListDtos</Name>
+      </CreditorsListDtos>
     </BusinessObjects>
     <Databases isList="true" count="0" />
     <DataSources isList="true" count="0" />
@@ -31,7 +30,7 @@
   </Dictionary>
   <EngineVersion>EngineV2</EngineVersion>
   <GlobalizationStrings isList="true" count="0" />
-  <Key>5aff7eedf9294c4d9e3f7138aa73ed30</Key>
+  <Key>1382712956654ed996a4a3169e419448</Key>
   <MetaTags isList="true" count="0" />
   <Pages isList="true" count="1">
     <Page1 Ref="3" type="Page" isKey="true">
@@ -42,13 +41,31 @@
           <Brush>Transparent</Brush>
           <ClientRectangle>0,10.3,8.1,0.3</ClientRectangle>
           <Components isList="true" count="3">
-            <Text10 Ref="5" type="Text" isKey="true">
+            <Text29 Ref="5" type="Text" isKey="true">
+              <Border>None;Black;1;Double;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.8,0,2.3,0.3</ClientRectangle>
+              <ClientRectangle>3.4,0,0.8,0.3</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,12,Bold</Font>
+              <Guid>2ce62b3a66414473a661250b960556fe</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text29</Name>
+              <Page isRef="3" />
+              <Parent isRef="4" />
+              <Text>{PageNumberThrough}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>SystemVariables</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text29>
+            <Text10 Ref="6" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.5,0,2.2,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,10,Bold</Font>
-              <Guid>9b85a3a87e364583a7718a0bb79b215c</Guid>
+              <Guid>8b65d124536e49c28472177b364d0bfa</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text10</Name>
@@ -59,13 +76,13 @@
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text10>
-            <Text3 Ref="6" type="Text" isKey="true">
+            <Text3 Ref="7" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.8,0,1,0.3</ClientRectangle>
+              <ClientRectangle>4.5,0,1,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10</Font>
-              <Guid>248d6670213e42af8df9e448a355fb10</Guid>
+              <Guid>2401f3e494b94563b7694b70f791cf49</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text3</Name>
@@ -76,25 +93,10 @@
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text3>
-            <Text5 Ref="7" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>3.4,0,0.8,0.3</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Arial,12,Bold</Font>
-              <HorAlignment>Center</HorAlignment>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text5</Name>
-              <Page isRef="3" />
-              <Parent isRef="4" />
-              <Text>{PageNumber}</Text>
-              <TextBrush>[0:0:0]</TextBrush>
-              <VertAlignment>Center</VertAlignment>
-            </Text5>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Guid>2daef76d117b41cf808b417247867635</Guid>
+          <Guid>f817ca5928114c0db08545653f2d3be6</Guid>
           <Name>PageFooterBand1</Name>
           <Page isRef="3" />
           <Parent isRef="3" />
@@ -109,7 +111,7 @@
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,21.75,Bold,Point,False,178</Font>
-              <Guid>6280f912ea5b4c1b99a2ded9ff3124ab</Guid>
+              <Guid>e74b4796b1f14efa9a64929bc674258d</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text1</Name>
@@ -126,13 +128,13 @@
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
-              <Guid>6d2b93de35d14a019839a58f2f42effa</Guid>
+              <Guid>00248ca180c041edb70f3f466a8fbc58</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text4</Name>
               <Page isRef="3" />
               <Parent isRef="8" />
-              <Text>لیست بدهکاران</Text>
+              <Text>لیست طلبکاران</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -143,7 +145,7 @@
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
-              <Guid>f921ff272a6446229bc78bd28d5faaf2</Guid>
+              <Guid>4c9549b010a34da2971df6ebf5d0ab7a</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text6</Name>
@@ -161,7 +163,7 @@
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
-              <Guid>b7dfa2c5d64545aba5e8c61594a28e44</Guid>
+              <Guid>8162cdf753bc424c93030b49a85b5d13</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text27</Name>
@@ -179,7 +181,7 @@
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
-              <Guid>7e5acc1a2a534f67a856d11f86d71d00</Guid>
+              <Guid>e12664712ff7471eb7fc64b4bfa44cf4</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text28</Name>
@@ -196,7 +198,7 @@
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,16,Bold</Font>
-              <Guid>41801736b6ae4fffbe9e38b42ced35b3</Guid>
+              <Guid>3e110a384a9542abafb1bab7b3b7cad5</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text42</Name>
@@ -212,7 +214,7 @@
               <ClientRectangle>1.2,1.4,5.1,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Guid>829ce5c6698a4094981a45dda064bc6f</Guid>
+              <Guid>3a3ee993d2cb461fb80a3079b6e3122c</Guid>
               <IconColor>68, 114, 196</IconColor>
               <ImageBytes>iVBORw0KGgoAAAANSUhEUgAAAf4AAABBCAYAAAAwhMYxAAAAAXNSR0IArs4c6QAAAARnQU1BAACx
 jwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAABFzSURBVHhe7d0HdxTX2QfwZ9ULCDVUEAgwxtiO
@@ -307,7 +309,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
-              <Guid>410cbf6db9944426a83d45d8f6820b7c</Guid>
+              <Guid>eed90f8a20c24685a354d9b15c2736ae</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text32</Name>
@@ -321,7 +323,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Guid>65957d20dbb949adb6d34b4a0e1b52b8</Guid>
+          <Guid>6f6cfb611d414f2aa0a374d685ad2f4a</Guid>
           <Name>ReportTitleBand1</Name>
           <Page isRef="3" />
           <Parent isRef="3" />
@@ -337,7 +339,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
-              <Guid>8ccd3349003a48a99d7ddb10ceaff87a</Guid>
+              <Guid>122d3da7680f464ea3e35594f69430ac</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text11</Name>
@@ -355,7 +357,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
-              <Guid>0917625e88954ee1841ee96db4b5c4fa</Guid>
+              <Guid>21b6050fe36c473d9be4ba4f4526ff32</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text14</Name>
@@ -373,13 +375,13 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
-              <Guid>0089b1fc6cb04f20a7389cd086bcd38d</Guid>
+              <Guid>dd31a1f2fad0445db5f5db156dea2fe8</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text34</Name>
               <Page isRef="3" />
               <Parent isRef="17" />
-              <Text>مبلغ بدهکاری</Text>
+              <Text>مبلغ طلبکاری</Text>
               <TextBrush>Black</TextBrush>
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
@@ -387,14 +389,14 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Guid>6a9ab76691d74e83b660e1ca3e4fbd73</Guid>
+          <Guid>a1654682be344cb19c2d8906d6514f48</Guid>
           <Name>HeaderBand1</Name>
           <Page isRef="3" />
           <Parent isRef="3" />
         </HeaderBand1>
         <DataBand1 Ref="21" type="DataBand" isKey="true">
           <Brush>Transparent</Brush>
-          <BusinessObjectGuid>dc65d75d83214ce5b5c781e5f6abca88</BusinessObjectGuid>
+          <BusinessObjectGuid>6b64143c89b241669882d2657b5b96b7</BusinessObjectGuid>
           <ClientRectangle>0,3.2,8.1,0.3</ClientRectangle>
           <Components isList="true" count="3">
             <Text7 Ref="22" type="Text" isKey="true">
@@ -403,14 +405,16 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
               <ClientRectangle>5.1,0,2.9,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
-              <Font>Calibri,12</Font>
+              <Font>Arial,12</Font>
+              <Guid>d54cc410969d475f8d35784f14fd990a</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text7</Name>
               <Page isRef="3" />
               <Parent isRef="21" />
-              <Text>{DebtorsListDtos.Name}</Text>
+              <Text>{CreditorsListDtos.Name}</Text>
               <TextBrush>Black</TextBrush>
+              <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Text7>
             <Text8 Ref="23" type="Text" isKey="true">
@@ -420,12 +424,13 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,12</Font>
+              <Guid>4e9f356f220e4d0f9c9fefb82b2d80ae</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text8</Name>
               <Page isRef="3" />
               <Parent isRef="21" />
-              <Text>{DebtorsListDtos.Debt}</Text>
+              <Text>{CreditorsListDtos.ShamsiDate}</Text>
               <TextBrush>Black</TextBrush>
               <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
@@ -437,13 +442,15 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,12</Font>
+              <Guid>2ebd3317245245719d5ec8a7f9c5fe99</Guid>
               <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
               <Page isRef="3" />
               <Parent isRef="21" />
-              <Text>{DebtorsListDtos.Total}</Text>
+              <Text>{CreditorsListDtos.Total}</Text>
               <TextBrush>Black</TextBrush>
+              <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
             </Text2>
           </Components>
@@ -452,7 +459,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
           <DataSourceName isNull="true" />
           <Expressions isList="true" count="0" />
           <Filters isList="true" count="0" />
-          <Guid>4a2b70de1577483f8d3e356050db3c60</Guid>
+          <Guid>eb27a6683fc24fd2aaf2bc3f8fb0fbd8</Guid>
           <Name>DataBand1</Name>
           <Page isRef="3" />
           <Parent isRef="3" />
@@ -461,7 +468,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
       </Components>
       <Conditions isList="true" count="0" />
       <Expressions isList="true" count="0" />
-      <Guid>51c0a1f8062d43a0a1bb070686e1e348</Guid>
+      <Guid>6f9a256d87f34c0a84e8de1a835de4c8</Guid>
       <Margins>0.2,0.2,0.2,0.2</Margins>
       <Name>Page1</Name>
       <PageHeight>11</PageHeight>
@@ -481,10 +488,10 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>12/1/2024 11:08:12 AM</ReportChanged>
-  <ReportCreated>11/30/2024 6:29:53 PM</ReportCreated>
-  <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\DebtorsReport.mrt</ReportFile>
-  <ReportGuid>8b7f0a1cdcee40358d5a022c5863a9b2</ReportGuid>
+  <ReportChanged>12/1/2024 11:16:01 AM</ReportChanged>
+  <ReportCreated>12/1/2024 8:35:24 AM</ReportCreated>
+  <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\CreditorsReport.mrt</ReportFile>
+  <ReportGuid>ac1274140376427aad7dcbf790b3646a</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>

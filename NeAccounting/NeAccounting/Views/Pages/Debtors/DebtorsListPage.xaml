@@ -10,13 +10,17 @@
                                         IsDesignTimeCreatable=False}"
       d:DesignHeight="800"
       d:DesignWidth="1200"
+      Loaded="Page_Loaded"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="DebtorsListPage">
 
     <Page.InputBindings>
         <KeyBinding Key="F6"
-                 Command="{Binding SearchCommand}" />
+                    Command="{Binding SearchCommand}" />
+        <KeyBinding Key="p"
+                    Modifiers="Ctrl"
+                    Command="{Binding ViewModel.PrintDebtorsListCommand}" />
     </Page.InputBindings>
     <Grid>
 
@@ -139,6 +143,7 @@
                                 <nu:MoneyPack LabelName="از مبلغ"
                                               MinWidth="200"
                                               MaxWidth="300"
+                                              x:Name="Dtp_Start"
                                               Value="{Binding ViewModel.Min , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                 <nu:MoneyPack Grid.Column="1"
@@ -177,7 +182,7 @@
                                         Grid.Column="2"
                                         x:Name="btn_Print"
                                         FontFamily="Calibri"
-                                        Command="{Binding ViewModel.PrintDebListCommand}"
+                                        Command="{Binding ViewModel.PrintDebtorsListCommand}"
                                         HorizontalAlignment="Right">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="پرینت" />
