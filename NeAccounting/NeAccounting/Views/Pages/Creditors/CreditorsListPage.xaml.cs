@@ -11,13 +11,18 @@ namespace NeAccounting.Views.Pages
         public CreditorsViewModel ViewModel { get; }
 
         public CreditorsListPage(CreditorsViewModel viewModel)
-        {
-            ViewModel = viewModel;
+		{
+			ViewModel = viewModel;
             DataContext = this;
             InitializeComponent();
+			Dtp_Start.Focus();
 
-        }
-        [RelayCommand]
+		}
+		private void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+			Dtp_Start.nm_box.Focus(); 
+		}
+		[RelayCommand]
         private async Task OnSearch()
         {
             Btn_submit.Focus();

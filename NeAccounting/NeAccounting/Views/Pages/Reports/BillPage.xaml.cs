@@ -9,7 +9,6 @@ using NeApplication.Services;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.IO;
-using System.Windows.Data;
 using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
@@ -132,17 +131,6 @@ namespace NeAccounting.Views.Pages
             btn_Print.Focus();
             await ViewModel.PrintListCommand.ExecuteAsync(null);
         }
-		public class BoolToOnOffConverter : IValueConverter
-		{
-			public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-			{
-				return (bool)value ? "On" : "Off";
-			}
 
-			public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-			{
-				return value.ToString() == "On";
-			}
-		}
 	}
 }
