@@ -3,6 +3,7 @@ using DomainShared.Constants;
 using DomainShared.Enums;
 using DomainShared.Utilities;
 using DomainShared.ViewModels;
+using DomainShared.ViewModels.Document;
 using DomainShared.ViewModels.PagedResul;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.EntityFramework;
@@ -10,6 +11,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using NeApplication.IRepositoryies;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 
@@ -778,11 +780,11 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<List<FunctionViewModel>> GetFunctionList(Guid? workerId,
+        public async Task<PagedResulViewModel<FunctionViewModel>> GetFunctionList(Guid? workerId,
             int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
-            return await (from worker in DbContext.Set<Personel>()
+			var list = await (from worker in DbContext.Set<Personel>()
                                                          .AsNoTracking()
                                                          .Where(t => workerId == null || t.Id == workerId)
 
@@ -802,10 +804,12 @@ namespace Infrastructure.Repositories
                           })
                       .OrderByDescending(c => c.PersianYear)
                       .ThenByDescending(c => c.PersianMonth)
-                      .Skip(pageNum * pageCount)
-                      .Take(pageCount)
                       .ToListAsync();
-        }
+			int row = 1;
+			var totalCount = list.Count;
+			list = list.Skip(--pageNum * pageCount).Take(pageCount).ToList();
+			return new PagedResulViewModel<FunctionViewModel>(totalCount, pageCount, pageNum, list);
+		}
 
         #endregion
 
@@ -928,10 +932,10 @@ namespace Infrastructure.Repositories
             return new(string.Empty, true);
         }
 
-        public async Task<List<AidViewModel>> GetAidList(Guid? workerId, int pageNum = 0,
+        public async Task<PagedResulViewModel<AidViewModel>> GetAidList(Guid? workerId, int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount)
         {
-            return await (from worker in DbContext.Set<Personel>()
+			var list = await (from worker in DbContext.Set<Personel>()
                                                .AsNoTracking()
                                                .Where(t => workerId == null || t.Id == workerId)
 
@@ -950,11 +954,13 @@ namespace Infrastructure.Repositories
                               Details = new AidDetails() { Id = aid.Id, WorkerId = worker.Id }
                           })
                           .OrderBy(t => t.SubmitDate)
-                          .Skip(pageNum * pageCount)
-                          .Take(pageCount)
                           .ToListAsync();
+			int row = 1;
+			var totalCount = list.Count;
+			list = list.Skip(--pageNum * pageCount).Take(pageCount).ToList();
+			return new PagedResulViewModel<AidViewModel>(totalCount, pageCount, pageNum, list);
 
-        }
+		}
         #endregion
     }
 }

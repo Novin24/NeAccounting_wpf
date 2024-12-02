@@ -23,10 +23,20 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private Guid? _workerId = null;
 
+        /// <summary>
+        /// صفحه ای داخلش قرار داریم
+        /// </summary>
         [ObservableProperty]
-        private int _pageNum;
+        private int _currentPage;
 
-        [ObservableProperty]
+
+		/// <summary>
+		/// تعداد صفحات موجود
+		/// </summary>
+		[ObservableProperty]
+		private int _pageCount = 1;
+
+		[ObservableProperty]
         private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
         [ObservableProperty]
@@ -52,17 +62,31 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.WorkerManager.GetWorkers();
-            List = await db.WorkerManager.GetAidList(WorkerId);
-        }
+            var result = await db.WorkerManager.GetAidList(WorkerId);
+			PageCount = result.PageCount;
+			CurrentPage = result.CurrentPage;
+			List = result.Items;
+		}
 
         [RelayCommand]
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            List = await db.WorkerManager.GetAidList(WorkerId, PageNum);
-        }
+			var result = await db.WorkerManager.GetAidList(WorkerId, CurrentPage);
+			PageCount = result.PageCount;
+			CurrentPage = result.CurrentPage;
+			List = result.Items;
+		}
+		[RelayCommand]
+		private async Task OnPageChenge()
+		{
+			using UnitOfWork db = new();
+			var t = await db.WorkerManager.GetAidList(WorkerId, CurrentPage);
+			PageCount = t.PageCount;
+			List = t.Items;
+		}
 
-        [RelayCommand]
+		[RelayCommand]
         private void OnAddClick(string parameter)
         {
             if (String.IsNullOrWhiteSpace(parameter))
@@ -132,7 +156,7 @@ namespace NeAccounting.ViewModels
             var aid = List.First(t => t.Details.Id == parameter.Id);
 
             using UnitOfWork db = new();
-            var list = await db.WorkerManager.GetAidList(WorkerId, PageNum);
+            var list = await db.WorkerManager.GetAidList(WorkerId, CurrentPage);
             var context = new UpdateFinancialAidPage(new UpdateFinancialAidViewModel(_navigationService, _snackbarService)
             {
                 WorkerId = parameter.WorkerId,
@@ -141,7 +165,7 @@ namespace NeAccounting.ViewModels
                 PersonnelName = aid.Name,
                 SubmitDate = aid.SubmitDate,
                 AidId = parameter.Id,
-                List = list,
+                List = list.Items,
                 PersonnelId = aid.PersonelId
             });
 
