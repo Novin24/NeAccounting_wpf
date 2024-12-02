@@ -24,10 +24,10 @@ namespace NeAccounting.ViewModels
         private Guid? _workerId = null;
 
         /// <summary>
-        /// صفحه ای داخلش قرار داریم
+        /// صفحه ای ک داخلش قرار داریم
         /// </summary>
         [ObservableProperty]
-        private int _currentPage;
+        private int _currentPage = 1;
 
 
 		/// <summary>
@@ -62,7 +62,7 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.WorkerManager.GetWorkers();
-            var result = await db.WorkerManager.GetAidList(WorkerId);
+            var result = await db.WorkerManager.GetAidList(WorkerId, CurrentPage);
 			PageCount = result.PageCount;
 			CurrentPage = result.CurrentPage;
 			List = result.Items;

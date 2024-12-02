@@ -20,7 +20,13 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private Guid? _workerId = null;
 
-        [ObservableProperty]
+		[ObservableProperty]
+		private int _currentPage = 0;
+
+		[ObservableProperty]
+		private int _pageCount = 1;
+
+		[ObservableProperty]
         private string _totalCount;
 
         [ObservableProperty]
@@ -62,8 +68,10 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.WorkerManager.GetWorkers();
-            var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear);
-            TotalCount = salaries.TotalCount.ToString("N0");
+            var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear, CurrentPage);
+			CurrentPage = salaries.CurrentPage;
+			PageCount = salaries.PageCount;
+			TotalCount = salaries.TotalCount.ToString("N0");
             List = salaries.Items;
         }
 
@@ -71,12 +79,24 @@ namespace NeAccounting.ViewModels
         private async Task OnSearchWorker()
         {
             using UnitOfWork db = new();
-            var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear);
-            TotalCount = salaries.TotalCount.ToString("N0");
+            var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear, CurrentPage);
+			CurrentPage = salaries.CurrentPage;
+			PageCount = salaries.PageCount;
+			TotalCount = salaries.TotalCount.ToString("N0");
             List = salaries.Items;
-        }
+		}
 
-        [RelayCommand]
+		[RelayCommand]
+		private async Task OnPageChenge()
+		{
+			using UnitOfWork db = new();
+			var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear, CurrentPage);
+			PageCount = salaries.PageCount;
+			TotalCount = salaries.TotalCount.ToString("N0");
+			List = salaries.Items;
+		}
+
+		[RelayCommand]
         private void OnAddClick(string parameter)
         {
             if (String.IsNullOrWhiteSpace(parameter))
