@@ -21,7 +21,7 @@ namespace NeAccounting.ViewModels
         private Guid? _workerId = null;
 
 		[ObservableProperty]
-		private int _currentPage = 0;
+		private int _currentPage = 1;
 
 		[ObservableProperty]
 		private int _pageCount = 1;

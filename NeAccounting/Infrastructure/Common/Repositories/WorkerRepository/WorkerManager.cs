@@ -371,7 +371,7 @@ namespace Infrastructure.Repositories
             new SqlParameter(nameof(startYear), startYear == null ? DBNull.Value : startYear),
             new SqlParameter(nameof(endMonth), endMonth == null ? DBNull.Value : endMonth),
             new SqlParameter(nameof(endYear), endYear == null ? DBNull.Value : endYear),
-            new SqlParameter("skipCount", pageNum * pageCount),
+            new SqlParameter("skipCount", (pageNum-1) * pageCount),
             new SqlParameter("maxResultCount",pageCount)
         };
 
