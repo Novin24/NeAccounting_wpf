@@ -91,7 +91,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
         CurrentPage = t.CurrentPage;
         InvList = t.Items;
         PageCount = t.PageCount;
-        Cuslist = await db.CustomerManager.GetDisplayUser(true);
+        Cuslist = await db.CustomerManager.GetDisplayUser();
         _isInit = false;
     }
 
