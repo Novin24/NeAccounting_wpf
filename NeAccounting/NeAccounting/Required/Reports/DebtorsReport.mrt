@@ -391,7 +391,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
               <Name>Text8</Name>
               <Page isRef="3" />
               <Parent isRef="19" />
-              <Text>{DebtorsListDtos.Debt}</Text>
+              <Text>{DebtorsListDtos.ShamsiDate}</Text>
               <TextBrush>Black</TextBrush>
               <Type>DataColumn</Type>
               <VertAlignment>Center</VertAlignment>
@@ -447,10 +447,10 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>12/4/2024 3:40:22 PM</ReportChanged>
+  <ReportChanged>12/8/2024 4:41:36 PM</ReportChanged>
   <ReportCreated>11/30/2024 6:29:53 PM</ReportCreated>
   <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\DebtorsReport.mrt</ReportFile>
-  <ReportGuid>a567d4dcdb8d4508bf7d2ba21d901c34</ReportGuid>
+  <ReportGuid>247bdd9e7d12498ba4366b656fba4ff1</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>
