@@ -135,7 +135,7 @@ namespace NeApplication.IRepositoryies
             long amountOf,
             string? description);
 
-        Task<List<AidViewModel>> GetAidList(Guid? workerId,
+        Task<PagedResulViewModel<AidViewModel>> GetAidList(Guid? workerId,
              int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 
@@ -163,7 +163,7 @@ namespace NeApplication.IRepositoryies
             byte overTime,
             string? description);
 
-        Task<List<FunctionViewModel>> GetFunctionList(Guid? workerId,
+        Task<PagedResulViewModel<FunctionViewModel>> GetFunctionList(Guid? workerId,
              int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
 
