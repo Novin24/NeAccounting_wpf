@@ -15,14 +15,14 @@ namespace Infrastructure.EntityFramework
                         DbContextOptionsBuilder optionsBuilder)
         {
             //علی اصغر
-			      //optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
-			
-            //optionsBuilder.UseSqlServer("Server=ALI\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
-			
-            //سرور
-            optionsBuilder.UseSqlServer("Data Source=192.168.10.242\\DESKTOP-L3HJTMF\\SQLEXPRESS,1434;Database=BaseDomain;TrustServerCertificate=True;User Id=MyLogIn;Password=P123a@h;");
+            optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 
-		}
+            //optionsBuilder.UseSqlServer("Server=ALI\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
+
+            //سرور
+            //optionsBuilder.UseSqlServer("Data Source=192.168.10.242\\DESKTOP-L3HJTMF\\SQLEXPRESS,1434;Database=BaseDomain;TrustServerCertificate=True;User Id=MyLogIn;Password=P123a@h;");
+
+        }
 
 		private static readonly MethodInfo ConfigureBasePropertiesMethodInfo = typeof(BaseDomainDbContext)
         .GetMethod(nameof(ConfigureBaseProperties),
