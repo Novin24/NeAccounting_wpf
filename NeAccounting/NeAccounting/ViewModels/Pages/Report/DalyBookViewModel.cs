@@ -19,13 +19,19 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private IEnumerable<DalyBookDto> _invList = [];
 
+        /// <summary>
+        /// تعداد صفحات موجود
+        /// </summary>
         [ObservableProperty]
         private int _pageCount = 1;
 
         [ObservableProperty]
         private DateTime? _date = DateTime.Now;
 
-        [ObservableProperty]
+		/// <summary>
+		/// صفحه ای داخلش قرار داریم
+		/// </summary>
+		[ObservableProperty]
         private int _currentPage = 1;
 
         public void OnNavigatedFrom()
