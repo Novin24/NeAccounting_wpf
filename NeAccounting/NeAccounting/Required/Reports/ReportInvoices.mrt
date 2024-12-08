@@ -60,7 +60,7 @@
             <Text37 Ref="5" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;2;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.8,0.01,1,0.3</ClientRectangle>
+              <ClientRectangle>4.6,0.01,1,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10</Font>
@@ -96,7 +96,7 @@
             <Text36 Ref="7" type="Text" isKey="true">
               <Border>None;Black;1;Solid;False;2;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.8,0,2.1,0.3</ClientRectangle>
+              <ClientRectangle>5.6,0,2.3,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,11,Bold</Font>
@@ -835,10 +835,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>5/16/2024 9:17:45 AM</ReportChanged>
+  <ReportChanged>12/1/2024 9:12:11 AM</ReportChanged>
   <ReportCreated>4/13/2021 2:18:22 AM</ReportCreated>
-  <ReportFile>D:\Source\Wpf\N2\Np_NovinWpf\NeAccounting\NeAccounting\Required\Reports\ReportInvoices.mrt</ReportFile>
-  <ReportGuid>5b099e654a3e4d349a92eeee34431030</ReportGuid>
+  <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\ReportInvoices.mrt</ReportFile>
+  <ReportGuid>7ab2812ff82b46ab8189489097dc9369</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>
