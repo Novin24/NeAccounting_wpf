@@ -564,9 +564,10 @@
                                                 </Button>
                                                 <Button Margin="4"
                                                         Padding="7,5"
+                                                        Command="{Binding Path=DataContext.ViewModel.PrintChequeCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                                         CommandParameter="{Binding Id , Mode=OneWay}">
                                                     <Button.ToolTip>
-                                                        <TextBlock Text="جزییات چک"
+                                                        <TextBlock Text="پرینت چک"
                                                                    FontSize="14" />
                                                     </Button.ToolTip>
                                                     <ui:SymbolIcon Symbol="Print20" />

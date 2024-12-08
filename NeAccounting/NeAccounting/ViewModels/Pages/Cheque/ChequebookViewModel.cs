@@ -1,3 +1,4 @@
+using Domain.NovinEntity.Cheques;
 using DomainShared.Constants;
 using DomainShared.Enums;
 using DomainShared.Errore;
@@ -7,7 +8,9 @@ using DomainShared.ViewModels;
 using DomainShared.ViewModels.Document;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
+using NeAccounting.Models;
 using NeAccounting.Views.Pages;
+using NeApplication.Services;
 using System.Globalization;
 using System.Windows.Media;
 using Wpf.Ui;
@@ -21,13 +24,15 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
     private readonly INavigationService _navigationService;
     private readonly IContentDialogService _contentDialogService;
     private readonly ISnackbarService _snackbarService;
-    private bool _isreadonly = true;
+	private readonly IPrintServices _printServices;
+	private bool _isreadonly = true;
 
-    public ChequebookViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
+    public ChequebookViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService, IPrintServices printServices)
     {
         _navigationService = navigationService;
         _contentDialogService = contentDialogService;
-        _snackbarService = snackbarService; _isreadonly = NeAccountingConstants.ReadOnlyMode;
+		_printServices = printServices;
+		_snackbarService = snackbarService; _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
     }
 
@@ -311,7 +316,34 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
         servise.Navigate(pageType, context);
     }
 
-    [RelayCommand]
+    public async Task<(bool isSuccess, DetailsChequeDto cheque)> PrintCheque(Guid chequeId)
+    {
+        using UnitOfWork db = new();
+        var (isSuccess, cheque) = await db.DocumentManager.GetChequeDetailById(chequeId);
+        
+        return (true , cheque);
+    }
+	private async Task OnPrintCheque(Guid parameter)
+	{
+		var (isSuccess, chequeInfo) = await PrintCheque(parameter);
+		
+
+		PersianCalendar pc = new();
+		Dictionary<string, string> dic = new()
+		{
+			{"Management",$"{chequeInfo.Cheque_Number}"},
+			{"Management",$"{chequeInfo.Bank_Name}"},
+			{"Management",$"{chequeInfo.Bank_Branch}"},
+			{"Management",$"{chequeInfo.DueDate}"},
+			{"Management",$"{chequeInfo.Price}"},
+			{"Management",$"{chequeInfo.Accunt_Number}"},
+			{"Management",$"{chequeInfo.Cheque_Owner}"},
+			{"Management",$"{chequeInfo.RecCusName}"},
+		};
+		_printServices.PrintInvoice(@"Required\Reports\ChequeReport.mrt",  dic);
+	}
+
+	[RelayCommand]
     private async Task OnTransfer(Guid parameter)
     {
         if (_isreadonly)
