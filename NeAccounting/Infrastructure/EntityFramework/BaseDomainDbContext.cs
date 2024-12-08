@@ -14,18 +14,20 @@ namespace Infrastructure.EntityFramework
         protected override void OnConfiguring(
                         DbContextOptionsBuilder optionsBuilder)
         {
+
 			//علی اصغر
 			//optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 
 			//optionsBuilder.UseSqlServer("Server=ALI\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 
 			//سرور
-			//optionsBuilder.UseSqlServer("Data Source=192.168.10.242\\DESKTOP-L3HJTMF\\SQLEXPRESS,1434;Database=BaseDomain;TrustServerCertificate=True;User Id=MyLogIn;Password=P123a@h;");
+			optionsBuilder.UseSqlServer("Data Source=192.168.10.242\\DESKTOP-L3HJTMF\\SQLEXPRESS,1434;Database=BaseDomain;TrustServerCertificate=True;User Id=MyLogIn;Password=P123a@h;");
 
 			// ابلفضل
-			optionsBuilder.UseSqlServer("Data Source=(localDb)\\MssqlLocalDb;Database=BaseDomain;Integrated Security=True;User ID=DESKTOP-N0GO0QP\\ALI;");
+			//optionsBuilder.UseSqlServer("Data Source=(localDb)\\MssqlLocalDb;Database=BaseDomain;Integrated Security=True;User ID=DESKTOP-N0GO0QP\\ALI;");
 
-		}
+
+        }
 
 		private static readonly MethodInfo ConfigureBasePropertiesMethodInfo = typeof(BaseDomainDbContext)
         .GetMethod(nameof(ConfigureBaseProperties),

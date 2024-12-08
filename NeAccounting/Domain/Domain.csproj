@@ -1,26 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="BaseDomain\**" />
-    <Compile Remove="Local\**" />
-    <EmbeddedResource Remove="BaseDomain\**" />
-    <EmbeddedResource Remove="Local\**" />
-    <None Remove="BaseDomain\**" />
-    <None Remove="Local\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="BaseDomain\**" />
+		<Compile Remove="Local\**" />
+		<EmbeddedResource Remove="BaseDomain\**" />
+		<EmbeddedResource Remove="Local\**" />
+		<None Remove="BaseDomain\**" />
+		<None Remove="Local\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+		<PackageReference Include="Serilog" Version="4.2.0" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DomainShared\DomainShared.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\DomainShared\DomainShared.csproj" />
+	</ItemGroup>
 
 </Project>
