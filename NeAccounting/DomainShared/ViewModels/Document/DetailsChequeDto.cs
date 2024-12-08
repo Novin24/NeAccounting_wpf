@@ -2,7 +2,7 @@
 
 namespace DomainShared.ViewModels.Document
 {
-    public class DetailsChequeDto
+	public class DetailsChequeDto
     {
         public Guid PayerId { get; set; }
         public Guid ReceverId { get; set; }
@@ -23,5 +23,5 @@ namespace DomainShared.ViewModels.Document
         public string Bank_Name { get; set; }
         public string Bank_Branch { get; set; }
         public string Cheque_Owner { get; set; }
-    }
+	}
 }

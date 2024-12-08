@@ -316,13 +316,15 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
         servise.Navigate(pageType, context);
     }
 
-    public async Task<(bool isSuccess, DetailsChequeDto cheque)> PrintCheque(Guid chequeId)
+    public async Task<(bool isSuccess, ChequeForPrintDto cheque)> PrintCheque(Guid chequeId)
     {
         using UnitOfWork db = new();
-        var (isSuccess, cheque) = await db.DocumentManager.GetChequeDetailById(chequeId);
+        var (isSuccess, cheque) = await db.DocumentManager.GetChequeForPrint(chequeId);
         
         return (true , cheque);
     }
+
+	[RelayCommand]
 	private async Task OnPrintCheque(Guid parameter)
 	{
 		var (isSuccess, chequeInfo) = await PrintCheque(parameter);
@@ -331,14 +333,14 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 		PersianCalendar pc = new();
 		Dictionary<string, string> dic = new()
 		{
-			{"Management",$"{chequeInfo.Cheque_Number}"},
-			{"Management",$"{chequeInfo.Bank_Name}"},
-			{"Management",$"{chequeInfo.Bank_Branch}"},
-			{"Management",$"{chequeInfo.DueDate}"},
-			{"Management",$"{chequeInfo.Price}"},
-			{"Management",$"{chequeInfo.Accunt_Number}"},
-			{"Management",$"{chequeInfo.Cheque_Owner}"},
-			{"Management",$"{chequeInfo.RecCusName}"},
+			{"Cheque_Number",$"{chequeInfo.Cheque_Number}"},
+			{"Bank_Name",$"{chequeInfo.Bank_Name}"},
+			{"Bank_Branch",$"{chequeInfo.Bank_Branch}"},
+			{"Price",$"{chequeInfo.Price}"},
+			{"Accunt_Number",$"{chequeInfo.Accunt_Number}"},
+			{"Cheque_Owner",$"{chequeInfo.Cheque_Owner}"},
+			{"CusName",$"{chequeInfo.RecCusName}"},
+			{"DueShamsiDate",$"{chequeInfo.DueShamsiDate}"},
 		};
 		_printServices.PrintInvoice(@"Required\Reports\ChequeReport.mrt",  dic);
 	}

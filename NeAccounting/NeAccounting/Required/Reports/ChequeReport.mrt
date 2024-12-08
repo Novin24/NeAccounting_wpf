@@ -10,39 +10,24 @@
     <Variables isList="true" count="8">
       <value>,Cheque_Number,Cheque_Number,,System.String,,False,False,False,False</value>
       <value>,Bank_Name,Bank_Name,,System.String,,False,False,False,False</value>
-      <value>,DueDate,DueDate,,System.String,,False,False,False,False</value>
       <value>,Bank_Branch,Bank_Branch,,System.String,,False,False,False,False</value>
       <value>,Price,Price,,System.String,,False,False,False,False</value>
-      <value>,Accunt_Number,Accunt_Number,,System.String,,False,False,False,False</value>
       <value>,Cheque_Owner,Cheque_Owner,,System.String,,False,False,False,False</value>
       <value>,CusName,CusName,,System.String,,False,False,False,False</value>
+      <value>,DueShamsiDate,DueShamsiDate,,System.String,,False,False,False,False</value>
+      <value>,Reciver,Reciver,,System.String,,False,False,False,False</value>
     </Variables>
   </Dictionary>
   <EngineVersion>EngineV2</EngineVersion>
   <GlobalizationStrings isList="true" count="0" />
   <Key>46281ce07b214be08923e999ec7d03aa</Key>
   <MetaTags isList="true" count="0" />
-  <Pages isList="true" count="2">
-    <Page1 Ref="2" type="Page" isKey="true">
-      <Border>None;Black;2;Solid;False;4;Black</Border>
-      <Brush>Transparent</Brush>
-      <Components isList="true" count="0" />
-      <Conditions isList="true" count="0" />
-      <Expressions isList="true" count="0" />
-      <Guid>a495b9c3d42943e2a28b150b4a4ca40a</Guid>
-      <Margins>0.39,0.39,0.39,0.39</Margins>
-      <Name>Page1</Name>
-      <Orientation>Landscape</Orientation>
-      <PageHeight>8.5</PageHeight>
-      <PageWidth>11</PageWidth>
-      <PaperSize>Letter</PaperSize>
-      <Report isRef="0" />
-    </Page1>
-    <Page2 Ref="3" type="Page" isKey="true">
+  <Pages isList="true" count="1">
+    <Page2 Ref="2" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
       <Components isList="true" count="9">
-        <Image1 Ref="4" type="Image" isKey="true">
+        <Image1 Ref="3" type="Image" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0.4,0.8,6.7,3.4</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -21987,11 +21972,11 @@ nEZxE67DW0iuFxjE71cuf/99hBW+okg0+IBM6salyCePLaeUfx99wi+tvBjP0f/b6LdIK5zT0nzy
 sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Margins>0,0,0,0</Margins>
           <Name>Image1</Name>
-          <Page isRef="3" />
-          <Parent isRef="3" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Stretch>True</Stretch>
         </Image1>
-        <Image2 Ref="5" type="Image" isKey="true">
+        <Image2 Ref="4" type="Image" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0.6,6,0,0</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -21999,40 +21984,25 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <IconColor>68, 114, 196</IconColor>
           <Margins>0,0,0,0</Margins>
           <Name>Image2</Name>
-          <Page isRef="3" />
-          <Parent isRef="3" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
         </Image2>
-        <Text1 Ref="6" type="Text" isKey="true">
+        <Text2 Ref="5" type="Text" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>4.8,1.2,1.3,0.2</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Expressions isList="true" count="0" />
-          <Font>Arial,14</Font>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text1</Name>
-          <Page isRef="3" />
-          <Parent isRef="3" />
-          <Text>{DueDate}</Text>
-          <TextBrush>Black</TextBrush>
-          <VertAlignment>Center</VertAlignment>
-        </Text1>
-        <Text2 Ref="7" type="Text" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>1.3,1.3,1.4,0.2</ClientRectangle>
+          <ClientRectangle>1.3,1,1.4,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Font>Arial,8</Font>
           <HorAlignment>Center</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text2</Name>
-          <Page isRef="3" />
-          <Parent isRef="3" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Text>{Cheque_Number}</Text>
           <TextBrush>Black</TextBrush>
           <VertAlignment>Center</VertAlignment>
         </Text2>
-        <Text3 Ref="8" type="Text" isKey="true">
+        <Text3 Ref="6" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>3,1,1.6,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -22041,44 +22011,44 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <HorAlignment>Center</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text3</Name>
-          <Page isRef="3" />
-          <Parent isRef="3" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Text>{Bank_Name}</Text>
           <TextBrush>Black</TextBrush>
           <VertAlignment>Center</VertAlignment>
         </Text3>
-        <Text4 Ref="9" type="Text" isKey="true">
+        <Text4 Ref="7" type="Text" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>3,1.3,1.6,0.2</ClientRectangle>
+          <ClientRectangle>3,1.2,1.6,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Font>Arial,9</Font>
+          <Font>Arial,10</Font>
           <HorAlignment>Center</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text4</Name>
-          <Page isRef="3" />
-          <Parent isRef="3" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Text>شعبه : {Bank_Branch}</Text>
           <TextBrush>Black</TextBrush>
           <Type>Expression</Type>
           <VertAlignment>Center</VertAlignment>
         </Text4>
-        <Text5 Ref="10" type="Text" isKey="true">
+        <Text5 Ref="8" type="Text" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>0.8,3,2.5,0.3</ClientRectangle>
+          <ClientRectangle>0.8,2.9,2.5,0.5</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Font>Arial,12</Font>
-          <HorAlignment>Center</HorAlignment>
+          <Font>Arial,22</Font>
+          <HorAlignment>Right</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text5</Name>
-          <Page isRef="3" />
-          <Parent isRef="3" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Text>{Price}</Text>
           <TextBrush>Black</TextBrush>
           <VertAlignment>Center</VertAlignment>
         </Text5>
-        <Text7 Ref="11" type="Text" isKey="true">
+        <Text7 Ref="9" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>4.6,3.4,1.6,0.3</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -22087,13 +22057,13 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <HorAlignment>Center</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text7</Name>
-          <Page isRef="3" />
-          <Parent isRef="3" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Text>{Cheque_Owner}</Text>
           <TextBrush>Black</TextBrush>
           <VertAlignment>Center</VertAlignment>
         </Text7>
-        <Text6 Ref="12" type="Text" isKey="true">
+        <Text6 Ref="10" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>4.2,2.4,2.3,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -22102,12 +22072,27 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <HorAlignment>Center</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text6</Name>
-          <Page isRef="3" />
-          <Parent isRef="3" />
+          <Page isRef="2" />
+          <Parent isRef="2" />
           <Text>{CusName}</Text>
           <TextBrush>Black</TextBrush>
           <VertAlignment>Center</VertAlignment>
         </Text6>
+        <Text1 Ref="11" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>4.8,1.2,1.3,0.3</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,18</Font>
+          <HorAlignment>Center</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text1</Name>
+          <Page isRef="2" />
+          <Parent isRef="2" />
+          <Text>{DueShamsiDate}</Text>
+          <TextBrush>Black</TextBrush>
+          <VertAlignment>Center</VertAlignment>
+        </Text1>
       </Components>
       <Conditions isList="true" count="0" />
       <Expressions isList="true" count="0" />
@@ -22132,10 +22117,10 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>12/7/2024 9:06:07 PM</ReportChanged>
+  <ReportChanged>12/8/2024 6:20:09 PM</ReportChanged>
   <ReportCreated>12/1/2024 7:43:20 PM</ReportCreated>
   <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\ChequeReport.mrt</ReportFile>
-  <ReportGuid>36cbb4fdcbdd4d47aabeada7db1529ea</ReportGuid>
+  <ReportGuid>08a95bebedee4e69bbdd6ea3442a767a</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>

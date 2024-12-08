@@ -1755,7 +1755,56 @@ namespace Infrastructure.Repositories
             return (true, itm);
         }
 
-        public async Task<(string error, bool isSuccess, Guid docId)> CreateRecCheque(Guid customerId,
+		public async Task<(bool isSuccess, ChequeForPrintDto itm)> GetChequeForPrint(Guid docId)
+		{
+			PersianCalendar pc = new();
+			var itm = await (from che in DbContext.Set<Cheque>()
+								   .AsNoTracking()
+
+							 join doc in DbContext.Set<Document>()
+								   .Where(d => d.Id == docId)
+													 on che.DocumetnId equals doc.Id
+
+							 join relDoc in DbContext.Set<Document>()
+													 on doc.Id equals relDoc.DocumentId into relD
+							 from d in relD.DefaultIfEmpty()
+
+							 join recCus in DbContext.Set<Customer>()
+													 on che.Reciver equals recCus.Id
+
+							 join payCus in DbContext.Set<Customer>()
+													 on che.Payer equals payCus.Id
+							 select new ChequeForPrintDto
+							 {
+								 SubmitStatus = che.SubmitStatus,
+								 Price = doc.Price,
+								 DueShamsiDate = che.Due_Date.ToShamsiDateNotSlash(pc),
+								 SubmitDate = doc.SubmitDate,
+								 DueDate = che.Due_Date,
+								 TransferDate = che.TransferdDate,
+								 Accunt_Number = che.Accunt_Number,
+								 Bank_Branch = che.Bank_Branch,
+								 Bank_Name = che.Bank_Name,
+								 Cheque_Number = che.Cheque_Number,
+								 Cheque_Owner = che.Cheque_Owner,
+								 PayCusName = payCus.Name,
+								 PayerId = payCus.Id,
+								 ReceverId = recCus.Id,
+								 PayCusNum = payCus.CusId.ToString(),
+								 RecCusNum = recCus.CusId.ToString(),
+								 RecCusName = recCus.Name,
+								 RecDescripion = d.Description,
+								 PayDescripion = doc.Description,
+								 Status = che.Status,
+							 }).FirstOrDefaultAsync();
+			if (itm == null)
+			{
+				return (false, new ChequeForPrintDto());
+			}
+			return (true, itm);
+		}
+
+		public async Task<(string error, bool isSuccess, Guid docId)> CreateRecCheque(Guid customerId,
             SubmitChequeStatus submitStatus,
             string? descripion,
             DateTime submitDate,
