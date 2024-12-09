@@ -1776,27 +1776,17 @@ namespace Infrastructure.Repositories
 													 on che.Payer equals payCus.Id
 							 select new ChequeForPrintDto
 							 {
-								 SubmitStatus = che.SubmitStatus,
+
 								 Price = doc.Price,
 								 DueShamsiDate = che.Due_Date.ToShamsiDateNotSlash(pc),
 								 StingShamsiDate = che.Due_Date.ShamsiDateToString(pc),
-								 SubmitDate = doc.SubmitDate,
-								 DueDate = che.Due_Date,
-								 TransferDate = che.TransferdDate,
 								 Accunt_Number = che.Accunt_Number,
 								 Bank_Branch = che.Bank_Branch,
 								 Bank_Name = che.Bank_Name,
 								 Cheque_Number = che.Cheque_Number,
 								 Cheque_Owner = che.Cheque_Owner,
-								 PayCusName = payCus.Name,
-								 PayerId = payCus.Id,
-								 ReceverId = recCus.Id,
-								 PayCusNum = payCus.CusId.ToString(),
-								 RecCusNum = recCus.CusId.ToString(),
 								 RecCusName = recCus.Name,
-								 RecDescripion = d.Description,
-								 PayDescripion = doc.Description,
-								 Status = che.Status,
+
 							 }).FirstOrDefaultAsync();
 			if (itm == null)
 			{

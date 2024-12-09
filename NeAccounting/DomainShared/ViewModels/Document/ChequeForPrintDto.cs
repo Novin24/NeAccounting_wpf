@@ -20,6 +20,9 @@ namespace DomainShared.ViewModels.Document
 		public DateTime? DueDate { get; set; }
 		public DateTime? TransferDate { get; set; }
 		public long Price { get; set; }
+		/// <summary>
+		/// شماره چک
+		/// </summary>
 		public string Cheque_Number { get; set; }
 		public string Accunt_Number { get; set; }
 		public string Bank_Name { get; set; }

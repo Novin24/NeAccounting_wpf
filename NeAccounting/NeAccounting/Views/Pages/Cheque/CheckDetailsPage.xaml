@@ -194,38 +194,77 @@
                                         Text="{Binding ViewModel.Bank_Branch}"
                                         FontFamily="Calibri" />
                         </StackPanel>
-                        <StackPanel Grid.Row="2"
-                                    Margin="30 5 20 5 ">
 
 
-                            <TextBlock FontFamily="Calibri"
+                        <Grid Grid.Row="2"
+                              Margin="30 6 20 5 ">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Row="2"
+                                    Margin="0 0 5 0">
+
+                                <TextBlock FontFamily="Calibri"
                                        FontSize="15"
-                                       Text="شماره چک"
-                                       Margin="5 0 0 3 " />
-                            <ui:TextBox TextAlignment="Center"
+                                       Text="سریال چک"
+                                       Margin="5 0 0 4 " />
+                                <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
+                                        IsEnabled="False"
                                         IsReadOnly="True"
                                         Text="{Binding ViewModel.Cheque_Number}"
                                         FontFamily="Calibri" />
-                        </StackPanel>
+                            </StackPanel>
+
+
+                            <StackPanel Grid.Column="1"
+                                        Margin="5 0 0 0 ">
+
+                                <TextBlock FontFamily="Calibri"
+                                           FontSize="15"
+                                           Text="سری چک"
+                                           Margin="5 0 0 4" />
+                                <ui:TextBox TextAlignment="Center"
+                                            FontSize="14"
+                                            IsEnabled="False"
+                                            IsReadOnly="True"
+                                            FontFamily="Calibri" />
+                            </StackPanel>
+                        </Grid>
+
                         <StackPanel Grid.Row="2"
-                                    Margin="20 6 30 0 "
-                                    Grid.Column="1">
+                                    Grid.Column="1"
+                                    Margin="20 6 30 5 ">
 
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="15"
+                                       Text="شماره صیادی"
+                                       Margin="5 0 0 4"/>
+                            <ui:TextBox FontSize="14"
+                                        IsEnabled="False"
+                                        IsReadOnly="True"
+                                        TextAlignment="Center"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
 
+                        <StackPanel Grid.Row="3"
+                                    Margin="30 6 20 0 ">
                             <TextBlock FontFamily="Calibri"
                                        FontSize="15"
                                        Text="شماره شبا"
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
-                                        Height="36"
+                                        IsEnabled="False"
                                         Text="{Binding ViewModel.Accunt_Number}"
                                         IsReadOnly="True"
                                         FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Grid.Row="3"
-                                    Margin="30 5 20 0 ">
+                                    Grid.Column="1"
+                                    Margin="20 5 30 0 ">
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="تاریخ سررسید"
@@ -236,45 +275,58 @@
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>
-                        <StackPanel Grid.Row="3"
-                                    Grid.Column="1"
-                                    Margin="20 5 30 5 ">
+                        <StackPanel Grid.Row="4"
+                                    Margin="30 5 20 5 ">
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="مبلغ چک"
                                        Margin="5 0 3 3" />
                             <ui:TextBox FontSize="14"
                                         IsReadOnly="True"
+                                        IsEnabled="False"
                                         Text="{Binding ViewModel.Price}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>
-                        <StackPanel Grid.Row="4"
-                                    Margin="30 5 20 0 ">
-                            <TextBlock FontFamily="Calibri"
+
+
+                        <Grid Grid.Row="4"
+                              Grid.Column="1"
+                              Margin="20 5 25 5 ">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="120"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Row="4"
+                                    Margin="0 0 5 0 ">
+                                <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="صاحب چک"
                                        Margin="5 0 3 3" />
-                            <ui:TextBox FontSize="14"
+                                <ui:TextBox FontSize="14"
                                         IsEnabled="False"
                                         Text="{Binding ViewModel.Cheque_Owner}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="4"
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4"
                                     Grid.Column="1"
-                                    Margin="20 5 30 5">
-                            <TextBlock FontFamily="Calibri"
+                                    Margin="5 0 5 0">
+                                <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="وضعیت چک"
                                        Margin="5 0 0 3 " />
-                            <ui:TextBox FontFamily="Calibri"
+                                <ui:TextBox FontFamily="Calibri"
                                         IsEnabled="False"
                                         Text="{Binding ViewModel.SubStatus}"
                                         FontSize="14" />
-                        </StackPanel>
+                            </StackPanel>
+
+                        </Grid>
                         <StackPanel Grid.Row="5"
-                                    Margin="20 5 30 0 ">
+                                    Margin="30 5 20 0 ">
                             <DockPanel>
                                 <TextBlock FontFamily="Calibri"
                                            FontSize="15"
@@ -327,6 +379,7 @@
                                         FlowDirection="RightToLeft"
                                         Text="{Binding ViewModel.PayDescription}"
                                         IsReadOnly="True"
+                                        IsEnabled="False"
                                         FontFamily="Calibri"></ui:TextBox>
                         </Grid>
                         <Grid Grid.Row="6"
