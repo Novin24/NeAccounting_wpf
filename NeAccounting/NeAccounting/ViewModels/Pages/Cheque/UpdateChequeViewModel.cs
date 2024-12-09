@@ -89,7 +89,7 @@ namespace NeAccounting.ViewModels
 
 
         /// <summary>
-        /// شماره حساب
+        /// شماره شبا
         /// </summary>
         [ObservableProperty]
         private string _accunt_Number;

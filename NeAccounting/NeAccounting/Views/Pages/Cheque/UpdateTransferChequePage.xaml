@@ -218,7 +218,7 @@
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
-                                       Text="شماره حساب"
+                                       Text="شماره شبا"
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"

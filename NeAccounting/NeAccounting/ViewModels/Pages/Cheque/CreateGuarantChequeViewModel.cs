@@ -63,7 +63,7 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
 
 
     /// <summary>
-    /// شماره حساب
+    /// شماره شبا
     /// </summary>
     public string Accunt_Number { get; set; }
 
