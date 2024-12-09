@@ -337,9 +337,11 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			{"Bank_Name",$"{chequeInfo.Bank_Name}"},
 			{"Bank_Branch",$"{chequeInfo.Bank_Branch}"},
 			{"Price",$"{chequeInfo.Price}"},
+			{"StringPrice",$"{chequeInfo.Price.ToString().NumberToPersianString()}"},
 			{"Cheque_Owner",$"{chequeInfo.Cheque_Owner}"},
 			{"CusName",$"{chequeInfo.RecCusName}"},
 			{"DueShamsiDate",$"{chequeInfo.DueShamsiDate}"},
+			{"StingShamsiDate",$"{chequeInfo.StingShamsiDate}"},
 			{"Accunt_Number",$"{chequeInfo.Accunt_Number}"},
 		};
 		_printServices.PrintInvoice(@"Required\Reports\ChequeReport.mrt",  dic);

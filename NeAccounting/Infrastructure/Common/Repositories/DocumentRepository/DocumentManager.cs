@@ -1779,6 +1779,7 @@ namespace Infrastructure.Repositories
 								 SubmitStatus = che.SubmitStatus,
 								 Price = doc.Price,
 								 DueShamsiDate = che.Due_Date.ToShamsiDateNotSlash(pc),
+								 StingShamsiDate = che.Due_Date.ShamsiDateToString(pc),
 								 SubmitDate = doc.SubmitDate,
 								 DueDate = che.Due_Date,
 								 TransferDate = che.TransferdDate,

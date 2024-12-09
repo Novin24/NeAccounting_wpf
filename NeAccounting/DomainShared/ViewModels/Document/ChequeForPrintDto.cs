@@ -15,6 +15,7 @@ namespace DomainShared.ViewModels.Document
 		public string? RecDescripion { get; set; }
 		public string? PayDescripion { get; set; }
 		public string? DueShamsiDate { get; set; }
+		public string? StingShamsiDate { get; set; }
 		public DateTime SubmitDate { get; set; }
 		public DateTime? DueDate { get; set; }
 		public DateTime? TransferDate { get; set; }
