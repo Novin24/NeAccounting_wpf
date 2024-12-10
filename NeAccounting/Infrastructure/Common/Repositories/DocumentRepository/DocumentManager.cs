@@ -12,6 +12,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using NeApplication.IRepositoryies;
+using Serilog;
 using System.Data;
 using System.Globalization;
 
@@ -1885,6 +1886,7 @@ namespace Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                Log.Error($"code(88t46993) [ErrMsg] => {ex.Message}");
                 return new(" خطا در اتصال به پایگاه داده code(88t46993)!!!", false);
             }
             return new(string.Empty, true);
