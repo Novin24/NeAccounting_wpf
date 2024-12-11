@@ -22088,10 +22088,10 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
         <Text1 Ref="11" type="Text" isKey="true">
           <AllowHtmlTags>True</AllowHtmlTags>
           <Brush>Transparent</Brush>
-          <ClientRectangle>4.8,1.1,1.5,0.3</ClientRectangle>
+          <ClientRectangle>4.8,1.1,1.5,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Font>Arial,14</Font>
+          <Font>Arial,12</Font>
           <HorAlignment>Right</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text1</Name>
@@ -22101,6 +22101,7 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <TextBrush>Black</TextBrush>
           <TextQuality>Wysiwyg</TextQuality>
           <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
         </Text1>
         <Text8 Ref="12" type="Text" isKey="true">
           <Brush>Transparent</Brush>
@@ -22187,10 +22188,10 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>12/11/2024 6:42:26 PM</ReportChanged>
+  <ReportChanged>12/11/2024 6:59:52 PM</ReportChanged>
   <ReportCreated>12/1/2024 7:43:20 PM</ReportCreated>
   <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\ChequeReport.mrt</ReportFile>
-  <ReportGuid>34b2620c207a403eb19dc4c99ae5f076</ReportGuid>
+  <ReportGuid>957da52c62b5439a88ca60ef2b54577b</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>
