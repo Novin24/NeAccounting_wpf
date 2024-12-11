@@ -83,6 +83,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
     {
         await InitializeViewModel();
     }
+
     public void OnNavigatedFrom()
     {
 
@@ -343,6 +344,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			{"DueShamsiDate",$"{chequeInfo.DueShamsiDate}"},
 			{"StingShamsiDate",$"{chequeInfo.StingShamsiDate}"},
 			{"Accunt_Number",$"{chequeInfo.Accunt_Number}"},
+			{"NationalCode",$"{chequeInfo.NationalCode}"},
 		};
 		_printServices.PrintInvoice(@"Required\Reports\ChequeReport.mrt",  dic);
 	}

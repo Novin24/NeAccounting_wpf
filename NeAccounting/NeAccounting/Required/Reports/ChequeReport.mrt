@@ -7,7 +7,7 @@
     <Relations isList="true" count="0" />
     <Report isRef="0" />
     <Resources isList="true" count="0" />
-    <Variables isList="true" count="10">
+    <Variables isList="true" count="11">
       <value>,Cheque_Number,Cheque_Number,,System.String,,False,False,False,False</value>
       <value>,Bank_Name,Bank_Name,,System.String,,False,False,False,False</value>
       <value>,Bank_Branch,Bank_Branch,,System.String,,False,False,False,False</value>
@@ -18,6 +18,7 @@
       <value>,Accunt_Number,Accunt_Number,,System.String,,False,False,False,False</value>
       <value>,StingShamsiDate,StingShamsiDate,,System.String,,False,False,False,False</value>
       <value>,StringPrice,StringPrice,,System.String,,False,False,False,False</value>
+      <value>,NationalCode,NationalCode,,System.String,,False,False,False,False</value>
     </Variables>
   </Dictionary>
   <EngineVersion>EngineV2</EngineVersion>
@@ -28,7 +29,7 @@
     <Page2 Ref="2" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
-      <Components isList="true" count="12">
+      <Components isList="true" count="13">
         <Image1 Ref="3" type="Image" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0.2,0.7,7.1,3.4</ClientRectangle>
@@ -22071,7 +22072,7 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
         </Text7>
         <Text6 Ref="10" type="Text" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>4.3,2.3,2.4,0.2</ClientRectangle>
+          <ClientRectangle>4.3,2.2,2.4,0.3</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Font>Calibri,12</Font>
@@ -22082,6 +22083,7 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Parent isRef="2" />
           <Text>{CusName}</Text>
           <TextBrush>Black</TextBrush>
+          <VertAlignment>Center</VertAlignment>
         </Text6>
         <Text1 Ref="11" type="Text" isKey="true">
           <AllowHtmlTags>True</AllowHtmlTags>
@@ -22099,7 +22101,6 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <TextBrush>Black</TextBrush>
           <TextQuality>Wysiwyg</TextQuality>
           <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
         </Text1>
         <Text8 Ref="12" type="Text" isKey="true">
           <Brush>Transparent</Brush>
@@ -22118,7 +22119,7 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
         </Text8>
         <Text9 Ref="13" type="Text" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>3.1,1.4,2.8,0.2</ClientRectangle>
+          <ClientRectangle>3.3,1.3,2.8,0.3</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Font>Calibri,12</Font>
@@ -22129,10 +22130,11 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Parent isRef="2" />
           <Text>{StingShamsiDate}</Text>
           <TextBrush>Black</TextBrush>
+          <VertAlignment>Center</VertAlignment>
         </Text9>
         <Text10 Ref="14" type="Text" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>1,1.9,4.3,0.2</ClientRectangle>
+          <ClientRectangle>1,1.8,4.3,0.3</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Font>Calibri,12</Font>
@@ -22144,7 +22146,23 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Text>{StringPrice} تمام </Text>
           <TextBrush>Black</TextBrush>
           <Type>Expression</Type>
+          <VertAlignment>Center</VertAlignment>
         </Text10>
+        <Text11 Ref="15" type="Text" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>1.7,2.2,1.5,0.3</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,12</Font>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text11</Name>
+          <Page isRef="2" />
+          <Parent isRef="2" />
+          <Text>{NationalCode}</Text>
+          <TextBrush>Black</TextBrush>
+          <VertAlignment>Center</VertAlignment>
+        </Text11>
       </Components>
       <Conditions isList="true" count="0" />
       <Expressions isList="true" count="0" />
@@ -22169,10 +22187,10 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>12/9/2024 7:23:03 PM</ReportChanged>
+  <ReportChanged>12/11/2024 6:42:26 PM</ReportChanged>
   <ReportCreated>12/1/2024 7:43:20 PM</ReportCreated>
   <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\ChequeReport.mrt</ReportFile>
-  <ReportGuid>64190a11d3074eeb90f701a38d542b37</ReportGuid>
+  <ReportGuid>34b2620c207a403eb19dc4c99ae5f076</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>

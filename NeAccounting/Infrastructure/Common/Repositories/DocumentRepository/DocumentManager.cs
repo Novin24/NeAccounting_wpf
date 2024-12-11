@@ -1785,6 +1785,7 @@ namespace Infrastructure.Repositories
 								 Bank_Name = che.Bank_Name,
 								 Cheque_Number = che.Cheque_Number,
 								 Cheque_Owner = che.Cheque_Owner,
+								 NationalCode = recCus.NationalCode.ToString(),
 								 RecCusName = recCus.Name,
 
 							 }).FirstOrDefaultAsync();

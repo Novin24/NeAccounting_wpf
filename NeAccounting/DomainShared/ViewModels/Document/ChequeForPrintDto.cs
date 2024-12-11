@@ -16,16 +16,30 @@ namespace DomainShared.ViewModels.Document
 		public string? PayDescripion { get; set; }
 		public string? DueShamsiDate { get; set; }
 		public string? StingShamsiDate { get; set; }
+		public string? NationalCode { get; set; }
 		public DateTime SubmitDate { get; set; }
 		public DateTime? DueDate { get; set; }
 		public DateTime? TransferDate { get; set; }
+
+		/// <summary>
+		/// مبلغ
+		/// </summary>
 		public long Price { get; set; }
+
 		/// <summary>
 		/// شماره چک
 		/// </summary>
 		public string Cheque_Number { get; set; }
 		public string Accunt_Number { get; set; }
+
+		/// <summary>
+		/// نام بانک
+		/// </summary>
 		public string Bank_Name { get; set; }
+
+		/// <summary>
+		/// شعبه بانک
+		/// </summary>
 		public string Bank_Branch { get; set; }
 		public string Cheque_Owner { get; set; }
 	}
