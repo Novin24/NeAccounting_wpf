@@ -172,7 +172,7 @@
                             <TextBlock FontFamily="Calibri"
                                        FontSize="15"
                                        Text="بانک"
-                                       Margin="5 0 0 3 " />
+                                       Margin="5 0 0 3 "/>
                             <ui:TextBox TextAlignment="Center"
                                         Text="{Binding ViewModel.Bank_Name,Mode=OneWayToSource}"
                                         FontFamily="Calibri"
@@ -263,7 +263,7 @@
                         
                         <nu:MoneyPack Grid.Row="4"
                                       Value="{Binding ViewModel.Price,Mode=OneWayToSource}"
-                                      Margin="10 0 0 0"
+                                      Margin="9 0 0 0"
                                       LabelName="مبلغ چک"/>
 
                         <Grid Grid.Row="4"

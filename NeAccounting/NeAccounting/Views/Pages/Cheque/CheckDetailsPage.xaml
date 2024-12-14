@@ -149,7 +149,7 @@
                                        Text="تاریخ پرداخت"
                                        Margin="5 0 3 3" />
                             <ui:TextBox FontSize="14"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
                                         Text="{Binding ViewModel.SubmitDate}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
@@ -163,7 +163,7 @@
                                        Text="تاریخ واگذاری"
                                        Margin="5 0 3 3" />
                             <ui:TextBox FontSize="14"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
                                         TextAlignment="Center"
                                         Text="{Binding ViewModel.TransferDate}"
                                         FontFamily="Calibri" />
@@ -175,7 +175,7 @@
                                        Margin="5 0 0 3 "
                                        FontFamily="Calibri" />
                             <ui:TextBox TextAlignment="Center"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
                                         FontFamily="Calibri"
                                         Text="{Binding ViewModel.Bank_Name}"
                                         FontSize="14" />
@@ -190,11 +190,10 @@
                                        Margin="5 0 0 3 " />
                             <ui:TextBox FontSize="14"
                                         TextAlignment="Center"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
                                         Text="{Binding ViewModel.Bank_Branch}"
                                         FontFamily="Calibri" />
                         </StackPanel>
-
 
                         <Grid Grid.Row="2"
                               Margin="30 6 20 5 ">
@@ -212,7 +211,6 @@
                                        Margin="5 0 0 4 " />
                                 <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
-                                        IsEnabled="False"
                                         IsReadOnly="True"
                                         Text="{Binding ViewModel.Cheque_Number}"
                                         FontFamily="Calibri" />
@@ -228,7 +226,6 @@
                                            Margin="5 0 0 4" />
                                 <ui:TextBox TextAlignment="Center"
                                             FontSize="14"
-                                            IsEnabled="False"
                                             IsReadOnly="True"
                                             FontFamily="Calibri" />
                             </StackPanel>
@@ -243,7 +240,6 @@
                                        Text="شماره صیادی"
                                        Margin="5 0 0 4"/>
                             <ui:TextBox FontSize="14"
-                                        IsEnabled="False"
                                         IsReadOnly="True"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
@@ -257,7 +253,6 @@
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
-                                        IsEnabled="False"
                                         Text="{Binding ViewModel.Accunt_Number}"
                                         IsReadOnly="True"
                                         FontFamily="Calibri" />
@@ -270,7 +265,7 @@
                                        Text="تاریخ سررسید"
                                        Margin="5 0 3 3" />
                             <ui:TextBox FontSize="14"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
                                         Text="{Binding ViewModel.DueDate}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
@@ -283,12 +278,10 @@
                                        Margin="5 0 3 3" />
                             <ui:TextBox FontSize="14"
                                         IsReadOnly="True"
-                                        IsEnabled="False"
                                         Text="{Binding ViewModel.Price}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>
-
 
                         <Grid Grid.Row="4"
                               Grid.Column="1"
@@ -305,7 +298,7 @@
                                        Text="صاحب چک"
                                        Margin="5 0 3 3" />
                                 <ui:TextBox FontSize="14"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
                                         Text="{Binding ViewModel.Cheque_Owner}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
@@ -319,12 +312,12 @@
                                        Text="وضعیت چک"
                                        Margin="5 0 0 3 " />
                                 <ui:TextBox FontFamily="Calibri"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
                                         Text="{Binding ViewModel.SubStatus}"
                                         FontSize="14" />
                             </StackPanel>
-
                         </Grid>
+                        
                         <StackPanel Grid.Row="5"
                                     Margin="30 5 20 0 ">
                             <DockPanel>
@@ -340,7 +333,7 @@
                                            Margin="0 3 3 1" />
                             </DockPanel>
                             <ui:TextBox FontSize="14"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
                                         Text="{Binding ViewModel.PayCusName}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
@@ -361,9 +354,9 @@
                                            Margin="0 3 3 1" />
                             </DockPanel>
                             <ui:TextBox FontSize="14"
-                                        IsEnabled="False"
                                         Text="{Binding ViewModel.CusName}"
                                         TextAlignment="Center"
+                                        IsReadOnly="True"
                                         FontFamily="Calibri" />
                         </StackPanel>
                         <Grid Grid.Row="6"
@@ -379,7 +372,6 @@
                                         FlowDirection="RightToLeft"
                                         Text="{Binding ViewModel.PayDescription}"
                                         IsReadOnly="True"
-                                        IsEnabled="False"
                                         FontFamily="Calibri"></ui:TextBox>
                         </Grid>
                         <Grid Grid.Row="6"
@@ -408,7 +400,7 @@
                                 HorizontalAlignment="Center"
                                 FontFamily="Calibri"
                                 FontSize="15"
-                                Grid.ColumnSpan="2" />
+                                Grid.ColumnSpan="2"/>
                     </Grid>
                 </Border>
             </Grid>

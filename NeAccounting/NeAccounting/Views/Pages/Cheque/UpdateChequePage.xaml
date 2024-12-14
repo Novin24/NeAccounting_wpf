@@ -198,24 +198,58 @@
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>
+                        
+                        <Grid Grid.Row="2"
+                              Margin="30 6 20 5 ">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel  Grid.Row="2"
-                                     Margin="30 5 20 5 ">
+                            <StackPanel  Grid.Row="2"
+                                     Margin="0 0 5 0 ">
 
 
-                            <TextBlock FontFamily="Calibri"
+                                <TextBlock FontFamily="Calibri"
                                        FontSize="15"
-                                       Text="شماره چک"
-                                       Margin="5 0 0 3 " />
-                            <ui:TextBox TextAlignment="Center"
+                                       Text="سریال چک"
+                                       Margin="5 0 0 4 " />
+                                <ui:TextBox TextAlignment="Center"
                                         Text="{Binding ViewModel.Cheque_Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="14"
                                         FontFamily="Calibri" />
-                        </StackPanel>
+                            </StackPanel>
+
+
+                            <StackPanel Grid.Column="1"
+                                        Margin="5 0 0 0 ">
+
+                                <TextBlock FontFamily="Calibri"
+                                           FontSize="15"
+                                           Text="سری چک"
+                                           Margin="5 0 0 4" />
+                                <ui:TextBox TextAlignment="Center"
+                                            FontSize="14"
+                                            FontFamily="Calibri" />
+                            </StackPanel>
+                        </Grid>
 
                         <StackPanel Grid.Row="2"
-                                    Margin="20 6 30 0 "
-                                    Grid.Column="1">
+                                    Grid.Column="1"
+                                    Margin="20 6 30 5 ">
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="15"
+                                       Text="شماره صیادی"
+                                       Margin="5 0 0 4"/>
+                            <ui:TextBox FontSize="14"
+                                        IsReadOnly="True"
+                                        TextAlignment="Center"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3"
+                                    Margin="30 6 20 0 ">
 
 
                             <TextBlock FontFamily="Calibri"
@@ -229,42 +263,50 @@
                                         FontFamily="Calibri" />
                         </StackPanel>
                         <nu:PersianDatePicker Grid.Row="3"
+                                              Grid.Column="1"
                                               VerticalAlignment="Center"
                                               SelectedDate="{Binding ViewModel.DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               FlowDirection="LeftToRight"
-                                              Margin="9 0 13 0"
+                                              Margin="0 0 23 0"
                                               LabelName="تاریخ سررسید" />
-                        <nu:MoneyPack Grid.Row="3"
-                                      Grid.Column="1"
+                        <nu:MoneyPack Grid.Row="4"
                                       VerticalAlignment="Center"
                                       Value="{Binding ViewModel.Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      Margin="0 0 10 0"
+                                      Margin="9 0 0 0"
                                       LabelName="مبلغ چک" />
-                        <StackPanel Grid.Row="4"
-                                    Margin="30 5 20 0 ">
+
+                        <Grid Grid.Row="4"
+                              Grid.Column="1"
+                              Margin="20 5 25 5 ">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="120"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Row="4"
+                                    Margin="0 0 5 0 ">
 
 
-                            <TextBlock FontFamily="Calibri"
+                                <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="صاحب چک"
                                        Margin="5 0 3 3" />
-                            <ui:TextBox FontSize="14"
+                                <ui:TextBox FontSize="14"
                                         Text="{Binding ViewModel.Cheque_Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
-                        </StackPanel>
+                            </StackPanel>
 
-                        <StackPanel Grid.Row="4"
-                                    Margin="20 5 0 5 "
-                                    HorizontalAlignment="Center"
-                                    Width="200"
+
+
+                            <StackPanel Grid.Row="4"
+                                    Margin="5 0 5 0 "
                                     Grid.Column="1">
 
-                            <TextBlock FontFamily="Calibri"
+                                <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="وضعیت چک"
-                                       Margin="5 0 0 0 " />
-                            <ComboBox SelectedIndex="3"
+                                       Margin="5 0 0 3 " />
+                                <ComboBox SelectedIndex="3"
                                       Margin="0 0 0 0"
                                       SelectedValuePath="Key"
                                       DisplayMemberPath="Value"
@@ -273,8 +315,9 @@
                                       x:Name="Cmb_Status"
                                       FontFamily="Calibri"
                                       FontSize="14">
-                            </ComboBox>
-                        </StackPanel>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
                         <Grid Grid.ColumnSpan="2"
                               Grid.Row="5"
                               Margin="30 3 30 4">
