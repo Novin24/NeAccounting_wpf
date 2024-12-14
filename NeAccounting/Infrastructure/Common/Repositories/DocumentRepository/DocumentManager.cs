@@ -1605,8 +1605,8 @@ namespace Infrastructure.Repositories
                                    .AsNoTracking()
                                    .Where(t => status == ChequeStatus.AllCheques || t.Status == status)
                                    .Where(t => string.IsNullOrEmpty(chequeNumber) || t.Cheque_Number.Contains(chequeNumber))
-                                   .Where(t => !startTime.HasValue || t.Due_Date >= startTime)
-                                   .Where(t => !endTime.HasValue || t.Due_Date < endTime)
+                                   .Where(t => !startTime.HasValue || (t.Due_Date.HasValue && t.Due_Date.Value.Date >= startTime.Value.Date))
+                                   .Where(t => !endTime.HasValue || (t.Due_Date.HasValue && t.Due_Date.Value.Date < endTime.Value.Date))
 
                          join doc in DbContext.Set<Document>()
                                .Where(p => !cusId.HasValue || p.CustomerId == cusId)
