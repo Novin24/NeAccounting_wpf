@@ -395,6 +395,8 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			Bank_Name = i.Bank_Name,
 			PayerName = i.CusName,
 			Cheque_Number = i.Cheque_Number,
+			Cheque_Series = i.Cheque_Series,
+			SiadyNumber = i.SiadyNumber,
 			Cuslist = users,
 			Cheque_Owner = i.Cheque_Owner,
 			DocId = i.Id,
