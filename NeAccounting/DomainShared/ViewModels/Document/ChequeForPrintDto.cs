@@ -4,22 +4,26 @@ namespace DomainShared.ViewModels.Document
 {
 	public class ChequeForPrintDto
 	{
-		public Guid PayerId { get; set; }
-		public Guid ReceverId { get; set; }
-		public string PayCusName { get; set; }
-		public string PayCusNum { get; set; }
+
+		/// <summary>
+		/// دریافت کننده چک
+		/// </summary>
 		public string RecCusName { get; set; }
-		public string RecCusNum { get; set; }
-		public SubmitChequeStatus SubmitStatus { get; set; }
-		public ChequeStatus Status { get; set; }
-		public string? RecDescripion { get; set; }
-		public string? PayDescripion { get; set; }
+
+		/// <summary>
+		/// تاریخ شمسی
+		/// </summary>
 		public string? DueShamsiDate { get; set; }
+
+		/// <summary>
+		/// تاریخ شمسی ب حروف
+		/// </summary>
 		public string? StingShamsiDate { get; set; }
+
+		/// <summary>
+		/// کدملی
+		/// </summary>
 		public string? NationalCode { get; set; }
-		public DateTime SubmitDate { get; set; }
-		public DateTime? DueDate { get; set; }
-		public DateTime? TransferDate { get; set; }
 
 		/// <summary>
 		/// مبلغ
@@ -35,7 +39,11 @@ namespace DomainShared.ViewModels.Document
 		/// سری چک
 		/// </summary>
 		public string? Cheque_Series { get; set; }
-		public string Accunt_Number { get; set; }
+
+		/// <summary>
+		/// شماره شبا
+		/// </summary>
+		public string? Accunt_Number { get; set; }
 
 		/// <summary>
 		/// نام بانک
@@ -45,7 +53,11 @@ namespace DomainShared.ViewModels.Document
 		/// <summary>
 		/// شعبه بانک
 		/// </summary>
-		public string Bank_Branch { get; set; }
+		public string? Bank_Branch { get; set; }
+
+		/// <summary>
+		/// صاحب حساب
+		/// </summary>
 		public string Cheque_Owner { get; set; }
 	}
 }
