@@ -234,6 +234,7 @@
                                            Margin="5 0 0 4" />
                                 <ui:TextBox TextAlignment="Center"
                                             FontSize="14"
+                                        Text="{Binding ViewModel.Cheque_Series, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             FontFamily="Calibri" />
                             </StackPanel>
                         </Grid>
@@ -247,6 +248,7 @@
                                        Text="شماره صیادی"
                                        Margin="5 0 0 4"/>
                             <ui:TextBox FontSize="14"
+                                        Text="{Binding ViewModel.SiadyNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>

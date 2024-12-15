@@ -87,11 +87,22 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private string? _cheque_Number;
 
+		/// <summary>
+		/// سری چک
+		/// </summary>
+		[ObservableProperty]
+		private string? _cheque_Series;
 
-        /// <summary>
-        /// شماره شبا
-        /// </summary>
-        [ObservableProperty]
+		/// <summary>
+		/// شماره صیادی
+		/// </summary>
+		[ObservableProperty]
+		private string? _siadyNumber;
+
+		/// <summary>
+		/// شماره شبا
+		/// </summary>
+		[ObservableProperty]
         private string _accunt_Number;
 
         /// <summary>
@@ -203,7 +214,7 @@ namespace NeAccounting.ViewModels
 
             #region UpdatePayDocumetn
             using UnitOfWork db = new();
-            var (e, s) = await db.DocumentManager.UpdateCheque(DocId, CusId.Value, Substatus, Description, SubmitDate.Value, DueDate, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
+            var (e, s) = await db.DocumentManager.UpdateCheque(DocId, CusId.Value, Substatus, Description, SubmitDate.Value, DueDate, Price.Value, Cheque_Number, Cheque_Series, SiadyNumber, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
             if (!s)
             {
                 _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

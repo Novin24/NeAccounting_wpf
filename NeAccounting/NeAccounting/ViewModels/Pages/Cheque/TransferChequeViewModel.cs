@@ -78,10 +78,22 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private string _accunt_Number;
 
-        /// <summary>
-        /// نام بانک
-        /// </summary>
-        [ObservableProperty]
+		/// <summary>
+		/// سری چک
+		/// </summary>
+		[ObservableProperty]
+		private string? _cheque_Series;
+
+		/// <summary>
+		/// شماره صیادی
+		/// </summary>
+		[ObservableProperty]
+		private string? _siadyNumber;
+
+		/// <summary>
+		/// نام بانک
+		/// </summary>
+		[ObservableProperty]
         private string _bank_Name;
 
         /// <summary>

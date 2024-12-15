@@ -235,6 +235,7 @@
                                            Margin="5 0 0 3" />
                                 <ui:TextBox TextAlignment="Center"
                                             FontSize="14"
+                                            Text="{Binding ViewModel.Cheque_Series,Mode=OneTime}"
                                             IsReadOnly="True"
                                             FontFamily="Calibri" />
                             </StackPanel>
@@ -249,6 +250,7 @@
                                        Text="شماره صیادی"
                                        Margin="5 0 0 3"/>
                             <ui:TextBox FontSize="14"
+                                        Text="{Binding ViewModel.SiadyNumber,Mode=OneTime}"
                                         IsReadOnly="True"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
