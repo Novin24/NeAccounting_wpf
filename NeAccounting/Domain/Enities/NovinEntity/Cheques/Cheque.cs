@@ -90,6 +90,7 @@ namespace Domain.NovinEntity.Cheques
             DateTime? dueDate,
 			string cheque_Number,
 			string? cheque_Series,
+			string? siadyNumber,
 			string accunt_Number,
             string bank_Name,
             string bank_Branch,
@@ -101,6 +102,7 @@ namespace Domain.NovinEntity.Cheques
 			SetCheque_Owner(cheque_Owner);
             SetCheque_Number(cheque_Number);
 			SetCheque_Series(cheque_Series);
+            SetSiadyNumber(siadyNumber);
 			Payer = payer;
             Reciver = reciver;
             Due_Date = dueDate;
@@ -156,7 +158,7 @@ namespace Domain.NovinEntity.Cheques
             }
             Cheque_Number = cheque_Number;
             return this;
-        }
+		}
 		public Cheque SetCheque_Series(string? cheque_Series)
 		{
 			if (!string.IsNullOrEmpty(cheque_Series) && cheque_Series.Length > 100)
@@ -164,6 +166,15 @@ namespace Domain.NovinEntity.Cheques
 				throw new ArgumentException(NeErrorCodes.IsLess("سری چک", "صد"));
 			}
 			Cheque_Series = cheque_Series;
+			return this;
+		}
+		public Cheque SetSiadyNumber(string? siadyNumber)
+		{
+			if (!string.IsNullOrEmpty(siadyNumber) && siadyNumber.Length > 100)
+			{
+				throw new ArgumentException(NeErrorCodes.IsLess("سری چک", "صد"));
+			}
+			SiadyNumber = siadyNumber;
 			return this;
 		}
 		#endregion

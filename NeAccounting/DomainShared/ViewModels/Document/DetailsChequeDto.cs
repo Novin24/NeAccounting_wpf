@@ -20,6 +20,7 @@ namespace DomainShared.ViewModels.Document
         public long Price { get; set; }
 		public string Cheque_Number { get; set; }
 		public string Cheque_Series { get; set; }
+		public string SiadyNumber { get; set; }
 		public string Accunt_Number { get; set; }
         public string Bank_Name { get; set; }
         public string Bank_Branch { get; set; }

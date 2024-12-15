@@ -245,6 +245,8 @@
                             <ui:TextBox FontSize="14"
                                         IsReadOnly="True"
                                         TextAlignment="Center"
+                                        PreviewTextInput="TextBox_PreviewTextInput"
+                                        Text="{Binding ViewModel.SiadyNumber, Mode=OneWayToSource}"
                                         FontFamily="Calibri" />
                         </StackPanel>
 

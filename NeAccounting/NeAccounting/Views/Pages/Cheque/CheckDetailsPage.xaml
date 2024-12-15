@@ -242,6 +242,7 @@
                                        Margin="5 0 0 4"/>
                             <ui:TextBox FontSize="14"
                                         IsReadOnly="True"
+                                        Text="{Binding ViewModel.SiadyNumber}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>

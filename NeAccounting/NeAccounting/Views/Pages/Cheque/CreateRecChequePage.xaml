@@ -244,6 +244,8 @@
                                        Margin="5 0 0 3"/>
                             <ui:TextBox FontSize="14"
                                         TextAlignment="Center"
+                                        PreviewTextInput="TextBox_PreviewTextInput"
+                                        Text="{Binding ViewModel.SiadyNumber, Mode=OneWayToSource}"
                                         FontFamily="Calibri" />
                         </StackPanel>
 

@@ -86,6 +86,12 @@ namespace NeAccounting.ViewModels
 		private string? _cheque_Series;
 
 		/// <summary>
+		/// شماره صیادی
+		/// </summary>
+		[ObservableProperty]
+		private string? _siadyNumber;
+
+		/// <summary>
 		/// شماره شبا
 		/// </summary>
 		[ObservableProperty]

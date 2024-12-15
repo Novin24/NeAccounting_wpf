@@ -303,6 +303,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
             Bank_Name = i.Bank_Name,
 			Cheque_Number = i.Cheque_Number,
 			Cheque_Series = i.Cheque_Series,
+            SiadyNumber = i.SiadyNumber,
 			PayCusName = i.PayCusName,
             PayCusNum = i.PayCusNum,
             CusName = i.RecCusName,

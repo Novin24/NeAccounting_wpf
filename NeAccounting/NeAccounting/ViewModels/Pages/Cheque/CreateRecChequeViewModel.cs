@@ -64,6 +64,12 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
 	private string? _cheque_Series;
 
 	/// <summary>
+	/// شماره صیادی
+	/// </summary>
+	[ObservableProperty]
+	private string? _siadyNumber;
+
+	/// <summary>
 	/// شماره شبا
 	/// </summary>
 	[ObservableProperty]
@@ -172,7 +178,7 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
 
         #region CreateRecDocumetn&Cheque
         using UnitOfWork db = new();
-        var (e, s, docId) = await db.DocumentManager.CreateRecCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Cheque_Series, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
+        var (e, s, docId) = await db.DocumentManager.CreateRecCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Cheque_Series, SiadyNumber, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
         if (!s)
         {
             _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
