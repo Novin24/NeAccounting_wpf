@@ -243,7 +243,6 @@
                                        Text="شماره صیادی"
                                        Margin="5 0 0 4"/>
                             <ui:TextBox FontSize="14"
-                                        IsReadOnly="True"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>

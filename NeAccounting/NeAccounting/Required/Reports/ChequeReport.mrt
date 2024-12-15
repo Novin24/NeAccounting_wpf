@@ -22328,7 +22328,7 @@ MTExMTExMTExMTEx/78vrvJ6LRGenS4AAAAASUVORK5CYII=</ImageBytes>
           <Name>Text14</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
-          <Text>9999999999999999</Text>
+          <Text>{SiadyNumber}</Text>
           <TextBrush>Black</TextBrush>
           <Type>Expression</Type>
         </Text14>
@@ -22356,10 +22356,10 @@ MTExMTExMTExMTEx/78vrvJ6LRGenS4AAAAASUVORK5CYII=</ImageBytes>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>12/15/2024 11:34:51 AM</ReportChanged>
+  <ReportChanged>12/15/2024 1:09:40 PM</ReportChanged>
   <ReportCreated>12/1/2024 7:43:20 PM</ReportCreated>
   <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\ChequeReport.mrt</ReportFile>
-  <ReportGuid>c3415389cd524eb09e3b59fb8c184231</ReportGuid>
+  <ReportGuid>5cb262615ac34532a9f1db1c67389ccc</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>

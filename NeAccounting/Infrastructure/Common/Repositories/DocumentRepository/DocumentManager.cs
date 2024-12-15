@@ -1788,6 +1788,7 @@ namespace Infrastructure.Repositories
 								 Cheque_Number = che.Cheque_Number,
 								 Cheque_Owner = che.Cheque_Owner,
 								 Cheque_Series = che.Cheque_Series,
+								 SiadyNumber = che.SiadyNumber,
 								 NationalCode = recCus.NationalCode.ToString(),
 								 RecCusName = recCus.Name,
 

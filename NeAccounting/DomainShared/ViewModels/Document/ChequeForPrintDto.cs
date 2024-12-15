@@ -41,6 +41,11 @@ namespace DomainShared.ViewModels.Document
 		public string? Cheque_Series { get; set; }
 
 		/// <summary>
+		/// شماره صیادی
+		/// </summary>
+		public string? SiadyNumber { get; set; }
+
+		/// <summary>
 		/// شماره شبا
 		/// </summary>
 		public string? Accunt_Number { get; set; }
