@@ -309,7 +309,7 @@ namespace NeApplication.IRepositoryies
             string cheque_Number,
 			string? cheque_Series,
 			string? siadyNumber,
-			string accunt_Number,
+			string shaba_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
@@ -323,7 +323,7 @@ namespace NeApplication.IRepositoryies
             string cheque_Number,
 			string? cheque_Series,
 			string? siadyNumber,
-			string accunt_Number,
+			string shaba_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
@@ -337,7 +337,7 @@ namespace NeApplication.IRepositoryies
             string cheque_Number,
 			string? cheque_Series,
 			string? siadyNumber,
-			string accunt_Number,
+			string shaba_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
@@ -353,7 +353,7 @@ namespace NeApplication.IRepositoryies
             string cheque_Number,
 			string? cheque_Series,
 			string? siadyNumber,
-			string accunt_Number,
+			string shaba_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);

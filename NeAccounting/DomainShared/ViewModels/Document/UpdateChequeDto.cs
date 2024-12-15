@@ -28,7 +28,7 @@ namespace DomainShared.ViewModels.Document
 		/// شماره صیادی
 		/// </summary>
 		public string? SiadyNumber { get; set; }
-		public string Accunt_Number { get; set; }
+		public string? Shaba_Number { get; set; }
         public string Bank_Name { get; set; }
         public string Bank_Branch { get; set; }
         public string Cheque_Owner { get; set; }

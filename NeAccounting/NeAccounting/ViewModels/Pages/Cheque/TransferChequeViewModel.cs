@@ -76,7 +76,7 @@ namespace NeAccounting.ViewModels
         /// شماره شبا
         /// </summary>
         [ObservableProperty]
-        private string _accunt_Number;
+        private string? _Shaba_Number;
 
 		/// <summary>
 		/// سری چک

@@ -58,7 +58,6 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private Dictionary<Enum, string> _enumSource;
 
-
         [ObservableProperty]
         private DateTime? _submitDate = DateTime.Now;
 
@@ -102,7 +101,7 @@ namespace NeAccounting.ViewModels
 		/// شماره شبا
 		/// </summary>
 		[ObservableProperty]
-        private string _accunt_Number;
+        private string _shaba_Number;
 
         /// <summary>
         /// نام بانک

@@ -75,7 +75,7 @@ namespace NeAccounting.ViewModels
 		/// شماره شبا
 		/// </summary>
 		[ObservableProperty]
-        private string _accunt_Number;
+        private string _shaba_Number;
 
         /// <summary>
         /// نام بانک
@@ -180,7 +180,7 @@ namespace NeAccounting.ViewModels
 
             #region CreatePayDocumetn&Cheque
             using UnitOfWork db = new();
-            var (e, s, docId) = await db.DocumentManager.CreatePayCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Cheque_Series, SiadyNumber, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
+            var (e, s, docId) = await db.DocumentManager.CreatePayCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Cheque_Series, SiadyNumber, Shaba_Number, Bank_Name, Bank_Branch, Cheque_Owner);
             if (!s)
             {
                 _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

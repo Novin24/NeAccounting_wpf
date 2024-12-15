@@ -209,7 +209,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 				CusId = i.ReceverId,
 				Substatus = i.SubmitStatus,
 				SubmitDate = i.TransferDate,
-				Accunt_Number = i.Accunt_Number,
+				Shaba_Number = i.Shaba_Number,
 				Bank_Branch = i.Bank_Branch,
 				Bank_Name = i.Bank_Name,
 				PayerName = i.PayCusName,
@@ -256,7 +256,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			CusId = i.PayerId,
 			Substatus = i.SubmitStatus,
 			SubmitDate = i.SubmitDate,
-			Accunt_Number = i.Accunt_Number,
+			Shaba_Number = i.Shaba_Number,
 			Bank_Branch = i.Bank_Branch,
 			Bank_Name = i.Bank_Name,
 			Cheque_Number = i.Cheque_Number,
@@ -302,7 +302,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			SubmitDate = i.SubmitDate.ToShamsiDate(pc),
 			TransferDate = i.TransferDate.ToShamsiDate(pc),
 			DueDate = i.DueDate.ToShamsiDate(pc),
-			Accunt_Number = i.Accunt_Number,
+			Shaba_Number = i.Shaba_Number,
 			Bank_Branch = i.Bank_Branch,
 			Bank_Name = i.Bank_Name,
 			Cheque_Number = i.Cheque_Number,
@@ -351,7 +351,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			{"CusName",$"{chequeInfo.RecCusName}"},
 			{"DueShamsiDate",$"{chequeInfo.DueShamsiDate}"},
 			{"StingShamsiDate",$"{chequeInfo.StingShamsiDate}"},
-			{"Accunt_Number",$"{chequeInfo.Accunt_Number}"},
+			{"Accunt_Number",$"{chequeInfo.Shaba_Number}"},
 			{"NationalCode",$"{chequeInfo.NationalCode}"},
 		};
 		_printServices.PrintInvoice(@"Required\Reports\ChequeReport.mrt", dic);
@@ -390,7 +390,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 		var context = new TransferChequePage(new TransferChequeViewModel(_snackbarService, _navigationService)
 		{
 			Substatus = i.SubmitStatus,
-			Accunt_Number = i.Accunt_Number,
+			Shaba_Number = i.Shaba_Number,
 			Bank_Branch = i.Bank_Branch,
 			Bank_Name = i.Bank_Name,
 			PayerName = i.CusName,

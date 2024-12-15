@@ -1689,7 +1689,7 @@ namespace Infrastructure.Repositories
 								 Id = doc.Id,
 								 Price = doc.Price,
 								 SubmitDate = doc.SubmitDate,
-								 Accunt_Number = che.Accunt_Number,
+								 Shaba_Number = che.Accunt_Number,
 								 Bank_Branch = che.Bank_Branch,
 								 Bank_Name = che.Bank_Name,
 								 Cheque_Number = che.Cheque_Number,
@@ -1735,7 +1735,7 @@ namespace Infrastructure.Repositories
 								 SubmitDate = doc.SubmitDate,
 								 DueDate = che.Due_Date,
 								 TransferDate = che.TransferdDate,
-								 Accunt_Number = che.Accunt_Number,
+								 Shaba_Number = che.Accunt_Number,
 								 Bank_Branch = che.Bank_Branch,
 								 Bank_Name = che.Bank_Name,
 								 Cheque_Number = che.Cheque_Number,
@@ -1784,7 +1784,7 @@ namespace Infrastructure.Repositories
 								 Price = doc.Price,
 								 DueShamsiDate = che.Due_Date.ToShamsiDateNotSlash(pc),
 								 StingShamsiDate = che.Due_Date.ShamsiDateToString(pc),
-								 Accunt_Number = che.Accunt_Number,
+								 Shaba_Number = che.Accunt_Number,
 								 Bank_Branch = che.Bank_Branch,
 								 Bank_Name = che.Bank_Name,
 								 Cheque_Number = che.Cheque_Number,
@@ -1811,7 +1811,7 @@ namespace Infrastructure.Repositories
 			string cheque_Number,
 			string? cheque_Series,
 			string? siadyNumber,
-			string accunt_Number,
+			string shaba_Number,
 			string bank_Name,
 			string bank_Branch,
 			string cheque_Owner)
@@ -1833,7 +1833,7 @@ namespace Infrastructure.Repositories
 				 cheque_Number,
 				 cheque_Series,
 				 siadyNumber,
-				 accunt_Number,
+				 shaba_Number,
 				 bank_Name,
 				 bank_Branch,
 				 cheque_Owner)));
@@ -1862,7 +1862,7 @@ namespace Infrastructure.Repositories
 			string cheque_Number,
 			string? cheque_Series,
 			string? siadyNumber,
-			string accunt_Number,
+			string shaba_Number,
 			string bank_Name,
 			string bank_Branch,
 			string cheque_Owner)
@@ -1884,7 +1884,7 @@ namespace Infrastructure.Repositories
 				  cheque_Number,
 				  cheque_Series,
 				  siadyNumber,
-				  accunt_Number,
+				  shaba_Number,
 				  bank_Name,
 				  bank_Branch,
 				  cheque_Owner)));
@@ -1911,7 +1911,7 @@ namespace Infrastructure.Repositories
 			string cheque_Number,
 			string? cheque_Series,
 			string? siadyNumber,
-			string accunt_Number,
+			string shaba_Number,
 			string bank_Name,
 			string bank_Branch,
 			string cheque_Owner)
@@ -1935,7 +1935,7 @@ namespace Infrastructure.Repositories
 				cheque_Number,
 				cheque_Series,
 				siadyNumber,
-				accunt_Number,
+				shaba_Number,
 				bank_Name,
 				bank_Branch,
 				cheque_Owner)));
@@ -1960,7 +1960,7 @@ namespace Infrastructure.Repositories
 			string cheque_Number,
 			string? cheque_Series,
 			string? siadyNumber,
-			string accunt_Number,
+			string shaba_Number,
 			string bank_Name,
 			string bank_Branch,
 			string cheque_Owner)
@@ -2012,7 +2012,7 @@ namespace Infrastructure.Repositories
 					checque.Payer = cusId;
 				}
 
-				checque.SetAccunt_Number(accunt_Number);
+				checque.SetAccunt_Number(shaba_Number);
 				checque.SetBank_Branch(bank_Branch);
 				checque.SetCheque_Owner(cheque_Owner);
 				checque.SetCheque_Number(cheque_Number);

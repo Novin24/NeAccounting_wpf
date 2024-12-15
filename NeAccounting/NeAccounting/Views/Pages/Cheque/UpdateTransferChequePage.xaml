@@ -265,6 +265,7 @@
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
+                                        
                                         Text="{Binding ViewModel.Accunt_Number,Mode=OneTime}"
                                         IsReadOnly="True"
                                         FontFamily="Calibri" />

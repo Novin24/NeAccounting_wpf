@@ -76,7 +76,7 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
 	/// <summary>
 	/// شماره شبا
 	/// </summary>
-	public string Accunt_Number { get; set; }
+	public string Shaba_Number { get; set; }
 
     /// <summary>
     /// نام بانک
@@ -180,7 +180,7 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
 
         #region CreatePayDocumetn
         using UnitOfWork db = new();
-        var (e, s) = await db.DocumentManager.CreateGarantyCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate, Price.Value, Cheque_Number, Cheque_Series, SiadyNumber, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
+        var (e, s) = await db.DocumentManager.CreateGarantyCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate, Price.Value, Cheque_Number, Cheque_Series, SiadyNumber, Shaba_Number, Bank_Name, Bank_Branch, Cheque_Owner);
         if (s)
         {
             await db.SaveChangesAsync();

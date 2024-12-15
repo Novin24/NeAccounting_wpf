@@ -48,7 +48,7 @@ namespace DomainShared.ViewModels.Document
 		/// <summary>
 		/// شماره شبا
 		/// </summary>
-		public string? Accunt_Number { get; set; }
+		public string? Shaba_Number { get; set; }
 
 		/// <summary>
 		/// نام بانک

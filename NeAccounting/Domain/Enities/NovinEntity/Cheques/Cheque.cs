@@ -57,7 +57,7 @@ namespace Domain.NovinEntity.Cheques
 		public long Serial { get; set; }
 
         /// <summary>
-        /// شماره حساب
+        /// شماره شبا
         /// </summary>
         public string? Accunt_Number { get; private set; }
 
