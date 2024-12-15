@@ -221,6 +221,8 @@
                                            Text="سری چک"
                                            Margin="5 0 0 3" />
                                 <ui:TextBox TextAlignment="Center"
+                                            PreviewTextInput="TextBox_PreviewTextInput"
+                                            Text="{Binding ViewModel.Cheque_Series, Mode=OneWayToSource}"
                                             FontSize="14"
                                             FontFamily="Calibri" />
                             </StackPanel>

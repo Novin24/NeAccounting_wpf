@@ -1737,6 +1737,7 @@ namespace Infrastructure.Repositories
                                  Bank_Branch = che.Bank_Branch,
                                  Bank_Name = che.Bank_Name,
                                  Cheque_Number = che.Cheque_Number,
+                                 Cheque_Series = che.Cheque_Series,
                                  Cheque_Owner = che.Cheque_Owner,
                                  PayCusName = payCus.Name,
                                  PayerId = payCus.Id,
@@ -1785,6 +1786,7 @@ namespace Infrastructure.Repositories
 								 Bank_Name = che.Bank_Name,
 								 Cheque_Number = che.Cheque_Number,
 								 Cheque_Owner = che.Cheque_Owner,
+								 Cheque_Series = che.Cheque_Series,
 								 NationalCode = recCus.NationalCode.ToString(),
 								 RecCusName = recCus.Name,
 
@@ -1803,7 +1805,8 @@ namespace Infrastructure.Repositories
             DateTime dueDate,
             long price,
             string cheque_Number,
-            string accunt_Number,
+			string? cheque_Series,
+			string accunt_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner)
@@ -1823,7 +1826,8 @@ namespace Infrastructure.Repositories
                  customerId,
                  dueDate,
                  cheque_Number,
-                 accunt_Number,
+                 cheque_Series,
+				 accunt_Number,
                  bank_Name,
                  bank_Branch,
                  cheque_Owner)));
@@ -1850,7 +1854,8 @@ namespace Infrastructure.Repositories
             DateTime dueDate,
             long price,
             string cheque_Number,
-            string accunt_Number,
+			string? cheque_Series,
+			string accunt_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner)
@@ -1870,7 +1875,8 @@ namespace Infrastructure.Repositories
                   Guid.Empty,
                   dueDate,
                   cheque_Number,
-                  accunt_Number,
+                  cheque_Series,
+				  accunt_Number,
                   bank_Name,
                   bank_Branch,
                   cheque_Owner)));
@@ -1895,6 +1901,7 @@ namespace Infrastructure.Repositories
             DateTime? dueDate,
             long price,
             string cheque_Number,
+			string? cheque_Series,
             string accunt_Number,
             string bank_Name,
             string bank_Branch,
@@ -1917,7 +1924,8 @@ namespace Infrastructure.Repositories
                 customerId,
                 dueDate,
                 cheque_Number,
-                accunt_Number,
+				cheque_Series,
+				accunt_Number,
                 bank_Name,
                 bank_Branch,
                 cheque_Owner)));

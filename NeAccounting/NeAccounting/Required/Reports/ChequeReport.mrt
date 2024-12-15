@@ -7,7 +7,7 @@
     <Relations isList="true" count="0" />
     <Report isRef="0" />
     <Resources isList="true" count="0" />
-    <Variables isList="true" count="11">
+    <Variables isList="true" count="12">
       <value>,Cheque_Number,Cheque_Number,,System.String,,False,False,False,False</value>
       <value>,Bank_Name,Bank_Name,,System.String,,False,False,False,False</value>
       <value>,Bank_Branch,Bank_Branch,,System.String,,False,False,False,False</value>
@@ -19,6 +19,7 @@
       <value>,StingShamsiDate,StingShamsiDate,,System.String,,False,False,False,False</value>
       <value>,StringPrice,StringPrice,,System.String,,False,False,False,False</value>
       <value>,NationalCode,NationalCode,,System.String,,False,False,False,False</value>
+      <value>,Cheque_Series,Cheque_Series,,System.String,,False,False,False,False</value>
     </Variables>
   </Dictionary>
   <EngineVersion>EngineV2</EngineVersion>
@@ -29,7 +30,7 @@
     <Page2 Ref="2" type="Page" isKey="true">
       <Border>None;Black;2;Solid;False;4;Black</Border>
       <Brush>Transparent</Brush>
-      <Components isList="true" count="18">
+      <Components isList="true" count="16">
         <Image1 Ref="3" type="Image" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0.2,0.7,7.1,3.4</ClientRectangle>
@@ -21991,24 +21992,9 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Page isRef="2" />
           <Parent isRef="2" />
         </Image2>
-        <Text2 Ref="5" type="Text" isKey="true">
+        <Text3 Ref="5" type="Text" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>1.7,0.9,0.7,0.2</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Expressions isList="true" count="0" />
-          <Font>Arial,8</Font>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text2</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
-          <Text>{Cheque_Number}</Text>
-          <TextBrush>Black</TextBrush>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text2>
-        <Text3 Ref="6" type="Text" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>2.4,0.9,1.2,0.2</ClientRectangle>
+          <ClientRectangle>2.4,0.9,1.2,0.5</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Font>Calibri,8,Bold</Font>
@@ -22019,10 +22005,10 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Parent isRef="2" />
           <Text>بانک {Bank_Name}</Text>
           <TextBrush>[0:0:0]</TextBrush>
+          <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
           <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
         </Text3>
-        <Text4 Ref="7" type="Text" isKey="true">
+        <Text4 Ref="6" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>4.1,0.9,2.2,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -22037,7 +22023,7 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Type>Expression</Type>
           <VertAlignment>Center</VertAlignment>
         </Text4>
-        <Text5 Ref="8" type="Text" isKey="true">
+        <Text5 Ref="7" type="Text" isKey="true">
           <AllowHtmlTags>True</AllowHtmlTags>
           <Brush>Transparent</Brush>
           <ClientRectangle>0.6,2.9,2.7,0.3</ClientRectangle>
@@ -22055,12 +22041,12 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Type>Expression</Type>
           <VertAlignment>Center</VertAlignment>
         </Text5>
-        <Text7 Ref="9" type="Text" isKey="true">
+        <Text7 Ref="8" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>4.3,3.3,2,0.3</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Font>Arial,12</Font>
+          <Font>Calibri,10</Font>
           <HorAlignment>Right</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text7</Name>
@@ -22070,12 +22056,12 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <TextBrush>Black</TextBrush>
           <VertAlignment>Center</VertAlignment>
         </Text7>
-        <Text6 Ref="10" type="Text" isKey="true">
+        <Text6 Ref="9" type="Text" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>4.3,2.2,2.3,0.3</ClientRectangle>
+          <ClientRectangle>4.3,2.3,2.3,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Font>Calibri,12</Font>
+          <Font>Calibri,10</Font>
           <HorAlignment>Right</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text6</Name>
@@ -22083,9 +22069,8 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Parent isRef="2" />
           <Text>{CusName}</Text>
           <TextBrush>Black</TextBrush>
-          <VertAlignment>Center</VertAlignment>
         </Text6>
-        <Text1 Ref="11" type="Text" isKey="true">
+        <Text1 Ref="10" type="Text" isKey="true">
           <AllowHtmlTags>True</AllowHtmlTags>
           <Brush>Transparent</Brush>
           <ClientRectangle>4.8,1.1,1.5,0.2</ClientRectangle>
@@ -22103,7 +22088,7 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Type>Expression</Type>
           <VertAlignment>Bottom</VertAlignment>
         </Text1>
-        <Text8 Ref="12" type="Text" isKey="true">
+        <Text8 Ref="11" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>4.2,3.7,2.4,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -22118,7 +22103,7 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <TextBrush>Black</TextBrush>
           <VertAlignment>Bottom</VertAlignment>
         </Text8>
-        <Text9 Ref="13" type="Text" isKey="true">
+        <Text9 Ref="12" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>3.6,1.4,2.4,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -22134,12 +22119,12 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Type>Expression</Type>
           <VertAlignment>Center</VertAlignment>
         </Text9>
-        <Text10 Ref="14" type="Text" isKey="true">
+        <Text10 Ref="13" type="Text" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>1,1.8,4.3,0.3</ClientRectangle>
+          <ClientRectangle>1,1.9,4.3,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Font>Calibri,12</Font>
+          <Font>Calibri,10</Font>
           <HorAlignment>Right</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text10</Name>
@@ -22150,12 +22135,12 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Type>Expression</Type>
           <VertAlignment>Center</VertAlignment>
         </Text10>
-        <Text11 Ref="15" type="Text" isKey="true">
+        <Text11 Ref="14" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>1.7,2.2,1.5,0.3</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Font>Arial,12</Font>
+          <Font>Arial,10</Font>
           <HorAlignment>Right</HorAlignment>
           <Margins>0,0,0,0</Margins>
           <Name>Text11</Name>
@@ -22165,7 +22150,7 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <TextBrush>Black</TextBrush>
           <VertAlignment>Center</VertAlignment>
         </Text11>
-        <Image3 Ref="16" type="Image" isKey="true">
+        <Image3 Ref="15" type="Image" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>0.5,0.9,0.6,0.6</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -22218,7 +22203,7 @@ MiP+t6r+NfBPJTO4lMzgUjKDS8mMfwD+YYy2sIumnQAAAABJRU5ErkJggg==</ImageBytes>
           <Parent isRef="2" />
           <Stretch>True</Stretch>
         </Image3>
-        <Image4 Ref="17" type="Image" isKey="true">
+        <Image4 Ref="16" type="Image" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>3.6,0.8,0.5,0.5</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -22317,26 +22302,9 @@ MTExMTExMTExMTEx/78vrvJ6LRGenS4AAAAASUVORK5CYII=</ImageBytes>
           <Stretch>True</Stretch>
           <VertAlignment>Center</VertAlignment>
         </Image4>
-        <Text12 Ref="18" type="Text" isKey="true">
+        <Text13 Ref="17" type="Text" isKey="true">
           <Brush>Transparent</Brush>
-          <ClientRectangle>1.6,0.9,0.1,0.2</ClientRectangle>
-          <Conditions isList="true" count="0" />
-          <Expressions isList="true" count="0" />
-          <Font>Arial,8</Font>
-          <Guid>dda414c3bea54b21af9f0e9c5eb50883</Guid>
-          <HorAlignment>Center</HorAlignment>
-          <Margins>0,0,0,0</Margins>
-          <Name>Text12</Name>
-          <Page isRef="2" />
-          <Parent isRef="2" />
-          <Text>/</Text>
-          <TextBrush>Black</TextBrush>
-          <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
-        </Text12>
-        <Text13 Ref="19" type="Text" isKey="true">
-          <Brush>Transparent</Brush>
-          <ClientRectangle>1.2,0.9,0.4,0.2</ClientRectangle>
+          <ClientRectangle>1.2,0.9,1.2,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
           <Font>Arial,8</Font>
@@ -22345,12 +22313,11 @@ MTExMTExMTExMTEx/78vrvJ6LRGenS4AAAAASUVORK5CYII=</ImageBytes>
           <Name>Text13</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
-          <Text>999999</Text>
+          <Text>{Cheque_Series} / {Cheque_Number}</Text>
           <TextBrush>Black</TextBrush>
           <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
         </Text13>
-        <Text14 Ref="20" type="Text" isKey="true">
+        <Text14 Ref="18" type="Text" isKey="true">
           <Brush>Transparent</Brush>
           <ClientRectangle>1.2,1.2,1.2,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
@@ -22364,7 +22331,6 @@ MTExMTExMTExMTEx/78vrvJ6LRGenS4AAAAASUVORK5CYII=</ImageBytes>
           <Text>9999999999999999</Text>
           <TextBrush>Black</TextBrush>
           <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
         </Text14>
       </Components>
       <Conditions isList="true" count="0" />
@@ -22390,10 +22356,10 @@ MTExMTExMTExMTEx/78vrvJ6LRGenS4AAAAASUVORK5CYII=</ImageBytes>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>12/14/2024 4:43:47 PM</ReportChanged>
+  <ReportChanged>12/15/2024 11:34:51 AM</ReportChanged>
   <ReportCreated>12/1/2024 7:43:20 PM</ReportCreated>
   <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\ChequeReport.mrt</ReportFile>
-  <ReportGuid>7d7165ff0bd945cf9af3d50d3618b852</ReportGuid>
+  <ReportGuid>c3415389cd524eb09e3b59fb8c184231</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>

@@ -27,9 +27,14 @@ namespace DomainShared.ViewModels.Document
 		public long Price { get; set; }
 
 		/// <summary>
-		/// شماره چک
+		/// سریال چک
 		/// </summary>
 		public string Cheque_Number { get; set; }
+
+		/// <summary>
+		/// سری چک
+		/// </summary>
+		public string? Cheque_Series { get; set; }
 		public string Accunt_Number { get; set; }
 
 		/// <summary>

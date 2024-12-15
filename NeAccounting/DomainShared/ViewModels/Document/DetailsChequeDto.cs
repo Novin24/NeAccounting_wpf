@@ -18,8 +18,9 @@ namespace DomainShared.ViewModels.Document
         public DateTime? DueDate { get; set; }
         public DateTime? TransferDate{ get; set; }
         public long Price { get; set; }
-        public string Cheque_Number { get; set; }
-        public string Accunt_Number { get; set; }
+		public string Cheque_Number { get; set; }
+		public string Cheque_Series { get; set; }
+		public string Accunt_Number { get; set; }
         public string Bank_Name { get; set; }
         public string Bank_Branch { get; set; }
         public string Cheque_Owner { get; set; }

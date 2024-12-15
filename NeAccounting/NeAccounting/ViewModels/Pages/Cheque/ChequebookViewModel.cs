@@ -301,8 +301,9 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
             Accunt_Number = i.Accunt_Number,
             Bank_Branch = i.Bank_Branch,
             Bank_Name = i.Bank_Name,
-            Cheque_Number = i.Cheque_Number,
-            PayCusName = i.PayCusName,
+			Cheque_Number = i.Cheque_Number,
+			Cheque_Series = i.Cheque_Series,
+			PayCusName = i.PayCusName,
             PayCusNum = i.PayCusNum,
             CusName = i.RecCusName,
             CusNum = i.RecCusNum,
@@ -335,6 +336,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 		Dictionary<string, string> dic = new()
 		{
 			{"Cheque_Number",$"{chequeInfo.Cheque_Number}"},
+			{"Cheque_Series",$"{chequeInfo.Cheque_Series}"},
 			{"Bank_Name",$"{chequeInfo.Bank_Name}"},
 			{"Bank_Branch",$"{chequeInfo.Bank_Branch}"},
 			{"Price",$"{chequeInfo.Price}"},

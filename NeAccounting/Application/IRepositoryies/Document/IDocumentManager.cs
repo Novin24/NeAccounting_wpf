@@ -307,7 +307,8 @@ namespace NeApplication.IRepositoryies
             DateTime dueDate,
             long price,
             string cheque_Number,
-            string accunt_Number,
+			string? cheque_Series,
+			string accunt_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
@@ -319,7 +320,8 @@ namespace NeApplication.IRepositoryies
             DateTime dueDate,
             long price,
             string cheque_Number,
-            string accunt_Number,
+			string? cheque_Series,
+			string accunt_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
@@ -331,7 +333,8 @@ namespace NeApplication.IRepositoryies
             DateTime? dueDate,
             long price,
             string cheque_Number,
-            string accunt_Number,
+			string? cheque_Series,
+			string accunt_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
