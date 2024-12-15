@@ -20,6 +20,7 @@
         <KeyBinding Key="F1"
                     Command="{Binding ViewModel.SubmitCommand}" />
     </Page.InputBindings>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -30,6 +31,7 @@
             <RowDefinition Height="45" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="45"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -37,6 +39,7 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="45"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
                 Grid.Column="0"
@@ -64,6 +67,7 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
+        
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="2"
@@ -92,6 +96,7 @@
 
             </Border.Background>
         </Border>
+        
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="1"
@@ -363,5 +368,6 @@
                 </Border>
             </Grid>
         </Border>
+        
     </Grid>
 </Page>
