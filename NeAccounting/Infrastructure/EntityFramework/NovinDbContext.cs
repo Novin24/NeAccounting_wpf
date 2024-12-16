@@ -27,7 +27,9 @@ namespace Infrastructure.EntityFramework
 
 			//ابلفضل
 			//optionsBuilder.UseSqlServer($"Data Source=(localDb)\\MssqlLocalDb;Database={NeAccountingConstants.NvoinDbConnectionStrint};Integrated Security=True;User ID=DESKTOP-N0GO0QP\\ALI;");
-		}
+		
+        }
+
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
