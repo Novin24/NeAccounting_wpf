@@ -28,7 +28,12 @@ namespace DomainShared.ViewModels.Document
 		/// <summary>
 		/// مبلغ
 		/// </summary>
-		public long Price { get; set; }
+		public String Price { get; set; }
+
+		/// <summary>
+		/// مبلغ به حروف
+		/// </summary>
+		public String stringPrice { get; set; }
 
 		/// <summary>
 		/// سریال چک

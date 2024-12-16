@@ -259,7 +259,7 @@
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
-                                        Text="{Binding ViewModel.Accunt_Number,Mode=OneWayToSource}"
+                                        Text="{Binding ViewModel.Shaba_Number,Mode=OneWayToSource}"
                                         PreviewTextInput="TextBox_PreviewTextInput"
                                         Height="36"
                                         FontFamily="Calibri" />

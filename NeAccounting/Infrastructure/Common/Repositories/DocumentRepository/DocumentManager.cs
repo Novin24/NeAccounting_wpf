@@ -1781,7 +1781,8 @@ namespace Infrastructure.Repositories
 							 select new ChequeForPrintDto
 							 {
 
-								 Price = doc.Price,
+								 Price = doc.Price.AddNegatives(),
+								 stringPrice = doc.Price.ToString().NumberToPersianString(),
 								 DueShamsiDate = che.Due_Date.ToShamsiDateNotSlash(pc),
 								 StingShamsiDate = che.Due_Date.ShamsiDateToString(pc),
 								 Shaba_Number = che.Accunt_Number,
@@ -1801,7 +1802,7 @@ namespace Infrastructure.Repositories
 			}
 			return (true, itm);
 		}
-
+		
 		public async Task<(string error, bool isSuccess, Guid docId)> CreateRecCheque(Guid customerId,
 			SubmitChequeStatus submitStatus,
 			string? descripion,

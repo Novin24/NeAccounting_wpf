@@ -263,7 +263,7 @@
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
-                                        Text="{Binding ViewModel.Accunt_Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Text="{Binding ViewModel.Shaba_Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Height="36"
                                         FontFamily="Calibri" />
                         </StackPanel>

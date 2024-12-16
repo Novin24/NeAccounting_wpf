@@ -103,7 +103,7 @@ namespace NeAccounting.ViewModels
 		/// شماره شبا
 		/// </summary>
 		[ObservableProperty]
-        private string _shaba_Number;
+        private string? _shaba_Number;
 
         /// <summary>
         /// نام بانک

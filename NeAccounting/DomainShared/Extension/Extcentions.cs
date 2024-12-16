@@ -17,7 +17,19 @@ namespace DomainShared.Extension
 		{
 			if (date == null)
 				return string.Empty;
-			return string.Concat(pc.GetYear(date.Value), "", pc.GetMonth(date.Value), "", pc.GetDayOfMonth(date.Value));
+
+			string month = pc.GetMonth(date.Value).ToString("D2");
+			string day = pc.GetDayOfMonth(date.Value).ToString("D2");
+			return string.Concat(pc.GetYear(date.Value), "", month, "", day);
+		}
+
+		public static string AddNegatives(this long price)
+		{
+			string priceString = price.ToString();
+			int length = priceString.Length;
+			int negativesToAdd = Math.Max(0, 15 - length); 
+
+			return new string('-', negativesToAdd) + priceString; 
 		}
 
 		public static string ShamsiDateToString(this DateTime? date, PersianCalendar pc)
