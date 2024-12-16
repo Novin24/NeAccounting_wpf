@@ -27,7 +27,6 @@ namespace Infrastructure.EntityFramework
 			// ابلفضل
 			//optionsBuilder.UseSqlServer("Data Source=(localDb)\\MssqlLocalDb;Database=BaseDomain;Integrated Security=True;User ID=DESKTOP-N0GO0QP\\ALI;");
 
-
         }
 
 		private static readonly MethodInfo ConfigureBasePropertiesMethodInfo = typeof(BaseDomainDbContext)
