@@ -20,6 +20,14 @@ namespace NeAccounting.Views.Pages
         private void txt_name_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             ViewModel.WorkerId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
-        }
-    }
+		}
+		private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
+		{
+			if (!IsInitialized)
+			{
+				return;
+			}
+			ViewModel.PageChengeCommand.Execute(null);
+		}
+	}
 }

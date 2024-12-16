@@ -21,10 +21,13 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private Guid? _workerId = null;
 
-        [ObservableProperty]
-        private int _pageNum;
+		[ObservableProperty]
+		private int _currentPage = 1;
 
-        [ObservableProperty]
+		[ObservableProperty]
+		private int _pageCount = 1;
+
+		[ObservableProperty]
         private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
         [ObservableProperty]
@@ -50,15 +53,22 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             AuSuBox = await db.WorkerManager.GetWorkers();
-            List = await db.WorkerManager.GetFunctionList(WorkerId, PageNum);
-        }
+            var t = await db.WorkerManager.GetFunctionList(WorkerId, CurrentPage);
+			CurrentPage = t.CurrentPage;
+			PageCount = t.PageCount;
+            List = t.Items;
+		}
 
         [RelayCommand]
         private async Task OnSearchWorker()
-        {
-            using UnitOfWork db = new();
-            List = await db.WorkerManager.GetFunctionList(WorkerId, PageNum);
-        }
+		{
+			using UnitOfWork db = new();
+			AuSuBox = await db.WorkerManager.GetWorkers();
+			var t = await db.WorkerManager.GetFunctionList(WorkerId, CurrentPage);
+			CurrentPage = t.CurrentPage;
+			PageCount = t.PageCount;
+			List = t.Items;
+		}
 
         [RelayCommand]
         private void OnAddClick(string parameter)
@@ -129,7 +139,7 @@ namespace NeAccounting.ViewModels
 
             var func = List.First(t => t.Details.Id == parameter.Id);
             using UnitOfWork db = new();
-            var list = await db.WorkerManager.GetFunctionList(WorkerId, PageNum);
+            var list = await db.WorkerManager.GetFunctionList(WorkerId, CurrentPage);
 
             var context = new UpdateFunctionPage(new UpdateFunctionViewModel(_navigationService, _snackbarService)
             {
@@ -141,11 +151,20 @@ namespace NeAccounting.ViewModels
                 FuncId = parameter.Id,
                 SubmitMonth = func.PersianMonth,
                 SubmitYear = func.PersianYear,
-                List = list,
+                List = list.Items,
                 PersonnelId = func.PersonelId
             });
 
             service.Navigate(pageType, context);
         }
-    }
+
+		[RelayCommand]
+		private async Task OnPageChenge()
+		{
+			using UnitOfWork db = new();
+			var t = await db.WorkerManager.GetFunctionList(WorkerId, CurrentPage);
+			PageCount = t.PageCount;
+			List = t.Items;
+		}
+	}
 }

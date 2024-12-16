@@ -83,5 +83,14 @@ namespace NeAccounting.Views.Pages
 
             _printServices.PrintInvoice(@"Required\Reports\SalaryReport.mrt", dic);
         }
-    }
+
+		private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
+		{
+			if (!IsInitialized)
+			{
+				return;
+			}
+			ViewModel.PageChengeCommand.ExecuteAsync(null);
+		}
+	}
 }
