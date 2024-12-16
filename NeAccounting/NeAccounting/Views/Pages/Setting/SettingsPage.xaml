@@ -218,7 +218,7 @@
                                FontFamily="Calibri"
                                Text="آدرس سایت : "
                                FontSize="15"/>
-                        <ui:Hyperlink NavigateUri="http://www.christ24.ir/" 
+                        <ui:Hyperlink NavigateUri="www.christ24.ir" 
                       FontSize="20"
                       Icon="{ui:SymbolIcon GlobeSurFace20}"  
                       Content="www.Christ24.ir"

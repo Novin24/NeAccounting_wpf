@@ -15,6 +15,7 @@ namespace Infrastructure.EntityFramework
                         DbContextOptionsBuilder optionsBuilder)
         {
 
+
 			//علی اصغر
 			//optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 
@@ -25,7 +26,6 @@ namespace Infrastructure.EntityFramework
 
 			// ابلفضل
 			//optionsBuilder.UseSqlServer("Data Source=(localDb)\\MssqlLocalDb;Database=BaseDomain;Integrated Security=True;User ID=DESKTOP-N0GO0QP\\ALI;");
-
 
         }
 

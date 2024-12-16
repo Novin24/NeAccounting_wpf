@@ -11,8 +11,60 @@ namespace DomainShared.Extension
             if (date == null)
                 return string.Empty;
             return string.Concat(pc.GetYear(date.Value), "/", pc.GetMonth(date.Value), "/", pc.GetDayOfMonth(date.Value));
-        }
-        public static string ToShamsiDate(this DateTime date, PersianCalendar pc)
+		}
+
+		public static string ToShamsiDateNotSlash(this DateTime? date, PersianCalendar pc)
+		{
+			if (date == null)
+				return string.Empty;
+
+			string month = pc.GetMonth(date.Value).ToString("D2");
+			string day = pc.GetDayOfMonth(date.Value).ToString("D2");
+			return string.Concat(pc.GetYear(date.Value), "", month, "", day);
+		}
+
+		public static string AddNegatives(this long price)
+		{
+			string priceString = price.ToString();
+			int length = priceString.Length;
+			int negativesToAdd = Math.Max(0, 15 - length); 
+
+			return new string('-', negativesToAdd) ; 
+		}
+
+		public static string ShamsiDateToString(this DateTime? date, PersianCalendar pc)
+		{
+			if (date == null)
+				return string.Empty;
+			string year = pc.GetYear(date.Value).ToString();
+            var month = pc.GetMonth(date.Value);
+			string day = pc.GetDayOfMonth(date.Value).ToString();
+			
+            string monthName = month switch
+			{
+				1 => "فروردین",
+				2 => "اردیبهشت",
+				3 => "خرداد",
+				4 => "تیر",
+				5 => "مرداد",
+				6 => "شهریور",
+				7 => "مهر",
+				8 => "آبان",
+				9 => "آذر",
+				10 => "دی",
+				11 => "بهمن",
+				12 => "اسفند",
+				_ => throw new ArgumentOutOfRangeException(nameof(month), "ماه نامعتبر است")
+			};
+
+			string dayInWords = day.NumberToPersianString();
+			string yearInWords = year.NumberToPersianString();
+
+			return $"{dayInWords} ، {monthName} ، {yearInWords}";
+
+		}
+
+		public static string ToShamsiDate(this DateTime date, PersianCalendar pc)
         {
             return string.Concat(pc.GetYear(date), "/", pc.GetMonth(date), "/", pc.GetDayOfMonth(date));
         }
@@ -44,8 +96,8 @@ namespace DomainShared.Extension
             return dataTable;
         }
 
-        #region NumberToPersianString
-        public static string NumberToPersianString(this string TXT)
+		#region NumberToPersianString
+		public static string NumberToPersianString(this string TXT)
         {
             string RET = string.Empty, STRVA;
             string[] MainStr = STR_To_Int(TXT);
