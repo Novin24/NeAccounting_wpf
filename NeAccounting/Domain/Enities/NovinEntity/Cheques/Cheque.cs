@@ -21,6 +21,7 @@ namespace Domain.NovinEntity.Cheques
         /// وضعیت ثبت
         /// </summary>
         public SubmitChequeStatus SubmitStatus { get; set; }
+
         /// <summary>
         /// وضعیت چک
         /// </summary>

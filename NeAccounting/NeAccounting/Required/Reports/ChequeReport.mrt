@@ -7,7 +7,7 @@
     <Relations isList="true" count="0" />
     <Report isRef="0" />
     <Resources isList="true" count="0" />
-    <Variables isList="true" count="13">
+    <Variables isList="true" count="14">
       <value>,Cheque_Number,Cheque_Number,,System.String,,False,False,False,False</value>
       <value>,Bank_Name,Bank_Name,,System.String,,False,False,False,False</value>
       <value>,Bank_Branch,Bank_Branch,,System.String,,False,False,False,False</value>
@@ -21,6 +21,7 @@
       <value>,NationalCode,NationalCode,,System.String,,False,False,False,False</value>
       <value>,Cheque_Series,Cheque_Series,,System.String,,False,False,False,False</value>
       <value>,SiadyNumber,SiadyNumber,,System.String,,False,False,False,False</value>
+      <value>,Mines,Mines,,System.String,,False,False,False,False</value>
     </Variables>
   </Dictionary>
   <EngineVersion>EngineV2</EngineVersion>
@@ -22036,7 +22037,7 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Name>Text5</Name>
           <Page isRef="2" />
           <Parent isRef="2" />
-          <Text>&lt;letter-spacing=".505"&gt;{Price}&lt;/letter-spacing&gt;</Text>
+          <Text>&lt;letter-spacing=".73"&gt;{Mines}&lt;/letter-spacing&gt;&lt;letter-spacing=".505"&gt;{Price}&lt;/letter-spacing&gt;</Text>
           <TextBrush>Black</TextBrush>
           <TextQuality>Wysiwyg</TextQuality>
           <Type>Expression</Type>
@@ -22357,10 +22358,10 @@ MTExMTExMTExMTEx/78vrvJ6LRGenS4AAAAASUVORK5CYII=</ImageBytes>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>12/15/2024 10:01:10 PM</ReportChanged>
+  <ReportChanged>12/16/2024 12:42:51 PM</ReportChanged>
   <ReportCreated>12/1/2024 7:43:20 PM</ReportCreated>
   <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\ChequeReport.mrt</ReportFile>
-  <ReportGuid>9dd1e0eb6edc499b8e27a6950ffa9160</ReportGuid>
+  <ReportGuid>34a6af0941d14dd4830ca67fe3e6d961</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>

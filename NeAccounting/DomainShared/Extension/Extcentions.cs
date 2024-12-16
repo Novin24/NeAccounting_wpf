@@ -29,7 +29,7 @@ namespace DomainShared.Extension
 			int length = priceString.Length;
 			int negativesToAdd = Math.Max(0, 15 - length); 
 
-			return new string('-', negativesToAdd) + priceString; 
+			return new string('-', negativesToAdd) ; 
 		}
 
 		public static string ShamsiDateToString(this DateTime? date, PersianCalendar pc)

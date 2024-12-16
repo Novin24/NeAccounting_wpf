@@ -28,7 +28,12 @@ namespace DomainShared.ViewModels.Document
 		/// <summary>
 		/// مبلغ
 		/// </summary>
-		public String Price { get; set; }
+		public long Price { get; set; }
+
+		/// <summary>
+		/// منفی های پشت مبلغ برای پرینت چک
+		/// </summary>
+		public string Mines { get; set; }
 
 		/// <summary>
 		/// مبلغ به حروف

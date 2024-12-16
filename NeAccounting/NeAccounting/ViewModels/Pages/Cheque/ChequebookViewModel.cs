@@ -346,6 +346,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			{"Bank_Name",$"{chequeInfo.Bank_Name}"},
 			{"Bank_Branch",$"{chequeInfo.Bank_Branch}"},
 			{"Price",$"{chequeInfo.Price}"},
+			{"Mines",$"{chequeInfo.Mines}"},
 			{"StringPrice",$"{chequeInfo.stringPrice}"},
 			{"Cheque_Owner",$"{chequeInfo.Cheque_Owner}"},
 			{"CusName",$"{chequeInfo.RecCusName}"},
