@@ -1800,6 +1800,7 @@ namespace Infrastructure.Repositories
 			{
 				return (false, new ChequeForPrintDto());
 			}
+
 			return (true, itm);
 		}
 		
@@ -1842,6 +1843,7 @@ namespace Infrastructure.Repositories
 				await DbContext.SaveChangesAsync();
 				id = t.Entity.Id;
 			}
+
 			catch (Exception ex)
 			{
 				if (ex is ArgumentException aex)
@@ -1917,14 +1919,17 @@ namespace Infrastructure.Repositories
 			string bank_Branch,
 			string cheque_Owner)
 		{
+
 			var customer = await DbContext.Set<Customer>().FirstOrDefaultAsync(t => t.Id == customerId);
 			if (customer == null)
 			{
 				return new("مشتری مورد نظر یافت نشد!!!", false);
 			}
+
 			customer.HaveChequeGuarantee = true;
 			customer.ChequeCredit += price;
 			customer.TotalCredit += price;
+
 			try
 			{
 				await Entities.AddAsync(new Document(customerId, price, DocumntType.GarantyCheque, PaymentType.GurantyCheque, descripion, submitDate, true)
@@ -1943,6 +1948,7 @@ namespace Infrastructure.Repositories
 
 				DbContext.Set<Customer>().Update(customer);
 			}
+
 			catch (Exception ex)
 			{
 				return new(" خطا در اتصال به پایگاه داده code(88t46993)!!!", false);

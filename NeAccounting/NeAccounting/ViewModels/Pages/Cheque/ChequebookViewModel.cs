@@ -354,6 +354,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			{"Accunt_Number",$"{chequeInfo.Shaba_Number}"},
 			{"NationalCode",$"{chequeInfo.NationalCode}"},
 		};
+
 		_printServices.PrintInvoice(@"Required\Reports\ChequeReport.mrt", dic);
 	}
 
