@@ -148,9 +148,10 @@ namespace NeAccounting.Views.Pages
                 txt_total_price.Text = string.Empty;
                 txt_UnitDescription.Text = string.Empty;
                 lbl_cusId.Text = string.Empty;
-            }
+			}
+			await ViewModel.LoadMaterialList();
 
-        }
+		}
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
         {

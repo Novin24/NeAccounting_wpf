@@ -143,6 +143,7 @@ namespace NeAccounting.Views.Pages
                 txt_UnitDescription.Text = string.Empty;
                 lbl_cusId.Text = string.Empty;
             }
+            await ViewModel.LoadMaterialList();
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)
