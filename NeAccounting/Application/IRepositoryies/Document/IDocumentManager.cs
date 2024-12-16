@@ -287,7 +287,9 @@ namespace NeApplication.IRepositoryies
         #region Cheque
         Task<(bool isSuccess, DetailsChequeDto itm)> GetChequeDetailById(Guid docId);
 
-        Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime,
+		Task<(bool isSuccess, ChequeForPrintDto itm)> GetChequeForPrint(Guid docId);
+
+		Task<PagedResulViewModel<ChequeListDtos>> GetChequeByDate(DateTime? startTime,
             DateTime? endTime,
             Guid? cusId,
             string chequeNumber,
@@ -305,7 +307,9 @@ namespace NeApplication.IRepositoryies
             DateTime dueDate,
             long price,
             string cheque_Number,
-            string accunt_Number,
+			string? cheque_Series,
+			string? siadyNumber,
+			string shaba_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
@@ -317,7 +321,9 @@ namespace NeApplication.IRepositoryies
             DateTime dueDate,
             long price,
             string cheque_Number,
-            string accunt_Number,
+			string? cheque_Series,
+			string? siadyNumber,
+			string shaba_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
@@ -329,7 +335,9 @@ namespace NeApplication.IRepositoryies
             DateTime? dueDate,
             long price,
             string cheque_Number,
-            string accunt_Number,
+			string? cheque_Series,
+			string? siadyNumber,
+			string shaba_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
@@ -343,7 +351,9 @@ namespace NeApplication.IRepositoryies
             DateTime? dueDate,
             long price,
             string cheque_Number,
-            string accunt_Number,
+			string? cheque_Series,
+			string? siadyNumber,
+			string shaba_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner);
