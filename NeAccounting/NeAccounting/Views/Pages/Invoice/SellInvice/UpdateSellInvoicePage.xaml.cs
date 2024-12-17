@@ -46,7 +46,9 @@ namespace NeAccounting.Views.Pages
 				txt_MaterialName.Focus();
             }
             dgv_Inv.Items.Refresh();
-        }
+
+			ViewModel.LblMatEntityVisibility = Visibility.Visible;
+		}
 
         private void Txt_mat_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
@@ -136,7 +138,9 @@ namespace NeAccounting.Views.Pages
             _price = itm.Price;
             txt_Unit_price.Text = itm.Price.ToString();
             dgv_Inv.Items.Refresh();
-        }
+
+			ViewModel.LblMatEntityVisibility = Visibility.Collapsed;
+		}
 
 
         private bool Validation()
