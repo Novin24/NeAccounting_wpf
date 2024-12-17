@@ -249,7 +249,8 @@
                                             <TextBlock x:Name="lbl_matEntity"
                                                        TextAlignment="Center"
                                                        FontSize="14"
-                                                       Foreground="#BB8F60" />
+                                                       Foreground="#BB8F60"
+                                                       Visibility="{Binding ViewModel.LblMatEntityVisibility}" />
                                         </StackPanel>
                                     </DockPanel>
 
