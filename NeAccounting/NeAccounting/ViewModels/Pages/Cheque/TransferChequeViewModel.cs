@@ -52,7 +52,7 @@ namespace NeAccounting.ViewModels
         /// تاریخ سررسید
         /// </summary>
         [ObservableProperty]
-        private DateTime? _dueDate = DateTime.Now;
+        private String? _dueDate ;
 
         /// <summary>
         /// مبلغ چک 

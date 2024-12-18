@@ -22015,7 +22015,7 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <ClientRectangle>4.1,0.9,2.2,0.2</ClientRectangle>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
-          <Font>Calibri,7,Bold</Font>
+          <Font>Calibri,8,Bold</Font>
           <Margins>0,0,0,0</Margins>
           <Name>Text4</Name>
           <Page isRef="2" />
@@ -22023,7 +22023,6 @@ sslx3v0XLgeQM/leT5gAAAAASUVORK5CYII=</ImageBytes>
           <Text>شعبه : {Bank_Branch}</Text>
           <TextBrush>[0:0:0]</TextBrush>
           <Type>Expression</Type>
-          <VertAlignment>Center</VertAlignment>
         </Text4>
         <Text5 Ref="7" type="Text" isKey="true">
           <AllowHtmlTags>True</AllowHtmlTags>
@@ -22358,10 +22357,10 @@ MTExMTExMTExMTEx/78vrvJ6LRGenS4AAAAASUVORK5CYII=</ImageBytes>
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>12/16/2024 12:42:51 PM</ReportChanged>
+  <ReportChanged>12/17/2024 7:35:09 PM</ReportChanged>
   <ReportCreated>12/1/2024 7:43:20 PM</ReportCreated>
   <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\ChequeReport.mrt</ReportFile>
-  <ReportGuid>34a6af0941d14dd4830ca67fe3e6d961</ReportGuid>
+  <ReportGuid>bf570af7bce847c693c342553027dc34</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>
