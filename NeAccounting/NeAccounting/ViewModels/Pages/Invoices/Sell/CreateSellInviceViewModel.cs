@@ -158,10 +158,15 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         using UnitOfWork db = new();
         Cuslist = await db.CustomerManager.GetDisplayUser(false, null, true);
         LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
-        MatList = await db.MaterialManager.GetMaterails();
-    }
+		await LoadMaterialList();
+	}
+	public async Task LoadMaterialList()
+	{
+		using UnitOfWork db = new();
+		MatList = await db.MaterialManager.GetMaterails();
+	}
 
-    public void OnNavigatedFrom()
+	public void OnNavigatedFrom()
     {
     }
 

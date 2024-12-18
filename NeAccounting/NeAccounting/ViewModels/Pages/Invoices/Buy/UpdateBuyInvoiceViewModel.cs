@@ -25,10 +25,16 @@ public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAw
         _windowsProviderService = serviceProvider;
         _navigationService = navigationService;
         _isreadonly = NeAccountingConstants.ReadOnlyMode;
-    }
+	}
 
-    #region Properties
-    private int RowId = 1;
+	/// <summary>
+	/// پنهان کردن موجودی
+	/// </summary>
+	[ObservableProperty]
+	private Visibility _lblMatEntityVisibility = Visibility.Visible;
+
+	#region Properties
+	private int RowId = 1;
 
     [ObservableProperty]
     private Guid _invoiceId;
