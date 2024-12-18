@@ -42,10 +42,13 @@ namespace NeAccounting.Views.Pages
                 txt_Unit_price.Text = string.Empty;
                 txt_total_price.Text = string.Empty;
                 txt_UnitDescription.Text = string.Empty;
-                txt_MaterialName.Focus();
+				lbl_matEntity.Text = string.Empty;
+				txt_MaterialName.Focus();
             }
             dgv_Inv.Items.Refresh();
-        }
+
+			ViewModel.LblMatEntityVisibility = Visibility.Visible;
+		}
 
         private void Txt_mat_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
@@ -56,7 +59,8 @@ namespace NeAccounting.Views.Pages
             ViewModel.MatPrice = mat.LastSellPrice;
             _totalEntity = mat.Entity;
             txt_UnitName.Text = mat.UnitName;
-            txt_Unit_price.Text = mat.LastSellPrice.ToString("N0");
+			lbl_matEntity.Text = mat.Entity.ToString("N0");
+			txt_Unit_price.Text = mat.LastSellPrice.ToString("N0");
             _price = mat.LastSellPrice;
         }
 
@@ -134,7 +138,9 @@ namespace NeAccounting.Views.Pages
             _price = itm.Price;
             txt_Unit_price.Text = itm.Price.ToString();
             dgv_Inv.Items.Refresh();
-        }
+
+			ViewModel.LblMatEntityVisibility = Visibility.Collapsed;
+		}
 
 
         private bool Validation()
