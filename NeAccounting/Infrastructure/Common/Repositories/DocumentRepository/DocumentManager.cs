@@ -1781,9 +1781,9 @@ namespace Infrastructure.Repositories
 							 select new ChequeForPrintDto
 							 {
 
-								 Price = doc.Price,
-								 Mines = doc.Price.AddNegatives(),
-								 stringPrice = doc.Price.ToString().NumberToPersianString(),
+								 Price = (doc.Price * 10),
+								 Mines = (doc.Price * 10).AddNegatives(),
+								 stringPrice = (doc.Price*10).ToString().NumberToPersianString(),
 								 DueShamsiDate = che.Due_Date.ToShamsiDateNotSlash(pc),
 								 StingShamsiDate = che.Due_Date.ShamsiDateToString(pc),
 								 Shaba_Number = che.Accunt_Number,

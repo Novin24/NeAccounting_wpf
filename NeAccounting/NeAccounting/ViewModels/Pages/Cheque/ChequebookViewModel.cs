@@ -204,6 +204,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			{
 				return;
 			}
+			PersianCalendar pc = new();
 			var cntx = new UpdateTransferChequePage(new UpdateTransferChequeViewModel(_snackbarService, _navigationService)
 			{
 				CusId = i.ReceverId,
@@ -222,7 +223,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 				CusNum = i.RecCusNum,
 				Description = i.RecDescripion,
 				DocId = parameter,
-				DueDate = i.DueDate,
+				DueDate = i.DueDate.ToShamsiDate(pc),
 				Price = i.Price,
 				EnumSource = SubmitChequeStatus.Register.ToEnumDictionary()
 			});
@@ -389,6 +390,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			users.Remove(payer);
 		}
 
+		PersianCalendar pc = new();
 		var context = new TransferChequePage(new TransferChequeViewModel(_snackbarService, _navigationService)
 		{
 			Substatus = i.SubmitStatus,
@@ -402,7 +404,7 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 			Cuslist = users,
 			Cheque_Owner = i.Cheque_Owner,
 			DocId = i.Id,
-			DueDate = i.DueDate,
+			DueDate = i.DueDate.ToShamsiDate(pc),
 			Price = i.Price,
 			EnumSource = SubmitChequeStatus.Register.ToEnumDictionary()
 		});

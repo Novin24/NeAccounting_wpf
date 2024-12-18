@@ -269,15 +269,19 @@
                                         IsReadOnly="True"
                                         FontFamily="Calibri" />
                         </StackPanel>
-
-                        <nu:PersianDatePicker Grid.Row="3"
-                                              Grid.Column="1"
-                                              VerticalAlignment="Center"
-                                              FlowDirection="LeftToRight"
-                                              SelectedDate="{Binding ViewModel.DueDate,Mode=OneTime}"
-                                              Margin="9 0 13 0"
-                                              IsEnabled="False"
-                                              LabelName="تاریخ سررسید" />
+                        <StackPanel Grid.Row="3"
+                                    Grid.Column="1"
+                                    Margin="20 6 30 0 ">
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="تاریخ سررسید"
+                                       Margin="5 0 0 5" />
+                            <ui:TextBox TextAlignment="Center"
+                                        FontSize="14"
+                                        Text="{Binding ViewModel.DueDate,Mode=OneTime}"
+                                        IsReadOnly="True"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
 
                         <StackPanel Grid.Row="4"
                                     Margin="30 5 20 5 ">
