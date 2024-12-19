@@ -34,6 +34,9 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private List<PunListDto> _list;
+
+        public ChangeMiniEntityDto Details { get; set; }
+
         public void OnNavigatedFrom()
         {
         }
@@ -174,6 +177,7 @@ namespace NeAccounting.ViewModels
                 servise.Navigate(pageType, context);
             }
         }
+
         [RelayCommand]
         private async Task OnActive(Guid id)
         {
@@ -186,8 +190,23 @@ namespace NeAccounting.ViewModels
             await db.MaterialManager.ChangeStatus(id, true);
             await db.SaveChangesAsync();
             List = await db.MaterialManager.GetMaterails(string.Empty, string.Empty);
-        }
-        [RelayCommand]
+		}
+
+		[RelayCommand]
+		private async Task OnChangeMiniEntity(ChangeMiniEntityDto parameter)
+		{
+			if (_isreadonly)
+			{
+				_snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
+				return;
+			}
+			using UnitOfWork db = new();
+			await db.MaterialManager.ChangeMiniEntity(parameter.Id, parameter.MiniEntity);
+			await db.SaveChangesAsync();
+			List = await db.MaterialManager.GetMaterails(string.Empty, string.Empty);
+		}
+
+		[RelayCommand]
         private async Task OnDeActive(Guid id)
         {
             if (_isreadonly)

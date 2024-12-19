@@ -47,6 +47,7 @@ namespace Domain.NovinEntity.Materials
             UnitId = unitId;
             IsService = isService;
 			Entity = 0;
+            MiniEntity = 0;
 			LastBuyPrice = 0;
             LastSellPrice = lastSellPrice;
             IsActive = true;
@@ -140,6 +141,14 @@ namespace Domain.NovinEntity.Materials
             PhysicalAddress = physicalAddress;
             return this;
         }
-        #endregion
-    }
+		public Pun SetMiniEntity(double miniEntity)
+		{
+			if (miniEntity < 0)
+				throw new ArgumentException(" حداقل موجودی منفی نمی‌تواند باشد.");
+
+			MiniEntity = miniEntity;
+			return this;
+		}
+		#endregion
+	}
 }

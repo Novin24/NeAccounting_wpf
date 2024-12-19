@@ -231,6 +231,9 @@
                                     HorizontalAlignment="Left"
                                     Padding="17 4 18 9"
                                     Command="{Binding ViewModel.SearchMaterialCommand }">جستجو</Button>
+                            <ui:Flyout Grid.Row="1"
+                                    Grid.Column="2"
+                                    Placement="Bottom"/>
                         </Grid>
                         <DataGrid Margin="0 0 0 30"
                                   Padding="7"
@@ -347,7 +350,7 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
                                 <DataGridTemplateColumn Header="عملیات"
-                                                        Width="75"
+                                                        Width="105"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -360,6 +363,26 @@
                                                          ToolTip="ویرایش">
                                                     <ui:SymbolIcon Symbol="Pen16" />
                                                 </Button>
+                                                <Button Margin="2"
+                                                        Command="{Binding Path=DataContext.ViewModel.ChangeMiniEntityCommand, RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
+                                                        CommandParameter="{Binding Id, Mode=OneWay}"
+                                                        Padding="7,5"
+                                                        ToolTip="حداقل موجودی"
+                                                        Click="OnMinimumStockClick">
+                                                    <ui:SymbolIcon Symbol="BoxDismiss20" />
+                                                </Button>
+
+                                                <ui:Flyout x:Name="MinimumStockFlyout" Placement="Bottom">
+                                                    <StackPanel Margin="10">
+                                                        <TextBlock Text="حداقل موجودی جدید:" />
+                                                        <ui:TextBox x:Name="MinimumStockTextBox" Width="200" />
+                                                        <Button Content="تایید" 
+                                                                Margin="0,5,0,0" 
+                                                                Command="{Binding ViewModel.ConfirmMinimumStockCommand}" 
+                                                                CommandParameter="{Binding Path=DataContext.ViewModel.PunId, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" />
+                                                    </StackPanel>
+                                                </ui:Flyout>
+
                                                 <CheckBox IsChecked="{Binding IsActive}"
                                                           Tag="{Binding Id}"
                                                           Margin="5 0 -5 0"

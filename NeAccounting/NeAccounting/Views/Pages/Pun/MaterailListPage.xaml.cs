@@ -65,6 +65,25 @@ namespace NeAccounting.Views.Pages
             await ViewModel.DeActiveCommand.ExecuteAsync(id);
             }
         }
+		private void OnMinimumStockClick(object sender, RoutedEventArgs e)
+		{
+			// باز کردن Flyout با استفاده از x:Name
+			MinimumStockFlyout.IsOpen = true;
+		}
+		private async void ConfirmMinimumStockClick(object sender, RoutedEventArgs e)
+		{
+			// گرفتن مقدار از TextBox
+			var miniStockValue = MinimumStockTextBox.Text;
 
-    }
+			// فرض کنید CommandParameter از اطلاعات درست استفاده می‌کند
+			if (Guid.TryParse((sender as Button).CommandParameter.ToString(), out Guid id))
+			{
+				await ViewModel.ChangeMiniEntityCommand(id, int.Parse(miniStockValue));
+			}
+
+			// بستن Flyout
+			MinimumStockFlyout.IsOpen = false;
+		}
+
+	}
 }

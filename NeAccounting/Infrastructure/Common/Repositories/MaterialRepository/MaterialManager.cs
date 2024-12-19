@@ -3,6 +3,7 @@ using DomainShared.ViewModels.Pun;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IRepositoryies;
+using System.Net;
 
 namespace Infrastructure.Repositories
 {
@@ -212,9 +213,34 @@ namespace Infrastructure.Repositories
                 return new(" خطا در اتصال به پایگاه داده code(93t46993)!!!", false);
             }
             return new(string.Empty, true);
-        }
+		}
+		public async Task<(string error, bool isSuccess)> ChangeMiniEntity(
+		   Guid id, double miniEntity)
+		{
+			var mt = await Entities.FindAsync(id);
 
-        public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList)
+			if (mt == null)
+				return new("کالای مورد نظر یافت نشد !!!", false);
+
+			try
+			{
+				mt.SetMiniEntity(miniEntity);
+
+				Entities.Update(mt);
+				await DbContext.SaveChangesAsync();
+			}
+			catch (Exception ex)
+			{
+				if (ex is ArgumentException aex)
+				{
+					return new(aex.Message, false);
+				}
+				return new(" خطا در اتصال به پایگاه داده code(79t46993)!!!", false);
+			}
+			return new(string.Empty, true);
+		}
+
+		public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList)
         {
             var materialList = matList.Select(t => new Pun(t.Id,
                 t.MaterialName,

@@ -49,9 +49,12 @@ namespace NeApplication.IRepositoryies
             double entity,
             bool DecreaseOrIncrease,
             long? lastPrice = null);
-        Task<(string error, bool isSuccess)> ChangeStatus(
-           Guid id, bool active);
+		Task<(string error, bool isSuccess)> ChangeStatus(
+		   Guid id, bool active);
 
-        Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList);
+		Task<(string error, bool isSuccess)> ChangeMiniEntity(
+		   Guid id, double miniEntity);
+
+		Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList);
     }
 }
