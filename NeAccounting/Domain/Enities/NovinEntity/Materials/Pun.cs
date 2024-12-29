@@ -144,7 +144,7 @@ namespace Domain.NovinEntity.Materials
 		public Pun SetMiniEntity(double miniEntity)
 		{
 			if (miniEntity < 0)
-				throw new ArgumentException(" حداقل موجودی منفی نمی‌تواند باشد.");
+				throw new ArgumentException(" حداقل موجودی نمی‌تواند منفی باشد.");
 
 			MiniEntity = miniEntity;
 			return this;

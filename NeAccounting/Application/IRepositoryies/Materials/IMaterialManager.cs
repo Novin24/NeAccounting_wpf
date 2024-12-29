@@ -52,8 +52,6 @@ namespace NeApplication.IRepositoryies
 		Task<(string error, bool isSuccess)> ChangeStatus(
 		   Guid id, bool active);
 
-		Task<(string error, bool isSuccess)> ChangeMiniEntity(
-		   Guid id, double miniEntity);
 
 		Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList);
     }
