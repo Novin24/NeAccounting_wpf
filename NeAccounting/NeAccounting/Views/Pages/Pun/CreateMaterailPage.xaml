@@ -179,10 +179,15 @@
                                       Grid.Column="1"
                                       Grid.ColumnSpan="3"
                                       LabelName="آخرین قیمت فروش"
-
                                       Value="{Binding ViewModel.LastSellPrice , Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                        <StackPanel Grid.Row="3"
+                        <nu:MoneyPack Grid.Row="3"
+                                      Grid.Column="1"
+                                      Grid.ColumnSpan="3"
+                                      LabelName="حداقل موجودی"
+                                      Value="{Binding ViewModel.MiniEntity , Mode= TwoWay}" />
+                        
+                        <StackPanel Grid.Row="5"
                                     Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     Margin="20 4 20 0">

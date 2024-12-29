@@ -56,8 +56,9 @@ namespace Infrastructure.Repositories
             long lastPrice,
             string serial,
             string address,
-            bool isManufacturedGoods)
-        {
+            bool isManufacturedGoods,
+            double? miniEntity = null)
+		{
             if (await TableNoTracking.AnyAsync(t => t.Name == name))
                 return new("کاربر گرامی این کالا از قبل تعریف شده می‌باشد!!!", false);
 
@@ -67,7 +68,8 @@ namespace Infrastructure.Repositories
                                unitId,
                                isService,
                                lastPrice,
-                               serial,
+							   miniEntity,
+							   serial,
                                address,
                                isManufacturedGoods));
                 await DbContext.SaveChangesAsync();

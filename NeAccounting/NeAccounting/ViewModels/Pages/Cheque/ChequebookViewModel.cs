@@ -449,7 +449,3 @@ namespace NeAccounting.ViewModels
         #endregion
     }
 }
-
-
-
-

@@ -168,6 +168,7 @@ namespace NeAccounting.ViewModels
                     Address = pun.Address,
                     IsManufacturedGoods = pun.IsManufacturedGoods,
                     MaterialName = pun.MaterialName,
+                    
                     UnitId = pun.UnitId,
                     AsuBox = asuBox
                 });

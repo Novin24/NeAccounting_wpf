@@ -17,7 +17,7 @@ namespace Domain.NovinEntity.Materials
         public string Name { get; private set; }
         public string Serial { get; private set; }
 		public double Entity { get; set; }
-		public double MiniEntity { get; set; }
+		public double MiniEntity { get; set; } = 0;
 		public long LastSellPrice { get; set; }
         public long LastBuyPrice { get; set; }
         public bool IsManufacturedGoods { get; set; }
@@ -36,18 +36,19 @@ namespace Domain.NovinEntity.Materials
             Guid unitId,
             bool isService,
             long lastSellPrice,
-            string serial,
+			double? miniEntity,
+			string serial,
             string physicalAddress,
             bool isManufacturedGoods)
         {
             SetName (name);
             SetSerial(serial);
             SetAddress(physicalAddress);
-            IsManufacturedGoods = isManufacturedGoods;
+            SetMiniEntity(miniEntity);
+			IsManufacturedGoods = isManufacturedGoods;
             UnitId = unitId;
             IsService = isService;
 			Entity = 0;
-            MiniEntity = 0;
 			LastBuyPrice = 0;
             LastSellPrice = lastSellPrice;
             IsActive = true;
@@ -141,12 +142,20 @@ namespace Domain.NovinEntity.Materials
             PhysicalAddress = physicalAddress;
             return this;
         }
-		public Pun SetMiniEntity(double miniEntity)
+		public Pun SetMiniEntity(double? miniEntity)
 		{
-			if (miniEntity < 0)
-				throw new ArgumentException(" حداقل موجودی نمی‌تواند منفی باشد.");
-
-			MiniEntity = miniEntity;
+			if (miniEntity == null)
+			{
+				MiniEntity = 0;
+			}
+			else if (miniEntity < 0)
+			{
+				throw new ArgumentException("حداقل موجودی نمی‌تواند منفی باشد.");
+			}
+			else
+			{
+				MiniEntity = miniEntity.Value;
+			}
 			return this;
 		}
 		#endregion

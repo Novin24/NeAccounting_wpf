@@ -41,10 +41,13 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private Guid? _unitId;
 
-        [ObservableProperty]
-        private bool _isManufacturedGoods = false;
+		[ObservableProperty]
+		private bool _isManufacturedGoods = false;
 
-        public void OnNavigatedFrom()
+		[ObservableProperty]
+		private double _miniEntity = 0;
+
+		public void OnNavigatedFrom()
         {
 
         }
@@ -102,7 +105,7 @@ namespace NeAccounting.ViewModels
 
             using (UnitOfWork db = new())
             {
-                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(MaterialName, UnitId.Value, false, LastSellPrice, Serial, Address, IsManufacturedGoods);
+                var (error, isSuccess) = await db.MaterialManager.CreateMaterial(MaterialName, UnitId.Value, false, LastSellPrice, Serial, Address, IsManufacturedGoods, MiniEntity);
                 if (!isSuccess)
                 {
                     _snackbarService.Show("کاربر گرامی", error, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
