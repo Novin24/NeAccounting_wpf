@@ -21,6 +21,7 @@ namespace Domain.NovinEntity.Cheques
         /// وضعیت ثبت
         /// </summary>
         public SubmitChequeStatus SubmitStatus { get; set; }
+
         /// <summary>
         /// وضعیت چک
         /// </summary>
@@ -36,18 +37,28 @@ namespace Domain.NovinEntity.Cheques
         /// </summary>
         public DateTime? Due_Date { get; set; }
 
-        /// <summary>
-        /// شماره چک
-        /// </summary>
-        public string Cheque_Number { get; private set; }
+		/// <summary>
+		/// سریال چک
+		/// </summary>
+		public string Cheque_Number { get; private set; }
+
+		/// <summary>
+		/// سری چک
+		/// </summary>
+		public string? Cheque_Series { get; private set; }
+
+		/// <summary>
+		/// شماره صیادی
+		/// </summary>
+		public string? SiadyNumber { get; private set; }
+
+		/// <summary>
+		/// سریال دیتابیسی
+		/// </summary>
+		public long Serial { get; set; }
 
         /// <summary>
-        /// سریال دیتابیسی
-        /// </summary>
-        public long Serial { get; set; }
-
-        /// <summary>
-        /// شماره حساب
+        /// شماره شبا
         /// </summary>
         public string? Accunt_Number { get; private set; }
 
@@ -78,18 +89,22 @@ namespace Domain.NovinEntity.Cheques
             Guid reciver,
             Guid payer,
             DateTime? dueDate,
-            string cheque_Number,
-            string accunt_Number,
+			string cheque_Number,
+			string? cheque_Series,
+			string? siadyNumber,
+			string accunt_Number,
             string bank_Name,
             string bank_Branch,
             string cheque_Owner)
         {
             SetBank_Name(bank_Name);
             SetBank_Branch(bank_Branch);
-            SetAccunt_Number(accunt_Number);
-            SetCheque_Owner(cheque_Owner);
+			SetAccunt_Number(accunt_Number);
+			SetCheque_Owner(cheque_Owner);
             SetCheque_Number(cheque_Number);
-            Payer = payer;
+			SetCheque_Series(cheque_Series);
+            SetSiadyNumber(siadyNumber);
+			Payer = payer;
             Reciver = reciver;
             Due_Date = dueDate;
             SubmitStatus = submitStatus;
@@ -140,11 +155,29 @@ namespace Domain.NovinEntity.Cheques
         {
             if (cheque_Number.Length > 100)
             {
-                throw new ArgumentException(NeErrorCodes.IsLess("شماره چک", "صد"));
+                throw new ArgumentException(NeErrorCodes.IsLess("سریال چک", "صد"));
             }
             Cheque_Number = cheque_Number;
             return this;
-        }
-        #endregion
-    }
+		}
+		public Cheque SetCheque_Series(string? cheque_Series)
+		{
+			if (!string.IsNullOrEmpty(cheque_Series) && cheque_Series.Length > 100)
+			{
+				throw new ArgumentException(NeErrorCodes.IsLess("سری چک", "صد"));
+			}
+			Cheque_Series = cheque_Series;
+			return this;
+		}
+		public Cheque SetSiadyNumber(string? siadyNumber)
+		{
+			if (!string.IsNullOrEmpty(siadyNumber) && siadyNumber.Length > 100)
+			{
+				throw new ArgumentException(NeErrorCodes.IsLess("سری چک", "صد"));
+			}
+			SiadyNumber = siadyNumber;
+			return this;
+		}
+		#endregion
+	}
 }

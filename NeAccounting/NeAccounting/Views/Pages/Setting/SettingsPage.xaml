@@ -20,19 +20,28 @@
     </Page.Resources>
 
     <StackPanel FlowDirection="RightToLeft" Margin="20 25 20 5">
-
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
 
-            <StackPanel >
-                <TextBlock Margin="1,0,0,0"
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel >
+                    <TextBlock Margin="1,0,0,0"
                    Text="تم" 
                    FontSize="24"
                    FontFamily="Calibri"/>
-                <RadioButton Margin="1,12,0,0"
+                    <RadioButton Margin="1,12,0,0"
                      Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
                      CommandParameter="theme_light"
                      HorizontalAlignment="Left"
@@ -41,7 +50,7 @@
                      GroupName="themeSelect"
                    FontFamily="Calibri"
                      IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
-                <RadioButton Margin="0,8,0,0"
+                    <RadioButton Margin="0,8,0,0"
                      Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
                      CommandParameter="theme_dark"
                      Content="تیره"
@@ -50,125 +59,177 @@
                      HorizontalAlignment="Left"
                      GroupName="themeSelect"
                      IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />
-            </StackPanel>
-            <Grid Grid.Column="1"
+                </StackPanel>
+                <Grid Grid.Column="1"
                   FlowDirection="RightToLeft">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <TextBlock 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock 
                     Text="کلید های میانبر" 
                            FontSize="24"
                            FontFamily="Calibri"/>
-                <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="3.4 7 0 0">
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="3.4 7 0 0">
 
-                    <TextBlock FontSize="16"
+                        <TextBlock FontSize="16"
                                Margin="0,4,5,0"
                                Text="فاکتور فروش :"
                                FontFamily="Calibri"/>
-                    <Button Content="Ctrl + Q"
+                        <Button Content="Ctrl + Q"
                             IsEnabled="False"
                             FontWeight="Bold"
                             FontSize="12"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="9.2 4 0 0">
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="9.2 4 0 0">
 
-                    <TextBlock FontSize="16"
+                        <TextBlock FontSize="16"
                                Margin="0,4,5,0"
                                FontFamily="Calibri"
                                Text="فاکتور خرید :"/>
-                    <Button Content="Ctrl + W"
+                        <Button Content="Ctrl + W"
                             IsEnabled="False"
                             FontWeight="Bold"
                             FontSize="12"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0 4 0 0">
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" Margin="0 4 0 0">
 
-                    <TextBlock Margin="0,4,5,0"
+                        <TextBlock Margin="0,4,5,0"
                                Text="اسناد پرداختی :"
                                FontFamily="Calibri"
                                FontSize="16"/>
-                    <Button Content="Ctrl + E"
+                        <Button Content="Ctrl + E"
                             IsEnabled="False"
                             FontWeight="Bold"
                             FontSize="12"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="3.8 4 0 0">
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="3.8 4 0 0">
 
-                    <TextBlock Margin="0,4,5,0"
+                        <TextBlock Margin="0,4,5,0"
                                Text="اسناد دریافتی :"
                                FontFamily="Calibri"
                                FontSize="16"/>
-                    <Button Content="Ctrl + R"
+                        <Button Content="Ctrl + R"
                             IsEnabled="False"
                             FontWeight="Bold"
                             FontSize="12"/>
-                </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="5" Margin="3.8 4 0 0">
+
+                        <TextBlock Margin="0,4,5,0"
+                               Text="صورتحساب :"
+                               FontFamily="Calibri"
+                               FontSize="16"/>
+                        <Button Content="Ctrl + D"
+                            IsEnabled="False"
+                            FontWeight="Bold"
+                            FontSize="12"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="6" Margin="3.8 4 0 0">
+
+                        <TextBlock Margin="0,4,5,0"
+                               Text="صورتحساب جزییات :"
+                               FontFamily="Calibri"
+                               FontSize="16"/>
+                        <Button Content="Ctrl + F"
+                            IsEnabled="False"
+                            FontWeight="Bold"
+                            FontSize="12"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
-        </Grid>
 
-        <TextBlock Margin="0,0,0,0"
-                   FontSize="24"
-                   FontWeight="Medium"
-                   Text="تماس با ما" 
-                   FontFamily="Calibri"/>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Margin="0,6,0,0"
-                       FontFamily="Calibri"
-                       Text="تلفن همراه : 09906131727"
-                       FontSize="15"/>
-            <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-                <TextBlock Margin="0,5,0,0"
-                           FontFamily="Calibri"
-                   Text="آدرس سایت : "
-                       FontSize="15"/>
-                <ui:Hyperlink NavigateUri="http://www.christ24.ir/" 
-                              FontSize="20"
-                              Icon="{ui:SymbolIcon GlobeSurFace20}"  
-                              Content="www.Christ24.ir"
-                              FlowDirection="LeftToRight"/>
-            </StackPanel>
-        </Grid>
-        <TextBlock Margin="0,23,0,0"
-                   FontSize="24"
-                   FontWeight="Medium"
-                   Text="ورژن برنامه" 
-                   FontFamily="Calibri"/>
-        <TextBlock Margin="0,6,0,0"
-                   Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
-        
-        <TextBlock Margin="0,23,0,0"
+                <TextBlock Margin="0,23,0,0"
            FontSize="24"
            FontWeight="Medium"
            Text="شناسه کاربری فعال" 
            FontFamily="Calibri"/>
-        <TextBlock Margin="0,6,0,0"
-           Text="{Binding ViewModel.UserName, Mode=OneWay}" />
-        
-        <TextBlock Margin="0,20,0,0"
-           FontSize="24"
-           FontWeight="Medium"
-           Text="نام کاربر فعال" 
-           FontFamily="Calibri"/>
-        <TextBlock Margin="0,6,0,0"
-           Text="{Binding ViewModel.FullName, Mode=OneWay}" />
-        
-        <TextBlock Margin="0,23,0,0"
-           FontSize="24"
-           FontWeight="Medium"
-           Text="سال مالی فعال" 
-           FontFamily="Calibri"/>
-        <TextBlock Margin="0,6,0,0"
+                <TextBlock Grid.Row="1" 
+                   Grid.Column="1" 
+                    Margin="0,6,0,0"
+                   Text="{Binding ViewModel.UserName, Mode=OneWay}" />
+
+                <TextBlock Grid.Column="1" 
+                   Margin="0,20,0,0"
+                   FontSize="24"
+                   FontWeight="Medium"
+                   Text="نام کاربر فعال" 
+                   FontFamily="Calibri"/>
+                <TextBlock Grid.Row="1" 
+                   Margin="0,6,0,0"
+                   Text="{Binding ViewModel.FullName, Mode=OneWay}" />
+
+                <TextBlock Grid.Column="2" 
+                   Margin="0,23,0,0"
+                   FontSize="24"
+                   FontWeight="Medium"
+                   Text="سال مالی فعال" 
+                   FontFamily="Calibri"/>
+                <TextBlock Grid.Column="2" 
+                   Grid.Row="1" 
+                   Margin="0,6,0,0"
            Text="{Binding ViewModel.FiscalYear, Mode=OneWay}" />
+            </Grid>
+            <Grid Grid.Row="3" Margin="0 25 0 0">
+
+                <TextBlock Margin="0,23,0,0"
+           FontSize="24"
+           FontWeight="Medium"
+           Text="ورژن برنامه" 
+           FontFamily="Calibri"/>
+                <TextBlock Margin="0,6,0,0"
+           Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
+            </Grid>
+            <StackPanel Grid.Row="4"
+                        Margin="0,25,0,0">
+                <TextBlock FontSize="24"
+                       FontWeight="Medium"
+                       Text="تماس با ما" 
+                       FontFamily="Calibri"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Margin="0,6,0,0"
+                           FontFamily="Calibri"
+                           Text="تلفن همراه : 09906131727"
+                           FontSize="15"/>
+                    <StackPanel Orientation="Horizontal" Grid.Column="1">
+
+                        <TextBlock Margin="0,5,0,0"
+                               FontFamily="Calibri"
+                               Text="آدرس سایت : "
+                               FontSize="15"/>
+                        <ui:Hyperlink NavigateUri="www.christ24.ir" 
+                      FontSize="20"
+                      Icon="{ui:SymbolIcon GlobeSurFace20}"  
+                      Content="www.Christ24.ir"
+                      FlowDirection="LeftToRight"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+
+        
+
     </StackPanel>
 </Page>

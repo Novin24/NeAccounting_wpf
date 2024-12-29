@@ -46,10 +46,13 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private int _pageCount = 1;
 
-        [ObservableProperty]
-        private int _currentPage = 1;
+		[ObservableProperty]
+		private int _currentPage = 1;
 
-        [ObservableProperty]
+		[ObservableProperty]
+		private bool _seePaymentType = false;
+
+		[ObservableProperty]
         private Guid? _cusId;
 
         [ObservableProperty]
@@ -94,11 +97,11 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            Cuslist = await db.CustomerManager.GetDisplayUser(true);
+            Cuslist = await db.CustomerManager.GetDisplayUser(false);
             if (CusId.HasValue && EndDate.HasValue && StartDate.HasValue)
             {
                 _isInit = true;
-                var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, true, CurrentPage);
+                var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, SeePaymentType, true, CurrentPage);
                 CurrentPage = t.CurrentPage;
                 InvList = t.Items;
                 PageCount = t.PageCount;
@@ -129,7 +132,7 @@ namespace NeAccounting.ViewModels
             }
             _isInit = true;
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, true, CurrentPage);
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, SeePaymentType, true, CurrentPage);
             CurrentPage = t.CurrentPage;
             InvList = t.Items;
             PageCount = t.PageCount;
@@ -159,7 +162,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, false, CurrentPage);
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, false, SeePaymentType, false, CurrentPage);
             InvList = t.Items;
             PageCount = t.PageCount;
         }
@@ -183,7 +186,7 @@ namespace NeAccounting.ViewModels
                 return (new List<InvoiceListDtos>(), false);
             }
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, true, true, CurrentPage);
+            var t = await db.DocumentManager.GetInvoicesByDate(StartDate.Value, EndDate.Value, Desc, CusId.Value, LeftOver, true, SeePaymentType, true, CurrentPage);
             return new(t.Items, true);
         }
 

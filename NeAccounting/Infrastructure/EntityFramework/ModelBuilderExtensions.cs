@@ -61,7 +61,6 @@ namespace Infrastructure.Utilities
 
             builder.Entity<Pun>(b =>
             {
-
                 b.HasIndex(t => t.Id);
                 b.Property(r => r.IsActive).HasDefaultValue(true);
                 b.Property(t => t.Name).HasMaxLength(100).IsRequired();
@@ -77,8 +76,10 @@ namespace Infrastructure.Utilities
             {
                 b.HasIndex(t => t.Id);
                 b.Property(r => r.Serial).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-                b.Property(t => t.Cheque_Number).HasMaxLength(100).IsRequired();
-                b.Property(t => t.Cheque_Owner).HasMaxLength(50).IsRequired();
+				b.Property(t => t.Cheque_Number).HasMaxLength(100).IsRequired();
+				b.Property(t => t.SiadyNumber).HasMaxLength(100);
+				b.Property(t => t.Cheque_Series).HasMaxLength(100);
+				b.Property(t => t.Cheque_Owner).HasMaxLength(50).IsRequired();
                 b.Property(t => t.Bank_Name).HasMaxLength(50).IsRequired();
                 b.Property(t => t.Accunt_Number).HasMaxLength(100);
                 b.Property(t => t.Bank_Branch).HasMaxLength(50);
@@ -91,7 +92,8 @@ namespace Infrastructure.Utilities
             builder.Entity<Units>(b =>
             {
                 b.HasIndex(t => t.Id);
-                b.Property(t => t.Name).HasMaxLength(30);
+				b.Property(r => r.IdNumber).IsRequired().ValueGeneratedOnAdd().Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+				b.Property(t => t.Name).HasMaxLength(30);
                 b.Property(t => t.Descrip).HasMaxLength(100);
             });
 

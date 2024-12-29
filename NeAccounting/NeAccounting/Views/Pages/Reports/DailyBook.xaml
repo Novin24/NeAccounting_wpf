@@ -136,7 +136,7 @@
                             <nu:PersianDatePicker Grid.Column="0"
                                                   VerticalAlignment="Center"
                                                   FlowDirection="LeftToRight"
-                                                  SelectedDate="{Binding ViewModel.Date, Mode=TwoWay}"
+                                                  SelectedDate="{Binding ViewModel.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   LabelName="تاریخ"
                                                   x:Name="Dtp_date" />
                             <Button Grid.Column="1"

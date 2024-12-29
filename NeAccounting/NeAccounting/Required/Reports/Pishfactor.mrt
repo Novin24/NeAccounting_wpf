@@ -53,7 +53,7 @@
             <Text29 Ref="5" type="Text" isKey="true">
               <Border>None;Black;1;Double;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.2,-0.01,0.6,0.2</ClientRectangle>
+              <ClientRectangle>3.4,-0.01,0.6,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,12,Bold</Font>
@@ -69,7 +69,7 @@
             </Text29>
             <Text10 Ref="6" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>5.4,-0.01,2,0.3</ClientRectangle>
+              <ClientRectangle>5.4,-0.01,2.1,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,10,Bold</Font>
@@ -86,7 +86,7 @@
             </Text10>
             <Text3 Ref="7" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.5,0,1,0.3</ClientRectangle>
+              <ClientRectangle>4.4,0,1,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10</Font>
@@ -352,7 +352,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text9 Ref="19" type="Text" isKey="true">
               <Border>Left, Bottom;Black;1;Solid;False;2;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.7,0,0.4,0.3</ClientRectangle>
+              <ClientRectangle>7,0,0.4,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
@@ -370,7 +370,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text11 Ref="20" type="Text" isKey="true">
               <Border>Left, Right, Bottom;Black;1;Solid;False;2;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.6,0,2.1,0.3</ClientRectangle>
+              <ClientRectangle>4.4,0,2.6,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
@@ -388,7 +388,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text14 Ref="21" type="Text" isKey="true">
               <Border>Right, Bottom;Black;1;Solid;False;2;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.4,0,1.6,0.3</ClientRectangle>
+              <ClientRectangle>0.1,0,1.7,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
@@ -406,7 +406,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text34 Ref="22" type="Text" isKey="true">
               <Border>Left, Right, Bottom;Black;1;Solid;False;2;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.9,0,0.7,0.3</ClientRectangle>
+              <ClientRectangle>3.7,0,0.7,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
@@ -424,7 +424,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text44 Ref="23" type="Text" isKey="true">
               <Border>Left, Right, Bottom;Black;1;Solid;False;2;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>2,0,1.3,0.3</ClientRectangle>
+              <ClientRectangle>1.8,0,1.3,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
@@ -442,7 +442,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text35 Ref="24" type="Text" isKey="true">
               <Border>Left, Right, Bottom;Black;1;Solid;False;2;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.3,0,0.6,0.3</ClientRectangle>
+              <ClientRectangle>3.1,0,0.6,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
@@ -472,7 +472,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text16 Ref="26" type="Text" isKey="true">
               <Border>Top, Left;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>6.7,0,0.4,0.3</ClientRectangle>
+              <ClientRectangle>7,0,0.4,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,9</Font>
@@ -489,7 +489,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text17 Ref="27" type="Text" isKey="true">
               <Border>Top, Left, Right;Black;1;Solid;False;2;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>4.6,0,2.1,0.3</ClientRectangle>
+              <ClientRectangle>4.4,0,2.6,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>B Nazanin,12,Bold</Font>
@@ -506,7 +506,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text20 Ref="28" type="Text" isKey="true">
               <Border>Top, Right;Black;1;Solid;False;2;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.4,0,1.6,0.3</ClientRectangle>
+              <ClientRectangle>0.1,0,1.7,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -529,7 +529,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text36 Ref="30" type="Text" isKey="true">
               <Border>Top, Left;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.9,0,0.7,0.3</ClientRectangle>
+              <ClientRectangle>3.7,0,0.7,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -546,7 +546,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text37 Ref="31" type="Text" isKey="true">
               <Border>Top, Left;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>3.3,0,0.6,0.3</ClientRectangle>
+              <ClientRectangle>3.1,0,0.6,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -563,7 +563,7 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
             <Text43 Ref="32" type="Text" isKey="true">
               <Border>Top, Left, Right;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
-              <ClientRectangle>2,0,1.3,0.3</ClientRectangle>
+              <ClientRectangle>1.8,0,1.3,0.3</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Arial,10,Bold</Font>
@@ -736,10 +736,10 @@ IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIioqFK5P8BazrJOLRC
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>5/16/2024 9:46:15 AM</ReportChanged>
+  <ReportChanged>12/1/2024 9:09:37 AM</ReportChanged>
   <ReportCreated>4/13/2021 2:18:22 AM</ReportCreated>
-  <ReportFile>D:\Source\Wpf\N2\Np_NovinWpf\NeAccounting\NeAccounting\Required\Reports\Pishfactor.mrt</ReportFile>
-  <ReportGuid>fe48e354bd584c7aa3ef275ef3d34998</ReportGuid>
+  <ReportFile>G:\WPF\project\NeAccounting\NeAccounting\NeAccounting\Required\Reports\Pishfactor.mrt</ReportFile>
+  <ReportGuid>3ce06cf8a93243d69642a0677b2f8e23</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Inches</ReportUnit>
   <ReportVersion>2022.1.1.0</ReportVersion>

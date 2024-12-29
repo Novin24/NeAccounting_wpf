@@ -50,7 +50,7 @@ namespace Infrastructure.Repositories
             return list;
         }
 
-        public async Task<(string error, bool isSuccess)> CreateMaterial(string name,
+        public async Task<(string error, bool isSuccess, bool Show)> CreateMaterial(string name,
             Guid unitId,
             bool isService,
             long lastPrice,
@@ -60,7 +60,7 @@ namespace Infrastructure.Repositories
             double? miniEntity = null)
 		{
             if (await TableNoTracking.AnyAsync(t => t.Name == name))
-                return new("کاربر گرامی این کالا از قبل تعریف شده می‌باشد!!!", false);
+                return new("کاربر گرامی این کالا از قبل تعریف شده می‌باشد!!!", false, false);
 
             try
             {
@@ -78,11 +78,11 @@ namespace Infrastructure.Repositories
             {
                 if (ex is ArgumentException aex)
                 {
-                    return new(aex.Message, false);
+                    return new(aex.Message, false, false);
                 }
-                return new(" خطا در اتصال به پایگاه داده code(69t46993)!!!", false);
+                return new(" خطا در اتصال به پایگاه داده code(69t46993)!!!", false, true);
             }
-            return new(string.Empty, true);
+            return new(string.Empty, true, false);
         }
 
         public async Task<(string error, bool isSuccess)> UpdateMaterial(
@@ -240,7 +240,23 @@ namespace Infrastructure.Repositories
             }
             return new(string.Empty, true);
         }
-    }
+
+		public Task<List<ExporteMaterialListDto>> GetExporteMaterialList(bool IsArchive)
+		{
+            return TableNoTracking
+                .Where(t => IsArchive == true || t.IsActive != IsArchive)
+                .Where(t => t.IsService == false)
+                .Select(x => new ExporteMaterialListDto
+                {
+                    MaterialName = x.Name,
+                    LastSellPrice = x.LastSellPrice,
+                    UnitName = x.Unit.Name,
+                    Address = x.PhysicalAddress,
+                    Serial = x.Serial,
+                    UnitNumber = x.Unit.IdNumber,
+                }).OrderBy(t => t.MaterialName).ToListAsync();
+		}
+	}
 }
 
 

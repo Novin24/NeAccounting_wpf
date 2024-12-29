@@ -283,7 +283,7 @@
                                       FontSize="14"
                                       x:Name="Cmb_PayType"
                                       SelectedValuePath="Tag"
-                                      SelectedValue="{Binding ViewModel.Type , Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.Type , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       FontFamily="Calibri">
                                 <ComboBoxItem Content="کارت به کارت"
                                               Tag="1" />
@@ -305,16 +305,16 @@
                                               LabelName="تاریخ"
                                               x:Name="pdp"
                                               Grid.Column="1"
-                                              SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay}"
+                                              SelectedDate="{Binding ViewModel.SubmitDate , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Margin="0 2 15 0" />
 
                         <nu:MoneyPack Grid.Row="2"
-                                      Value="{Binding ViewModel.Price, Mode=TwoWay}"
+                                      Value="{Binding ViewModel.Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       FontFamily="Calibri"
                                       LabelName="مبلغ وجه" />
 
                         <nu:MoneyPack Grid.Column="1"
-                                      Value="{Binding ViewModel.Discount, Mode=TwoWay}"
+                                      Value="{Binding ViewModel.Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Grid.Row="2"
                                       LabelName="مبلغ تخفیف" />
                         <Grid Grid.ColumnSpan="2"
@@ -329,7 +329,7 @@
                                        Margin="7 0 0 3" />
                             <TextBox Margin="0,20,0,0"
                                      FontSize="14"
-                                     Text="{Binding ViewModel.Description, Mode=TwoWay}"
+                                     Text="{Binding ViewModel.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      FlowDirection="RightToLeft"
                                      Grid.ColumnSpan="2"
                                      FontFamily="Calibri"></TextBox>

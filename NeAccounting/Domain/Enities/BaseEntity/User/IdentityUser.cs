@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using DomainShared.Enums.Themes;
 
 namespace Domain.BaseDomain.User
 {
@@ -13,5 +14,12 @@ namespace Domain.BaseDomain.User
         public string PasswordHash { get; set; }
         public string Temp { get; set; }
         public bool IsActive { get; set; }
-    }
+
+		/// <summary>
+		/// تم برنامه
+		/// </summary>
+		public Theme CurrentTheme { get; set; }
+
+
+	}
 }

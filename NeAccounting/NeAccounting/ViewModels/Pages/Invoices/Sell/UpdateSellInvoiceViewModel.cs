@@ -24,10 +24,17 @@ namespace NeAccounting.ViewModels
             _snackbarService = snackbarService;
             _navigationService = navigationService;
             _isreadonly = NeAccountingConstants.ReadOnlyMode;
-        }
-        #region properties
+		}
 
-        private int RowId = 1;
+        /// <summary>
+        /// پنهان کردن موجودی
+        /// </summary>
+		[ObservableProperty]
+		private Visibility _lblMatEntityVisibility = Visibility.Visible;
+
+		#region properties
+
+		private int RowId = 1;
 
         [ObservableProperty]
         private Guid _invoiceId;

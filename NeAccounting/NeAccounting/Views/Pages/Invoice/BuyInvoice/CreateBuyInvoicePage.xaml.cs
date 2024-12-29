@@ -39,7 +39,8 @@ namespace NeAccounting.Views.Pages
                 txt_Unit_price.Text = string.Empty;
                 txt_total_price.Text = string.Empty;
                 txt_UnitDescription.Text = string.Empty;
-                txt_MaterialName.Focus();
+				lbl_matEntity.Text = string.Empty;
+				txt_MaterialName.Focus();
             }
             dgv_Inv.Items.Refresh();
         }
@@ -65,7 +66,8 @@ namespace NeAccounting.Views.Pages
             _totalEntity = mat.Entity;
             txt_UnitName.Text = mat.UnitName;
             txt_amount.Text = "0";
-            txt_Unit_price.Text = mat.LastBuyPrice.ToString("N0");
+			lbl_matEntity.Text = mat.Entity.ToString("N0");
+			txt_Unit_price.Text = mat.LastBuyPrice.ToString("N0");
             _price = mat.LastBuyPrice;
         }
 
@@ -141,6 +143,7 @@ namespace NeAccounting.Views.Pages
                 txt_UnitDescription.Text = string.Empty;
                 lbl_cusId.Text = string.Empty;
             }
+            await ViewModel.LoadMaterialList();
         }
 
         private void BtnUpdate_Click(object sender, RoutedEventArgs e)

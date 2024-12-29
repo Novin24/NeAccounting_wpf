@@ -2,10 +2,10 @@
 
 namespace DomainShared.Enums
 {
-    /// <summary>
-    /// نوع مشتری حقیقی و حقوقی
-    /// </summary>
-    public enum CustomerType : byte
+	/// <summary>
+	/// نوع مشتری حقیقی و حقوقی
+	/// </summary>
+	public enum CustomerType : byte
     {
         /// <summary>
         /// حقوقی

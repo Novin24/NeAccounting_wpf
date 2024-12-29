@@ -219,6 +219,10 @@ namespace Infrastructure.Migrations.NovinDb
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Cheque_Series")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -257,6 +261,10 @@ namespace Infrastructure.Migrations.NovinDb
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Serial"));
+
+                    b.Property<string>("SiadyNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
@@ -601,6 +609,12 @@ namespace Infrastructure.Migrations.NovinDb
                     b.Property<string>("Descrip")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("IdNumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdNumber"));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");

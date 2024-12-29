@@ -188,6 +188,7 @@
                                       Value="{Binding ViewModel.MiniEntity , Mode= TwoWay}" />
                         
                         <StackPanel Grid.Row="5"
+
                                     Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     Margin="20 4 20 0">

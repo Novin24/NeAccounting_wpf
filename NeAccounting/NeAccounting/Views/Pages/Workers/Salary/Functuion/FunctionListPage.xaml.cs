@@ -22,5 +22,13 @@ namespace NeAccounting.Views.Pages
         {
             ViewModel.WorkerId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
         }
-    }
+		private void Pagination_PageChosen(object sender, RoutedPropertyChangedEventArgs<int> e)
+		{
+			if (!IsInitialized)
+			{
+				return;
+			}
+			ViewModel.PageChengeCommand.ExecuteAsync(null);
+		}
+	}
 }

@@ -121,6 +121,7 @@
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="4*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
 
                         </Grid.RowDefinitions>
 
@@ -156,6 +157,8 @@
                                 </Grid>
                             </ui:CardAction>
                         </Grid>
+
+                        <!--#region Search -->
                         <Grid Grid.Row="1"
                               Margin="0 ,5,0,5">
                             <Grid.ColumnDefinitions>
@@ -171,7 +174,7 @@
                                                    Icon="{ui:SymbolIcon Search24}"
                                                    PlaceholderText="جستجو ..."
                                                    FontSize="14"
-                                                   OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay}"
+                                                   OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay , UpdateSourceTrigger=PropertyChanged}"
                                                    SuggestionChosen="txt_name_SuggestionChosen"
                                                    DisplayMemberPath="DisplayName"
                                                    Margin="0 4 3 0 "
@@ -186,10 +189,14 @@
                                     IsDefault="True">جستجو</Button>
 
                         </Grid>
+                        <!--#endregion-->
+                        
+                        <!--#region DataGrid-->
+
                         <DataGrid Grid.Row="2"
                                   Padding="7"
                                   FontSize="15"
-                                  Margin="0 0 0 30"
+                                  Margin="0 0 0 0"
                                   FontFamily="Calibri"
                                   x:Name="Workersdata"
                                   CanUserResizeColumns="False"
@@ -239,7 +246,18 @@
 
                             </DataGrid.Columns>
                         </DataGrid>
+                        <!--#endregion-->
 
+                        <!--#region Paginatoin -->
+                        <nu:Pagination  Grid.Row="3"
+                                        Margin="0,10"
+                                        PageCount="{Binding ViewModel.PageCount}"
+                                        CurrntPage="{Binding ViewModel.CurrentPage, Mode=TwoWay}"
+                                        PageChosen="Pagination_PageChosen"
+                                        HorizontalAlignment="Center"
+                                        FlowDirection="LeftToRight" />
+
+                        <!--#endregion-->
 
                     </Grid>
 

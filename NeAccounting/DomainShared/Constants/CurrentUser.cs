@@ -1,4 +1,6 @@
-﻿namespace DomainShared.Constants
+﻿using DomainShared.Enums.Themes;
+
+namespace DomainShared.Constants
 {
     public static class CurrentUser
     {
@@ -21,12 +23,17 @@
         /// شناسه کاربر
         /// </summary>
         public static Guid CurrentUserId;
-        
-        /// <summary>
-        /// شناسه کاربر
-        /// </summary>
-        public static string LogInTime;
-    }
+
+		/// <summary>
+		/// شناسه کاربر
+		/// </summary>
+		public static string LogInTime;
+
+		/// <summary>
+		/// تم برنامه
+		/// </summary>
+		public static Theme CurrentTheme;
+	}
 
 
     public static class EditInvoiceDetails

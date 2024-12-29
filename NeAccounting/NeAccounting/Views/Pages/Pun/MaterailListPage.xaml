@@ -207,7 +207,7 @@
                                 <ui:TextBox TextAlignment="Center"
                                             FontFamily="Calibri"
                                             x:Name="materialName_txb"
-                                            Text="{Binding ViewModel.PunName}"
+                                            Text="{Binding ViewModel.PunName,UpdateSourceTrigger=PropertyChanged}"
                                             Margin="0 4 0 0" />
                             </StackPanel>
                             <StackPanel Grid.Row="1"
@@ -220,7 +220,7 @@
                                            Margin="2 0 0 0 " />
                                 <ui:TextBox TextAlignment="Center"
                                             FontFamily="Calibri"
-                                            Text="{Binding ViewModel.Serial}"
+                                            Text="{Binding ViewModel.Serial,UpdateSourceTrigger=PropertyChanged}"
                                             Margin="0 4 0 0" />
                             </StackPanel>
 

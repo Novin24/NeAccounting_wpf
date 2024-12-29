@@ -377,42 +377,120 @@
                                                     Binding="{Binding Row}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width="50" />
+                                                    Width="50"/>
 
                                 <DataGridTextColumn Header="شماره چک"
                                                     Binding="{Binding CheckNumber}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".44*" />
+                                                    Width=".44*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding CheckNumber}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+
+                                </DataGridTextColumn>
 
                                 <DataGridTextColumn Header="پرداخت کننده"
                                                     Binding="{Binding Payer}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".44*" />
+                                                    Width=".44*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Payer}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="دریافت کننده"
                                                     Binding="{Binding Reciver}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".44*" />
+                                                    Width=".44*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Reciver}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+
+                                </DataGridTextColumn>
+
                                 <DataGridTextColumn Header="تاریخ سررسید"
                                                     Binding="{Binding DueShamsiDate}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".6*" />
+                                                    Width=".6*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding DueShamsiDate}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+
+                                </DataGridTextColumn>
+
+
                                 <DataGridTextColumn Header="وضعیت"
                                                     Binding="{Binding StatusName}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".6*" />
+                                                    Width=".6*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding StatusName}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+
+                                </DataGridTextColumn>
+
+
                                 <DataGridTextColumn Header="مبلغ"
                                                     Binding="{Binding Price}"
                                                     HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                     ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                    Width=".6*" />
+                                                    Width=".6*">
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                                               Text='{Binding Price}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+
+                                </DataGridTextColumn>
+                                
 
                                 <DataGridTemplateColumn Header="عملیات"
-                                                        Width="230"
+                                                        Width="270"
                                                         HeaderStyle="{DynamicResource CenterGridHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -483,6 +561,16 @@
                                                                    FontSize="14" />
                                                     </Button.ToolTip>
                                                     <ui:SymbolIcon Symbol="SlideText20" />
+                                                </Button>
+                                                <Button Margin="4"
+                                                        Padding="7,5"
+                                                        Command="{Binding Path=DataContext.ViewModel.PrintChequeCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                        CommandParameter="{Binding Id , Mode=OneWay}">
+                                                    <Button.ToolTip>
+                                                        <TextBlock Text="پرینت چک"
+                                                                   FontSize="14" />
+                                                    </Button.ToolTip>
+                                                    <ui:SymbolIcon Symbol="Print20" />
                                                 </Button>
                                             </StackPanel>
                                         </DataTemplate>

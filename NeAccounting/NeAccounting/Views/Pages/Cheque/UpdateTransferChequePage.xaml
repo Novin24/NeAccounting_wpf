@@ -20,6 +20,7 @@
         <KeyBinding Key="F1"
                     Command="{Binding ViewModel.SubmitCommand}" />
     </Page.InputBindings>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -30,6 +31,7 @@
             <RowDefinition Height="45" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="45"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -37,6 +39,7 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="45"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        
         <Border Grid.Row="1"
                 Grid.RowSpan="3"
                 Grid.Column="0"
@@ -64,6 +67,7 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
+        
         <Border Grid.Row="3"
                 Grid.RowSpan="3"
                 Grid.Column="2"
@@ -92,6 +96,7 @@
 
             </Border.Background>
         </Border>
+        
         <Border Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="1"
@@ -182,7 +187,7 @@
                             <ui:TextBox TextAlignment="Center"
                                         Text="{Binding ViewModel.Bank_Name,Mode=OneTime}"
                                         FontFamily="Calibri"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
                                         FontSize="14" />
                         </StackPanel>
                         <StackPanel Grid.Row="1"
@@ -196,76 +201,131 @@
                             <ui:TextBox FontSize="14"
                                         TextAlignment="Center"
                                         Text="{Binding ViewModel.Bank_Branch,Mode=OneTime}"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
                                         FontFamily="Calibri" />
                         </StackPanel>
+
+                        <Grid Grid.Row="2"
+                              Margin="30 6 20 5 ">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+
+                            <StackPanel Margin="0 0 5 0 ">
+
+                                <TextBlock FontFamily="Calibri"
+                                       FontSize="15"
+                                       Text="سریال چک"
+                                       Margin="5 0 0 3 " />
+                                <ui:TextBox TextAlignment="Center"
+                                        FontSize="14"
+                                        Text="{Binding ViewModel.Cheque_Number, Mode=OneTime}"
+                                        IsReadOnly="True"
+                                        FontFamily="Calibri" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1"
+                                        Margin="5 0 0 0 ">
+
+                                <TextBlock FontFamily="Calibri"
+                                           FontSize="15"
+                                           Text="سری چک"
+                                           Margin="5 0 0 3" />
+                                <ui:TextBox TextAlignment="Center"
+                                            FontSize="14"
+                                            Text="{Binding ViewModel.Cheque_Series,Mode=OneTime}"
+                                            IsReadOnly="True"
+                                            FontFamily="Calibri" />
+                            </StackPanel>
+                        </Grid>
+
                         <StackPanel Grid.Row="2"
+                                    Grid.Column="1"
+                                    Margin="20 6 30 5 ">
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="15"
+                                       Text="شماره صیادی"
+                                       Margin="5 0 0 3"/>
+                            <ui:TextBox FontSize="14"
+                                        Text="{Binding ViewModel.SiadyNumber,Mode=OneTime}"
+                                        IsReadOnly="True"
+                                        TextAlignment="Center"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Row="3"
                                     Margin="30 6 20 0 ">
 
                             <TextBlock FontFamily="Calibri"
                                        FontSize="15"
-                                       Text="شماره چک"
-                                       Margin="5 0 0 3 " />
-                            <ui:TextBox TextAlignment="Center"
-                                        FontSize="14"
-                                        Text="{Binding ViewModel.Cheque_Number,Mode=OneTime}"
-                                        IsEnabled="False"
-                                        FontFamily="Calibri" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="2"
-                                    Margin="20 6 30 0 "
-                                    Grid.Column="1">
-
-                            <TextBlock FontFamily="Calibri"
-                                       FontSize="14"
-                                       Text="شماره حساب"
+                                       Text="شماره شبا"
                                        Margin="5 0 0 4" />
                             <ui:TextBox TextAlignment="Center"
                                         FontSize="14"
-                                        Text="{Binding ViewModel.Accunt_Number,Mode=OneTime}"
-                                        IsEnabled="False"
+                                        Text="{Binding ViewModel.Shaba_Number,Mode=OneTime}"
+                                        IsReadOnly="True"
+                                        FontFamily="Calibri" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="3"
+                                    Grid.Column="1"
+                                    Margin="20 6 30 0 ">
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="تاریخ سررسید"
+                                       Margin="5 0 0 5" />
+                            <ui:TextBox TextAlignment="Center"
+                                        FontSize="14"
+                                        Text="{Binding ViewModel.DueDate,Mode=OneTime}"
+                                        IsReadOnly="True"
                                         FontFamily="Calibri" />
                         </StackPanel>
 
-                        <nu:PersianDatePicker Grid.Row="3"
-                                              VerticalAlignment="Center"
-                                              FlowDirection="LeftToRight"
-                                              SelectedDate="{Binding ViewModel.DueDate,Mode=OneTime}"
-                                              Margin="9 0 13 0"
-                                              IsEnabled="False"
-                                              LabelName="تاریخ سررسید" />
-                        <nu:MoneyPack Grid.Row="3"
-                                      Grid.Column="1"
-                                      VerticalAlignment="Center"
-                                      Margin="0 0 10 0"
-                                      Value="{Binding ViewModel.Price,Mode=OneTime}"
-                                      IsEnabled="False"
-                                      LabelName="مبلغ چک" />
-                        <StackPanel Margin="30 5 20 5 "
-                                    Grid.Row="4">
-
+                        <StackPanel Grid.Row="4"
+                                    Margin="30 5 20 5 ">
                             <TextBlock FontFamily="Calibri"
                                        FontSize="14"
-                                       Text="صاحب حساب"
+                                       Text="مبلغ چک"
                                        Margin="5 0 3 3" />
                             <ui:TextBox FontSize="14"
-                                        Text="{Binding ViewModel.Cheque_Owner,Mode=OneTime}"
-                                        IsEnabled="False"
+                                        IsReadOnly="True"
+                                        Text="{Binding ViewModel.Price,Mode=OneTime}"
                                         TextAlignment="Center"
                                         FontFamily="Calibri" />
                         </StackPanel>
-                        <StackPanel Grid.Row="4"
-                                    Margin="0 5 0 5 "
-                                    HorizontalAlignment="Center"
-                                    Width="200"
+
+                        <Grid Grid.Row="4"
+                              Grid.Column="1"
+                              Margin="20 5 25 5 ">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="120"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Margin="0 0 5 0">
+
+                                <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="صاحب حساب"
+                                       Margin="5 0 3 3" />
+                                <ui:TextBox FontSize="14"
+                                            Text="{Binding ViewModel.Cheque_Owner,Mode=OneTime}"
+                                            IsReadOnly="True"
+                                        TextAlignment="Center"
+                                        FontFamily="Calibri" />
+                            </StackPanel>
+
+                            <StackPanel Margin="5 0 5 0 "
                                     Grid.Column="1">
-                            <TextBlock FontFamily="Calibri"
+                                <TextBlock FontFamily="Calibri"
                                        FontSize="14"
                                        Text="وضعیت چک"
                                        Margin="5 0 0 3 " />
-                            <ComboBox SelectedIndex="3"
+                                <ComboBox SelectedIndex="3"
                                       Margin="0 0 0 0 "
-                                      IsEnabled="False"
+                                      IsReadOnly="True"
                                       SelectedValuePath="Key"
                                       DisplayMemberPath="Value"
                                       SelectedValue="{Binding ViewModel.Substatus,Mode=OneTime}"
@@ -273,8 +333,10 @@
                                       x:Name="Cmb_Status"
                                       FontFamily="Calibri"
                                       FontSize="14">
-                            </ComboBox>
-                        </StackPanel>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
                         <Grid Grid.Row="5"
                               Grid.ColumnSpan="2"
                               Margin="30 3 30 4">
@@ -312,5 +374,6 @@
                 </Border>
             </Grid>
         </Border>
+        
     </Grid>
 </Page>

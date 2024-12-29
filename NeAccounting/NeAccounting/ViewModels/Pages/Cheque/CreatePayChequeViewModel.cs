@@ -54,17 +54,28 @@ namespace NeAccounting.ViewModels
         private string? _description;
 
         /// <summary>
-        /// شماره چک
+        /// سریال چک
         /// </summary>
         [ObservableProperty]
         private string? _cheque_Number;
 
+		/// <summary>
+		/// سری چک
+		/// </summary>
+		[ObservableProperty]
+		private string? _cheque_Series;
 
-        /// <summary>
-        /// شماره حساب
-        /// </summary>
-        [ObservableProperty]
-        private string _accunt_Number;
+		/// <summary>
+		/// شماره صیادی
+		/// </summary>
+		[ObservableProperty]
+		private string? _siadyNumber;
+
+		/// <summary>
+		/// شماره شبا
+		/// </summary>
+		[ObservableProperty]
+        private string _shaba_Number;
 
         /// <summary>
         /// نام بانک
@@ -169,7 +180,7 @@ namespace NeAccounting.ViewModels
 
             #region CreatePayDocumetn&Cheque
             using UnitOfWork db = new();
-            var (e, s, docId) = await db.DocumentManager.CreatePayCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Accunt_Number, Bank_Name, Bank_Branch, Cheque_Owner);
+            var (e, s, docId) = await db.DocumentManager.CreatePayCheque(CusId.Value, Status, Description, SubmitDate.Value, DueDate.Value, Price.Value, Cheque_Number, Cheque_Series, SiadyNumber, Shaba_Number, Bank_Name, Bank_Branch, Cheque_Owner);
             if (!s)
             {
                 _snackbarService.Show("خطا", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));

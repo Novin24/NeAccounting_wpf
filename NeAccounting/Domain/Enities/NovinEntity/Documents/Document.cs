@@ -46,6 +46,7 @@ namespace Domain.NovinEntity.Documents
             Cheques = [];
         }
 
+
         public Document(
             Guid customerId,
             long price,

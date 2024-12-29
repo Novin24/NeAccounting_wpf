@@ -71,9 +71,10 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            AuSuBox = await db.WorkerManager.GetWorkers();
-            List = await db.WorkerManager.GetFunctionList(WorkerId);
-        }
+			AuSuBox = await db.WorkerManager.GetWorkers();
+			var t = await db.WorkerManager.GetFunctionList(WorkerId);
+			List = t.Items;
+		}
 
         [RelayCommand]
         private async Task OnCreate()

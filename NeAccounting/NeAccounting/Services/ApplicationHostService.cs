@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using NeAccounting.Views.Pages;
 using NeAccounting.Views.Pages.Test;
 using NeAccounting.Windows;
+using Serilog;
 using System.Windows.Navigation;
 
 namespace NeAccounting.Services
@@ -49,10 +50,13 @@ namespace NeAccounting.Services
         {
             await Task.CompletedTask;
 
-            //var loadWindow = _serviceProvider.GetRequiredService<LoadingWindow>();
-            //loadWindow.Show();
-
-            if (!Application.Current.Windows.OfType<MainWindow>().Any())
+			//var loadWindow = _serviceProvider.GetRequiredService<LoadingWindow>();
+			//loadWindow.Show();
+			AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+			{
+				Log.Error(e.ExceptionObject as Exception, "An unhandled exception occurred.");
+			};
+			if (!Application.Current.Windows.OfType<MainWindow>().Any())
             {
                 var navigationWindow = _serviceProvider.GetRequiredService<MainWindow>();
                 navigationWindow.Loaded += OnNavigationWindowLoaded;

@@ -92,6 +92,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("CreatorId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<byte>("CurrentTheme")
+                        .HasColumnType("tinyint");
+
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uniqueidentifier");
 

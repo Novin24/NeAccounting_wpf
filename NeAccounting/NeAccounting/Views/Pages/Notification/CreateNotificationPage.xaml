@@ -147,7 +147,7 @@
                                      Grid.Column="0"
                                      Margin="0 4 3 0 "
                                      x:Name="Txt_Titele"
-                                     Text="{Binding ViewModel.Titele , Mode=OneWayToSource}"
+                                     Text="{Binding ViewModel.Titele , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                       
                                      FontFamily="Calibri" />
                         </StackPanel>
@@ -165,7 +165,7 @@
                                       x:Name="cmb_Priority"
                                       SelectedValuePath="Key"
                                       DisplayMemberPath="Value"
-                                      SelectedValue="{Binding ViewModel.Priority,Mode=TwoWay}"
+                                      SelectedValue="{Binding ViewModel.Priority,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Margin="0 4 0 0">
                             </ComboBox>
                         </StackPanel>
@@ -173,7 +173,7 @@
                                               Grid.Column="1"
                                               LabelName="تاریخ سررسید"
                                               Grid.ColumnSpan="3"
-                                              SelectedDate="{Binding ViewModel.DueDate , Mode=TwoWay}"
+                                              SelectedDate="{Binding ViewModel.DueDate , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               FlowDirection="LeftToRight" />
 
                         <Grid Grid.Row="3"
@@ -184,7 +184,7 @@
                                        FontSize="14"
                                        Text="توضیحات"
                                        Margin="7 0 0 0 " />
-                            <ui:TextBox Text="{Binding ViewModel.Message , Mode=OneWayToSource}"
+                            <ui:TextBox Text="{Binding ViewModel.Message , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                         Margin="0 25 3 0"
                                         FontSize="14"
                                         FontFamily="Calibri" />
