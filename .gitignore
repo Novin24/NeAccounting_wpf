@@ -361,5 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/NeAccounting/Infrastructure/EntityFramework/BaseDomainDbContext.cs
-/NeAccounting/Infrastructure/EntityFramework/NovinDbContext.cs
