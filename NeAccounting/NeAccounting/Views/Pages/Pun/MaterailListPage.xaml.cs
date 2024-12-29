@@ -66,5 +66,5 @@ namespace NeAccounting.Views.Pages
             }
         }
 
-    }
+	}
 }

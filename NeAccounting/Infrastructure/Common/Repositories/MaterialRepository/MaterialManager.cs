@@ -56,8 +56,9 @@ namespace Infrastructure.Repositories
             long lastPrice,
             string serial,
             string address,
-            bool isManufacturedGoods)
-        {
+            bool isManufacturedGoods,
+            double? miniEntity = null)
+		{
             if (await TableNoTracking.AnyAsync(t => t.Name == name))
                 return new("کاربر گرامی این کالا از قبل تعریف شده می‌باشد!!!", false, false);
 
@@ -67,7 +68,8 @@ namespace Infrastructure.Repositories
                                unitId,
                                isService,
                                lastPrice,
-                               serial,
+							   miniEntity,
+							   serial,
                                address,
                                isManufacturedGoods));
                 await DbContext.SaveChangesAsync();
@@ -212,9 +214,9 @@ namespace Infrastructure.Repositories
                 return new(" خطا در اتصال به پایگاه داده code(93t46993)!!!", false);
             }
             return new(string.Empty, true);
-        }
-
-        public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList)
+		}
+		
+		public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList)
         {
             var materialList = matList.Select(t => new Pun(t.Id,
                 t.MaterialName,

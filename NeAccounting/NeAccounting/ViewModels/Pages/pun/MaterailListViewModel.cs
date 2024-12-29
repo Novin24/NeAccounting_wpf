@@ -34,6 +34,7 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private List<PunListDto> _list;
+
         public void OnNavigatedFrom()
         {
         }
@@ -167,6 +168,7 @@ namespace NeAccounting.ViewModels
                     Address = pun.Address,
                     IsManufacturedGoods = pun.IsManufacturedGoods,
                     MaterialName = pun.MaterialName,
+                    
                     UnitId = pun.UnitId,
                     AsuBox = asuBox
                 });
@@ -174,6 +176,7 @@ namespace NeAccounting.ViewModels
                 servise.Navigate(pageType, context);
             }
         }
+
         [RelayCommand]
         private async Task OnActive(Guid id)
         {
@@ -186,8 +189,9 @@ namespace NeAccounting.ViewModels
             await db.MaterialManager.ChangeStatus(id, true);
             await db.SaveChangesAsync();
             List = await db.MaterialManager.GetMaterails(string.Empty, string.Empty);
-        }
-        [RelayCommand]
+		}
+
+		[RelayCommand]
         private async Task OnDeActive(Guid id)
         {
             if (_isreadonly)

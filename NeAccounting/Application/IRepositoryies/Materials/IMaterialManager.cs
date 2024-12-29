@@ -47,7 +47,8 @@ namespace NeApplication.IRepositoryies
             long lastPrice,
             string serial,
             string address,
-            bool isManufacturedGoods);
+            bool isManufacturedGoods,
+			double? miniEntity = null);
 
         Task<(string error, bool isSuccess)> UpdateMaterial(
             Guid materialId,
@@ -71,9 +72,10 @@ namespace NeApplication.IRepositoryies
             double entity,
             bool DecreaseOrIncrease,
             long? lastPrice = null);
-        Task<(string error, bool isSuccess)> ChangeStatus(
-           Guid id, bool active);
 
-        Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList);
+		Task<(string error, bool isSuccess)> ChangeStatus(
+		   Guid id, bool active);
+
+		Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList);
     }
 }
