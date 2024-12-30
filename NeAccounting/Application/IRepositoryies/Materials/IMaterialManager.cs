@@ -57,7 +57,8 @@ namespace NeApplication.IRepositoryies
             string serial,
             string address,
             long lastPrice,
-            bool isManufacturedGoods);
+            bool isManufacturedGoods,
+			double miniEntity );
 
         /// <summary>
         /// Increase =

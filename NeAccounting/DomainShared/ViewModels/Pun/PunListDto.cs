@@ -13,6 +13,7 @@
         public long LastBuyPrice { get; set; }
         public string Serial { get; set; }
         public string Address { get; set; }
+        public double MiniEntity { get; set; }
         public string ServiceType
         {
             get

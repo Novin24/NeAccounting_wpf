@@ -92,8 +92,9 @@ namespace Infrastructure.Repositories
             string serial,
             string address,
             long lastPrice,
-            bool isManufacturedGoods)
-        {
+            bool isManufacturedGoods,
+			double miniEntity)
+		{
             var mt = await Entities.FindAsync(materialId);
 
             if (mt == null)
