@@ -111,6 +111,7 @@
                                              VirtualizingPanel.CacheLengthUnit="Item">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type  models:NotifViewModel}">
+                            
                             <ui:CardAction Grid.Row="0"
                                            Grid.Column="0"
                                            Margin="0,12,12,0"
@@ -130,6 +131,8 @@
                                         <TextBlock FontSize="16"
                                                    FontWeight="Heavy"
                                                    FontFamily="calibri"
+                                                   VerticalAlignment="Center"
+                                                   TextWrapping="WrapWithOverflow"
                                                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                                                    Text="{Binding Titele, Mode=OneWay}"
                                                    HorizontalAlignment="Center" />
@@ -145,6 +148,7 @@
                                     </StackPanel>
                                 </Grid>
                             </ui:CardAction>
+                            
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ui:VirtualizingItemsControl>

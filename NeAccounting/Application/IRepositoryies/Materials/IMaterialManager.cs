@@ -1,4 +1,5 @@
 ﻿using Domain.NovinEntity.Materials;
+using DomainShared.Notifications;
 using DomainShared.ViewModels.Customer;
 using DomainShared.ViewModels.Pun;
 using NeApplication.Common;
@@ -6,20 +7,26 @@ using NeApplication.Common;
 namespace NeApplication.IRepositoryies
 {
     public interface IMaterialManager : IRepository<Pun>
-    {
-        /// <summary>
-        /// فیلتر شده برای فاکتور ها
-        /// </summary>
-        /// <returns></returns>
-        Task<List<MatListDto>> GetMaterails();
+	{
+		/// <summary>
+		/// فیلتر شده برای فاکتور ها
+		/// </summary>
+		/// <returns></returns>
+		Task<List<MatListDto>> GetMaterails();
 
-        /// <summary>
-        /// فیلتر نشده برای لیست اجناس
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="serial"></param>
-        /// <returns></returns>
-        Task<List<PunListDto>> GetMaterails(string name, string serial);
+		/// <summary>
+		/// فیلتر شده برای نمایش در داشبود
+		/// </summary>
+		/// <returns></returns>
+		public Task<List<NotifViewModel>> GetMaterailforDashboard();
+
+		/// <summary>
+		/// فیلتر نشده برای لیست اجناس
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="serial"></param>
+		/// <returns></returns>
+		Task<List<PunListDto>> GetMaterails(string name, string serial);
 
 		/// <summary>
 		/// لیست برای خروجی گرفتن از اجناس

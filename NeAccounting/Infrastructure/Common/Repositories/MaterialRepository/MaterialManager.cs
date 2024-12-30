@@ -1,4 +1,5 @@
 ﻿using Domain.NovinEntity.Materials;
+using DomainShared.Notifications;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -8,19 +9,31 @@ namespace Infrastructure.Repositories
 {
     public class MaterialManager(NovinDbContext context) : Repository<Pun>(context), IMaterialManager
     {
-        public Task<List<MatListDto>> GetMaterails()
+		public Task<List<MatListDto>> GetMaterails()
+		{
+
+			return TableNoTracking.Where(t => t.IsActive).Select(x => new MatListDto
+			{
+				Id = x.Id,
+				MaterialName = x.Name,
+				Entity = x.Entity,
+				LastSellPrice = x.LastSellPrice,
+				LastBuyPrice = x.LastBuyPrice,
+				UnitName = x.Unit.Name,
+				IsService = x.IsService,
+			}).ToListAsync();
+		}
+		public Task<List<NotifViewModel>> GetMaterailforDashboard()
         {
 
-            return TableNoTracking.Where(t => t.IsActive).Select(x => new MatListDto
+            var list = TableNoTracking.Where(t => t.IsActive & t.MiniEntity > t.Entity).Select(x => new NotifViewModel
             {
-                Id = x.Id,
-                MaterialName = x.Name,
-                Entity = x.Entity,
-                LastSellPrice = x.LastSellPrice,
-                LastBuyPrice = x.LastBuyPrice,
-                UnitName = x.Unit.Name,
-                IsService = x.IsService,
+                Titele = $"موجودی جنس {x.Name} به زیر {x.MiniEntity} {x.Unit.Name} رسیده",
+                Message = $"اکنون فقط {x.Entity} {x.Unit.Name} در دسترس است."
+
             }).ToListAsync();
+
+            return list;
         }
 
         public async Task<List<PunListDto>> GetMaterails(string name, string serial)
