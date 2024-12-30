@@ -39,6 +39,7 @@ namespace Infrastructure.Repositories
                     Address = x.PhysicalAddress,
                     IsManufacturedGoods = x.IsManufacturedGoods,
                     Entity = x.Entity,
+                    MiniEntity = x.MiniEntity,
                     SEntity = x.Entity.ToString("N0"),
                     UnitId = x.UnitId,
                     LastSellPrice = x.LastSellPrice,
@@ -105,6 +106,7 @@ namespace Infrastructure.Repositories
                 mt.SetName(name);
                 mt.SetSerial(serial);
                 mt.SetAddress(address);
+                mt.SetMiniEntity(miniEntity);
                 mt.UnitId = unitId;
                 mt.LastSellPrice = lastPrice;
                 mt.IsManufacturedGoods = isManufacturedGoods;
