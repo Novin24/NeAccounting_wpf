@@ -132,17 +132,17 @@
                                                    FontWeight="Heavy"
                                                    FontFamily="calibri"
                                                    VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center" 
                                                    TextWrapping="WrapWithOverflow"
-                                                   Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                                                    Text="{Binding Titele, Mode=OneWay}"
-                                                   HorizontalAlignment="Center" />
+                                                   Foreground="{DynamicResource TextFillColorTertiaryBrush}"/>
                                         <TextBlock Margin="0 18 0 0"
                                                    FontSize="15"
-                                                   Text="{Binding Message, Mode=OneWay}"
-                                                   TextWrapping="WrapWithOverflow"
-                                                   HorizontalAlignment="Center"
                                                    FontFamily="calibri"
                                                    VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   TextWrapping="WrapWithOverflow"
+                                                   Text="{Binding Message, Mode=OneWay}"
                                                    FlowDirection="RightToLeft" />
 
                                     </StackPanel>
