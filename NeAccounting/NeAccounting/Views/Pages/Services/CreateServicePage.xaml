@@ -189,6 +189,7 @@
                                      Text="{Binding ViewModel.Address, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                      FlowDirection="RightToLeft"
                                      Grid.ColumnSpan="2"
+                                     TextWrapping="Wrap"
                                      FontFamily="Calibri"></TextBox>
                         </Grid>
 

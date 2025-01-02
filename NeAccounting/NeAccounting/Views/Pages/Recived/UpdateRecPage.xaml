@@ -320,6 +320,7 @@
                                        Margin="7 0 0 3"/>
                             <TextBox Margin="0,24,5,0"
                                      FontSize="14"
+                                     TextWrapping="Wrap"
                                      Text="{Binding ViewModel.Description,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      FlowDirection="RightToLeft"
                                      Grid.ColumnSpan="2"

@@ -321,6 +321,7 @@
                                      Text="{Binding ViewModel.Description,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      FlowDirection="RightToLeft"
                                      Grid.ColumnSpan="2"
+                                     TextWrapping="Wrap"
                                      FontFamily="Calibri"></TextBox>
                         </Grid>
                         <Button Grid.Row="6"

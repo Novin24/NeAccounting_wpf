@@ -177,21 +177,13 @@
                                       Grid.ColumnSpan="3"
                                       LabelName="آخرین قیمت فروش"
                                       Value="{Binding ViewModel.LastSellPrice,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <StackPanel  Grid.Column="1"
-                                    Grid.ColumnSpan="3"
-                                    Grid.Row="3"
-                                    Margin="20 4 20 0">
 
-                            <TextBlock FontFamily="Calibri"
-                                       FontSize="14"
-                                       Text="محل نگهداری"
-                                       Margin="1 0 0 0 " />
-                            <ui:TextBox FontSize="14"
-                                        TextAlignment="Center"
-                                        Text="{Binding ViewModel.Address,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        FontFamily="Calibri"
-                                        Margin="0 4 0 0" />
-                        </StackPanel>
+                        <nu:MoneyPack Grid.Row="3"
+                                      Grid.Column="1"
+                                      Grid.ColumnSpan="3"
+                                      LabelName="حداقل موجودی"
+                                      Value="{Binding ViewModel.MiniEntity , Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        
                         <StackPanel Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     Grid.Row="4"
@@ -219,6 +211,21 @@
 
                         </StackPanel>
 
+                        <StackPanel  Grid.Column="1"
+                                    Grid.ColumnSpan="3"
+                                    Grid.Row="5"
+                                    Margin="20 4 20 0">
+
+                            <TextBlock FontFamily="Calibri"
+                                       FontSize="14"
+                                       Text="محل نگهداری"
+                                       Margin="1 0 0 0 " />
+                            <ui:TextBox FontSize="14"
+                                        TextAlignment="Center"
+                                        Text="{Binding ViewModel.Address,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        FontFamily="Calibri"
+                                        Margin="0 4 0 0" />
+                        </StackPanel>
 
                         <Button Grid.Row="6"
                                 Margin="10"

@@ -349,6 +349,7 @@
                             <TextBox Margin="0,20,0,0"
                                      Text="{Binding ViewModel.Description,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="14"
+                                     TextWrapping="Wrap"
                                      FlowDirection="RightToLeft"
                                      FontFamily="Calibri"></TextBox>
                         </Grid>

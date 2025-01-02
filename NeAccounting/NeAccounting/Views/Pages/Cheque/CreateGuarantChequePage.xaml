@@ -322,6 +322,7 @@
                                        Grid.Column="1"/>
                             <ui:TextBox Margin="0,21,0,0"
                                         FontSize="16"
+                                        TextWrapping="Wrap"
                                         Text="{Binding ViewModel.Description,Mode=OneWayToSource}"
                                         FlowDirection="RightToLeft"
                                         FontFamily="Calibri"></ui:TextBox>
