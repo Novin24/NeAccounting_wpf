@@ -94,7 +94,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
             using UnitOfWork db = new();
-            (string error, bool isSuccess) = await db.MaterialManager.UpdateMaterial(MaterialId, SrvicName, UnitId.Value, string.Empty, Address, Price.Value, false);
+            (string error, bool isSuccess) = await db.MaterialManager.UpdateMaterial(MaterialId, SrvicName, UnitId.Value, string.Empty, Address, Price.Value, false,0);
 
             if (!isSuccess)
             {

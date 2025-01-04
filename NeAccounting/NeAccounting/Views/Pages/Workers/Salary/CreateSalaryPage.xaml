@@ -373,6 +373,7 @@
                                              FlowDirection="RightToLeft"
                                              Text="{Binding ViewModel.Descriptio, UpdateSourceTrigger=PropertyChanged}"
                                              Grid.ColumnSpan="3"
+                                             TextWrapping="Wrap"
                                              FontFamily="Calibri"></TextBox>
                                 </Grid>
                                 <ui:Button Grid.Row="8"

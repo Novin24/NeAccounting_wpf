@@ -241,6 +241,7 @@
                                        Grid.ColumnSpan="3" />
                             <ui:TextBox Grid.Row="1"
                                         FontSize="14"
+                                        TextWrapping="Wrap"
                                         TabIndex="6"
                                         Text="{Binding ViewModel.Address,   Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         FontFamily="Calibri"

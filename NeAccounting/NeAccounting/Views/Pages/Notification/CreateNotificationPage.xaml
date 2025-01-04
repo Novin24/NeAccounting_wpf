@@ -186,6 +186,7 @@
                                        Margin="7 0 0 0 " />
                             <ui:TextBox Text="{Binding ViewModel.Message , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                         Margin="0 25 3 0"
+                                        TextWrapping="Wrap"
                                         FontSize="14"
                                         FontFamily="Calibri" />
                         </Grid>

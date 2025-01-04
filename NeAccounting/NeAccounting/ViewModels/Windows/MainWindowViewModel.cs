@@ -204,7 +204,7 @@ namespace NeAccounting.ViewModels
                     new NavigationViewItem {Content = "تغییر رمز عبور",TargetPageType = typeof(ChangePassword) , Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
                 #endregion
                     
-                #region ChangePassword
+                #region Notification
                     new NavigationViewItem {Content = "یادآورها",TargetPageType = typeof(NotificationListPage) , Icon = new SymbolIcon{ Symbol = SymbolRegular.CaretRight20} },
 					new NavigationViewItem(){Content = "ایجاد یادآور",Icon = new SymbolIcon { Symbol = SymbolRegular.ReadingListAdd28},TargetPageType = typeof(CreateNotificationPage),
 						Visibility = Visibility.Collapsed},
