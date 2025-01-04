@@ -371,6 +371,7 @@
                                        Margin="5 0 0 0 " />
                             <ui:TextBox Margin="0,21,0,0"
                                         FontSize="16"
+                                        TextWrapping="Wrap"
                                         FlowDirection="RightToLeft"
                                         Text="{Binding ViewModel.PayDescription}"
                                         IsReadOnly="True"
@@ -386,6 +387,7 @@
                                        Text="توضیحات"
                                        Margin="5 0 0 0 " />
                             <ui:TextBox Margin="0,21,0,0"
+                                        TextWrapping="Wrap"
                                         FontSize="16"
                                         Text="{Binding ViewModel.RecDescription}"
                                         FlowDirection="RightToLeft"

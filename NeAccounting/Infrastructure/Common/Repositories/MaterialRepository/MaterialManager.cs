@@ -1,4 +1,5 @@
 ﻿using Domain.NovinEntity.Materials;
+using DomainShared.Notifications;
 using DomainShared.ViewModels.Pun;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -8,19 +9,31 @@ namespace Infrastructure.Repositories
 {
     public class MaterialManager(NovinDbContext context) : Repository<Pun>(context), IMaterialManager
     {
-        public Task<List<MatListDto>> GetMaterails()
+		public Task<List<MatListDto>> GetMaterails()
+		{
+
+			return TableNoTracking.Where(t => t.IsActive).Select(x => new MatListDto
+			{
+				Id = x.Id,
+				MaterialName = x.Name,
+				Entity = x.Entity,
+				LastSellPrice = x.LastSellPrice,
+				LastBuyPrice = x.LastBuyPrice,
+				UnitName = x.Unit.Name,
+				IsService = x.IsService,
+			}).ToListAsync();
+		}
+		public Task<List<NotifViewModel>> GetMaterailforDashboard()
         {
 
-            return TableNoTracking.Where(t => t.IsActive).Select(x => new MatListDto
+            var list = TableNoTracking.Where(t => t.IsActive & t.MiniEntity > t.Entity).Select(x => new NotifViewModel
             {
-                Id = x.Id,
-                MaterialName = x.Name,
-                Entity = x.Entity,
-                LastSellPrice = x.LastSellPrice,
-                LastBuyPrice = x.LastBuyPrice,
-                UnitName = x.Unit.Name,
-                IsService = x.IsService,
+                Titele = $"موجودی جنس {x.Name} به زیر {x.MiniEntity} {x.Unit.Name} رسیده",
+                Message = $"اکنون فقط {x.Entity} {x.Unit.Name} در دسترس است."
+
             }).ToListAsync();
+
+            return list;
         }
 
         public async Task<List<PunListDto>> GetMaterails(string name, string serial)
@@ -39,6 +52,7 @@ namespace Infrastructure.Repositories
                     Address = x.PhysicalAddress,
                     IsManufacturedGoods = x.IsManufacturedGoods,
                     Entity = x.Entity,
+                    MiniEntity = x.MiniEntity,
                     SEntity = x.Entity.ToString("N0"),
                     UnitId = x.UnitId,
                     LastSellPrice = x.LastSellPrice,
@@ -56,8 +70,9 @@ namespace Infrastructure.Repositories
             long lastPrice,
             string serial,
             string address,
-            bool isManufacturedGoods)
-        {
+            bool isManufacturedGoods,
+            double? miniEntity = null)
+		{
             if (await TableNoTracking.AnyAsync(t => t.Name == name))
                 return new("کاربر گرامی این کالا از قبل تعریف شده می‌باشد!!!", false, false);
 
@@ -67,7 +82,8 @@ namespace Infrastructure.Repositories
                                unitId,
                                isService,
                                lastPrice,
-                               serial,
+							   miniEntity,
+							   serial,
                                address,
                                isManufacturedGoods));
                 await DbContext.SaveChangesAsync();
@@ -90,8 +106,9 @@ namespace Infrastructure.Repositories
             string serial,
             string address,
             long lastPrice,
-            bool isManufacturedGoods)
-        {
+            bool isManufacturedGoods,
+			double miniEntity)
+		{
             var mt = await Entities.FindAsync(materialId);
 
             if (mt == null)
@@ -102,6 +119,7 @@ namespace Infrastructure.Repositories
                 mt.SetName(name);
                 mt.SetSerial(serial);
                 mt.SetAddress(address);
+                mt.SetMiniEntity(miniEntity);
                 mt.UnitId = unitId;
                 mt.LastSellPrice = lastPrice;
                 mt.IsManufacturedGoods = isManufacturedGoods;
@@ -212,9 +230,9 @@ namespace Infrastructure.Repositories
                 return new(" خطا در اتصال به پایگاه داده code(93t46993)!!!", false);
             }
             return new(string.Empty, true);
-        }
-
-        public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList)
+		}
+		
+		public async Task<(string error, bool isSuccess)> AddAllMaterialsInNewYear(List<PunListDto> matList)
         {
             var materialList = matList.Select(t => new Pun(t.Id,
                 t.MaterialName,
