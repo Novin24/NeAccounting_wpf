@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_83A4938939934AE4B2FDA98138797792"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8F19105F3DB5408C9176BB10B4E85259"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -37,6 +43,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -53,6 +67,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -84,6 +106,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_83A4938939934AE4B2FDA98138797792"
+            {
+            "SourcePath" = "8:..\\NeAccounting\\CmpIco.ico"
+            "TargetName" = "8:CmpIco.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_FCEDE7ECF8EB40F0A665DD9C2ABA9099"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -139,7 +181,7 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:NeSetup"
+        "ProductName" = "8:NeAccounting"
         "ProductCode" = "8:{E421012C-A426-42EA-BBCA-2162C6D55FA8}"
         "PackageCode" = "8:{7723AD74-B9EA-460D-8268-1E7461E2B4E9}"
         "UpgradeCode" = "8:{9E7B96D9-6CC9-4627-BAB9-51FBCC0C19EE}"
@@ -149,16 +191,16 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:2.3.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:Christ24"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:NeSetup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:Christ24"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_83A4938939934AE4B2FDA98138797792"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -662,7 +704,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8F19105F3DB5408C9176BB10B4E85259"
             {
-            "SourcePath" = "8:..\\NeAccounting\\obj\\Debug\\net8.0-windows7.0\\apphost.exe"
+            "SourcePath" = "8:..\\NeAccounting\\obj\\Release\\net8.0-windows7.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FCEDE7ECF8EB40F0A665DD9C2ABA9099"
