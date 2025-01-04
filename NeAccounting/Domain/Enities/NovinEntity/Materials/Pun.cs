@@ -23,6 +23,7 @@ namespace Domain.NovinEntity.Materials
         /// سریال
         /// </summary>
         public string Serial { get; private set; }
+		public double MiniEntity { get; set; } = 0;
 
         /// <summary>
         /// موجودی
@@ -37,6 +38,7 @@ namespace Domain.NovinEntity.Materials
         /// <summary>
         /// آخرین قیمت خرید
         /// </summary>
+        
         public long LastBuyPrice { get; set; }
 
         public bool IsManufacturedGoods { get; set; }
@@ -67,44 +69,59 @@ namespace Domain.NovinEntity.Materials
             Guid unitId,
             bool isService,
             long lastSellPrice,
-            string serial,
+			double? miniEntity,
+			string serial,
             string physicalAddress,
             bool isManufacturedGoods)
         {
             SetName (name);
             SetSerial(serial);
             SetAddress(physicalAddress);
-            IsManufacturedGoods = isManufacturedGoods;
+            SetMiniEntity(miniEntity);
+			IsManufacturedGoods = isManufacturedGoods;
             UnitId = unitId;
             IsService = isService;
-            Entity = 0;
-            LastBuyPrice = 0;
+			Entity = 0;
+			LastBuyPrice = 0;
             LastSellPrice = lastSellPrice;
             IsActive = true;
         }
 
-        public Pun(string name,
-            Guid unitId,
-            bool isService,
-            long lastSellPrice,
-            string serial,
-            double entity,
-            long lastBuyPrice,
-            bool isActive,
-            string physicalAddress)
-        {
-            Name = name;
-            IsManufacturedGoods = false;
-            Entity = entity;
-            LastBuyPrice = lastBuyPrice;
-            UnitId = unitId;
-            Serial = serial;
-            IsService = isService;
-            LastSellPrice = lastSellPrice;
-            PhysicalAddress = physicalAddress;
-            IsActive = isActive;
-        }
+        //public Pun(string name,
+        //    Guid unitId,
+        //    bool isService,
+        //    long lastSellPrice,
+        //    string serial,
+        //    double entity,
+        //    long lastBuyPrice,
+        //    bool isActive,
+        //    string physicalAddress)
+        //{
+        //    Name = name;
+        //    IsManufacturedGoods = false;
+        //    Entity = entity;
+        //    LastBuyPrice = lastBuyPrice;
+        //    UnitId = unitId;
+        //    Serial = serial;
+        //    IsService = isService;
+        //    LastSellPrice = lastSellPrice;
+        //    PhysicalAddress = physicalAddress;
+        //    IsActive = isActive;
+        //}
 
+        /// <summary>
+        /// سال مالی جدید
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="unitId"></param>
+        /// <param name="isService"></param>
+        /// <param name="lastSellPrice"></param>
+        /// <param name="serial"></param>
+        /// <param name="entity"></param>
+        /// <param name="lastBuyPrice"></param>
+        /// <param name="isActive"></param>
+        /// <param name="physicalAddress"></param>
         public Pun(
             Guid id,
             string name,
@@ -158,6 +175,22 @@ namespace Domain.NovinEntity.Materials
             PhysicalAddress = physicalAddress;
             return this;
         }
-        #endregion
-    }
+		public Pun SetMiniEntity(double? miniEntity)
+		{
+			if (miniEntity == null)
+			{
+				MiniEntity = 0;
+			}
+			else if (miniEntity < 0)
+			{
+				throw new ArgumentException("حداقل موجودی نمی‌تواند منفی باشد.");
+			}
+			else
+			{
+				MiniEntity = miniEntity.Value;
+			}
+			return this;
+		}
+		#endregion
+	}
 }

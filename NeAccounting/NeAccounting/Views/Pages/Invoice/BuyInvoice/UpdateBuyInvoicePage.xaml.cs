@@ -53,7 +53,7 @@ namespace NeAccounting.Views.Pages
                 return;
             var mat = (MatListDto)args.SelectedItem;
             ViewModel.MaterialId = mat.Id;
-            ViewModel.MatPrice = mat.LastSellPrice;
+            ViewModel.MatPrice = mat.LastBuyPrice;
             _totalEntity = mat.Entity;
             txt_UnitName.Text = mat.UnitName;
 			lbl_matEntity.Text = mat.Entity.ToString("N0");

@@ -49,8 +49,11 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private Guid _materialId;
 
+		[ObservableProperty]
+		private double _miniEntity = 0;
 
-        public void OnNavigatedFrom()
+
+		public void OnNavigatedFrom()
         {
 
         }
@@ -98,7 +101,7 @@ namespace NeAccounting.ViewModels
             //}
 
             using UnitOfWork db = new();
-            (string error, bool isSuccess) = await db.MaterialManager.UpdateMaterial(MaterialId, MaterialName, UnitId.Value, Serial, Address, LastSellPrice, IsManufacturedGoods);
+            (string error, bool isSuccess) = await db.MaterialManager.UpdateMaterial(MaterialId, MaterialName, UnitId.Value, Serial, Address, LastSellPrice, IsManufacturedGoods,MiniEntity);
 
             if (!isSuccess)
             {

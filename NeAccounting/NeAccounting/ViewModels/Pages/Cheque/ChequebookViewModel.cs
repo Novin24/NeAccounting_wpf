@@ -500,7 +500,3 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 	}
 	#endregion
 }
-
-
-
-

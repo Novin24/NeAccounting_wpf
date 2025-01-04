@@ -160,6 +160,7 @@
                                        Text="توضیحات"
                                        Grid.Column="1" />
                             <TextBox Margin="0,20,0,0"
+                                     TextWrapping="Wrap"
                                      FontSize="14"
                                      Text="{Binding ViewModel.Description , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                      FlowDirection="RightToLeft"
