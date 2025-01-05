@@ -71,8 +71,10 @@ public partial class WatingWindowViewModel : ObservableObject
         using BaseUnitOfWork db = new();
         var g = Guid.NewGuid().ToString().Replace("-", "")[15..];
         var path = Directory.GetCurrentDirectory();
-        var filePath = path + "\\" + g + ".mdf";
-        var logfilePath = path + "\\" + g + "_log.ldf";
+        var filePath = Path.Combine(path, "Required", "Data", g + ".mdf");
+        //var filePathh = path + "\\" + g + ".mdf";
+        var logfilePath = Path.Combine(path, "Required", "Data", g + "_log.ldf");
+        //var logfilePath = path + "\\" + g + "_log.ldf";
         var (iis, e) = await db.FinancialYearRepository.CreateNewDatabase(g, filePath, logfilePath);
         var s = await db.FinancialYearRepository.CreateNewFinancialYear(Titele, g, Description);
         if (!s)
