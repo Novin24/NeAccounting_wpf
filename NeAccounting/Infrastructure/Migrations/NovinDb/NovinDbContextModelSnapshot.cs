@@ -78,7 +78,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("MaterialId");
 
-                    b.ToTable("BuyRemittance");
+                    b.ToTable("BuyRemittance", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Enities.NovinEntity.Remittances.SellRemittance", b =>
@@ -137,7 +137,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("MaterialId");
 
-                    b.ToTable("SellRemittance");
+                    b.ToTable("SellRemittance", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Bank.Bank", b =>
@@ -186,7 +186,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bank");
+                    b.ToTable("Bank", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Cheques.Cheque", b =>
@@ -273,7 +273,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Cheque");
+                    b.ToTable("Cheque", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Customers.Customer", b =>
@@ -369,7 +369,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Documents.Document", b =>
@@ -444,7 +444,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Serial");
 
-                    b.ToTable("Document");
+                    b.ToTable("Document", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Expense.Expense", b =>
@@ -501,7 +501,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Expense");
+                    b.ToTable("Expense", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Materials.Pun", b =>
@@ -579,7 +579,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Pun");
+                    b.ToTable("Pun", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Materials.Units", b =>
@@ -626,7 +626,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("Id");
 
-                    b.ToTable("Units");
+                    b.ToTable("Units", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.FinancialAid", b =>
@@ -685,7 +685,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("FinancialAid");
+                    b.ToTable("FinancialAid", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Function", b =>
@@ -744,7 +744,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("Function");
+                    b.ToTable("Function", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Personel", b =>
@@ -849,7 +849,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("PersonnelId");
 
-                    b.ToTable("Personel");
+                    b.ToTable("Personel", (string)null);
                 });
 
             modelBuilder.Entity("Domain.NovinEntity.Workers.Salary", b =>
@@ -935,7 +935,7 @@ namespace Infrastructure.Migrations.NovinDb
 
                     b.HasIndex("WorkerId");
 
-                    b.ToTable("Salary");
+                    b.ToTable("Salary", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Enities.NovinEntity.Remittances.BuyRemittance", b =>
