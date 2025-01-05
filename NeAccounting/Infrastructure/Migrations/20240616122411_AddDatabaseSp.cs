@@ -113,7 +113,7 @@ BEGIN
   CREATE TABLE dbo.Units (
     Id uniqueidentifier NOT NULL DEFAULT (newsequentialid()),
     Name nvarchar(30) NOT NULL,
-    Descrip nvarchar(max) NULL,
+    Descrip nvarchar(100) NULL,
     IsActive bit NOT NULL,
     CreationTime datetime2 NOT NULL,
     CreatorId uniqueidentifier NOT NULL,
@@ -122,11 +122,10 @@ BEGIN
     DeletionTime datetime2 NULL,
     DeleterId uniqueidentifier NULL,
     IsDeleted bit NOT NULL,
+    IdNumber INT IDENTITY,
     CONSTRAINT PK_Units PRIMARY KEY CLUSTERED (Id)
   )
-  ON [PRIMARY]
-  TEXTIMAGE_ON [PRIMARY]
-   
+  ON [PRIMARY]   
   
   CREATE INDEX IX_Units_Id
     ON dbo.Units (Id)
@@ -227,6 +226,7 @@ BEGIN
     DeletionTime datetime2 NULL,
     DeleterId uniqueidentifier NULL,
     IsDeleted bit NOT NULL,
+    MiniEntity FLOAT NOT NULL DEFAULT (0.0000000000000000e+000)
     CONSTRAINT PK_Pun PRIMARY KEY CLUSTERED (Id)
   )
   ON [PRIMARY]
@@ -245,8 +245,8 @@ BEGIN
   CREATE TABLE dbo.Personel (
     Id uniqueidentifier NOT NULL DEFAULT (newsequentialid()),
     FullName nvarchar(50) NOT NULL,
-    NationalCode nvarchar(10) NULL,
-    Mobile nvarchar(max) NOT NULL,
+    NationalCode nvarchar(12) NOT NULL,
+    Mobile nvarchar(20) NOT NULL,
     Address nvarchar(150) NULL,
     StartDate datetime2 NOT NULL,
     EndDate datetime2 NULL,
@@ -272,9 +272,7 @@ BEGIN
     IsDeleted bit NOT NULL,
     CONSTRAINT PK_Personel PRIMARY KEY CLUSTERED (Id)
   )
-  ON [PRIMARY]
-  TEXTIMAGE_ON [PRIMARY]
-   
+  ON [PRIMARY]   
   
   CREATE INDEX IX_Personel_PersonnelId
     ON dbo.Personel (PersonnelId)
@@ -479,6 +477,8 @@ CREATE TABLE dbo.Cheque (
   DeletionTime datetime2 NULL,
   DeleterId uniqueidentifier NULL,
   IsDeleted bit NOT NULL,
+  Cheque_Series NVARCHAR(100) NULL,
+  SiadyNumber NVARCHAR(100) NULL,
   CONSTRAINT PK_Cheque PRIMARY KEY CLUSTERED (Id)
 )
 ON [PRIMARY]
@@ -524,26 +524,6 @@ CREATE INDEX IX_BuyRemittance_MaterialId
   ON dbo.BuyRemittance (MaterialId)
   ON [PRIMARY]
  
-
-CREATE TABLE dbo.Bank (
-  Id int IDENTITY,
-  Bank_ID int NOT NULL,
-  Bank_Name nvarchar(max) NOT NULL,
-  Bank_Branch nvarchar(max) NOT NULL,
-  Account_num nvarchar(max) NOT NULL,
-  CreationTime datetime2 NOT NULL,
-  CreatorId uniqueidentifier NOT NULL,
-  LastModificationTime datetime2 NULL,
-  LastModifireId uniqueidentifier NULL,
-  DeletionTime datetime2 NULL,
-  DeleterId uniqueidentifier NULL,
-  IsDeleted bit NOT NULL,
-  CONSTRAINT PK_Bank PRIMARY KEY CLUSTERED (Id)
-)
-ON [PRIMARY]
-TEXTIMAGE_ON [PRIMARY]
- 
-
 CREATE TABLE dbo.__EFMigrationsHistory (
   MigrationId nvarchar(150) NOT NULL,
   ProductVersion nvarchar(32) NOT NULL,
