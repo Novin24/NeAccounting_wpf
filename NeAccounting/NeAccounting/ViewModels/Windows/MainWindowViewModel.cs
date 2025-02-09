@@ -240,7 +240,9 @@ namespace NeAccounting.ViewModels
 				return false;
 			}
 			using BaseUnitOfWork db = new();
-			if (await db.UserRepository.LogInUser(userName, password))
+			var (isSuccess, error) = await db.UserRepository.LogInUser(userName, password);
+
+            if (isSuccess)
 			{
 				var r = await db.FinancialYearRepository.GetActiveYear();
 				if (!r.isSucces)
@@ -262,7 +264,7 @@ namespace NeAccounting.ViewModels
 				return true;
 			}
 
-			LogInError = "عدم تطابق نام کاربری و گذرواژه !!!";
+			LogInError = error;
 			return false;
 		}
 

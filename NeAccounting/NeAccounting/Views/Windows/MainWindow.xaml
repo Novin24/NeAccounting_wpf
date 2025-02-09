@@ -343,6 +343,15 @@
                                                      Margin="0 50 0 0"
                                                      VerticalAlignment="Center"
                                                      IsIndeterminate="True" />
+                                    <TextBlock 
+                                               Margin="0 20 0 0"
+                                               Foreground="DarkGray"
+                                               FontSize="20"
+                                               FlowDirection="RightToLeft"
+                                               FontWeight="Heavy"
+                                               FontFamily="B Nazanin"
+                                               HorizontalAlignment="Center"
+                                               Text="در حال بارگذاری . . ."/>
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
