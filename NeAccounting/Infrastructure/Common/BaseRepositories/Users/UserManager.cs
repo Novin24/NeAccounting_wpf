@@ -2,9 +2,10 @@
 using Domain.BaseDomain.User;
 using DomainShared.Constants;
 using Infrastructure.EntityFramework;
-using Infrastructure.UnitOfWork;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using NeApplication.IBaseRepositories;
+using Serilog;
 
 namespace Infrastructure.BaseRepositories
 {
@@ -12,36 +13,61 @@ namespace Infrastructure.BaseRepositories
     {
         public UserManager(BaseDomainDbContext context) : base(context) { }
 
-        public async Task<IdentityUser> GetUser(string userName)
+        private async Task<IdentityUser?> GetUser(string userName)
         {
-            return await TableNoTracking.FirstOrDefaultAsync(x => x.UserName == userName);
+            for(int i = 0; i < 5; i++)
+            {
+
+                try
+                {
+                    var u = await TableNoTracking.FirstOrDefaultAsync(x => x.UserName == userName);
+                    return u;
+                }
+                catch (SqlException ex) 
+                {
+                    Log.Error(ex, "LogIn Error, code: (47ls3513)");
+                    await Task.Delay(5000); // Wait before retrying
+                    continue;
+                }
+                catch (InvalidOperationException ex) 
+                {
+                    Log.Error(ex, "LogIn Error, code: (47hs4923)");
+                    await Task.Delay(5000); // Wait before retrying
+                    continue;
+                }
+                catch (Exception ex) 
+                {
+                    Log.Error(ex, "LogIn Error, code: (46hs7223)");
+                    await Task.Delay(5000); // Wait before retrying
+                    continue;
+                }
+            }
+            return new IdentityUser();
         }
 
-        public async Task<IdentityUser> GetUser(Guid id)
+        private async Task<IdentityUser?> GetUser(Guid id)
         {
             return await TableNoTracking.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<bool> LogInUser(string userName, string password)
+        public async Task<(bool isSuccess, string error)> LogInUser(string userName, string password)
         {
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-            {
-                return false;
-            }
             var passHash = SecurityHelper.GetSha512Hash(password);
 
             var user = await GetUser(userName);
 
-            if (user == null) { return false; }
+            if (user == null) { return (false, "عدم تطابق نام کاربری و گذرواژه !!!"); }
 
-            if (user.PasswordHash != passHash) { return false; }
+            if (user.UserName == null) { return (false, "خطا در اتصال به پایگاه داده ! ! !"); }
+
+            if (user.PasswordHash != passHash) { return (false, "عدم تطابق نام کاربری و گذرواژه !!!"); }
 
             CurrentUser.CurrentFullName = user.Name + " " + user.SurName;
             CurrentUser.CurrentName = user.Name;
             CurrentUser.CurrentUserName = user.UserName;
             CurrentUser.CurrentUserId = user.Id;
             CurrentUser.LogInTime = DateTime.Now.ToString("HH:mm:ss");
-            return true;
+            return (true, "");
         }
 
 
@@ -68,26 +94,26 @@ namespace Infrastructure.BaseRepositories
             }
             return (true, string.Empty);
         }
-		public async Task UpdateUserTheme(Guid userId, DomainShared.Enums.Themes.Theme theme)
-		{
-			var user = await GetUser(userId);
-			if (user != null)
-			{
-				user.CurrentTheme = theme; // فرض بر این است که این فیلد در IdentityUser وجود دارد
-				Entities.Update(user);
-			}
-		}
-		public async Task<DomainShared.Enums.Themes.Theme> LoadUserTheme(Guid userId)
-		{
-			var user = await GetUser(userId);
-			if (user != null)
-			{
-				return user.CurrentTheme; // فرض بر این است که این فیلد در IdentityUser وجود دارد
-			}
-			return DomainShared.Enums.Themes.Theme.Dark; // مقدار پیش‌فرض در صورت عدم وجود کاربر
-		}
+        public async Task UpdateUserTheme(Guid userId, DomainShared.Enums.Themes.Theme theme)
+        {
+            var user = await GetUser(userId);
+            if (user != null)
+            {
+                user.CurrentTheme = theme; // فرض بر این است که این فیلد در IdentityUser وجود دارد
+                Entities.Update(user);
+            }
+        }
+        public async Task<DomainShared.Enums.Themes.Theme> LoadUserTheme(Guid userId)
+        {
+            var user = await GetUser(userId);
+            if (user != null)
+            {
+                return user.CurrentTheme; // فرض بر این است که این فیلد در IdentityUser وجود دارد
+            }
+            return DomainShared.Enums.Themes.Theme.Dark; // مقدار پیش‌فرض در صورت عدم وجود کاربر
+        }
 
-	}
+    }
 
 
 }
