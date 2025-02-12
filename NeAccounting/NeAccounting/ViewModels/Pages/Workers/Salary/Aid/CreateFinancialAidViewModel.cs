@@ -26,6 +26,7 @@ namespace NeAccounting.ViewModels
 
         }
 
+        #region Properties
         [ObservableProperty]
         private int? _PersonelId;
 
@@ -47,6 +48,19 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private IEnumerable<AidViewModel> _list;
 
+        /// <summary>
+        /// غیرفعال بودن سرچ
+        /// </summary>
+        [ObservableProperty]
+        private bool _loding = true;
+
+        /// <summary>
+        /// متن نمایشی سرچ
+        /// </summary>
+        [ObservableProperty]
+        private string _placeholderSearch = "در حال بارگذاری ...";
+        #endregion
+
         public async void OnNavigatedTo()
         {
             await InitializeViewModel();
@@ -64,6 +78,8 @@ namespace NeAccounting.ViewModels
             AuSuBox = await db.WorkerManager.GetWorkers();
             var result = await db.WorkerManager.GetAidList(WorkerId);
             List = result.Items;
+            Loding = false;
+            PlaceholderSearch = "جستجو ...";
         }
 
         [RelayCommand]

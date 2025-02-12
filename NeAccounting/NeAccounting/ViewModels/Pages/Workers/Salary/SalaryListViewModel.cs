@@ -17,16 +17,17 @@ namespace NeAccounting.ViewModels
         private readonly IContentDialogService _contentDialogService;
         private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
+        #region Properties
         [ObservableProperty]
         private Guid? _workerId = null;
 
-		[ObservableProperty]
-		private int _currentPage = 1;
+        [ObservableProperty]
+        private int _currentPage = 1;
 
-		[ObservableProperty]
-		private int _pageCount = 1;
+        [ObservableProperty]
+        private int _pageCount = 1;
 
-		[ObservableProperty]
+        [ObservableProperty]
         private string _totalCount;
 
         [ObservableProperty]
@@ -47,6 +48,20 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private IEnumerable<SalaryViewModel> _list;
+
+        /// <summary>
+        /// غیرفعال بودن سرچ
+        /// </summary>
+        [ObservableProperty]
+        private bool _loding = true;
+
+        /// <summary>
+        /// متن نمایشی سرچ
+        /// </summary>
+        [ObservableProperty]
+        private string _placeholderSearch = "در حال بارگذاری ...";
+
+        #endregion
 
         public SalaryListViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService)
         {
@@ -69,10 +84,12 @@ namespace NeAccounting.ViewModels
             using UnitOfWork db = new();
             AuSuBox = await db.WorkerManager.GetWorkers();
             var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear, CurrentPage);
-			CurrentPage = salaries.CurrentPage;
-			PageCount = salaries.PageCount;
-			TotalCount = salaries.TotalCount.ToString("N0");
+            CurrentPage = salaries.CurrentPage;
+            PageCount = salaries.PageCount;
+            TotalCount = salaries.TotalCount.ToString("N0");
             List = salaries.Items;
+            Loding = false;
+            PlaceholderSearch = "جستجو ...";
         }
 
         [RelayCommand]
@@ -80,23 +97,23 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear, CurrentPage);
-			CurrentPage = salaries.CurrentPage;
-			PageCount = salaries.PageCount;
-			TotalCount = salaries.TotalCount.ToString("N0");
+            CurrentPage = salaries.CurrentPage;
+            PageCount = salaries.PageCount;
+            TotalCount = salaries.TotalCount.ToString("N0");
             List = salaries.Items;
-		}
+        }
 
-		[RelayCommand]
-		private async Task OnPageChenge()
-		{
-			using UnitOfWork db = new();
-			var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear, CurrentPage);
-			PageCount = salaries.PageCount;
-			TotalCount = salaries.TotalCount.ToString("N0");
-			List = salaries.Items;
-		}
+        [RelayCommand]
+        private async Task OnPageChenge()
+        {
+            using UnitOfWork db = new();
+            var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear, CurrentPage);
+            PageCount = salaries.PageCount;
+            TotalCount = salaries.TotalCount.ToString("N0");
+            List = salaries.Items;
+        }
 
-		[RelayCommand]
+        [RelayCommand]
         private void OnAddClick(string parameter)
         {
             if (String.IsNullOrWhiteSpace(parameter))

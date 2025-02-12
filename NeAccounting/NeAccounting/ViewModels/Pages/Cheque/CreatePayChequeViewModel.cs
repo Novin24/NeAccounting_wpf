@@ -14,10 +14,11 @@ namespace NeAccounting.ViewModels
     public partial class CreatePayChequeViewModel(ISnackbarService snackbarService, INavigationService navigationService) : ObservableObject, INavigationAware
     {
         private readonly ISnackbarService _snackbarService = snackbarService;
-        private readonly INavigationService _navigationService = navigationService; 
+        private readonly INavigationService _navigationService = navigationService;
         private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
 
+        #region Properties
 
         /// <summary>
         /// لیست مشتری ها
@@ -59,22 +60,22 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private string? _cheque_Number;
 
-		/// <summary>
-		/// سری چک
-		/// </summary>
-		[ObservableProperty]
-		private string? _cheque_Series;
+        /// <summary>
+        /// سری چک
+        /// </summary>
+        [ObservableProperty]
+        private string? _cheque_Series;
 
-		/// <summary>
-		/// شماره صیادی
-		/// </summary>
-		[ObservableProperty]
-		private string? _siadyNumber;
+        /// <summary>
+        /// شماره صیادی
+        /// </summary>
+        [ObservableProperty]
+        private string? _siadyNumber;
 
-		/// <summary>
-		/// شماره شبا
-		/// </summary>
-		[ObservableProperty]
+        /// <summary>
+        /// شماره شبا
+        /// </summary>
+        [ObservableProperty]
         private string _shaba_Number;
 
         /// <summary>
@@ -101,6 +102,19 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private SubmitChequeStatus _status = SubmitChequeStatus.Register;
 
+        /// <summary>
+        /// غیرفعال بودن سرچ
+        /// </summary>
+        [ObservableProperty]
+        private bool _loding = true;
+
+        /// <summary>
+        /// متن نمایشی سرچ
+        /// </summary>
+        [ObservableProperty]
+        private string _placeholderSearch = "در حال بارگذاری ...";
+        #endregion
+
         public async void OnNavigatedTo()
         {
             await InitializeViewModel();
@@ -110,6 +124,8 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             Cuslist = await db.CustomerManager.GetDisplayUser();
+            Loding = false;
+            PlaceholderSearch = "جستجو ...";
         }
 
         public void OnNavigatedFrom()

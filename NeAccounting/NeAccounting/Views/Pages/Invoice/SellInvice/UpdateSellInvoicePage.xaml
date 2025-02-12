@@ -257,6 +257,7 @@
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
                                                        OriginalItemsSource="{Binding ViewModel.MatList}"
+                                                       PlaceholderText="جستجو ..."
                                                        DisplayMemberPath="MaterialName"
                                                        SuggestionChosen="Txt_mat_SuggestionChosen"
                                                        FontFamily="Calibri"

@@ -253,6 +253,7 @@
                                                        FontFamily="Calibri"
                                                        OriginalItemsSource="{Binding ViewModel.MatList, UpdateSourceTrigger=PropertyChanged}"
                                                        DisplayMemberPath="MaterialName"
+                                                       PlaceholderText="جستجو ..."
                                                        SuggestionChosen="Txt_mat_SuggestionChosen"
                                                        Margin="0 2 0 0" />
                                 </StackPanel>

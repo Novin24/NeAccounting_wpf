@@ -186,9 +186,10 @@
                                                        Grid.Column="0"
                                                        Icon="{ui:SymbolIcon Search24}"
                                                        OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
-                                                       DisplayMemberPath="DisplayName"
+                                                       PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
+                                                       PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
                                                        SuggestionChosen="Txt_name_SuggestionChosen"
-                                                       PlaceholderText="Search ..."
+                                                       DisplayMemberPath="DisplayName"
                                                        FontFamily="Calibri"
                                                        x:Name="txt_Name"
                                                        Height="33.5" />

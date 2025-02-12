@@ -144,6 +144,18 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
     /// </summary>
     [ObservableProperty]
     private string? _invDescription;
+
+    /// <summary>
+    /// غیرفعال بودن سرچ
+    /// </summary>
+    [ObservableProperty]
+    private bool _loding = true;
+
+    /// <summary>
+    /// متن نمایشی سرچ
+    /// </summary>
+    [ObservableProperty]
+    private string _placeholderSearch = "در حال بارگذاری ...";
     #endregion
 
     #region Method
@@ -159,7 +171,9 @@ public partial class CreateSellInvoiceViewModel(ISnackbarService snackbarService
         Cuslist = await db.CustomerManager.GetDisplayUser(false, null, true);
         LastInvoice = await db.DocumentManager.GetLastDocumntNumber(DocumntType.SellInv);
 		await LoadMaterialList();
-	}
+        PlaceholderSearch = "جستجو ...";
+        Loding = false;
+    }
 	public async Task LoadMaterialList()
 	{
 		using UnitOfWork db = new();

@@ -29,5 +29,10 @@ namespace NeAccounting.Views.Pages
 			}
 			ViewModel.PageChengeCommand.Execute(null);
 		}
-	}
+
+        private void txt_CustomerName_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            e.Handled = ViewModel.Loding;
+        }
+    }
 }

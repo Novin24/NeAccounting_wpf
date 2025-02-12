@@ -154,12 +154,13 @@
                             </DockPanel>
                             <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
                                                OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
-                                               PlaceholderText="Search..."
+                                               PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
+                                               PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
+                                               SuggestionChosen="Txt_Name_SuggestionChosen"
                                                DisplayMemberPath="DisplayName"
+                                               x:Name="txt_Name"
                                                FontSize="14"
                                                Grid.Row="0"
-                                               x:Name="txt_Name"
-                                               SuggestionChosen="Txt_Name_SuggestionChosen"
                                                FontFamily="Calibri" />
                         </StackPanel>
                         <nu:PersianDatePicker Grid.Row="0"

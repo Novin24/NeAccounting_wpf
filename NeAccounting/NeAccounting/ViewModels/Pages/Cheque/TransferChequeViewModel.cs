@@ -15,6 +15,7 @@ namespace NeAccounting.ViewModels
         private readonly INavigationService _navigationService = navigationService;
         private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
+        #region Properties
         /// <summary>
         /// لیست مشتری ها
         /// </summary>
@@ -113,6 +114,8 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private SubmitChequeStatus _substatus = SubmitChequeStatus.NotRegister;
+
+        #endregion
 
         /// <summary>
         /// ثبت فاکتور

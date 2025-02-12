@@ -61,5 +61,10 @@ namespace NeAccounting.Views.Pages
             lbl_num.Text = string.Empty;
             ViewModel.CusId = null;
         }
+
+        private void txt_CustomerName_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            e.Handled = ViewModel.Loding;
+        }
     }
 }

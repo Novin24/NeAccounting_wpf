@@ -162,7 +162,9 @@
                                                    Icon="{ui:SymbolIcon Search24}"
                                                    DisplayMemberPath="MaterialName"
                                                    SuggestionChosen="txt_name_SuggestionChosen"
-                                                   OriginalItemsSource="{Binding ViewModel.MatList}" />
+                                                   PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
+                                                   OriginalItemsSource="{Binding ViewModel.MatList}" 
+                                                   PlaceholderText="{Binding ViewModel.PlaceholderSearch}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1">

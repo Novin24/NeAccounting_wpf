@@ -213,5 +213,9 @@ namespace NeAccounting.Views.Pages
         {
             txt_CustomerName.Focus();
         }
+        private void txt_CustomerName_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            e.Handled = ViewModel.Loding;
+        }
     }
 }
