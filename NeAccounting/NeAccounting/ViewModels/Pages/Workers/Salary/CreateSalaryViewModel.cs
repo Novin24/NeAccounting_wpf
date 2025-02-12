@@ -79,7 +79,7 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
     /// متن نمایشی سرچ
     /// </summary>
     [ObservableProperty]
-    private String _placeholderSearch = "در حال بارگذاری ...";
+    private string _placeholderSearch = "در حال بارگذاری ...";
 
     public CreateSalaryViewModel(ISnackbarService snackbarService, INavigationService navigationService)
     {

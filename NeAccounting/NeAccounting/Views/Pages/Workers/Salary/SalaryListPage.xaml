@@ -197,6 +197,7 @@
                                                        x:Name="txt_name"
                                                        Icon="{ui:SymbolIcon Search24}"
                                                        OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                       PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
                                                        PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
                                                        SuggestionChosen="autoSuggest_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"

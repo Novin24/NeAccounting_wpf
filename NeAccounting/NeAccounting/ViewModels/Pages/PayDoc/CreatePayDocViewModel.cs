@@ -83,7 +83,7 @@ public partial class CreatePayDocViewModel(ISnackbarService snackbarService) : O
     /// متن نمایشی سرچ
     /// </summary>
     [ObservableProperty]
-    private String _placeholderSearch = "در حال بارگذاری ...";
+    private string _placeholderSearch = "در حال بارگذاری ...";
     #endregion
 
     public async void OnNavigatedTo()

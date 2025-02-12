@@ -84,7 +84,7 @@ public partial class PreviewinvoiceViewModel(ISnackbarService snackbarService, I
     /// متن نمایشی سرچ
     /// </summary>
     [ObservableProperty]
-    private String _placeholderSearch = "در حال بارگذاری ...";
+    private string _placeholderSearch = "در حال بارگذاری ...";
 
     public async void OnNavigatedTo()
     {

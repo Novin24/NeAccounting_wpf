@@ -154,7 +154,7 @@ public partial class CreateBuyInvoiceViewModel(ISnackbarService snackbarService,
     /// متن نمایشی سرچ
     /// </summary>
     [ObservableProperty]
-    private String _placeholderSearch = "در حال بارگذاری ...";
+    private string _placeholderSearch = "در حال بارگذاری ...";
     #endregion
 
     #region Method

@@ -165,7 +165,7 @@ public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAw
     /// متن نمایشی سرچ
     /// </summary>
     [ObservableProperty]
-    private String _placeholderSearch = "در حال بارگذاری ...";
+    private string _placeholderSearch = "در حال بارگذاری ...";
     #endregion
 
     #region Commands
