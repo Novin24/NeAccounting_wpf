@@ -60,6 +60,7 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private String _placeholderSearch = "در حال بارگذاری ...";
+
         #endregion
 
         public SalaryListViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService)

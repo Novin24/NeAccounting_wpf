@@ -190,17 +190,15 @@
                                             Margin="20 5.5 0 0"
                                             FlowDirection="RightToLeft">
                                     <TextBlock FontFamily="Calibri"
-                                               FontWeight="Bold"
-                                               FontSize="16"
-                                               Text="نام پرسنلی"
-                                               Margin="5 0 0 7" />
+                                                   FontSize="16"
+                                                   Text="نام پرسنلی"
+                                                   Margin="5 0 0 7" />
                                     <ui:AutoSuggestBox FontSize="16"
                                                        x:Name="txt_name"
                                                        Icon="{ui:SymbolIcon Search24}"
                                                        OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                                       PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
                                                        PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
-                                                       SuggestionChosen="txt_name_SuggestionChosen"
+                                                       SuggestionChosen="autoSuggest_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
                                                        FontFamily="Calibri" />
                                 </StackPanel>
