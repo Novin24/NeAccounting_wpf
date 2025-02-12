@@ -225,5 +225,10 @@ namespace NeAccounting.Views.Pages
 
         [GeneratedRegex("[^0-9]+")]
         private static partial Regex MyRegex();
+
+        private void txt_CustomerName_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            e.Handled = ViewModel.Loding;
+        }
     }
 }

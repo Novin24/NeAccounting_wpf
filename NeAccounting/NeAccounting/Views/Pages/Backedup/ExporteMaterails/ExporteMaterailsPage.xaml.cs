@@ -25,9 +25,9 @@ namespace NeAccounting.Views.Pages
 		public ExporteMaterialViewModel ViewModel { get; }
 		public ExporteMaterailsPage(ExporteMaterialViewModel viewModel)
 		{
-			InitializeComponent();
 			ViewModel = viewModel;
 			DataContext = this;
+			InitializeComponent();
 			txt_name.Focus();
 		}
 

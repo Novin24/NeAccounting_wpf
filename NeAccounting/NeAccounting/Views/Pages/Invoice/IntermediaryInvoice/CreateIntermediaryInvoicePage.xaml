@@ -264,8 +264,9 @@
                                                Text="شرح کالا"
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
-                                                       Icon=""
+                                                       PlaceholderText="جستجو ..."
                                                        FontFamily="Calibri"
+                                                       Icon=""
                                                        Margin="0 2 0 0" />
                                 </StackPanel>
                                 <StackPanel Grid.Column="2"

@@ -69,6 +69,18 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
     [ObservableProperty]
     private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
+    /// <summary>
+    /// غیرفعال بودن سرچ
+    /// </summary>
+    [ObservableProperty]
+    private bool _loding = true;
+
+    /// <summary>
+    /// متن نمایشی سرچ
+    /// </summary>
+    [ObservableProperty]
+    private String _placeholderSearch = "در حال بارگذاری ...";
+
     public CreateSalaryViewModel(ISnackbarService snackbarService, INavigationService navigationService)
     {
         _snackbarService = snackbarService;
@@ -190,6 +202,8 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
     {
         using UnitOfWork db = new();
         AuSuBox = await db.WorkerManager.GetWorkers();
+        Loding = false;
+        PlaceholderSearch = "جستجو ...";
     }
 
     public void OnNavigatedFrom()

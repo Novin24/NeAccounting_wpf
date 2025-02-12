@@ -181,7 +181,9 @@
                                     </DockPanel>
                                     <ui:AutoSuggestBox FontFamily="Calibri"
                                                        x:Name="txt_CustomerName"
+                                                       PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
                                                        OriginalItemsSource="{Binding ViewModel.Cuslist}"
+                                                       PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
                                                        SuggestionChosen="Txt_name_SuggestionChosen"
                                                        DisplayMemberPath="DisplayName"
                                                        Margin="0 4 0 0" />
@@ -282,8 +284,10 @@
 
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
-                                                       OriginalItemsSource="{Binding ViewModel.MatList}"
                                                        DisplayMemberPath="MaterialName"
+                                                       OriginalItemsSource="{Binding ViewModel.MatList}"
+                                                       PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
+                                                       PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
                                                        SuggestionChosen="Txt_mat_SuggestionChosen"
                                                        FontFamily="Calibri"
                                                        Margin="0 2 0 0" />

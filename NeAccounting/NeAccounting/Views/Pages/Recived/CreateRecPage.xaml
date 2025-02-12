@@ -229,11 +229,12 @@
                             </DockPanel>
                             <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
                                                OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
-                                               PlaceholderText="Search..."
-                                               DisplayMemberPath="DisplayName"
-                                               FontSize="14"
-                                               x:Name="aus_CusName"
                                                SuggestionChosen="AutoSuggestBoxSuggestions_SuggestionChosen"
+                                               PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
+                                               PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
+                                               DisplayMemberPath="DisplayName"
+                                               x:Name="aus_CusName"
+                                               FontSize="14"
                                                FontFamily="Calibri" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"

@@ -76,10 +76,22 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 	/// </summary>
 	[ObservableProperty]
 	private IEnumerable<ChequeListDtos> _invList;
-	#endregion
 
-	#region Methods
-	public async void OnNavigatedTo()
+    /// <summary>
+    /// غیرفعال بودن سرچ
+    /// </summary>
+    [ObservableProperty]
+    private bool _loding = true;
+
+    /// <summary>
+    /// متن نمایشی سرچ
+    /// </summary>
+    [ObservableProperty]
+    private String _placeholderSearch = "در حال بارگذاری ...";
+    #endregion
+
+    #region Methods
+    public async void OnNavigatedTo()
 	{
 		await InitializeViewModel();
 	}
@@ -99,7 +111,9 @@ public partial class ChequebookViewModel : ObservableObject, INavigationAware
 		PageCount = t.PageCount;
 		Cuslist = await db.CustomerManager.GetDisplayUser(true);
 		_isInit = false;
-	}
+        Loding = false;
+        PlaceholderSearch = "جستجو ...";
+    }
 
 	[RelayCommand]
 	private async Task OnSearch()

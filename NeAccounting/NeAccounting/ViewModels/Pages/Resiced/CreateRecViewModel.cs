@@ -18,7 +18,7 @@ namespace NeAccounting.ViewModels
         private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
 
-
+        #region Properties
         /// <summary>
         /// لیست مشتری ها
         /// </summary>
@@ -76,6 +76,19 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private PaymentType _type;
 
+        /// <summary>
+        /// غیرفعال بودن سرچ
+        /// </summary>
+        [ObservableProperty]
+        private bool _loding = true;
+
+        /// <summary>
+        /// متن نمایشی سرچ
+        /// </summary>
+        [ObservableProperty]
+        private String _placeholderSearch = "در حال بارگذاری ...";
+        #endregion
+
         public async void OnNavigatedTo()
         {
             await InitializeViewModel();
@@ -86,6 +99,8 @@ namespace NeAccounting.ViewModels
             using UnitOfWork db = new();
             Cuslist = await db.CustomerManager.GetDisplayUser();
             DocList = await db.DocumentManager.GetSummaryDocs(CusId, DocumntType.RecDoc);
+            Loding = false;
+            PlaceholderSearch = "جستجو ...";
         }
 
         public void OnNavigatedFrom()

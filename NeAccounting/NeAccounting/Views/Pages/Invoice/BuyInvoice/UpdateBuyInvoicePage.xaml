@@ -277,8 +277,10 @@
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
                                                        FontFamily="Calibri"
-                                                       OriginalItemsSource="{Binding ViewModel.MatList}"
                                                        DisplayMemberPath="MaterialName"
+                                                       OriginalItemsSource="{Binding ViewModel.MatList}"
+                                                       PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
+                                                       PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
                                                        SuggestionChosen="Txt_mat_SuggestionChosen"
                                                        Margin="0 2 0 0" />
                                 </StackPanel>

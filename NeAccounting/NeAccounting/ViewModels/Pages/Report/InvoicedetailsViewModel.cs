@@ -62,6 +62,18 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private IEnumerable<DetailRemittanceDto> _invList;
+
+        /// <summary>
+        /// غیرفعال بودن سرچ
+        /// </summary>
+        [ObservableProperty]
+        private bool _loding = true;
+
+        /// <summary>
+        /// متن نمایشی سرچ
+        /// </summary>
+        [ObservableProperty]
+        private String _placeholderSearch = "در حال بارگذاری ...";
         #endregion
 
         #region Methods
@@ -78,6 +90,8 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             Cuslist = await db.CustomerManager.GetDisplayUser(false);
+            Loding = false;
+            PlaceholderSearch = "جستجو ...";
         }
 
         [RelayCommand]

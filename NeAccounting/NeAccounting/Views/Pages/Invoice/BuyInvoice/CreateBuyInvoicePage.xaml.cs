@@ -206,5 +206,16 @@ namespace NeAccounting.Views.Pages
         {
             txt_CustomerName.Focus();
         }
+
+        private void txt_CustomerName_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            // جلوگیری از ورود کاراکترها
+            sender.Text = ""; // یا هر متن دیگری که می‌خواهید
+        }
+
+        private void txt_CustomerName_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            e.Handled = ViewModel.Loding;
+        }
     }
 }

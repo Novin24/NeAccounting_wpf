@@ -154,6 +154,18 @@ public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAw
     /// </summary>
     [ObservableProperty]
     private string? _invDescription;
+
+    /// <summary>
+    /// غیرفعال بودن سرچ
+    /// </summary>
+    [ObservableProperty]
+    private bool _loding = true;
+
+    /// <summary>
+    /// متن نمایشی سرچ
+    /// </summary>
+    [ObservableProperty]
+    private String _placeholderSearch = "در حال بارگذاری ...";
     #endregion
 
     #region Commands
@@ -176,6 +188,9 @@ public partial class UpdateBuyInvoiceViewModel : ObservableObject, INavigationAw
             return;
         }
         MatList = (await db.MaterialManager.GetMaterails()).Where(t => !t.IsService).ToList();
+
+        Loding = false;
+        PlaceholderSearch = "جستجو ...";
         var stu = await db.DocumentManager.GetStatus(itm.CustomerId);
         (string error, CustomerListDto cus) = await db.CustomerManager.GetCustomerById(itm.CustomerId);
         foreach (var it in itm.RemList)
