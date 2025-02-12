@@ -20,6 +20,7 @@ namespace NeAccounting.ViewModels
 
 
 
+        #region Properties
         [ObservableProperty]
         private Guid? _workerId = null;
 
@@ -41,6 +42,19 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private IEnumerable<AidViewModel> _list;
+
+        /// <summary>
+        /// غیرفعال بودن سرچ
+        /// </summary>
+        [ObservableProperty]
+        private bool _loding = true;
+
+        /// <summary>
+        /// متن نمایشی سرچ
+        /// </summary>
+        [ObservableProperty]
+        private string _placeholderSearch = "در حال بارگذاری ...";
+        #endregion
 
         public AidListViewModel(ISnackbarService snackbarService, INavigationService navigationService, IContentDialogService contentDialogService)
         {
@@ -66,7 +80,9 @@ namespace NeAccounting.ViewModels
 			PageCount = result.PageCount;
 			CurrentPage = result.CurrentPage;
 			List = result.Items;
-		}
+            Loding = false;
+            PlaceholderSearch = "جستجو ...";
+        }
 
         [RelayCommand]
         private async Task OnSearchWorker()

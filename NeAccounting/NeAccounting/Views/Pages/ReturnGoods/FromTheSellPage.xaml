@@ -230,8 +230,9 @@
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
                                                        Icon=""
                                                        OriginalItemsSource="{Binding ViewModel.MatList, UpdateSourceTrigger=PropertyChanged}"
-                                                       DisplayMemberPath="MaterialName"
                                                        SuggestionChosen="Txt_mat_SuggestionChosen"
+                                                       PlaceholderText="جستجو ..."
+                                                       DisplayMemberPath="MaterialName"
                                                        FontFamily="Calibri"
                                                        Margin="0 2 0 0" />
                                 </StackPanel>

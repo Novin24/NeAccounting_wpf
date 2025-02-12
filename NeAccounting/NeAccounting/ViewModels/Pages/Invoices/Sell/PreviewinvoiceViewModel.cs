@@ -74,6 +74,18 @@ public partial class PreviewinvoiceViewModel(ISnackbarService snackbarService, I
     [ObservableProperty]
     private string? _description;
 
+    /// <summary>
+    /// غیرفعال بودن سرچ
+    /// </summary>
+    [ObservableProperty]
+    private bool _loding = true;
+
+    /// <summary>
+    /// متن نمایشی سرچ
+    /// </summary>
+    [ObservableProperty]
+    private string _placeholderSearch = "در حال بارگذاری ...";
+
     public async void OnNavigatedTo()
     {
         await InitializeViewModel();
@@ -83,6 +95,8 @@ public partial class PreviewinvoiceViewModel(ISnackbarService snackbarService, I
     {
         using UnitOfWork db = new();
         MatList = await db.MaterialManager.GetMaterails();
+        Loding = false;
+        PlaceholderSearch = "جستجو ...";
     }
 
     public void OnNavigatedFrom()

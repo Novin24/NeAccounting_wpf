@@ -166,6 +166,8 @@
                                                    Icon="{ui:SymbolIcon Search24}"
                                                    DisplayMemberPath="DisplayName"
                                                    SuggestionChosen="txt_name_SuggestionChosen"
+                                                   PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
+                                                   PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
                                                    OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}" />
                             </StackPanel>
 

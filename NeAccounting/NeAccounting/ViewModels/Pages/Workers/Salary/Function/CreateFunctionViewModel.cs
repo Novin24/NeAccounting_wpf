@@ -27,6 +27,7 @@ namespace NeAccounting.ViewModels
             _isreadonly = NeAccountingConstants.ReadOnlyMode;
         }
 
+        #region Properties
         [ObservableProperty]
         private int? _PersonelId;
 
@@ -57,6 +58,19 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private IEnumerable<FunctionViewModel> _list;
 
+        /// <summary>
+        /// غیرفعال بودن سرچ
+        /// </summary>
+        [ObservableProperty]
+        private bool _loding = true;
+
+        /// <summary>
+        /// متن نمایشی سرچ
+        /// </summary>
+        [ObservableProperty]
+        private string _placeholderSearch = "در حال بارگذاری ...";
+        #endregion
+
         public async void OnNavigatedTo()
         {
             await InitializeViewModel();
@@ -74,7 +88,9 @@ namespace NeAccounting.ViewModels
 			AuSuBox = await db.WorkerManager.GetWorkers();
 			var t = await db.WorkerManager.GetFunctionList(WorkerId);
 			List = t.Items;
-		}
+            Loding = false;
+            PlaceholderSearch = "جستجو ...";
+        }
 
         [RelayCommand]
         private async Task OnCreate()

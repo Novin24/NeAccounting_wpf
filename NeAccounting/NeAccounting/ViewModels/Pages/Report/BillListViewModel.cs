@@ -81,6 +81,18 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private IEnumerable<InvoiceListDtos> _invList;
+
+        /// <summary>
+        /// غیرفعال بودن سرچ
+        /// </summary>
+        [ObservableProperty]
+        private bool _loding = true;
+
+        /// <summary>
+        /// متن نمایشی سرچ
+        /// </summary>
+        [ObservableProperty]
+        private string _placeholderSearch = "در حال بارگذاری ...";
         #endregion
 
         #region Methods
@@ -108,6 +120,8 @@ namespace NeAccounting.ViewModels
                 _isInit = false;
             }
             _isInitialized = true;
+            Loding = false;
+            PlaceholderSearch = "جستجو ...";
         }
 
         [RelayCommand]

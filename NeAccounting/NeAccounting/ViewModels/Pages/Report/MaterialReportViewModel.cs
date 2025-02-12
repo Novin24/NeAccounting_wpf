@@ -59,6 +59,18 @@ namespace NeAccounting.ViewModels
         /// </summary>
         [ObservableProperty]
         private IEnumerable<MaterialReportDto> _matReportList;
+
+        /// <summary>
+        /// غیرفعال بودن سرچ
+        /// </summary>
+        [ObservableProperty]
+        private bool _loding = true;
+
+        /// <summary>
+        /// متن نمایشی سرچ
+        /// </summary>
+        [ObservableProperty]
+        private string _placeholderSearch = "در حال بارگذاری ...";
         #endregion
 
         #region Methods
@@ -75,6 +87,8 @@ namespace NeAccounting.ViewModels
         {
             using UnitOfWork db = new();
             MatList = await db.MaterialManager.GetMaterails("", "");
+            Loding = false;
+            PlaceholderSearch = "جستجو ...";
         }
 
         [RelayCommand]

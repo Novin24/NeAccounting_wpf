@@ -228,12 +228,13 @@
                                                Text="شرح کالا"
                                                HorizontalAlignment="Center" />
                                     <ui:AutoSuggestBox x:Name="txt_MaterialName"
-                                                       Icon=""
                                                        OriginalItemsSource="{Binding ViewModel.MatList,UpdateSourceTrigger=PropertyChanged}"
-                                                       DisplayMemberPath="MaterialName"
                                                        SuggestionChosen="Txt_mat_SuggestionChosen"
+                                                       DisplayMemberPath="MaterialName"
+                                                       PlaceholderText="جستجو ..."
                                                        FontFamily="Calibri"
-                                                       Margin="0 2 0 0" />
+                                                       Margin="0 2 0 0" 
+                                                       Icon=""/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="2"
                                             Margin="2 14 2 0 ">
