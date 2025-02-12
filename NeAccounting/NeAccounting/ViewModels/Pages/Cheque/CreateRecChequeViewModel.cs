@@ -17,6 +17,7 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
 
+    #region Properties
     /// <summary>
     /// لیست مشتری ها
     /// </summary>
@@ -99,6 +100,19 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
     [ObservableProperty]
     private SubmitChequeStatus _status = SubmitChequeStatus.Register;
 
+    /// <summary>
+    /// غیرفعال بودن سرچ
+    /// </summary>
+    [ObservableProperty]
+    private bool _loding = true;
+
+    /// <summary>
+    /// متن نمایشی سرچ
+    /// </summary>
+    [ObservableProperty]
+    private string _placeholderSearch = "در حال بارگذاری ...";
+    #endregion
+
     public async void OnNavigatedTo()
     {
         await InitializeViewModel();
@@ -108,6 +122,8 @@ public partial class CreateRecChequeViewModel(ISnackbarService snackbarService, 
     {
         using UnitOfWork db = new();
         Cuslist = await db.CustomerManager.GetDisplayUser();
+        PlaceholderSearch = "جستجو ...";
+        Loding = false;
     }
 
     public void OnNavigatedFrom()

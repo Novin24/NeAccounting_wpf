@@ -150,7 +150,8 @@
                             </DockPanel>
                             <ui:AutoSuggestBox Icon="{ui:SymbolIcon Search24}"
                                                OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
-                                               PlaceholderText="Search..."
+                                               PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
+                                               PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
                                                DisplayMemberPath="DisplayName"
                                                FontSize="14"
                                                Grid.Row="0"

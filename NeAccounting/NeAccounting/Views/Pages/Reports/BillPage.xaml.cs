@@ -132,5 +132,9 @@ namespace NeAccounting.Views.Pages
             await ViewModel.PrintListCommand.ExecuteAsync(null);
         }
 
-	}
+        private void txt_CustomerName_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            e.Handled = ViewModel.Loding;
+        }
+    }
 }

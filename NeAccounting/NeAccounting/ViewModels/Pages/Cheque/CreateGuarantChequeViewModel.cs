@@ -98,6 +98,12 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
     /// </summary>
     [ObservableProperty]
     private SubmitChequeStatus _status = SubmitChequeStatus.Register;
+
+    /// <summary>
+    /// غیرفعال بودن سرچ
+    /// </summary>
+    [ObservableProperty]
+    private bool _loding = true;
     #endregion
 
     #region Method
@@ -110,6 +116,7 @@ public partial class CreateGuarantChequeViewModel(ISnackbarService snackbarServi
     {
         using UnitOfWork db = new();
         Cuslist = await db.CustomerManager.GetDisplayUser();
+        Loding = false;
     }
 
     public void OnNavigatedFrom()

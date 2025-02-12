@@ -162,9 +162,11 @@
                                                    x:Name="txt_name"
                                                    Icon="{ui:SymbolIcon Search24}"
                                                    OriginalItemsSource="{Binding ViewModel.Cuslist, Mode=OneWay}"
-                                                   DisplayMemberPath="DisplayName"
+                                                   PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
+                                                   PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
                                                    SuggestionChosen="txt_name_SuggestionChosen"
-                                                   FontFamily="Calibri" />
+                                                   DisplayMemberPath="DisplayName"
+                                                   FontFamily="Calibri"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1"
                                         Margin="21 0 7 10 ">

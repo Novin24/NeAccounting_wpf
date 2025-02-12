@@ -172,9 +172,10 @@
                                            Margin="2 0 0 0 " />
                                 <ui:AutoSuggestBox x:Name="txt_sugName"
                                                    Icon="{ui:SymbolIcon Search24}"
-                                                   PlaceholderText="جستجو ..."
                                                    FontSize="14"
                                                    OriginalItemsSource="{Binding ViewModel.AuSuBox, Mode=OneWay , UpdateSourceTrigger=PropertyChanged}"
+                                                   PlaceholderText="{Binding ViewModel.PlaceholderSearch}"
+                                                   PreviewKeyDown="txt_CustomerName_PreviewKeyDown"
                                                    SuggestionChosen="txt_name_SuggestionChosen"
                                                    DisplayMemberPath="DisplayName"
                                                    Margin="0 4 3 0 "
