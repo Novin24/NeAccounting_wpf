@@ -706,7 +706,7 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(t => t.Id == workerId);
 
             if (worker == null)
-                return new("کارگر مورد نظر یافت نشد!!!!", false);
+                return new("پرسنل مورد نظر یافت نشد!!!!", false);
 
             var func = worker.Functions.FirstOrDefault(t => t.Id == funcId);
 
@@ -714,7 +714,7 @@ namespace Infrastructure.Repositories
                 return new("کارکرد مورد نظر یافت نشد!!!!", false);
 
             if (worker.Functions.FirstOrDefault(t => t.Id != funcId && t.PersianYear == persianYear && t.PersianMonth == persianMonth) != null)
-                return new("برای کارگر مورد نظر در این ماه کارکرد ثبت شده!!!!", false);
+                return new("برای پرسنل مورد نظر در این ماه کارکرد ثبت شده!!!!", false);
 
             if (worker.Salaries.FirstOrDefault(t => t.PersianYear == persianYear && t.PersianMonth == persianMonth) != null)
                 return new("برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", false);

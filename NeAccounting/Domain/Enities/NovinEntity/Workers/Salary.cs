@@ -3,6 +3,9 @@ using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Workers
 {
+    /// <summary>
+    /// فیش حقوقی
+    /// </summary>
     public class Salary : LocalEntity
     {
         #region Navigation
