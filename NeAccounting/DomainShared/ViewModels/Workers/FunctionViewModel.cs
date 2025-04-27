@@ -47,5 +47,10 @@ namespace DomainShared.ViewModels.Workers
             }
         }
         public FucntionDetails Details { get; set; }
+
+        /// <summary>
+        /// آیا دارای فیش حقوقی هست؟
+        /// </summary>
+        public bool HasSalary { get; set; }
     }
 }

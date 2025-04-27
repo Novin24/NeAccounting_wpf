@@ -800,6 +800,7 @@ namespace Infrastructure.Repositories
                               PersonelId = worker.PersonnelId,
                               PersianMonth = func.PersianMonth,
                               PersianYear = func.PersianYear,
+                              HasSalary = worker.Salaries.FirstOrDefault(t => t.PersianYear == func.PersianYear && t.PersianMonth == func.PersianMonth) != null,
                               Details = new FucntionDetails() { Id = func.Id, WorkerId = worker.Id }
                           })
                       .OrderByDescending(c => c.PersianYear)

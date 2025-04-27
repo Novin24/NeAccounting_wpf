@@ -225,13 +225,15 @@
                                                 FontFamily="Calibri"
                                                 x:Name="dtp"
                                                 LabelName="تاریخ کارکرد"
+                                                IsEnabled="{Binding ViewModel.HasSalary}"
                                                 SelectedMon="{Binding ViewModel.SubmitMonth,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 SelectedYear="{Binding ViewModel.SubmitYear,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                                
-                                <nu:MoneyPack Grid.Column="0"
+
+                            <nu:MoneyPack Grid.Column="0"
                                               Value="{Binding ViewModel.AmountOf ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Grid.Row="1"
+                                              IsEnabled="{Binding ViewModel.HasSalary}"
                                               Minimum="0"
                                               Maximum="31"
                                               LabelName="کارکرد عادی" />
@@ -239,6 +241,7 @@
                             <nu:MoneyPack Grid.Column="1"
                                               LabelName="اضافه کاری"
                                               Minimum="0"
+                                              IsEnabled="{Binding ViewModel.HasSalary}"
                                               Maximum="120"
                                               Value="{Binding ViewModel.OverTime ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Grid.Row="1" />
@@ -261,6 +264,7 @@
                                 <ui:TextBox FontSize="14"
                                                 Margin="0,30,0,0"
                                                 FlowDirection="RightToLeft"
+                                                IsEnabled="{Binding ViewModel.HasSalary}"
                                                 Text="{Binding ViewModel.Description, Mode=OneWayToSource}"
                                                 Grid.ColumnSpan="2"
                                                 TextWrapping="Wrap"

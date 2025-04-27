@@ -152,7 +152,8 @@ namespace NeAccounting.ViewModels
                 SubmitMonth = func.PersianMonth,
                 SubmitYear = func.PersianYear,
                 List = list.Items,
-                PersonnelId = func.PersonelId
+                PersonnelId = func.PersonelId,
+                HasSalary = !func.HasSalary,
             });
 
             service.Navigate(pageType, context);
