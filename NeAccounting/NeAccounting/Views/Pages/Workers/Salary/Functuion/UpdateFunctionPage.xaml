@@ -235,14 +235,14 @@
                                               Grid.Row="1"
                                               IsEnabled="{Binding ViewModel.HasSalary}"
                                               Minimum="0"
-                                              Maximum="31"
+                                              Maximum="{Binding ViewModel.FunctionLimit}"
                                               LabelName="کارکرد عادی" />
 
                             <nu:MoneyPack Grid.Column="1"
                                               LabelName="اضافه کاری"
                                               Minimum="0"
                                               IsEnabled="{Binding ViewModel.HasSalary}"
-                                              Maximum="120"
+                                              Maximum="250"
                                               Value="{Binding ViewModel.OverTime ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Grid.Row="1" />
 

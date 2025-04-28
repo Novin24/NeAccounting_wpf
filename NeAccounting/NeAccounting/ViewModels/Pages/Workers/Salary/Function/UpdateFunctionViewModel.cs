@@ -57,6 +57,9 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private bool _hasSalary;
 
+        [ObservableProperty]
+        private int _functionLimit;
+
         public void OnNavigatedTo()
         {
             if (!_hasSalary)

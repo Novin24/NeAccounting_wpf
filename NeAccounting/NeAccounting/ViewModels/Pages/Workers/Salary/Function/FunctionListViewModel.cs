@@ -1,4 +1,5 @@
 ﻿using DomainShared.Constants;
+using DomainShared.Enums;
 using DomainShared.ViewModels;
 using DomainShared.ViewModels.Workers;
 using Infrastructure.UnitOfWork;
@@ -154,6 +155,7 @@ namespace NeAccounting.ViewModels
                 List = list.Items,
                 PersonnelId = func.PersonelId,
                 HasSalary = !func.HasSalary,
+                FunctionLimit= func.ShiftStatus == Shift.ByMounth ? 31 : 500,
             });
 
             service.Navigate(pageType, context);

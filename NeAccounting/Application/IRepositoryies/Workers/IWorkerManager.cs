@@ -166,6 +166,8 @@ namespace NeApplication.IRepositoryies
         Task<PagedResulViewModel<FunctionViewModel>> GetFunctionList(Guid? workerId,
              int pageNum = 0,
             int pageCount = NeAccountingConstants.PageCount);
+         
+        Task<Shift> GetWorkerShiftStatusById(Guid? workerId);
 
         Task<(string error, bool isSuccess)> DeleteFunc(Guid workerId,
             int persianYear,
