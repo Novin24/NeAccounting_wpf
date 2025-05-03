@@ -953,7 +953,7 @@ namespace Infrastructure.Repositories
                               SubmitDate = aid.SubmitDate,
                               Details = new AidDetails() { Id = aid.Id, WorkerId = worker.Id }
                           })
-                          .OrderBy(t => t.SubmitDate)
+                          .OrderByDescending(t => t.SubmitDate)
                           .ToListAsync();
 			int row = 1;
 			var totalCount = list.Count;
