@@ -54,6 +54,24 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private string _description;
 
+        [ObservableProperty]
+        private long _dayInMonthSave = 0;
+
+        [ObservableProperty]
+        private long _monthPriceSave = 0;
+
+        [ObservableProperty]
+        private long _insurancePerimumSave = 0;
+
+        [ObservableProperty]
+        private long _overtimePriceMonthSave = 0;
+
+        [ObservableProperty]
+        private long _shiftPriceSave = 0;
+
+        [ObservableProperty]
+        private long _overTimeShiftSave = 0;
+
         public Shift WorkerShift
         {
             get

@@ -33,15 +33,27 @@ namespace NeAccounting.Views.Pages
             ViewModel.WorkerShift = Shift.ByHour;
 
             txt_dayInMonth.IsEnabled = false;
+            ViewModel.DayInMonthSave = txt_dayInMonth.Value;
             txt_dayInMonth.Value = 0;
+
+            long salary = ViewModel.Salary;
             txt_MonthPrice.IsEnabled = false;
+            ViewModel.MonthPriceSave = txt_MonthPrice.Value;
             txt_MonthPrice.Value = 0;
+
             txt_insurancePerimum.IsEnabled = false;
+            ViewModel.InsurancePerimumSave = txt_insurancePerimum.Value;
             txt_insurancePerimum.Value = 0;
+
             txt_overtimePriceMonth.IsEnabled = false;
+            ViewModel.OvertimePriceMonthSave = txt_overtimePriceMonth.Value;
             txt_overtimePriceMonth.Value = 0;
 
+
+            txt_ShiftPrice.Value = ViewModel.ShiftPriceSave;
             txt_ShiftPrice.IsEnabled = true;
+
+            txt_overTimeShift.Value = ViewModel.OverTimeShiftSave;
             txt_overTimeShift.IsEnabled = true;
         }
 
@@ -53,14 +65,25 @@ namespace NeAccounting.Views.Pages
             }
             ViewModel.WorkerShift = Shift.ByMounth;
 
+
+            txt_dayInMonth.Value = ViewModel.DayInMonthSave;
             txt_dayInMonth.IsEnabled = true;
+
+            txt_MonthPrice.Value = ViewModel.MonthPriceSave;
             txt_MonthPrice.IsEnabled = true;
+
+            txt_insurancePerimum.Value = ViewModel.InsurancePerimumSave;
             txt_insurancePerimum.IsEnabled = true;
+
+            txt_overtimePriceMonth.Value = ViewModel.OvertimePriceMonthSave;
             txt_overtimePriceMonth.IsEnabled = true;
 
             txt_ShiftPrice.IsEnabled = false;
+            ViewModel.ShiftPriceSave = txt_ShiftPrice.Value;
             txt_ShiftPrice.Value = 0;
+
             txt_overTimeShift.IsEnabled = false;
+            ViewModel.OverTimeShiftSave = txt_overTimeShift.Value;
             txt_overTimeShift.Value = 0;
         }
 

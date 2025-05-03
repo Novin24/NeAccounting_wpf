@@ -8,6 +8,7 @@ using Wpf.Ui.Controls;
 using System.Windows.Media;
 using System.Globalization;
 using DomainShared.Constants;
+using DomainShared.Enums;
 
 namespace NeAccounting.ViewModels
 {
@@ -57,6 +58,9 @@ namespace NeAccounting.ViewModels
 
         [ObservableProperty]
         private IEnumerable<FunctionViewModel> _list;
+
+        [ObservableProperty]
+        private int _functionLimit;
 
         /// <summary>
         /// غیرفعال بودن سرچ
@@ -155,5 +159,12 @@ namespace NeAccounting.ViewModels
             _ = _navigationService.Navigate(pageType);
         }
 
+        
+        public async Task GetFunctionLimit(Guid? workerId)
+        {
+            using UnitOfWork db = new();
+            var shiftStatus = await db.WorkerManager.GetWorkerShiftStatusById(workerId);
+            FunctionLimit = shiftStatus == Shift.ByMounth ? 31 : 500;
+        }
     }
 }

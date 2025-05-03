@@ -144,14 +144,15 @@
                                         <RowDefinition Height="*"></RowDefinition>
                                         <RowDefinition Height="*"></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <CheckBox TabIndex="10"
+                                    <RadioButton TabIndex="10"
                                               VerticalAlignment="Top"
                                               x:Name="rbtn_Shift"
                                               Margin="0 5"
                                               HorizontalAlignment="Center"
-                                              IsChecked="{Binding ViewModel.ShiftByHour,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              IsChecked="{Binding ViewModel.ShiftByHour,  Mode=OneWay}"
                                               Checked="RadioButton_Checked"
-                                              FlowDirection="LeftToRight">ساعتی - شیفتی</CheckBox>
+                                              GroupName="wages"
+                                              FlowDirection="LeftToRight">ساعتی - شیفتی</RadioButton>
 
                                     <nu:MoneyPack Grid.Row="1"
                                                   LabelName="دستمزد"
@@ -190,15 +191,16 @@
                                         <RowDefinition Height="2*"></RowDefinition>
                                         <RowDefinition Height="2*"></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <CheckBox VerticalAlignment="Top"
+                                    <RadioButton VerticalAlignment="Top"
                                               HorizontalAlignment="Center"
                                               TabIndex="13"
-                                              IsChecked="{Binding ViewModel.ShiftByMonth,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              IsChecked="{Binding ViewModel.ShiftByMonth,  Mode=OneWay}"
                                               x:Name="rbtn_Month"
                                               Margin="0 5"
                                               Checked="RadioButton_Checked_1"
+                                              GroupName="wages"
                                               FlowDirection="LeftToRight">ثابت - ماهانه
-                                    </CheckBox>
+                                    </RadioButton>
 
                                     <nu:MoneyPack Grid.Row="1"
                                                   LabelName="دستمزد"
