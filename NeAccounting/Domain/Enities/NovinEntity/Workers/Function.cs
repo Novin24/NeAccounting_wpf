@@ -3,6 +3,9 @@ using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Workers
 {
+    /// <summary>
+    /// کارکرد
+    /// </summary>
     public class Function : LocalEntity
     {
         #region Navigation

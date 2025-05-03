@@ -89,6 +89,7 @@
         <StackPanel Margin="20,5,20,5">
             <TextBlock Margin="0 0 15 8"
                        FontFamily="Calibri"
+                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                        x:Name="lbl_name"
                        FontWeight="Bold"
                        HorizontalAlignment="Right"
@@ -110,7 +111,7 @@
                                        FontSize="20" />
                 </Button>
                 <Border CornerRadius="6" Grid.Column="1"
-                    Background="{DynamicResource ControlSolidFillColorDefaultBrush}">
+                    Background="{DynamicResource ApplicationBackgroundBrush}">
                     <Grid x:Name="header"
                       Margin="0,1,0,3"
                       Height="33">

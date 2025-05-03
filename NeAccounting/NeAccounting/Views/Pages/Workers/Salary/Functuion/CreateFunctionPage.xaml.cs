@@ -22,6 +22,7 @@ namespace NeAccounting.Views.Pages
         {
             ViewModel.WorkerId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
             ViewModel.PersonelId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).PersonnelId;
+            ViewModel.GetFunctionLimit(ViewModel.WorkerId);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

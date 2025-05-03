@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using DomainShared.Enums;
+using System.Globalization;
 
 namespace DomainShared.ViewModels.Workers
 {
@@ -47,5 +48,12 @@ namespace DomainShared.ViewModels.Workers
             }
         }
         public FucntionDetails Details { get; set; }
+
+        /// <summary>
+        /// آیا دارای فیش حقوقی هست؟
+        /// </summary>
+        public bool HasSalary { get; set; }
+
+        public Shift ShiftStatus { get; set; }
     }
 }

@@ -116,7 +116,7 @@
                         </Border.Background>
 
                         <Grid FlowDirection="RightToLeft"
-                              Margin="50 15 50 0">
+                              Margin="50 5 50 0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="auto"></RowDefinition>
@@ -124,10 +124,16 @@
 
                             </Grid.RowDefinitions>
 
-                            <Grid>
-
-
-                            </Grid>
+                            <ui:InfoBar Title="تذکر"
+                                            Grid.ColumnSpan="3"
+                                            IsOpen="True"
+                                            Height="46"
+                                            Padding="0"
+                                            VerticalAlignment="Top"
+                                            IsClosable="False"
+                                            Message="فقط پرسنل در وضعیت مشغول به کار مجاز به انجام عملیات کارکرد و مساعده و ... هستند  !!!"
+                                            Severity="Warning" />
+                            
                             <Grid Grid.Row="1"
                                   Margin="0 ,5,0,5">
                                 <Grid.ColumnDefinitions>
