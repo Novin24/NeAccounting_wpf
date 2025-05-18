@@ -122,7 +122,6 @@
                                       FontFamily="Calibri"
                                       FontWeight="Bold"
                                       FontSize="18"
-                                      Foreground="White"
                                       Text="1402/09/18 " />
                         <ui:TextBlock Margin="0 20 55 0"
                                       Height="40"
@@ -130,7 +129,6 @@
                                       FontFamily="Calibri"
                                       FontWeight="Bold"
                                       FontSize="18"
-                                      Foreground="White"
                                       Text="به روز رسانی فیش حقوقی" />
                     </Grid>
                     <Border Grid.Row="1"
