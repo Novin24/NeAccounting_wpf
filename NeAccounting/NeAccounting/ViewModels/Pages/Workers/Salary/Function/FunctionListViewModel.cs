@@ -52,7 +52,7 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            AuSuBox = await db.WorkerManager.GetWorkers();
+            AuSuBox = await db.WorkerManager.GetDisplayWorkers();
             var t = await db.WorkerManager.GetFunctionList(WorkerId, CurrentPage);
 			CurrentPage = t.CurrentPage;
 			PageCount = t.PageCount;
@@ -63,7 +63,7 @@ namespace NeAccounting.ViewModels
         private async Task OnSearchWorker()
 		{
 			using UnitOfWork db = new();
-			AuSuBox = await db.WorkerManager.GetWorkers();
+			AuSuBox = await db.WorkerManager.GetDisplayWorkers();
 			var t = await db.WorkerManager.GetFunctionList(WorkerId, CurrentPage);
 			CurrentPage = t.CurrentPage;
 			PageCount = t.PageCount;

@@ -49,9 +49,11 @@ namespace Infrastructure.Repositories
 
         #region Worker
 
-        public Task<List<PersonnerlSuggestBoxViewModel>> GetWorkers()
+        public Task<List<PersonnerlSuggestBoxViewModel>> GetDisplayWorkers()
         {
-            return TableNoTracking.Select(x => new PersonnerlSuggestBoxViewModel
+            return TableNoTracking
+                .Where (t=> t.Status == Status.InWork)
+                .Select(x => new PersonnerlSuggestBoxViewModel
             {
                 Id = x.Id,
                 DisplayName = x.FullName,
@@ -953,7 +955,7 @@ namespace Infrastructure.Repositories
                               SubmitDate = aid.SubmitDate,
                               Details = new AidDetails() { Id = aid.Id, WorkerId = worker.Id }
                           })
-                          .OrderBy(t => t.SubmitDate)
+                          .OrderByDescending(t => t.SubmitDate)
                           .ToListAsync();
 			int row = 1;
 			var totalCount = list.Count;

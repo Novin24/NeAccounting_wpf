@@ -11,8 +11,11 @@ namespace NeApplication.IRepositoryies
     public interface IWorkerManager : IRepository<Personel>
     {
         #region worker
-
-        Task<List<PersonnerlSuggestBoxViewModel>> GetWorkers();
+        /// <summary>
+        /// دریافت پرسنل مشغول به کار نمایشی
+        /// </summary>
+        /// <returns></returns>
+        Task<List<PersonnerlSuggestBoxViewModel>> GetDisplayWorkers();
 
         Task<WorkerVewiModel> GetWorker(Guid workerId);
 

@@ -82,7 +82,7 @@ namespace NeAccounting.ViewModels
         private async Task InitializeViewModel()
         {
             using UnitOfWork db = new();
-            AuSuBox = await db.WorkerManager.GetWorkers();
+            AuSuBox = await db.WorkerManager.GetDisplayWorkers();
             var salaries = await db.WorkerManager.GetSalaryList(WorkerId, StartMonth, StartYear, EndMonth, EndYear, CurrentPage);
             CurrentPage = salaries.CurrentPage;
             PageCount = salaries.PageCount;
