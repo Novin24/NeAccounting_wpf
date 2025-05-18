@@ -49,9 +49,11 @@ namespace Infrastructure.Repositories
 
         #region Worker
 
-        public Task<List<PersonnerlSuggestBoxViewModel>> GetWorkers()
+        public Task<List<PersonnerlSuggestBoxViewModel>> GetDisplayWorkers()
         {
-            return TableNoTracking.Select(x => new PersonnerlSuggestBoxViewModel
+            return TableNoTracking
+                .Where (t=> t.Status == Status.InWork)
+                .Select(x => new PersonnerlSuggestBoxViewModel
             {
                 Id = x.Id,
                 DisplayName = x.FullName,

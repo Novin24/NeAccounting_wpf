@@ -201,7 +201,7 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
     public async void OnNavigatedTo()
     {
         using UnitOfWork db = new();
-        AuSuBox = await db.WorkerManager.GetWorkers();
+        AuSuBox = await db.WorkerManager.GetDisplayWorkers();
         Loding = false;
         PlaceholderSearch = "جستجو ...";
     }
