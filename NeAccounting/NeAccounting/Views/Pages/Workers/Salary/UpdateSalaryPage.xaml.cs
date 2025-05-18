@@ -123,6 +123,9 @@ namespace NeAccounting.Views.Pages
         {
             if (DataContext is UpdateSalaryPage usp)
             {
+                // اینجو رو دوباره ببین
+                Deductions = txt_Aid.Value + txt_Insurance.Value + txt_Tax.Value + txt_loanInstallment.Value + txt_Othere.Value;
+                Additions = txt_amountOf.Value + txt_overtime.Value + txt_ChildAllowance.Value + txt_OtherAdditions.Value + txt_RighOfFood.Value;
                 if (usp.ViewModel.ShiftStatus == DomainShared.Enums.Shift.ByMounth)
                 {
                     txt_Tax.IsEnabled = true;
