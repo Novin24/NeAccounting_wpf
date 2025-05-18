@@ -91,7 +91,7 @@ namespace NeAccounting.ViewModels
                 return;
             }
 
-            if (AmountOf > 31)
+            if (AmountOf > FunctionLimit)
             {
                 _snackbarService.Show("خطا", "کارکرد بیشتر از سقف مجاز", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
                 return;
