@@ -54,6 +54,9 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private IEnumerable<FunctionViewModel> _list;
 
+        /// <summary>
+        /// آیا فیش حقوقی ندارد؟
+        /// </summary>
         [ObservableProperty]
         private bool _hasSalary;
 
@@ -62,13 +65,20 @@ namespace NeAccounting.ViewModels
 
         public void OnNavigatedTo()
         {
-            if (!_hasSalary)
-            {
-                _snackbarService.Show("خطا", "برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
-
-            }
+            
         }
 
+        public void CheckAndShowSnackbar()
+        {
+            if (!HasSalary)
+            {
+                _snackbarService.Show("خطا",
+                    "برای ماه مورد نظر فیش حقوقی صادر شده!!!\n در صورت نیاز به ویرایش ابتدا فیش حقوقی ماه مرتبط را حذف کرده و مجددا تلاش نمایید.",
+                    ControlAppearance.Secondary,
+                    new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)),
+                    TimeSpan.FromMilliseconds(3000));
+            }
+        }
 
         public void OnNavigatedFrom()
         {
