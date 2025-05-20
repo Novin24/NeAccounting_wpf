@@ -12,7 +12,14 @@
         /// </summary>
         public Guid WorkerId { get; set; }
 
+        /// <summary>
+        /// سال شمسی
+        /// </summary>
         public int PersianYear { get; set; }
+
+        /// <summary>
+        /// ماه شمسی
+        /// </summary>
         public byte PersianMonth { get; set; }
     }
 }

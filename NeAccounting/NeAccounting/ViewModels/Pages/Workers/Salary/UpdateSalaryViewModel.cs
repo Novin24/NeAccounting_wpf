@@ -13,61 +13,117 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     private readonly INavigationService _navigationService;
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
-
+    /// <summary>
+    /// شناسه کارگر
+    /// </summary>
     [ObservableProperty]
     private Guid _workerId ;
 
+    /// <summary>
+    /// شناسه فیش حقوقی
+    /// </summary>
     [ObservableProperty]
     private int _salaryId = -1;
 
+    /// <summary>
+    /// شماره پرسنلی
+    /// </summary>
     [ObservableProperty]
     private int? _personnelId;
 
+    /// <summary>
+    /// نام کارگر
+    /// </summary>
     [ObservableProperty]
     private string _personnelName;
 
+    /// <summary>
+    /// ماه
+    /// </summary>
     [ObservableProperty]
     private byte? _submitMonth;
 
+    /// <summary>
+    /// سال
+    /// </summary>
     [ObservableProperty]
     private int? _submitYear;
 
+    /// <summary>
+    /// کارکرد عادی
+    /// </summary>
     [ObservableProperty]
     private long _amountOf;
 
+    /// <summary>
+    /// مساعده مالی
+    /// </summary>
     [ObservableProperty]
     private long _financialAid;
 
+    /// <summary>
+    /// اضافه کاری
+    /// </summary>
     [ObservableProperty]
     private long _overTime;
 
+    /// <summary>
+    /// مالیات
+    /// </summary>
     [ObservableProperty]
     private long _tax;
 
+    /// <summary>
+    /// حق اولاد
+    /// </summary>
     [ObservableProperty]
     private long _childAllowance;
 
+    /// <summary>
+    /// بیمه
+    /// </summary>
     [ObservableProperty]
     private long _insurance;
 
+    /// <summary>
+    /// حق خوار و بار و مسکن
+    /// </summary>
     [ObservableProperty]
     private long _rightHousingAndFood;
 
+    /// <summary>
+    /// قسط وام
+    /// </summary>
     [ObservableProperty]
     private long _loanInstallment;
 
+    /// <summary>
+    /// سایر اضافات
+    /// </summary>
     [ObservableProperty]
     private long _otherAdditions;
 
+    /// <summary>
+    /// سایر کسورات
+    /// </summary>
     [ObservableProperty]
     private long _otherDeductions;
 
+    /// <summary>
+    /// باقی مانده
+    /// </summary>
     [ObservableProperty]
     private long _leftOver;
 
+    /// <summary>
+    /// توضیحات
+    /// </summary>
     [ObservableProperty]
     private string? _description;
 
+    /// <summary>
+    /// شیفت کاری
+    /// </summary>
     [ObservableProperty]
     private Shift _shiftStatus;
 

@@ -113,6 +113,10 @@ namespace NeAccounting.ViewModels
             List = salaries.Items;
         }
 
+        /// <summary>
+        /// ثبت فیش حقوقی
+        /// </summary>
+        /// <param name="parameter"></param>
         [RelayCommand]
         private void OnAddClick(string parameter)
         {
@@ -131,6 +135,11 @@ namespace NeAccounting.ViewModels
             _ = _navigationService.Navigate(pageType);
         }
 
+        /// <summary>
+        /// حذف فیش حقوقی
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         [RelayCommand]
         private async Task OnRemove(SalaryDetails parameter)
         {
@@ -165,6 +174,11 @@ namespace NeAccounting.ViewModels
             }
         }
 
+        /// <summary>
+        /// بروزرسانی فیش حقوقی
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         [RelayCommand]
         private async Task OnUpdate(SalaryDetails parameter)
         {
@@ -215,6 +229,11 @@ namespace NeAccounting.ViewModels
             service.Navigate(pageType, context);
         }
 
+        /// <summary>
+        /// چاپ فیش حقوقی
+        /// </summary>
+        /// <param name="salaryId"></param>
+        /// <returns></returns>
         public async Task<(bool isSuccess, SalaryWorkerViewModel item)> PrintSalary(int salaryId)
         {
             using UnitOfWork db = new();

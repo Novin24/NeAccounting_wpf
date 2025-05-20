@@ -8,6 +8,7 @@ namespace DomainShared.ViewModels.Workers
         /// شیفت کاری
         /// </summary>
         public Shift ShiftStatus { get; set; }
+
         /// <summary>
         /// نام کارگر
         /// </summary>
@@ -37,8 +38,9 @@ namespace DomainShared.ViewModels.Workers
         /// تعداد اضافه کاری
         /// </summary>
         public int OverTimeNum { get; set; }
+
         /// <summary>
-        /// حقوق پرداختی
+        /// کارکرد عادی
         /// </summary>
         public long AmountOf { get; set; }
 

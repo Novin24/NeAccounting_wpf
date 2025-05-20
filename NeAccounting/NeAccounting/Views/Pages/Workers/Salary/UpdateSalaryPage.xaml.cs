@@ -20,6 +20,10 @@ namespace NeAccounting.Views.Pages
         /// همه ی کسورات
         /// </summary>
         private long Deductions = 0;
+
+        /// <summary>
+        /// باقی مانده
+        /// </summary>
         private long LeftOver = 0;
         public UpdateSalaryPage(UpdateSalaryViewModel viewModel)
         {
@@ -44,6 +48,8 @@ namespace NeAccounting.Views.Pages
 
             // همه ی اضافات
             Additions = total;
+
+            // کم کردن اضافات از کسورات
             LeftOver = Additions - Deductions;
             ViewModel.LeftOver = LeftOver;
             txt_totalPlus.Text = total.ToString("N0");
@@ -55,7 +61,6 @@ namespace NeAccounting.Views.Pages
             var input = ((MoneyPack)sender).Value;
 
             SetTotalPlusPrice();
-
         }
 
         private void SetTotalPrice()
@@ -71,6 +76,8 @@ namespace NeAccounting.Views.Pages
             Additions = txt_amountOf.Value + txt_overtime.Value + txt_ChildAllowance.Value + txt_OtherAdditions.Value + txt_RighOfFood.Value;
             //همه ی کسورات
             Deductions = total;
+
+            // کم کردن اضافات از کسورات
             LeftOver = Additions - Deductions;
             ViewModel.LeftOver = LeftOver;
             txt_totalMines.Text = total.ToString("N0");
@@ -138,8 +145,11 @@ namespace NeAccounting.Views.Pages
         {
             if (DataContext is UpdateSalaryPage usp)
             {
-                // اینجو رو دوباره ببین
+
+                // کسورات
                 Deductions = txt_Aid.Value + txt_Insurance.Value + txt_Tax.Value + txt_loanInstallment.Value + txt_Othere.Value;
+
+                // اضافات
                 Additions = txt_amountOf.Value + txt_overtime.Value + txt_ChildAllowance.Value + txt_OtherAdditions.Value + txt_RighOfFood.Value;
                 if (usp.ViewModel.ShiftStatus == DomainShared.Enums.Shift.ByMounth)
                 {
