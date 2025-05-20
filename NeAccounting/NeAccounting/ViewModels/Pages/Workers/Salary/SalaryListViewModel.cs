@@ -18,6 +18,10 @@ namespace NeAccounting.ViewModels
         private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
         #region Properties
+
+        /// <summary>
+        /// شناسه کارگر
+        /// </summary>
         [ObservableProperty]
         private Guid? _workerId = null;
 
@@ -42,10 +46,15 @@ namespace NeAccounting.ViewModels
         [ObservableProperty]
         private int? _endYear;
 
-
+        /// <summary>
+        /// سرچ پرسنل
+        /// </summary>
         [ObservableProperty]
         private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 
+        /// <summary>
+        /// لیست فیش حقوقی ها
+        /// </summary>
         [ObservableProperty]
         private IEnumerable<SalaryViewModel> _list;
 

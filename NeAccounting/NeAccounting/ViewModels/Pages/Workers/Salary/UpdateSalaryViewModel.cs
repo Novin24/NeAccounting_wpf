@@ -13,6 +13,7 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     private readonly INavigationService _navigationService;
     private readonly bool _isreadonly = NeAccountingConstants.ReadOnlyMode;
 
+    #region Properties
     /// <summary>
     /// شناسه کارگر
     /// </summary>
@@ -126,6 +127,8 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     /// </summary>
     [ObservableProperty]
     private Shift _shiftStatus;
+
+    #endregion
 
     public UpdateSalaryViewModel(ISnackbarService snackbarService, INavigationService navigationService)
     {

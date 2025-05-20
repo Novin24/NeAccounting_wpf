@@ -15,57 +15,111 @@ public partial class CreateSalaryViewModel : ObservableObject, INavigationAware
     private readonly INavigationService _navigationService;
     private bool _isreadonly = true;
 
+    /// <summary>
+    /// شناسه کارگر
+    /// </summary>
     [ObservableProperty]
     private Guid? _workerId = null;
 
+    /// <summary>
+    /// شماره پرسنلی
+    /// </summary>
     [ObservableProperty]
     private int? _personelId;
 
+    /// <summary>
+    /// ماه
+    /// </summary>
     [ObservableProperty]
     private byte? _submitMonth;
 
+    /// <summary>
+    /// سال
+    /// </summary>
     [ObservableProperty]
     private int? _submitYear;
 
+    /// <summary>
+    /// کارکرد عادی
+    /// </summary>
     [ObservableProperty]
     private long _amountOf = 0;
 
+    /// <summary>
+    /// مساعده مالی
+    /// </summary>
     [ObservableProperty]
     private long _financialAid = 0;
 
+    /// <summary>
+    /// اضافه کاری
+    /// </summary>
     [ObservableProperty]
     private long _overTime = 0;
 
+    /// <summary>
+    /// مالیات
+    /// </summary>
     [ObservableProperty]
     private long _tax = 0;
 
+    /// <summary>
+    /// حق اولاد
+    /// </summary>
     [ObservableProperty]
     private long _childAllowance = 0;
 
+    /// <summary>
+    /// بیمه
+    /// </summary>
     [ObservableProperty]
     private long _insurance = 0;
 
+    /// <summary>
+    /// حق خوار و بار و مسکن
+    /// </summary>
     [ObservableProperty]
     private long _rightHousingAndFood = 0;
 
+    /// <summary>
+    /// قسط وام
+    /// </summary>
     [ObservableProperty]
     private long _loanInstallment = 0;
 
+    /// <summary>
+    /// سایر اضافات
+    /// </summary>
     [ObservableProperty]
     private long _otherAdditions = 0;
 
+    /// <summary>
+    /// سایر کسورات
+    /// </summary>
     [ObservableProperty]
     private long _otherDeductions = 0;
 
+    /// <summary>
+    /// باقی مانده
+    /// </summary>
     [ObservableProperty]
     private long _leftOver = 0;
 
+    /// <summary>
+    /// توضیحات
+    /// </summary>
     [ObservableProperty]
     private string? _description;
 
+    /// <summary>
+    /// شیفت کاری
+    /// </summary>
     [ObservableProperty]
     private Shift _shiftStatus;
 
+    /// <summary>
+    /// سرچ پرسنل
+    /// </summary>
     [ObservableProperty]
     private IEnumerable<PersonnerlSuggestBoxViewModel> _auSuBox;
 

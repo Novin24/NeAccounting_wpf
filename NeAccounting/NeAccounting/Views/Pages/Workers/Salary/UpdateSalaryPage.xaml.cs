@@ -94,7 +94,6 @@ namespace NeAccounting.Views.Pages
                     lbl_status.Text = "بدهکار";
                     lbl_status.Foreground = new SolidColorBrush(Colors.DarkSeaGreen);
                 }
-
             }
 
         }
