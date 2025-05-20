@@ -61,10 +61,9 @@ namespace NeAccounting.Views.Pages
         private void NumberBox_ValueChanged(object sender, RoutedEventArgs e)
         {
             var input = ((MoneyPack)sender).Value;
-            if (input != 0)
-            {
-                SetTotalPlusPrice();
-            }
+
+            SetTotalPlusPrice();
+
         }
 
         private void SetTotalPrice()
