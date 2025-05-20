@@ -65,7 +65,6 @@ namespace NeAccounting.ViewModels
 
         public void OnNavigatedTo()
         {
-            
         }
 
         public void CheckAndShowSnackbar()
