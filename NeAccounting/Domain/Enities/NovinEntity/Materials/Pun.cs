@@ -4,9 +4,16 @@ using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Materials
 {
+    /// <summary>
+    /// اجناس
+    /// </summary>
     public class Pun : LocalEntity<Guid>
     {
         #region Navigation
+
+        /// <summary>
+        /// واحد
+        /// </summary>
         public Units Unit { get; set; }
         public Guid UnitId { get; set; }
         public IEnumerable<SellRemittance> SellRemittances { get; set; }
@@ -23,6 +30,10 @@ namespace Domain.NovinEntity.Materials
         /// سریال
         /// </summary>
         public string Serial { get; private set; }
+
+        /// <summary>
+        /// کمترین موجودی
+        /// </summary>
 		public double MiniEntity { get; set; } = 0;
 
         /// <summary>
@@ -38,9 +49,11 @@ namespace Domain.NovinEntity.Materials
         /// <summary>
         /// آخرین قیمت خرید
         /// </summary>
-        
         public long LastBuyPrice { get; set; }
 
+        /// <summary>
+        /// کالاهای تولیدی
+        /// </summary>
         public bool IsManufacturedGoods { get; set; }
 
         /// <summary>

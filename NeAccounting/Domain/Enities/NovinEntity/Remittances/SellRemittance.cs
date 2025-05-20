@@ -5,6 +5,9 @@ using DomainShared.Errore;
 
 namespace Domain.Enities.NovinEntity.Remittances
 {
+    /// <summary>
+    /// حواله فروش
+    /// </summary>
     public class SellRemittance : LocalEntity<Guid>
     {
         #region Navigation

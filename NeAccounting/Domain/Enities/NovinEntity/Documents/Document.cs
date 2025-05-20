@@ -6,6 +6,9 @@ using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Documents
 {
+    /// <summary>
+    /// اسناد
+    /// </summary>
     public class Document : LocalEntity<Guid>
     {
         #region Navigation
@@ -16,6 +19,43 @@ namespace Domain.NovinEntity.Documents
         public List<Document> RelatedDocuments { get; private set; }
         public List<SellRemittance> SellRemittances { get; private set; }
         public List<BuyRemittance> BuyRemittances { get; private set; }
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// قیمت
+        /// </summary>
+        public long Price { get; set; }
+
+        /// <summary>
+        /// توضیحات
+        /// </summary>
+        public string? Description { get; private set; }
+
+        /// <summary>
+        /// تاریخ دریافت سند
+        /// </summary>
+        public DateTime SubmitDate { get; set; }
+
+        /// <summary>
+        /// نوع پرداخت
+        /// </summary>
+        public PaymentType PayType { get; set; }
+
+        /// <summary>
+        /// نوع
+        /// </summary>
+        public DocumntType Type { get; set; }
+
+        /// <summary>
+        /// ما دریافت کردیم
+        /// </summary>
+        public bool IsReceived { get; set; }
+
+        public byte? Commission { get; set; }
+
+        public long Serial { get; set; }
         #endregion
 
         #region Ctor
@@ -59,23 +99,6 @@ namespace Domain.NovinEntity.Documents
         {
             Commission = commission;
         }
-        #endregion
-
-        #region Properties
-        public long Price { get; set; }
-        public string? Description { get; private set; }
-        /// <summary>
-        /// تاریخ دریافت سند
-        /// </summary>
-        public DateTime SubmitDate { get; set; }
-        public PaymentType PayType { get; set; }
-        public DocumntType Type { get; set; }
-        /// <summary>
-        /// ما دریافت کردیم
-        /// </summary>
-        public bool IsReceived { get; set; }
-        public byte? Commission { get; set; }
-        public long Serial { get; set; }
         #endregion
 
         #region Methods

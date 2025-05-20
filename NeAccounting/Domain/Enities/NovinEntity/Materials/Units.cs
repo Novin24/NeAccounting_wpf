@@ -3,9 +3,15 @@ using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Materials
 {
+    /// <summary>
+    /// واحد
+    /// </summary>
     public class Units : LocalEntity<Guid>
     {
         #region Navigation
+        /// <summary>
+        /// اجناس
+        /// </summary>
         public ICollection<Pun> Materials { get; private set; }
         #endregion
 
@@ -25,7 +31,6 @@ namespace Domain.NovinEntity.Materials
 		/// فعال بودن
 		/// </summary>
 		public bool IsActive { get; set; }
-
 
         /// <summary>
         /// شماره واحد

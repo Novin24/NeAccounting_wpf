@@ -5,13 +5,52 @@ using DomainShared.Errore;
 
 namespace Domain.Enities.NovinEntity.Remittances
 {
+    /// <summary>
+    /// حواله خرید
+    /// </summary>
     public class BuyRemittance : LocalEntity<Guid>
     {
         #region Navigation
+
+        /// <summary>
+        /// اجناس
+        /// </summary>
         public Pun Material { get; private set; }
         public Guid MaterialId { get; set; }
+
+        /// <summary>
+        /// اسناد
+        /// </summary>
         public Document Document { get; private set; }
         public Guid DocumentId { get; private set; }
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// قیمت
+        /// </summary>
+        public long Price { get; set; }
+
+        /// <summary>
+        /// توضیح
+        /// </summary>
+        public string? Description { get; private set; }
+
+        /// <summary>
+        /// تاریخ ثبت
+        /// </summary>
+        public DateTime SubmitDate { get; set; }
+
+        /// <summary>
+        /// قیمت کل
+        /// </summary>
+        public long TotalPrice { get; set; }
+
+        /// <summary>
+        /// مقدار
+        /// </summary>
+        public double AmountOf { get; set; }
         #endregion
 
         #region Ctor
@@ -32,14 +71,6 @@ namespace Domain.Enities.NovinEntity.Remittances
             Price = price;
             SubmitDate = submitDate;
         }
-        #endregion
-
-        #region Properties
-        public long Price { get; set; }
-        public string? Description { get; private set; }
-        public DateTime SubmitDate { get; set; }
-        public long TotalPrice { get; set; }
-        public double AmountOf { get; set; }
         #endregion
 
         #region Methods

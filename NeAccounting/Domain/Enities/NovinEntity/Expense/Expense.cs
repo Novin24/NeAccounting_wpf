@@ -9,7 +9,6 @@ namespace Domain.NovinEntity.Expense
     {
         #region Property
 
-
         /// <summary>
         /// تاریخ ثبت
         /// </summary>

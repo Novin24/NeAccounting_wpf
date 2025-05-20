@@ -4,67 +4,12 @@ using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Customers
 {
+    /// <summary>
+    /// مشتری
+    /// </summary>
     public class Customer : LocalEntity<Guid>
     {
         #region navigation
-        #endregion
-
-        #region ctor
-        internal Customer() { }
-
-        public Customer(
-            string name,
-            string mobile,
-            long totalCredit,
-            long cashCredit,
-            long promissoryNote,
-            string nationalCode,
-            string address,
-            CustomerType type,
-            bool havePromissoryNote,
-            bool haveCashCredit,
-            bool isBuyer,
-            bool isSeller)
-        {
-            SetName(name);
-            SetMobile(mobile);
-            SetNationalCode(nationalCode);
-            HaveChequeGuarantee = false;
-            ChequeCredit = 0;
-            TotalCredit = totalCredit;
-            CashCredit = cashCredit;
-            PromissoryNote = promissoryNote;
-            HavePromissoryNote = havePromissoryNote;
-            HaveCashCredit = haveCashCredit;
-            Address = address;
-            Buyer = isBuyer;
-            Seller = isSeller;
-            Type = type;
-            IsActive = true;
-        }
-
-		/// <summary>
-		/// اضافه کردن همه به سال مالی جدید
-		/// </summary>
-		/// <param name="cusList"></param>
-		/// <returns></returns>
-		public Customer(
-            string name,
-            string mobile,
-            long totalCredit,
-            long cashCredit,
-            long promissoryNote,
-            string nationalCode,
-            string address,
-            CustomerType type,
-            bool havePromissoryNote,
-            bool haveCashCredit,
-            bool isBuyer,
-            bool isSeller,
-            Guid id) : this(name, mobile, totalCredit, cashCredit, promissoryNote, nationalCode, address, type, havePromissoryNote, haveCashCredit, isBuyer, isSeller)
-        {
-            Id = id;
-        }
         #endregion
 
         #region properties
@@ -144,6 +89,64 @@ namespace Domain.NovinEntity.Customers
         /// آیا فعال است؟
         /// </summary>
         public bool IsActive { get; set; }
+        #endregion
+
+        #region ctor
+        internal Customer() { }
+
+        public Customer(
+            string name,
+            string mobile,
+            long totalCredit,
+            long cashCredit,
+            long promissoryNote,
+            string nationalCode,
+            string address,
+            CustomerType type,
+            bool havePromissoryNote,
+            bool haveCashCredit,
+            bool isBuyer,
+            bool isSeller)
+        {
+            SetName(name);
+            SetMobile(mobile);
+            SetNationalCode(nationalCode);
+            HaveChequeGuarantee = false;
+            ChequeCredit = 0;
+            TotalCredit = totalCredit;
+            CashCredit = cashCredit;
+            PromissoryNote = promissoryNote;
+            HavePromissoryNote = havePromissoryNote;
+            HaveCashCredit = haveCashCredit;
+            Address = address;
+            Buyer = isBuyer;
+            Seller = isSeller;
+            Type = type;
+            IsActive = true;
+        }
+
+		/// <summary>
+		/// اضافه کردن همه به سال مالی جدید
+		/// </summary>
+		/// <param name="cusList"></param>
+		/// <returns></returns>
+		public Customer(
+            string name,
+            string mobile,
+            long totalCredit,
+            long cashCredit,
+            long promissoryNote,
+            string nationalCode,
+            string address,
+            CustomerType type,
+            bool havePromissoryNote,
+            bool haveCashCredit,
+            bool isBuyer,
+            bool isSeller,
+            Guid id) : this(name, mobile, totalCredit, cashCredit, promissoryNote, nationalCode, address, type, havePromissoryNote, haveCashCredit, isBuyer, isSeller)
+        {
+            Id = id;
+        }
         #endregion
 
         #region Method

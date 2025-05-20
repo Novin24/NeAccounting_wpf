@@ -5,9 +5,20 @@ namespace DomainShared.ViewModels.Workers
     public struct WorkerVewiModel
     {
         public Guid Id { get; set; }
+        
+        /// <summary>
+        /// نام کامل
+        /// </summary>
         public string FullName { get; set; }
+        
         public string JobTitle { get; set; }
+        
+        /// <summary>
+        /// کدملی
+        /// </summary>
         public string NationalCode { get; set; }
+
+
         public string WorkerStatus { get; set; }
 
         /// <summary>

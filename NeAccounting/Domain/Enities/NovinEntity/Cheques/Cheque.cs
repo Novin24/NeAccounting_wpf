@@ -5,6 +5,9 @@ using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Cheques
 {
+    /// <summary>
+    /// چک
+    /// </summary>
     public class Cheque : LocalEntity<Guid>
     {
         #region Navigation

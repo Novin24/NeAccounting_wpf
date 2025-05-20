@@ -34,7 +34,6 @@ namespace Domain.NovinEntity.Workers
         /// </summary>
         public byte AmountOfOverTime { get; set; }
 
-
         /// <summary>
         /// توضیحات
         /// </summary>

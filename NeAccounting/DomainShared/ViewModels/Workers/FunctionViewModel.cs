@@ -54,6 +54,9 @@ namespace DomainShared.ViewModels.Workers
         /// </summary>
         public bool HasSalary { get; set; }
 
+        /// <summary>
+        /// شیفت کاری
+        /// </summary>
         public Shift ShiftStatus { get; set; }
     }
 }

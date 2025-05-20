@@ -4,6 +4,9 @@ using DomainShared.Errore;
 
 namespace Domain.NovinEntity.Workers
 {
+    /// <summary>
+    /// پرسنل
+    /// </summary>
     public class Personel : LocalEntity<Guid>
     {
         #region Navigation

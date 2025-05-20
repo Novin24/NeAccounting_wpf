@@ -37,6 +37,11 @@ namespace NeAccounting.Views.Pages
             ViewModel.WorkerId = ((PersonnerlSuggestBoxViewModel)args.SelectedItem).Id;
         }
 
+        /// <summary>
+        /// چاپ فیش حقوقی
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void BtnPrint_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not Button btn)
