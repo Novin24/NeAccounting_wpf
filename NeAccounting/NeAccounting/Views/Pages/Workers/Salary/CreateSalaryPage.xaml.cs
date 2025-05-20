@@ -70,6 +70,7 @@ namespace NeAccounting.Views.Pages
         private void SetTotalPrice()
         {
             var total = txt_Aid.Value + txt_Insurance.Value + txt_Tax.Value + txt_loanInstallment.Value + txt_Othere.Value;
+
             Deductions = total;
             LeftOver = Additions - Deductions;
             ViewModel.LeftOver = LeftOver;
@@ -95,10 +96,9 @@ namespace NeAccounting.Views.Pages
         private void NumberMinesBox_ValueChanged(object sender, RoutedEventArgs e)
         {
             var input = ((MoneyPack)sender).Value;
-            if (input != 0)
-            {
-                SetTotalPrice();
-            }
+
+            SetTotalPrice();
+
         }
 
         private async void dtp_MonthChosen(object sender, RoutedPropertyChangedEventArgs<byte?> e)

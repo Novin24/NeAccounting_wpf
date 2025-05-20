@@ -10,7 +10,15 @@ namespace NeAccounting.Views.Pages
     public partial class UpdateSalaryPage : INavigableView<UpdateSalaryViewModel>
     {
         public UpdateSalaryViewModel ViewModel { get; }
+
+        /// <summary>
+        /// همه ی اضافات
+        /// </summary>
         private long Additions = 0;
+
+        /// <summary>
+        /// همه ی کسورات
+        /// </summary>
         private long Deductions = 0;
         private long LeftOver = 0;
         public UpdateSalaryPage(UpdateSalaryViewModel viewModel)
@@ -30,7 +38,11 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
+
+            // همه ی اضافات
             var total = txt_amountOf.Value + txt_overtime.Value + txt_ChildAllowance.Value + txt_OtherAdditions.Value + txt_RighOfFood.Value;
+
+            // همه ی اضافات
             Additions = total;
             LeftOver = Additions - Deductions;
             ViewModel.LeftOver = LeftOver;
@@ -53,7 +65,12 @@ namespace NeAccounting.Views.Pages
             {
                 return;
             }
+            //همه ی کسورات
             var total = txt_Aid.Value + txt_Insurance.Value + txt_Tax.Value + txt_loanInstallment.Value + txt_Othere.Value;
+
+            //محاسبه تمام اضافات
+            Additions = txt_amountOf.Value + txt_overtime.Value + txt_ChildAllowance.Value + txt_OtherAdditions.Value + txt_RighOfFood.Value;
+            //همه ی کسورات
             Deductions = total;
             LeftOver = Additions - Deductions;
             ViewModel.LeftOver = LeftOver;
@@ -79,10 +96,9 @@ namespace NeAccounting.Views.Pages
         private void NumberMinesBox_ValueChanged(object sender, RoutedEventArgs e)
         {
             var input = ((MoneyPack)sender).Value;
-            if (input != 0)
-            {
-                SetTotalPrice();
-            }
+
+            SetTotalPrice();
+
         }
 
         private async Task ReloadSalary()
