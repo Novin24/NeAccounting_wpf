@@ -45,9 +45,13 @@ namespace NeAccounting.Views.Pages
             // همه ی اضافات
             Additions = total;
             LeftOver = Additions - Deductions;
-            ViewModel.LeftOver = LeftOver;
+            if (DataContext is UpdateSalaryPage usp)
+            {
+                usp.ViewModel.LeftOver = LeftOver;
+            }
             txt_totalPlus.Text = total.ToString("N0");
             lbl_leftOver.Text = Math.Abs(LeftOver).ToString("N0");
+            var lbl_leftOvertxt = lbl_leftOver.Text;
         }
 
         private void NumberBox_ValueChanged(object sender, RoutedEventArgs e)
@@ -73,7 +77,10 @@ namespace NeAccounting.Views.Pages
             //همه ی کسورات
             Deductions = total;
             LeftOver = Additions - Deductions;
-            ViewModel.LeftOver = LeftOver;
+            if (DataContext is UpdateSalaryPage usp)
+            {
+                usp.ViewModel.LeftOver = LeftOver;
+            }
             txt_totalMines.Text = total.ToString("N0");
             lbl_leftOver.Text = Math.Abs(LeftOver).ToString("N0");
             if (LeftOver != 0)

@@ -35,6 +35,9 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     [ObservableProperty]
     private long _amountOf;
 
+    /// <summary>
+    /// مساعده
+    /// </summary>
     [ObservableProperty]
     private long _financialAid;
 
@@ -47,6 +50,9 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
     [ObservableProperty]
     private long _childAllowance;
 
+    /// <summary>
+    /// حق بیمه
+    /// </summary>
     [ObservableProperty]
     private long _insurance;
 
@@ -122,7 +128,7 @@ public partial class UpdateSalaryViewModel : ObservableObject, INavigationAware
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("حق خوار و بار و مسکن"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
             return;
         }
-
+        
         if (LoanInstallment < 0)
         {
             _snackbarService.Show("خطا", NeErrorCodes.IsMandatory("وام"), ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
