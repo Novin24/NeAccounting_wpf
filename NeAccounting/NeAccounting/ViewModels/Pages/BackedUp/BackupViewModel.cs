@@ -168,7 +168,7 @@ public partial class BackupViewModel(ISnackbarService snackbarService) : Observa
 					myFiles.Add(nMyfile);
 				}
 			}
-			myFiles = myFiles.OrderBy(f => f.CreationDate).ThenBy(f => f.CreationTime).ToList();
+			myFiles = myFiles.OrderByDescending(f => f.CreationDate).ThenByDescending(f => f.CreationTime).ToList();
 
 			BakFiles = new ObservableCollection<BackFilesDetails>(myFiles);
 		}
