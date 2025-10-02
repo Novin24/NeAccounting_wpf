@@ -79,7 +79,7 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
@@ -88,6 +88,11 @@
                     {
                     "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
                     "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.8"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.8 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.8"
                     }
                 }
             }
@@ -199,7 +204,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:NeAccounting"
         "ProductCode" = "8:{3D456DA3-557B-4698-BF8C-99D3F55D5338}"
-        "PackageCode" = "8:{9130E332-4BE1-4E9C-A532-F99505F68245}"
+        "PackageCode" = "8:{30554F31-C3A4-4C91-AA31-DCEA1D47EB7F}"
         "UpgradeCode" = "8:{9E7B96D9-6CC9-4627-BAB9-51FBCC0C19EE}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

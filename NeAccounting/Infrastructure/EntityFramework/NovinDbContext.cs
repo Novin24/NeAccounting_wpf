@@ -23,7 +23,7 @@ namespace Infrastructure.EntityFramework
             //optionsBuilder.UseSqlServer($"Server=ALI"\\SQLEXPRESS;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
 
             //سرور
-            optionsBuilder.UseSqlServer($"Data Source=DESKTOP-L3HJTMF\\SQLEXPRESS,1434;Database={NeAccountingConstants.NvoinDbConnectionStrint};TrustServerCertificate=True;User Id=MyLogIn;Password=P123a@h;");
+            optionsBuilder.UseSqlServer($"Data Source=192.168.10.242,1433;Database={NeAccountingConstants.NvoinDbConnectionStrint};TrustServerCertificate=True;User Id=SA;Password=@#$%QWer;");
 
             //ابلفضل
             //optionsBuilder.UseSqlServer($"Data Source=(localDb)"\\MssqlLocalDb;Database={NeAccountingConstants.NvoinDbConnectionStrint};Integrated Security=True;User ID=DESKTOP-N0GO0QP\"\ALI;");
