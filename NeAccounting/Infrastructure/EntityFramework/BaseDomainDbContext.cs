@@ -16,6 +16,7 @@ namespace Infrastructure.EntityFramework
         {
             //علی اصغر
             //optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=(localDb)\\MssqlLocalDb;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 
             //optionsBuilder.UseSqlServer("Server=ALI"\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 
