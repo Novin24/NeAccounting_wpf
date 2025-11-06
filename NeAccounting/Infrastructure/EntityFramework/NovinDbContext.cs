@@ -18,8 +18,8 @@ namespace Infrastructure.EntityFramework
                         DbContextOptionsBuilder optionsBuilder)
         {
             //علی اصغر
-            //optionsBuilder.UseSqlServer($"Server=.\\SQLExpress;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
-            optionsBuilder.UseSqlServer($"Data Source=(localDb)\\MssqlLocalDb;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer($"Server=.\\SQLExpress;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
+            //optionsBuilder.UseSqlServer($"Data Source=(localDb)\\MssqlLocalDb;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
 
             //optionsBuilder.UseSqlServer($"Server=ALI"\\SQLEXPRESS;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
 
