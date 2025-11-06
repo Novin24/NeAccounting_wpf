@@ -203,15 +203,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:NeAccounting"
-        "ProductCode" = "8:{3D456DA3-557B-4698-BF8C-99D3F55D5338}"
-        "PackageCode" = "8:{30554F31-C3A4-4C91-AA31-DCEA1D47EB7F}"
+        "ProductCode" = "8:{09A4DD28-7BB2-427E-A715-F6BF0A9384D0}"
+        "PackageCode" = "8:{5D584AA4-60CF-4FE0-AC8B-D74E9588C028}"
         "UpgradeCode" = "8:{9E7B96D9-6CC9-4627-BAB9-51FBCC0C19EE}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:2.4.44"
+        "ProductVersion" = "8:2.5.24"
         "Manufacturer" = "8:Christ24"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -725,7 +725,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8F19105F3DB5408C9176BB10B4E85259"
             {
-            "SourcePath" = "8:..\\NeAccounting\\obj\\Release\\net8.0-windows7.0\\apphost.exe"
+            "SourcePath" = "8:..\\NeAccounting\\obj\\Debug\\net8.0-windows7.0\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_FCEDE7ECF8EB40F0A665DD9C2ABA9099"
