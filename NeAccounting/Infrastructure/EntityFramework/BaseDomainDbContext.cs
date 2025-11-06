@@ -21,7 +21,7 @@ namespace Infrastructure.EntityFramework
             //optionsBuilder.UseSqlServer("Server=ALI"\\SQLEXPRESS;Database=BaseDomain;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
 
             //سرور
-            optionsBuilder.UseSqlServer("Server=192.168.10.242,1433;Database=BaseDomain;User Id=SA;Password=@#$%QWer;TrustServerCertificate=True;");
+            //optionsBuilder.UseSqlServer("Server=192.168.10.242,1433;Database=BaseDomain;User Id=SA;Password=@#$%QWer;TrustServerCertificate=True;");
 
             // ابلفضل
             //optionsBuilder.UseSqlServer("Data Source=(localDb)"\\MssqlLocalDb;Database=BaseDomain;Integrated Security=True;User ID=DESKTOP-N0GO0QP\"\ALI;");
