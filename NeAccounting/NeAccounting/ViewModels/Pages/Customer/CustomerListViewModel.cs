@@ -122,7 +122,7 @@ namespace NeAccounting.ViewModels
 
             var cus = List.First(t => t.Id == parameter);
 
-            var context = new UpdateCustomerPage(new UpdateCustomerViewModel(_snackbarService, _navigationService,_contentDialogService)
+            var context = new UpdateCustomerPage(new UpdateCustomerViewModel(_snackbarService, _navigationService, _contentDialogService)
             {
                 Id = cus.Id,
                 FullName = cus.Name,
@@ -182,7 +182,7 @@ namespace NeAccounting.ViewModels
             using UnitOfWork db = new();
             await db.CustomerManager.ArchiveCustomer(id, true);
             await db.SaveChangesAsync();
-            List = await db.CustomerManager.GetCustomerList(string.Empty, string.Empty, string.Empty);
+            List = await db.CustomerManager.GetCustomerList(Name, NationalCode, Mobile);
         }
         [RelayCommand]
         private async Task OnDeActive(Guid id)
@@ -195,7 +195,7 @@ namespace NeAccounting.ViewModels
             using UnitOfWork db = new();
             await db.CustomerManager.ArchiveCustomer(id, false);
             await db.SaveChangesAsync();
-            List = await db.CustomerManager.GetCustomerList(string.Empty, string.Empty, string.Empty);
+            List = await db.CustomerManager.GetCustomerList(Name, NationalCode, Mobile);
         }
     }
 }
