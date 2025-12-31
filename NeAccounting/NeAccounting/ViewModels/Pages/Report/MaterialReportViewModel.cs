@@ -120,13 +120,13 @@ namespace NeAccounting.ViewModels
 
             _isInit = true;
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetMaterialReport(MaterialId.Value, Buy, Sell, StartDate.Value, EndDate.Value, false, _isInit);
+            var t = await db.DocumentManager.GetMaterialReport(MaterialId.Value, Buy, Sell, StartDate.Value, EndDate.Value, false, _isInit,1,50);
             CurrentPage = t.CurrentPage;
             MatReportList = t.Items;
             PageCount = t.PageCount;
             _isInit = false;
         }
-
+        
         [RelayCommand]
         private async Task OnChangePage()
         {
@@ -158,7 +158,7 @@ namespace NeAccounting.ViewModels
             }
 
             using UnitOfWork db = new();
-            var t = await db.DocumentManager.GetMaterialReport(MaterialId.Value, Buy, Sell, StartDate.Value, EndDate.Value, false, _isInit);
+            var t = await db.DocumentManager.GetMaterialReport(MaterialId.Value, Buy, Sell, StartDate.Value, EndDate.Value, false,false,CurrentPage,50);
             CurrentPage = t.CurrentPage;
             MatReportList = t.Items;
             PageCount = t.PageCount;

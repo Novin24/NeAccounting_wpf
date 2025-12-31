@@ -18,13 +18,13 @@ namespace Infrastructure.EntityFramework
                         DbContextOptionsBuilder optionsBuilder)
         {
             //علی اصغر
-            //optionsBuilder.UseSqlServer($"Server=.\\SQLExpress;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer($"Server=.\\SQLExpress;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
             //optionsBuilder.UseSqlServer($"Data Source=(localDb)\\MssqlLocalDb;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
 
             //optionsBuilder.UseSqlServer($"Server=ALI"\\SQLEXPRESS;Database={NeAccountingConstants.NvoinDbConnectionStrint};Trusted_Connection=True;TrustServerCertificate=True;");
 
             //سرور
-            optionsBuilder.UseSqlServer($"Data Source=192.168.10.242,1433;Database={NeAccountingConstants.NvoinDbConnectionStrint};TrustServerCertificate=True;User Id=SA;Password=@#$%QWer;");
+            //optionsBuilder.UseSqlServer($"Data Source=192.168.10.242,1433;Database={NeAccountingConstants.NvoinDbConnectionStrint};TrustServerCertificate=True;User Id=SA;Password=@#$%QWer;");
 
             //ابلفضل
             //optionsBuilder.UseSqlServer($"Data Source=(localDb)"\\MssqlLocalDb;Database={NeAccountingConstants.NvoinDbConnectionStrint};Integrated Security=True;User ID=DESKTOP-N0GO0QP\"\ALI;");

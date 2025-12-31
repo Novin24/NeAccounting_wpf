@@ -1,11 +1,33 @@
 ﻿using Domain.BaseDomain.User;
+using DomainShared.ViewModels.Users;
 using NeApplication.Common;
 
 namespace NeApplication.IBaseRepositories
 {
     public interface IIdentityUserManager : IBaseRepository<IdentityUser>
     {
+		/// <summary>
+		/// دریافت لیست کاربران سیستم
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="mobile"></param>
+		/// <returns></returns>
+		Task<List<UsersListDto>> GetUserList(string name, string mobile);
+
+		/// <summary>
+		/// بررسی برای ورود کاربر
+		/// </summary>
+		/// <param name="userName"></param>
+		/// <param name="password"></param>
+		/// <returns></returns>
         Task<(bool isSuccess, string error)> LogInUser(string userName, string password);
+
+		/// <summary>
+		/// تغییر رمز عبور
+		/// </summary>
+		/// <param name="currentPass"></param>
+		/// <param name="NewPass"></param>
+		/// <returns></returns>
         Task<(bool isSuccess, string error)> ChangePass(string currentPass, string NewPass);
 
 		/// <summary>

@@ -1,6 +1,7 @@
 ﻿using Common.Utilities;
 using Domain.BaseDomain.User;
 using DomainShared.Constants;
+using DomainShared.ViewModels.Users;
 using Infrastructure.EntityFramework;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,22 @@ namespace Infrastructure.BaseRepositories
                 }
             }
             return new IdentityUser();
+        }
+
+        public async Task<List<UsersListDto>> GetUserList(string name, string mobile)
+        {
+            return await TableNoTracking
+                .Where(x => string.IsNullOrEmpty(name) || x.Name.Contains(name))
+                .Where(x => string.IsNullOrEmpty(mobile) || x.Mobile.Contains(mobile))
+                .Where(c => c.Id != Guid.Empty)
+                .Select(x => new UsersListDto
+                {
+                    Id = x.Id,
+                    DisplayName = x.Name + " " + x.SurName ,
+                    IsActive = x.IsActive,
+                    Mobile = x.Mobile,  
+                    UserName = x.UserName,
+                }).OrderBy(t => t.DisplayName).ToListAsync();
         }
 
         private async Task<IdentityUser?> GetUser(Guid id)

@@ -22,6 +22,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Threading;
 using Wpf.Ui;
+using NeAccounting.Views.Pages.Users;
 
 namespace NeAccounting
 {
@@ -300,10 +301,16 @@ namespace NeAccounting
 
 				services.AddTransient<DailyBookPage>();
 				services.AddTransient<DalyBookViewModel>();
-				#endregion
+                #endregion
 
-				#region UserControl
-				services.AddTransient<Pagination>();
+                #region Users
+                services.AddTransient<UserListPage>();
+                services.AddTransient<UserListViewModel>();
+
+                #endregion
+
+                #region UserControl
+                services.AddTransient<Pagination>();
 				services.AddTransient<PersianDatePicker>();
 				#endregion
 
