@@ -1,4 +1,4 @@
-﻿<Page x:Class="NeAccounting.Views.Pages.Users.UserListPage"
+﻿<Page x:Class="NeAccounting.Views.Pages.UserListPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,10 +10,10 @@
       mc:Ignorable="d"
       d:DesignHeight="800"
       d:DesignWidth="1200"
-      d:DataContext="{d:DesignInstance local:CustomerListPage ,IsDesignTimeCreatable=False}"
+      d:DataContext="{d:DesignInstance local:UserListPage ,IsDesignTimeCreatable=False}"
       d:Background="{DynamicResource ApplicationBackgroundBrush}"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
-      Title="UserListPage">
+      Title="UserList">
 
 
     <Grid Margin="-12">
@@ -121,7 +121,7 @@
                     <RowDefinition Height="6*"></RowDefinition>
 
                 </Grid.RowDefinitions>
-                <nu:HeaderPack NamePpage="مشتری"
+                <nu:HeaderPack NamePpage="کاربران سیستم"
                             Margin="25 0" />
 
                 <Border Grid.Row="1"
@@ -164,7 +164,7 @@
                                         FontSize="15"
                                         Padding="9 0"
                                         Command="{Binding ViewModel.AddClickCommand}"
-                                        CommandParameter="CreateCustomer"
+                                        CommandParameter="CreateUser"
                                         IsChevronVisible="False"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom">
@@ -185,7 +185,7 @@
                                                    Text="افزودن"
                                                    TextWrapping="WrapWithOverflow" />
                                         <ui:TextBlock Appearance="Tertiary"
-                                                   Text="اضافه کردن مشتری"
+                                                   Text="اضافه کردن کابر جدید"
                                                    TextWrapping="WrapWithOverflow" />
                                     </StackPanel>
                                 </Grid>
@@ -196,7 +196,7 @@
 
                                 <TextBlock FontFamily="Calibri"
                                         FontSize="15"
-                                        Text="نام مشتری"
+                                        Text="نام کاربر"
                                         Margin="2 0 0 0 " />
                                 <ui:TextBox TextAlignment="Center"
                                          x:Name="CusName_txt"
@@ -207,24 +207,8 @@
                                          Margin="0 4 0 0" />
                             </StackPanel>
 
+
                             <StackPanel Grid.Column="1"
-                                     Grid.Row="1"
-                                     Margin="10 0 10 0 ">
-
-                                <TextBlock FontFamily="Calibri"
-                                        FontSize="15"
-                                        Text="کد ملی"
-                                        Margin="2 0 0 0 " />
-                                <ui:TextBox TextAlignment="Center"
-                                         FontFamily="Calibri"
-                                         ClearButtonEnabled="False"
-                                         TabIndex="0"
-                                         Text="{Binding ViewModel.NationalCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         Margin="0 4 0 0" />
-
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="2"
                                      Grid.Row="1"
                                      Margin="10 0 20 0">
                                 <TextBlock FontFamily="Calibri"
@@ -240,7 +224,7 @@
                             </StackPanel>
 
                             <Button Grid.Row="1"
-                                 Grid.Column="3"
+                                 Grid.Column="2"
                                  Margin="0 22.3 0 0"
                                  Padding="17 4 17 9"
                                  Command="{Binding ViewModel.SearchCusCommand}"
@@ -258,39 +242,50 @@
                                CanUserResizeColumns="False"
                                CanUserReorderColumns="False"
                                ItemsSource="{Binding ViewModel.List, Mode=TwoWay}">
-
-                            <DataGrid.Resources>
-                                <s:String x:Key="format">{0:N0}</s:String>
-                            </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="نام مشتری"
+                                <DataGridTextColumn Header="ردیف"
+                                   HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                   ElementStyle="{StaticResource CenterDtaGridCell}"
+                                   Binding="{Binding Row}"
+                                   Width="45" >
+                                    <DataGridTextColumn.CellStyle>
+                                        <Style TargetType="DataGridCell">
+                                            <Setter Property="ToolTip">
+                                                <Setter.Value>
+                                                    <TextBlock FontSize='17'
+                                              Text='{Binding Name}' />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataGridTextColumn.CellStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="نام و نام خانوادگی"
                                                  HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
                                                  ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                 Binding="{Binding Name}"
+                                                 Binding="{Binding DisplayName}"
                                                  Width="*" >
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
                                                     <TextBlock FontSize='17'
-                                                            Text='{Binding Name}' />
+                                                            Text='{Binding DisplayName}' />
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
-
-                                <DataGridTextColumn Header="کدملی"
-                                                 ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                 HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                 Binding="{Binding NationalCode}"
-                                                 Width=".65*" >
+                                <DataGridTextColumn Header="نام کاربری"
+                                           HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
+                                           ElementStyle="{StaticResource CenterDtaGridCell}"
+                                           Binding="{Binding UserName}"
+                                           Width=".4*" >
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
                                                     <TextBlock FontSize='17'
-                                                            Text='{Binding NationalCode}' />
+                                                      Text='{Binding UserName}' />
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>
@@ -314,34 +309,17 @@
                                     </DataGridTextColumn.CellStyle>
                                 </DataGridTextColumn>
 
-                                <DataGridTextColumn Header="نوع مشتری"
+                                <DataGridTextColumn Header="اخرین بازدید"
                                                  ElementStyle="{StaticResource CenterDtaGridCell}"
                                                  HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                 Binding="{Binding CusTypeName}"
+                                                 Binding="{Binding ShamsiDate}"
                                                  Width=".5*" >
                                     <DataGridTextColumn.CellStyle>
                                         <Style TargetType="DataGridCell">
                                             <Setter Property="ToolTip">
                                                 <Setter.Value>
                                                     <TextBlock FontSize='17'
-                                                            Text='{Binding CusTypeName}' />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </DataGridTextColumn.CellStyle>
-                                </DataGridTextColumn>
-
-                                <DataGridTextColumn Header="اعتبار"
-                                                 ElementStyle="{StaticResource CenterDtaGridCell}"
-                                                 HeaderStyle="{DynamicResource CenterGridHeaderStyle}"
-                                                 Binding="{Binding TotalCredit, StringFormat={StaticResource format}}"
-                                                 Width="*" >
-                                    <DataGridTextColumn.CellStyle>
-                                        <Style TargetType="DataGridCell">
-                                            <Setter Property="ToolTip">
-                                                <Setter.Value>
-                                                    <TextBlock FontSize='17'
-                                                            Text='{Binding TotalCredit, StringFormat={StaticResource format}}' />
+                                                            Text='{Binding ShamsiDate}' />
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>
@@ -364,17 +342,7 @@
                                                     </Button.ToolTip>
                                                     <ui:SymbolIcon Symbol="Pen16" />
                                                 </Button>
-                                                <Button  Margin="2"
-                                                      CommandParameter="{Binding Id , Mode=OneWay}"
-                                                      Command="{Binding Path=DataContext.ViewModel.AddGaranteeChequeCommand, RelativeSource= {RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"
-                                                      Padding="7,5">
-                                                    <Button.ToolTip>
-                                                        <ToolTip>
-                                                            <TextBlock FontSize="14">ثبت چک ضمانتی</TextBlock>
-                                                        </ToolTip>
-                                                    </Button.ToolTip>
-                                                    <ui:SymbolIcon Symbol=" TableCellEdit16" />
-                                                </Button>
+           
                                                 <CheckBox IsChecked="{Binding IsActive}"
                                                        Tag="{Binding Id}"
                                                        Margin="5 0 -5 0"
@@ -382,7 +350,7 @@
                                                        Checked="CheckBox_Status_Chkecked"
                                                        Unchecked="CheckBox_Status_Unckecked">
                                                     <CheckBox.ToolTip>
-                                                        <TextBlock FontSize="16">بایگانی</TextBlock>
+                                                        <TextBlock FontSize="16">فعال و غیرفعال</TextBlock>
                                                     </CheckBox.ToolTip>
                                                 </CheckBox>
                                             </StackPanel>

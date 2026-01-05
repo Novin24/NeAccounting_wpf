@@ -72,4 +72,20 @@
         <TextBlock Text="پس از بایگانی فیلد مورد نظر در عملیات ثبت و ویرایش نمایش داده نمیشود ."
                    TextWrapping="Wrap" />
     </StackPanel>
+
+    <StackPanel x:Key="DeActiveUser"
+                FlowDirection="RightToLeft">
+        <TextBlock Text=" کاربر امکان ورود به برنامه نخواهد داشت."
+                   FontWeight="Bold"
+                    FontSize="15"
+                   HorizontalAlignment="Center"
+                   FontFamily="Calibri"
+                   TextWrapping="Wrap" />
+        <TextBlock Text="آیا ادامه میدهید ؟"
+                   HorizontalAlignment="Center"
+                   FontSize="15"
+                   FontFamily="Calibri"
+                   FontWeight="ExtraBold"
+           TextWrapping="Wrap" />
+    </StackPanel>
 </ResourceDictionary>

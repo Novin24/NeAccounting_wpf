@@ -2,7 +2,7 @@
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
-namespace NeAccounting.Views.Pages.Users
+namespace NeAccounting.Views.Pages
 {
     /// <summary>
     /// Interaction logic for UserPage.xaml
@@ -32,7 +32,7 @@ namespace NeAccounting.Views.Pages.Users
             {
                 return;
             }
-            //ViewModel.ActiveCommand.ExecuteAsync(id);
+           ViewModel.ActiveCommand.ExecuteAsync(id);
         }
         private async void CheckBox_Status_Unckecked(object sender, RoutedEventArgs e)
         {
@@ -52,16 +52,16 @@ namespace NeAccounting.Views.Pages.Users
             }
             var result = await _contentDialogService.ShowSimpleDialogAsync(new SimpleContentDialogCreateOptions()
             {
-                Title = "آیا از بایگانی اطمینان دارید!!!",
-                Content = Application.Current.Resources["DeleteDialogContent"],
-                PrimaryButtonText = "بله",
+                Title = "غیر فعال کردن کاربر !!!!",
+                Content = Application.Current.Resources["DeActiveUser"],
+                PrimaryButtonText = "تایید",
                 SecondaryButtonText = "خیر",
                 CloseButtonText = "انصراف",
             });
 
             if (result == ContentDialogResult.Primary)
             {
-                //await ViewModel.DeActiveCommand.ExecuteAsync(id);
+                await ViewModel.DeActiveCommand.ExecuteAsync(id);
             }
         }
     }

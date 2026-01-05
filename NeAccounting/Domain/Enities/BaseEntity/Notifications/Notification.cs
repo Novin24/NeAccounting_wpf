@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Domain.Enities.NovinEntity.Remittances;
 using DomainShared.Enums;
 using DomainShared.Errore;
 

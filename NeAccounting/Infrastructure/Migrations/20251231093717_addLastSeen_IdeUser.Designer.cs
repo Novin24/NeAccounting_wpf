@@ -4,6 +4,7 @@ using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(BaseDomainDbContext))]
-    partial class BaseDomainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251231093717_addLastSeen_IdeUser")]
+    partial class addLastSeen_IdeUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,60 +82,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("FinancialYear");
                 });
 
-            modelBuilder.Entity("Domain.BaseDomain.Menus.Menu", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWSEQUENTIALID()");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("LastModifireId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Level")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("ParentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte>("Root")
-                        .HasColumnType("tinyint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Menu");
-                });
-
             modelBuilder.Entity("Domain.BaseDomain.User.IdentityUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -167,7 +116,7 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("LastModifireId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("LastSeen")
+                    b.Property<DateTime>("LastSeen")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Mobile")
@@ -258,36 +207,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Notification");
-                });
-
-            modelBuilder.Entity("IdentityUserMenu", b =>
-                {
-                    b.Property<Guid>("MenusId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("MenusId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("IdentityUserMenu");
-                });
-
-            modelBuilder.Entity("IdentityUserMenu", b =>
-                {
-                    b.HasOne("Domain.BaseDomain.Menus.Menu", null)
-                        .WithMany()
-                        .HasForeignKey("MenusId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.BaseDomain.User.IdentityUser", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

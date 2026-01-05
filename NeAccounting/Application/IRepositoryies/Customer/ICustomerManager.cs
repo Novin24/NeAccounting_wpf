@@ -24,7 +24,7 @@ namespace NeApplication.IRepositoryies
         /// </summary>
         /// <param name="IsArchive"></param>
         /// <returns></returns>
-		Task<List<ExporteCustomerListDto>> GetExporteCustomerList(bool IsArchive);
+		Task<List<ExporteCustomerListDto>> GetExportedCustomerList(bool IsArchive);
 
 		Task<(string error, CustomerListDto cus)> GetCustomerById(Guid Id);
 

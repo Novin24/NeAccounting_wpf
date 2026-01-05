@@ -56,12 +56,12 @@ public partial class ExporteCustomerViewModel(ISnackbarService snackbarService) 
 	private async Task InitializeViewModel()
 	{
 		using UnitOfWork db = new();
-		List = await db.CustomerManager.GetExporteCustomerList(IsArchive);
+		List = await db.CustomerManager.GetExportedCustomerList(IsArchive);
 	}
 	public async Task LoadCustomerList(bool isArchive)
 	{
 		using UnitOfWork db = new();
-		List = await db.CustomerManager.GetExporteCustomerList(isArchive);
+		List = await db.CustomerManager.GetExportedCustomerList(isArchive);
 	}
 	public void BrowseFolder()
 	{

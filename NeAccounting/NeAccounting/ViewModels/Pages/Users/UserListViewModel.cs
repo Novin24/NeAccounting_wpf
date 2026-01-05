@@ -1,10 +1,9 @@
 ﻿using System.Windows.Media;
 using DomainShared.Constants;
-using DomainShared.ViewModels.Customer;
 using DomainShared.ViewModels.Users;
+using Infrastructure.EntityFramework;
 using Infrastructure.UnitOfWork;
 using NeAccounting.Helpers;
-using NeAccounting.Views.Pages;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 
@@ -16,19 +15,14 @@ namespace NeAccounting.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IContentDialogService _contentDialogService;
         private readonly ISnackbarService _snackbarService;
-        private bool _isreadonly = true;
 
         public UserListViewModel(INavigationService navigationService, IContentDialogService contentDialogService, ISnackbarService snackbarService)
         {
             _navigationService = navigationService;
             _contentDialogService = contentDialogService;
-            _snackbarService = snackbarService; _isreadonly = NeAccountingConstants.ReadOnlyMode;
+            _snackbarService = snackbarService; 
 
         }
-
-
-        [ObservableProperty]
-        private string _nationalCode = "";
 
         [ObservableProperty]
         private string _mobile = "";
@@ -145,31 +139,27 @@ namespace NeAccounting.ViewModels
         //    servise.Navigate(pageType, context);
         //}
 
-        //[RelayCommand]
-        //private async Task OnActive(Guid id)
-        //{
-        //    if (_isreadonly)
-        //    {
-        //        _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
-        //        return;
-        //    }
-        //    using UnitOfWork db = new();
-        //    await db.CustomerManager.ArchiveCustomer(id, true);
-        //    await db.SaveChangesAsync();
-        //    List = await db.CustomerManager.GetCustomerList(Name, NationalCode, Mobile);
-        //}
-        //[RelayCommand]
-        //private async Task OnDeActive(Guid id)
-        //{
-        //    if (_isreadonly)
-        //    {
-        //        _snackbarService.Show("خطا", "کاربر گرامی ویرایش در سال مالی گذشته امکان پذیر نمی باشد", ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.IndianRed)), TimeSpan.FromMilliseconds(3000));
-        //        return;
-        //    }
-        //    using UnitOfWork db = new();
-        //    await db.CustomerManager.ArchiveCustomer(id, false);
-        //    await db.SaveChangesAsync();
-        //    List = await db.CustomerManager.GetCustomerList(Name, NationalCode, Mobile);
-        //}
+        [RelayCommand]
+        private async Task OnActive(Guid id)
+        {
+            using BaseUnitOfWork db = new();
+            await db.UserRepository.SetActiveUser(id, true);
+            await db.SaveChangesAsync();
+            List = await db.UserRepository.GetUserList(Name, Mobile);
+        }
+
+        [RelayCommand]
+        private async Task OnDeActive(Guid id)
+        {
+            using BaseUnitOfWork db = new();
+            var (e, s) = await db.UserRepository.SetActiveUser(id, false);
+            if (!s)
+            {
+                _snackbarService.Show("کاربر گرامی", e, ControlAppearance.Secondary, new SymbolIcon(SymbolRegular.Warning20, new SolidColorBrush(Colors.Goldenrod)), TimeSpan.FromMilliseconds(3000));
+                return;
+            }
+            await db.SaveChangesAsync();
+            List = await db.UserRepository.GetUserList(Name, Mobile);
+        }
     }
 }

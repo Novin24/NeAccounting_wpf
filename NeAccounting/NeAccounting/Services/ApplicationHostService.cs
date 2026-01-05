@@ -50,18 +50,29 @@ namespace NeAccounting.Services
         {
             await Task.CompletedTask;
 
-			//var loadWindow = _serviceProvider.GetRequiredService<LoadingWindow>();
-			//loadWindow.Show();
-			AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
-			{
-				Log.Error(e.ExceptionObject as Exception, "An unhandled exception occurred.");
-			};
-			if (!Application.Current.Windows.OfType<MainWindow>().Any())
+            //var loadWindow = _serviceProvider.GetRequiredService<LoadingWindow>();
+            //loadWindow.Show();
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
             {
-                var navigationWindow = _serviceProvider.GetRequiredService<MainWindow>();
-                navigationWindow.Loaded += OnNavigationWindowLoaded;
-                navigationWindow.Show();
-                //loadWindow.Close();
+                Log.Error(e.ExceptionObject as Exception, "An unhandled exception occurred.");
+            };
+            if (!Application.Current.Windows.OfType<LogInWindow>().Any())
+            {
+                var loginWindow = _serviceProvider.GetRequiredService<LogInWindow>();
+                Application.Current.MainWindow = _serviceProvider.GetRequiredService<LoadingWindow>(); 
+                bool? loginResult = loginWindow.ShowDialog();
+                if (loginResult == true)
+                {
+                    //navigationWindow.Loaded += OnNavigationWindowLoaded;
+                    var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+                    Application.Current.MainWindow = mainWindow;
+
+                    mainWindow.Show();
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
             }
         }
 

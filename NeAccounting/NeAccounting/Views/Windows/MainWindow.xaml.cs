@@ -3,9 +3,11 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using System.Windows.Input;
+using System.Windows.Navigation;
 using NeAccounting.Helpers;
 using NeAccounting.ViewModels;
-using System.Windows.Input;
+using NeAccounting.Views.Pages.Test;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 //using Wpf.Ui.Controls;
@@ -37,7 +39,6 @@ namespace NeAccounting.Windows
             contentDialogService.SetContentPresenter(RootContentDialog);
 
             NavigationView.SetServiceProvider(serviceProvider);
-            Txt_UserName.Focus();
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -68,35 +69,6 @@ namespace NeAccounting.Windows
             NavigationView.Navigate(pageType);
         }
 
-        private async void Btnlogin_Click(object sender, RoutedEventArgs e)
-        {
-            Btn_LogIn.Visibility = Visibility.Collapsed;
-            Prg_loading.Visibility = Visibility.Visible;
-            if (await ViewModel.LogIn(Txt_UserName.Text, txt_password.Password))
-            {
-                LoginGrid.Visibility = Visibility.Collapsed;
-                LoginGrid.IsEnabled = false;
-
-                this.WindowStyle = WindowStyle.SingleBorderWindow;
-                mainGrid.Visibility = Visibility.Visible;
-                mainGrid.IsEnabled = true;
-                mainWin.WindowState = WindowState.Maximized;
-
-                Type? pageType = NameToPageTypeConverter.Convert("Dashboard");
-
-                if (pageType == null)
-                {
-                    return;
-                }
-                NavigationView.Navigate(pageType);
-                key_esc.Command = NavigateDashboardCommand;
-                await Task.CompletedTask;
-            }
-
-            Btn_LogIn.Visibility = Visibility.Visible;
-            Prg_loading.Visibility = Visibility.Hidden;
-        }
-
         private void mainWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             for (int intCounter = App.Current.Windows.Count - 1; intCounter > 0; intCounter--)
@@ -104,6 +76,20 @@ namespace NeAccounting.Windows
 
                 App.Current.Windows[intCounter].Close();
             }
+        }
+
+        private void mainWin_Loaded(object sender, RoutedEventArgs e)
+        {
+            Type? pageType = NameToPageTypeConverter.Convert("Dashboard");
+
+            if (pageType == null)
+            {
+                return;
+            }
+
+            this.WindowStyle = WindowStyle.SingleBorderWindow;
+            mainWin.WindowState = WindowState.Maximized;
+            NavigationView.Navigate(pageType);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Infrastructure.BaseRepositories;
 using Infrastructure.EntityFramework;
 using NeApplication.IBaseRepositories;
+using NeApplication.IBaseRepositories.Menus;
 
 namespace Infrastructure.UnitOfWork
 {
@@ -9,6 +10,7 @@ namespace Infrastructure.UnitOfWork
         readonly BaseDomainDbContext BaseNovin = new();
 
         private IIdentityUserManager _userManager;
+        private IMenuManager _menuManager;
         private INotifManager _notifManager;
         private IBackUpManager _backUpManager;
         private IFinancialYearManager _financialYearManager;
@@ -19,6 +21,15 @@ namespace Infrastructure.UnitOfWork
             {
                 _userManager ??= new UserManager(BaseNovin);
                 return _userManager;
+            }
+        }
+
+        public IMenuManager MenuRepository
+        {
+            get
+            {
+                _menuManager ??= new MenuManager(BaseNovin);
+                return _menuManager;
             }
         }
 

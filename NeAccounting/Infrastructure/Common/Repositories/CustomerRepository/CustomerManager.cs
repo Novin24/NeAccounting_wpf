@@ -26,7 +26,7 @@ namespace Infrastructure.Repositories
                 }).OrderBy(c=> c.DisplayName).ToListAsync();
 		}
 
-		public Task<List<ExporteCustomerListDto>> GetExporteCustomerList(bool IsArchive)
+		public Task<List<ExporteCustomerListDto>> GetExportedCustomerList(bool IsArchive)
 		{
             return TableNoTracking
                 .Where(t => IsArchive == true || t.IsActive != IsArchive)

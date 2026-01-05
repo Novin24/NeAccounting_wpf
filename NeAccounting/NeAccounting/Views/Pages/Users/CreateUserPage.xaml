@@ -1,0 +1,312 @@
+﻿<Page x:Class="NeAccounting.Views.Pages.CreateUserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:NeAccounting.Views.Pages"
+      xmlns:models="clr-namespace:DomainShared.ViewModels.Menu;assembly=DomainShared"
+      x:Name="RootPage"
+      xmlns:nu="clr-namespace:NeAccounting.Controls"
+      
+      d:DataContext="{d:DesignInstance local:CreateUserPage,
+                                     IsDesignTimeCreatable=False}"
+      mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:Height="800"
+      d:Background="{DynamicResource ApplicationBackgroundBrush}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Title="CreateUserPage">
+
+    <Page.InputBindings>
+        <KeyBinding Key="F1"
+                    Command="{Binding ViewModel.CreateUserCommand}" />
+    </Page.InputBindings>
+    <Grid Margin="-30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="15" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="15"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.3" />
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.8" />
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <Border Grid.Row="3"
+                Grid.RowSpan="3"
+                Grid.Column="2"
+                Grid.ColumnSpan="3"
+                CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5"
+                                            CenterX="0.5" />
+                            <SkewTransform CenterX="0.5"
+                                           CenterY="0.5" />
+                            <RotateTransform Angle="45"
+                                             CenterX="0.5"
+                                             CenterY="0.5" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="{DynamicResource SystemFillColorTopGradiant}"
+                                  Offset="0.5" />
+                    <GradientStop Color="{DynamicResource SystemFillColorButtonGradiant}"
+                                  Offset="0.7" />
+                </LinearGradientBrush>
+
+            </Border.Background>
+        </Border>
+        <Border Grid.Row="2"
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Background="{DynamicResource ApplicationBackgroundBrush}"
+                CornerRadius="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+
+
+                </Grid.RowDefinitions>
+
+                <nu:HeaderPack Grid.ColumnSpan="3"
+                               NamePpage="تعریف کاربر" />
+
+
+                <Separator
+                    Width="1.5"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Background="Gray"
+                    Margin="0 10"
+                    HorizontalAlignment="Stretch" />
+
+                <Border Grid.Column="0"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        Grid.RowSpan="2"
+                        CornerRadius="9"
+                        Margin="10 0 10 8"
+                        BorderBrush="#D6D5D5"
+                        BorderThickness="0.4">
+                    <Border.Background>
+                        <SolidColorBrush Color="Gray"
+                                         Opacity="0.08" />
+                    </Border.Background>
+                    <Grid FlowDirection="RightToLeft"
+
+                          Margin="0 5 0 0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width=".5*" />
+                            <ColumnDefinition Width=".5*" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.ColumnSpan="2">
+
+                            <StackPanel Margin="20 10,20,0"
+                                    Grid.ColumnSpan="2">
+                                <TextBlock FontFamily="Calibri"
+                                    FontSize="22"
+                                           HorizontalAlignment="Center"
+                                           FontWeight="Bold"
+                                    Text="اطلاعات هویتی"
+                                    Margin="2 0 0 5" />
+                            </StackPanel>
+
+                            <StackPanel Margin="20 10,20,0"
+                                    Grid.ColumnSpan="2">
+                                <TextBlock FontFamily="Calibri"
+                                    FontSize="18"
+                                    Text="نام کاربری (فقط حروف انگلیسی یا اعداد)"
+                                    Margin="2 0 0 5" />
+                                <ui:TextBox FontSize="18"
+                                     TextAlignment="Center"
+                                            x:Name="txt_UserName"
+                                     TabIndex="0"
+                                     Text="{Binding ViewModel.UserName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="Calibri" />
+                            </StackPanel>
+
+                            <StackPanel Margin="20 20 20 0"
+                                    Grid.Row="0"
+                                    Grid.ColumnSpan="2">
+
+                                <TextBlock FontFamily="Calibri"
+                                       FontSize="18"
+                                       Text="نام"
+                                       Margin="2 0 0 4 " />
+                                <ui:TextBox TabIndex="1"
+                                        TextAlignment="Center"
+                                        Text="{Binding ViewModel.Name , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                        FontSize="18"
+                                        FontFamily="Calibri" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2"
+                                    Grid.ColumnSpan="2"
+                                    Margin="20 20 20 0">
+
+                                <TextBlock FontFamily="Calibri"
+                                      FontSize="18"
+                                      Text="نام خانوادگی"
+                                      Margin="2 0 0 4 " />
+
+                                <ui:TextBox TabIndex="2"
+                                       TextAlignment="Center"
+                                       Text="{Binding ViewModel.SurName , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                       FontSize="18"
+                                       FontFamily="Calibri" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="3"
+                                   Grid.ColumnSpan="2"
+                                   Margin="20 20 20 0">
+
+                                <TextBlock FontFamily="Calibri"
+                                     FontSize="18"
+                                     Text="کد ملی"
+                                     Margin="2 0 0 4 " />
+
+                                <ui:TextBox TabIndex="3"
+                                      TextAlignment="Center"
+                                      Text="{Binding ViewModel.NationalCode , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                      FontSize="18"
+                                      FontFamily="Calibri" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4"
+                                        Grid.ColumnSpan="2"
+                                        Margin="20 20 20 0">
+                                <TextBlock FontFamily="Calibri"
+                                     FontSize="18"
+                                     Text="موبایل"
+                                     Margin="2 0 0 5" />
+                                <ui:TextBox FontSize="14"
+                                            TextAlignment="Center"
+                                            TabIndex="4"
+                                            Text="{Binding ViewModel.Mobile, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                            FontFamily="Calibri" />
+                            </StackPanel>
+                        </StackPanel>
+                        <Grid Grid.Column="2" 
+      Grid.ColumnSpan="2" 
+      Margin="30,10"
+      VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Margin="20,10,20,10">
+                                <TextBlock FontFamily="Calibri"
+                   FontSize="22"
+                   HorizontalAlignment="Center"
+                   FontWeight="Bold"
+                   Text="دسترسی" />
+                            </StackPanel>
+
+                            <TreeView Grid.Row="1"
+              ItemsSource="{Binding ViewModel.Permissions}"
+              Background="Transparent"
+              BorderThickness="0"
+              ScrollViewer.VerticalScrollBarVisibility="Auto"
+              ScrollViewer.CanContentScroll="True">
+
+                                <TreeView.Resources>
+                                    <HierarchicalDataTemplate DataType="{x:Type models:MenuListDto}"
+                                      ItemsSource="{Binding Children}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <CheckBox CommandParameter="{Binding}"
+                              Command="{Binding ViewModel.PermissionCheckedCommand, ElementName=RootPage}"
+                              IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                              IsThreeState="False"
+                              VerticalAlignment="Center" />
+
+                                            <TextBlock Text="{Binding Name}"
+                               FontFamily="Calibri"
+                               FontSize="18"
+                               VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </HierarchicalDataTemplate>
+                                </TreeView.Resources>
+                            </TreeView>
+                        </Grid>
+
+
+                        <Button Grid.Row="7"
+                                Margin="10"
+                                FontSize="17"
+                                Padding="50 7"
+                                Grid.Column="1"
+                                x:Name="Btn_submit"
+                                Grid.ColumnSpan="2"
+                                FontFamily="Calibri"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Command="{Binding ViewModel.CreateUserCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ثبت" />
+                                <TextBlock Text=" (F1)"
+                                           FontSize="12"
+                                           VerticalAlignment="Center"
+                                           Foreground="#FFA3A3A3" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

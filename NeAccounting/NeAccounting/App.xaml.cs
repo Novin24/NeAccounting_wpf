@@ -16,14 +16,11 @@ using NeAccounting.Views.Pages;
 using NeAccounting.Views.Pages.Test;
 using NeAccounting.Windows;
 using NeApplication.Services;
-using Serilog.Events;
 using Serilog;
 using System.IO;
 using System.Reflection;
 using System.Windows.Threading;
 using Wpf.Ui;
-using NeAccounting.Views.Pages.Users;
-
 namespace NeAccounting
 {
 	/// <summary>
@@ -59,10 +56,15 @@ namespace NeAccounting
 				#region Main
 				services.AddHostedService<ApplicationHostService>();
 				services.AddSingleton<MainWindow>();
+                services.AddSingleton<MainWindowViewModel>();
 
-				//services.AddSingleton<LoadingWindow>(); 
-				services.AddSingleton<MainWindowViewModel>();
-				services.AddSingleton<WindowsProviderService>();
+                //services.AddSingleton<LoadingWindow>(); 
+				services.AddSingleton<LogInWindow>();
+                services.AddSingleton<LoginWindowViewModel>();
+
+                services.AddSingleton<LoadingWindow>();
+
+                services.AddSingleton<WindowsProviderService>();
 				services.AddSingleton<INavigationService, NavigationService>();
 				services.AddSingleton<ISnackbarService, SnackbarService>();
 				services.AddSingleton<IContentDialogService, ContentDialogService>();
@@ -307,6 +309,8 @@ namespace NeAccounting
                 services.AddTransient<UserListPage>();
                 services.AddTransient<UserListViewModel>();
 
+                services.AddTransient< CreateUserPage>();
+                services.AddTransient<CreateUserViewModel>();
                 #endregion
 
                 #region UserControl
